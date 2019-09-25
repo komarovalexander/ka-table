@@ -7,8 +7,8 @@ import { Column } from './DataGrid/Models/Column';
 
 const App: React.FC = () => {
   const columns: Column[] = [
-    { key: 'column', name: 'Column 1' }, 
-    { key: 'column2', name: 'Column 2' }
+    { key: 'column', name: 'Column 1' },
+    { key: 'column2', name: 'Column 2' },
   ];
   const data = [{ column: 1, column2: 2, id: 1 },
     { column: 12, column2: 22, id: 2 }];
@@ -18,10 +18,9 @@ const App: React.FC = () => {
         data={data}
         columns={columns}
         rowKey={'id'}
-      >
-      </DataGrid>
+      />
     </div>
   );
-}
+};
 
 export default App;
