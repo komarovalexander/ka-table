@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import React from 'react';
+
+import DataGrid from './DataGrid/DataGrid';
+import { Column } from './DataGrid/Models/Column';
+
 const App: React.FC = () => {
+  const columns: Column[] = [
+    { key: 'column', name: 'Column 1' }, 
+    { key: 'column2', name: 'Column 2' }
+  ];
+  const data = [{ column: 1, column2: 2, id: 1 },
+    { column: 12, column2: 22, id: 2 }];
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <DataGrid
+        data={data}
+        columns={columns}
+        rowKey={'id'}
+      >
+      </DataGrid>
     </div>
   );
 }
