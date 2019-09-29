@@ -1,8 +1,7 @@
-import './App.css';
-
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-import DataGrid from './DataGrid/DataGrid';
+import DataGrid from './DataGrid';
 
 const dataGridProps = {
   columns: [
@@ -16,12 +15,8 @@ const dataGridProps = {
   rowKey: 'id',
 };
 
-const App: React.FC = () => {
-  return (
-    <div className='App'>
-      <DataGrid {...dataGridProps} />
-    </div>
-  );
-};
-
-export default App;
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<DataGrid {...dataGridProps} />, div);
+  ReactDOM.unmountComponentAtNode(div);
+});

@@ -1,28 +1,25 @@
 import * as React from 'react';
 
+import Cell from './Cell/Cell';
 import { Column } from './Models/Column';
+import Row from './Row/Row';
 
 interface IDataGridProps {
-    data: any[];
-    columns: Column[];
-    rowKey: string;
+  data: any[];
+  columns: Column[];
+  rowKey: string;
 }
 
-const DataGrid: React.FunctionComponent<IDataGridProps> = (props) => {
-  const { data, columns, rowKey } = props;
+const DataGrid: React.FunctionComponent<IDataGridProps> = ({ data, columns, rowKey }) => {
   return (
     <div className='dg'>
       <table>
         <thead>
-          <tr>{columns.map((column) => <th key={column.key}>{column.name}</th>)}</tr>
+          <tr>{columns.map((column) =>  <Cell key={column.key} text={column.name}/>)}</tr>
         </thead>
         <tbody>
           {data.map((d) => (
-            <tr key={d[rowKey]}>
-              {columns.map((column) =>
-                <td key={column.key}>{d[column.key]}</td>,
-              )}
-            </tr>
+            <Row key={d[rowKey]} columns={columns} data={d} />
           ))}
         </tbody>
       </table>
