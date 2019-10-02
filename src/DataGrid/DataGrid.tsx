@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import Cell from './Cell/Cell';
+import Cell from './Components/Cell/Cell';
+import Row from './Components/Row/Row';
 import { Column } from './Models/Column';
-import Row from './Row/Row';
 
 interface IDataGridProps {
   data: any[];
