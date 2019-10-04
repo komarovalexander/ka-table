@@ -6,7 +6,7 @@ import { SortDirection } from './Enums/SortDirection';
 import { Column } from './Models/Column';
 import { OptionChangedParam } from './Models/EventParams/OptionChangedParam';
 
-interface IDataGridProps {
+interface ITableProps {
   data: any[];
   columns: Column[];
   rowKey: string;
@@ -23,7 +23,7 @@ const sortData = (columns: Column[], data: any): any[] => {
   return newData;
 };
 
-const DataGrid: React.FunctionComponent<IDataGridProps> = ({ data, columns, rowKey, onOptionChanged }) => {
+const Table: React.FunctionComponent<ITableProps> = ({ data, columns, rowKey, onOptionChanged }) => {
   data = sortData(columns, data);
   return (
     <div className='dg'>
@@ -41,8 +41,8 @@ const DataGrid: React.FunctionComponent<IDataGridProps> = ({ data, columns, rowK
   );
 };
 
-DataGrid.defaultProps = {
+Table.defaultProps = {
   rowKey: 'id',
 };
 
-export default DataGrid;
+export default Table;

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import DataGrid from './DataGrid';
+import Table from './Table';
 
-const dataGridProps = {
+const tableProps = {
   columns: [
     { key: 'column', name: 'Column 1' },
     { key: 'column2', name: 'Column 2' },
@@ -17,6 +17,6 @@ const dataGridProps = {
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<DataGrid {...dataGridProps} />, div);
+  ReactDOM.render(<Table {...tableProps} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

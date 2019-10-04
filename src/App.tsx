@@ -2,10 +2,10 @@ import './App.css';
 
 import React, { useState } from 'react';
 
-import DataGrid from './DataGrid/DataGrid';
-import { SortDirection } from './DataGrid/Enums/SortDirection';
-import { DefaultOptions } from './DataGrid/Models/DefaultOptions';
-import { OptionChangedParam } from './DataGrid/Models/EventParams/OptionChangedParam';
+import { SortDirection } from './Table/Enums/SortDirection';
+import { DefaultOptions } from './Table/Models/DefaultOptions';
+import { OptionChangedParam } from './Table/Models/EventParams/OptionChangedParam';
+import Table from './Table/Table';
 
 DefaultOptions.columnSortDirection = SortDirection.Ascend;
 const dataArray = [
@@ -15,7 +15,7 @@ const dataArray = [
   { column: 214, column2: 224, id: 44 },
 ];
 
-const dataGridProps = {
+const tableProps = {
   columns: [
     { key: 'id', name: 'Id', sortDirection: SortDirection.Descend },
     { key: 'column', name: 'Column 1' },
@@ -25,13 +25,13 @@ const dataGridProps = {
 };
 
 const App: React.FC = () => {
-  const [option, changeOptions] = useState(dataGridProps);
+  const [option, changeOptions] = useState(tableProps);
   const onOptionChanged = (newOption: OptionChangedParam) => {
     changeOptions({...option, ...newOption.value });
   };
   return (
     <div className='App'>
-      <DataGrid
+      <Table
         {...option}
         data={dataArray}
         onOptionChanged={onOptionChanged}
