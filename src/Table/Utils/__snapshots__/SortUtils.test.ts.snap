@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sortData should be sorted 1`] = `
+Array [
+  Object {
+    "column": "21",
+    "column2": "22",
+    "id": 2,
+  },
+  Object {
+    "column": "11",
+    "column2": "12",
+    "id": 1,
+  },
+  Object {
+    "column": "01",
+    "column2": "02",
+    "id": 0,
+  },
+]
+`;

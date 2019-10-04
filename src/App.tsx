@@ -8,12 +8,11 @@ import { OptionChangedParam } from './Table/Models/EventParams/OptionChangedPara
 import Table from './Table/Table';
 
 DefaultOptions.columnSortDirection = SortDirection.Ascend;
-const dataArray = [
-  { column: 1, column2: 332, id: 1 },
-  { column: 312, column2: 422, id: 32 },
-  { column: 413, column2: 323, id: 13 },
-  { column: 214, column2: 224, id: 44 },
-];
+const dataArray: any[] = [];
+
+for (let index = 0; index < 10; index++) {
+  dataArray.push({ column: index + '1', column2: index + '2', id: index });
+}
 
 const tableProps = {
   columns: [
