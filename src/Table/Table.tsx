@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import HeadRow from './Components/HeadRow/HeadRow';
 import Row from './Components/Row/Row';
-import { SortDirection } from './Enums/SortDirection';
 import { Column } from './Models/Column';
 import { OptionChangedParam } from './Models/EventParams/OptionChangedParam';
+import { sortData } from './Utils/SortUtils';
 
 interface ITableProps {
   data: any[];
@@ -12,16 +12,6 @@ interface ITableProps {
   rowKey: string;
   onOptionChanged: (newOption: OptionChangedParam) => void;
 }
-
-const sortData = (columns: Column[], data: any): any[] => {
-  const sortedColumn = columns.find((column) => column.sortDirection);
-  if (!sortedColumn) { return data; }
-  const columnKey = sortedColumn.key;
-  const newData = [...data].sort((a: any, b: any) =>
-  (sortedColumn.sortDirection === SortDirection.Ascend
-    ? a[columnKey] > b[columnKey] : a[columnKey] < b[columnKey]) ? -1 : 1);
-  return newData;
-};
 
 const Table: React.FunctionComponent<ITableProps> = ({ data, columns, rowKey, onOptionChanged }) => {
   data = sortData(columns, data);

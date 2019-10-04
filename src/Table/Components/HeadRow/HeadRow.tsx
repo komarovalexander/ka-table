@@ -1,14 +1,13 @@
 import React from 'react';
 
-import { SortDirection } from '../../Enums/SortDirection';
 import { Column } from '../../Models/Column';
-import { DefaultOptions } from '../../Models/DefaultOptions';
-import { OptionChangedParam } from '../../Models/EventParams/OptionChangedParam';
+import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
+import { sortUtilsClickHandler } from '../../Utils/HeadRowUtils';
 import HeadCell from '../HeadCell/HeadCell';
 
 interface IHeadRowProps {
   columns: Column[];
-  onOptionChanged: (newOption: OptionChangedParam) => void;
+  onOptionChanged: OptionChangedFunc;
 }
 
 const HeadRow: React.FunctionComponent<IHeadRowProps> = ({ columns, onOptionChanged }) => {
@@ -21,28 +20,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({ columns, onOptionChan
           sortClick={
             // tslint:disable-next-line:jsx-no-lambda
             () => {
-              const newColumns = [...columns];
-              let sortDirection;
-              if (column.sortDirection) {
-                sortDirection = column.sortDirection === SortDirection.Ascend
-                  ? SortDirection.Descend : SortDirection.Ascend;
-              } else {
-                sortDirection = DefaultOptions.columnSortDirection;
-              }
-
-              newColumns.forEach((newColumn, newColumnIndex) => {
-                if (newColumn.sortDirection) {
-                  newColumns[newColumnIndex] = {...newColumn};
-                  newColumns[newColumnIndex].sortDirection = undefined;
-                }
-              });
-
-              newColumns[index] = {...column};
-              newColumns[index].sortDirection = sortDirection;
-              onOptionChanged({
-                name: 'columns',
-                value: { columns: newColumns },
-              });
+              sortUtilsClickHandler(columns, column, index, onOptionChanged);
             }
           }
         />
