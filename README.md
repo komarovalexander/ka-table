@@ -1,5 +1,5 @@
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/react-filter-control/blob/master/LICENSE) [![Build Status](https://travis-ci.com/komarovalexander/react-filter-control.svg?branch=master)](https://travis-ci.com/komarovalexander/react-filter-control)
-[![Coverage Status](https://coveralls.io/repos/github/komarovalexander/react-filter-control/badge.svg?branch=master)](https://coveralls.io/github/komarovalexander/react-filter-control?branch=master)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/react-table-component/blob/master/LICENSE) [![Build Status](https://travis-ci.com/komarovalexander/react-filter-control.svg?branch=master)](https://travis-ci.com/komarovalexander/react-table-component)
+[![Coverage Status](https://coveralls.io/repos/github/komarovalexander/react-filter-control/badge.svg?branch=master)](https://coveralls.io/github/komarovalexander/react-table-component?branch=dev)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
