@@ -2,10 +2,10 @@ import './App.css';
 
 import React, { useState } from 'react';
 
-import { SortDirection } from './Table/Enums/SortDirection';
-import { DefaultOptions } from './Table/Models/DefaultOptions';
-import { OptionChangedParam } from './Table/Models/EventParams/OptionChangedParam';
-import Table from './Table/Table';
+import Table from './Components/Table/Table';
+import { SortDirection } from './Enums/SortDirection';
+import { DefaultOptions } from './Models/DefaultOptions';
+import { OptionChangedParam } from './Models/EventParams/OptionChangedParam';
 
 DefaultOptions.columnSortDirection = SortDirection.Ascend;
 const dataArray: any[] = [];

@@ -18,7 +18,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "fix-lint": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'"
+    "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
+    "doc": "styleguidist server",
+    "doc:build": "styleguidist build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,6 +38,9 @@
     ]
   },
   "devDependencies": {
+    "acorn": "^6.3.0",
+    "react-docgen-typescript": "^1.15.0",
+    "react-styleguidist": "^9.1.16",
     "tslint": "^5.20.0",
     "tslint-react": "^4.1.0"
   }
