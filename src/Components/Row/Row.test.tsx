@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Row from './Row';
+import Row, { IRowProps } from './Row';
 
-const props = {
+const props: IRowProps = {
   columns: [
-    { key: 'column', name: 'Column 1' },
-    { key: 'column2', name: 'Column 2' },
+    { field: 'column', title: 'Column 1' },
+    { field: 'column2', title: 'Column 2' },
   ],
   data: [{ column: 1, column2: 2 }],
 };

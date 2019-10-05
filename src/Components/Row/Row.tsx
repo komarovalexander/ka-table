@@ -3,7 +3,7 @@ import React from 'react';
 import { Column } from '../../Models/Column';
 import Cell from '../Cell/Cell';
 
-interface IRowProps {
+export interface IRowProps {
   columns: Column[];
   data: any;
 }
@@ -11,7 +11,7 @@ interface IRowProps {
 const Row: React.FunctionComponent<IRowProps> = ({ columns, data }) => {
   return (
     <tr>
-      {columns.map((column) => (<Cell key={column.key} text={data[column.key]}/>))}
+      {columns.map((column) => (<Cell key={column.field} text={data[column.field]}/>))}
     </tr>
   );
 };

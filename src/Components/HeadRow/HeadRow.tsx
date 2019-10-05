@@ -5,7 +5,7 @@ import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 import { sortUtilsClickHandler } from '../../Utils/HeadRowUtils';
 import HeadCell from '../HeadCell/HeadCell';
 
-interface IHeadRowProps {
+export interface IHeadRowProps {
   columns: Column[];
   onOptionChanged: OptionChangedFunc;
 }
@@ -15,8 +15,8 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({ columns, onOptionChan
     <tr>
       {columns.map((column, index) => (
         <HeadCell
-          key={column.key}
-          text={column.name}
+          key={column.field}
+          text={column.title}
           sortClick={
             // tslint:disable-next-line:jsx-no-lambda
             () => {

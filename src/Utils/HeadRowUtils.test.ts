@@ -4,9 +4,9 @@ import { OptionChangedParam } from '../Models/EventParams/OptionChangedParam';
 import { sortUtilsClickHandler } from './HeadRowUtils';
 
 const columns: Column[] = [
-  { key: 'id', name: 'Id', sortDirection: SortDirection.Descend },
-  { key: 'column', name: 'Column 1' },
-  { key: 'column2', name: 'Column 2' },
+  { field: 'id', title: 'Id', sortDirection: SortDirection.Descend },
+  { field: 'column', title: 'Column 1' },
+  { field: 'column2', title: 'Column 2' },
 ];
 
 describe('sortUtilsClickHandler', () => {

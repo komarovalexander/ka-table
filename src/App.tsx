@@ -2,7 +2,7 @@ import './App.css';
 
 import React, { useState } from 'react';
 
-import Table from './Components/Table/Table';
+import Table, { ITableOption } from './Components/Table/Table';
 import { SortDirection } from './Enums/SortDirection';
 import { DefaultOptions } from './Models/DefaultOptions';
 import { OptionChangedParam } from './Models/EventParams/OptionChangedParam';
@@ -14,17 +14,17 @@ for (let index = 0; index < 10; index++) {
   dataArray.push({ column: index + '1', column2: index + '2', id: index });
 }
 
-const tableProps = {
+const tableOption: ITableOption = {
   columns: [
-    { key: 'id', name: 'Id', sortDirection: SortDirection.Descend },
-    { key: 'column', name: 'Column 1' },
-    { key: 'column2', name: 'Column 2' },
+    { field: 'id', title: 'Id', sortDirection: SortDirection.Descend },
+    { field: 'column', title: 'Column 1' },
+    { field: 'column2', title: 'Column 2' },
   ],
   rowKey: 'id',
 };
 
 const App: React.FC = () => {
-  const [option, changeOptions] = useState(tableProps);
+  const [option, changeOptions] = useState(tableOption);
   const onOptionChanged = (newOption: OptionChangedParam) => {
     changeOptions({...option, ...newOption.value });
   };

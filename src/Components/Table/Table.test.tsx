@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Table from './Table';
+import Table, { ITableProps } from './Table';
 
-const tableProps = {
+const tableProps: ITableProps = {
   columns: [
-    { key: 'column', name: 'Column 1' },
-    { key: 'column2', name: 'Column 2' },
+    { field: 'column', name: 'Column 1' },
+    { field: 'column2', name: 'Column 2' },
   ],
   data: [
     { column: 1, column2: 2, id: 1 },
