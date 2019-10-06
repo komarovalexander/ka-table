@@ -1,6 +1,5 @@
 import { SortDirection } from '../Enums/SortDirection';
 import { Column } from '../Models/Column';
-import { OptionChangedParam } from '../Models/EventParams/OptionChangedParam';
 import { sortUtilsClickHandler } from './HeadRowUtils';
 
 const columns: Column[] = [
@@ -11,15 +10,15 @@ const columns: Column[] = [
 
 describe('sortUtilsClickHandler', () => {
   it('should not change original data', () => {
-    sortUtilsClickHandler(columns, columns[0], (newOption) => {
+    sortUtilsClickHandler(columns, columns[0], (value) => {
       expect(columns[0].sortDirection).toBe(SortDirection.Descend);
-      expect(newOption).not.toBe(columns);
+      expect(value.columns).not.toBe(columns);
     });
   });
 
   it('should change sortDirection', () => {
-    sortUtilsClickHandler(columns, columns[0], (newOption: OptionChangedParam) => {
-      expect(newOption.value.columns[0].sortDirection).toBe(SortDirection.Ascend);
+    sortUtilsClickHandler(columns, columns[0], (value) => {
+      expect(value.columns[0].sortDirection).toBe(SortDirection.Ascend);
     });
   });
 });

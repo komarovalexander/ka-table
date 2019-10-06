@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
-import { getRowEditableCells } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
 import HeadRow from '../HeadRow/HeadRow';
 import Row from '../Row/Row';
@@ -50,7 +49,8 @@ const Table: React.FunctionComponent<IAllProps> = ({ data, columns, rowKey, onOp
                 columns={columns}
                 rowData={d}
                 rowKeyValue={rowKeyValue}
-                rowEditableCells={getRowEditableCells(rowKeyValue, editableCells)}
+                onOptionChanged={onOptionChanged}
+                editableCells={editableCells || []}
               />
             );
           })}

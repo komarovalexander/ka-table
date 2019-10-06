@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import Table, { ITableOption } from '../../Components/Table/Table';
-import { OptionChangedParam } from '../../Models/EventParams/OptionChangedParam';
+import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 
 const dataArray: any[] = [];
 
@@ -20,8 +20,8 @@ const tableOption: ITableOption = {
 
 const SortingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChanged = (newOption: OptionChangedParam) => {
-    changeOptions({...option, ...newOption.value });
+  const onOptionChanged: OptionChangedFunc = (value) => {
+    changeOptions({...option, ...value });
   };
   return (
     <Table

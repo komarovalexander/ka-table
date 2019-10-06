@@ -26,8 +26,5 @@ export const sortUtilsClickHandler = (
 
   newColumns[index] = {...column};
   newColumns[index].sortDirection = sortDirection;
-  onOptionChanged({
-    name: 'columns',
-    value: { columns: newColumns },
-  });
+  onOptionChanged({ columns: newColumns });
 };
