@@ -8,7 +8,7 @@ const props: IHeadRowProps = {
     { field: 'column', title: 'Column 1' },
     { field: 'column2', title: 'Column 2' },
   ],
-  onOptionChanged: () => {},
+  onOptionChanged: () => { },
 };
 
 it('renders without crashing', () => {
