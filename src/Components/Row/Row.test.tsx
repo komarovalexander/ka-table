@@ -8,8 +8,8 @@ const props: IRowProps = {
     { field: 'column', title: 'Column 1' },
     { field: 'column2', title: 'Column 2' },
   ],
-  rowKey: 'column',
   rowData: [{ column: 1, column2: 2 }],
+  rowKey: 'column',
 };
 
 it('renders without crashing', () => {
