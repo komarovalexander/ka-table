@@ -2,13 +2,11 @@ import './App.css';
 
 import React from 'react';
 
-import BasicDemo from './Demos/BasicDemo/BasicDemo';
-import getDemoPage from './Demos/DemoPage';
+import Demos from './Demos/Demos';
 
 const App: React.FC = () => {
-  const DemoPage = getDemoPage(BasicDemo);
   return (
-    <DemoPage />
+    <Demos />
   );
 };
 

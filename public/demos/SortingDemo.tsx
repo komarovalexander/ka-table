@@ -18,7 +18,7 @@ const tableOption: ITableOption = {
   rowKey: 'id',
 };
 
-const BasicDemo: React.FC = () => {
+const SortingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const onOptionChanged = (newOption: OptionChangedParam) => {
     changeOptions({...option, ...newOption.value });
@@ -32,4 +32,4 @@ const BasicDemo: React.FC = () => {
   );
 };
 
-export default BasicDemo;
+export default SortingDemo;

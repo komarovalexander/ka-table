@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var typedoc = require('gulp-typedoc');
  
 gulp.task('default', function () {
-    return gulp.src('src/Demos/BasicDemo/BasicDemo.tsx')
+    return gulp.src('src/Demos/SortingDemo/SortingDemo.tsx')
         .pipe(gulp.dest('public/demos'));
 });
  
