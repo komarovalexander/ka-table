@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Cell from './Cell';
+import CellComponent from './CellComponent';
 
 const props = {
-  text: 'testText',
+  field: 'column',
+  rowData: { column : 1 },
+  rowEditableCells: [],
+  rowKeyValue: 1,
 };
 
 it('renders without crashing', () => {
   const element = document.createElement('tr');
-  ReactDOM.render(<Cell {...props} />, element);
+  ReactDOM.render(<CellComponent {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });

@@ -1,13 +1,15 @@
 import * as React from 'react';
 
+import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
+import { getRowEditableCells } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
 import HeadRow from '../HeadRow/HeadRow';
 import Row from '../Row/Row';
 
 /**
- * ITableOption sets the options of the data grid
+ * Sets the options of the data grid which are related to its looks
  */
 export interface ITableOption {
   /**
@@ -16,6 +18,8 @@ export interface ITableOption {
   columns: Column[];
   /** Specifies the column unique field which will be used as a key */
   rowKey: string;
+  /** Specifies the array of cells which are being edited */
+  editableCells?: Cell[];
 }
 
 interface ITableEvents {
@@ -29,18 +33,27 @@ interface IAllProps extends ITableEvents, ITableOption {
 }
 
 /** The Table Component */
-const Table: React.FunctionComponent<IAllProps> = ({ data, columns, rowKey, onOptionChanged }) => {
+const Table: React.FunctionComponent<IAllProps> = ({ data, columns, rowKey, onOptionChanged, editableCells }) => {
   data = sortData(columns, data);
   return (
-    <div className='dg'>
+    <div className='tc'>
       <table>
         <thead>
           <HeadRow columns={columns} onOptionChanged={onOptionChanged} />
         </thead>
         <tbody>
-          {data.map((d) => (
-            <Row key={d[rowKey]} columns={columns} data={d} />
-          ))}
+          {data.map((d) => {
+            const rowKeyValue = d[rowKey];
+            return (
+              <Row
+                key={rowKeyValue}
+                columns={columns}
+                rowData={d}
+                rowKeyValue={rowKeyValue}
+                rowEditableCells={getRowEditableCells(rowKeyValue, editableCells)}
+              />
+            );
+          })}
         </tbody>
       </table>
     </div>

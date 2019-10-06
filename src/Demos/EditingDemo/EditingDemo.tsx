@@ -15,10 +15,14 @@ const tableOption: ITableOption = {
     { field: 'column', title: 'Column 1' },
     { field: 'column2', title: 'Column 2' },
   ],
+  editableCells: [{
+    field: 'id',
+    rowKeyValue: 2,
+  }],
   rowKey: 'id',
 };
 
-const SortingDemo: React.FC = () => {
+const EditingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const onOptionChanged = (newOption: OptionChangedParam) => {
     changeOptions({...option, ...newOption.value });
@@ -32,4 +36,4 @@ const SortingDemo: React.FC = () => {
   );
 };
 
-export default SortingDemo;
+export default EditingDemo;

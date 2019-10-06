@@ -1,17 +1,29 @@
 import React from 'react';
 
+import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
-import Cell from '../Cell/Cell';
+import { isEditableCell } from '../../Utils/CellUtils';
+import CellComponent from '../CellComponent/CellComponent';
 
 export interface IRowProps {
   columns: Column[];
-  data: any;
+  rowKeyValue: any;
+  rowData: any;
+  rowEditableCells?: Cell[];
 }
 
-const Row: React.FunctionComponent<IRowProps> = ({ columns, data }) => {
+const Row: React.FunctionComponent<IRowProps> = ({ columns, rowData, rowKeyValue, rowEditableCells }) => {
   return (
     <tr>
-      {columns.map((column) => (<Cell key={column.field} text={data[column.field]}/>))}
+      {columns.map((column) => (
+        <CellComponent
+          key={column.field}
+          rowData={rowData}
+          field={column.field}
+          rowKeyValue={rowKeyValue}
+          isEditableCell={isEditableCell(column.field, rowEditableCells)}
+        />
+      ))}
     </tr>
   );
 };

@@ -2,10 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 import getDemoPage from './DemoPage';
+import EditingDemo from './EditingDemo/EditingDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
 
 const demos = [
   SortingDemo,
+  EditingDemo,
 ];
 
 const cases = demos.map((d: React.FC) => {
@@ -14,7 +16,6 @@ const cases = demos.map((d: React.FC) => {
 });
 
 const Demos: React.FC = () => {
-  const DemoPage = getDemoPage(SortingDemo);
   return (
     <Router>
       <div>
@@ -32,7 +33,7 @@ const Demos: React.FC = () => {
         }
         </ul>
         <hr />
-        <Route exact={true} path='/' component={DemoPage} />
+        <Route exact={true} path='/' component={EditingDemo} />
         {
           cases.map((c) => (
               <Route key={c.name} path={c.path} component={c.demoComponent} />

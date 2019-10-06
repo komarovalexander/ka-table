@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterUtils getRowEditableCells should returnu required cells from table EditableCells 1`] = `
+Array [
+  Object {
+    "field": "10",
+    "rowKeyValue": 10,
+  },
+]
+`;

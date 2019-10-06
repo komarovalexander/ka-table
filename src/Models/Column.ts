@@ -5,7 +5,7 @@ import { SortDirection } from '../Enums/SortDirection';
  */
 export class Column {
   /*
-  * Specifies the field which value will be used in column
+  * Specifies the field of data which value will be used in column
   */
   public field!: string;
 
