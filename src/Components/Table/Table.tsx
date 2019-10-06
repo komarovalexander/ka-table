@@ -6,17 +6,20 @@ import { sortData } from '../../Utils/SortUtils';
 import HeadRow from '../HeadRow/HeadRow';
 import Row from '../Row/Row';
 
+/**
+ * ITableOption sets the options of the data grid
+ */
 export interface ITableOption {
   /**
    * Array of column's settings
    */
   columns: Column[];
-  /** prop1 description */
+  /** Specifies the column unique field which will be used as a key */
   rowKey: string;
 }
 
 interface ITableEvents {
-  /** ITableEvents onOptionChanged */
+  /** Called each time ITableOption changed */
   onOptionChanged: OptionChangedFunc;
 }
 
@@ -25,6 +28,7 @@ interface IAllProps extends ITableEvents, ITableOption {
   data: any[];
 }
 
+/** The Table Component */
 const Table: React.FunctionComponent<IAllProps> = ({ data, columns, rowKey, onOptionChanged }) => {
   data = sortData(columns, data);
   return (

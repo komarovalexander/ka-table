@@ -40,7 +40,9 @@
   },
   "devDependencies": {
     "gulp": "^4.0.2",
+    "gulp-typedoc": "^2.2.2",
     "tslint": "^5.20.0",
-    "tslint-react": "^4.1.0"
+    "tslint-react": "^4.1.0",
+    "typedoc": "^0.15.0"
   }
 }

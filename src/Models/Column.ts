@@ -1,7 +1,7 @@
 import { SortDirection } from '../Enums/SortDirection';
 
 /**
- * Column
+ * Describes the columns in table and their look and behaviour
  */
 export class Column {
   /*
