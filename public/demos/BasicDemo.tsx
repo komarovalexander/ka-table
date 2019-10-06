@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import Table, { ITableOption } from '../Components/Table/Table';
-import { OptionChangedParam } from '../Models/EventParams/OptionChangedParam';
+import Table, { ITableOption } from '../../Components/Table/Table';
+import { OptionChangedParam } from '../../Models/EventParams/OptionChangedParam';
 
 const dataArray: any[] = [];
 
