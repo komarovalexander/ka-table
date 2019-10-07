@@ -10,3 +10,8 @@ export const changeCellTextToCellEditorHandler = (item: Cell, editableCells: Cel
   var newEditableCells = getCopyOfArrayAndAddItem(item, editableCells);
   onOptionChanged({ editableCells: newEditableCells });
 }
+
+export const changeCellEditorToCellTextHandler = (item: Cell, editableCells: Cell[] = [], onOptionChanged: OptionChangedFunc) => {  
+  var newEditableCells = editableCells.filter(c => c.field !== item.field && c.rowKeyValue !== item.rowKeyValue);
+  onOptionChanged({ editableCells: newEditableCells });
+}

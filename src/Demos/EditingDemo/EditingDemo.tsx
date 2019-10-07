@@ -25,6 +25,7 @@ const tableOption: ITableOption = {
 const EditingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const onOptionChanged: OptionChangedFunc = (value) => {
+    console.log(value.editableCells);
     changeOptions({...option, ...value });
   };
   return (

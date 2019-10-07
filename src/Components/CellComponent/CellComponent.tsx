@@ -2,8 +2,9 @@ import * as React from 'react';
 
 import { Cell } from '../../Models/Cell';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
-import { changeCellTextToCellEditorHandler } from '../../Utils/CellUtils';
+import { changeCellEditorToCellTextHandler } from '../../Utils/CellUtils';
 import CellEditor from '../CellEditor/CellEditor';
+import CellText from '../CellText/CellText';
 
 interface ICellProps {
   field: string;
@@ -26,11 +27,11 @@ const CellComponent: React.FunctionComponent<ICellProps> = ({
   return (
     <td className='tc-cell'>
       { isEditableCell ?
-        <CellEditor value={value} />
+          <input autoFocus type='text' 
+            value={value} 
+            onBlur={() => changeCellEditorToCellTextHandler({ field, rowKeyValue }, editableCells, onOptionChanged)}/>
         : (
-          <div 
-            onDoubleClick={() => changeCellTextToCellEditorHandler({ field, rowKeyValue }, editableCells, onOptionChanged)}
-          >{value}</div>
+          <CellText {...{ field, rowData, rowKeyValue, editableCells, onOptionChanged }}/>
         )
       }
     </td>
