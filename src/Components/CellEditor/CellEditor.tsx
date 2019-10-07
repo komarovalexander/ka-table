@@ -1,12 +1,27 @@
 import * as React from 'react';
 
+import { Cell } from '../../Models/Cell';
+import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
+
 interface ICellEditorProps {
-  value: any;
+  field: string;
+  onOptionChanged?: OptionChangedFunc;
+  rowData: any;
+  rowKeyValue?: any;
+  editableCells?: Cell[];
+  changeToText: () => void;
 }
 
-const CellEditor: React.FunctionComponent<ICellEditorProps> = ({ value }) => {
+const CellEditor: React.FunctionComponent<ICellEditorProps> = ({
+  field,
+  rowData,
+  changeToText
+}) => {
+  const value = rowData[field];
   return (
-    <input type='text' value={value} />
+    <input autoFocus type='text'
+      value={value}
+      onBlur={changeToText}/>
   );
 };
 

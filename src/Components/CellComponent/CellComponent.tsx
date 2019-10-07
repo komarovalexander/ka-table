@@ -2,8 +2,10 @@ import * as React from 'react';
 
 import { Cell } from '../../Models/Cell';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
-import { changeCellEditorToCellTextHandler } from '../../Utils/CellUtils';
-import CellEditor from '../CellEditor/CellEditor';
+import {
+  changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler
+} from '../../Utils/CellUtils';
+import CellEditorState from '../CellEditorState/CellEditorState';
 import CellText from '../CellText/CellText';
 
 interface ICellProps {
@@ -18,20 +20,23 @@ interface ICellProps {
 const CellComponent: React.FunctionComponent<ICellProps> = ({
   field,
   rowKeyValue,
-  rowData, 
+  rowData,
   isEditableCell,
   editableCells,
   onOptionChanged,
 }) => {
-  const value = rowData[field];
   return (
     <td className='tc-cell'>
-      { isEditableCell ?
-          <input autoFocus type='text' 
-            value={value} 
-            onBlur={() => changeCellEditorToCellTextHandler({ field, rowKeyValue }, editableCells, onOptionChanged)}/>
+      { isEditableCell ? (
+          <CellEditorState
+            {...{ field, rowData }}
+            changeToText={() => changeCellEditorToCellTextHandler({ field, rowKeyValue }, editableCells, onOptionChanged)}
+          />
+        )
         : (
-          <CellText {...{ field, rowData, rowKeyValue, editableCells, onOptionChanged }}/>
+          <CellText {...{ field, rowData }}
+            changeToEditor={() => changeCellTextToCellEditorHandler({ field, rowKeyValue }, editableCells, onOptionChanged)}
+          />
         )
       }
     </td>
