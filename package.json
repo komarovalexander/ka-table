@@ -21,6 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
@@ -57,5 +58,11 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": "npm run lint"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/Components/*.{ts,tsx}",
+      "src/Utils/*.ts"
+    ]
   }
 }

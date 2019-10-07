@@ -6,7 +6,7 @@ import CellEditorState, { ICellEditorStateProps } from './CellEditorState';
 const props: ICellEditorStateProps = {
   field: 'column',
   onChangeToText: () => {},
-  onValueChange: () => {},
+  onRowDataChanged: () => {},
   rowData: { column : 1 },
 };
 

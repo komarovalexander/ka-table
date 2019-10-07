@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { KeyboardEnum } from '../../Enums/KeyboardEnum';
 import { RowDataChangedFunc } from '../../Types/RowDataChangedFunc';
+import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import CellEditor from '../CellEditor/CellEditor';
 
 export interface ICellEditorStateProps {
@@ -29,20 +29,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorStateProps> = ({
   }, [field, onChangeToText, onRowDataChanged, rowData, value]);
 
   useEffect(() => {
-    const handleKeyboard = (event: KeyboardEvent) => {
-      if (event.keyCode === KeyboardEnum.Esc) {
-        onChangeToText();
-      }
-
-      if (event.keyCode === KeyboardEnum.Enter) {
-        onChangeToTextHandler();
-      }
-    };
-    window.addEventListener('keyup', handleKeyboard);
-
-    return () => {
-      window.removeEventListener('keyup', handleKeyboard);
-    };
+    return addEscEnterKeyEffect(onChangeToText, onChangeToTextHandler);
   }, [onChangeToText, onChangeToTextHandler]);
   return (
     <CellEditor

@@ -8,10 +8,11 @@ const props: ICellProps = {
   field: 'column',
   isEditableCell: false,
   onOptionChanged: () => {},
+  onRowDataChanged: () => {},
   rowData: {
     column: 1,
   },
-  rowKeyValue: 1,
+  rowKey: '1',
 };
 
 it('renders without crashing', () => {
