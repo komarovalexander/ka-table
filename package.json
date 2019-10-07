@@ -24,7 +24,7 @@
     "eject": "react-scripts eject",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
-    "precommit": "lint-staged"
+    "lint:staged": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -50,10 +50,13 @@
     "tslint-react": "^4.1.0",
     "typedoc": "^0.15.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "npm run lint",
-      "git add"
-    ]
+    "*.{ts,tsx}": "npm run lint"
   }
 }
