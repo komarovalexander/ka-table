@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
+import { KeyboardEnum } from '../../Enums/KeyboardEnum';
 import { RowDataChangedFunc } from '../../Types/RowDataChangedFunc';
 import CellEditor from '../CellEditor/CellEditor';
 
@@ -20,13 +21,35 @@ const CellEditorState: React.FunctionComponent<ICellEditorStateProps> = ({
   const onValueStateChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const rowValue = { ...rowData, ...{ [field]: event.currentTarget.value} };
     changeValue(rowValue);
-    onRowDataChanged(rowValue);
   };
+
+  const onChangeToTextHandler = useCallback(() => {
+    onRowDataChanged({ ...rowData, ...{ [field]: value[field] } });
+    onChangeToText();
+  }, [field, onChangeToText, onRowDataChanged, rowData, value]);
+
+  useEffect(() => {
+    const handleKeyboart = (event: KeyboardEvent) => {
+      if (event.keyCode === KeyboardEnum.Esc) {
+        onChangeToText();
+      }
+
+      if (event.keyCode === KeyboardEnum.Enter) {
+        onChangeToTextHandler();
+      }
+    };
+    window.addEventListener('keyup', handleKeyboart);
+
+    return () => {
+      window.removeEventListener('keyup', handleKeyboart);
+    };
+  }, [onChangeToText, onChangeToTextHandler]);
   return (
     <CellEditor
-      {...{ field, rowData: value }}
+      field={field}
+      rowData={value}
       onValueChange={onValueStateChange}
-      onChangeToText={onChangeToText}/>
+      onChangeToText={onChangeToTextHandler}/>
   );
 };
 

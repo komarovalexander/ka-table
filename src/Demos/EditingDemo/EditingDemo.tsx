@@ -12,7 +12,6 @@ for (let index = 0; index < 10; index++) {
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'id', title: 'Id' },
     { field: 'column', title: 'Column 1' },
     { field: 'column2', title: 'Column 2' },
   ],
