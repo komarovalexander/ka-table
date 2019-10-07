@@ -15,11 +15,11 @@ interface ICellEditorProps {
 const CellEditor: React.FunctionComponent<ICellEditorProps> = ({
   field,
   rowData,
-  changeToText
+  changeToText,
 }) => {
   const value = rowData[field];
   return (
-    <input autoFocus type='text'
+    <input autoFocus={true} type='text'
       value={value}
       onBlur={changeToText}/>
   );

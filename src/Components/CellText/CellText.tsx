@@ -9,12 +9,13 @@ interface ICellTextProps {
 const CellText: React.FunctionComponent<ICellTextProps> = ({
   field,
   rowData,
-  changeToEditor
+  changeToEditor,
 }) => {
   const value = rowData[field];
-  return (<div
-    onClick={changeToEditor}
-  >{value}</div>
+  return (
+    <div
+      onClick={changeToEditor}
+    >{value}</div>
   );
 };
 
