@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Table, { ITableOption } from '../../Components/Table/Table';
+import { SortDirection } from '../../Enums/SortDirection';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 
 const dataArray: any[] = [];
@@ -12,7 +13,7 @@ for (let index = 0; index < 10; index++) {
 const tableOption: ITableOption = {
   columns: [
     { field: 'id', title: 'Id' },
-    { field: 'column', title: 'Column 1' },
+    { field: 'column', title: 'Column 1', sortDirection: SortDirection.Descend },
     { field: 'column2', title: 'Column 2' },
   ],
   rowKey: 'id',

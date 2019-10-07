@@ -29,7 +29,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorStateProps> = ({
   }, [field, onChangeToText, onRowDataChanged, rowData, value]);
 
   useEffect(() => {
-    const handleKeyboart = (event: KeyboardEvent) => {
+    const handleKeyboard = (event: KeyboardEvent) => {
       if (event.keyCode === KeyboardEnum.Esc) {
         onChangeToText();
       }
@@ -38,10 +38,10 @@ const CellEditorState: React.FunctionComponent<ICellEditorStateProps> = ({
         onChangeToTextHandler();
       }
     };
-    window.addEventListener('keyup', handleKeyboart);
+    window.addEventListener('keyup', handleKeyboard);
 
     return () => {
-      window.removeEventListener('keyup', handleKeyboart);
+      window.removeEventListener('keyup', handleKeyboard);
     };
   }, [onChangeToText, onChangeToTextHandler]);
   return (

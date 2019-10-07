@@ -56,7 +56,7 @@ const Table: React.FunctionComponent<IAllProps> = ({
           <HeadRow columns={columns} onOptionChanged={onOptionChanged} />
         </thead>
         <tbody>
-          {data.map((d, index) => {
+          {data.map((d) => {
             const rowKeyValue = d[rowKey];
             return (
               <Row
