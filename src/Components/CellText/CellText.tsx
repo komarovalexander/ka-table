@@ -1,20 +1,20 @@
 import * as React from 'react';
 
 export interface ICellTextProps {
-  changeToEditor: () => void;
   field: string;
+  onChangeToEditor: () => void;
   rowData: any;
 }
 
 const CellText: React.FunctionComponent<ICellTextProps> = ({
   field,
   rowData,
-  changeToEditor,
+  onChangeToEditor,
 }) => {
   const value = rowData[field];
   return (
     <div
-      onClick={changeToEditor}
+      onClick={onChangeToEditor}
     >{value}</div>
   );
 };

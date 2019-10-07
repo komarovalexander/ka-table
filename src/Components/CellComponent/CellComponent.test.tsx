@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CellComponent from './CellComponent';
+import CellComponent, { ICellProps } from './CellComponent';
 
-const props = {
+const props: ICellProps = {
+  editableCells: [],
   field: 'column',
-  rowData: { column : 1 },
-  rowEditableCells: [],
+  isEditableCell: false,
+  onOptionChanged: () => {},
+  rowData: {
+    column: 1,
+  },
   rowKeyValue: 1,
 };
 

@@ -8,7 +8,7 @@ import {
 import CellEditorState from '../CellEditorState/CellEditorState';
 import CellText from '../CellText/CellText';
 
-interface ICellProps {
+export interface ICellProps {
   field: string;
   onOptionChanged: OptionChangedFunc;
   rowData: any;
@@ -30,14 +30,14 @@ const CellComponent: React.FunctionComponent<ICellProps> = ({
       { isEditableCell ? (
           <CellEditorState
             {...{ field, rowData }}
-            changeToText={
+            onChangeToText={
               () => changeCellEditorToCellTextHandler({ field, rowKeyValue }, editableCells, onOptionChanged)
             }
           />
         )
         : (
           <CellText {...{ field, rowData }}
-            changeToEditor={
+            onChangeToEditor={
               () => changeCellTextToCellEditorHandler({ field, rowKeyValue }, editableCells, onOptionChanged)
             }
           />

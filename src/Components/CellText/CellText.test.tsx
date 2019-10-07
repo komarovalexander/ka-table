@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom';
 import CellText, { ICellTextProps } from './CellText';
 
 const props: ICellTextProps = {
-  changeToEditor: () => {},
   field: 'column',
+  onChangeToEditor: () => {},
   rowData: { column : 1 },
 };
 
 it('renders without crashing', () => {
-  const element = document.createElement('tr');
+  const element = document.createElement('td');
   ReactDOM.render(<CellText {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });
