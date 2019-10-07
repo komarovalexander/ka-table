@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { EditingMode } from '../../Enums/EditingMode';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
@@ -13,6 +14,7 @@ export interface IRowProps {
   rowKeyValue: any;
   rowData: any;
   editableCells: Cell[];
+  editingMode: EditingMode;
 }
 
 const Row: React.FunctionComponent<IRowProps> = ({
@@ -21,6 +23,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
   rowKeyValue,
   editableCells,
   onOptionChanged,
+  editingMode,
 }) => {
   const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
   return (
@@ -31,7 +34,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
           rowData={rowData}
           field={column.field}
           rowKeyValue={rowKeyValue}
-          isEditableCell={isEditableCell(column.field, rowEditableCells)}
+          isEditableCell={isEditableCell(editingMode, column.field, rowEditableCells)}
           editableCells={editableCells}
           onOptionChanged={onOptionChanged}
         />

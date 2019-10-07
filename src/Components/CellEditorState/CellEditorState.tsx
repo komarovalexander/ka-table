@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import CellEditor from '../CellEditor/CellEditor';
 
-interface ICellEditorStateProps {
+export interface ICellEditorStateProps {
+  changeToText: () => void;
   field: string;
   rowData: any;
-  changeToText: () => void;
 }
 
 const CellEditorState: React.FunctionComponent<ICellEditorStateProps> = ({

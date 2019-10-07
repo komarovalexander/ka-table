@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-interface ICellTextProps {
+export interface ICellTextProps {
+  changeToEditor: () => void;
   field: string;
   rowData: any;
-  changeToEditor: () => void;
 }
 
 const CellText: React.FunctionComponent<ICellTextProps> = ({

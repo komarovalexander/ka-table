@@ -1,9 +1,13 @@
+import { EditingMode } from '../Enums/EditingMode';
 import { Cell } from '../Models/Cell';
 import { OptionChangedFunc } from '../Types/OptionChangedFunc';
 import { getCopyOfArrayAndAddItem } from './ArrayUtils';
 
-export const isEditableCell = (field: string, rowEditableCells?: Cell[]): boolean => {
-  return rowEditableCells ? !!rowEditableCells.find((c) => c.field === field) : false;
+export const isEditableCell = (editingMode: EditingMode, field: string, rowEditableCells?: Cell[]): boolean => {
+  if (editingMode === EditingMode.Cell) {
+    return rowEditableCells ? !!rowEditableCells.find((c) => c.field === field) : false;
+  }
+  return false;
 };
 
 export const changeCellTextToCellEditorHandler = (

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import Table, { ITableOption } from '../../Components/Table/Table';
+import { EditingMode } from '../../Enums/EditingMode';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 
 const dataArray: any[] = [];
@@ -19,6 +20,7 @@ const tableOption: ITableOption = {
     field: 'id',
     rowKeyValue: 2,
   }],
+  editingMode: EditingMode.Cell,
   rowKey: 'id',
 };
 

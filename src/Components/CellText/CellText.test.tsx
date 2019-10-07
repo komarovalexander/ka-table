@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CellText from './CellText';
+import CellText, { ICellTextProps } from './CellText';
 
-const props = {
+const props: ICellTextProps = {
+  changeToEditor: () => {},
   field: 'column',
   rowData: { column : 1 },
-  rowEditableCells: [],
-  rowKeyValue: 1,
 };
 
 it('renders without crashing', () => {

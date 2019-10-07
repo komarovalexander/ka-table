@@ -2,6 +2,7 @@ import './Table.scss';
 
 import * as React from 'react';
 
+import { EditingMode } from '../../Enums/EditingMode';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
@@ -13,14 +14,14 @@ import Row from '../Row/Row';
  * Sets the options of the data grid which are related to its looks
  */
 export interface ITableOption {
-  /**
-   * Array of column's settings
-   */
+  /** Column's settings */
   columns: Column[];
   /** Specifies the column unique field which will be used as a key */
   rowKey: string;
   /** Specifies the array of cells which are being edited */
   editableCells?: Cell[];
+  /** Sets the editing mode */
+  editingMode?: EditingMode;
 }
 
 interface ITableEvents {
@@ -34,7 +35,14 @@ interface IAllProps extends ITableEvents, ITableOption {
 }
 
 /** The Table Component */
-const Table: React.FunctionComponent<IAllProps> = ({ data, columns, rowKey, onOptionChanged, editableCells }) => {
+const Table: React.FunctionComponent<IAllProps> = ({
+  data,
+  columns,
+  rowKey,
+  onOptionChanged,
+  editableCells,
+  editingMode = EditingMode.None,
+}) => {
   data = sortData(columns, data);
   return (
     <div className='tc'>
@@ -53,6 +61,7 @@ const Table: React.FunctionComponent<IAllProps> = ({ data, columns, rowKey, onOp
                 rowKeyValue={rowKeyValue}
                 onOptionChanged={onOptionChanged}
                 editableCells={editableCells || []}
+                editingMode={editingMode}
               />
             );
           })}

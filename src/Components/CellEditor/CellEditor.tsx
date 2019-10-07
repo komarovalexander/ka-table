@@ -1,15 +1,9 @@
 import * as React from 'react';
 
-import { Cell } from '../../Models/Cell';
-import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
-
-interface ICellEditorProps {
-  field: string;
-  onOptionChanged?: OptionChangedFunc;
-  rowData: any;
-  rowKeyValue?: any;
-  editableCells?: Cell[];
+export interface ICellEditorProps {
   changeToText: () => void;
+  field: string;
+  rowData: any;
 }
 
 const CellEditor: React.FunctionComponent<ICellEditorProps> = ({
