@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 
-import { ValueChangeFunc } from '../../Types/ValueChangeFunction';
+import { RowDataChangedFunc } from '../../Types/RowDataChangedFunc';
 import CellEditor from '../CellEditor/CellEditor';
 
 export interface ICellEditorStateProps {
   field: string;
-  rowData: any;
   onChangeToText: () => void;
-  onValueChange?: ValueChangeFunc;
+  onRowDataChanged: RowDataChangedFunc;
+  rowData: any;
 }
 
 const CellEditorState: React.FunctionComponent<ICellEditorStateProps> = ({
   field,
   rowData,
   onChangeToText,
+  onRowDataChanged,
 }) => {
   const [value, changeValue] = useState(rowData);
   const onValueStateChange = (event: React.FormEvent<HTMLInputElement>): void => {
-    changeValue({ ...rowData, ...{ [field]: event.currentTarget.value} });
+    const rowValue = { ...rowData, ...{ [field]: event.currentTarget.value} };
+    changeValue(rowValue);
+    onRowDataChanged(rowValue);
   };
   return (
     <CellEditor

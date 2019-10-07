@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArrayUtils getCopyOfArrayAndReplaceItem 1`] = `
+Array [
+  Object {
+    "column1": 1,
+    "column2": 31,
+  },
+  Object {
+    "column1": 2,
+    "column2": 32,
+  },
+  Object {
+    "column1": 3,
+    "column2": 333,
+  },
+  Object {
+    "column1": 4,
+    "column2": 34,
+  },
+]
+`;

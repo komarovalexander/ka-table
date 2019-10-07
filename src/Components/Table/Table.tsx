@@ -5,7 +5,9 @@ import * as React from 'react';
 import { EditingMode } from '../../Enums/EditingMode';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
+import { DataChangedFunc } from '../../Types/DataChangedFunc';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
+import { getCopyOfArrayAndReplaceItem } from '../../Utils/ArrayUtils';
 import { sortData } from '../../Utils/SortUtils';
 import HeadRow from '../HeadRow/HeadRow';
 import Row from '../Row/Row';
@@ -27,6 +29,8 @@ export interface ITableOption {
 interface ITableEvents {
   /** Called each time ITableOption changed */
   onOptionChanged: OptionChangedFunc;
+  /** Called each time Data is changed */
+  onDataChanged?: DataChangedFunc;
 }
 
 interface IAllProps extends ITableEvents, ITableOption {
@@ -36,12 +40,13 @@ interface IAllProps extends ITableEvents, ITableOption {
 
 /** The Table Component */
 const Table: React.FunctionComponent<IAllProps> = ({
-  data,
   columns,
-  rowKey,
-  onOptionChanged,
+  data,
   editableCells,
   editingMode = EditingMode.None,
+  onDataChanged = () => {},
+  onOptionChanged,
+  rowKey,
 }) => {
   data = sortData(columns, data);
   return (
@@ -51,17 +56,21 @@ const Table: React.FunctionComponent<IAllProps> = ({
           <HeadRow columns={columns} onOptionChanged={onOptionChanged} />
         </thead>
         <tbody>
-          {data.map((d) => {
+          {data.map((d, index) => {
             const rowKeyValue = d[rowKey];
             return (
               <Row
                 key={rowKeyValue}
                 columns={columns}
                 rowData={d}
-                rowKeyValue={rowKeyValue}
+                rowKey={rowKey}
                 onOptionChanged={onOptionChanged}
                 editableCells={editableCells || []}
                 editingMode={editingMode}
+                onRowDataChanged={(rowData: any) => {
+                  const newData = getCopyOfArrayAndReplaceItem(rowData, rowKey, data);
+                  onDataChanged(newData);
+                }}
               />
             );
           })}

@@ -1,4 +1,4 @@
-import { getCopyOfArrayAndAddItem } from './ArrayUtils';
+import { getCopyOfArrayAndAddItem, getCopyOfArrayAndReplaceItem } from './ArrayUtils';
 
 describe('ArrayUtils', () => {
   it('getCopyOfArrayAndAddItem add item to array', () => {
@@ -12,5 +12,18 @@ describe('ArrayUtils', () => {
   it('getCopyOfArrayAndAddItem add item to empty array', () => {
     const result = getCopyOfArrayAndAddItem(1, undefined);
     expect(result).toStrictEqual([1]);
+  });
+
+  it('getCopyOfArrayAndReplaceItem', () => {
+    const array = [
+      { column1: 1,  column2: 31 },
+      { column1: 2,  column2: 32 },
+      { column1: 3,  column2: 33 },
+      { column1: 4,  column2: 34 },
+    ];
+    const result = getCopyOfArrayAndReplaceItem({ column1: 3,  column2: 333 }, 'column1', array);
+
+    expect(result).not.toEqual(array);
+    expect(result).toMatchSnapshot();
   });
 });
