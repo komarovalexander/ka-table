@@ -41,7 +41,7 @@ const CellComponent: React.FunctionComponent<ICellProps> = ({
                 editableCells,
                 onOptionChanged)
             }
-            onRowDataChanged={onRowDataChanged}
+            onValueChange={onRowDataChanged}
           />
         )
         : (

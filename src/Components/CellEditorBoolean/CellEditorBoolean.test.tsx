@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import { DataType } from '../../Enums/DataType';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
-import CellEditorState from './CellEditorState';
+import CellEditorString from './CellEditorBoolean';
 
 const props: ICellEditorProps = {
   column: {
@@ -12,12 +12,12 @@ const props: ICellEditorProps = {
     title: 'Field',
   },
   onChangeToText: () => {},
-  onRowDataChanged: () => {},
+  onValueChange: () => {},
   rowData: { column : 1 },
 };
 
 it('renders without crashing', () => {
   const element = document.createElement('td');
-  ReactDOM.render(<CellEditorState {...props} />, element);
+  ReactDOM.render(<CellEditorString {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });

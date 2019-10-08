@@ -1,34 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Column } from '../../Models/Column';
-import { RowDataChangedFunc } from '../../Types/RowDataChangedFunc';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
-import CellEditor from '../CellEditor/CellEditor';
+import CellEditor, { ICellEditorProps } from '../CellEditor/CellEditor';
 
-export interface ICellEditorStateProps {
-  column: Column;
-  onChangeToText: () => void;
-  onRowDataChanged: RowDataChangedFunc;
-  rowData: any;
-}
-
-const CellEditorState: React.FunctionComponent<ICellEditorStateProps> = ({
+const CellEditorState: React.FunctionComponent<ICellEditorProps> = ({
   column,
   rowData,
   onChangeToText,
-  onRowDataChanged,
+  onValueChange,
 }) => {
   const field = column.field;
   const [value, changeValue] = useState(rowData);
   const onValueStateChange = (event: React.FormEvent<HTMLInputElement>): void => {
-    const rowValue = { ...rowData, ...{ [field]: event.currentTarget.value} };
+    const newValue = event.currentTarget.type === 'checkbox' ? event.currentTarget.checked : event.currentTarget.value;
+    const rowValue = { ...rowData, ...{ [field]: newValue } };
     changeValue(rowValue);
   };
 
   const onChangeToTextHandler = useCallback(() => {
-    onRowDataChanged({ ...rowData, ...{ [field]: value[field] } });
+    onValueChange({ ...rowData, ...{ [field]: value[field] } });
     onChangeToText();
-  }, [field, onChangeToText, onRowDataChanged, rowData, value]);
+  }, [field, onChangeToText, onValueChange, rowData, value]);
 
   useEffect(() => {
     return addEscEnterKeyEffect(onChangeToText, onChangeToTextHandler);

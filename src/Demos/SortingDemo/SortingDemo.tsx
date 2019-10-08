@@ -6,17 +6,20 @@ import { SortDirection } from '../../Enums/SortDirection';
 import { SortingMode } from '../../Enums/SortingMode';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 
-const dataArray: any[] = [];
-
-for (let index = 0; index < 10; index++) {
-  dataArray.push({ column: index + '1', column2: index + '2', id: index });
-}
+const dataArray: any[] = [
+  { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
+  { id: 2, name: 'Billi Bob', score: 55, passed: false },
+  { id: 3, name: 'Tom Williams', score: 45, passed: false },
+  { id: 4, name: 'Kurt Cobain', score: 75, passed: true },
+  { id: 5, name: 'Marshall Bruce', score: 77, passed: true },
+  { id: 6, name: 'Sunny Fox', score: 33, passed: false },
+];
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'id', title: 'Id', dataType: DataType.Number },
-    { field: 'column', title: 'Column 1', dataType: DataType.Number, sortDirection: SortDirection.Descend },
-    { field: 'column2', title: 'Column 2', dataType: DataType.Number },
+    { field: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend },
+    { field: 'score', title: 'Score', dataType: DataType.Number },
+    { field: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
   rowKey: 'id',
   sortingMode: SortingMode.Single,

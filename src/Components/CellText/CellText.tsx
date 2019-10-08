@@ -3,6 +3,7 @@ import './CellText.scss';
 import * as React from 'react';
 
 import { Column } from '../../Models/Column';
+import { isEmpty } from '../../Utils/CommonUtils';
 
 export interface ICellTextProps {
   column: Column;
@@ -19,7 +20,7 @@ const CellText: React.FunctionComponent<ICellTextProps> = ({
   return (
     <div className='tc-cell-text'
       onClick={onChangeToEditor}
-    >{value ? value : <span>&nbsp;</span>}</div>
+    >{!isEmpty(value) ? value.toString() : <span>&nbsp;</span>}</div>
   );
 };
 
