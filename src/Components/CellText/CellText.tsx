@@ -1,21 +1,25 @@
+import './CellText.scss';
+
 import * as React from 'react';
 
+import { Column } from '../../Models/Column';
+
 export interface ICellTextProps {
-  field: string;
+  column: Column;
   onChangeToEditor: () => void;
   rowData: any;
 }
 
 const CellText: React.FunctionComponent<ICellTextProps> = ({
-  field,
+  column,
   rowData,
   onChangeToEditor,
 }) => {
-  const value = rowData[field];
+  const value = rowData[column.field];
   return (
-    <div
+    <div className='tc-cell-text'
       onClick={onChangeToEditor}
-    >{value}</div>
+    >{value ? value : <span>&nbsp;</span>}</div>
   );
 };
 

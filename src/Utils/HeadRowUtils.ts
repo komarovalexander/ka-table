@@ -10,8 +10,7 @@ export const sortUtilsClickHandler = (
 ) => {
   const index = columns.findIndex((c) => c === column);
   const newColumns = [...columns];
-  const sortDirection = column.sortDirection === SortDirection.Ascend
-  ? SortDirection.Descend : SortDirection.Ascend;
+  const sortDirection = getNextSortDirection(column.sortDirection);
 
   newColumns.forEach((newColumn, newColumnIndex) => {
     if (newColumn.sortDirection) {
@@ -23,4 +22,15 @@ export const sortUtilsClickHandler = (
   newColumns[index] = {...column};
   newColumns[index].sortDirection = sortDirection;
   onOptionChanged({ columns: newColumns });
+};
+
+const getNextSortDirection = (previousSortdirection?: SortDirection) => {
+  let nextSortDirection;
+  if (previousSortdirection) {
+    nextSortDirection = previousSortdirection === SortDirection.Ascend
+      ? SortDirection.Descend : SortDirection.Ascend;
+  } else {
+    nextSortDirection = DefaultOptions.columnSortDirection;
+  }
+  return nextSortDirection;
 };

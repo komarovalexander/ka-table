@@ -13,7 +13,7 @@ import HeadRow from '../HeadRow/HeadRow';
 import Row from '../Row/Row';
 
 /**
- * Sets the options of the data grid which are related to its looks
+ * Sets the options of the table which are related to its looks
  */
 export interface ITableOption {
   /** Column's settings */

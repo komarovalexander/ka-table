@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CellEditor, { ICellEditorProps } from './CellEditor';
+import { ICellEditorProps } from '../CellEditor/CellEditor';
+import CellEditorString from './CellEditorString';
 
 const props: ICellEditorProps = {
   column: {
@@ -10,11 +11,11 @@ const props: ICellEditorProps = {
   },
   onChangeToText: () => {},
   onValueChange: () => {},
-  rowData: [{ column: 1 }],
+  rowData: { column : 1 },
 };
 
 it('renders without crashing', () => {
   const element = document.createElement('td');
-  ReactDOM.render(<CellEditor {...props} />, element);
+  ReactDOM.render(<CellEditorString {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });

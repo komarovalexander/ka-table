@@ -1,22 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { Column } from '../../Models/Column';
 import { RowDataChangedFunc } from '../../Types/RowDataChangedFunc';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import CellEditor from '../CellEditor/CellEditor';
 
 export interface ICellEditorStateProps {
-  field: string;
+  column: Column;
   onChangeToText: () => void;
   onRowDataChanged: RowDataChangedFunc;
   rowData: any;
 }
 
 const CellEditorState: React.FunctionComponent<ICellEditorStateProps> = ({
-  field,
+  column,
   rowData,
   onChangeToText,
   onRowDataChanged,
 }) => {
+  const field = column.field;
   const [value, changeValue] = useState(rowData);
   const onValueStateChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const rowValue = { ...rowData, ...{ [field]: event.currentTarget.value} };
@@ -33,7 +35,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorStateProps> = ({
   }, [onChangeToText, onChangeToTextHandler]);
   return (
     <CellEditor
-      field={field}
+      column={column}
       rowData={value}
       onValueChange={onValueStateChange}
       onChangeToText={onChangeToTextHandler}/>

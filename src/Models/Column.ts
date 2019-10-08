@@ -1,3 +1,4 @@
+import { DataType } from '../Enums/DataType';
 import { SortDirection } from '../Enums/SortDirection';
 
 /**
@@ -13,6 +14,11 @@ export class Column {
   * Specifies the text of the header
   */
   public title!: string;
+
+  /*
+  * Specifies the data type of the column
+  */
+  public dataType!: DataType;
 
   /*
   * Sort rows by column. Available values: 'ascend' | 'descend'

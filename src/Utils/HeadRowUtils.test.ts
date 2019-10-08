@@ -1,11 +1,12 @@
+import { DataType } from '../Enums/DataType';
 import { SortDirection } from '../Enums/SortDirection';
 import { Column } from '../Models/Column';
 import { sortUtilsClickHandler } from './HeadRowUtils';
 
 const columns: Column[] = [
-  { field: 'id', title: 'Id', sortDirection: SortDirection.Descend },
-  { field: 'column', title: 'Column 1', sortDirection: SortDirection.Ascend },
-  { field: 'column2', title: 'Column 2' },
+  { field: 'id', title: 'Id', dataType: DataType.String, sortDirection: SortDirection.Descend },
+  { field: 'column', title: 'Column 1', dataType: DataType.String, sortDirection: SortDirection.Ascend },
+  { field: 'column2', dataType: DataType.String, title: 'Column 2' },
 ];
 
 describe('sortUtilsClickHandler', () => {

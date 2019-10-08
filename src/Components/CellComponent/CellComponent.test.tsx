@@ -4,8 +4,11 @@ import ReactDOM from 'react-dom';
 import CellComponent, { ICellProps } from './CellComponent';
 
 const props: ICellProps = {
+  column: {
+    field: 'columnField',
+    title: 'Field',
+  },
   editableCells: [],
-  field: 'column',
   isEditableCell: false,
   onOptionChanged: () => {},
   onRowDataChanged: () => {},

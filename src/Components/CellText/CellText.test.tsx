@@ -4,7 +4,10 @@ import ReactDOM from 'react-dom';
 import CellText, { ICellTextProps } from './CellText';
 
 const props: ICellTextProps = {
-  field: 'column',
+  column: {
+    field: 'columnField',
+    title: 'Field',
+  },
   onChangeToEditor: () => {},
   rowData: { column : 1 },
 };

@@ -18,7 +18,6 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({ columns, onOptionChan
           key={column.field}
           text={column.title}
           sortClick={
-            // tslint:disable-next-line:jsx-no-lambda
             () => {
               sortUtilsClickHandler(columns, column, onOptionChanged);
             }

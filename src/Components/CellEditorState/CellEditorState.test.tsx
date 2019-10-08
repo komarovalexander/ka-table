@@ -4,7 +4,9 @@ import ReactDOM from 'react-dom';
 import CellEditorState, { ICellEditorStateProps } from './CellEditorState';
 
 const props: ICellEditorStateProps = {
-  field: 'column',
+  column: {
+    field: 'coumnField',
+  },
   onChangeToText: () => {},
   onRowDataChanged: () => {},
   rowData: { column : 1 },

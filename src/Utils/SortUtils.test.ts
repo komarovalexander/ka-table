@@ -1,3 +1,4 @@
+import { DataType } from '../Enums/DataType';
 import { SortDirection } from '../Enums/SortDirection';
 import { Column } from '../Models/Column';
 import { sortData } from './SortUtils';
@@ -11,8 +12,8 @@ const data: any[] = [
 ];
 
 const columns: Column[] = [
-  { field: 'id', title: 'Id' },
-  { field: 'column', title: 'Column 1', sortDirection: SortDirection.Descend },
+  { field: 'id', title: 'Id', dataType: DataType.String },
+  { field: 'column', title: 'Column 1', dataType: DataType.String, sortDirection: SortDirection.Descend },
 ];
 
 describe('sortData', () => {

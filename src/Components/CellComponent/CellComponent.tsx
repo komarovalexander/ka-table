@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Cell } from '../../Models/Cell';
+import { Column } from '../../Models/Column';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 import { RowDataChangedFunc } from '../../Types/RowDataChangedFunc';
 import {
@@ -11,7 +12,7 @@ import CellText from '../CellText/CellText';
 
 export interface ICellProps {
   editableCells: Cell[];
-  field: string;
+  column: Column;
   isEditableCell: boolean;
   onOptionChanged: OptionChangedFunc;
   onRowDataChanged: RowDataChangedFunc;
@@ -21,7 +22,7 @@ export interface ICellProps {
 
 const CellComponent: React.FunctionComponent<ICellProps> = ({
   editableCells,
-  field,
+  column,
   isEditableCell,
   onOptionChanged,
   onRowDataChanged,
@@ -33,17 +34,23 @@ const CellComponent: React.FunctionComponent<ICellProps> = ({
     <td className='tc-cell'>
       { isEditableCell ? (
           <CellEditorState
-            {...{ field, rowData }}
+            {...{ column, rowData }}
             onChangeToText={
-              () => changeCellEditorToCellTextHandler({ field, rowKeyValue }, editableCells, onOptionChanged)
+              () => changeCellEditorToCellTextHandler(
+                { field: column.field, rowKeyValue },
+                editableCells,
+                onOptionChanged)
             }
             onRowDataChanged={onRowDataChanged}
           />
         )
         : (
-          <CellText {...{ field, rowData }}
+          <CellText {...{ column, rowData }}
             onChangeToEditor={
-              () => changeCellTextToCellEditorHandler({ field, rowKeyValue }, editableCells, onOptionChanged)
+              () => changeCellTextToCellEditorHandler(
+                { field: column.field, rowKeyValue },
+                editableCells,
+                onOptionChanged)
             }
           />
         )
