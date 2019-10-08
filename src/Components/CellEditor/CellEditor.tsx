@@ -4,6 +4,7 @@ import { DataType } from '../../Enums/DataType';
 import { Column } from '../../Models/Column';
 import { ValueChangeFunc } from '../../Types/ValueChangeFunction';
 import CellEditorBoolean from '../CellEditorBoolean/CellEditorBoolean';
+import CellEditorDate from '../CellEditorDate/CellEditorDate';
 import CellEditorNumber from '../CellEditorNumber/CellEditorNumber';
 import CellEditorString from '../CellEditorString/CellEditorString';
 
@@ -18,6 +19,7 @@ const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
   const { dataType } = props.column;
   switch (dataType) {
     case DataType.Boolean: return <CellEditorBoolean {...props}/>;
+    case DataType.Date: return <CellEditorDate {...props}/>;
     case DataType.Number: return <CellEditorNumber {...props}/>;
     default: return <CellEditorString {...props}/>;
   }

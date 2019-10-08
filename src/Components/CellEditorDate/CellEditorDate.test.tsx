@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import { DataType } from '../../Enums/DataType';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
-import CellEditorNumber from './CellEditorNumber';
+import CellEditorDate from './CellEditorDate';
 
 const props: ICellEditorProps = {
   column: {
@@ -18,6 +18,6 @@ const props: ICellEditorProps = {
 
 it('renders without crashing', () => {
   const element = document.createElement('td');
-  ReactDOM.render(<CellEditorNumber {...props} />, element);
+  ReactDOM.render(<CellEditorDate {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });

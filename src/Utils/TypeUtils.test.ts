@@ -6,6 +6,7 @@ import { convertToColumnTypes } from './TypeUtils';
 
 [{
   cases: [
+    ['empty', undefined, undefined],
     ['fromBoolean', true, true],
     ['fromDate', Date.UTC(2019, 10, 8), true],
     ['fromNumber', 12, true],
@@ -15,6 +16,7 @@ import { convertToColumnTypes } from './TypeUtils';
   dataType: DataType.Boolean,
 }, {
   cases: [
+    ['empty', undefined, undefined],
     ['fromBoolean', true, 1],
     ['fromDate', Date.UTC(2019, 10, 8), 1573171200000],
     ['fromNumber', 12, 12],
@@ -25,6 +27,7 @@ import { convertToColumnTypes } from './TypeUtils';
   dataType: DataType.Number,
 }, {
   cases: [
+    ['empty', undefined, undefined],
     ['fromBoolean', true, true],
     ['fromDate', Date.UTC(2019, 10, 8),  Date.UTC(2019, 10, 8)],
     ['fromNumber', 12, 12],
@@ -34,6 +37,7 @@ import { convertToColumnTypes } from './TypeUtils';
   dataType: DataType.Object,
 }, {
   cases: [
+    ['empty', undefined, undefined],
     ['fromBoolean', true, 'true'],
     ['fromDate', Date.UTC(2019, 10, 8), '1573171200000'],
     ['fromNumber', 12, '12'],
