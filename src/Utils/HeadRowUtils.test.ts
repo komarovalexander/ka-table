@@ -4,7 +4,7 @@ import { sortUtilsClickHandler } from './HeadRowUtils';
 
 const columns: Column[] = [
   { field: 'id', title: 'Id', sortDirection: SortDirection.Descend },
-  { field: 'column', title: 'Column 1' },
+  { field: 'column', title: 'Column 1', sortDirection: SortDirection.Ascend },
   { field: 'column2', title: 'Column 2' },
 ];
 
@@ -16,9 +16,21 @@ describe('sortUtilsClickHandler', () => {
     });
   });
 
-  it('should change sortDirection', () => {
+  it('should change sortDirection to Ascend', () => {
     sortUtilsClickHandler(columns, columns[0], (value) => {
       expect(value.columns[0].sortDirection).toBe(SortDirection.Ascend);
+    });
+  });
+
+  it('should change sortDirection to Descend', () => {
+    sortUtilsClickHandler(columns, columns[1], (value) => {
+      expect(value.columns[1].sortDirection).toBe(SortDirection.Descend);
+    });
+  });
+
+  it('should change default sortDirection to Ascend', () => {
+    sortUtilsClickHandler(columns, columns[2], (value) => {
+      expect(value.columns[2].sortDirection).toBe(SortDirection.Ascend);
     });
   });
 });

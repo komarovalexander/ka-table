@@ -42,7 +42,7 @@ interface IAllProps extends ITableEvents, ITableOption {
 const Table: React.FunctionComponent<IAllProps> = ({
   columns,
   data,
-  editableCells,
+  editableCells = [],
   editingMode = EditingMode.None,
   onDataChanged = () => {},
   onOptionChanged,
@@ -65,7 +65,7 @@ const Table: React.FunctionComponent<IAllProps> = ({
                 rowData={d}
                 rowKey={rowKey}
                 onOptionChanged={onOptionChanged}
-                editableCells={editableCells || []}
+                editableCells={editableCells}
                 editingMode={editingMode}
                 onRowDataChanged={(rowData: any) => {
                   const newData = getCopyOfArrayAndReplaceItem(rowData, rowKey, data);

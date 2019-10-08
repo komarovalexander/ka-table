@@ -2,16 +2,17 @@ import { SortDirection } from '../Enums/SortDirection';
 import { Column } from '../Models/Column';
 import { sortData } from './SortUtils';
 
-const data: any[] = [];
-
-for (let index = 0; index < 3; index++) {
-  data.push({ column: index + '1', column2: index + '2', id: index });
-}
+const data: any[] = [
+  { column: 1, id: 1 },
+  { column: 3, id: 2 },
+  { column: 2, id: 3 },
+  { column: 3, id: 4 },
+  { column: 3, id: 5 },
+];
 
 const columns: Column[] = [
-  { field: 'id', title: 'Id', sortDirection: SortDirection.Descend },
-  { field: 'column', title: 'Column 1' },
-  { field: 'column2', title: 'Column 2' },
+  { field: 'id', title: 'Id' },
+  { field: 'column', title: 'Column 1', sortDirection: SortDirection.Descend },
 ];
 
 describe('sortData', () => {
@@ -20,8 +21,16 @@ describe('sortData', () => {
     expect(newData).not.toBe(data);
   });
 
-  it('should be sorted', () => {
+  it('should be sorted by Descend', () => {
     const newData = sortData(columns, data);
+    expect(newData).toMatchSnapshot();
+  });
+
+  it('should be sorted by Ascend', () => {
+    const columns2 = [
+      { field: 'column', title: 'Column 1', sortDirection: SortDirection.Ascend },
+    ];
+    const newData = sortData(columns2, data);
     expect(newData).toMatchSnapshot();
   });
 });

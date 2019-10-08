@@ -14,9 +14,13 @@ export const addEscEnterKeyEffect = (escKeyHandler: () => void, enterKeyHandler:
       enterKeyHandler();
     }
   };
-  window.addEventListener('keyup', handleKeyboard);
+  return getEventListenerEffect('keyup', handleKeyboard);
+};
+
+export const getEventListenerEffect = (eventName: string, handler: any) => {
+  window.addEventListener(eventName, handler);
 
   return () => {
-    window.removeEventListener('keyup', handleKeyboard);
+    window.removeEventListener(eventName, handler);
   };
 };

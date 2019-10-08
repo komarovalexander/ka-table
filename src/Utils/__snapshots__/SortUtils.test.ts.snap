@@ -1,21 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sortData should be sorted 1`] = `
+exports[`sortData should be sorted by Ascend 1`] = `
 Array [
   Object {
-    "column": "21",
-    "column2": "22",
-    "id": 2,
-  },
-  Object {
-    "column": "11",
-    "column2": "12",
+    "column": 1,
     "id": 1,
   },
   Object {
-    "column": "01",
-    "column2": "02",
-    "id": 0,
+    "column": 2,
+    "id": 3,
+  },
+  Object {
+    "column": 3,
+    "id": 2,
+  },
+  Object {
+    "column": 3,
+    "id": 4,
+  },
+  Object {
+    "column": 3,
+    "id": 5,
+  },
+]
+`;
+
+exports[`sortData should be sorted by Descend 1`] = `
+Array [
+  Object {
+    "column": 3,
+    "id": 2,
+  },
+  Object {
+    "column": 3,
+    "id": 4,
+  },
+  Object {
+    "column": 3,
+    "id": 5,
+  },
+  Object {
+    "column": 2,
+    "id": 3,
+  },
+  Object {
+    "column": 1,
+    "id": 1,
   },
 ]
 `;

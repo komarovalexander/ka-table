@@ -10,13 +10,9 @@ export const sortUtilsClickHandler = (
 ) => {
   const index = columns.findIndex((c) => c === column);
   const newColumns = [...columns];
-  let sortDirection;
-  if (column.sortDirection) {
-    sortDirection = column.sortDirection === SortDirection.Ascend
-      ? SortDirection.Descend : SortDirection.Ascend;
-  } else {
-    sortDirection = DefaultOptions.columnSortDirection;
-  }
+  const sortDirection = column.sortDirection === SortDirection.Ascend
+  ? SortDirection.Descend : SortDirection.Ascend;
+
   newColumns.forEach((newColumn, newColumnIndex) => {
     if (newColumn.sortDirection) {
       newColumns[newColumnIndex] = {...newColumn};
