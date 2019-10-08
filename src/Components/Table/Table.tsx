@@ -10,6 +10,7 @@ import { DataChangedFunc } from '../../Types/DataChangedFunc';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 import { getCopyOfArrayAndReplaceItem } from '../../Utils/ArrayUtils';
 import { sortData } from '../../Utils/SortUtils';
+import { convertToColumnTypes } from '../../Utils/TypeUtils';
 import HeadRow from '../HeadRow/HeadRow';
 import Row from '../Row/Row';
 
@@ -52,6 +53,7 @@ const Table: React.FunctionComponent<IAllProps> = ({
   rowKey,
   sortingMode = SortingMode.None,
 }) => {
+  data = convertToColumnTypes(data, columns);
   if (sortingMode === SortingMode.Single) {
     data = sortData(columns, data);
   }
