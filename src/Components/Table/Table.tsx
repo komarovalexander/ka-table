@@ -3,6 +3,7 @@ import './Table.scss';
 import * as React from 'react';
 
 import { EditingMode } from '../../Enums/EditingMode';
+import { SortingMode } from '../../Enums/SortingMode';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { DataChangedFunc } from '../../Types/DataChangedFunc';
@@ -24,6 +25,8 @@ export interface ITableOption {
   editableCells?: Cell[];
   /** Sets the editing mode */
   editingMode?: EditingMode;
+  /** Sets the sorting mode */
+  sortingMode?: SortingMode;
 }
 
 interface ITableEvents {
@@ -47,8 +50,11 @@ const Table: React.FunctionComponent<IAllProps> = ({
   onDataChanged = () => {},
   onOptionChanged,
   rowKey,
+  sortingMode = SortingMode.None,
 }) => {
-  data = sortData(columns, data);
+  if (sortingMode === SortingMode.Single) {
+    data = sortData(columns, data);
+  }
   return (
     <div className='tc'>
       <table>
