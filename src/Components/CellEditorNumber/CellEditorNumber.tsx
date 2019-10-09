@@ -13,7 +13,7 @@ const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
     <input autoFocus={true}
       type='number'
       value={value}
-      onChange={onValueChange}
+      onChange={(event) => onValueChange(event.currentTarget.value)}
       onBlur={onChangeToText}/>
   );
 };

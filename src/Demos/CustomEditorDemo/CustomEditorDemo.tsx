@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Table, { ITableOption } from '../../Components/Table/Table';
 import { DataType } from '../../Enums/DataType';
 import { EditingMode } from '../../Enums/EditingMode';
+import { EditorFuncPropsWithChildren } from '../../Types/EditorFuncPropsWithChildren';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 
 const dataArray: any[] = [
@@ -16,7 +17,19 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'name', title: 'Name', dataType: DataType.String },
+    {
+      dataType: DataType.String,
+      editor: (props: EditorFuncPropsWithChildren) => {
+        return (
+          <div>I'm A custom: {props.column.field}
+            <button onClick={props.onChangeToText}>Close</button>
+            <button onClick={() => props.onValueChange('Anton')}>Edit</button>
+          </div>
+        );
+      },
+      field: 'name',
+      title: 'Name',
+    },
     { field: 'score', title: 'Score', dataType: DataType.Number },
     { field: 'passed', title: 'Passed', dataType: DataType.Boolean },
     { field: 'nextTry', title: 'Next Try', dataType: DataType.Date },
@@ -29,7 +42,7 @@ const tableOption: ITableOption = {
   rowKey: 'id',
 };
 
-const EditingDemo: React.FC = () => {
+const CustomEditorDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const onOptionChanged: OptionChangedFunc = (value) => {
     changeOptions({...option, ...value });
@@ -49,4 +62,4 @@ const EditingDemo: React.FC = () => {
   );
 };
 
-export default EditingDemo;
+export default CustomEditorDemo;

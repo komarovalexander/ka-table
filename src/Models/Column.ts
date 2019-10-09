@@ -1,5 +1,6 @@
 import { DataType } from '../Enums/DataType';
 import { SortDirection } from '../Enums/SortDirection';
+import { EditorFunc } from '../Types/EditorFunc';
 
 /**
  * Describes the columns in table and their look and behaviour
@@ -24,4 +25,9 @@ export class Column {
   * Sort rows by column. Available values: 'ascend' | 'descend'
   */
   public sortDirection?: SortDirection;
+
+  /*
+  * Sets the custom editor
+  */
+  public editor?: EditorFunc;
 }

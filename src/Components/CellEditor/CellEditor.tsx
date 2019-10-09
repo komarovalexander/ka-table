@@ -16,7 +16,8 @@ export interface ICellEditorProps {
 }
 
 const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
-  const { dataType } = props.column;
+  const { dataType, editor } = props.column;
+  if (editor) { return editor(props); }
   switch (dataType) {
     case DataType.Boolean: return <CellEditorBoolean {...props}/>;
     case DataType.Date: return <CellEditorDate {...props}/>;

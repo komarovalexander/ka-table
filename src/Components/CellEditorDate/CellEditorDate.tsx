@@ -13,7 +13,7 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
     <input autoFocus={true}
       type='date'
       value={value.toISOString().split('T')[0]}
-      onChange={onValueChange}
+      onChange={(event) => onValueChange(new Date(event.currentTarget.value))}
       onBlur={onChangeToText}/>
   );
 };

@@ -8,6 +8,10 @@ Array [
         "field": "column",
         "rowKeyValue": 1,
       },
+      Object {
+        "field": "column",
+        "rowKeyValue": 2,
+      },
     ],
   },
 ]

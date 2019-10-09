@@ -14,7 +14,7 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
       type='checkbox'
       checked={value}
       value={value}
-      onChange={onValueChange}
+      onChange={(event) => onValueChange(event.currentTarget.checked)}
       onBlur={onChangeToText}/>
   );
 };
