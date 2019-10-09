@@ -1,5 +1,3 @@
-import { strictEqual } from 'assert';
-
 import { DataType } from '../Enums/DataType';
 import { Column } from '../Models/Column';
 import { convertToColumnTypes } from './TypeUtils';
@@ -12,6 +10,7 @@ import { convertToColumnTypes } from './TypeUtils';
     ['fromNumber', 12, true],
     ['fromObject', {}, true],
     ['fromString', '12', true],
+    ['fromString false', 'false', false],
   ],
   dataType: DataType.Boolean,
 }, {
