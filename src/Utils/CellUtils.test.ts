@@ -1,7 +1,8 @@
 import { EditingMode } from '../Enums/EditingMode';
 import { Cell } from '../Models/Cell';
 import {
-  changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler, isEditableCell,
+  changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler, getValueFromInputEvent,
+  isEditableCell,
 } from './CellUtils';
 
 describe('CellUtils', () => {
@@ -61,6 +62,44 @@ describe('CellUtils', () => {
       changeCellEditorToCellTextHandler(item, editableCells, onOptionChangedMock);
       expect(onOptionChangedMock.mock.calls.length).toBe(1);
       expect(onOptionChangedMock.mock.calls[0]).toMatchSnapshot();
+    });
+  });
+
+  describe('getValueFromInputEvent', () => {
+    it('for string', () => {
+      const event: any = {
+        currentTarget: {
+          type: 'text',
+          value: 'strValue',
+        },
+      };
+      const result = getValueFromInputEvent(event, null);
+      expect(result).toBe('strValue');
+    });
+
+    it('for boolean', () => {
+      const event: any = {
+        currentTarget: {
+          checked: true,
+          type: 'checkbox',
+        },
+      };
+      const result = getValueFromInputEvent(event, null);
+      expect(result).toBe(true);
+    });
+
+    it('for date', () => {
+      const date = new Date();
+      const event: any = {
+        currentTarget: {
+          type: 'date',
+          value: date.toISOString().split('T')[0],
+        },
+      };
+      const result: any = getValueFromInputEvent(event);
+      expect(result.getFullYear()).toEqual(date.getFullYear());
+      expect(result.getMonth()).toEqual(date.getMonth());
+      expect(result.getDay()).toEqual(date.getDay());
     });
   });
 

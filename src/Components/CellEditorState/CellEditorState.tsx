@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { getValueFromInputEvent } from '../../Utils/CellUtils';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import CellEditor, { ICellEditorProps } from '../CellEditor/CellEditor';
 
@@ -12,7 +13,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = ({
   const field = column.field;
   const [value, changeValue] = useState(rowData);
   const onValueStateChange = (event: React.FormEvent<HTMLInputElement>): void => {
-    const newValue = event.currentTarget.type === 'checkbox' ? event.currentTarget.checked : event.currentTarget.value;
+    const newValue = getValueFromInputEvent(event);
     const rowValue = { ...rowData, ...{ [field]: newValue } };
     changeValue(rowValue);
   };

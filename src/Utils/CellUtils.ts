@@ -21,3 +21,8 @@ export const changeCellEditorToCellTextHandler = (
     const newEditableCells = editableCells.filter((c) => c.field !== item.field && c.rowKeyValue !== item.rowKeyValue);
     onOptionChanged({ editableCells: newEditableCells });
 };
+
+export const getValueFromInputEvent = (event: React.FormEvent<HTMLInputElement>) => {
+  return event.currentTarget.type === 'checkbox' ? event.currentTarget.checked :
+  (event.currentTarget.type === 'date' ? new Date(event.currentTarget.value) : event.currentTarget.value);
+};

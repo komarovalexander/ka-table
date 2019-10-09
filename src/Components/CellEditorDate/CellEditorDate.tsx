@@ -11,8 +11,8 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   const value = rowData[column.field];
   return (
     <input autoFocus={true}
-      type='datetime-local'
-      value={value}
+      type='date'
+      value={value.toISOString().split('T')[0]}
       onChange={onValueChange}
       onBlur={onChangeToText}/>
   );

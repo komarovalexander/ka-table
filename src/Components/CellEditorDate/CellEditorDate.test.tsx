@@ -13,7 +13,7 @@ const props: ICellEditorProps = {
   },
   onChangeToText: () => {},
   onValueChange: () => {},
-  rowData: { column : 1 },
+  rowData: { columnField : new Date() },
 };
 
 it('renders without crashing', () => {
