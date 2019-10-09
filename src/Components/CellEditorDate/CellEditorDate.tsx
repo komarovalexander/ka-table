@@ -5,7 +5,7 @@ import { ICellEditorProps } from '../CellEditor/CellEditor';
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   column,
   rowData,
-  onChangeToText,
+  close,
   onValueChange,
 }) => {
   const fieldValue = rowData[column.field];
@@ -19,7 +19,7 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
         const targetValue: string = event.currentTarget.value;
         onValueChange(targetValue ? new Date(targetValue) : null);
       }}
-      onBlur={onChangeToText}/>
+      onBlur={close}/>
   );
 };
 

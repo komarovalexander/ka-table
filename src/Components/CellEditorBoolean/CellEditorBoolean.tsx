@@ -5,7 +5,7 @@ import { ICellEditorProps } from '../CellEditor/CellEditor';
 const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
   column,
   rowData,
-  onChangeToText,
+  close,
   onValueChange,
 }) => {
   const value = rowData[column.field];
@@ -15,7 +15,7 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
       checked={value}
       value={value}
       onChange={(event) => onValueChange(event.currentTarget.checked)}
-      onBlur={onChangeToText}/>
+      onBlur={close}/>
   );
 };
 

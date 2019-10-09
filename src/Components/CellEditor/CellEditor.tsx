@@ -7,7 +7,7 @@ import CellEditorState from '../CellEditorState/CellEditorState';
 export interface ICellEditorProps {
   column: Column;
   rowData: any;
-  onChangeToText: () => void;
+  close: () => void;
   onValueChange: ValueChangeFunc;
 }
 

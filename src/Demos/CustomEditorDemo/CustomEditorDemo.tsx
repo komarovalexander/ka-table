@@ -16,38 +16,26 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2019, 10, 9, 10) },
 ];
 
-const CustomEditor: React.FC<EditorFuncPropsWithChildren> = (props: EditorFuncPropsWithChildren) => {
-  const {
-    column : {
-      field,
-    },
-    rowData,
-    onChangeToText,
-    onValueChange,
-  } = props;
-  const [value, setValue] = useState(rowData[props.column.field]);
+const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
+  column: { field }, rowData, close, onValueChange,
+}) => {
+  const [value, setValue] = useState(rowData[field]);
   return (
     <div>
     <input type='text' value={value} onChange={(event) => setValue(event.currentTarget.value)}/>
     <button onClick={() => {
       onValueChange({ ...rowData, ...{ [field]: value } });
-      onChangeToText();
+      close();
     }}>Save</button>
-    <button onClick={onChangeToText}>Cancel</button>
+    <button onClick={close}>Cancel</button>
     </div>
   );
 };
 
-const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = (props: EditorFuncPropsWithChildren) => {
-  const {
-    column : {
-      field,
-    },
-    rowData,
-    onChangeToText,
-    onValueChange,
-  } = props;
-  const [value, setValue] = useState(rowData[props.column.field]);
+const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
+  column: { field }, rowData, close,  onValueChange,
+}) => {
+  const [value, setValue] = useState(rowData[field]);
   return (
     <div>
       <select
@@ -55,7 +43,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = (props: Editor
         defaultValue={value}
         onBlur={() => {
           onValueChange({ ...rowData, ...{ [field]: value } });
-          onChangeToText();
+          close();
         }}
         onChange={(event) => {
           setValue(toBoolean(event.currentTarget.value));
@@ -69,25 +57,11 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = (props: Editor
 
 const tableOption: ITableOption = {
   columns: [
-    {
-      dataType: DataType.String,
-      editor: CustomEditor,
-      field: 'name',
-      title: 'Name',
-    },
+    { dataType: DataType.String, field: 'name', title: 'Name', editor: CustomEditor },
     { field: 'score', title: 'Score', dataType: DataType.Number },
-    {
-      dataType: DataType.Boolean,
-      editor: CustomLookupEditor,
-      field: 'passed',
-      title: 'Passed',
-    },
+    { dataType: DataType.Boolean, field: 'passed', title: 'Passed', editor: CustomLookupEditor },
     { field: 'nextTry', title: 'Next Try', dataType: DataType.Date },
   ],
-  editableCells: [{
-    field: 'name',
-    rowKeyValue: 2,
-  }],
   editingMode: EditingMode.Cell,
   rowKey: 'id',
 };

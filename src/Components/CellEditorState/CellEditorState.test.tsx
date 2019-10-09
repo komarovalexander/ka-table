@@ -6,12 +6,12 @@ import { ICellEditorProps } from '../CellEditor/CellEditor';
 import CellEditorState from './CellEditorState';
 
 const props: ICellEditorProps = {
+  close: () => {},
   column: {
     dataType: DataType.String,
     field: 'columnField',
     title: 'Field',
   },
-  onChangeToText: () => {},
   onValueChange: () => {},
   rowData: { column : 1 },
 };

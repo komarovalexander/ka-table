@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { DataType } from '../../Enums/DataType';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 import CellEditorString from './CellEditorString';
 
 const props: ICellEditorProps = {
+  close: () => {},
   column: {
+    dataType: DataType.String,
     field: 'columnField',
     title: 'Field',
   },
-  onChangeToText: () => {},
   onValueChange: () => {},
   rowData: { column : 1 },
 };

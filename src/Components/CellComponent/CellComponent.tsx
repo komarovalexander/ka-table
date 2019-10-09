@@ -35,7 +35,7 @@ const CellComponent: React.FunctionComponent<ICellProps> = ({
       { isEditableCell ? (
           <CellEditor
             {...{ column, rowData }}
-            onChangeToText={
+            close={
               () => changeCellEditorToCellTextHandler(
                 { field: column.field, rowKeyValue },
                 editableCells,

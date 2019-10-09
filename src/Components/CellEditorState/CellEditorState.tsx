@@ -10,7 +10,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
       field,
     },
     rowData,
-    onChangeToText,
+    close,
     onValueChange,
   } = props;
   const [value, changeValue] = useState(rowData);
@@ -19,17 +19,17 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     changeValue(rowValue);
   };
 
-  const onChangeToTextHandler = useCallback(() => {
+  const closeHandler = useCallback(() => {
     onValueChange({ ...rowData, ...{ [field]: value[field] } });
-    onChangeToText();
-  }, [field, onChangeToText, onValueChange, rowData, value]);
+    close();
+  }, [field, close, onValueChange, rowData, value]);
 
   useEffect(() => {
-    return addEscEnterKeyEffect(onChangeToText, onChangeToTextHandler);
-  }, [onChangeToText, onChangeToTextHandler]);
+    return addEscEnterKeyEffect(close, closeHandler);
+  }, [close, closeHandler]);
 
   const stateProps = { ...props, ...{
-    onChangeToText: onChangeToTextHandler,
+    close: closeHandler,
     onValueChange: onValueStateChange,
     rowData : value,
   }};
