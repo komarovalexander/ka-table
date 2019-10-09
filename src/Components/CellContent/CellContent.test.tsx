@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { DataType } from '../../Enums/DataType';
-import { ICellContentProps } from '../CellContent/CellContent';
-import CellText from './CellText';
+import CellContent, { ICellContentProps } from './CellContent';
 
 const props: ICellContentProps = {
   column: {
@@ -17,6 +16,6 @@ const props: ICellContentProps = {
 
 it('renders without crashing', () => {
   const element = document.createElement('td');
-  ReactDOM.render(<CellText {...props} />, element);
+  ReactDOM.render(<CellContent {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });

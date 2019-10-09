@@ -1,5 +1,6 @@
 import { DataType } from '../Enums/DataType';
 import { SortDirection } from '../Enums/SortDirection';
+import { CellFunc } from '../Types/CellFunc';
 import { EditorFunc } from '../Types/EditorFunc';
 
 /**
@@ -30,4 +31,9 @@ export class Column {
   * Sets the custom editor
   */
   public editor?: EditorFunc;
+
+  /*
+  * Sets the custom cell
+  */
+  public cell?: CellFunc;
 }

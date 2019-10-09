@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CellComponent, { ICellProps } from './CellComponent';
+import { DataType } from '../../Enums/DataType';
+import CellComponent, { ICellComponentProps } from './CellComponent';
 
-const props: ICellProps = {
+const props: ICellComponentProps = {
   column: {
+    dataType: DataType.String,
     field: 'columnField',
     title: 'Field',
   },

@@ -13,11 +13,7 @@ export interface ICellEditorProps {
 
 const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
   const { editor } = props.column;
-  if (editor) {
-    return editor(props);
-  } else {
-    return <CellEditorState {...props}/>;
-  }
+  return editor ? editor(props) :  <CellEditorState {...props}/>;
 };
 
 export default CellEditor;

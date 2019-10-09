@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
+import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
 import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
 import getDemoPage from './DemoPage';
 import EditingDemo from './EditingDemo/EditingDemo';
@@ -10,6 +11,7 @@ const demos = [
   SortingDemo,
   EditingDemo,
   CustomEditorDemo,
+  CustomCellDemo,
 ];
 
 const cases = demos.map((d: React.FC) => {
@@ -35,7 +37,7 @@ const Demos: React.FC = () => {
         }
         </ul>
         <hr />
-        <Route exact={true} path='/' component={CustomEditorDemo} />
+        <Route exact={true} path='/' component={CustomCellDemo} />
         {
           cases.map((c) => (
               <Route key={c.name} path={c.path} component={c.demoComponent} />

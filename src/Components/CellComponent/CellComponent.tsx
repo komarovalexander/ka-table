@@ -7,10 +7,10 @@ import { RowDataChangedFunc } from '../../Types/RowDataChangedFunc';
 import {
   changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler,
 } from '../../Utils/CellUtils';
+import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
-import CellText from '../CellText/CellText';
 
-export interface ICellProps {
+export interface ICellComponentProps {
   editableCells: Cell[];
   column: Column;
   isEditableCell: boolean;
@@ -20,7 +20,7 @@ export interface ICellProps {
   rowKey: any;
 }
 
-const CellComponent: React.FunctionComponent<ICellProps> = ({
+const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
   editableCells,
   column,
   isEditableCell,
@@ -45,8 +45,8 @@ const CellComponent: React.FunctionComponent<ICellProps> = ({
           />
         )
         : (
-          <CellText {...{ column, rowData }}
-            onChangeToEditor={
+          <CellContent {...{ column, rowData }}
+            openEditor={
               () => changeCellTextToCellEditorHandler(
                 { field: column.field, rowKeyValue },
                 editableCells,
