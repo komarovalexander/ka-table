@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Table, { ITableOption } from '../../Components/Table/Table';
 import { DataType } from '../../Enums/DataType';
 import { EditingMode } from '../../Enums/EditingMode';
-import { SortDirection } from '../../Enums/SortDirection';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 
 const dataArray: any[] = [
@@ -17,15 +16,11 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend },
+    { field: 'name', title: 'Name', dataType: DataType.String },
     { field: 'score', title: 'Score', dataType: DataType.Number },
     { field: 'passed', title: 'Passed', dataType: DataType.Boolean },
     { field: 'nextTry', title: 'Next Try', dataType: DataType.Date },
   ],
-  editableCells: [{
-    field: 'id',
-    rowKeyValue: 2,
-  }],
   editingMode: EditingMode.Cell,
   rowKey: 'id',
 };

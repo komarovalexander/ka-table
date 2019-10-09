@@ -54,14 +54,12 @@ const Table: React.FunctionComponent<IAllProps> = ({
   sortingMode = SortingMode.None,
 }) => {
   data = convertToColumnTypes(data, columns);
-  if (sortingMode === SortingMode.Single) {
-    data = sortData(columns, data);
-  }
+  data = sortData(columns, data);
   return (
     <div className='tc'>
       <table>
         <thead>
-          <HeadRow columns={columns} onOptionChanged={onOptionChanged} />
+          <HeadRow columns={columns} onOptionChanged={onOptionChanged} sortingMode={sortingMode}/>
         </thead>
         <tbody>
           {data.map((d) => {
