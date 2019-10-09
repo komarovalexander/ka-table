@@ -1,15 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
-import CellEditor, { ICellEditorProps } from '../CellEditor/CellEditor';
+import { ICellEditorProps } from '../CellEditor/CellEditor';
+import CellEditorDataType from '../CellEditorDataType/CellEditorDataType';
 
-const CellEditorState: React.FunctionComponent<ICellEditorProps> = ({
-  column,
-  rowData,
-  onChangeToText,
-  onValueChange,
-}) => {
-  const field = column.field;
+const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
+  const {
+    column: {
+      field,
+    },
+    rowData,
+    onChangeToText,
+    onValueChange,
+  } = props;
   const [value, changeValue] = useState(rowData);
   const onValueStateChange = (newValue: any): void => {
     const rowValue = { ...rowData, ...{ [field]: newValue } };
@@ -24,12 +27,15 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = ({
   useEffect(() => {
     return addEscEnterKeyEffect(onChangeToText, onChangeToTextHandler);
   }, [onChangeToText, onChangeToTextHandler]);
+
+  const stateProps = { ...props, ...{
+    onChangeToText: onChangeToTextHandler,
+    onValueChange: onValueStateChange,
+    rowData : value,
+  }};
+
   return (
-    <CellEditor
-      column={column}
-      rowData={value}
-      onValueChange={onValueStateChange}
-      onChangeToText={onChangeToTextHandler}/>
+    <CellEditorDataType {...stateProps} />
   );
 };
 

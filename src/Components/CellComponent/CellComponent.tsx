@@ -7,7 +7,7 @@ import { RowDataChangedFunc } from '../../Types/RowDataChangedFunc';
 import {
   changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler,
 } from '../../Utils/CellUtils';
-import CellEditorState from '../CellEditorState/CellEditorState';
+import CellEditor from '../CellEditor/CellEditor';
 import CellText from '../CellText/CellText';
 
 export interface ICellProps {
@@ -33,7 +33,7 @@ const CellComponent: React.FunctionComponent<ICellProps> = ({
   return (
     <td className='tc-cell'>
       { isEditableCell ? (
-          <CellEditorState
+          <CellEditor
             {...{ column, rowData }}
             onChangeToText={
               () => changeCellEditorToCellTextHandler(
