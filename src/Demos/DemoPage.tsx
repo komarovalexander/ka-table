@@ -3,10 +3,10 @@ import './DemoPage.scss';
 import React, { useEffect, useState } from 'react';
 import Highlight from 'react-highlight';
 
-import BootstrapCssClasses from '../Models/BootstrapCssClasses';
+import bootstrapCssClasses from '../Models/BootstrapCssClasses';
 import defaultOptions from '../Models/DefaultOptions';
 
-defaultOptions.css = BootstrapCssClasses;
+defaultOptions.css = bootstrapCssClasses;
 
 const getDemoPage = (WrappedComponent: React.FC) => {
   return () => {

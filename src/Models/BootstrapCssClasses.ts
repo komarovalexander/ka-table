@@ -1,11 +1,11 @@
 import { CssClasses } from './CssClasses';
 
-const BootstrapCssClasses = new CssClasses();
-BootstrapCssClasses.table = 'table table-striped';
-BootstrapCssClasses.thead = 'thead-dark';
-BootstrapCssClasses.checkbox = 'form-control';
-BootstrapCssClasses.dateInput = 'form-control';
-BootstrapCssClasses.numberInput = 'form-control';
-BootstrapCssClasses.textInput = 'form-control';
+const bootstrapCssClasses = new CssClasses();
+bootstrapCssClasses.table = 'table table-striped';
+bootstrapCssClasses.thead = 'thead-dark';
+bootstrapCssClasses.checkbox = 'form-control';
+bootstrapCssClasses.dateInput = 'form-control';
+bootstrapCssClasses.numberInput = 'form-control';
+bootstrapCssClasses.textInput = 'form-control';
 
-export default BootstrapCssClasses;
+export default bootstrapCssClasses;
