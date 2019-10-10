@@ -23,6 +23,7 @@ export interface ICellComponentProps {
 const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
   editableCells,
   column,
+  column: { textAlign },
   isEditableCell,
   onOptionChanged,
   onRowDataChanged,
@@ -31,7 +32,7 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
 }) => {
   const rowKeyValue = rowData[rowKey];
   return (
-    <td>
+    <td style={{textAlign}}>
       { isEditableCell ? (
           <CellEditor
             {...{ column, rowData }}

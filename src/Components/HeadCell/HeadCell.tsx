@@ -7,9 +7,9 @@ export interface IHeadCellProps {
   sortClick?: React.MouseEventHandler;
 }
 
-const HeadCell: React.FunctionComponent<IHeadCellProps> = ({ sortClick, column: { width, title } }) => {
+const HeadCell: React.FunctionComponent<IHeadCellProps> = ({ sortClick, column: { width, title, textAlign } }) => {
   return (
-    <th scope='col' style={{ width }}>
+    <th scope='col' style={{ width, textAlign }}>
       <div>{title}</div>
       {sortClick && <div onClick={sortClick}>Sort</div>}
     </th>

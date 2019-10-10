@@ -1,5 +1,6 @@
 import { DataType } from '../Enums/DataType';
 import { SortDirection } from '../Enums/SortDirection';
+import { TextAlign } from '../Enums/TextAlign';
 import { CellFunc } from '../Types/CellFunc';
 import { EditorFunc } from '../Types/EditorFunc';
 
@@ -41,4 +42,9 @@ export class Column {
   * Sets the width
   */
   public width?: number | string;
+
+  /*
+  * Sets column's text alignment
+  */
+  public textAlign?: TextAlign;
 }

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Table, { ITableOption } from '../../Components/Table/Table';
 import { DataType } from '../../Enums/DataType';
 import { EditingMode } from '../../Enums/EditingMode';
+import { TextAlign } from '../../Enums/TextAlign';
 import { CellFuncPropsWithChildren } from '../../Types/CellFuncPropsWithChildren';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 
@@ -27,10 +28,17 @@ const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { dataType: DataType.String, field: 'name', title: 'Name' },
-    { field: 'score', title: 'Score', dataType: DataType.Number },
-    { dataType: DataType.Boolean, field: 'passed', title: 'Results', cell: CustomCell },
-    { field: 'nextTry', title: 'Next Try', dataType: DataType.Date },
+    { dataType: DataType.String, field: 'name', title: 'Name', width: '30%' },
+    { field: 'score', title: 'Score', dataType: DataType.Number, width: '10%', textAlign: TextAlign.Right },
+    {
+      cell: CustomCell,
+      dataType: DataType.Boolean,
+      field: 'passed',
+      textAlign: TextAlign.Right,
+      title: 'Results',
+      width: '10%',
+    },
+    { field: 'nextTry', title: 'Next Try', dataType: DataType.Date, textAlign: TextAlign.Right  },
   ],
   editingMode: EditingMode.Cell,
   rowKey: 'id',

@@ -22,7 +22,11 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
   const [value, setValue] = useState(rowData[field]);
   return (
     <div>
-    <input type='text' value={value} onChange={(event) => setValue(event.currentTarget.value)}/>
+    <input
+      className='form-control'
+      type='text'
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}/>
     <button onClick={() => {
       onValueChange({ ...rowData, ...{ [field]: value } });
       close();
@@ -39,6 +43,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
   return (
     <div>
       <select
+        className='form-control'
         autoFocus={true}
         defaultValue={value}
         onBlur={() => {
@@ -57,9 +62,9 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { dataType: DataType.String, field: 'name', title: 'Name', editor: CustomEditor },
-    { field: 'score', title: 'Score', dataType: DataType.Number },
-    { dataType: DataType.Boolean, field: 'passed', title: 'Passed', editor: CustomLookupEditor },
+    { dataType: DataType.String, field: 'name', title: 'Name', editor: CustomEditor, width: '30%' },
+    { field: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
+    { dataType: DataType.Boolean, field: 'passed', title: 'Passed', editor: CustomLookupEditor, width: '10%' },
     { field: 'nextTry', title: 'Next Try', dataType: DataType.Date },
   ],
   editingMode: EditingMode.Cell,
