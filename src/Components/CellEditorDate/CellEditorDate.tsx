@@ -1,5 +1,6 @@
 import React from 'react';
 
+import defaultOptions from '../../Models/DefaultOptions';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
@@ -13,6 +14,7 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   return (
     <input
       autoFocus={true}
+      className={defaultOptions.css.dateInput}
       type='date'
       defaultValue={value}
       onChange={(event) => {

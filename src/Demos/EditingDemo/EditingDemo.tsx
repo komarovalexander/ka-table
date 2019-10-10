@@ -16,9 +16,9 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'name', title: 'Name', dataType: DataType.String },
-    { field: 'score', title: 'Score', dataType: DataType.Number },
-    { field: 'passed', title: 'Passed', dataType: DataType.Boolean },
+    { field: 'name', title: 'Name', dataType: DataType.String, width: '30%' },
+    { field: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
+    { field: 'passed', title: 'Passed', dataType: DataType.Boolean, width: '10%' },
     { field: 'nextTry', title: 'Next Try', dataType: DataType.Date },
   ],
   editableCells: [{

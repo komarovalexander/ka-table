@@ -1,14 +1,16 @@
 import * as React from 'react';
 
-interface IHeadCellProps {
-  text: string;
+import { Column } from '../../Models/Column';
+
+export interface IHeadCellProps {
+  column: Column;
   sortClick?: React.MouseEventHandler;
 }
 
-const HeadCell: React.FunctionComponent<IHeadCellProps> = ({ sortClick, text }) => {
+const HeadCell: React.FunctionComponent<IHeadCellProps> = ({ sortClick, column: { width, title } }) => {
   return (
-    <th>
-      <div>{text}</div>
+    <th scope='col' style={{ width }}>
+      <div>{title}</div>
       {sortClick && <div onClick={sortClick}>Sort</div>}
     </th>
   );

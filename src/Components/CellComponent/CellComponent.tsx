@@ -31,7 +31,7 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
 }) => {
   const rowKeyValue = rowData[rowKey];
   return (
-    <td className='tc-cell'>
+    <td>
       { isEditableCell ? (
           <CellEditor
             {...{ column, rowData }}

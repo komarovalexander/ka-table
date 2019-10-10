@@ -3,6 +3,11 @@ import './DemoPage.scss';
 import React, { useEffect, useState } from 'react';
 import Highlight from 'react-highlight';
 
+import BootstrapCssClasses from '../Models/BootstrapCssClasses';
+import defaultOptions from '../Models/DefaultOptions';
+
+defaultOptions.css = BootstrapCssClasses;
+
 const getDemoPage = (WrappedComponent: React.FC) => {
   return () => {
     const [text, changeText]: [string, any] = useState('');

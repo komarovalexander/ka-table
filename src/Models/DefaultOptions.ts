@@ -1,7 +1,14 @@
+
 import { DataType } from '../Enums/DataType';
 import { SortDirection } from '../Enums/SortDirection';
+import { CssClasses } from './CssClasses';
 
-export class DefaultOptions {
-  public static columnSortDirection: SortDirection = SortDirection.Ascend;
-  public static columnDataType = DataType.String;
+class DefaultOptions {
+  public columnDataType = DataType.String;
+  public columnSortDirection: SortDirection = SortDirection.Ascend;
+  public css: CssClasses = new CssClasses();
 }
+
+const defaultOptions = new DefaultOptions();
+
+export default defaultOptions;

@@ -36,4 +36,9 @@ export class Column {
   * Sets the custom cell
   */
   public cell?: CellFunc;
+
+  /*
+  * Sets the width
+  */
+  public width?: number | string;
 }

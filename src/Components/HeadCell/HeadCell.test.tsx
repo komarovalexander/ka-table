@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import HeaderCell from './HeadCell';
+import { Column } from '../../Models/Column';
+import HeaderCell, { IHeadCellProps } from './HeadCell';
 
-const props = {
-  text: 'testText',
+const props: IHeadCellProps = {
+  column: new Column(),
 };
 
 it('renders without crashing', () => {

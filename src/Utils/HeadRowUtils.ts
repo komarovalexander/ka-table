@@ -1,6 +1,6 @@
 import { SortDirection } from '../Enums/SortDirection';
 import { Column } from '../Models/Column';
-import { DefaultOptions } from '../Models/DefaultOptions';
+import defaultOptions from '../Models/DefaultOptions';
 import { OptionChangedFunc } from '../Types/OptionChangedFunc';
 
 export const sortUtilsClickHandler = (
@@ -30,7 +30,7 @@ const getNextSortDirection = (previousSortdirection?: SortDirection) => {
     nextSortDirection = previousSortdirection === SortDirection.Ascend
       ? SortDirection.Descend : SortDirection.Ascend;
   } else {
-    nextSortDirection = DefaultOptions.columnSortDirection;
+    nextSortDirection = defaultOptions.columnSortDirection;
   }
   return nextSortDirection;
 };

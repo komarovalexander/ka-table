@@ -6,6 +6,7 @@ import { EditingMode } from '../../Enums/EditingMode';
 import { SortingMode } from '../../Enums/SortingMode';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
+import defaultOptions from '../../Models/DefaultOptions';
 import { DataChangedFunc } from '../../Types/DataChangedFunc';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 import { getCopyOfArrayAndReplaceItem } from '../../Utils/ArrayUtils';
@@ -57,8 +58,8 @@ const Table: React.FunctionComponent<IAllProps> = ({
   data = sortData(columns, data);
   return (
     <div className='tc'>
-      <table>
-        <thead>
+      <table className={defaultOptions.css.table}>
+        <thead className={defaultOptions.css.thead}>
           <HeadRow columns={columns} onOptionChanged={onOptionChanged} sortingMode={sortingMode}/>
         </thead>
         <tbody>
