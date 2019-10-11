@@ -1,4 +1,6 @@
-import { getCopyOfArrayAndAddItem, getCopyOfArrayAndReplaceItem } from './ArrayUtils';
+import {
+  getCopyOfArrayAndAddItem, getCopyOfArrayAndDeleteItem, getCopyOfArrayAndInsertOrReplaceItem,
+} from './ArrayUtils';
 
 describe('ArrayUtils', () => {
   it('getCopyOfArrayAndAddItem add item to array', () => {
@@ -14,14 +16,39 @@ describe('ArrayUtils', () => {
     expect(result).toStrictEqual([1]);
   });
 
-  it('getCopyOfArrayAndReplaceItem', () => {
+  it('getCopyOfArrayAndInsertOrReplaceItem replace', () => {
     const array = [
       { column1: 1,  column2: 31 },
       { column1: 2,  column2: 32 },
       { column1: 3,  column2: 33 },
       { column1: 4,  column2: 34 },
     ];
-    const result = getCopyOfArrayAndReplaceItem({ column1: 3,  column2: 333 }, 'column1', array);
+    const result = getCopyOfArrayAndInsertOrReplaceItem({ column1: 3,  column2: 333 }, 'column1', array);
+
+    expect(result).not.toEqual(array);
+    expect(result).toMatchSnapshot();
+  });
+
+  it('getCopyOfArrayAndInsertOrReplaceItem insert', () => {
+    const array = [
+      { column1: 1,  column2: 31 },
+      { column1: 2,  column2: 32 },
+      { column1: 4,  column2: 34 },
+    ];
+    const result = getCopyOfArrayAndInsertOrReplaceItem({ column1: 3,  column2: 333 }, 'column1', array);
+
+    expect(result).not.toEqual(array);
+    expect(result).toMatchSnapshot();
+  });
+
+  it('getCopyOfArrayAndDeleteItem', () => {
+    const array = [
+      { column1: 1,  column2: 31 },
+      { column1: 2,  column2: 32 },
+      { column1: 3,  column2: 33 },
+      { column1: 4,  column2: 34 },
+    ];
+    const result = getCopyOfArrayAndDeleteItem({ column1: 3,  column2: 333 }, 'column1', array);
 
     expect(result).not.toEqual(array);
     expect(result).toMatchSnapshot();

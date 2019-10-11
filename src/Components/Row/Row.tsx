@@ -30,7 +30,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
 }) => {
   const rowEditableCells = getRowEditableCells(rowData[rowKey], editableCells);
   return (
-    <tr>
+    <tr className='tc-row'>
       {columns.map((column) => (
         <CellComponent
           key={column.field}

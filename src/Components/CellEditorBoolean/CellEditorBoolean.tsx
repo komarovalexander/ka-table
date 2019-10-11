@@ -14,7 +14,7 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
     <input autoFocus={true}
       className={defaultOptions.css.checkbox}
       type='checkbox'
-      checked={value}
+      defaultChecked={value}
       value={value}
       onChange={(event) => onValueChange(event.currentTarget.checked)}
       onBlur={close}/>

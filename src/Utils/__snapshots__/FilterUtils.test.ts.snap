@@ -1,6 +1,76 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FilterUtils getRowEditableCells should returnu required cells from table EditableCells 1`] = `
+exports[`FilterUtils filterCellValueChangeHandler add item 1`] = `
+Array [
+  Object {
+    "filterRow": Array [
+      Object {
+        "field": "name",
+        "operator": "=",
+        "value": "Billi Bob",
+      },
+      Object {
+        "field": "score",
+        "operator": "=",
+        "value": 45,
+      },
+      Object {
+        "field": "position",
+        "operator": "=",
+        "value": "Professor",
+      },
+    ],
+  },
+]
+`;
+
+exports[`FilterUtils filterCellValueChangeHandler delete item 1`] = `
+Array [
+  Object {
+    "filterRow": Array [
+      Object {
+        "field": "score",
+        "operator": "=",
+        "value": 45,
+      },
+    ],
+  },
+]
+`;
+
+exports[`FilterUtils filterCellValueChangeHandler repace item 1`] = `
+Array [
+  Object {
+    "filterRow": Array [
+      Object {
+        "field": "name",
+        "operator": "=",
+        "value": "Sasha",
+      },
+      Object {
+        "field": "score",
+        "operator": "=",
+        "value": 45,
+      },
+    ],
+  },
+]
+`;
+
+exports[`FilterUtils filterData one item 1`] = `
+Array [
+  Object {
+    "id": 2,
+    "name": "Billi Bob",
+    "passed": false,
+    "score": 55,
+  },
+]
+`;
+
+exports[`FilterUtils filterData two item 1`] = `Array []`;
+
+exports[`FilterUtils getRowEditableCells should return required cells from table EditableCells 1`] = `
 Array [
   Object {
     "field": "10",

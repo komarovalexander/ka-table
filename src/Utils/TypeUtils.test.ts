@@ -11,6 +11,7 @@ import { convertToColumnTypes } from './TypeUtils';
     ['fromObject', {}, true],
     ['fromString', '12', true],
     ['fromString false', 'false', false],
+    ['fromString true', 'true', true],
   ],
   dataType: DataType.Boolean,
 }, {

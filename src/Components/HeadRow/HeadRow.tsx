@@ -14,7 +14,7 @@ export interface IHeadRowProps {
 
 const HeadRow: React.FunctionComponent<IHeadRowProps> = ({ columns, onOptionChanged, sortingMode }) => {
   return (
-    <tr>
+    <tr className='tc-header-row'>
       {columns.map((column) => {
         const sortClick: any = sortingMode === SortingMode.Single && (() => {
           sortUtilsClickHandler(columns, column, onOptionChanged);
