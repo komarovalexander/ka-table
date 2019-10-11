@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Table, { ITableOption } from '../../Components/Table/Table';
 import { DataType } from '../../Enums/DataType';
 import { SortDirection } from '../../Enums/SortDirection';
-import { SortingMode } from '../../Enums/SortingMode';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 
 const dataArray: any[] = [
