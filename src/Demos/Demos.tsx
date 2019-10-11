@@ -6,6 +6,7 @@ import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
 import getDemoPage from './DemoPage';
 import EditingDemo from './EditingDemo/EditingDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
+import SearchDemo from './SearchDemo/SearchDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
 
 const demos = [
@@ -14,6 +15,7 @@ const demos = [
   CustomEditorDemo,
   CustomCellDemo,
   FilterRowDemo,
+  SearchDemo,
 ];
 
 const cases = demos.map((d: React.FC) => {
@@ -39,7 +41,7 @@ const Demos: React.FC = () => {
         }
         </ul>
         <hr />
-        <Route exact={true} path='/' component={FilterRowDemo} />
+        <Route exact={true} path='/' component={SearchDemo} />
         {
           cases.map((c) => (
               <Route key={c.name} path={c.path} component={c.demoComponent} />

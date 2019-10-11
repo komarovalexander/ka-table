@@ -47,4 +47,9 @@ export class Column {
   * Sets column's text alignment
   */
   public textAlign?: TextAlign;
+
+  /*
+  * Sets the searchHandler
+  */
+  public searcHandler?: (searchText?: string, rodData?: any, column?: Column) => boolean;
 }

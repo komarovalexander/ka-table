@@ -11,7 +11,7 @@ import { FilterRowItem } from '../../Models/FilterRowItem';
 import { DataChangedFunc } from '../../Types/DataChangedFunc';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../../Utils/ArrayUtils';
-import { filterData } from '../../Utils/FilterUtils';
+import { filterData, searchData } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
 import { convertToColumnTypes } from '../../Utils/TypeUtils';
 import FilterRow from '../FilterRow/FilterRow';
@@ -34,6 +34,8 @@ export interface ITableOption {
   rowKey: string;
   /** Sets the sorting mode */
   sortingMode?: SortingMode;
+  /** Sets the search by data columns */
+  search?: string;
 }
 
 interface ITableEvents {
@@ -54,12 +56,14 @@ const Table: React.FunctionComponent<IAllProps> = ({
   data,
   editableCells = [],
   editingMode = EditingMode.None,
+  filterRow,
   onDataChanged = () => {},
   onOptionChanged,
   rowKey,
+  search,
   sortingMode = SortingMode.None,
-  filterRow,
 }) => {
+  data = search ? searchData(columns, data, search) : data;
   data = convertToColumnTypes(data, columns);
   data = filterRow ? filterData(data, filterRow) : data;
   data = sortData(columns, data);
