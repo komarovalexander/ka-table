@@ -1,6 +1,7 @@
 import React from 'react';
 
 import defaultOptions from '../../Models/DefaultOptions';
+import { isEmpty } from '../../Utils/CommonUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
@@ -14,8 +15,8 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
     <input autoFocus={true}
       className={defaultOptions.css.checkbox}
       type='checkbox'
-      defaultChecked={value}
-      value={value}
+      ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}
+      checked={value || false}
       onChange={(event) => onValueChange(event.currentTarget.checked)}
       onBlur={close}/>
   );

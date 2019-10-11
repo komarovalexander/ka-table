@@ -16,7 +16,7 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
       autoFocus={true}
       className={defaultOptions.css.dateInput}
       type='date'
-      defaultValue={value}
+      value={value || ''}
       onChange={(event) => {
         const targetValue: string = event.currentTarget.value;
         onValueChange(targetValue ? new Date(targetValue) : null);

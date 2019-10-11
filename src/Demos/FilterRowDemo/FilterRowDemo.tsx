@@ -27,7 +27,6 @@ const tableOption: ITableOption = {
     value: 'Billi Bob',
   }],
   rowKey: 'id',
-  sortingMode: SortingMode.Single,
 };
 
 const FilterRowDemo: React.FC = () => {

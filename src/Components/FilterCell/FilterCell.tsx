@@ -25,6 +25,9 @@ const FilterCell: React.FunctionComponent<IFilterCellProps> = ({
         close={emptyFunc}
         onValueChange={onValueChange}
       />
+      <div className='tc-filter-row-clear-button' onClick={() => { onValueChange(null); }}>
+        Clear
+      </div>
     </td>
   );
 };

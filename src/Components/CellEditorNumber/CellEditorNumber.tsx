@@ -14,7 +14,7 @@ const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
     <input autoFocus={true}
       className={defaultOptions.css.numberInput}
       type='number'
-      defaultValue={value}
+      value={value || ''}
       onChange={(event) => {
         const newValue = event.currentTarget.value;
         onValueChange(Number(newValue) || null);
