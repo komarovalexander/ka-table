@@ -52,4 +52,9 @@ export class Column {
   * Sets the search
   */
   public search?: (searchText?: string, rodData?: any, column?: Column) => boolean;
+
+  /*
+  * Sets the validation
+  */
+  public validation?: (value: any, rowData: any) => string | void;
 }

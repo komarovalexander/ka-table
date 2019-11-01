@@ -9,6 +9,7 @@ import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
+import ValidationDemo from './ValidationDemo/ValidationDemo';
 
 const demos = [
   CustomCellDemo,
@@ -18,6 +19,7 @@ const demos = [
   FilterRowDemo,
   SearchDemo,
   SortingDemo,
+  ValidationDemo,
 ];
 
 const cases = demos.map((d: React.FC) => {
@@ -43,7 +45,7 @@ const Demos: React.FC = () => {
         }
         </ul>
         <hr />
-        <Route exact={true} path='/' component={FilterExtendedDemo} />
+        <Route exact={true} path='/' component={ValidationDemo} />
         {
           cases.map((c) => (
               <Route key={c.name} path={c.path} component={c.demoComponent} />

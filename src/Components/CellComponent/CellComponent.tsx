@@ -8,7 +8,7 @@ import {
   changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler,
 } from '../../Utils/CellUtils';
 import CellContent from '../CellContent/CellContent';
-import CellEditor from '../CellEditor/CellEditor';
+import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
 
 export interface ICellComponentProps {
   editableCells: Cell[];
@@ -34,7 +34,7 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
   return (
     <td style={{textAlign}}>
       { isEditableCell ? (
-          <CellEditor
+          <CellEditorValidation
             {...{ column, rowData }}
             close={
               () => changeCellEditorToCellTextHandler(
