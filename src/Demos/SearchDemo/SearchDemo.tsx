@@ -20,7 +20,7 @@ const tableOption: ITableOption = {
     {
       dataType: DataType.Boolean,
       field: 'passed',
-      searcHandler: (searchText, rowData) => {
+      search: (searchText, rowData) => {
         return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
       },
       title: 'Passed',

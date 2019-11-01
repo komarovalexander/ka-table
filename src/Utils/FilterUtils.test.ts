@@ -99,7 +99,7 @@ describe('FilterUtils', () => {
       {
         dataType: DataType.Boolean,
         field: 'passed',
-        searcHandler: (searchText?: string, rowData?: any) => {
+        search: (searchText?: string, rowData?: any) => {
           return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
         },
         title: 'Passed',

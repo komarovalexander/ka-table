@@ -12,7 +12,7 @@ export const getRowEditableCells = (rowKeyValue: any, editableCells?: Cell[]): C
 export const searchData = (columns: Column[], data: any[], searchText: string): any[] => {
   return columns.reduce((initialData: any[], c) => {
     const filterFunction = (item: any) => {
-      return c.searcHandler ? c.searcHandler(searchText, item, c) : initialData.indexOf(item) < 0
+      return c.search ? c.search(searchText, item, c) : initialData.indexOf(item) < 0
         && item[c.field].toString().toLowerCase().includes(searchText.toLowerCase());
     };
     return initialData.concat(data.filter(filterFunction));

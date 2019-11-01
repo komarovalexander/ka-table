@@ -49,7 +49,7 @@ export class Column {
   public textAlign?: TextAlign;
 
   /*
-  * Sets the searchHandler
+  * Sets the search
   */
-  public searcHandler?: (searchText?: string, rodData?: any, column?: Column) => boolean;
+  public search?: (searchText?: string, rodData?: any, column?: Column) => boolean;
 }
