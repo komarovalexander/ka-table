@@ -30,6 +30,8 @@ export interface ITableOption {
   editingMode?: EditingMode;
   /** Sets filters for columns */
   filterRow?: FilterRowItem[];
+  /** Sets filters for the table */
+  extendedFilter?: FilterRowItem[];
   /** Specifies the column unique field which will be used as a key */
   rowKey: string;
   /** Sets the sorting mode */

@@ -5,17 +5,19 @@ import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
 import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
 import getDemoPage from './DemoPage';
 import EditingDemo from './EditingDemo/EditingDemo';
+import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
 
 const demos = [
-  SortingDemo,
-  EditingDemo,
-  CustomEditorDemo,
   CustomCellDemo,
+  CustomEditorDemo,
+  EditingDemo,
+  FilterExtendedDemo,
   FilterRowDemo,
   SearchDemo,
+  SortingDemo,
 ];
 
 const cases = demos.map((d: React.FC) => {
@@ -41,7 +43,7 @@ const Demos: React.FC = () => {
         }
         </ul>
         <hr />
-        <Route exact={true} path='/' component={SearchDemo} />
+        <Route exact={true} path='/' component={FilterExtendedDemo} />
         {
           cases.map((c) => (
               <Route key={c.name} path={c.path} component={c.demoComponent} />
