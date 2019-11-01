@@ -13,7 +13,7 @@ const dataArray: any[] = [
   { id: 2, name: 'Billi Bob', score: 55, passed: false },
   { id: 3, name: 'Tom Williams', score: 45, passed: false },
   { id: 4, name: 'Kurt Cobain', score: 75, passed: true },
-  { id: 5, name: 'Marshall Bruce', score: 77, passed: true },
+  { id: 5, name: 'Tom Bruce', score: 77, passed: true },
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
@@ -28,17 +28,17 @@ const tableOption: ITableOption = {
 };
 
 export const fields = [{
-  caption: 'Field 1',
+  caption: 'Name',
   name: 'name',
   operators: [{
-    caption: 'Equals',
-    name: '=',
+    caption: 'Contains',
+    name: 'contains',
   }, {
     caption: 'Does not equal',
     name: '<>',
   }],
 }, {
-  caption: 'Field',
+  caption: 'Score',
   name: 'score',
   operators: [{
     caption: 'Equals',
@@ -59,32 +59,8 @@ export const filter: IFilterControlFilterValue = {
     {
       field: 'name',
       key: '1',
-      operator: '=',
-      value: '1',
-    },
-    {
-      field: 'name',
-      key: '2',
-      operator: '=',
-      value: '2',
-    },
-    {
-      groupName: 'or',
-      items: [
-        {
-          field: 'name',
-          key: '3-1',
-          operator: '<>',
-          value: '3',
-        },
-        {
-          field: 'score',
-          key: '3-2',
-          operator: '=',
-          value: '1',
-        },
-      ],
-      key: '3',
+      operator: 'contains',
+      value: 'Tom',
     },
   ],
 };
