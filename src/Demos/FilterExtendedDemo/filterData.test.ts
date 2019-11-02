@@ -32,12 +32,12 @@ describe('filter data', () => {
       operator: '=',
       value: 1,
     }, {
+      groupName: 'and',
       items: [{
         field: 'field2',
         operator: '=',
         value: 'text 2',
       }],
-      name: 'and',
     }];
     const result = filterGroupAnd(data, items);
     expect(result).toMatchSnapshot();
@@ -54,6 +54,7 @@ describe('filter data', () => {
       operator: '=',
       value: 1,
     }, {
+      groupName: 'and',
       items: [{
         field: 'field2',
         operator: '=',
@@ -63,7 +64,6 @@ describe('filter data', () => {
         operator: '=',
         value: 4,
       }],
-      name: 'and',
     }];
     const result = filterGroupAnd(data, items);
     expect(result).toMatchSnapshot();
@@ -100,6 +100,7 @@ describe('filter data', () => {
       operator: '=',
       value: 1,
     }, {
+      groupName: 'or',
       items: [{
         field: 'field2',
         operator: '=',
@@ -109,7 +110,6 @@ describe('filter data', () => {
         operator: '=',
         value: 4,
       }],
-      name: 'or',
     }];
     const result = filterGroupOr(data, items);
     expect(result).toMatchSnapshot();

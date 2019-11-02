@@ -3,6 +3,7 @@ import { SortDirection } from '../Enums/SortDirection';
 import { TextAlign } from '../Enums/TextAlign';
 import { CellFunc } from '../Types/CellFunc';
 import { EditorFunc } from '../Types/EditorFunc';
+import { ValidationFunc } from '../Types/ValidationFunc';
 
 /**
  * Describes the columns in table and their look and behaviour
@@ -56,5 +57,5 @@ export class Column {
   /*
   * Sets the validation
   */
-  public validation?: (value: any, rowData: any) => string | void;
+  public validation?: ValidationFunc;
 }
