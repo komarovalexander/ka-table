@@ -54,9 +54,6 @@ const ValidationDemo: React.FC = () => {
   };
   return (
     <>
-      <input defaultValue={option.search} onChange={(event) => {
-        onOptionChanged({ search: event.currentTarget.value });
-      }} />
       <Table
         {...option}
         data={data}
