@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import FilterControl, { IFilterControlFilterValue } from 'react-filter-control';
+import FilterControl from 'react-filter-control';
+import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
 
 import Table, { ITableOption } from '../../Components/Table/Table';
 import { DataType } from '../../Enums/DataType';
