@@ -25,7 +25,6 @@ export interface ITableBodyProps {
   rowKey: string;
 }
 
-/** The Table Component */
 const TableBody: React.FunctionComponent<ITableBodyProps> = ({
   columns,
   data,
@@ -37,11 +36,11 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
   onOptionChanged,
   rowKey,
 }) => {
-  data = groups ? getGroupedData(data, groups) : data;
+  const groupedData = groups ? getGroupedData(data, groups) : data;
   return (
     <tbody>
       {filterRow && <FilterRow columns={columns} filterRow={filterRow} onOptionChanged={onOptionChanged}/>}
-      {data.map((d, index) => {
+      {groupedData.map((d) => {
         return (
           d.groupMark === groupMark
           ? (

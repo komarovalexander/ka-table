@@ -34,11 +34,16 @@ const GroupingDemo: React.FC = () => {
   const onOptionChanged: OptionChangedFunc = (value) => {
     changeOptions({...option, ...value });
   };
+  const [data, changeData] = useState(dataArray);
+  const onDataChanged: OptionChangedFunc = (newValue) => {
+    changeData(newValue);
+  };
   return (
     <Table
       {...option}
-      data={dataArray}
+      data={data}
       onOptionChanged={onOptionChanged}
+      onDataChanged={onDataChanged}
     />
   );
 };

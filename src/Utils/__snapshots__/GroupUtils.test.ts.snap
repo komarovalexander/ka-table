@@ -4,11 +4,18 @@ exports[`GroupUtils convertToFlat complex structure 1`] = `
 Array [
   Object {
     "groupMark": Object {},
-    "key": "France",
+    "key": Array [
+      "France",
+    ],
+    "value": "France",
   },
   Object {
     "groupMark": Object {},
-    "key": "Cat",
+    "key": Array [
+      "France",
+      "Cat",
+    ],
+    "value": "Cat",
   },
   Object {
     "country": "France",
@@ -22,7 +29,11 @@ Array [
   },
   Object {
     "groupMark": Object {},
-    "key": "Dog",
+    "key": Array [
+      "France",
+      "Dog",
+    ],
+    "value": "Dog",
   },
   Object {
     "country": "France",
@@ -36,11 +47,18 @@ Array [
   },
   Object {
     "groupMark": Object {},
-    "key": "Brazil",
+    "key": Array [
+      "Brazil",
+    ],
+    "value": "Brazil",
   },
   Object {
     "groupMark": Object {},
-    "key": "Cat",
+    "key": Array [
+      "Brazil",
+      "Cat",
+    ],
+    "value": "Cat",
   },
   Object {
     "country": "Brazil",
@@ -54,7 +72,11 @@ Array [
   },
   Object {
     "groupMark": Object {},
-    "key": "Dog",
+    "key": Array [
+      "Brazil",
+      "Dog",
+    ],
+    "value": "Dog",
   },
   Object {
     "country": "Brazil",
@@ -73,11 +95,18 @@ exports[`GroupUtils convertToFlat inner group 1`] = `
 Array [
   Object {
     "groupMark": Object {},
-    "key": "France",
+    "key": Array [
+      "France",
+    ],
+    "value": "France",
   },
   Object {
     "groupMark": Object {},
-    "key": "Cat",
+    "key": Array [
+      "France",
+      "Cat",
+    ],
+    "value": "Cat",
   },
   Object {
     "country": "France",
@@ -91,7 +120,10 @@ exports[`GroupUtils convertToFlat simple 1`] = `
 Array [
   Object {
     "groupMark": Object {},
-    "key": "France",
+    "key": Array [
+      "France",
+    ],
+    "value": "France",
   },
   Object {
     "country": "France",
