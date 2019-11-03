@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { EditingMode } from '../../Enums/EditingMode';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
@@ -13,6 +14,7 @@ import CellEditor from '../CellEditor/CellEditor';
 export interface ICellComponentProps {
   editableCells: Cell[];
   column: Column;
+  editingMode: EditingMode;
   isEditableCell: boolean;
   onOptionChanged: OptionChangedFunc;
   onRowDataChanged: RowDataChangedFunc;
@@ -26,6 +28,7 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
   column: { textAlign },
   isEditableCell,
   onOptionChanged,
+  editingMode,
   onRowDataChanged,
   rowData,
   rowKey,
@@ -48,8 +51,8 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
         : (
           <CellContent {...{ column, rowData }}
             openEditor={
-              () => changeCellTextToCellEditorHandler(
-                { field: column.field, rowKeyValue },
+              () => editingMode !== EditingMode.None && changeCellTextToCellEditorHandler(
+                {field: column.field, rowKeyValue },
                 editableCells,
                 onOptionChanged)
             }

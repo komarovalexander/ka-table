@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Table from './Table';
+import TableBody from './TableBody';
 
 const tableProps: any = {
   columns: [
@@ -16,7 +16,7 @@ const tableProps: any = {
 };
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Table {...tableProps} />, div);
+  const div = document.createElement('table');
+  ReactDOM.render(<TableBody {...tableProps} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

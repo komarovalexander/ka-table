@@ -1,0 +1,180 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupUtils convertToFlat complex structure 1`] = `
+Array [
+  Object {
+    "groupMark": Object {},
+    "key": "France",
+  },
+  Object {
+    "groupMark": Object {},
+    "key": "Cat",
+  },
+  Object {
+    "country": "France",
+    "name": "Simba",
+    "type": "Cat",
+  },
+  Object {
+    "country": "France",
+    "name": "Kas",
+    "type": "Cat",
+  },
+  Object {
+    "groupMark": Object {},
+    "key": "Dog",
+  },
+  Object {
+    "country": "France",
+    "name": "Slimu",
+    "type": "Dog",
+  },
+  Object {
+    "country": "France",
+    "name": "Rex",
+    "type": "Dog",
+  },
+  Object {
+    "groupMark": Object {},
+    "key": "Brazil",
+  },
+  Object {
+    "groupMark": Object {},
+    "key": "Cat",
+  },
+  Object {
+    "country": "Brazil",
+    "name": "Simba",
+    "type": "Cat",
+  },
+  Object {
+    "country": "Brazil",
+    "name": "Kas",
+    "type": "Cat",
+  },
+  Object {
+    "groupMark": Object {},
+    "key": "Dog",
+  },
+  Object {
+    "country": "Brazil",
+    "name": "Slimu",
+    "type": "Dog",
+  },
+  Object {
+    "country": "Brazil",
+    "name": "Rex",
+    "type": "Dog",
+  },
+]
+`;
+
+exports[`GroupUtils convertToFlat inner group 1`] = `
+Array [
+  Object {
+    "groupMark": Object {},
+    "key": "France",
+  },
+  Object {
+    "groupMark": Object {},
+    "key": "Cat",
+  },
+  Object {
+    "country": "France",
+    "name": "Simba",
+    "type": "Cat",
+  },
+]
+`;
+
+exports[`GroupUtils convertToFlat simple 1`] = `
+Array [
+  Object {
+    "groupMark": Object {},
+    "key": "France",
+  },
+  Object {
+    "country": "France",
+    "name": "Simba",
+    "type": "Cat",
+  },
+]
+`;
+
+exports[`GroupUtils getGroupedStructure 1`] = `
+Map {
+  "Czech Republic" => Map {
+    "Cat" => Array [
+      Object {
+        "country": "Czech Republic",
+        "name": "Kas",
+        "type": "Cat",
+      },
+      Object {
+        "country": "Czech Republic",
+        "name": "Hash",
+        "type": "Cat",
+      },
+    ],
+    "Dog" => Array [
+      Object {
+        "country": "Czech Republic",
+        "name": "Beethoven",
+        "type": "Dog",
+      },
+    ],
+  },
+  "Montenegro" => Map {
+    "Dog" => Array [
+      Object {
+        "country": "Montenegro",
+        "name": "Rex",
+        "type": "Dog",
+      },
+    ],
+  },
+  "France" => Map {
+    "Cat" => Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+    ],
+  },
+}
+`;
+
+exports[`GroupUtils groupBy 1`] = `
+Map {
+  "Cat" => Array [
+    Object {
+      "country": "Czech Republic",
+      "name": "Kas",
+      "type": "Cat",
+    },
+    Object {
+      "country": "France",
+      "name": "Simba",
+      "type": "Cat",
+    },
+    Object {
+      "country": "Czech Republic",
+      "name": "Hash",
+      "type": "Cat",
+    },
+  ],
+  "Dog" => Array [
+    Object {
+      "country": "Montenegro",
+      "name": "Rex",
+      "type": "Dog",
+    },
+    Object {
+      "country": "Czech Republic",
+      "name": "Beethoven",
+      "type": "Dog",
+    },
+  ],
+}
+`;

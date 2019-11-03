@@ -8,15 +8,14 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import defaultOptions from '../../Models/DefaultOptions';
 import { FilterRowItem } from '../../Models/FilterRowItem';
+import { Group } from '../../Models/Group';
 import { DataChangedFunc } from '../../Types/DataChangedFunc';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
-import { getCopyOfArrayAndInsertOrReplaceItem } from '../../Utils/ArrayUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
 import { convertToColumnTypes } from '../../Utils/TypeUtils';
-import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
-import Row from '../Row/Row';
+import TableBody from '../TableBody/TableBody';
 
 /**
  * Sets the options of the table which are related to its looks
@@ -30,14 +29,14 @@ export interface ITableOption {
   editingMode?: EditingMode;
   /** Sets filters for columns */
   filterRow?: FilterRowItem[];
-  /** Sets filters for the table */
-  extendedFilter?: FilterRowItem[];
   /** Specifies the column unique field which will be used as a key */
   rowKey: string;
   /** Sets the sorting mode */
   sortingMode?: SortingMode;
   /** Sets the search by data columns */
   search?: string;
+  /** Sets the groups option */
+  groups?: Group[];
 }
 
 interface ITableEvents {
@@ -52,19 +51,15 @@ interface IAllProps extends ITableEvents, ITableOption {
   data: any[];
 }
 
-/** The Table Component */
-const Table: React.FunctionComponent<IAllProps> = ({
-  columns,
-  data,
-  editableCells = [],
-  editingMode = EditingMode.None,
-  filterRow,
-  onDataChanged = () => {},
-  onOptionChanged,
-  rowKey,
-  search,
-  sortingMode = SortingMode.None,
-}) => {
+const Table: React.FunctionComponent<IAllProps> = (props) => {
+  const {
+    columns,
+    filterRow,
+    onOptionChanged,
+    search,
+    sortingMode = SortingMode.None,
+  } = props;
+  let { data } = props;
   data = search ? searchData(columns, data, search) : data;
   data = convertToColumnTypes(data, columns);
   data = filterRow ? filterData(data, filterRow) : data;
@@ -75,27 +70,7 @@ const Table: React.FunctionComponent<IAllProps> = ({
         <thead className={defaultOptions.css.thead}>
           <HeadRow columns={columns} onOptionChanged={onOptionChanged} sortingMode={sortingMode}/>
         </thead>
-        <tbody>
-          {filterRow && <FilterRow columns={columns} filterRow={filterRow} onOptionChanged={onOptionChanged}/>}
-          {data.map((d) => {
-            const rowKeyValue = d[rowKey];
-            return (
-              <Row
-                key={rowKeyValue}
-                columns={columns}
-                rowData={d}
-                rowKey={rowKey}
-                onOptionChanged={onOptionChanged}
-                editableCells={editableCells}
-                editingMode={editingMode}
-                onRowDataChanged={(rowData: any) => {
-                  const newData = getCopyOfArrayAndInsertOrReplaceItem(rowData, rowKey, data);
-                  onDataChanged(newData);
-                }}
-              />
-            );
-          })}
-        </tbody>
+        <TableBody {...props} data={data}/>
       </table>
     </div>
   );

@@ -37,6 +37,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
           rowData={rowData}
           column={column}
           rowKey={rowKey}
+          editingMode={editingMode}
           isEditableCell={isEditableCell(editingMode, column.field, rowEditableCells)}
           editableCells={editableCells}
           onOptionChanged={onOptionChanged}

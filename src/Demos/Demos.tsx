@@ -7,6 +7,7 @@ import getDemoPage from './DemoPage';
 import EditingDemo from './EditingDemo/EditingDemo';
 import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
+import GroupingDemo from './GroupingDemo/GroupingDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
@@ -17,6 +18,7 @@ const demos = [
   EditingDemo,
   FilterExtendedDemo,
   FilterRowDemo,
+  GroupingDemo,
   SearchDemo,
   SortingDemo,
   ValidationDemo,
@@ -45,7 +47,7 @@ const Demos: React.FC = () => {
         }
         </ul>
         <hr />
-        <Route exact={true} path='/' component={ValidationDemo} />
+        <Route exact={true} path='/' component={GroupingDemo} />
         {
           cases.map((c) => (
               <Route key={c.name} path={c.path} component={c.demoComponent} />
