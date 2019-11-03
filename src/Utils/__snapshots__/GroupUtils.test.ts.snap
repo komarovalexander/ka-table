@@ -133,7 +133,7 @@ Array [
 ]
 `;
 
-exports[`GroupUtils getGroupedStructure 1`] = `
+exports[`GroupUtils getGroupedStructure basic 1`] = `
 Map {
   "Czech Republic" => Map {
     "Cat" => Array [
@@ -174,6 +174,81 @@ Map {
       },
     ],
   },
+}
+`;
+
+exports[`GroupUtils getGroupedStructure expanded couple (skip Czech Republic) 1`] = `
+Map {
+  "Czech Republic" => Array [],
+  "Montenegro" => Map {
+    "Dog" => Array [],
+  },
+  "France" => Array [],
+}
+`;
+
+exports[`GroupUtils getGroupedStructure expanded couple 1`] = `
+Map {
+  "Czech Republic" => Map {
+    "Cat" => Array [
+      Object {
+        "country": "Czech Republic",
+        "name": "Kas",
+        "type": "Cat",
+      },
+      Object {
+        "country": "Czech Republic",
+        "name": "Hash",
+        "type": "Cat",
+      },
+    ],
+    "Dog" => Array [],
+  },
+  "Montenegro" => Map {
+    "Dog" => Array [],
+  },
+  "France" => Array [],
+}
+`;
+
+exports[`GroupUtils getGroupedStructure expanded root 1`] = `
+Map {
+  "Czech Republic" => Map {
+    "Cat" => Array [],
+    "Dog" => Array [],
+  },
+  "Montenegro" => Array [],
+  "France" => Array [],
+}
+`;
+
+exports[`GroupUtils getGroupedStructure expanded second 1`] = `
+Map {
+  "Czech Republic" => Map {
+    "Cat" => Array [
+      Object {
+        "country": "Czech Republic",
+        "name": "Kas",
+        "type": "Cat",
+      },
+      Object {
+        "country": "Czech Republic",
+        "name": "Hash",
+        "type": "Cat",
+      },
+    ],
+    "Dog" => Array [],
+  },
+  "Montenegro" => Array [],
+  "France" => Array [],
+}
+`;
+
+exports[`GroupUtils getGroupedStructure should not expand second 1`] = `
+Map {
+  "Czech Republic" => Array [],
+  "Montenegro" => Array [],
+  "France" => Array [],
 }
 `;
 

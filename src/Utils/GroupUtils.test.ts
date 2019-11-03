@@ -1,4 +1,3 @@
-import { Group } from '../Models/Group';
 import { convertToFlat, getGroupedStructure, groupBy } from './GroupUtils';
 
 describe('GroupUtils', () => {
@@ -9,11 +8,7 @@ describe('GroupUtils', () => {
     { type: 'Dog', name: 'Beethoven', country: 'Czech Republic' },
     { type: 'Cat', name: 'Hash', country: 'Czech Republic' },
   ];
-  const groups: Group[] = [{
-    id: 'country',
-  }, {
-    id: 'type',
-  }];
+  const groups: string[] = ['country', 'type'];
 
   describe('convertToFlat', () => {
     it('simple', () => {
@@ -91,8 +86,32 @@ describe('GroupUtils', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('getGroupedStructure', () => {
-    const result = getGroupedStructure(data, groups);
-    expect(result).toMatchSnapshot();
+  describe('getGroupedStructure', () => {
+    it('basic', () => {
+      const result = getGroupedStructure(data, groups);
+      expect(result).toMatchSnapshot();
+    });
+
+    it('expanded root', () => {
+      const result = getGroupedStructure(data, groups, 0, [['Czech Republic']]);
+      expect(result).toMatchSnapshot();
+    });
+    it('expanded second', () => {
+      const result = getGroupedStructure(data, groups, 0, [['Czech Republic'], ['Czech Republic', 'Cat']]);
+      expect(result).toMatchSnapshot();
+    });
+    it('should not expand second', () => {
+      const result = getGroupedStructure(data, groups, 0, [['Czech Republic', 'Cat']]);
+      expect(result).toMatchSnapshot();
+    });
+    it('expanded couple', () => {
+      const result = getGroupedStructure(data, groups, 0,
+        [['Czech Republic'], ['Czech Republic', 'Cat'], ['Montenegro']]);
+      expect(result).toMatchSnapshot();
+    });
+    it('expanded couple (skip Czech Republic)', () => {
+      const result = getGroupedStructure(data, groups, 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
+      expect(result).toMatchSnapshot();
+    });
   });
 });

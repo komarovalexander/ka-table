@@ -1,16 +1,15 @@
 import { isArray } from 'util';
 
 import groupMark from '../Constants/GroupMark';
-import { Group } from '../Models/Group';
 
-export const getGroupedData = (data: any[], groups: Group[]): any[] => {
-  const grouped = getGroupedStructure(data, [...groups]);
+export const getGroupedData = (data: any[], groups: string[], groupsExpanded?: any[]): any[] => {
+  const grouped = getGroupedStructure(data, groups, 0, groupsExpanded);
   return convertToFlat(grouped);
 };
 
 export const convertToFlat = (grouped: any, key: any[] = []) => {
   let result: any[] = [];
-  grouped.forEach((value: any[], groupValue: any) => {
+  grouped.forEach((value: any, groupValue: any) => {
     const groupKey = [...key];
     groupKey.push(groupValue);
     result.push({ groupMark, key: groupKey, value: groupValue });
@@ -25,31 +24,51 @@ export const convertToFlat = (grouped: any, key: any[] = []) => {
   return result;
 };
 
-export const getGroupedStructure = (data: any[], groups: Group[]): any => {
+export const getGroupedStructure = (
+  data: any[],
+  groups: string[],
+  expandedDeep: number = 0,
+  groupsExpanded?: any[],
+): any => {
+  groups = [...groups];
   const group = groups.shift();
   if (group) {
-    const grouped = groupBy(data, (item: any) => item[group.id]);
-    if (groups.length > 0) {
-      grouped.forEach((value, key) => {
-        const newStructure = getGroupedStructure(value, [...groups]);
+    const grouped = groupBy(data, (item: any) => item[group]);
+    grouped.forEach((value, key) => {
+      const groupExpandedItems = groupsExpanded && groupsExpanded.filter((ge) => ge[expandedDeep] === key);
+      const isThisGroupExpanded = !groupExpandedItems
+        || groupExpandedItems.some((ge) => ge.length === expandedDeep + 1);
+      if (isThisGroupExpanded) {
+        const newStructure = getGroupedStructure(
+          value,
+          groups,
+          expandedDeep + 1,
+          groupExpandedItems && groupExpandedItems.filter((ge) => ge.length > expandedDeep + 1),
+        );
         if (newStructure) {
           grouped.set(key, newStructure);
         }
-      });
-    }
+      } else {
+        grouped.set(key, []);
+      }
+    });
     return grouped;
   }
 };
 
-export const groupBy = (data: any[], keyGetter: any) => {
+export const groupBy = (data: any[], keyGetter: any, isEmptyValue: boolean = false) => {
   const map = new Map();
   data.forEach((item) => {
     const key = keyGetter(item);
-    const collection = map.get(key);
-    if (!collection) {
-        map.set(key, [item]);
+    if (isEmptyValue) {
+      map.set(key, []);
     } else {
-        collection.push(item);
+      const collection = map.get(key);
+      if (!collection) {
+          map.set(key, [item]);
+      } else {
+          collection.push(item);
+      }
     }
   });
   return map;
