@@ -5,6 +5,7 @@ import { EditingMode } from '../../Enums/EditingMode';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { FilterRowItem } from '../../Models/FilterRowItem';
+import { Group } from '../../Models/Group';
 import { DataChangedFunc } from '../../Types/DataChangedFunc';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../../Utils/ArrayUtils';
@@ -19,7 +20,7 @@ export interface ITableBodyProps {
   editableCells?: Cell[];
   editingMode?: EditingMode;
   filterRow?: FilterRowItem[];
-  groups?: string[];
+  groups?: Group[];
   groupsExpanded?: any[][];
   onDataChanged?: DataChangedFunc;
   onOptionChanged: OptionChangedFunc;

@@ -8,6 +8,7 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import defaultOptions from '../../Models/DefaultOptions';
 import { FilterRowItem } from '../../Models/FilterRowItem';
+import { Group } from '../../Models/Group';
 import { DataChangedFunc } from '../../Types/DataChangedFunc';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 import { filterData, searchData } from '../../Utils/FilterUtils';
@@ -29,7 +30,7 @@ export interface ITableOption {
   /** Sets filters for columns */
   filterRow?: FilterRowItem[];
   /** Sets the groups option */
-  groups?: string[];
+  groups?: Group[];
   /** Sets the expanded groups */
   groupsExpanded?: any[][];
   /** Specifies the column unique field which will be used as a key */

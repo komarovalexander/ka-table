@@ -21,7 +21,7 @@ const tableOption: ITableOption = {
     { field: 'age', title: 'Age', dataType: DataType.Number },
   ],
   editingMode: EditingMode.Cell,
-  groups: ['country', 'type'],
+  groups: [{ field: 'country' }, { field: 'type' }],
   rowKey: 'id',
 };
 

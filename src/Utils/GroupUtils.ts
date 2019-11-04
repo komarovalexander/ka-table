@@ -1,6 +1,7 @@
 import { isArray } from 'util';
 
 import groupMark from '../Constants/GroupMark';
+import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import { OptionChangedFunc } from '../Types/OptionChangedFunc';
 
@@ -23,7 +24,7 @@ export const getExpandedGroups = (groupedData: any[]): any[][] => {
   return groupsExpanded;
 };
 
-export const getGroupedData = (data: any[], groups: string[], groupsExpanded?: any[]): any[] => {
+export const getGroupedData = (data: any[], groups: Group[], groupsExpanded?: any[]): any[] => {
   const grouped = getGroupedStructure(data, groups, 0, groupsExpanded);
   return convertToFlat(grouped);
 };
@@ -47,14 +48,14 @@ export const convertToFlat = (grouped: any, key: any[] = []) => {
 
 export const getGroupedStructure = (
   data: any[],
-  groups: string[],
+  groups: Group[],
   expandedDeep: number = 0,
   groupsExpanded?: any[],
 ): any => {
   groups = [...groups];
   const group = groups.shift();
   if (group) {
-    const grouped = groupBy(data, (item: any) => item[group]);
+    const grouped = groupBy(data, (item: any) => item[group.field]);
     grouped.forEach((value, key) => {
       const groupExpandedItems = groupsExpanded && groupsExpanded.filter((ge) => ge[expandedDeep] === key);
       const isThisGroupExpanded = !groupExpandedItems

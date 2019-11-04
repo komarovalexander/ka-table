@@ -1,4 +1,5 @@
 import groupMark from '../Constants/GroupMark';
+import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import {
   convertToFlat, getExpandedGroups, getGroupedStructure, groupBy, groupClick,
@@ -12,7 +13,7 @@ describe('GroupUtils', () => {
     { type: 'Dog', name: 'Beethoven', country: 'Czech Republic' },
     { type: 'Cat', name: 'Hash', country: 'Czech Republic' },
   ];
-  const groups: string[] = ['country', 'type'];
+  const groups: Group[] = [{ field: 'country' }, { field: 'type' }];
 
   describe('convertToFlat', () => {
     it('simple', () => {
