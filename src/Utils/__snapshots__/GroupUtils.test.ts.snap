@@ -285,3 +285,10 @@ Map {
   ],
 }
 `;
+
+exports[`GroupUtils groupBy empty 1`] = `
+Map {
+  "Cat" => Array [],
+  "Dog" => Array [],
+}
+`;

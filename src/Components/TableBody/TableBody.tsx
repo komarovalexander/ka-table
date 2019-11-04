@@ -8,8 +8,9 @@ import { FilterRowItem } from '../../Models/FilterRowItem';
 import { DataChangedFunc } from '../../Types/DataChangedFunc';
 import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../../Utils/ArrayUtils';
-import { getGroupedData } from '../../Utils/GroupUtils';
+import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import FilterRow from '../FilterRow/FilterRow';
+import GroupRow from '../GroupRow/GroupRow';
 import Row from '../Row/Row';
 
 export interface ITableBodyProps {
@@ -40,12 +41,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
   const groupedData = groups ? getGroupedData(data, groups, groupsExpanded) : data;
 
   if (groups && !groupsExpanded) {
-    groupsExpanded = [];
-    for (const value of groupedData) {
-      if (value.groupMark === groupMark) {
-        groupsExpanded.push(value.key);
-      }
-    }
+    groupsExpanded = getExpandedGroups(groupedData);
   }
   return (
     <tbody>
@@ -54,15 +50,12 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
         return (
           d.groupMark === groupMark
           ? (
-            <tr key={d.key}><td colSpan={columns.length} onClick={() => {
-              if (groupsExpanded) {
-                const newGroupsExpanded = groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(d.key));
-                if (newGroupsExpanded.length === groupsExpanded.length) {
-                  newGroupsExpanded.push(d.key);
-                }
-                onOptionChanged({ groupsExpanded: newGroupsExpanded });
-              }
-            }}>{d.value.toString()}</td></tr>
+            <GroupRow
+              key={d.key}
+              columns={columns}
+              groupRowData={d}
+              groupsExpanded={groupsExpanded || []}
+              onOptionChanged={onOptionChanged} />
           ) : (
             <Row
               key={d[rowKey]}

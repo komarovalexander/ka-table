@@ -1,6 +1,27 @@
 import { isArray } from 'util';
 
 import groupMark from '../Constants/GroupMark';
+import { GroupRowData } from '../Models/GroupRowData';
+import { OptionChangedFunc } from '../Types/OptionChangedFunc';
+
+export const groupClick = (groupsExpanded: any[][], groupRowData: GroupRowData, onOptionChanged: OptionChangedFunc) => {
+  const newGroupsExpanded =
+    groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(groupRowData.key));
+  if (newGroupsExpanded.length === groupsExpanded.length) {
+    newGroupsExpanded.push(groupRowData.key);
+  }
+  onOptionChanged({ groupsExpanded: newGroupsExpanded });
+};
+
+export const getExpandedGroups = (groupedData: any[]): any[][] => {
+  const groupsExpanded: any[][] = [];
+  for (const value of groupedData) {
+    if (value.groupMark === groupMark) {
+      groupsExpanded.push(value.key);
+    }
+  }
+  return groupsExpanded;
+};
 
 export const getGroupedData = (data: any[], groups: string[], groupsExpanded?: any[]): any[] => {
   const grouped = getGroupedStructure(data, groups, 0, groupsExpanded);

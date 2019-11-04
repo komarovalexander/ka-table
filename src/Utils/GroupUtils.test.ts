@@ -1,4 +1,8 @@
-import { convertToFlat, getGroupedStructure, groupBy } from './GroupUtils';
+import groupMark from '../Constants/GroupMark';
+import { GroupRowData } from '../Models/GroupRowData';
+import {
+  convertToFlat, getExpandedGroups, getGroupedStructure, groupBy, groupClick,
+} from './GroupUtils';
 
 describe('GroupUtils', () => {
   const data = [
@@ -20,6 +24,7 @@ describe('GroupUtils', () => {
       const result = convertToFlat(mappedData);
       expect(result).toMatchSnapshot();
     });
+
     it('inner group', () => {
       const mappedData = new Map([['France',
         new Map([['Cat', [{
@@ -31,6 +36,7 @@ describe('GroupUtils', () => {
       const result = convertToFlat(mappedData);
       expect(result).toMatchSnapshot();
     });
+
     it('complex structure', () => {
       const mappedData = new Map([['France',
         new Map([
@@ -81,8 +87,38 @@ describe('GroupUtils', () => {
     });
   });
 
+  it('getExpandedGroups', () => {
+    const groupRowData: GroupRowData = { key: ['dog'], value: 'Rex', groupMark };
+    const groupedData: any[] = [{}, groupRowData, {}];
+    const result = getExpandedGroups(groupedData);
+    expect(result).toEqual([['dog']]);
+  });
+
+  it('groupClick add', () => {
+    const groupsExpanded: any[][] = [['cat']];
+    const groupRowData: GroupRowData = { key: ['dog'], value: 'Rex', groupMark: {} };
+    const onOptionChanged = jest.fn((x) => {});
+    groupClick(groupsExpanded, groupRowData, onOptionChanged);
+    expect(onOptionChanged.mock.calls.length).toBe(1);
+    expect(onOptionChanged.mock.calls[0]).toEqual([{groupsExpanded: [['cat'], ['dog']]}]);
+  });
+
+  it('groupClick remove', () => {
+    const groupsExpanded: any[][] = [['cat']];
+    const groupRowData: GroupRowData = { key: ['cat'], value: 'Tom', groupMark: {} };
+    const onOptionChanged = jest.fn((x) => {});
+    groupClick(groupsExpanded, groupRowData, onOptionChanged);
+    expect(onOptionChanged.mock.calls.length).toBe(1);
+    expect(onOptionChanged.mock.calls[0]).toEqual([{groupsExpanded: []}]);
+  });
+
   it('groupBy', () => {
     const result = groupBy(data, (item: any) => item.type);
+    expect(result).toMatchSnapshot();
+  });
+
+  it('groupBy empty', () => {
+    const result = groupBy(data, (item: any) => item.type, true);
     expect(result).toMatchSnapshot();
   });
 
