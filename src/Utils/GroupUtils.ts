@@ -1,5 +1,3 @@
-import { isArray } from 'util';
-
 import groupMark from '../Constants/GroupMark';
 import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
@@ -35,7 +33,7 @@ export const convertToFlat = (grouped: any, key: any[] = []) => {
     const groupKey = [...key];
     groupKey.push(groupValue);
     result.push({ groupMark, key: groupKey, value: groupValue });
-    if (isArray(value)) {
+    if (Array.isArray(value)) {
       value.forEach((item) => {
         result.push(item);
       });

@@ -1,15 +1,18 @@
 import React from 'react';
 
 import { DataType } from '../../Enums/DataType';
-import defaultOptions from '../../Models/DefaultOptions';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
+import CellEditorBoolean from '../CellEditorBoolean/CellEditorBoolean';
+import CellEditorDate from '../CellEditorDate/CellEditorDate';
+import CellEditorNumber from '../CellEditorNumber/CellEditorNumber';
+import CellEditorString from '../CellEditorString/CellEditorString';
 
 const CellEditorDataType: React.FunctionComponent<ICellEditorProps> = (props) => {
   switch (props.column.dataType) {
-    case DataType.Boolean: return defaultOptions.editors.checkbox(props);
-    case DataType.Date: return defaultOptions.editors.date(props);
-    case DataType.Number: return defaultOptions.editors.number(props);
-    default: return defaultOptions.editors.text(props);
+    case DataType.Boolean: return <CellEditorBoolean {...props} />;
+    case DataType.Date: return <CellEditorDate {...props} />;
+    case DataType.Number: return <CellEditorNumber {...props} />;
+    default: return <CellEditorString {...props} />;
   }
 };
 
