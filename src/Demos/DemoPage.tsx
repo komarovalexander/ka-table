@@ -8,18 +8,20 @@ import defaultOptions from '../Models/DefaultOptions';
 
 defaultOptions.css = bootstrapCssClasses;
 
-const getDemoPage = (WrappedComponent: React.FC) => {
+const getDemoPage = (WrappedComponent: React.FC, title: string) => {
   return () => {
     const [text, changeText]: [string, any] = useState('');
     useEffect(() => {
-      fetch(`demos/${WrappedComponent.name}.tsx`)
+      const name = WrappedComponent.name;
+      fetch(`demos/${name}/${name}.tsx`)
         .then((res) => res.text())
         .then((fileText) => changeText(fileText));
     }, []);
     return (
       <div>
+        <h1>{title}</h1>
         <WrappedComponent />
-        <Highlight className='tsx'>
+        <Highlight className='language-typescript'>
           {text}
         </Highlight>
       </div>

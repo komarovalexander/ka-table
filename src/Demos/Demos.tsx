@@ -1,3 +1,5 @@
+import './Demos.scss';
+
 import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
@@ -13,47 +15,53 @@ import SortingDemo from './SortingDemo/SortingDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
 
 const demos = [
-  CustomCellDemo,
-  CustomEditorDemo,
-  EditingDemo,
-  FilterExtendedDemo,
-  FilterRowDemo,
-  GroupingDemo,
-  SearchDemo,
-  SortingDemo,
-  ValidationDemo,
+  [CustomCellDemo, 'Custom Cell'],
+  [CustomEditorDemo, 'Custom Editor'],
+  [EditingDemo, 'Editing'],
+  [FilterExtendedDemo, 'Filter Extended'],
+  [FilterRowDemo, 'Filter Row'],
+  [GroupingDemo, 'Grouping'],
+  [SearchDemo, 'Search'],
+  [SortingDemo, 'Sorting'],
+  [ValidationDemo, 'Validation'],
 ];
 
-const cases = demos.map((d: React.FC) => {
-  const demoName = d.name.replace('Demo', '');
-  return ({ demoComponent: getDemoPage(d), name: demoName, path: `/${demoName}` });
+const cases = demos.map((d: any[]) => {
+  const demoName = d[0].name.replace('Demo', '');
+  const title = d[1];
+  return ({ demoComponent: getDemoPage(d[0], title), name: demoName, title, path: `/${demoName}` });
 });
+
+const defaultDemo: any[] = demos.find((d) => d[0] === GroupingDemo) || demos[0];
 
 const Demos: React.FC = () => {
   return (
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
-        {
-          cases.map((c) => (
-              <li key={c.name}>
-                <Link to={c.path}>{c.name}</Link>
-              </li>
-            ),
-          )
-        }
-        </ul>
-        <hr />
-        <Route exact={true} path='/' component={GroupingDemo} />
-        {
-          cases.map((c) => (
-              <Route key={c.name} path={c.path} component={c.demoComponent} />
-            ),
-          )
-        }
+      <div className='demos'>
+        <nav>
+          <ul>
+            <li>
+              <Link to='/'>Home</Link>
+            </li>
+          {
+            cases.map((c) => (
+                <li key={c.name}>
+                  <Link to={c.path}>{c.title}</Link>
+                </li>
+              ),
+            )
+          }
+          </ul>
+        </nav>
+        <main>
+          <Route exact={true} path='/' component={getDemoPage(defaultDemo[0], defaultDemo[1])} />
+          {
+            cases.map((c) => (
+                <Route key={c.name} path={c.path} component={c.demoComponent} />
+              ),
+            )
+          }
+        </main>
       </div>
     </Router>
   );
