@@ -1,7 +1,8 @@
 {
   "name": "react-table-component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "@types/jest": "24.0.18",
     "@types/node": "12.7.7",
@@ -18,6 +19,7 @@
     "react-highlight": "^0.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.2",
+    "rollup-plugin-license": "^0.12.1",
     "typescript": "3.6.3"
   },
   "scripts": {
@@ -49,9 +51,10 @@
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-typedoc": "^2.2.2",
+    "gulp-typescript": "^5.0.1",
     "husky": "^3.0.8",
     "lint-staged": "^10.0.0-0",
-    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-typescript2": "^0.25.2",
     "tslint": "^5.20.0",
     "tslint-react": "^4.1.0",
     "typedoc": "^0.15.0"

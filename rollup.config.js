@@ -1,18 +1,24 @@
+import typescript from 'rollup-plugin-typescript2';
+import pkg from './package.json';
 
-import typescript from 'rollup-plugin-typescript';
-
-const config = {
+export default {
     input: 'src/Components/Table/Table.tsx',
-    external: ['react'],
-    output: {
-        name: 'react-table-control',
-        format: 'umd',
-        globals: {
-            react: "React"
-        }
-    },
-    plugins: [
-        typescript(),
-    ]
-}
-export default config
+    output: [
+      {
+        file: pkg.main,
+        format: 'cjs',
+      },
+      {
+        file: pkg.module,
+        format: 'es',
+      },
+    ],
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+      ...Object.keys(pkg.peerDependencies || {}),
+    ],plugins: [
+      typescript({
+        typescript: require('typescript'),
+      }),
+    ],
+  }

@@ -29,7 +29,7 @@ describe('sortData', () => {
 
   it('should be sorted by Ascend', () => {
     const columns2 = [
-      { field: 'column', title: 'Column 1', sortDirection: SortDirection.Ascend },
+      { field: 'column', title: 'Column 1', sortDirection: SortDirection.Ascend, dataType: DataType.String },
     ];
     const newData = sortData(columns2, data);
     expect(newData).toMatchSnapshot();

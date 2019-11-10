@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { DataType } from '../../Enums/DataType';
 import Row, { IRowProps } from './Row';
 
-const props: IRowProps = {
+const props: any = {
   columns: [
-    { field: 'column', title: 'Column 1' },
-    { field: 'column2', title: 'Column 2' },
+    { field: 'column', title: 'Column 1', dataType: DataType.String },
+    { field: 'column2', title: 'Column 2', dataType: DataType.String },
   ],
   rowData: [{ column: 1, column2: 2 }],
   rowKey: 'column',

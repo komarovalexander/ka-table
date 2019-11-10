@@ -1,10 +1,28 @@
 var gulp = require('gulp');
 var typedoc = require('gulp-typedoc');
 
+var ts = require('gulp-typescript');
+var tsProject = ts.createProject('tsconfig.json');
+
 gulp.task('default', function () {
     return gulp
         .src('src/Demos/*/*Demo.tsx')
         .pipe(gulp.dest('public/demos'));
+});
+
+gulp.task('compile', function () {
+    return gulp
+        .src([
+            'src/**/*.tsx',
+            '!src/**/*.test.tsx',
+            'src/**/*.ts',
+            '!src/**/*.test.ts',
+            '!src/Demos/**/*',
+            '!src/*'
+        ])
+        .pipe(gulp.dest('dist'))
+        .pipe(tsProject())
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('doc', function (cb) {

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { DataType } from '../../Enums/DataType';
 import CellComponent, { ICellComponentProps } from './CellComponent';
 
-const props: ICellComponentProps = {
+const props: any = {
   column: {
     dataType: DataType.String,
     field: 'columnField',

@@ -55,7 +55,7 @@ import { convertToColumnTypes } from './TypeUtils';
         const data = [{ columnField: testCase[1] }];
         const newData = convertToColumnTypes(data, columns);
         if (testCase[3]) {
-          expect(newData[0].columnField).toStrictEqual(testCase[2]);
+          expect(newData[0].columnField).toStrictEqual(testCase[2] || {});
         } else {
           expect(newData[0].columnField).toBe(testCase[2]);
         }

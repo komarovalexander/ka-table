@@ -4,7 +4,7 @@ import { Column } from '../../Models/Column';
 
 export interface IHeadCellProps {
   column: Column;
-  sortClick?: React.MouseEventHandler;
+  sortClick?: () => void;
 }
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = ({ sortClick, column: { width, title, textAlign } }) => {

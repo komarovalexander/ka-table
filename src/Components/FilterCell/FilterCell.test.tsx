@@ -5,19 +5,16 @@ import { DataType } from '../../Enums/DataType';
 import FilterCell, { IFilterCellProps } from './FilterCell';
 
 const props: IFilterCellProps = {
+  close: () => {},
   column: {
     dataType: DataType.String,
     field: 'columnField',
     title: 'Field',
   },
-  editableCells: [],
-  isEditableCell: false,
-  onOptionChanged: () => {},
-  onRowDataChanged: () => {},
+  onValueChange: () => {},
   rowData: {
     column: 1,
   },
-  rowKey: '1',
 };
 
 it('renders without crashing', () => {
