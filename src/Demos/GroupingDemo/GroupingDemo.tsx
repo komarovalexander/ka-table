@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import Table, { ITableOption } from '../../Components/Table/Table';
-import { DataType } from '../../Enums/DataType';
-import { EditingMode } from '../../Enums/EditingMode';
-import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
+import { ITableOption, Table } from '../../lib';
+import { DataType, EditingMode } from '../../lib/enums';
+import { OptionChangedFunc } from '../../lib/types';
 
 const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },

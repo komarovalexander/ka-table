@@ -13,12 +13,10 @@ gulp.task('default', function () {
 gulp.task('compile', function () {
     return gulp
         .src([
-            'src/**/*.tsx',
+            'src/lib/**/*.tsx',
             '!src/**/*.test.tsx',
-            'src/**/*.ts',
+            'src/lib/**/*.ts',
             '!src/**/*.test.ts',
-            '!src/Demos/**/*',
-            '!src/*'
         ])
         .pipe(gulp.dest('dist'))
         .pipe(tsProject())

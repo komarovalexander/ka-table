@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import Table, { ITableOption } from '../../Components/Table/Table';
-import { DataType } from '../../Enums/DataType';
-import { SortDirection } from '../../Enums/SortDirection';
-import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
+import { ITableOption, Table } from '../../lib';
+import { DataType, SortDirection } from '../../lib/enums';
+import { OptionChangedFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },

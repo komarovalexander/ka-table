@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 
-import Table, { ITableOption } from '../../Components/Table/Table';
-import { DataType } from '../../Enums/DataType';
-import { EditingMode } from '../../Enums/EditingMode';
-import { TextAlign } from '../../Enums/TextAlign';
-import { CellFuncPropsWithChildren } from '../../Types/CellFuncPropsWithChildren';
-import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
+import { ITableOption, Table } from '../../lib';
+import { DataType, EditingMode, TextAlign } from '../../lib/enums';
+import { CellFuncPropsWithChildren, OptionChangedFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },

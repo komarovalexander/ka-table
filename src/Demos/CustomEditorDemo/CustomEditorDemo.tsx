@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 
-import Table, { ITableOption } from '../../Components/Table/Table';
-import { DataType } from '../../Enums/DataType';
-import { EditingMode } from '../../Enums/EditingMode';
-import { EditorFuncPropsWithChildren } from '../../Types/EditorFuncPropsWithChildren';
-import { OptionChangedFunc } from '../../Types/OptionChangedFunc';
-import { toBoolean } from '../../Utils/TypeUtils';
+import { ITableOption, Table } from '../../lib';
+import { DataType, EditingMode } from '../../lib/enums';
+import { EditorFuncPropsWithChildren, OptionChangedFunc } from '../../lib/types';
+import { toBoolean } from '../../lib/Utils/TypeUtils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
