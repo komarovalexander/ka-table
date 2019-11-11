@@ -12,6 +12,7 @@
     "jsx-no-multiline-js": false,
     "no-empty": [true, "allow-empty-functions"],
     "jsx-alignment": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "no-implicit-dependencies": false
   }
 }

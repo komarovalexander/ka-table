@@ -1,5 +1,4 @@
-import { DataType } from '../enums';
-import { SortDirection } from '../enums';
+import { DataType, SortDirection } from '../enums';
 import { Column } from '../Models/Column';
 import { sortData } from './SortUtils';
 

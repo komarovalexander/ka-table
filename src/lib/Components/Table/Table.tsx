@@ -1,5 +1,3 @@
-import './Table.scss';
-
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
