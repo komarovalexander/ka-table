@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "rollup -c -o dist/react-table-control.min.js",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "test:all": "react-scripts test --watchAll",
     "test:coverage": "react-scripts test --coverage --watchAll",
