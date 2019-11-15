@@ -1,8 +1,8 @@
 {
   "name": "react-table-control",
   "version": "0.1.4",
-  "private": true,
   "license": "MIT",
+  "repository": "github:komarovalexander/react-table-control",
   "homepage" : "https://komarovalexander.github.io/react-table-control",
   "dependencies": {
     "@types/react": "16.9.3",
