@@ -5,14 +5,21 @@ var typedoc = require('gulp-typedoc');
 var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');
 var jsonfile = require('jsonfile')
+var ghPages = require('gulp-gh-pages');
 
-gulp.task('default', function () {
-    return gulp
-        .src('src/Demos/*/*Demo.tsx')
-        .pipe(gulp.dest('public/demos'));
+gulp.task('gh-pages', function () {
+    return gulp.src('./build/**/*')
+        .pipe(ghPages());
 });
 
-gulp.task('compile', function () {
+gulp.task('demos', function () {
+    return gulp
+        .src('src/Demos/*/*Demo.tsx')
+        .pipe(gulp.dest('public/demos'))
+        .pipe(gulp.dest('build/demos'));
+});
+
+gulp.task('default', function () {
     return gulp
         .src([
             'src/lib/**/*.tsx',
