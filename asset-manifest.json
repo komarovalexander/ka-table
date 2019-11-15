@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.6d5dc420.chunk.css",
-    "main.js": "/static/js/main.e4438f67.chunk.js",
-    "main.js.map": "/static/js/main.e4438f67.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.94fa00b6.js",
-    "runtime-main.js.map": "/static/js/runtime-main.94fa00b6.js.map",
-    "static/css/2.1a66e77d.chunk.css": "/static/css/2.1a66e77d.chunk.css",
-    "static/js/2.d8dea83a.chunk.js": "/static/js/2.d8dea83a.chunk.js",
-    "static/js/2.d8dea83a.chunk.js.map": "/static/js/2.d8dea83a.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.a9f456a2784fe7e0ce9f4b2fcfc9280c.js": "/precache-manifest.a9f456a2784fe7e0ce9f4b2fcfc9280c.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.1a66e77d.chunk.css.map": "/static/css/2.1a66e77d.chunk.css.map",
-    "static/css/main.6d5dc420.chunk.css.map": "/static/css/main.6d5dc420.chunk.css.map"
+    "main.css": "/react-table-control/static/css/main.6d5dc420.chunk.css",
+    "main.js": "/react-table-control/static/js/main.b24a8e89.chunk.js",
+    "main.js.map": "/react-table-control/static/js/main.b24a8e89.chunk.js.map",
+    "runtime-main.js": "/react-table-control/static/js/runtime-main.4442c054.js",
+    "runtime-main.js.map": "/react-table-control/static/js/runtime-main.4442c054.js.map",
+    "static/css/2.1a66e77d.chunk.css": "/react-table-control/static/css/2.1a66e77d.chunk.css",
+    "static/js/2.0a79844a.chunk.js": "/react-table-control/static/js/2.0a79844a.chunk.js",
+    "static/js/2.0a79844a.chunk.js.map": "/react-table-control/static/js/2.0a79844a.chunk.js.map",
+    "index.html": "/react-table-control/index.html",
+    "precache-manifest.868bb785ef1810ce8f82d2543b6d94d9.js": "/react-table-control/precache-manifest.868bb785ef1810ce8f82d2543b6d94d9.js",
+    "service-worker.js": "/react-table-control/service-worker.js",
+    "static/css/2.1a66e77d.chunk.css.map": "/react-table-control/static/css/2.1a66e77d.chunk.css.map",
+    "static/css/main.6d5dc420.chunk.css.map": "/react-table-control/static/css/main.6d5dc420.chunk.css.map"
   }
 }
