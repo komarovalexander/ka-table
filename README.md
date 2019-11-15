@@ -1,5 +1,5 @@
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/react-table-component/blob/master/LICENSE) 
-[![Build Status](https://travis-ci.com/komarovalexander/react-table-component.svg?token=9QUEx9r7MWqF44f9VDer&branch=dev)](https://travis-ci.com/komarovalexander/react-table-component)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/react-table-control/blob/master/LICENSE)
+[![Build Status](https://travis-ci.com/komarovalexander/react-table-control.svg?token=9QUEx9r7MWqF44f9VDer&branch=dev)](https://travis-ci.com/komarovalexander/react-table-control)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
