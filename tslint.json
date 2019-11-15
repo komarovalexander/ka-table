@@ -6,7 +6,6 @@
     ]
   },
   "rules": {
-    // override tslint-react rules here
     "no-submodule-imports": false,
     "quotemark": [true, "single", "jsx-single"],
     "jsx-no-multiline-js": false,
