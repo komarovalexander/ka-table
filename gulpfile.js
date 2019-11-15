@@ -12,14 +12,14 @@ gulp.task('gh-pages', function () {
         .pipe(ghPages());
 });
 
-gulp.task('demos', function () {
+gulp.task('demo-code', function () {
     return gulp
         .src('src/Demos/*/*Demo.tsx')
         .pipe(gulp.dest('public/demos'))
         .pipe(gulp.dest('build/demos'));
 });
 
-gulp.task('default', function () {
+gulp.task('build', function () {
     return gulp
         .src([
             'src/lib/**/*.tsx',
