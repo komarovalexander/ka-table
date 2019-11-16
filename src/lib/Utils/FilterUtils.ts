@@ -1,6 +1,6 @@
 import { Cell } from '../Models/Cell';
 import { Column } from '../Models/Column';
-import { FilterRowItem } from '../Models/FilterRowItem';
+import { FilterCondition } from '../Models/FilterCondition';
 import { OptionChangedFunc } from '../types';
 import { getCopyOfArrayAndDeleteItem, getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
 import { isEmpty } from './CommonUtils';
@@ -19,7 +19,7 @@ export const searchData = (columns: Column[], data: any[], searchText: string): 
   }, []);
 };
 
-export const filterData = (data: any[], filterRow: FilterRowItem[]): any[] => {
+export const filterData = (data: any[], filterRow: FilterCondition[]): any[] => {
   return filterRow.reduce((initialData, f) => {
     const searcFunc = typeof f.value === 'string' ? (d: any) => d[f.field].toLowerCase().includes(f.value.toLowerCase())
       : (d: any) => d[f.field] === f.value;
@@ -28,10 +28,10 @@ export const filterData = (data: any[], filterRow: FilterRowItem[]): any[] => {
 };
 
 export const filterCellValueChangeHandler = (
-    value: any, field: string, filterRow: FilterRowItem[], optionChangeHandler: OptionChangedFunc,
+    value: any, field: string, filterRow: FilterCondition[], optionChangeHandler: OptionChangedFunc,
   ) => {
   let newFilterRow;
-  const newFRValue: FilterRowItem = {
+  const newFRValue: FilterCondition = {
     field,
     operator: '=',
     value,

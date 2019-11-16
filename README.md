@@ -4,7 +4,7 @@
 *This project is on pre-alpha stage. Stable version with documentation and finished styles will be available no later than January of 2020*
 
 # React Table Control
-The highly customizable, extendable, lightweight and free React Table Component
+The customizable, extendable, lightweight and free React Table Component
 
 Can easily be included in react projects, never mind it is ts or js
 
@@ -35,12 +35,19 @@ yarn add react-table-control
 | --- | --- | --- |
 | columns | [<code>Column\[\]</code>](#Column) | Columns in table and their look and behaviour |
 | data | <code>any\[\]</code> | The data which is shown in Table's rows |
-| editableCells | [<code>Array.&lt;Cell&gt;</code>](#Cell) | This property contains the array of cells which are being edited |
+| editableCells | [<code>Cell[]</code>](#Cell) | This property contains the array of cells which are being edited |
+| editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode |
+| filterRow | [<code>FilterCondition[]</code>](#FilterCondition) | Sets filters for columns |
+| groups | [<code>Group[]</code>](#Group) | Group's in the table |
+| groupsExpanded | TODO | Contains groups which are expanded in the grid |
+| rowKey | string | Property of data's item which is used to identitify row |
+| sortingMode | [<code>SortingMode[]</code>](#SortingMode)  | Sorting mode |
 | search <a name="Table.search"></a> | string | Specifies the text which should be found in the data |
 
 
 <a name="Column"></a>
 ### Column
+Describes column of table its look and behaviour
 **Properties**
 
 | Name | Type | Description |
@@ -53,9 +60,44 @@ yarn add react-table-control
 | cell | [<code>CellFunc</code>](#CellFunc) | Returns an custom cell if it is not in editable mode |
 | width | <code>number \| string</code> | Sets the width of the column |
 | textAlign | [<code>TextAlign</code>](#TextAlign) | Sets column's text alignment |
-| search | [<code>SearchFunc</code>](#SearchFunc) | Overrides the default search method for the cell. Executes if [Table.search])(#Table.search) option is set |
-| validation | [<code>ValidationFunc</code>](#ValidationFunc) |  |
+| search | [<code>SearchFunc</code>](#SearchFunc) | Overrides the default search method for the cell. Executes if [Table.search](#Table.search) option is set |
+| validation | [<code>ValidationFunc</code>](#ValidationFunc) | Returns the validation error string or does not return anything in case of passed validation |
 
+
+
+<a name="Cell"></a>
+### Cell
+Describes the position of a cell in  the table
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| field | string | The field of
+specific column |
+| rowKeyValue | any | Data's key value of еру specific row |
+
+
+<a name="FilterCondition"></a>
+### FilterCondition
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| field | string | The filtered column's field |
+| operator | string | Operator which will be applied for filtering |
+| value | any | Filtered value |
+
+
+<a name="Group"></a>
+### Group
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| field | string | The grouped column's field |
 
 
 <a name="DataType"></a>
@@ -70,6 +112,15 @@ yarn add react-table-control
 | String | 'string' |
 
 
+<a name="EditingMode"></a>
+### EditingMode
+
+| Property | String value | Description |
+| --- | --- | --- |
+| None | 'none' | Editing is disabled |
+| Cell | 'cell' | Data is edited by cell to cell, click by cell activates editing |
+
+
 <a name="SortDirection"></a>
 ### SortDirection
 
@@ -77,6 +128,15 @@ yarn add react-table-control
 | --- | --- |
 | Ascend | 'ascend' |
 | Descend | 'descend' |
+
+
+<a name="SortingMode"></a>
+### SortingMode
+
+| Property | String value |
+| --- | --- |
+| None | 'none' |
+| Single | 'single' |
 
 
 <a name="TextAlign"></a>
@@ -118,7 +178,7 @@ Function which obtains searchText?: string, rowData?: any, column?: Column - as 
 
 (value: any, rowData: any) => string | void;
 
-Function which obtains value of specific cell and row value - as parameters and returns validation error string or does not return anything in case of passed validation.
+Function which obtains value of specific cell and row - as parameters and returns validation error string or does not return anything in case of passed validation.
 
 
 <a name="ICellEditorProps"></a>

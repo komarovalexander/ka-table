@@ -4,7 +4,7 @@ import defaultOptions from '../../defaultOptions';
 import { EditingMode, SortingMode } from '../../enums';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
-import { FilterRowItem } from '../../Models/FilterRowItem';
+import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
 import { DataChangedFunc, OptionChangedFunc } from '../../types';
 import { filterData, searchData } from '../../Utils/FilterUtils';
@@ -24,7 +24,7 @@ export interface ITableOption {
   /** Sets the editing mode */
   editingMode?: EditingMode;
   /** Sets filters for columns */
-  filterRow?: FilterRowItem[];
+  filterRow?: FilterCondition[];
   /** Sets the groups option */
   groups?: Group[];
   /** Sets the expanded groups */

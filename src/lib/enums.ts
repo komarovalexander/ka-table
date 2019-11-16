@@ -7,8 +7,8 @@ export enum DataType {
 }
 
 export enum EditingMode {
-  None,
-  Cell,
+  None = 'none',
+  Cell = 'cell',
 }
 
 export enum KeyboardEnum {
@@ -22,8 +22,8 @@ export enum SortDirection {
 }
 
 export enum SortingMode {
-  None,
-  Single,
+  None = 'none',
+  Single = 'single',
 }
 
 export enum TextAlign {

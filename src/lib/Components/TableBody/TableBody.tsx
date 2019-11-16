@@ -4,7 +4,7 @@ import { EditingMode } from '../../enums';
 import groupMark from '../../groupMark';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
-import { FilterRowItem } from '../../Models/FilterRowItem';
+import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
 import { DataChangedFunc, OptionChangedFunc } from '../../types';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../../Utils/ArrayUtils';
@@ -18,7 +18,7 @@ export interface ITableBodyProps {
   data: any[];
   editableCells?: Cell[];
   editingMode?: EditingMode;
-  filterRow?: FilterRowItem[];
+  filterRow?: FilterCondition[];
   groups?: Group[];
   groupsExpanded?: any[][];
   onDataChanged?: DataChangedFunc;

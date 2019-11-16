@@ -3,7 +3,7 @@
  */
 export class Cell {
   /*
-  * Specifies the field of data which value will be used in cell
+  * Specifies the field of data
   */
   public field!: string;
 

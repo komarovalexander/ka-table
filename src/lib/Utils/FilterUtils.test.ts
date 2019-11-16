@@ -1,6 +1,6 @@
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
-import { FilterRowItem } from '../Models/FilterRowItem';
+import { FilterCondition } from '../Models/FilterCondition';
 import {
   filterCellValueChangeHandler, filterData, getRowEditableCells, searchData,
 } from './FilterUtils';
@@ -37,7 +37,7 @@ describe('FilterUtils', () => {
     });
 
     it('two item', () => {
-      const filterRow: FilterRowItem[] = [{
+      const filterRow: FilterCondition[] = [{
         field: 'name',
         operator: '=',
         value: 'Billi Bob',
@@ -52,7 +52,7 @@ describe('FilterUtils', () => {
   });
 
   describe('filterCellValueChangeHandler', () => {
-    let filterRow: FilterRowItem[];
+    let filterRow: FilterCondition[];
     beforeEach(() => {
       filterRow = [{
         field: 'name',

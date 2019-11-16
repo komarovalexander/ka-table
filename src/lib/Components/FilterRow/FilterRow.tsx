@@ -2,14 +2,14 @@ import React from 'react';
 
 import emptyFunc from '../../emptyFunc';
 import { Column } from '../../Models/Column';
-import { FilterRowItem } from '../../Models/FilterRowItem';
+import { FilterCondition } from '../../Models/FilterCondition';
 import { OptionChangedFunc } from '../../types';
 import { filterCellValueChangeHandler } from '../../Utils/FilterUtils';
 import FilterCell from '../FilterCell/FilterCell';
 
 export interface IFilterRowProps {
   columns: Column[];
-  filterRow: FilterRowItem[];
+  filterRow: FilterCondition[];
   onOptionChanged: OptionChangedFunc;
 }
 

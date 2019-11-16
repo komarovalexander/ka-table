@@ -2,7 +2,7 @@ import { DataType, SortDirection, TextAlign } from '../enums';
 import { CellFunc, EditorFunc, SearchFunc, ValidationFunc } from '../types';
 
 /**
- * Columns in table and their look and behaviour
+ * Describes column of table its look and behaviour
  */
 export class Column {
   /*
