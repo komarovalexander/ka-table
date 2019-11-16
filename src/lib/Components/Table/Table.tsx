@@ -17,7 +17,7 @@ import TableBody from '../TableBody/TableBody';
  * Sets the options of the table which are related to its looks
  */
 export interface ITableOption {
-  /** Column's settings */
+  /** Columns in table and their look and behaviour */
   columns: Column[];
   /** Specifies the array of cells which are being edited */
   editableCells?: Cell[];
@@ -33,7 +33,10 @@ export interface ITableOption {
   rowKey: string;
   /** Sets the sorting mode */
   sortingMode?: SortingMode;
-  /** Sets the search by data columns */
+  /**
+   * Sets the search by data columns
+   * (TODO: replace string to any)
+   */
   search?: string;
 }
 

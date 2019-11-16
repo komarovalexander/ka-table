@@ -1,8 +1,8 @@
 import { DataType, SortDirection, TextAlign } from '../enums';
-import { CellFunc, EditorFunc, ValidationFunc } from '../types';
+import { CellFunc, EditorFunc, SearchFunc, ValidationFunc } from '../types';
 
 /**
- * Describes the columns in table and their look and behaviour
+ * Columns in table and their look and behaviour
  */
 export class Column {
   /*
@@ -21,7 +21,7 @@ export class Column {
   public dataType!: DataType;
 
   /*
-  * Sort rows by column. Available values: 'ascend' | 'descend'
+  * Sort rows by column
   */
   public sortDirection?: SortDirection;
 
@@ -48,10 +48,10 @@ export class Column {
   /*
   * Sets the search
   */
-  public search?: (searchText?: string, rodData?: any, column?: Column) => boolean;
+  public search?: SearchFunc;
 
   /*
-  * Sets the validation
+  * Sets the validation rule for the cell
   */
   public validation?: ValidationFunc;
 }
