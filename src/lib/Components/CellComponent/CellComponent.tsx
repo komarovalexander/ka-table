@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
@@ -34,7 +35,7 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
 }) => {
   const rowKeyValue = rowData[rowKey];
   return (
-    <td style={{textAlign}}>
+    <td style={{textAlign}} className={defaultOptions.css.cell}>
       { isEditableCell ? (
           <CellEditor
             {...{ column, rowData }}

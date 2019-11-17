@@ -1,5 +1,6 @@
 import React from 'react';
 
+import defaultOptions from '../../defaultOptions';
 import { SortingMode } from '../../enums';
 import { Column } from '../../Models/Column';
 import { OptionChangedFunc } from '../../types';
@@ -14,7 +15,7 @@ export interface IHeadRowProps {
 
 const HeadRow: React.FunctionComponent<IHeadRowProps> = ({ columns, onOptionChanged, sortingMode }) => {
   return (
-    <tr className='tc-header-row'>
+    <tr className={defaultOptions.css.theadRow}>
       {columns.map((column) => {
         const sortClick: any = sortingMode === SortingMode.Single && (() => {
           sortUtilsClickHandler(columns, column, onOptionChanged);

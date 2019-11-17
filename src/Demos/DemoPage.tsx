@@ -3,11 +3,7 @@ import './DemoPage.scss';
 import React, { useEffect, useState } from 'react';
 import Highlight from 'react-highlight';
 
-import bootstrapCssClasses from '../lib/bootstrapCssClasses';
-import defaultOptions from '../lib/defaultOptions';
 import Demo from './Demo';
-
-defaultOptions.css = bootstrapCssClasses;
 
 const getDemoPage = (demo: Demo) => {
   return () => {

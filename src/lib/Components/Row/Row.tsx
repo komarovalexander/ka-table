@@ -1,5 +1,6 @@
 import React from 'react';
 
+import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
@@ -29,7 +30,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
 }) => {
   const rowEditableCells = getRowEditableCells(rowData[rowKey], editableCells);
   return (
-    <tr className='tc-row'>
+    <tr className={defaultOptions.css.row}>
       {columns.map((column) => (
         <CellComponent
           key={column.field}

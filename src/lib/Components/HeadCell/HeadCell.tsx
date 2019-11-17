@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import defaultOptions from '../../defaultOptions';
+import { SortDirection } from '../../enums';
 import { Column } from '../../Models/Column';
 
 export interface IHeadCellProps {
@@ -7,11 +9,25 @@ export interface IHeadCellProps {
   sortClick?: () => void;
 }
 
-const HeadCell: React.FunctionComponent<IHeadCellProps> = ({ sortClick, column: { width, title, textAlign } }) => {
+const HeadCell: React.FunctionComponent<IHeadCellProps> = ({
+  sortClick, column: { width, title, textAlign, sortDirection },
+}) => {
   return (
-    <th scope='col' style={{ width, textAlign }}>
-      <div>{title}</div>
-      {sortClick && <div onClick={sortClick}>Sort</div>}
+    <th scope='col' style={{ width, textAlign }} className={defaultOptions.css.theadCell}>
+      <div className='tc-thead-cell-content' onClick={sortClick}>
+        <div>{title}</div>
+        {
+          sortDirection && sortClick && (
+            <div
+              className={
+                sortDirection === SortDirection.Ascend
+                  ? defaultOptions.css.iconSortArrowDown
+                  : defaultOptions.css.iconSortArrowUp
+              }
+            />
+          )
+        }
+      </div>
     </th>
   );
 };
