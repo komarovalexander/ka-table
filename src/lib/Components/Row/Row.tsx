@@ -13,16 +13,26 @@ export interface IRowProps {
   editableCells: Cell[];
   editingMode: EditingMode;
   columns: Column[];
+  groupColumnsCount: number;
   onRowDataChanged: RowDataChangedFunc;
   onOptionChanged: OptionChangedFunc;
   rowKey: any;
   rowData: any;
 }
 
+const getEmptyColumns = (count: number) => {
+  const columns = [];
+  for (let i = 0; i < count; i++) {
+    columns.push(<td className='tc-empty-column'/>);
+  }
+  return columns;
+};
+
 const Row: React.FunctionComponent<IRowProps> = ({
   columns,
   editableCells,
   editingMode,
+  groupColumnsCount,
   onOptionChanged,
   onRowDataChanged,
   rowData,
@@ -31,6 +41,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
   const rowEditableCells = getRowEditableCells(rowData[rowKey], editableCells);
   return (
     <tr className={defaultOptions.css.row}>
+      {getEmptyColumns(groupColumnsCount)}
       {columns.map((column) => (
         <CellComponent
           key={column.field}

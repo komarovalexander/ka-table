@@ -21,6 +21,7 @@ export interface ITableBodyProps {
   filterRow?: FilterCondition[];
   groups?: Group[];
   groupsExpanded?: any[][];
+  groupColumnsCount: number;
   onDataChanged?: DataChangedFunc;
   onOptionChanged: OptionChangedFunc;
   rowKey: string;
@@ -34,6 +35,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
   filterRow,
   groups,
   groupsExpanded,
+  groupColumnsCount,
   onDataChanged = () => {},
   onOptionChanged,
   rowKey,
@@ -52,8 +54,8 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
           ? (
             <GroupRow
               key={d.key}
-              columns={columns}
               groupRowData={d}
+              groupColumnsCount={d.key.length}
               groupsExpanded={groupsExpanded || []}
               onOptionChanged={onOptionChanged} />
           ) : (
@@ -65,6 +67,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
               onOptionChanged={onOptionChanged}
               editableCells={editableCells}
               editingMode={editingMode}
+              groupColumnsCount={groupColumnsCount}
               onRowDataChanged={(rowData: any) => {
                 const newData = getCopyOfArrayAndInsertOrReplaceItem(rowData, rowKey, data);
                 onDataChanged(newData);

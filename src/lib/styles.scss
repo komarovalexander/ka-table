@@ -26,6 +26,7 @@
 }
 .tc-thead-cell-content{
   display: flex;
+  cursor: pointer;
 }
 .tc-cell{
   padding: 30px 40px;
@@ -33,4 +34,12 @@
 }
 .tc-icon{
   font-weight: 100;
+}
+.tc-empty-column{
+  width: 40px;
+}
+.tc-group-column{
+  padding: 25px 40px;
+  display: flex;
+  align-items: center;
 }

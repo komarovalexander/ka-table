@@ -55,6 +55,7 @@ interface IAllProps extends ITableEvents, ITableOption {
 export const Table: React.FunctionComponent<IAllProps> = (props) => {
   const {
     columns,
+    groups,
     filterRow,
     onOptionChanged,
     search,
@@ -65,13 +66,27 @@ export const Table: React.FunctionComponent<IAllProps> = (props) => {
   data = convertToColumnTypes(data, columns);
   data = filterRow ? filterData(data, filterRow) : data;
   data = sortData(columns, data);
+
+  let groupColumnsCount = 0;
+  if (groups) {
+    groupColumnsCount = groups.length;
+  }
   return (
     <div className='tc'>
       <table className={defaultOptions.css.table}>
         <thead className={defaultOptions.css.thead}>
-          <HeadRow columns={columns} onOptionChanged={onOptionChanged} sortingMode={sortingMode}/>
+          <HeadRow
+            groupColumnsCount={groupColumnsCount}
+            columns={columns}
+            onOptionChanged={onOptionChanged}
+            sortingMode={sortingMode}
+          />
         </thead>
-        <TableBody {...props} data={data}/>
+        <TableBody
+            {...props}
+            data={data}
+            groupColumnsCount={groupColumnsCount}
+        />
       </table>
     </div>
   );

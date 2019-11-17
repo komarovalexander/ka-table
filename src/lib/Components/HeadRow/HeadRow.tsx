@@ -11,11 +11,24 @@ export interface IHeadRowProps {
   columns: Column[];
   sortingMode: SortingMode;
   onOptionChanged: OptionChangedFunc;
+  groupColumnsCount: number;
 }
 
-const HeadRow: React.FunctionComponent<IHeadRowProps> = ({ columns, onOptionChanged, sortingMode }) => {
+const getEmptyColumns = (count: number) => {
+  const columns = [];
+  for (let i = 0; i < count; i++) {
+    columns.push(<th colSpan={0} className='tc-empty-column'/>);
+  }
+  return columns;
+};
+
+const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
+  columns, onOptionChanged, sortingMode, groupColumnsCount,
+
+}) => {
   return (
     <tr className={defaultOptions.css.theadRow}>
+      {getEmptyColumns(groupColumnsCount)}
       {columns.map((column) => {
         const sortClick: any = sortingMode === SortingMode.Single && (() => {
           sortUtilsClickHandler(columns, column, onOptionChanged);
