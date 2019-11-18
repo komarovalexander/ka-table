@@ -21,27 +21,38 @@
   background-color: #F1F5F7;
 }
 .tc-thead-cell{
-  padding: 25px 40px;
+  padding: 15px 20px;
   color: #747D86;
 }
 .tc-thead-cell-content{
   display: flex;
   cursor: pointer;
+  align-items: center;
 }
 .tc-cell{
-  padding: 30px 40px;
+  padding: 15px 20px;
   color: #353C44;
 }
 .tc-icon{
   font-weight: 100;
+  font-size: 10px;
 }
 .tc-empty-cell{
   width: 40px;
 }
+.tc-group-row{
+  background-color: #F9FBFC;
+}
 .tc-group-column{
-  padding: 25px 40px;
+  padding: 15px 20px;
 }
 .tc-group-column-content{
   display: flex;
   align-items: center;
+}
+.tc-icon-group-arrow{
+  margin-right: 10px;
+}
+.tc-icon-sort{
+  margin-left: 3px;
 }
