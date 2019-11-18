@@ -5,6 +5,7 @@ import { SortingMode } from '../../enums';
 import { Column } from '../../Models/Column';
 import { OptionChangedFunc } from '../../types';
 import { sortUtilsClickHandler } from '../../Utils/HeadRowUtils';
+import EmptyCells from '../EmptyCells/EmptyCells';
 import HeadCell from '../HeadCell/HeadCell';
 
 export interface IHeadRowProps {
@@ -14,21 +15,12 @@ export interface IHeadRowProps {
   groupColumnsCount: number;
 }
 
-const getEmptyColumns = (count: number) => {
-  const columns = [];
-  for (let i = 0; i < count; i++) {
-    columns.push(<th colSpan={0} className='tc-empty-column'/>);
-  }
-  return columns;
-};
-
 const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
   columns, onOptionChanged, sortingMode, groupColumnsCount,
-
 }) => {
   return (
     <tr className={defaultOptions.css.theadRow}>
-      {getEmptyColumns(groupColumnsCount)}
+      <EmptyCells count={groupColumnsCount}/>
       {columns.map((column) => {
         const sortClick: any = sortingMode === SortingMode.Single && (() => {
           sortUtilsClickHandler(columns, column, onOptionChanged);

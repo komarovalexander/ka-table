@@ -4,40 +4,37 @@ import defaultOptions from '../../defaultOptions';
 import { GroupRowData } from '../../Models/GroupRowData';
 import { OptionChangedFunc } from '../../types';
 import { groupClick } from '../../Utils/GroupUtils';
+import EmptyCells from '../EmptyCells/EmptyCells';
 
 export interface IGroupRowProps {
-  groupColumnsCount: number;
+  emptyColumnsCount: number;
   groupRowData: GroupRowData;
   groupsExpanded: any[][];
   onOptionChanged: OptionChangedFunc;
 }
 
-const getEmptyColumns = (count: number) => {
-  const columns = [];
-  for (let i = 0; i < count; i++) {
-    columns.push(<td colSpan={0} className='tc-empty-column'/>);
-  }
-  return columns;
-};
-
 const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
-  groupColumnsCount,
+  emptyColumnsCount,
   groupRowData,
   groupsExpanded,
   onOptionChanged,
 }) => {
   return (
     <tr className='tc-group-row'>
-      {getEmptyColumns(groupColumnsCount)}
+      <EmptyCells count={emptyColumnsCount}/>
       <td
         className='tc-group-column'
-        colSpan={'100%' as any}
-        onClick={() => {
-          groupClick(groupsExpanded, groupRowData, onOptionChanged);
-        }}>
-          <div className={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(groupRowData.key))
-            ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed}/>
-          <div className='tc-group-text'>{groupRowData.value.toString()}</div>
+        colSpan={'100%' as any}>
+          <div className='tc-group-column-content'>
+            <div
+              onClick={() => {
+                groupClick(groupsExpanded, groupRowData, onOptionChanged);
+              }}
+              className={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(groupRowData.key))
+                ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed}
+            />
+            <div className='tc-group-text'>{groupRowData.value.toString()}</div>
+          </div>
       </td>
     </tr>
   );

@@ -8,6 +8,7 @@ import { OptionChangedFunc, RowDataChangedFunc } from '../../types';
 import { isEditableCell } from '../../Utils/CellUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
 import CellComponent from '../CellComponent/CellComponent';
+import EmptyCells from '../EmptyCells/EmptyCells';
 
 export interface IRowProps {
   editableCells: Cell[];
@@ -19,14 +20,6 @@ export interface IRowProps {
   rowKey: any;
   rowData: any;
 }
-
-const getEmptyColumns = (count: number) => {
-  const columns = [];
-  for (let i = 0; i < count; i++) {
-    columns.push(<td className='tc-empty-column'/>);
-  }
-  return columns;
-};
 
 const Row: React.FunctionComponent<IRowProps> = ({
   columns,
@@ -41,7 +34,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
   const rowEditableCells = getRowEditableCells(rowData[rowKey], editableCells);
   return (
     <tr className={defaultOptions.css.row}>
-      {getEmptyColumns(groupColumnsCount)}
+      <EmptyCells count={groupColumnsCount}/>
       {columns.map((column) => (
         <CellComponent
           key={column.field}

@@ -55,7 +55,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
             <GroupRow
               key={d.key}
               groupRowData={d}
-              groupColumnsCount={d.key.length - 1}
+              emptyColumnsCount={d.key.length - 1}
               groupsExpanded={groupsExpanded || []}
               onOptionChanged={onOptionChanged} />
           ) : (

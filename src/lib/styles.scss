@@ -35,11 +35,13 @@
 .tc-icon{
   font-weight: 100;
 }
-.tc-empty-column{
+.tc-empty-cell{
   width: 40px;
 }
 .tc-group-column{
   padding: 25px 40px;
+}
+.tc-group-column-content{
   display: flex;
   align-items: center;
 }
