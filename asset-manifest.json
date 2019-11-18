@@ -1,17 +1,18 @@
 {
   "files": {
-    "main.css": "/react-table-control/static/css/main.6d5dc420.chunk.css",
-    "main.js": "/react-table-control/static/js/main.bedd688c.chunk.js",
-    "main.js.map": "/react-table-control/static/js/main.bedd688c.chunk.js.map",
+    "main.css": "/react-table-control/static/css/main.9b026f16.chunk.css",
+    "main.js": "/react-table-control/static/js/main.10eebac9.chunk.js",
+    "main.js.map": "/react-table-control/static/js/main.10eebac9.chunk.js.map",
     "runtime-main.js": "/react-table-control/static/js/runtime-main.4442c054.js",
     "runtime-main.js.map": "/react-table-control/static/js/runtime-main.4442c054.js.map",
-    "static/css/2.1a66e77d.chunk.css": "/react-table-control/static/css/2.1a66e77d.chunk.css",
-    "static/js/2.0a79844a.chunk.js": "/react-table-control/static/js/2.0a79844a.chunk.js",
-    "static/js/2.0a79844a.chunk.js.map": "/react-table-control/static/js/2.0a79844a.chunk.js.map",
+    "static/css/2.ab3f4a0d.chunk.css": "/react-table-control/static/css/2.ab3f4a0d.chunk.css",
+    "static/js/2.fee82758.chunk.js": "/react-table-control/static/js/2.fee82758.chunk.js",
+    "static/js/2.fee82758.chunk.js.map": "/react-table-control/static/js/2.fee82758.chunk.js.map",
     "index.html": "/react-table-control/index.html",
-    "precache-manifest.854079404ed2cb5a894ab2b2492234d2.js": "/react-table-control/precache-manifest.854079404ed2cb5a894ab2b2492234d2.js",
+    "precache-manifest.3202a5030857832ad2c908151c23783b.js": "/react-table-control/precache-manifest.3202a5030857832ad2c908151c23783b.js",
     "service-worker.js": "/react-table-control/service-worker.js",
-    "static/css/2.1a66e77d.chunk.css.map": "/react-table-control/static/css/2.1a66e77d.chunk.css.map",
-    "static/css/main.6d5dc420.chunk.css.map": "/react-table-control/static/css/main.6d5dc420.chunk.css.map"
+    "static/css/2.ab3f4a0d.chunk.css.map": "/react-table-control/static/css/2.ab3f4a0d.chunk.css.map",
+    "static/css/main.9b026f16.chunk.css.map": "/react-table-control/static/css/main.9b026f16.chunk.css.map",
+    "static/media/DemoPage.scss": "/react-table-control/static/media/icons.c03dc181.woff"
   }
 }
