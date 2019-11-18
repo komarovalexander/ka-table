@@ -39,9 +39,18 @@
 }
 .tc-empty-cell{
   width: 40px;
+  min-width: 40px;
+}
+.tc-row{
+  box-sizing: border-box;
+  border-bottom: 1px solid #F0F2F6;
+  border-top: 1px solid #F0F2F6;
 }
 .tc-group-row{
-  background-color: #F9FBFC;
+  background-color: #F0F2F6;
+  box-sizing: border-box;
+  border-bottom: 1px solid white;
+  border-top: 1px solid white;
 }
 .tc-group-column{
   padding: 15px 20px;
