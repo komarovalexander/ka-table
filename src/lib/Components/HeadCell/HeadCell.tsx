@@ -14,7 +14,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = ({
 }) => {
   return (
     <th scope='col' style={{ width, textAlign }} className={defaultOptions.css.theadCell}>
-      <div className='tc-thead-cell-content' onClick={sortClick}>
+      <div className='tc-thead-cell-content' onClick={sortClick ? sortClick : undefined}>
         <div>{title}</div>
         {
           sortDirection && sortClick && (
