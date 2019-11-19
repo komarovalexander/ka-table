@@ -18,28 +18,23 @@ export interface ICellComponentProps {
   rowKey: any;
 }
 
-const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
-  column,
-  column: { textAlign },
-  isEditableCell,
-  editingMode,
-  onEvent,
-  onRowDataChanged,
-  rowData,
-  rowKey,
-}) => {
+const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
+  const {
+    column,
+    column: { textAlign },
+    isEditableCell,
+    editingMode,
+    onEvent,
+    onRowDataChanged,
+    rowData,
+    rowKey,
+  } = props;
   const rowKeyValue = rowData[rowKey];
   return (
     <td style={{textAlign}} className={defaultOptions.css.cell}>
       { isEditableCell ? (
           <CellEditor
-            {...{ column, rowData }}
-            close={
-              () => {
-                const cell: Cell = { field: column.field, rowKeyValue };
-                onEvent(Events.CloseEditor, { cell });
-              }
-            }
+            {...props}
             onValueChange={onRowDataChanged}
           />
         )

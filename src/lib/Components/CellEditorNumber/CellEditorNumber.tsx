@@ -1,13 +1,16 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
+import { Events } from '../../enums';
+import { Cell } from '../../models';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
   column,
-  rowData,
-  close,
+  onEvent,
   onValueChange,
+  rowData,
+  rowKey,
 }) => {
   const value = rowData[column.field];
   return (
@@ -19,7 +22,11 @@ const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
         const newValue = event.currentTarget.value;
         onValueChange(Number(newValue) || null);
       }}
-      onBlur={close}/>
+      onBlur={() => {
+        const cell: Cell = { field: column.field, rowKeyValue: rowData[rowKey] };
+        onEvent(Events.CloseEditor, { cell });
+      }}
+    />
   );
 };
 

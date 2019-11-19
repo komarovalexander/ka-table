@@ -29,8 +29,9 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
           <FilterCell
             key={column.field}
             column={column}
+            rowKey={''}
+            onEvent={emptyFunc}
             rowData={rowData}
-            close={emptyFunc}
             onValueChange={(value) => {
               filterCellValueChangeHandler(value, column.field, filterRow, onOptionChanged);
             }}

@@ -1,13 +1,14 @@
 import * as React from 'react';
 
 import { Column } from '../../Models/Column';
-import { ValueChangeFunc } from '../../types';
+import { EventFunc, ValueChangeFunc } from '../../types';
 import CellEditorState from '../CellEditorState/CellEditorState';
 
 export interface ICellEditorProps {
   column: Column;
   rowData: any;
-  close: () => void;
+  rowKey: string;
+  onEvent: EventFunc;
   onValueChange: ValueChangeFunc;
 }
 

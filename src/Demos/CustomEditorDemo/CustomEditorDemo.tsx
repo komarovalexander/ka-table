@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode } from '../../lib/enums';
+import { DataType, EditingMode, Events } from '../../lib/enums';
+import { Cell } from '../../lib/models';
 import { EditorFuncPropsWithChildren, OptionChangedFunc } from '../../lib/types';
 import { toBoolean } from '../../lib/Utils/TypeUtils';
 
@@ -15,8 +16,12 @@ const dataArray: any[] = [
 ];
 
 const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { field }, rowData, close, onValueChange,
+  column: { field }, rowKey, rowData, onEvent, onValueChange,
 }) => {
+  const close = () => {
+    const cell: Cell = { field, rowKeyValue: rowData[rowKey] };
+    onEvent(Events.CloseEditor, { cell });
+  };
   const [value, setValue] = useState(rowData[field]);
   return (
     <div>
@@ -35,8 +40,12 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
 };
 
 const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { field }, rowData, close,  onValueChange,
+  column: { field }, rowData, rowKey, onEvent, onValueChange,
 }) => {
+  const close = () => {
+    const cell: Cell = { field, rowKeyValue: rowData[rowKey] };
+    onEvent(Events.CloseEditor, { cell });
+  };
   const [value, setValue] = useState(rowData[field]);
   return (
     <div>

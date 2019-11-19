@@ -12,6 +12,7 @@
     "no-empty": [true, "allow-empty-functions"],
     "jsx-alignment": false,
     "jsx-no-lambda": false,
-    "no-implicit-dependencies": false
+    "no-implicit-dependencies": false,
+    "no-object-literal-type-assertion": [true, { "allow-arguments": true }]
   }
 }

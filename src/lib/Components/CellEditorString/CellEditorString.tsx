@@ -1,10 +1,16 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
+import { Events } from '../../enums';
+import { Cell } from '../../models';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
-  column, rowData, close, onValueChange,
+  column,
+  onEvent,
+  onValueChange,
+  rowData,
+  rowKey,
 }) => {
   const value = rowData[column.field] || '';
   return (
@@ -13,7 +19,11 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
       className={defaultOptions.css.textInput}
       value={value || ''}
       onChange={(event) => onValueChange(event.currentTarget.value)}
-      onBlur={close}/>
+      onBlur={() => {
+        const cell: Cell = { field: column.field, rowKeyValue: rowData[rowKey] };
+        onEvent(Events.CloseEditor, { cell });
+      }}
+    />
   );
 };
 

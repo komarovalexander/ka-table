@@ -1,13 +1,16 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
+import { Events } from '../../enums';
+import { Cell } from '../../models';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   column,
-  rowData,
-  close,
+  onEvent,
   onValueChange,
+  rowData,
+  rowKey,
 }) => {
   const fieldValue = rowData[column.field];
   const value = fieldValue && fieldValue.toISOString().split('T')[0];
@@ -21,7 +24,11 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
         const targetValue: string = event.currentTarget.value;
         onValueChange(targetValue ? new Date(targetValue) : null);
       }}
-      onBlur={close}/>
+      onBlur={() => {
+        const cell: Cell = { field: column.field, rowKeyValue: rowData[rowKey] };
+        onEvent(Events.CloseEditor, { cell });
+      }}
+    />
   );
 };
 
