@@ -29,7 +29,6 @@
 }
 .tc-thead-cell-content{
   display: flex;
-  cursor: pointer;
   align-items: center;
 }
 .tc-cell{
@@ -67,4 +66,7 @@
 }
 .tc-icon-sort{
   margin-left: 3px;
+}
+.tc-pointer{
+  cursor: pointer;
 }
