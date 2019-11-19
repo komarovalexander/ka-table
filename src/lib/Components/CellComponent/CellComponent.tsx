@@ -1,8 +1,7 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode, Events } from '../../enums';
-import { Cell } from '../../Models/Cell';
+import { EditingMode } from '../../enums';
 import { Column } from '../../Models/Column';
 import { EventFunc, RowDataChangedFunc } from '../../types';
 import CellContent from '../CellContent/CellContent';
@@ -20,16 +19,10 @@ export interface ICellComponentProps {
 
 const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
   const {
-    column,
     column: { textAlign },
     isEditableCell,
-    editingMode,
-    onEvent,
     onRowDataChanged,
-    rowData,
-    rowKey,
   } = props;
-  const rowKeyValue = rowData[rowKey];
   return (
     <td style={{textAlign}} className={defaultOptions.css.cell}>
       { isEditableCell ? (
@@ -39,16 +32,7 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
           />
         )
         : (
-          <CellContent {...{ column, rowData }}
-            openEditor={
-              () => {
-                if (editingMode !== EditingMode.None) {
-                  const cell: Cell = { field: column.field, rowKeyValue };
-                  onEvent(Events.OpenEditor, { cell });
-                }
-              }
-            }
-          />
+          <CellContent {...props} />
         )
       }
     </td>

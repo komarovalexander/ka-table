@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, TextAlign } from '../../lib/enums';
+import { DataType, EditingMode, Events, TextAlign } from '../../lib/enums';
+import { Cell } from '../../lib/models';
 import { CellFuncPropsWithChildren, OptionChangedFunc } from '../../lib/types';
 
 const dataArray: any[] = [
@@ -14,10 +15,13 @@ const dataArray: any[] = [
 ];
 
 const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
-  column: { field }, rowData, openEditor,
+  column: { field }, rowData, rowKey, onEvent,
 }) => {
   return (
-    <div onClick={openEditor}>
+    <div onClick={() => {
+      const cell: Cell = { field, rowKeyValue: rowData[rowKey] };
+      onEvent(Events.OpenEditor, { cell });
+    }}>
       {rowData[field] ? 'Passed' : 'Failed'}
     </div>
   );

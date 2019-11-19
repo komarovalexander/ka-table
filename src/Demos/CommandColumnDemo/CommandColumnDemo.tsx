@@ -4,7 +4,9 @@ import { ITableOption, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
 import { CellFuncPropsWithChildren, EventFunc, OptionChangedFunc } from '../../lib/types';
 
-const dataArray = Array(100).fill(undefined).map(
+const DELETE_EVENT = 'delete';
+
+const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -14,7 +16,7 @@ const dataArray = Array(100).fill(undefined).map(
 );
 
 const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
-  column, rowData, openEditor,
+   rowData,
 }) => {
   return (
     <div>
@@ -23,14 +25,24 @@ const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
   );
 };
 
+const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
+  rowData, onEvent,
+}) => {
+ return (
+   <div>
+     <button onClick={() => onEvent(DELETE_EVENT, { rowData })}>Delete</button>
+   </div>
+ );
+};
+
 const tableOption: ITableOption = {
   columns: [
+    { key: 'command2', field: '', cell: (props) => <AlertCell {...props}/> },
     { field: 'column1', title: 'Column 1', dataType: DataType.String },
     { field: 'column2', title: 'Column 2', dataType: DataType.String },
     { field: 'column3', title: 'Column 3', dataType: DataType.String },
     { field: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: 'command1', field: '', cell: () => <div>1223</div> },
-    { key: 'command2', field: '', cell: (props) => <AlertCell {...props}/> },
+    { key: 'command1', field: '', cell: (props) => <DeleteRow {...props} /> },
   ],
   rowKey: 'column1',
 };
@@ -47,7 +59,10 @@ const CommandColumnDemo: React.FC = () => {
   };
 
   const onEvent: EventFunc = (event, eventData) => {
-
+    if (event === DELETE_EVENT) {
+      const newValue = data.filter((d: any) => d[tableOption.rowKey] !== eventData.rowData[tableOption.rowKey]);
+      changeData(newValue);
+    }
   };
   return (
     <Table
