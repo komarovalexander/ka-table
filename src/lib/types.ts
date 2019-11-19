@@ -9,7 +9,7 @@ export type CellFuncPropsWithChildren = PropsWithChildren<ICellContentProps>;
 export type DataChangedFunc = (data: any[]) => void;
 export type EditorFunc = (props: EditorFuncPropsWithChildren) => any;
 export type EditorFuncPropsWithChildren = PropsWithChildren<ICellEditorProps>;
-export type EventFunction = (type: string, data: any) => void;
+export type EventFunc = (type: string, data: any) => void;
 export type OptionChangedFunc = (value: any) => void;
 export type RowDataChangedFunc = (data: any) => void;
 export type SearchFunc = (searchText?: string, rowData?: any, column?: Column) => boolean;

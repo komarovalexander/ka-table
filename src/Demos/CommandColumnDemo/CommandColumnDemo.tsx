@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
-import { OptionChangedFunc } from '../../lib/types';
+import { CellFuncPropsWithChildren, EventFunc, OptionChangedFunc } from '../../lib/types';
 
 const dataArray = Array(100).fill(undefined).map(
   (_, index) => ({
@@ -13,12 +13,24 @@ const dataArray = Array(100).fill(undefined).map(
   }),
 );
 
+const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
+  column, rowData, openEditor,
+}) => {
+  return (
+    <div>
+      <button onClick={() => alert(`row data: ${JSON.stringify(rowData)}`)}>Show allert</button>
+    </div>
+  );
+};
+
 const tableOption: ITableOption = {
   columns: [
     { field: 'column1', title: 'Column 1', dataType: DataType.String },
     { field: 'column2', title: 'Column 2', dataType: DataType.String },
     { field: 'column3', title: 'Column 3', dataType: DataType.String },
     { field: 'column4', title: 'Column 4', dataType: DataType.String },
+    { key: 'command1', field: '', cell: () => <div>1223</div> },
+    { key: 'command2', field: '', cell: (props) => <AlertCell {...props}/> },
   ],
   rowKey: 'column1',
 };
@@ -33,12 +45,17 @@ const CommandColumnDemo: React.FC = () => {
   const onDataChanged: OptionChangedFunc = (newValue) => {
     changeData(newValue);
   };
+
+  const onEvent: EventFunc = (event, eventData) => {
+
+  };
   return (
     <Table
       {...option}
       data={data}
       onOptionChanged={onOptionChanged}
       onDataChanged={onDataChanged}
+      onEvent={onEvent}
     />
   );
 };

@@ -6,6 +6,10 @@ import { CellFunc, EditorFunc, SearchFunc, ValidationFunc } from '../types';
  */
 export class Column {
   /*
+  * Unique identifier for the column. If it is not set, field will be used as its value
+  */
+  public key?: string;
+  /*
   * Specifies the field of data which value will be used in column
   */
   public field!: string;
@@ -13,12 +17,12 @@ export class Column {
   /*
   * Specifies the text of the header
   */
-  public title!: string;
+  public title?: string;
 
   /*
   * Specifies the data type of the column
   */
-  public dataType!: DataType;
+  public dataType?: DataType = DataType.String;
 
   /*
   * Sort rows by column
@@ -54,4 +58,9 @@ export class Column {
   * Sets the validation rule for the cell
   */
   public validation?: ValidationFunc;
+
+  /*
+  * Column which is not binded to specific field
+  */
+  public isCustom?: boolean;
 }

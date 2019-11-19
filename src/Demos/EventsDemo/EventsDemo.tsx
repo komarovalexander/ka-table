@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { EventFunction, OptionChangedFunc } from '../../lib/types';
+import { EventFunc, OptionChangedFunc } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -38,7 +38,7 @@ const EventsDemo: React.FC = () => {
     changeData(newValue);
   };
 
-  const onEvent: EventFunction = (event, eventData) => {
+  const onEvent: EventFunc = (event, eventData) => {
     events.push(`event: ${event}, data:${JSON.stringify(eventData)}`);
   };
   return (

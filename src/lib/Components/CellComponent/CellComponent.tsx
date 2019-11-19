@@ -1,34 +1,29 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode } from '../../enums';
+import { EditingMode, Events } from '../../enums';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
-import { OptionChangedFunc, RowDataChangedFunc } from '../../types';
-import {
-  changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler,
-} from '../../Utils/CellUtils';
+import { EventFunc, RowDataChangedFunc } from '../../types';
 import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
 
 export interface ICellComponentProps {
-  editableCells: Cell[];
   column: Column;
   editingMode: EditingMode;
   isEditableCell: boolean;
-  onOptionChanged: OptionChangedFunc;
+  onEvent: EventFunc;
   onRowDataChanged: RowDataChangedFunc;
   rowData: any;
   rowKey: any;
 }
 
 const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
-  editableCells,
   column,
   column: { textAlign },
   isEditableCell,
-  onOptionChanged,
   editingMode,
+  onEvent,
   onRowDataChanged,
   rowData,
   rowKey,
@@ -40,10 +35,10 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
           <CellEditor
             {...{ column, rowData }}
             close={
-              () => changeCellEditorToCellTextHandler(
-                { field: column.field, rowKeyValue },
-                editableCells,
-                onOptionChanged)
+              () => {
+                const cell: Cell = { field: column.field, rowKeyValue };
+                onEvent(Events.CloseEditor, { cell });
+              }
             }
             onValueChange={onRowDataChanged}
           />
@@ -51,10 +46,12 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = ({
         : (
           <CellContent {...{ column, rowData }}
             openEditor={
-              () => editingMode !== EditingMode.None && changeCellTextToCellEditorHandler(
-                {field: column.field, rowKeyValue },
-                editableCells,
-                onOptionChanged)
+              () => {
+                if (editingMode !== EditingMode.None) {
+                  const cell: Cell = { field: column.field, rowKeyValue };
+                  onEvent(Events.OpenEditor, { cell });
+                }
+              }
             }
           />
         )

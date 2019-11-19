@@ -6,8 +6,7 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
-import { DataChangedFunc, EventFunction, OptionChangedFunc } from '../../types';
-import { getCopyOfArrayAndInsertOrReplaceItem } from '../../Utils/ArrayUtils';
+import { DataChangedFunc, EventFunc, OptionChangedFunc } from '../../types';
 import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import GroupRow from '../GroupRow/GroupRow';
@@ -23,7 +22,7 @@ export interface ITableBodyProps {
   groupsExpanded?: any[][];
   groupColumnsCount: number;
   onDataChanged?: DataChangedFunc;
-  onEvent?: EventFunction;
+  onEvent: EventFunc;
   onOptionChanged: OptionChangedFunc;
   rowKey: string;
 }
@@ -39,7 +38,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
   groupColumnsCount,
   onDataChanged = () => {},
   onOptionChanged,
-  onEvent = () => {},
+  onEvent,
   rowKey,
 }) => {
   const groupedData = groups ? getGroupedData(data, groups, groupsExpanded) : data;
@@ -66,13 +65,11 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
               columns={columns}
               rowData={d}
               rowKey={rowKey}
-              onOptionChanged={onOptionChanged}
               editableCells={editableCells}
               editingMode={editingMode}
               groupColumnsCount={groupColumnsCount}
+              onEvent={onEvent}
               onRowDataChanged={(rowData: any) => {
-                const newData = getCopyOfArrayAndInsertOrReplaceItem(rowData, rowKey, data);
-                onDataChanged(newData);
                 onEvent(Events.RowDataChanged, { rowData });
               }}
             />

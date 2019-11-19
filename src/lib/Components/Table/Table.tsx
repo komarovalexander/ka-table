@@ -6,7 +6,8 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
-import { DataChangedFunc, EventFunction, OptionChangedFunc } from '../../types';
+import { DataChangedFunc, EventFunc, OptionChangedFunc } from '../../types';
+import { getOnEventHandler } from '../../Utils/EventUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
 import { convertToColumnTypes } from '../../Utils/TypeUtils';
@@ -40,21 +41,21 @@ export interface ITableOption {
   search?: string;
 }
 
-interface ITableEvents {
+export interface ITableEvents {
   /** Called each time Data is changed */
   onDataChanged?: DataChangedFunc;
   /** Called each time ITableOption changed */
   onOptionChanged: OptionChangedFunc;
   /** Called each time when some event emited */
-  onEvent?: EventFunction;
+  onEvent?: EventFunc;
 }
 
-interface IAllProps extends ITableEvents, ITableOption {
+export interface ITableAllProps extends ITableEvents, ITableOption {
   /** The data which is shown in Table's rows */
   data: any[];
 }
 
-export const Table: React.FunctionComponent<IAllProps> = (props) => {
+export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     groups,
     filterRow,
@@ -63,16 +64,20 @@ export const Table: React.FunctionComponent<IAllProps> = (props) => {
     sortingMode = SortingMode.None,
   } = props;
   let { columns, data } = props;
-  data = search ? searchData(columns, data, search) : data;
-  data = convertToColumnTypes(data, columns);
+  const realColumns = columns.filter((c) => c.field);
+  data = search ? searchData(realColumns, data, search) : data;
+  data = convertToColumnTypes(data, realColumns);
   data = filterRow ? filterData(data, filterRow) : data;
-  data = sortData(columns, data);
+  data = sortData(realColumns, data);
 
   let groupColumnsCount = 0;
   if (groups) {
     groupColumnsCount = groups.length;
     columns = columns.filter((c) => !groups.some((g) => g.field === c.field));
   }
+
+  const tableOnEvent = getOnEventHandler(props);
+
   return (
     <div className='tc'>
       <table className={defaultOptions.css.table}>
@@ -88,6 +93,7 @@ export const Table: React.FunctionComponent<IAllProps> = (props) => {
             {...props}
             data={data}
             columns={columns}
+            onEvent={tableOnEvent}
             groupColumnsCount={groupColumnsCount}
         />
       </table>

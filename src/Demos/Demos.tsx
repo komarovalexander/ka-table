@@ -35,7 +35,7 @@ const cases = demos.map((d: Demo) => {
   return ({ demoComponent: getDemoPage(d), name: d.fileName, title: d.title, path: d.path });
 });
 
-const defaultDemo: Demo = demos.find((d) => d.component === EventsDemo) || demos[0];
+const defaultDemo: Demo = demos.find((d) => d.component === CommandColumnDemo) || demos[0];
 
 const Demos: React.FC = () => {
   return (

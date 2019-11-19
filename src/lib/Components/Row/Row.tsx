@@ -4,21 +4,21 @@ import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
-import { OptionChangedFunc, RowDataChangedFunc } from '../../types';
+import { EventFunc, RowDataChangedFunc } from '../../types';
 import { isEditableCell } from '../../Utils/CellUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
 import CellComponent from '../CellComponent/CellComponent';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
 export interface IRowProps {
+  columns: Column[];
   editableCells: Cell[];
   editingMode: EditingMode;
-  columns: Column[];
   groupColumnsCount: number;
+  onEvent: EventFunc;
   onRowDataChanged: RowDataChangedFunc;
-  onOptionChanged: OptionChangedFunc;
-  rowKey: any;
   rowData: any;
+  rowKey: any;
 }
 
 const Row: React.FunctionComponent<IRowProps> = ({
@@ -26,7 +26,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
   editableCells,
   editingMode,
   groupColumnsCount,
-  onOptionChanged,
+  onEvent,
   onRowDataChanged,
   rowData,
   rowKey,
@@ -37,15 +37,14 @@ const Row: React.FunctionComponent<IRowProps> = ({
       <EmptyCells count={groupColumnsCount}/>
       {columns.map((column) => (
         <CellComponent
-          key={column.field}
-          rowData={rowData}
           column={column}
-          rowKey={rowKey}
           editingMode={editingMode}
           isEditableCell={isEditableCell(editingMode, column.field, rowEditableCells)}
-          editableCells={editableCells}
-          onOptionChanged={onOptionChanged}
+          key={column.key || column.field}
+          onEvent={onEvent}
           onRowDataChanged={onRowDataChanged}
+          rowData={rowData}
+          rowKey={rowKey}
         />
       ))}
     </tr>
