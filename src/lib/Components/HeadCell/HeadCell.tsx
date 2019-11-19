@@ -1,33 +1,21 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { SortDirection } from '../../enums';
 import { Column } from '../../Models/Column';
+import HeadCellContent from '../HeadCellContent/HeadCellContent';
 
 export interface IHeadCellProps {
   column: Column;
   sortClick?: () => void;
 }
 
-const HeadCell: React.FunctionComponent<IHeadCellProps> = ({
-  sortClick, column: { width, title, textAlign, sortDirection },
-}) => {
+const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
+  const {
+    column: { width,  textAlign },
+  } = props;
   return (
     <th scope='col' style={{ width, textAlign }} className={defaultOptions.css.theadCell}>
-      <div className='tc-thead-cell-content' onClick={sortClick ? sortClick : undefined}>
-        <div>{title}</div>
-        {
-          sortDirection && sortClick && (
-            <div
-              className={
-                sortDirection === SortDirection.Ascend
-                  ? defaultOptions.css.iconSortArrowDown
-                  : defaultOptions.css.iconSortArrowUp
-              }
-            />
-          )
-        }
-      </div>
+      <HeadCellContent {...props}/>
     </th>
   );
 };

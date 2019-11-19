@@ -6,6 +6,7 @@ import { HashRouter, Link, Route } from 'react-router-dom';
 import CommandColumnDemo from './CommandColumnDemo/CommandColumnDemo';
 import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
 import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
+import CustomHeaderCellDemo from './CustomHeaderCellDemo/CustomHeaderCellDemo';
 import Demo from './Demo';
 import getDemoPage from './DemoPage';
 import EditingDemo from './EditingDemo/EditingDemo';
@@ -21,6 +22,7 @@ const demos: Demo[] = [
   new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo'),
   new Demo(CustomCellDemo, '/custom-cell', 'Custom Cell', 'CustomCellDemo'),
   new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo'),
+  new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo'),
   new Demo(EditingDemo, '/editing', 'Editing', 'EditingDemo'),
   new Demo(EventsDemo, '/events', 'Events', 'EventsDemo'),
   new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo'),
@@ -35,7 +37,7 @@ const cases = demos.map((d: Demo) => {
   return ({ demoComponent: getDemoPage(d), name: d.fileName, title: d.title, path: d.path });
 });
 
-const defaultDemo: Demo = demos.find((d) => d.component === CommandColumnDemo) || demos[0];
+const defaultDemo: Demo = demos.find((d) => d.component === CustomHeaderCellDemo) || demos[0];
 
 const Demos: React.FC = () => {
   return (
