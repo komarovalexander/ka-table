@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { EditingMode } from '../../enums';
+import { EditingMode, Events } from '../../enums';
 import groupMark from '../../groupMark';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
-import { DataChangedFunc, OptionChangedFunc } from '../../types';
+import { DataChangedFunc, EventFunction, OptionChangedFunc } from '../../types';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../../Utils/ArrayUtils';
 import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import FilterRow from '../FilterRow/FilterRow';
@@ -23,6 +23,7 @@ export interface ITableBodyProps {
   groupsExpanded?: any[][];
   groupColumnsCount: number;
   onDataChanged?: DataChangedFunc;
+  onEvent?: EventFunction;
   onOptionChanged: OptionChangedFunc;
   rowKey: string;
 }
@@ -38,6 +39,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
   groupColumnsCount,
   onDataChanged = () => {},
   onOptionChanged,
+  onEvent = () => {},
   rowKey,
 }) => {
   const groupedData = groups ? getGroupedData(data, groups, groupsExpanded) : data;
@@ -71,6 +73,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
               onRowDataChanged={(rowData: any) => {
                 const newData = getCopyOfArrayAndInsertOrReplaceItem(rowData, rowKey, data);
                 onDataChanged(newData);
+                onEvent(Events.RowDataChanged, { rowData });
               }}
             />
           )

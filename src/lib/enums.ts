@@ -11,6 +11,10 @@ export enum EditingMode {
   Cell = 'cell',
 }
 
+export enum Events {
+  RowDataChanged = 'RowDataChanged',
+}
+
 export enum KeyboardEnum {
   Esc = 27,
   Enter = 13,

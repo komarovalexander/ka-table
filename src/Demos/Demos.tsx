@@ -3,11 +3,13 @@ import './Demos.scss';
 import React from 'react';
 import { HashRouter, Link, Route } from 'react-router-dom';
 
+import CommandColumnDemo from './CommandColumnDemo/CommandColumnDemo';
 import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
 import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
 import Demo from './Demo';
 import getDemoPage from './DemoPage';
 import EditingDemo from './EditingDemo/EditingDemo';
+import EventsDemo from './EventsDemo/EventsDemo';
 import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
@@ -16,9 +18,11 @@ import SortingDemo from './SortingDemo/SortingDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
 
 const demos: Demo[] = [
+  new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo'),
   new Demo(CustomCellDemo, '/custom-cell', 'Custom Cell', 'CustomCellDemo'),
   new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo'),
   new Demo(EditingDemo, '/editing', 'Editing', 'EditingDemo'),
+  new Demo(EventsDemo, '/events', 'Events', 'EventsDemo'),
   new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo'),
   new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo'),
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo'),
@@ -31,7 +35,7 @@ const cases = demos.map((d: Demo) => {
   return ({ demoComponent: getDemoPage(d), name: d.fileName, title: d.title, path: d.path });
 });
 
-const defaultDemo: Demo = demos.find((d) => d.component === GroupingDemo) || demos[0];
+const defaultDemo: Demo = demos.find((d) => d.component === EventsDemo) || demos[0];
 
 const Demos: React.FC = () => {
   return (

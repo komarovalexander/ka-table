@@ -26,7 +26,9 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const closeHandler = useCallback(() => {
     if (!validationValue) {
-      onValueChange({ ...rowData, ...{ [field]: value[field] } });
+      if (rowData[field] !== value[field]) {
+        onValueChange({ ...rowData, ...{ [field]: value[field] } });
+      }
       close();
     }
   }, [validationValue, onValueChange, close, value, field, rowData]);

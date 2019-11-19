@@ -6,7 +6,7 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
-import { DataChangedFunc, OptionChangedFunc } from '../../types';
+import { DataChangedFunc, EventFunction, OptionChangedFunc } from '../../types';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
 import { convertToColumnTypes } from '../../Utils/TypeUtils';
@@ -45,6 +45,8 @@ interface ITableEvents {
   onDataChanged?: DataChangedFunc;
   /** Called each time ITableOption changed */
   onOptionChanged: OptionChangedFunc;
+  /** Called each time when some event emited */
+  onEvent?: EventFunction;
 }
 
 interface IAllProps extends ITableEvents, ITableOption {

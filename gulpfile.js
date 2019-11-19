@@ -12,7 +12,7 @@ gulp.task('gh-pages', function () {
         .pipe(ghPages());
 });
 
-gulp.task('demo-code', function () {
+gulp.task('demos', function () {
     return gulp
         .src('src/Demos/*/*Demo.tsx')
         .pipe(gulp.dest('public/demos'))

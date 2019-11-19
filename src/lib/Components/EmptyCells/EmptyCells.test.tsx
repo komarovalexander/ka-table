@@ -8,7 +8,7 @@ const props: IEmptyCellsProps = {
 };
 
 it('renders without crashing', () => {
-  const element = document.createElement('td');
+  const element = document.createElement('tr');
   ReactDOM.render(<EmptyCells {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });

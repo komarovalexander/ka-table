@@ -1,15 +1,19 @@
 
-.demos {
+.demos{
   font-family:'icons', 'Helvetica Neue Light', 'Open Sans', Helvetica;
   display: flex;
 
-  nav {
+  nav{
     width: 15%;
     padding: 20px;
   }
 
-  main {
+  main{
     width: 85%;
     padding: 20px;
+
+    .tc{
+      max-height: 600px;
+    }
   }
 }
