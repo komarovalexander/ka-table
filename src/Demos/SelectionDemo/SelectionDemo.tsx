@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, Events, SortDirection, SortingMode } from '../../lib/enums';
-import { Cell } from '../../lib/models';
-import {
-  CellFuncPropsWithChildren, EditorFuncPropsWithChildren, OptionChangedFunc,
-} from '../../lib/types';
+import { EditorFuncPropsWithChildren, OptionChangedFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -17,15 +14,21 @@ const dataArray: any[] = [
 ];
 
 const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { field }, rowData, rowKey, onEvent,
+  rowData, rowKey, onEvent, isSelectedRow,
 }) => {
   return (
-    <div onClick={() => {
-      const cell: Cell = { field, rowKeyValue: rowData[rowKey] };
-      onEvent(Events.OpenEditor, { cell });
-    }}>
-      SelectionCell
-    </div>
+    <input
+      type='checkbox'
+      checked={isSelectedRow}
+      onChange={(event) => {
+        const rowKeyValue = rowData[rowKey];
+        if (event.currentTarget.checked) {
+          onEvent(Events.RowSelected, { rowKeyValue });
+        } else {
+          onEvent(Events.RowDeselected, { rowKeyValue });
+        }
+      }}
+    />
   );
 };
 

@@ -12,6 +12,8 @@ export enum EditingMode {
 }
 
 export enum Events {
+  RowDeselected = 'RowDeselected',
+  RowSelected = 'RowSelected',
   CloseEditor = 'CloseEditor',
   OpenEditor = 'OpenEditor',
   RowDataChanged = 'RowDataChanged',

@@ -19,6 +19,7 @@ export interface IRowProps {
   onRowDataChanged: RowDataChangedFunc;
   rowData: any;
   rowKey: any;
+  selectedRows: any[];
 }
 
 const Row: React.FunctionComponent<IRowProps> = ({
@@ -30,16 +31,20 @@ const Row: React.FunctionComponent<IRowProps> = ({
   onRowDataChanged,
   rowData,
   rowKey,
+  selectedRows,
 }) => {
-  const rowEditableCells = getRowEditableCells(rowData[rowKey], editableCells);
+  const rowKeyValue = rowData[rowKey];
+  const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
+  const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
   return (
-    <tr className={defaultOptions.css.row}>
+    <tr className={`${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`}>
       <EmptyCells count={groupColumnsCount}/>
       {columns.map((column) => (
         <CellComponent
           column={column}
           editingMode={editingMode}
-          isEditableCell={isEditableCell(editingMode, column.field, rowEditableCells)}
+          isEditableCell={isEditableCell(editingMode, column, rowEditableCells)}
+          isSelectedRow={isSelectedRow}
           key={column.key || column.field}
           onEvent={onEvent}
           onRowDataChanged={onRowDataChanged}

@@ -7,10 +7,11 @@ import { changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler } 
 export const getOnEventHandler = ({
   data,
   editableCells = [],
+  onDataChanged = () => {},
+  onEvent = () => {},
   onOptionChanged,
   rowKey,
-  onEvent = () => {},
-  onDataChanged = () => {},
+  selectedRows = [],
 }: ITableAllProps) => {
   return (event: string, eventData: any) => {
     switch (event) {
@@ -29,6 +30,12 @@ export const getOnEventHandler = ({
       case Events.RowDataChanged:
           const newData = getCopyOfArrayAndInsertOrReplaceItem(eventData.rowData, rowKey, data);
           onDataChanged(newData);
+          break;
+      case Events.RowSelected:
+          onOptionChanged({ selectedRows: [...selectedRows, ...[eventData.rowKeyValue]] });
+          break;
+      case Events.RowDeselected:
+          onOptionChanged({ selectedRows: [...selectedRows].filter((s) => s !== eventData.rowKeyValue) });
           break;
     }
     onEvent(event, eventData);

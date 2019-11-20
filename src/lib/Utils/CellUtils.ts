@@ -1,11 +1,15 @@
 import { EditingMode } from '../enums';
+import { Column } from '../models';
 import { Cell } from '../Models/Cell';
 import { OptionChangedFunc } from '../types';
 import { getCopyOfArrayAndAddItem } from './ArrayUtils';
 
-export const isEditableCell = (editingMode: EditingMode, field: string, rowEditableCells: Cell[]): boolean => {
+export const isEditableCell = (editingMode: EditingMode, column: Column, rowEditableCells: Cell[]): boolean => {
+  if (column.isEditable !== undefined) {
+    return column.isEditable;
+  }
   if (editingMode === EditingMode.Cell) {
-    return !!rowEditableCells.find((c) => c.field === field);
+    return !!rowEditableCells.find((c) => c.field === column.field);
   }
   return false;
 };

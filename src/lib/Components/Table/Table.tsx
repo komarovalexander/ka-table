@@ -32,6 +32,8 @@ export interface ITableOption {
   groupsExpanded?: any[][];
   /** Specifies the column unique field which will be used as a key */
   rowKey: string;
+  /** Specifies the array of keys of rows which were selected */
+  selectedRows?: any[];
   /** Sets the sorting mode */
   sortingMode?: SortingMode;
   /**

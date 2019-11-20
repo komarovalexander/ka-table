@@ -11,6 +11,7 @@ export interface ICellComponentProps {
   column: Column;
   editingMode: EditingMode;
   isEditableCell: boolean;
+  isSelectedRow: boolean;
   onEvent: EventFunc;
   onRowDataChanged: RowDataChangedFunc;
   rowData: any;

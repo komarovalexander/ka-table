@@ -8,6 +8,7 @@ export interface ICellEditorProps {
   column: Column;
   rowData: any;
   rowKey: string;
+  isSelectedRow: boolean;
   onEvent: EventFunc;
   onValueChange: ValueChangeFunc;
 }

@@ -30,6 +30,7 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
             key={column.field}
             column={column}
             rowKey={''}
+            isSelectedRow={false}
             onEvent={emptyFunc}
             rowData={rowData}
             onValueChange={(value) => {

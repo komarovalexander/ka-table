@@ -18,13 +18,14 @@ export interface ITableBodyProps {
   editableCells?: Cell[];
   editingMode?: EditingMode;
   filterRow?: FilterCondition[];
+  groupColumnsCount: number;
   groups?: Group[];
   groupsExpanded?: any[][];
-  groupColumnsCount: number;
   onDataChanged?: DataChangedFunc;
   onEvent: EventFunc;
   onOptionChanged: OptionChangedFunc;
   rowKey: string;
+  selectedRows?: any[];
 }
 
 const TableBody: React.FunctionComponent<ITableBodyProps> = ({
@@ -33,13 +34,13 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
   editableCells = [],
   editingMode = EditingMode.None,
   filterRow,
+  groupColumnsCount,
   groups,
   groupsExpanded,
-  groupColumnsCount,
-  onDataChanged = () => {},
-  onOptionChanged,
   onEvent,
+  onOptionChanged,
   rowKey,
+  selectedRows = [],
 }) => {
   const groupedData = groups ? getGroupedData(data, groups, groupsExpanded) : data;
 
@@ -69,6 +70,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
               editingMode={editingMode}
               groupColumnsCount={groupColumnsCount}
               onEvent={onEvent}
+              selectedRows={selectedRows}
               onRowDataChanged={(rowData: any) => {
                 onEvent(Events.RowDataChanged, { rowData });
               }}
