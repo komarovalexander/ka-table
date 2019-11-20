@@ -15,6 +15,7 @@ import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
+import SelectionDemo from './SelectionDemo/SelectionDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
 
@@ -29,6 +30,7 @@ const demos: Demo[] = [
   new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo'),
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo'),
   new Demo(SearchDemo, '/search', 'Search', 'SearchDemo'),
+  new Demo(SelectionDemo, '/selection', 'Selection', 'SelectionDemo'),
   new Demo(SortingDemo, '/sorting', 'Sorting', 'SortingDemo'),
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo'),
 ];
@@ -37,7 +39,7 @@ const cases = demos.map((d: Demo) => {
   return ({ demoComponent: getDemoPage(d), name: d.fileName, title: d.title, path: d.path });
 });
 
-const defaultDemo: Demo = demos.find((d) => d.component === CustomHeaderCellDemo) || demos[0];
+const defaultDemo: Demo = demos.find((d) => d.component === SelectionDemo) || demos[0];
 
 const Demos: React.FC = () => {
   return (

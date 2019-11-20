@@ -1,10 +1,11 @@
 export class CssClasses {
-  public table?: string;
-  public thead?: string;
-  public theadRow?: string;
-  public theadCell?: string;
-  public row?: string;
-  public cell?: string;
+  public table?: string = 'tc-table';
+  public thead?: string = 'tc-thead';
+  public theadRow?: string = 'tc-thead-row';
+  public theadCell?: string = 'tc-thead-cell';
+  public row?: string = 'tc-row';
+  public rowSelected?: string = 'tc-row-delected';
+  public cell?: string = 'tc-cell';
 
   public iconGroupArrowCollapsed?: string = 'tc-icon tc-icon-group-arrow tc-icon-group-arrow-collapsed';
   public iconGroupArrowExpanded?: string = 'tc-icon tc-icon-group-arrow tc-icon-group-arrow-expanded';
