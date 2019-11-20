@@ -16,11 +16,15 @@ const getDemoPage = (demo: Demo) => {
     }, []);
     return (
       <div>
-        <h1>{demo.title}</h1>
-        <demo.component />
-        <Highlight className='language-typescript'>
-          {text}
-        </Highlight>
+        <div className='simulator-content'>
+          <h1>{demo.title}</h1>
+          <demo.component />
+        </div>
+        <div className='code'>
+          <Highlight className='language-typescript'>
+            {text}
+          </Highlight>
+        </div>
       </div>
     );
   };

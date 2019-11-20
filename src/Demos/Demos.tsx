@@ -1,7 +1,7 @@
 import './Demos.scss';
 
 import React from 'react';
-import { HashRouter, Link, Route } from 'react-router-dom';
+import { HashRouter, NavLink, Redirect, Route } from 'react-router-dom';
 
 import CommandColumnDemo from './CommandColumnDemo/CommandColumnDemo';
 import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
@@ -39,29 +39,30 @@ const cases = demos.map((d: Demo) => {
   return ({ demoComponent: getDemoPage(d), name: d.fileName, title: d.title, path: d.path });
 });
 
-const defaultDemo: Demo = demos.find((d) => d.component === SelectionDemo) || demos[0];
-
 const Demos: React.FC = () => {
   return (
     <HashRouter>
       <div className='demos'>
         <nav>
-          <ul>
-            <li>
-              <Link to='/'>Home</Link>
-            </li>
+          <div className='logo-container'>
+            <b>react-table-control</b>
+          </div>
+          <ul className='menu'>
           {
             cases.map((c) => (
-                <li key={c.name}>
-                  <Link to={c.path}>{c.title}</Link>
-                </li>
-              ),
-            )
+              <li key={c.name}>
+                  <NavLink to={c.path} activeClassName='active'>
+                    <span className='menu-button'>
+                      <span className='menu-button-inner'>{c.title}</span>
+                    </span>
+                  </NavLink>
+              </li>
+            ))
           }
           </ul>
         </nav>
         <main>
-          <Route exact={true} path='/' component={getDemoPage(defaultDemo)} />
+          <Redirect from='/' to='/selection' />
           {
             cases.map((c) => (
                 <Route key={c.name} path={c.path} component={c.demoComponent} />

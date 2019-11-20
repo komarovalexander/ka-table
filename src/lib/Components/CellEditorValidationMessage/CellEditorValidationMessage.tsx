@@ -8,7 +8,7 @@ const CellEditorValidationMessage: React.FunctionComponent<ICellEditorValidation
   const { message } = props;
 
   return (
-    <div className='tc validation-message'>{message}</div>
+    <div className='tc-validation-message'>{message}</div>
   );
 };
 

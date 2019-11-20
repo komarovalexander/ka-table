@@ -1,19 +1,68 @@
 
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+}
 .demos{
-  font-family:'icons', 'Helvetica Neue Light', 'Open Sans', Helvetica;
+  font-family: 'Roboto',  'Helvetica Neue Light', 'Open Sans', Helvetica;
   display: flex;
 
   nav{
-    width: 15%;
-    padding: 20px;
+    width: 350px;
+    box-sizing: border-box;
+    border-right: 1px solid #CBDCE4;
+
+    .logo-container {
+      padding: 20px 50px;
+      border-bottom: 1px solid #CBDCE4;
+    }
+
+    ul{
+      list-style-type: none;
+      padding: 0;
+      box-sizing: border-box;
+
+      a {
+        display: block;
+        padding: 10px 0 10px 40px;
+        text-decoration: none;
+        .menu-button{
+          .menu-button-inner{
+            width: 185px;
+          }
+        }
+
+        &.active{
+          padding: 10px 0 10px 36px;
+          border-left: 4px solid #353C44;
+          color: #353C44;
+        }
+      }
+    }
   }
 
   main{
-    width: 85%;
-    padding: 20px;
+    width: calc(100% - 350px);
+    box-sizing: border-box;
 
-    .tc{
-      max-height: 600px;
+    .simulator-content{
+      background: #ECF0F4;
+      padding: 28px 80px 60px;
+
+      h1{
+        margin: 0 0 30px 20px;
+        font-size: 22px;
+      }
+      .tc{
+        border-radius: 12px;
+        max-height: 600px;
+        box-shadow: 5px 15px 30px rgba(0, 0, 0, 0.1);
+      }
+    }
+    .code{
+      padding: 60px 80px;
     }
   }
 }
