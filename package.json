@@ -3,11 +3,12 @@
   "version": "0.1.4",
   "license": "MIT",
   "repository": "github:komarovalexander/react-table-control",
-  "homepage" : "https://komarovalexander.github.io/react-table-control",
+  "homepage": "https://komarovalexander.github.io/react-table-control",
   "dependencies": {
     "@types/react": "16.9.3",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "react-ga": "^2.7.0"
   },
   "scripts": {
     "start": "react-scripts start",

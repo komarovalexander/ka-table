@@ -1,7 +1,8 @@
 import './Demos.scss';
 
 import React from 'react';
-import { HashRouter, NavLink, Redirect, Route } from 'react-router-dom';
+import ReactGA from 'react-ga';
+import { HashRouter, NavLink, Route } from 'react-router-dom';
 
 import CommandColumnDemo from './CommandColumnDemo/CommandColumnDemo';
 import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
@@ -13,11 +14,17 @@ import EditingDemo from './EditingDemo/EditingDemo';
 import EventsDemo from './EventsDemo/EventsDemo';
 import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
+import { withTracker } from './GAWrapper';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
 import SelectionDemo from './SelectionDemo/SelectionDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
+
+const host = window.location.hostname;
+if (host !== 'localhost') {
+  ReactGA.initialize('UA-50311880-5');
+}
 
 const demos: Demo[] = [
   new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo'),
@@ -36,7 +43,12 @@ const demos: Demo[] = [
 ];
 
 const cases = demos.map((d: Demo) => {
-  return ({ demoComponent: getDemoPage(d), name: d.fileName, title: d.title, path: d.path });
+  return ({
+    demoComponent: getDemoPage(d),
+    name: d.fileName,
+    path: d.path,
+    title: d.title,
+  });
 });
 
 const Demos: React.FC = () => {
@@ -62,12 +74,10 @@ const Demos: React.FC = () => {
           </ul>
         </nav>
         <main>
-          <Redirect from='/' to='/selection' />
           {
             cases.map((c) => (
-                <Route key={c.name} path={c.path} component={c.demoComponent} />
-              ),
-            )
+              <Route key={c.name} path={c.path} component={withTracker(c.demoComponent)} />
+            ))
           }
         </main>
       </div>
