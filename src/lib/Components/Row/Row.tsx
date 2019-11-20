@@ -31,7 +31,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
   onRowDataChanged,
   rowData,
   rowKey,
-  selectedRows,
+  selectedRows = [],
 }) => {
   const rowKeyValue = rowData[rowKey];
   const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);

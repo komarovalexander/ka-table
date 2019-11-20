@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { DataType } from '../../enums';
-import Row, { IRowProps } from './Row';
+import Row from './Row';
 
 const props: any = {
   columns: [
