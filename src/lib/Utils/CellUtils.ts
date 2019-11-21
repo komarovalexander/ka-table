@@ -9,7 +9,7 @@ export const isEditableCell = (editingMode: EditingMode, column: Column, rowEdit
     return column.isEditable;
   }
   if (editingMode === EditingMode.Cell) {
-    return !!rowEditableCells.find((c) => c.field === column.field);
+    return !!rowEditableCells.find((c) => c.columnKey === column.key);
   }
   return false;
 };
@@ -22,6 +22,6 @@ export const changeCellTextToCellEditorHandler = (
 
 export const changeCellEditorToCellTextHandler = (
   item: Cell, editableCells: Cell[], onOptionChanged: OptionChangedFunc) => {
-    const newEditableCells = editableCells.filter((c) => c.field !== item.field || c.rowKeyValue !== item.rowKeyValue);
+    const newEditableCells = editableCells.filter((c) => c.columnKey !== item.columnKey || c.rowKey !== item.rowKey);
     onOptionChanged({ editableCells: newEditableCells });
 };

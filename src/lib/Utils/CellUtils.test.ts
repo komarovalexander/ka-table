@@ -6,25 +6,25 @@ import {
 
 describe('CellUtils', () => {
   it('isEditableCell equals true', () => {
-    const rowEditableCells = isEditableCell(EditingMode.Cell, { field: 'column' }, [{
-      field: 'column',
-      rowKeyValue: 10,
+    const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column' }, [{
+      columnKey: 'column',
+      rowKey: 10,
     }]);
     expect(rowEditableCells).toBeTruthy();
   });
 
   it('isEditableCell equals false', () => {
-    const rowEditableCells = isEditableCell(EditingMode.Cell, { field: 'column2' }, [{
-      field: 'column',
-      rowKeyValue: 10,
+    const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column2' }, [{
+      columnKey: 'column',
+      rowKey: 10,
     }]);
     expect(rowEditableCells).toBeFalsy();
   });
 
   it('isEditableCell always equals false when EditingMode.None', () => {
-    const rowEditableCells = isEditableCell(EditingMode.None, { field: 'column' }, [{
-      field: 'column',
-      rowKeyValue: 10,
+    const rowEditableCells = isEditableCell(EditingMode.None, { key: 'column' }, [{
+      columnKey: 'column',
+      rowKey: 10,
     }]);
     expect(rowEditableCells).toBeFalsy();
   });
@@ -33,12 +33,12 @@ describe('CellUtils', () => {
     it('changeCellTextToCellEditorHandler', () => {
       const onOptionChangedMock = jest.fn((x) => {});
       const editableCells: Cell[] = [{
-        field: 'column',
-        rowKeyValue: 1,
+        columnKey: 'column',
+        rowKey: 1,
       }];
       const item: Cell = {
-        field: 'column2',
-        rowKeyValue: 2,
+        columnKey: 'column2',
+        rowKey: 2,
       };
       changeCellTextToCellEditorHandler(item, editableCells, onOptionChangedMock);
       expect(onOptionChangedMock.mock.calls.length).toBe(1);
@@ -48,18 +48,18 @@ describe('CellUtils', () => {
     it('changeCellEditorToCellTextHandler', () => {
       const onOptionChangedMock = jest.fn();
       const editableCells: Cell[] = [{
-        field: 'column',
-        rowKeyValue: 1,
+        columnKey: 'column',
+        rowKey: 1,
       }, {
-        field: 'column2',
-        rowKeyValue: 2,
+        columnKey: 'column2',
+        rowKey: 2,
       }, {
-        field: 'column',
-        rowKeyValue: 2,
+        columnKey: 'column',
+        rowKey: 2,
       }];
       const item: Cell = {
-        field: 'column2',
-        rowKeyValue: 2,
+        columnKey: 'column2',
+        rowKey: 2,
       };
       changeCellEditorToCellTextHandler(item, editableCells, onOptionChangedMock);
       expect(onOptionChangedMock.mock.calls.length).toBe(1);

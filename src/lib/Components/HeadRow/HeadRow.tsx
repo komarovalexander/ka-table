@@ -26,7 +26,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
       {columns.map((column) => {
         return (
           <HeadCell
-            key={column.key || column.field}
+            key={column.key}
             column={column}
             onEvent={onEvent}
             sortingMode={sortingMode}

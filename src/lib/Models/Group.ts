@@ -1,4 +1,4 @@
 
 export class Group {
-  public field!: string;
+  public columnKey!: string;
 }

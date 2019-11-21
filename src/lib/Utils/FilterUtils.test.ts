@@ -8,11 +8,11 @@ import {
 describe('FilterUtils', () => {
   it('getRowEditableCells should return required cells from table EditableCells', () => {
     const rowEditableCells = getRowEditableCells(10, [{
-      field: '10',
-      rowKeyValue: 10,
+      columnKey: '10',
+      rowKey: 10,
     }, {
-      field: '10',
-      rowKeyValue: 2,
+      columnKey: '10',
+      rowKey: 2,
     }]);
     expect(rowEditableCells).toMatchSnapshot();
   });
@@ -94,11 +94,11 @@ describe('FilterUtils', () => {
 
   describe('searchData', () => {
     const columns: Column[] = [
-      { field: 'name', title: 'Name', dataType: DataType.String, width: '40%' },
-      { field: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
+      { key: 'name', title: 'Name', dataType: DataType.String, width: '40%' },
+      { key: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
       {
         dataType: DataType.Boolean,
-        field: 'passed',
+        key: 'passed',
         search: (searchText?: string, rowData?: any) => {
           return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
         },
@@ -122,7 +122,7 @@ describe('FilterUtils', () => {
       const columnsBoolean: Column[] = [
         {
           dataType: DataType.Boolean,
-          field: 'passed',
+          key: 'passed',
           title: 'Passed',
         },
       ];

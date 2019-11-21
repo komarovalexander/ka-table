@@ -3,6 +3,7 @@ import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { Events } from '../../enums';
 import { Cell } from '../../models';
+import { getRowValueByColumn } from '../../Utils/RowUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
@@ -10,9 +11,9 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   onEvent,
   onValueChange,
   rowData,
-  rowKey,
+  rowKeyField,
 }) => {
-  const fieldValue = rowData[column.field];
+  const fieldValue = getRowValueByColumn(rowData, column);
   const value = fieldValue && fieldValue.toISOString().split('T')[0];
   return (
     <input
@@ -25,7 +26,7 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
         onValueChange(targetValue ? new Date(targetValue) : null);
       }}
       onBlur={() => {
-        const cell: Cell = { field: column.field, rowKeyValue: rowData[rowKey] };
+        const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
         onEvent(Events.CloseEditor, { cell });
       }}
     />

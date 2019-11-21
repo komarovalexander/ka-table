@@ -31,7 +31,7 @@ export interface ITableOption {
   /** Sets the expanded groups */
   groupsExpanded?: any[][];
   /** Specifies the column unique field which will be used as a key */
-  rowKey: string;
+  rowKeyField: string;
   /** Specifies the array of keys of rows which were selected */
   selectedRows?: any[];
   /** Sets the sorting mode */
@@ -65,16 +65,17 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     sortingMode = SortingMode.None,
   } = props;
   let { columns, data } = props;
-  const realColumns = columns.filter((c) => c.field);
-  data = search ? searchData(realColumns, data, search) : data;
-  data = convertToColumnTypes(data, realColumns);
+  data = search ? searchData(columns, data, search) : data;
+  data = convertToColumnTypes(data, columns);
   data = filterRow ? filterData(data, filterRow) : data;
-  data = sortData(realColumns, data);
+  data = sortData(columns, data);
 
   let groupColumnsCount = 0;
+  let groupedColumns: Column[] = [];
   if (groups) {
     groupColumnsCount = groups.length;
-    columns = columns.filter((c) => !groups.some((g) => g.field === c.field));
+    groupedColumns = columns.filter((c) => groups.some((g) => g.columnKey === c.key));
+    columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
 
   const tableOnEvent = getOnEventHandler(props);
@@ -95,6 +96,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
             data={data}
             columns={columns}
             onEvent={tableOnEvent}
+            groupedColumns={groupedColumns}
             groupColumnsCount={groupColumnsCount}
         />
       </table>

@@ -15,17 +15,17 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'name', title: 'Name', dataType: DataType.String, width: '30%' },
-    { field: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
-    { field: 'passed', title: 'Passed', dataType: DataType.Boolean, width: '10%' },
-    { field: 'nextTry', title: 'Next Try', dataType: DataType.Date },
+    { key: 'name', title: 'Name', dataType: DataType.String, width: '30%' },
+    { key: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
+    { key: 'passed', title: 'Passed', dataType: DataType.Boolean, width: '10%' },
+    { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
   ],
   editableCells: [{
-    field: 'name',
-    rowKeyValue: 2,
+    columnKey: 'name',
+    rowKey: 2,
   }],
   editingMode: EditingMode.Cell,
-  rowKey: 'id',
+  rowKeyField: 'id',
 };
 
 const EditingDemo: React.FC = () => {

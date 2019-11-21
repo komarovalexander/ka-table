@@ -5,12 +5,12 @@ Array [
   Object {
     "editableCells": Array [
       Object {
-        "field": "column",
-        "rowKeyValue": 1,
+        "columnKey": "column",
+        "rowKey": 1,
       },
       Object {
-        "field": "column",
-        "rowKeyValue": 2,
+        "columnKey": "column",
+        "rowKey": 2,
       },
     ],
   },
@@ -22,12 +22,12 @@ Array [
   Object {
     "editableCells": Array [
       Object {
-        "field": "column",
-        "rowKeyValue": 1,
+        "columnKey": "column",
+        "rowKey": 1,
       },
       Object {
-        "field": "column2",
-        "rowKeyValue": 2,
+        "columnKey": "column2",
+        "rowKey": 2,
       },
     ],
   },

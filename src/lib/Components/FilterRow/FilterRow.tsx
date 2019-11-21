@@ -27,14 +27,14 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
       {columns.map((column) => {
         return (
           <FilterCell
-            key={column.field}
+            key={column.key}
             column={column}
-            rowKey={''}
+            rowKeyField={''}
             isSelectedRow={false}
             onEvent={emptyFunc}
             rowData={rowData}
             onValueChange={(value) => {
-              filterCellValueChangeHandler(value, column.field, filterRow, onOptionChanged);
+              filterCellValueChangeHandler(value, column.key, filterRow, onOptionChanged);
             }}
           />
         );

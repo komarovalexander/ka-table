@@ -6,14 +6,16 @@ import { ICellEditorProps } from '../CellEditor/CellEditor';
 import CellEditorNumber from './CellEditorNumber';
 
 const props: ICellEditorProps = {
-  close: () => {},
   column: {
     dataType: DataType.String,
-    field: 'columnField',
+    key: 'columnField',
     title: 'Field',
   },
+  isSelectedRow: true,
+  onEvent: () => {},
   onValueChange: () => {},
-  rowData: { column : 1 },
+  rowData: { column: 1 },
+  rowKeyField: '',
 };
 
 it('renders without crashing', () => {

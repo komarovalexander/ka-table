@@ -6,6 +6,7 @@ import {
 } from './GroupUtils';
 
 describe('GroupUtils', () => {
+  const columnMap = { country: 'country', type: 'type' };
   const data = [
     { type: 'Cat', name: 'Kas', country: 'Czech Republic' },
     { type: 'Dog', name: 'Rex', country: 'Montenegro' },
@@ -13,7 +14,7 @@ describe('GroupUtils', () => {
     { type: 'Dog', name: 'Beethoven', country: 'Czech Republic' },
     { type: 'Cat', name: 'Hash', country: 'Czech Republic' },
   ];
-  const groups: Group[] = [{ field: 'country' }, { field: 'type' }];
+  const groups: Group[] = [{ columnKey: 'country' }, { columnKey: 'type' }];
 
   describe('convertToFlat', () => {
     it('simple', () => {
@@ -125,29 +126,29 @@ describe('GroupUtils', () => {
 
   describe('getGroupedStructure', () => {
     it('basic', () => {
-      const result = getGroupedStructure(data, groups);
+      const result = getGroupedStructure(data, groups, columnMap);
       expect(result).toMatchSnapshot();
     });
 
     it('expanded root', () => {
-      const result = getGroupedStructure(data, groups, 0, [['Czech Republic']]);
+      const result = getGroupedStructure(data, groups, columnMap, 0, [['Czech Republic']]);
       expect(result).toMatchSnapshot();
     });
     it('expanded second', () => {
-      const result = getGroupedStructure(data, groups, 0, [['Czech Republic'], ['Czech Republic', 'Cat']]);
+      const result = getGroupedStructure(data, groups, columnMap, 0, [['Czech Republic'], ['Czech Republic', 'Cat']]);
       expect(result).toMatchSnapshot();
     });
     it('should not expand second', () => {
-      const result = getGroupedStructure(data, groups, 0, [['Czech Republic', 'Cat']]);
+      const result = getGroupedStructure(data, groups, columnMap, 0, [['Czech Republic', 'Cat']]);
       expect(result).toMatchSnapshot();
     });
     it('expanded couple', () => {
-      const result = getGroupedStructure(data, groups, 0,
+      const result = getGroupedStructure(data, groups, columnMap, 0,
         [['Czech Republic'], ['Czech Republic', 'Cat'], ['Montenegro']]);
       expect(result).toMatchSnapshot();
     });
     it('expanded couple (skip Czech Republic)', () => {
-      const result = getGroupedStructure(data, groups, 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
+      const result = getGroupedStructure(data, groups, columnMap, 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
       expect(result).toMatchSnapshot();
     });
   });

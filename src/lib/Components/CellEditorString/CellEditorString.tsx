@@ -3,6 +3,7 @@ import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { Events } from '../../enums';
 import { Cell } from '../../models';
+import { getRowValueByColumn } from '../../Utils/RowUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
@@ -10,9 +11,9 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
   onEvent,
   onValueChange,
   rowData,
-  rowKey,
+  rowKeyField,
 }) => {
-  const value = rowData[column.field] || '';
+  const value = getRowValueByColumn(rowData, column);
   return (
     <input autoFocus={true}
       type='text'
@@ -20,7 +21,7 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
       value={value || ''}
       onChange={(event) => onValueChange(event.currentTarget.value)}
       onBlur={() => {
-        const cell: Cell = { field: column.field, rowKeyValue: rowData[rowKey] };
+        const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
         onEvent(Events.CloseEditor, { cell });
       }}
     />

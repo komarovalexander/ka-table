@@ -7,7 +7,7 @@ import CellEditorState from '../CellEditorState/CellEditorState';
 export interface ICellEditorProps {
   column: Column;
   rowData: any;
-  rowKey: string;
+  rowKeyField: string;
   isSelectedRow: boolean;
   onEvent: EventFunc;
   onValueChange: ValueChangeFunc;

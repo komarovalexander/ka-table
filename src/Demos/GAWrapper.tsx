@@ -13,7 +13,10 @@ export const withTracker = <P extends RouteComponentProps>(
 
   return (props: P) => {
     useEffect(() => {
-      trackPage(props.location.pathname);
+      const host = window.location.hostname;
+      if (host !== 'localhost') {
+            trackPage(props.location.pathname);
+      }
     }, [props.location.pathname]);
 
     return <WrappedComponent {...props} />;

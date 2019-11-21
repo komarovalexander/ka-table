@@ -4,6 +4,7 @@ import defaultOptions from '../../defaultOptions';
 import { Events } from '../../enums';
 import { Cell } from '../../models';
 import { isEmpty } from '../../Utils/CommonUtils';
+import { getRowValueByColumn } from '../../Utils/RowUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
@@ -11,9 +12,9 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
   onEvent,
   onValueChange,
   rowData,
-  rowKey,
+  rowKeyField,
 }) => {
-  const value = rowData[column.field];
+  const value = getRowValueByColumn(rowData, column);
   return (
     <input autoFocus={true}
       className={defaultOptions.css.checkbox}
@@ -22,7 +23,7 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
       checked={value || false}
       onChange={(event) => onValueChange(event.currentTarget.checked)}
       onBlur={() => {
-        const cell: Cell = { field: column.field, rowKeyValue: rowData[rowKey] };
+        const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
         onEvent(Events.CloseEditor, { cell });
       }}
     />

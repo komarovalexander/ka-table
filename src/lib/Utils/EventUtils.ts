@@ -12,7 +12,7 @@ export const getOnEventHandler = ({
   onDataChanged = () => {},
   onEvent = () => {},
   onOptionChanged,
-  rowKey,
+  rowKeyField,
   selectedRows = [],
 }: ITableAllProps) => {
   return (event: string, eventData: any) => {
@@ -30,7 +30,7 @@ export const getOnEventHandler = ({
           onOptionChanged);
         break;
       case Events.RowDataChanged:
-          const newData = getCopyOfArrayAndInsertOrReplaceItem(eventData.rowData, rowKey, data);
+          const newData = getCopyOfArrayAndInsertOrReplaceItem(eventData.rowData, rowKeyField, data);
           onDataChanged(newData);
           break;
       case Events.RowSelected:

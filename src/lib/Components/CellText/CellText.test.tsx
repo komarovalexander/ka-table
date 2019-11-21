@@ -8,11 +8,12 @@ import CellText from './CellText';
 const props: ICellContentProps = {
   column: {
     dataType: DataType.String,
-    field: 'columnField',
+    key: 'columnField',
     title: 'Field',
   },
-  openEditor: () => {},
-  rowData: { column : 1 },
+  onEvent: () => {},
+  rowData: { column: 1 },
+  rowKeyField: '',
 };
 
 it('renders without crashing', () => {

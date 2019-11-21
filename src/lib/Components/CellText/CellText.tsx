@@ -3,19 +3,20 @@ import * as React from 'react';
 import { Events } from '../../enums';
 import { Cell } from '../../models';
 import { isEmpty } from '../../Utils/CommonUtils';
+import { getRowValueByColumn } from '../../Utils/RowUtils';
 import { ICellContentProps } from '../CellContent/CellContent';
 
 const CellText: React.FunctionComponent<ICellContentProps> = ({
   column,
   rowData,
-  rowKey,
+  rowKeyField,
   onEvent,
 }) => {
-  const value = rowData[column.field];
+  const value = getRowValueByColumn(rowData, column);
   return (
     <div className='tc-cell-text'
       onClick={() => {
-        const cell: Cell = { field: column.field, rowKeyValue: rowData[rowKey] };
+        const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
         onEvent(Events.OpenEditor, { cell });
       }}
     >{!isEmpty(value) ? value.toString() : <>&nbsp;</>}</div>

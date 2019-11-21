@@ -5,14 +5,16 @@ import { DataType } from '../../enums';
 import CellEditor, { ICellEditorProps } from './CellEditor';
 
 const props: ICellEditorProps = {
-  close: () => {},
   column: {
     dataType: DataType.String,
-    field: 'columnField',
+    key: 'columnField',
     title: 'Field',
   },
+  isSelectedRow: true,
+  onEvent: () => {},
   onValueChange: () => {},
   rowData: [{ column: 1 }],
+  rowKeyField: '',
 };
 
 it('renders without crashing', () => {

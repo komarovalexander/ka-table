@@ -15,7 +15,7 @@ export interface ICellComponentProps {
   onEvent: EventFunc;
   onRowDataChanged: RowDataChangedFunc;
   rowData: any;
-  rowKey: any;
+  rowKeyField: string;
 }
 
 const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {

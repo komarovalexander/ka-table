@@ -16,13 +16,13 @@ const dataArray = Array(7).fill(undefined).map(
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'column1', title: 'Column 1', dataType: DataType.String },
-    { field: 'column2', title: 'Column 2', dataType: DataType.String },
-    { field: 'column3', title: 'Column 3', dataType: DataType.String },
-    { field: 'column4', title: 'Column 4', dataType: DataType.String },
+    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
   editingMode: EditingMode.Cell,
-  rowKey: 'id',
+  rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };
 

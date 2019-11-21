@@ -7,11 +7,12 @@ import CellContent, { ICellContentProps } from './CellContent';
 const props: ICellContentProps = {
   column: {
     dataType: DataType.String,
-    field: 'columnField',
+    key: 'columnField',
     title: 'Field',
   },
-  openEditor: () => {},
+  onEvent: () => {},
   rowData: { column : 1 },
+  rowKeyField: '',
 };
 
 it('renders without crashing', () => {

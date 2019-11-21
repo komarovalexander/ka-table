@@ -15,34 +15,34 @@ const dataArray: any[] = [
 ];
 
 const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
-  column: { field }, rowData, rowKey, onEvent,
+  column: { key, field }, rowData, rowKeyField, onEvent,
 }) => {
   return (
     <div onClick={() => {
-      const cell: Cell = { field, rowKeyValue: rowData[rowKey] };
+      const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
       onEvent(Events.OpenEditor, { cell });
     }}>
-      {rowData[field] ? 'Passed' : 'Failed'}
+      {rowData[field || key] ? 'Passed' : 'Failed'}
     </div>
   );
 };
 
 const tableOption: ITableOption = {
   columns: [
-    { dataType: DataType.String, field: 'name', title: 'Name', width: '30%' },
-    { field: 'score', title: 'Score', dataType: DataType.Number, width: '10%', textAlign: TextAlign.Right },
+    { dataType: DataType.String, key: 'name', title: 'Name', width: '30%' },
+    { key: 'score', title: 'Score', dataType: DataType.Number, width: '10%', textAlign: TextAlign.Right },
     {
       cell: CustomCell,
       dataType: DataType.Boolean,
-      field: 'passed',
+      key: 'passed',
       textAlign: TextAlign.Right,
       title: 'Results',
       width: '10%',
     },
-    { field: 'nextTry', title: 'Next Try', dataType: DataType.Date, textAlign: TextAlign.Right  },
+    { key: 'nextTry', title: 'Next Try', dataType: DataType.Date, textAlign: TextAlign.Right  },
   ],
   editingMode: EditingMode.Cell,
-  rowKey: 'id',
+  rowKeyField: 'id',
 };
 
 const CustomCellDemo: React.FC = () => {

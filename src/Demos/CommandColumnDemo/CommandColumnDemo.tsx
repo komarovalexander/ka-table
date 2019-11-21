@@ -37,14 +37,15 @@ const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'command2', field: '', cell: (props) => <AlertCell {...props}/> },
-    { field: 'column1', title: 'Column 1', dataType: DataType.String },
-    { field: 'column2', title: 'Column 2', dataType: DataType.String },
-    { field: 'column3', title: 'Column 3', dataType: DataType.String },
-    { field: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: 'command1', field: '', cell: (props) => <DeleteRow {...props} /> },
+    { key: 'command1', cell: (props) => <AlertCell {...props}/> },
+    { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String },
+    { key: 'command22', cell: (props) => <DeleteRow {...props} /> },
   ],
-  rowKey: 'column1',
+  rowKeyField: 'column1',
 };
 
 const CommandColumnDemo: React.FC = () => {
@@ -60,7 +61,8 @@ const CommandColumnDemo: React.FC = () => {
 
   const onEvent: EventFunc = (event, eventData) => {
     if (event === DELETE_EVENT) {
-      const newValue = data.filter((d: any) => d[tableOption.rowKey] !== eventData.rowData[tableOption.rowKey]);
+      const newValue = data.filter(
+        (d: any) => d[tableOption.rowKeyField] !== eventData.rowData[tableOption.rowKeyField]);
       changeData(newValue);
     }
   };

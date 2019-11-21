@@ -73,8 +73,8 @@ exports[`FilterUtils filterData two item 1`] = `Array []`;
 exports[`FilterUtils getRowEditableCells should return required cells from table EditableCells 1`] = `
 Array [
   Object {
-    "field": "10",
-    "rowKeyValue": 10,
+    "columnKey": "10",
+    "rowKey": 10,
   },
 ]
 `;

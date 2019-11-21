@@ -3,17 +3,18 @@ import { Column } from '../Models/Column';
 import { FilterCondition } from '../Models/FilterCondition';
 import { OptionChangedFunc } from '../types';
 import { getCopyOfArrayAndDeleteItem, getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
+import { getField } from './ColumnUtils';
 import { isEmpty } from './CommonUtils';
 
 export const getRowEditableCells = (rowKeyValue: any, editableCells?: Cell[]): Cell[] => {
-  return editableCells ? editableCells.filter((c) => c.rowKeyValue === rowKeyValue) : [];
+  return editableCells ? editableCells.filter((c) => c.rowKey === rowKeyValue) : [];
 };
 
 export const searchData = (columns: Column[], data: any[], searchText: string): any[] => {
   return columns.reduce((initialData: any[], c) => {
     const filterFunction = (item: any) => {
       return c.search ? c.search(searchText, item, c) : initialData.indexOf(item) < 0
-        && item[c.field].toString().toLowerCase().includes(searchText.toLowerCase());
+        && item[getField(c)].toString().toLowerCase().includes(searchText.toLowerCase());
     };
     return initialData.concat(data.filter(filterFunction));
   }, []);

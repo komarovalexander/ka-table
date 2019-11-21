@@ -8,11 +8,11 @@ export class Column {
   public cell?: CellFunc;
   public dataType?: DataType = DataType.String;
   public editor?: EditorFunc;
-  public field!: string;
+  public key!: string;
   public headCell?: HeaderCellFunc;
   public isCustom?: boolean;
   public isEditable?: boolean;
-  public key?: any;
+  public field?: string;
   public search?: SearchFunc;
   public sortDirection?: SortDirection;
   public textAlign?: TextAlign;

@@ -1,7 +1,9 @@
 import groupMark from '../groupMark';
+import { Column } from '../models';
 import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import { OptionChangedFunc } from '../types';
+import { getField } from './ColumnUtils';
 
 export const groupClick = (groupsExpanded: any[][], groupRowData: GroupRowData, onOptionChanged: OptionChangedFunc) => {
   const newGroupsExpanded =
@@ -22,8 +24,14 @@ export const getExpandedGroups = (groupedData: any[]): any[][] => {
   return groupsExpanded;
 };
 
-export const getGroupedData = (data: any[], groups: Group[], groupsExpanded?: any[]): any[] => {
-  const grouped = getGroupedStructure(data, groups, 0, groupsExpanded);
+export const getGroupedData = (
+  data: any[],
+  groups: Group[],
+  groupedColumns: Column[],
+  groupsExpanded?: any[]): any[] => {
+  const columnMap: any = {};
+  groupedColumns.forEach((c) => columnMap[c.key] = getField(c));
+  const grouped = getGroupedStructure(data, groups, columnMap, 0, groupsExpanded);
   return convertToFlat(grouped);
 };
 
@@ -47,13 +55,14 @@ export const convertToFlat = (grouped: any, key: any[] = []) => {
 export const getGroupedStructure = (
   data: any[],
   groups: Group[],
+  columnMap: any,
   expandedDeep: number = 0,
   groupsExpanded?: any[],
 ): any => {
   groups = [...groups];
   const group = groups.shift();
   if (group) {
-    const grouped = groupBy(data, (item: any) => item[group.field]);
+    const grouped = groupBy(data, (item: any) => item[columnMap[group.columnKey]]);
     grouped.forEach((value, key) => {
       const groupExpandedItems = groupsExpanded && groupsExpanded.filter((ge) => ge[expandedDeep] === key);
       const isThisGroupExpanded = !groupExpandedItems
@@ -62,6 +71,7 @@ export const getGroupedStructure = (
         const newStructure = getGroupedStructure(
           value,
           groups,
+          columnMap,
           expandedDeep + 1,
           groupExpandedItems && groupExpandedItems.filter((ge) => ge.length > expandedDeep + 1),
         );

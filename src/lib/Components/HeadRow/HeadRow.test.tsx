@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { DataType } from '../../enums';
-import HeaderRow, { IHeadRowProps } from './HeadRow';
+import HeaderRow from './HeadRow';
 
 const props: any = {
   columns: [
-    { field: 'column', title: 'Column 1', dataType: DataType.String },
-    { field: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
   ],
   onOptionChanged: () => { },
 };
