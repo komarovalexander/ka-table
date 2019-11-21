@@ -4,6 +4,7 @@ import emptyFunc from '../../emptyFunc';
 import { Column } from '../../Models/Column';
 import { FilterCondition } from '../../Models/FilterCondition';
 import { OptionChangedFunc } from '../../types';
+import { getField } from '../../Utils/ColumnUtils';
 import { filterCellValueChangeHandler } from '../../Utils/FilterUtils';
 import FilterCell from '../FilterCell/FilterCell';
 
@@ -29,6 +30,7 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
           <FilterCell
             key={column.key}
             column={column}
+            field={getField(column)}
             rowKeyField={''}
             isSelectedRow={false}
             onEvent={emptyFunc}

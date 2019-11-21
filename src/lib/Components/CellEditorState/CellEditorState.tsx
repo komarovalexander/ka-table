@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { Events } from '../../enums';
 import { Cell } from '../../models';
-import { getField } from '../../Utils/ColumnUtils';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import { getValidationValue } from '../../Utils/Validation';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
@@ -12,6 +11,7 @@ import CellEditorValidationMessage from '../CellEditorValidationMessage/CellEdit
 const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
     column,
+    field,
     column: {
       key,
     },
@@ -22,7 +22,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   } = props;
   const [value, changeValue] = useState(rowData);
 
-  const validationValue = getValidationValue(value, getField(column), column.validation);
+  const validationValue = getValidationValue(value, field, column.validation);
   const onValueStateChange = (newValue: any): void => {
     const rowValue = { ...rowData, ...{ [key]: newValue } };
     changeValue(rowValue);

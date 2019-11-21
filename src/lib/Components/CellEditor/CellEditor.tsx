@@ -6,6 +6,7 @@ import CellEditorState from '../CellEditorState/CellEditorState';
 
 export interface ICellEditorProps {
   column: Column;
+  field: string;
   rowData: any;
   rowKeyField: string;
   isSelectedRow: boolean;

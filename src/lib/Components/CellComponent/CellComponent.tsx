@@ -4,6 +4,7 @@ import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
 import { Column } from '../../Models/Column';
 import { EventFunc, RowDataChangedFunc } from '../../types';
+import { getField } from '../../Utils/ColumnUtils';
 import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
 
@@ -20,6 +21,7 @@ export interface ICellComponentProps {
 
 const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
   const {
+    column,
     column: { textAlign },
     isEditableCell,
     onRowDataChanged,
@@ -29,11 +31,15 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
       { isEditableCell ? (
           <CellEditor
             {...props}
+            field={getField(column)}
             onValueChange={onRowDataChanged}
           />
         )
         : (
-          <CellContent {...props} />
+          <CellContent
+            {...props}
+            field={getField(column)}
+          />
         )
       }
     </td>

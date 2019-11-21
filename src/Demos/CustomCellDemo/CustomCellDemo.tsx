@@ -15,14 +15,14 @@ const dataArray: any[] = [
 ];
 
 const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
-  column: { key, field }, rowData, rowKeyField, onEvent,
+  column: { key }, field, rowData, rowKeyField, onEvent,
 }) => {
   return (
     <div onClick={() => {
       const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
       onEvent(Events.OpenEditor, { cell });
     }}>
-      {rowData[field || key] ? 'Passed' : 'Failed'}
+      {rowData[field] ? 'Passed' : 'Failed'}
     </div>
   );
 };

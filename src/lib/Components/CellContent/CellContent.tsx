@@ -6,6 +6,7 @@ import CellText from '../CellText/CellText';
 
 export interface ICellContentProps {
   column: Column;
+  field: string;
   rowData: any;
   rowKeyField: string;
   onEvent: EventFunc;
