@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { SortDirection } from '../../enums';
+import { Events, SortDirection, SortingMode } from '../../enums';
 import { IHeadCellProps } from '../HeadCell/HeadCell';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
@@ -13,16 +13,23 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   }
 
   const {
-    sortClick, column: { title, sortDirection },
+    column,
+    column: { title, sortDirection },
+    onEvent,
+    sortingMode,
   } = props;
+  const isSortingEnabled = sortingMode === SortingMode.Single;
+  const sortClick = isSortingEnabled ? () => {
+    onEvent(Events.SortingChanged, { column });
+  } : undefined;
   return (
     <div
-      className={`tc-thead-cell-content ${sortClick ? 'tc-pointer' : ''}`}
-      onClick={sortClick ? sortClick : undefined}
+      className={`tc-thead-cell-content ${isSortingEnabled ? 'tc-pointer' : ''}`}
+      onClick={sortClick}
     >
       <div>{title}</div>
       {
-        sortDirection && sortClick && (
+        sortDirection && isSortingEnabled && (
           <div
             className={
               sortDirection === SortDirection.Ascend

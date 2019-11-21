@@ -61,7 +61,6 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     groups,
     filterRow,
-    onOptionChanged,
     search,
     sortingMode = SortingMode.None,
   } = props;
@@ -87,7 +86,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
           <HeadRow
             groupColumnsCount={groupColumnsCount}
             columns={columns}
-            onOptionChanged={onOptionChanged}
+            onEvent={tableOnEvent}
             sortingMode={sortingMode}
           />
         </thead>

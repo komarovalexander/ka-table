@@ -12,11 +12,12 @@ export enum EditingMode {
 }
 
 export enum Events {
-  RowDeselected = 'RowDeselected',
-  RowSelected = 'RowSelected',
   CloseEditor = 'CloseEditor',
   OpenEditor = 'OpenEditor',
   RowDataChanged = 'RowDataChanged',
+  RowDeselected = 'RowDeselected',
+  RowSelected = 'RowSelected',
+  SortingChanged = 'SortingChanged',
 }
 
 export enum KeyboardEnum {

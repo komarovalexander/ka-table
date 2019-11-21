@@ -5,6 +5,5 @@ export default class Demo {
     public path: string,
     public title: string,
     public fileName: string) {
-
   }
 }

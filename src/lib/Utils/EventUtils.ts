@@ -3,8 +3,10 @@ import { ITableAllProps } from '../';
 import { Events } from '../enums';
 import { getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
 import { changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler } from './CellUtils';
+import { sortUtilsClickHandler } from './HeadRowUtils';
 
 export const getOnEventHandler = ({
+  columns,
   data,
   editableCells = [],
   onDataChanged = () => {},
@@ -36,6 +38,9 @@ export const getOnEventHandler = ({
           break;
       case Events.RowDeselected:
           onOptionChanged({ selectedRows: [...selectedRows].filter((s) => s !== eventData.rowKeyValue) });
+          break;
+      case Events.SortingChanged:
+          sortUtilsClickHandler(columns, eventData.column, onOptionChanged);
           break;
     }
     onEvent(event, eventData);

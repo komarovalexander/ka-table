@@ -1,12 +1,15 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
+import { SortingMode } from '../../enums';
 import { Column } from '../../Models/Column';
+import { EventFunc } from '../../types';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
 
 export interface IHeadCellProps {
   column: Column;
-  sortClick?: () => void;
+  sortingMode: SortingMode;
+  onEvent: EventFunc;
 }
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
