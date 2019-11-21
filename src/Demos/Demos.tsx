@@ -16,6 +16,7 @@ import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
 import { withTracker } from './GAWrapper';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
+import ManyRowsDemo from './ManyRowsDemo/ManyRowsDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
 import SelectionDemo from './SelectionDemo/SelectionDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
@@ -36,6 +37,7 @@ const demos: Demo[] = [
   new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo'),
   new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo'),
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo'),
+  new Demo(ManyRowsDemo, '/many-rows', '10000 Rows', 'ManyRowsDemo'),
   new Demo(SearchDemo, '/search', 'Search', 'SearchDemo'),
   new Demo(SelectionDemo, '/selection', 'Selection', 'SelectionDemo'),
   new Demo(SortingDemo, '/sorting', 'Sorting', 'SortingDemo'),

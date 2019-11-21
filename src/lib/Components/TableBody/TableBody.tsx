@@ -49,6 +49,8 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
   if (groups && !groupsExpanded) {
     groupsExpanded = getExpandedGroups(groupedData);
   }
+
+  const rowDataChangedEvent = onEvent.bind(null, Events.RowDataChanged);
   return (
     <tbody>
       {filterRow && <FilterRow columns={columns} filterRow={filterRow} onOptionChanged={onOptionChanged}/>}
@@ -73,9 +75,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
               groupColumnsCount={groupColumnsCount}
               onEvent={onEvent}
               selectedRows={selectedRows}
-              onRowDataChanged={(rowData: any) => {
-                onEvent(Events.RowDataChanged, { rowData });
-              }}
+              onRowDataChanged={rowDataChangedEvent}
             />
           )
         );
