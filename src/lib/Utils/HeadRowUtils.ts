@@ -1,27 +1,30 @@
 import defaultOptions from '../defaultOptions';
 import { SortDirection } from '../enums';
 import { Column } from '../Models/Column';
-import { OptionChangedFunc } from '../types';
+import { compareColumns } from './ColumnUtils';
 
-export const sortUtilsClickHandler = (
+export const getSortedColumns = (
   columns: Column[],
   column: Column,
-  onOptionChanged: OptionChangedFunc,
 ) => {
-  const index = columns.findIndex((c) => c === column);
+  const index = columns.findIndex((c) => compareColumns(c, column));
   const newColumns = [...columns];
-  const sortDirection = getNextSortDirection(column.sortDirection);
 
-  newColumns.forEach((newColumn, newColumnIndex) => {
-    if (newColumn.sortDirection) {
-      newColumns[newColumnIndex] = {...newColumn};
+  newColumns.forEach((c, newColumnIndex) => {
+    if (c.sortDirection) {
+      newColumns[newColumnIndex] = {...c};
       newColumns[newColumnIndex].sortDirection = undefined;
     }
   });
 
   newColumns[index] = {...column};
-  newColumns[index].sortDirection = sortDirection;
-  onOptionChanged({ columns: newColumns });
+  return newColumns;
+};
+
+export const getColumnWithUpdatedSortDirection = (column: Column): Column => {
+  const newColumn = {...column};
+  newColumn.sortDirection = getNextSortDirection(newColumn.sortDirection);
+  return newColumn;
 };
 
 const getNextSortDirection = (previousSortdirection?: SortDirection) => {

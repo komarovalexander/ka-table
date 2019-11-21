@@ -3,7 +3,7 @@ import { ITableAllProps } from '../';
 import { Events } from '../enums';
 import { getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
 import { changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler } from './CellUtils';
-import { sortUtilsClickHandler } from './HeadRowUtils';
+import { getSortedColumns } from './HeadRowUtils';
 
 export const getOnEventHandler = ({
   columns,
@@ -40,7 +40,8 @@ export const getOnEventHandler = ({
           onOptionChanged({ selectedRows: [...selectedRows].filter((s) => s !== eventData.rowKeyValue) });
           break;
       case Events.SortingChanged:
-          sortUtilsClickHandler(columns, eventData.column, onOptionChanged);
+          const sortedColumns = getSortedColumns(columns, eventData.column);
+          onOptionChanged({ columns: sortedColumns });
           break;
     }
     onEvent(event, eventData);

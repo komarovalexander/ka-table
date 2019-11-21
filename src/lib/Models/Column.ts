@@ -12,7 +12,7 @@ export class Column {
   public headCell?: HeaderCellFunc;
   public isCustom?: boolean;
   public isEditable?: boolean;
-  public key?: string;
+  public key?: any;
   public search?: SearchFunc;
   public sortDirection?: SortDirection;
   public textAlign?: TextAlign;

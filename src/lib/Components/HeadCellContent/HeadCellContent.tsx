@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { Events, SortDirection, SortingMode } from '../../enums';
+import { getColumnWithUpdatedSortDirection } from '../../Utils/HeadRowUtils';
 import { IHeadCellProps } from '../HeadCell/HeadCell';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
@@ -20,7 +21,8 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   } = props;
   const isSortingEnabled = sortingMode === SortingMode.Single;
   const sortClick = isSortingEnabled ? () => {
-    onEvent(Events.SortingChanged, { column });
+    const updatedColumn = getColumnWithUpdatedSortDirection(column);
+    onEvent(Events.SortingChanged, { column: updatedColumn });
   } : undefined;
   return (
     <div
@@ -33,8 +35,8 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
           <div
             className={
               sortDirection === SortDirection.Ascend
-                ? defaultOptions.css.iconSortArrowDown
-                : defaultOptions.css.iconSortArrowUp
+                ? defaultOptions.css.iconSortArrowUp
+                : defaultOptions.css.iconSortArrowDown
             }
           />
         )
