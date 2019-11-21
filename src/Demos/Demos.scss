@@ -35,6 +35,7 @@ body {
         }
 
         &.active{
+          pointer-events: none;
           padding: 10px 0 10px 36px;
           border-left: 4px solid #353C44;
           color: #353C44;
