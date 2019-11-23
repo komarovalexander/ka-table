@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { DataType, SortingMode } from '../../lib/enums';
 import { OptionChangedFunc } from '../../lib/types';
 
-const dataArray = Array(10000).fill(undefined).map(
+const dataArray = Array(5000).fill(undefined).map(
   (_, index) => ({
-    column1: `column:1 row:${index}`,
-    column2: `column:2 row:${index}`,
+    column1: `column:1 row:${index % 100}00`,
+    column2: `column:2 row:${index % 50}0`,
     column3: `column:3 row:${index}`,
     column4: `column:4 row:${index}`,
     id: index,
@@ -21,7 +21,7 @@ const tableOption: ITableOption = {
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
-  editingMode: EditingMode.Cell,
+  groups: [{ columnKey: 'column1'}, { columnKey: 'column2' }],
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
   virtualScrolling: {
@@ -30,27 +30,21 @@ const tableOption: ITableOption = {
   },
 };
 
-const ManyRowsDemo: React.FC = () => {
+const ManyRowsGroupingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const onOptionChanged: OptionChangedFunc = (value) => {
     changeOptions({...option, ...value });
-  };
-
-  const [data, changeData] = useState(dataArray);
-  const onDataChanged: OptionChangedFunc = (newValue) => {
-    changeData(newValue);
   };
 
   return (
     <>
       <Table
         {...option}
-        data={data}
+        data={dataArray}
         onOptionChanged={onOptionChanged}
-        onDataChanged={onDataChanged}
       />
     </>
   );
 };
 
-export default ManyRowsDemo;
+export default ManyRowsGroupingDemo;

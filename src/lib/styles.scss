@@ -77,3 +77,17 @@
 .tc-pointer{
   cursor: pointer;
 }
+
+.tc-virtual-scrolling {
+  overflow: hidden;
+  tbody{
+    display: block;
+    overflow-y: scroll;
+    height: 555px;
+  }
+  tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+}

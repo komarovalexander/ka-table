@@ -6,6 +6,7 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
+import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { DataChangedFunc, EventFunc, OptionChangedFunc } from '../../types';
 import { getOnEventHandler } from '../../Utils/EventUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
@@ -18,29 +19,17 @@ import TableBody from '../TableBody/TableBody';
  * Sets the options of the table which are related to its looks
  */
 export interface ITableOption {
-  /** Columns in table and their look and behaviour */
   columns: Column[];
-  /** Specifies the array of cells which are being edited */
   editableCells?: Cell[];
-  /** Sets the editing mode */
   editingMode?: EditingMode;
-  /** Sets filters for columns */
   filterRow?: FilterCondition[];
-  /** Sets the groups option */
   groups?: Group[];
-  /** Sets the expanded groups */
   groupsExpanded?: any[][];
-  /** Specifies the column unique field which will be used as a key */
   rowKeyField: string;
-  /** Specifies the array of keys of rows which were selected */
-  selectedRows?: any[];
-  /** Sets the sorting mode */
-  sortingMode?: SortingMode;
-  /**
-   * Sets the search by data columns
-   * (TODO: replace string to any)
-   */
   search?: string;
+  selectedRows?: any[];
+  sortingMode?: SortingMode;
+  virtualScrolling?: VirtualScrolling;
 }
 
 export interface ITableEvents {
@@ -63,6 +52,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     filterRow,
     search,
     sortingMode = SortingMode.None,
+    virtualScrolling,
   } = props;
   let { columns, data } = props;
   data = search ? searchData(columns, data, search) : data;
@@ -81,7 +71,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const tableOnEvent = getOnEventHandler(props);
 
   return (
-    <div className='tc'>
+    <div className={`tc ${virtualScrolling ? 'tc-virtual-scrolling' : ''}`} >
       <table className={defaultOptions.css.table}>
         <thead className={defaultOptions.css.thead}>
           <HeadRow
@@ -100,6 +90,6 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
             groupColumnsCount={groupColumnsCount}
         />
       </table>
-    </div>
+    </div >
   );
 };

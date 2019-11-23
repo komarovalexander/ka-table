@@ -6,8 +6,10 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
+import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { DataChangedFunc, EventFunc, OptionChangedFunc } from '../../types';
 import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
+import { getVirtualized } from '../../Utils/Virtualize';
 import FilterRow from '../FilterRow/FilterRow';
 import GroupRow from '../GroupRow/GroupRow';
 import Row from '../Row/Row';
@@ -27,6 +29,7 @@ export interface ITableBodyProps {
   onOptionChanged: OptionChangedFunc;
   rowKeyField: string;
   selectedRows?: any[];
+  virtualScrolling?: VirtualScrolling;
 }
 
 const TableBody: React.FunctionComponent<ITableBodyProps> = ({
@@ -43,6 +46,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
   onOptionChanged,
   rowKeyField,
   selectedRows = [],
+  virtualScrolling,
 }) => {
   const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
 
@@ -50,11 +54,21 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
     groupsExpanded = getExpandedGroups(groupedData);
   }
 
-  const rowDataChangedEvent = onEvent.bind(null, Events.RowDataChanged);
+  let virtualizedData = groupedData;
+  let virtualized;
+  if (virtualScrolling) {
+    virtualized = getVirtualized(virtualScrolling, groupedData);
+    virtualizedData = virtualized.virtualizedData;
+  }
+  const rowDataChangedEvent = onEvent && onEvent.bind(null, Events.RowDataChanged);
   return (
-    <tbody>
+    <tbody onScroll={virtualized ? (event) => {
+      const scrollTop = event.currentTarget.scrollTop;
+      onOptionChanged({ virtualScrolling: { ...virtualScrolling, scrollPosition: scrollTop }});
+    } : undefined}>
       {filterRow && <FilterRow columns={columns} filterRow={filterRow} onOptionChanged={onOptionChanged}/>}
-      {groupedData.map((d) => {
+      {virtualized && <tr style={{height: virtualized.beginHeight}} />}
+      {virtualizedData.map((d) => {
         return (
           d.groupMark === groupMark
           ? (
@@ -80,6 +94,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
           )
         );
       })}
+      {virtualized && <tr style={{height: virtualized.endHeight}} />}
     </tbody>
   );
 };

@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Virtualize getVirtualized itemHeight 40 1`] = `
+Object {
+  "beginHeight": 0,
+  "endHeight": 7840,
+  "virtualizedData": Array [
+    1,
+    1,
+    1,
+    1,
+  ],
+}
+`;
+
+exports[`Virtualize getVirtualized scrollPosition 0 1`] = `
+Object {
+  "beginHeight": 0,
+  "endHeight": 1960,
+  "virtualizedData": Array [
+    1,
+    1,
+    1,
+    1,
+  ],
+}
+`;
+
+exports[`Virtualize getVirtualized scrollPosition 100 1`] = `
+Object {
+  "beginHeight": 80,
+  "endHeight": 1860,
+  "virtualizedData": Array [
+    1,
+    1,
+    1,
+    1,
+  ],
+}
+`;
+
+exports[`Virtualize getVirtualized scrollPosition 2000 1`] = `
+Object {
+  "beginHeight": 1980,
+  "endHeight": 0,
+  "virtualizedData": Array [],
+}
+`;
