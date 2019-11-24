@@ -40,11 +40,11 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
     onEvent,
     onOptionChanged,
   } = props;
-  let { groupsExpanded } = props;
+  const { groupsExpanded } = props;
   const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
-
   if (groups && !groupsExpanded) {
-    groupsExpanded = getExpandedGroups(groupedData);
+    onOptionChanged({ groupsExpanded: getExpandedGroups(groupedData) });
+    return <></>;
   }
   return (
     <tbody className={defaultOptions.css.tbody} onScroll={(event) => {

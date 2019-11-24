@@ -49,7 +49,6 @@
     "gulp-gh-pages": "^0.5.4",
     "gulp-typedoc": "^2.2.2",
     "gulp-typescript": "^5.0.1",
-    "husky": "^3.0.8",
     "jsonfile": "^5.0.0",
     "lint-staged": "^10.0.0-0",
     "node-sass": "^4.12.0",
@@ -61,11 +60,6 @@
     "tslint-react": "^4.1.0",
     "typedoc": "^0.15.0",
     "typescript": "3.6.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.{ts,tsx}": "npm run lint"

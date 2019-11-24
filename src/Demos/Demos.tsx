@@ -38,7 +38,7 @@ const demos: Demo[] = [
   new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo'),
   new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo'),
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo'),
-  new Demo(ManyRowsDemo, '/many-rows', '10000 Rows', 'ManyRowsDemo'),
+  new Demo(ManyRowsDemo, '/many-rows', '25000 Rows', 'ManyRowsDemo'),
   new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', '10000 Rows with grouping', 'ManyRowsGroupingDemo'),
   new Demo(SearchDemo, '/search', 'Search', 'SearchDemo'),
   new Demo(SelectionDemo, '/selection', 'Selection', 'SelectionDemo'),
