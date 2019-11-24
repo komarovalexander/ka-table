@@ -4,7 +4,7 @@ import { ITableOption, Table } from '../../lib';
 import { DataType, SortingMode } from '../../lib/enums';
 import { OptionChangedFunc } from '../../lib/types';
 
-const dataArray = Array(5000).fill(undefined).map(
+const dataArray = Array(10000).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index % 100}00`,
     column2: `column:2 row:${index % 50}0`,

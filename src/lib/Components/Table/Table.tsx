@@ -52,7 +52,6 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     filterRow,
     search,
     sortingMode = SortingMode.None,
-    virtualScrolling,
   } = props;
   let { columns, data } = props;
   data = search ? searchData(columns, data, search) : data;
@@ -71,7 +70,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const tableOnEvent = getOnEventHandler(props);
 
   return (
-    <div className={`tc ${virtualScrolling ? 'tc-virtual-scrolling' : ''}`} >
+    <div className='tc' >
       <table className={defaultOptions.css.table}>
         <thead className={defaultOptions.css.thead}>
           <HeadRow

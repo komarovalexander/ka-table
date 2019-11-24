@@ -20,7 +20,7 @@ const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
   onOptionChanged,
 }) => {
   return (
-    <tr className='tc-group-row'>
+    <tr className={defaultOptions.css.groupRow}>
       <EmptyCells count={emptyColumnsCount}/>
       <td
         className='tc-group-column'

@@ -14,6 +14,7 @@ export const getOnEventHandler = ({
   onOptionChanged,
   rowKeyField,
   selectedRows = [],
+  virtualScrolling,
 }: ITableAllProps) => {
   return (event: string, eventData: any) => {
     switch (event) {
@@ -42,6 +43,16 @@ export const getOnEventHandler = ({
       case Events.SortingChanged:
           const sortedColumns = getSortedColumns(columns, eventData.column);
           onOptionChanged({ columns: sortedColumns });
+          break;
+      case Events.ScrollTable:
+          if (virtualScrolling) {
+            const scrollPosition = eventData.scrollTop;
+            const canUpdate = !virtualScrolling.scrollPosition
+              || (Math.abs(virtualScrolling.scrollPosition - scrollPosition) > 600);
+            if (canUpdate) {
+              onOptionChanged({ virtualScrolling: { ...virtualScrolling, scrollPosition }});
+            }
+          }
           break;
     }
     onEvent(event, eventData);

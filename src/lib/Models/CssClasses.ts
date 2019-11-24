@@ -1,9 +1,11 @@
 export class CssClasses {
   public table?: string = 'tc-table';
+  public tbody?: string = 'tc-tbody';
   public thead?: string = 'tc-thead';
-  public theadRow?: string = 'tc-thead-row';
+  public theadRow?: string = 'tc-tr tc-thead-row';
   public theadCell?: string = 'tc-thead-cell';
-  public row?: string = 'tc-row';
+  public groupRow?: string = 'tc-tr tc-group-row';
+  public row?: string = 'tc-tr tc-row';
   public rowSelected?: string = 'tc-row-selected';
   public cell?: string = 'tc-cell';
 

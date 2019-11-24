@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import defaultOptions from '../../defaultOptions';
 import { EditingMode, Events } from '../../enums';
 import groupMark from '../../groupMark';
 import { Cell } from '../../Models/Cell';
@@ -62,10 +63,9 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = ({
   }
   const rowDataChangedEvent = onEvent && onEvent.bind(null, Events.RowDataChanged);
   return (
-    <tbody onScroll={virtualized ? (event) => {
-      const scrollTop = event.currentTarget.scrollTop;
-      onOptionChanged({ virtualScrolling: { ...virtualScrolling, scrollPosition: scrollTop }});
-    } : undefined}>
+    <tbody className={defaultOptions.css.tbody} onScroll={(event) => {
+      onEvent(Events.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
+    }}>
       {filterRow && <FilterRow columns={columns} filterRow={filterRow} onOptionChanged={onOptionChanged}/>}
       {virtualized && <tr style={{height: virtualized.beginHeight}} />}
       {virtualizedData.map((d) => {

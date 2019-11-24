@@ -4,7 +4,7 @@ import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { OptionChangedFunc } from '../../lib/types';
 
-const dataArray = Array(10000).fill(undefined).map(
+const dataArray = Array(25000).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -26,7 +26,7 @@ const tableOption: ITableOption = {
   sortingMode: SortingMode.Single,
   virtualScrolling: {
     itemHeight: () => 45,
-    visibleItemsCount: 20,
+    visibleItemsCount: 30,
   },
 };
 

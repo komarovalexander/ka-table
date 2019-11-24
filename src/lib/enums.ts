@@ -12,6 +12,7 @@ export enum EditingMode {
 }
 
 export enum Events {
+  ScrollTable = 'ScrollTable',
   CloseEditor = 'CloseEditor',
   OpenEditor = 'OpenEditor',
   RowDataChanged = 'RowDataChanged',

@@ -13,13 +13,16 @@
 @import './static/icons.scss';
 
 .tc{
-  overflow: auto;
+  overflow: hidden;
   background-color: white;
 }
 .tc-table{
   font-size: 14px;
   width: 100%;
   border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .tc-thead{
   background-color: #F1F5F7;
@@ -31,6 +34,11 @@
 .tc-thead-cell-content{
   display: flex;
   align-items: center;
+}
+.tc-tbody{
+  display: block;
+  overflow-y: scroll;
+  height: 100%;
 }
 .tc-cell{
   padding: 15px 20px;
@@ -44,6 +52,11 @@
 .tc-empty-cell{
   width: 40px;
   min-width: 40px;
+}
+.tc-tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 .tc-row{
   box-sizing: border-box;
@@ -76,18 +89,4 @@
 }
 .tc-pointer{
   cursor: pointer;
-}
-
-.tc-virtual-scrolling {
-  overflow: hidden;
-  tbody{
-    display: block;
-    overflow-y: scroll;
-    height: 555px;
-  }
-  tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-  }
 }

@@ -4,7 +4,7 @@ import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { EventFunc, OptionChangedFunc } from '../../lib/types';
 
-const dataArray = Array(7).fill(undefined).map(
+const dataArray = Array(20).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -26,7 +26,6 @@ const tableOption: ITableOption = {
   sortingMode: SortingMode.Single,
 };
 
-const events: string[] = [];
 const EventsDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const onOptionChanged: OptionChangedFunc = (value) => {
@@ -38,8 +37,9 @@ const EventsDemo: React.FC = () => {
     changeData(newValue);
   };
 
+  const [events, changeEvents] = useState([] as string []);
   const onEvent: EventFunc = (event, eventData) => {
-    events.push(`event: ${event}, data:${JSON.stringify(eventData)}`);
+    changeEvents([`event: ${event}, data:${JSON.stringify(eventData)}`, ...events]);
   };
   return (
     <>
