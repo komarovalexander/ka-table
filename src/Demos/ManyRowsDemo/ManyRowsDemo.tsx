@@ -25,8 +25,6 @@ const tableOption: ITableOption = {
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
   virtualScrolling: {
-    itemHeight: () => 45,
-    visibleItemsCount: 30,
   },
 };
 

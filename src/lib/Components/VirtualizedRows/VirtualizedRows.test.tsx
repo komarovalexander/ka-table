@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import emptyFunc from '../../emptyFunc';
-import TableBody from './TableBody';
+import VirtualizedRows from './VirtualizedRows';
 
 const tableProps: any = {
   columns: [
@@ -18,7 +18,7 @@ const tableProps: any = {
 };
 
 it('renders without crashing', () => {
-  const div = document.createElement('table');
-  ReactDOM.render(<TableBody {...tableProps} />, div);
+  const div = document.createElement('tbody');
+  ReactDOM.render(<VirtualizedRows {...tableProps} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

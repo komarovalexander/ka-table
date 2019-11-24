@@ -1,30 +1,13 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode } from '../../enums';
-import { Cell } from '../../Models/Cell';
-import { Column } from '../../Models/Column';
-import { EventFunc, RowDataChangedFunc } from '../../types';
 import { isEditableCell } from '../../Utils/CellUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
 import CellComponent from '../CellComponent/CellComponent';
 import EmptyCells from '../EmptyCells/EmptyCells';
+import { IRowProps } from '../Row/Row';
 
-export interface IRowProps {
-  columns: Column[];
-  editableCells: Cell[];
-  editingMode: EditingMode;
-  groupColumnsCount: number;
-  onEvent: EventFunc;
-  onRowDataChanged: RowDataChangedFunc;
-  rowData: any;
-  rowKeyField: string;
-  height?: number;
-  selectedRows: any[];
-  trRef?: any;
-}
-
-const Row: React.FunctionComponent<IRowProps> = ({
+const DataRow: React.FunctionComponent<IRowProps> = ({
   columns,
   editableCells,
   editingMode,
@@ -34,12 +17,14 @@ const Row: React.FunctionComponent<IRowProps> = ({
   rowData,
   rowKeyField,
   selectedRows = [],
+  height,
+  trRef,
 }) => {
   const rowKeyValue = rowData[rowKeyField];
   const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
   const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
   return (
-    <tr className={`${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`}>
+    <tr ref={trRef} style={{height}} className={`${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`}>
       <EmptyCells count={groupColumnsCount}/>
       {columns.map((column) => (
         <CellComponent
@@ -58,4 +43,4 @@ const Row: React.FunctionComponent<IRowProps> = ({
   );
 };
 
-export default Row;
+export default DataRow;

@@ -3,12 +3,12 @@
 exports[`Virtualize getVirtualized itemHeight 40 1`] = `
 Object {
   "beginHeight": 0,
-  "endHeight": 7840,
+  "endHeight": 3840,
   "virtualizedData": Array [
+    0,
     1,
-    1,
-    1,
-    1,
+    2,
+    3,
   ],
 }
 `;
@@ -16,12 +16,12 @@ Object {
 exports[`Virtualize getVirtualized scrollPosition 0 1`] = `
 Object {
   "beginHeight": 0,
-  "endHeight": 1960,
+  "endHeight": 960,
   "virtualizedData": Array [
+    0,
     1,
-    1,
-    1,
-    1,
+    2,
+    3,
   ],
 }
 `;
@@ -29,20 +29,25 @@ Object {
 exports[`Virtualize getVirtualized scrollPosition 100 1`] = `
 Object {
   "beginHeight": 80,
-  "endHeight": 1860,
+  "endHeight": 860,
   "virtualizedData": Array [
-    1,
-    1,
-    1,
-    1,
+    10,
+    11,
+    12,
+    13,
   ],
 }
 `;
 
-exports[`Virtualize getVirtualized scrollPosition 2000 1`] = `
+exports[`Virtualize getVirtualized scrollPosition 900 1`] = `
 Object {
-  "beginHeight": 1980,
-  "endHeight": 0,
-  "virtualizedData": Array [],
+  "beginHeight": 880,
+  "endHeight": 60,
+  "virtualizedData": Array [
+    90,
+    91,
+    92,
+    93,
+  ],
 }
 `;

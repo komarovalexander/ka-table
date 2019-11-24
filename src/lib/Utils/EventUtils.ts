@@ -47,9 +47,7 @@ export const getOnEventHandler = ({
       case Events.ScrollTable:
           if (virtualScrolling) {
             const scrollPosition = eventData.scrollTop;
-            const canUpdate = !virtualScrolling.scrollPosition
-              || (Math.abs(virtualScrolling.scrollPosition - scrollPosition) > 600);
-            if (canUpdate) {
+            if (virtualScrolling) {
               onOptionChanged({ virtualScrolling: { ...virtualScrolling, scrollPosition }});
             }
           }

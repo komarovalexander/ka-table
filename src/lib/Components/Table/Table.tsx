@@ -48,9 +48,12 @@ export interface ITableAllProps extends ITableEvents, ITableOption {
 
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
-    groups,
+    editableCells = [],
+    editingMode = EditingMode.None,
     filterRow,
+    groups,
     search,
+    selectedRows = [],
     sortingMode = SortingMode.None,
   } = props;
   let { columns, data } = props;
@@ -82,11 +85,14 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         </thead>
         <TableBody
             {...props}
-            data={data}
             columns={columns}
-            onEvent={tableOnEvent}
-            groupedColumns={groupedColumns}
+            data={data}
+            editableCells={editableCells}
+            editingMode={editingMode}
             groupColumnsCount={groupColumnsCount}
+            groupedColumns={groupedColumns}
+            onEvent={tableOnEvent}
+            selectedRows={selectedRows}
         />
       </table>
     </div >

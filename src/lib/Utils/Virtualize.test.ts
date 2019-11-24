@@ -2,13 +2,13 @@ import { VirtualScrolling } from '../Models/VirtualScrolling';
 import { getVirtualized } from './Virtualize';
 
 describe('Virtualize', () => {
-  const data: any[] = new Array(200).fill(1);
+  const data: any[] = new Array(100).fill(0).map((_, index) => index);
   describe('getVirtualized', () => {
     it('scrollPosition 0', () => {
       const virtualScrolling: VirtualScrolling = {
         itemHeight: () => 10,
         scrollPosition: 0,
-        visibleItemsCount: 4,
+        tbodyHeight: 40,
       };
       const result = getVirtualized(virtualScrolling, data);
 
@@ -18,19 +18,19 @@ describe('Virtualize', () => {
     it('scrollPosition 100', () => {
       const virtualScrolling: VirtualScrolling = {
         itemHeight: () => 10,
-        scrollPosition: 101,
-        visibleItemsCount: 4,
+        scrollPosition: 100,
+        tbodyHeight: 40,
       };
       const result = getVirtualized(virtualScrolling, data);
 
       expect(result).toMatchSnapshot();
     });
 
-    it('scrollPosition 2000', () => {
+    it('scrollPosition 900', () => {
       const virtualScrolling: VirtualScrolling = {
         itemHeight: () => 10,
-        scrollPosition: 2000,
-        visibleItemsCount: 4,
+        scrollPosition: 900,
+        tbodyHeight: 40,
       };
       const result = getVirtualized(virtualScrolling, data);
 
@@ -41,7 +41,7 @@ describe('Virtualize', () => {
       const virtualScrolling: VirtualScrolling = {
         itemHeight: () => 40,
         scrollPosition: 0,
-        visibleItemsCount: 4,
+        tbodyHeight: 160,
       };
       const result = getVirtualized(virtualScrolling, data);
 
