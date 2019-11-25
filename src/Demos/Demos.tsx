@@ -1,7 +1,6 @@
 import './Demos.scss';
 
 import React from 'react';
-import ReactGA from 'react-ga';
 import { HashRouter, NavLink, Route } from 'react-router-dom';
 
 import CommandColumnDemo from './CommandColumnDemo/CommandColumnDemo';
@@ -14,6 +13,7 @@ import EditingDemo from './EditingDemo/EditingDemo';
 import EventsDemo from './EventsDemo/EventsDemo';
 import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
+import { initializeGA, trackEvent } from './ga';
 import { withTracker } from './GAWrapper';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
 import ManyRowsDemo from './ManyRowsDemo/ManyRowsDemo';
@@ -23,10 +23,7 @@ import SelectionDemo from './SelectionDemo/SelectionDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
 
-const host = window.location.hostname;
-if (host !== 'localhost') {
-  ReactGA.initialize('UA-50311880-5');
-}
+initializeGA();
 
 const demos: Demo[] = [
   new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo'),
@@ -62,8 +59,14 @@ const Demos: React.FC = () => {
         <nav>
           <div className='logo-container'>
             <b>react-table-control</b>
-            <a href='https://github.com/komarovalexander/react-table-control' target='_blank'><img src='static/icons/github_logo.svg' alt=''/></a>
-            <a href='https://www.npmjs.com/package/react-table-component' target='_blank'><img src='static/icons/npm_logo.svg' alt=''/></a>
+            <a href='https://github.com/komarovalexander/react-table-control'
+              onClick={() => { trackEvent('click', 'github_logo'); }}>
+              <img src='static/icons/github_logo.svg' alt=''/>
+            </a>
+            <a href='https://www.npmjs.com/package/react-table-component'
+              onClick={() => { trackEvent('click', 'npm_logo'); }}>
+              <img src='static/icons/npm_logo.svg' alt=''/>
+            </a>
           </div>
           <ul className='menu'>
           {
