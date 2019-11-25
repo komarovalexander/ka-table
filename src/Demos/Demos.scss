@@ -37,8 +37,8 @@ body {
         text-decoration: none;
         .menu-button{
           display: flex;
-          img {
-            margin-right: 20px;
+          .menu-icon {
+            width: 40px;
           }
           .menu-button-inner{
             width: 185px;

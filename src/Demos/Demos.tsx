@@ -74,7 +74,7 @@ const Demos: React.FC = () => {
               <li key={c.name}>
                   <NavLink to={c.path} activeClassName='active'>
                     <span className='menu-button'>
-                      <img src={`static/icons/${c.name}.svg`} alt=''/>
+                      <span className='menu-icon'><img src={`static/icons/${c.name}.svg`} alt=''/></span>
                       <span className='menu-button-inner'>{c.title}</span>
                     </span>
                   </NavLink>
