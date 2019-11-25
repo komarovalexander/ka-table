@@ -17,6 +17,13 @@ body {
     .logo-container {
       padding: 20px 50px;
       border-bottom: 1px solid #CBDCE4;
+      display: flex;
+      a{
+        line-height: 27px;
+      }
+      b, a{
+        margin-right: 10px;
+      }
     }
 
     ul{
@@ -29,6 +36,10 @@ body {
         padding: 10px 0 10px 40px;
         text-decoration: none;
         .menu-button{
+          display: flex;
+          img {
+            margin-right: 20px;
+          }
           .menu-button-inner{
             width: 185px;
           }

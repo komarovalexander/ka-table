@@ -62,6 +62,8 @@ const Demos: React.FC = () => {
         <nav>
           <div className='logo-container'>
             <b>react-table-control</b>
+            <a href='https://github.com/komarovalexander/react-table-control' target='_blank'><img src='static/icons/github_logo.svg' alt=''/></a>
+            <a href='https://www.npmjs.com/package/react-table-component' target='_blank'><img src='static/icons/npm_logo.svg' alt=''/></a>
           </div>
           <ul className='menu'>
           {
@@ -69,6 +71,7 @@ const Demos: React.FC = () => {
               <li key={c.name}>
                   <NavLink to={c.path} activeClassName='active'>
                     <span className='menu-button'>
+                      <img src={`static/icons/${c.name}.svg`} alt=''/>
                       <span className='menu-button-inner'>{c.title}</span>
                     </span>
                   </NavLink>
