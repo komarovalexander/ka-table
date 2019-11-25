@@ -15,18 +15,18 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'name', title: 'Name', dataType: DataType.String, width: '40%' },
-    { field: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
+    { key: 'name', title: 'Name', dataType: DataType.String, width: '40%' },
+    { key: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
     {
       dataType: DataType.Boolean,
-      field: 'passed',
+      key: 'passed',
       search: (searchText, rowData) => {
         return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
       },
       title: 'Passed',
     },
   ],
-  rowKey: 'id',
+  rowKeyField: 'id',
   search: 'Billi Bob',
 };
 

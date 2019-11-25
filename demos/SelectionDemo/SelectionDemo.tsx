@@ -14,14 +14,14 @@ const dataArray: any[] = [
 ];
 
 const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
-  rowData, rowKey, onEvent, isSelectedRow,
+  rowData, rowKeyField, onEvent, isSelectedRow,
 }) => {
   return (
     <input
       type='checkbox'
       checked={isSelectedRow}
       onChange={(event) => {
-        const rowKeyValue = rowData[rowKey];
+        const rowKeyValue = rowData[rowKeyField];
         if (event.currentTarget.checked) {
           onEvent(Events.RowSelected, { rowKeyValue });
         } else {
@@ -34,12 +34,12 @@ const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'commandColumn:selection', field: '', editor: SelectionCell, isEditable: true },
-    { field: 'name', title: 'Name', dataType: DataType.String, width: '33%', sortDirection: SortDirection.Descend },
-    { field: 'score', title: 'Score', width: '10%', dataType: DataType.Number },
-    { field: 'passed', title: 'Passed', dataType: DataType.Boolean },
+    { key: 'commandColumn:selection', editor: SelectionCell, isEditable: true },
+    { key: 'name', title: 'Name', dataType: DataType.String, width: '33%', sortDirection: SortDirection.Descend },
+    { key: 'score', title: 'Score', width: '10%', dataType: DataType.Number },
+    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
-  rowKey: 'id',
+  rowKeyField: 'id',
   selectedRows: [3, 5],
   sortingMode: SortingMode.Single,
 };

@@ -24,10 +24,10 @@ const HeadCell: React.FC<HeaderCellFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'column1', title: 'Column 1', headCell: (props) => <HeadCell {...props}/>, textAlign: TextAlign.Left },
-    { field: 'column2', title: 'Column 2' },
+    { key: 'column1', title: 'Column 1', headCell: (props) => <HeadCell {...props}/>, textAlign: TextAlign.Left },
+    { key: 'column2', title: 'Column 2' },
   ],
-  rowKey: 'id',
+  rowKeyField: 'id',
 };
 
 const CustomHeaderCellDemo: React.FC = () => {

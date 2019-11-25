@@ -15,16 +15,16 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend },
-    { field: 'score', title: 'Score', dataType: DataType.Number },
-    { field: 'passed', title: 'Passed', dataType: DataType.Boolean },
+    { key: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend },
+    { key: 'score', title: 'Score', dataType: DataType.Number },
+    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
   filterRow: [{
     field: 'name',
     operator: '=',
     value: 'Billi Bob',
   }],
-  rowKey: 'id',
+  rowKeyField: 'id',
 };
 
 const FilterRowDemo: React.FC = () => {

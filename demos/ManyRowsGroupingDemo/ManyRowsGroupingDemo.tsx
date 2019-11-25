@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { EventFunc, OptionChangedFunc } from '../../lib/types';
+import { DataType, SortingMode } from '../../lib/enums';
+import { OptionChangedFunc } from '../../lib/types';
 
-const dataArray = Array(20).fill(undefined).map(
+const dataArray = Array(10000).fill(undefined).map(
   (_, index) => ({
-    column1: `column:1 row:${index}`,
-    column2: `column:2 row:${index}`,
+    column1: `column:1 row:${index % 100}00`,
+    column2: `column:2 row:${index % 50}0`,
     column3: `column:3 row:${index}`,
     column4: `column:4 row:${index}`,
     id: index,
@@ -21,38 +21,28 @@ const tableOption: ITableOption = {
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
-  editingMode: EditingMode.Cell,
+  groups: [{ columnKey: 'column1'}, { columnKey: 'column2' }],
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
+  virtualScrolling: {
+  },
 };
 
-const EventsDemo: React.FC = () => {
+const ManyRowsGroupingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const onOptionChanged: OptionChangedFunc = (value) => {
     changeOptions({...option, ...value });
   };
 
-  const [data, changeData] = useState(dataArray);
-  const onDataChanged: OptionChangedFunc = (newValue) => {
-    changeData(newValue);
-  };
-
-  const [events, changeEvents] = useState([] as string []);
-  const onEvent: EventFunc = (event, eventData) => {
-    changeEvents([`event: ${event}, data:${JSON.stringify(eventData)}`, ...events]);
-  };
   return (
     <>
       <Table
         {...option}
-        data={data}
+        data={dataArray}
         onOptionChanged={onOptionChanged}
-        onDataChanged={onDataChanged}
-        onEvent={onEvent}
       />
-      {events.map((e, i) => (<div key={i}>{e}</div>))}
     </>
   );
 };
 
-export default EventsDemo;
+export default ManyRowsGroupingDemo;

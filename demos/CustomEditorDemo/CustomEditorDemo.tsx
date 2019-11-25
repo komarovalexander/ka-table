@@ -4,6 +4,7 @@ import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, Events } from '../../lib/enums';
 import { Cell } from '../../lib/models';
 import { EditorFuncPropsWithChildren, OptionChangedFunc } from '../../lib/types';
+import { getField } from '../../lib/Utils/ColumnUtils';
 import { toBoolean } from '../../lib/Utils/TypeUtils';
 
 const dataArray: any[] = [
@@ -16,13 +17,13 @@ const dataArray: any[] = [
 ];
 
 const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { field }, rowKey, rowData, onEvent, onValueChange,
+  column, rowKeyField, rowData, onEvent, onValueChange,
 }) => {
   const close = () => {
-    const cell: Cell = { field, rowKeyValue: rowData[rowKey] };
+    const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
     onEvent(Events.CloseEditor, { cell });
   };
-  const [value, setValue] = useState(rowData[field]);
+  const [value, setValue] = useState(rowData[getField(column)]);
   return (
     <div>
     <input
@@ -31,7 +32,7 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
       value={value}
       onChange={(event) => setValue(event.currentTarget.value)}/>
     <button onClick={() => {
-      onValueChange({ ...rowData, ...{ [field]: value } });
+      onValueChange({ ...rowData, ...{ [getField(column)]: value } });
       close();
     }}>Save</button>
     <button onClick={close}>Cancel</button>
@@ -40,10 +41,10 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
 };
 
 const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { field }, rowData, rowKey, onEvent, onValueChange,
+  column: { key: field }, rowData, rowKeyField, onEvent, onValueChange,
 }) => {
   const close = () => {
-    const cell: Cell = { field, rowKeyValue: rowData[rowKey] };
+    const cell: Cell = { columnKey: field, rowKey: rowData[rowKeyField] };
     onEvent(Events.CloseEditor, { cell });
   };
   const [value, setValue] = useState(rowData[field]);
@@ -69,13 +70,13 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { dataType: DataType.String, field: 'name', title: 'Name', editor: CustomEditor, width: '30%' },
-    { field: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
-    { dataType: DataType.Boolean, field: 'passed', title: 'Passed', editor: CustomLookupEditor, width: '10%' },
-    { field: 'nextTry', title: 'Next Try', dataType: DataType.Date },
+    { dataType: DataType.String, key: 'name', title: 'Name', editor: CustomEditor, width: '30%' },
+    { key: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
+    { dataType: DataType.Boolean, key: 'passed', title: 'Passed', editor: CustomLookupEditor, width: '10%' },
+    { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
   ],
   editingMode: EditingMode.Cell,
-  rowKey: 'id',
+  rowKeyField: 'id',
 };
 
 const CustomEditorDemo: React.FC = () => {

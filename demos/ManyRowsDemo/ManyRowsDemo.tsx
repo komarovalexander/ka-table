@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { EventFunc, OptionChangedFunc } from '../../lib/types';
+import { OptionChangedFunc } from '../../lib/types';
 
-const dataArray = Array(20).fill(undefined).map(
+const dataArray = Array(25000).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -24,9 +24,11 @@ const tableOption: ITableOption = {
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
+  virtualScrolling: {
+  },
 };
 
-const EventsDemo: React.FC = () => {
+const ManyRowsDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const onOptionChanged: OptionChangedFunc = (value) => {
     changeOptions({...option, ...value });
@@ -37,10 +39,6 @@ const EventsDemo: React.FC = () => {
     changeData(newValue);
   };
 
-  const [events, changeEvents] = useState([] as string []);
-  const onEvent: EventFunc = (event, eventData) => {
-    changeEvents([`event: ${event}, data:${JSON.stringify(eventData)}`, ...events]);
-  };
   return (
     <>
       <Table
@@ -48,11 +46,9 @@ const EventsDemo: React.FC = () => {
         data={data}
         onOptionChanged={onOptionChanged}
         onDataChanged={onDataChanged}
-        onEvent={onEvent}
       />
-      {events.map((e, i) => (<div key={i}>{e}</div>))}
     </>
   );
 };
 
-export default EventsDemo;
+export default ManyRowsDemo;

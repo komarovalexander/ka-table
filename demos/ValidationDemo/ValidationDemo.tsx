@@ -15,10 +15,10 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'name', title: 'Name', dataType: DataType.String, width: '40%' },
+    { key: 'name', title: 'Name', dataType: DataType.String, width: '40%' },
     {
       dataType: DataType.Number,
-      field: 'score',
+      key: 'score',
       title: 'Score',
       validation: (value: any, rowData: any) => {
         if (value > 100) {
@@ -29,16 +29,16 @@ const tableOption: ITableOption = {
     },
     {
       dataType: DataType.Boolean,
-      field: 'passed',
+      key: 'passed',
       title: 'Passed',
     },
   ],
   editableCells: [{
-    field: 'score',
-    rowKeyValue: 2,
+    columnKey: 'score',
+    rowKey: 2,
   }],
   editingMode: EditingMode.Cell,
-  rowKey: 'id',
+  rowKeyField: 'id',
 };
 
 const ValidationDemo: React.FC = () => {

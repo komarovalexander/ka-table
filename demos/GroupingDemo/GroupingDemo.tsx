@@ -14,14 +14,14 @@ const dataArray = [
 
 const tableOption: ITableOption = {
   columns: [
-    { field: 'type', title: 'TYPE', dataType: DataType.String },
-    { field: 'name', title: 'NAME', dataType: DataType.String, width: '50%' },
-    { field: 'country', title: 'COUNTRY', dataType: DataType.String },
-    { field: 'age', title: 'AGE', dataType: DataType.Number, width: '50%' },
+    { key: 'type', title: 'TYPE', dataType: DataType.String },
+    { key: 'name', title: 'NAME', dataType: DataType.String, width: '50%' },
+    { key: 'country', title: 'COUNTRY', dataType: DataType.String },
+    { key: 'age', title: 'AGE', dataType: DataType.Number, width: '50%' },
   ],
   editingMode: EditingMode.Cell,
-  groups: [{ field: 'country' }, { field: 'type' }],
-  rowKey: 'id',
+  groups: [{ columnKey: 'country' }, { columnKey: 'type' }],
+  rowKeyField: 'id',
 };
 
 const GroupingDemo: React.FC = () => {
