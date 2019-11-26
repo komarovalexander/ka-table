@@ -31,14 +31,13 @@
   padding: 15px 20px;
   color: #747D86;
 }
-.tc-thead-cell-content{
-  display: flex;
-  align-items: center;
-}
 .tc-tbody{
   display: block;
-  overflow-y: scroll;
+  overflow-y: overlay;
   height: 100%;
+}
+.tc-thead-cell, .tc-cell{
+  text-align: left;
 }
 .tc-cell{
   padding: 15px 20px;

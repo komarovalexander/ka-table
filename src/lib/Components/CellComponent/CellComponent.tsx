@@ -22,12 +22,12 @@ export interface ICellComponentProps {
 const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
   const {
     column,
-    column: { textAlign },
+    column: { textAlign, width },
     isEditableCell,
     onRowDataChanged,
   } = props;
   return (
-    <td style={{textAlign}} className={defaultOptions.css.cell}>
+    <td style={{textAlign, width}} className={defaultOptions.css.cell}>
       { isEditableCell ? (
           <CellEditor
             {...props}

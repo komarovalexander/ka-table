@@ -29,10 +29,10 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
       className={`tc-thead-cell-content ${isSortingEnabled ? 'tc-pointer' : ''}`}
       onClick={sortClick}
     >
-      <div>{title}</div>
+      <span>{title}</span>
       {
         sortDirection && isSortingEnabled && (
-          <div
+          <span
             className={
               sortDirection === SortDirection.Ascend
                 ? defaultOptions.css.iconSortArrowUp
