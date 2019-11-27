@@ -1,7 +1,9 @@
+import './CommandColumnDemo.scss';
+
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType } from '../../lib/enums';
+import { DataType, TextAlign } from '../../lib/enums';
 import { CellFuncPropsWithChildren, EventFunc, OptionChangedFunc } from '../../lib/types';
 
 const DELETE_EVENT = 'delete';
@@ -20,7 +22,12 @@ const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
 }) => {
   return (
     <div>
-      <button onClick={() => alert(`row data: ${JSON.stringify(rowData)}`)}>Show allert</button>
+      <img
+        src='static/icons/alert.svg'
+        className='button'
+        alt=''
+        onClick={() => alert(`row data: ${JSON.stringify(rowData)}`)}
+      />
     </div>
   );
 };
@@ -30,20 +37,25 @@ const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
 }) => {
  return (
    <div>
-     <button onClick={() => onEvent(DELETE_EVENT, { rowData })}>Delete</button>
+      <img
+        src='static/icons/delete.svg'
+        className='button'
+        onClick={() => onEvent(DELETE_EVENT, { rowData })}
+        alt=''
+      />
    </div>
  );
 };
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'command1', cell: (props) => <AlertCell {...props}/> },
+    { key: 'command1', cell: (props) => <AlertCell {...props}/>, width: 40, textAlign: TextAlign.Center },
     { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: 'command22', cell: (props) => <DeleteRow {...props} /> },
+    { key: 'command22', cell: (props) => <DeleteRow {...props} />, width: 40, textAlign: TextAlign.Center },
   ],
   rowKeyField: 'column1',
 };
