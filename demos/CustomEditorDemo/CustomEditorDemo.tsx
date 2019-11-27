@@ -70,9 +70,9 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { dataType: DataType.String, key: 'name', title: 'Name', editor: CustomEditor, width: '30%' },
-    { key: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
-    { dataType: DataType.Boolean, key: 'passed', title: 'Passed', editor: CustomLookupEditor, width: '10%' },
+    { dataType: DataType.String, key: 'name', title: 'Name', editor: CustomEditor, style: { width: '30%' } },
+    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%' } },
+    { dataType: DataType.Boolean, key: 'passed', title: 'Passed', editor: CustomLookupEditor, style: { width: '10%' } },
     { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
   ],
   editingMode: EditingMode.Cell,
