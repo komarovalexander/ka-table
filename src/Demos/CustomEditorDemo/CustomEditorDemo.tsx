@@ -55,7 +55,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
         autoFocus={true}
         defaultValue={value}
         onBlur={() => {
-          onValueChange({ rowData: { ...rowData, ...{ [field]: value } }});
+          onValueChange({ ...rowData, ...{ [field]: value } });
           close();
         }}
         onChange={(event) => {
