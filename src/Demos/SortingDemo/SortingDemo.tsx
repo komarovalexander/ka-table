@@ -15,8 +15,14 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, width: '33%', sortDirection: SortDirection.Descend },
-    { key: 'score', title: 'Score', width: '10%', dataType: DataType.Number },
+    {
+      dataType: DataType.String,
+      key: 'name',
+      sortDirection: SortDirection.Descend,
+      style: { width: '33%' },
+      title: 'Name',
+    },
+    { key: 'score', title: 'Score', style: { width: '10%' }, dataType: DataType.Number },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
   rowKeyField: 'id',

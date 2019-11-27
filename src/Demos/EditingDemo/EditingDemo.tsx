@@ -15,9 +15,9 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, width: '30%' },
-    { key: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean, width: '10%' },
+    { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '30%' } },
+    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%' } },
+    { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: { width: '10%' }},
     { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
   ],
   editableCells: [{

@@ -14,10 +14,10 @@ export interface IHeadCellProps {
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
-    column: { width,  textAlign },
+    column: { style },
   } = props;
   return (
-    <th scope='col' style={{ width, textAlign }} className={defaultOptions.css.theadCell}>
+    <th scope='col' style={style} className={defaultOptions.css.theadCell}>
       <HeadCellContent {...props}/>
     </th>
   );

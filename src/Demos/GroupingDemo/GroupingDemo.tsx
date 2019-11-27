@@ -15,9 +15,9 @@ const dataArray = [
 const tableOption: ITableOption = {
   columns: [
     { key: 'type', title: 'TYPE', dataType: DataType.String },
-    { key: 'name', title: 'NAME', dataType: DataType.String, width: '50%' },
+    { key: 'name', title: 'NAME', dataType: DataType.String, style: { width: '50%' } },
     { key: 'country', title: 'COUNTRY', dataType: DataType.String },
-    { key: 'age', title: 'AGE', dataType: DataType.Number, width: '50%' },
+    { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' } },
   ],
   editingMode: EditingMode.Cell,
   groups: [{ columnKey: 'country' }, { columnKey: 'type' }],

@@ -94,8 +94,8 @@ describe('FilterUtils', () => {
 
   describe('searchData', () => {
     const columns: Column[] = [
-      { key: 'name', title: 'Name', dataType: DataType.String, width: '40%' },
-      { key: 'score', title: 'Score', dataType: DataType.Number, width: '10%' },
+      { key: 'name', title: 'Name', dataType: DataType.String },
+      { key: 'score', title: 'Score', dataType: DataType.Number },
       {
         dataType: DataType.Boolean,
         key: 'passed',

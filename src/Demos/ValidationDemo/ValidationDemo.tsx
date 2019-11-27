@@ -15,17 +15,17 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, width: '40%' },
+    { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '40%' } },
     {
       dataType: DataType.Number,
       key: 'score',
+      style: { width: '10%' },
       title: 'Score',
       validation: (value: any, rowData: any) => {
         if (value > 100) {
           return `Value can't be more than 100`;
         }
       },
-      width: '10%',
     },
     {
       dataType: DataType.Boolean,
