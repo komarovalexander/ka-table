@@ -15,8 +15,8 @@ export class CssClasses {
   public iconSortArrowDown?: string = 'tc-icon tc-icon-sort tc-icon-sort-arrow-down';
   public iconSortArrowUp?: string = 'tc-icon tc-icon-sort tc-icon-sort-arrow-up';
 
-  public checkbox ?: string;
-  public dateInput ?: string;
-  public numberInput ?: string;
-  public textInput ?: string;
+  public checkbox ?: string = 'tc-input';
+  public dateInput ?: string = 'tc-input';
+  public numberInput ?: string = 'tc-input';
+  public textInput ?: string = 'tc-input';
 }
