@@ -5,15 +5,20 @@ import CellEditorDataType from '../CellEditorDataType/CellEditorDataType';
 
 const FilterCell: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
-    column: { textAlign },
+    column: { textAlign, filterCell },
     onValueChange,
   } = props;
   return (
     <td style={{textAlign}} className='tc-thead-cell tc-filter-row-cell'>
-      <CellEditorDataType
-        {...props}
-        onValueChange={onValueChange}
-      />
+      {
+        filterCell ? filterCell(props) :
+        (
+          <CellEditorDataType
+            {...props}
+            onValueChange={onValueChange}
+          />
+        )
+      }
     </td>
   );
 };

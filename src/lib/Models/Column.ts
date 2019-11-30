@@ -8,6 +8,7 @@ export class Column {
   public cell?: CellFunc;
   public dataType?: DataType = DataType.String;
   public editor?: EditorFunc;
+  public filterCell?: EditorFunc;
   public field?: string;
   public headCell?: HeaderCellFunc;
   public isCustom?: boolean;
