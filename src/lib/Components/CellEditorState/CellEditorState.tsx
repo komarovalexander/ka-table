@@ -62,8 +62,10 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   return (
     <>
-      <CellEditorDataType {...stateProps} />
-      {validationValue && <CellEditorValidationMessage message={validationValue} />}
+      <div className={`tc-cell-editor ${validationValue ? 'tc-cell-editor-validation-error' : ''}`}>
+        <CellEditorDataType {...stateProps} />
+        {validationValue && <CellEditorValidationMessage message={validationValue} />}
+      </div>
     </>
   );
 };
