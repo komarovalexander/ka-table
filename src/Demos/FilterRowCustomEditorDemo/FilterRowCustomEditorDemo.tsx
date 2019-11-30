@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, SortDirection } from '../../lib/enums';
+import { DataType } from '../../lib/enums';
 import { EditorFuncPropsWithChildren, OptionChangedFunc } from '../../lib/types';
 
 const dataArray: any[] = [
