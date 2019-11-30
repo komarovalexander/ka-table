@@ -12,6 +12,7 @@ import { getOnEventHandler } from '../../Utils/EventUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
 import { convertToColumnTypes } from '../../Utils/TypeUtils';
+import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
 import TableBody from '../TableBody/TableBody';
 
@@ -52,6 +53,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     editingMode = EditingMode.None,
     filterRow,
     groups,
+    onOptionChanged,
     search,
     selectedRows = [],
     sortingMode = SortingMode.None,
@@ -82,6 +84,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
             onEvent={tableOnEvent}
             sortingMode={sortingMode}
           />
+          {filterRow && <FilterRow columns={columns} filterRow={filterRow} onOptionChanged={onOptionChanged}/>}
         </thead>
         <TableBody
             {...props}

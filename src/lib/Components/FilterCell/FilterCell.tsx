@@ -9,14 +9,11 @@ const FilterCell: React.FunctionComponent<ICellEditorProps> = (props) => {
     onValueChange,
   } = props;
   return (
-    <td style={{textAlign}}>
+    <td style={{textAlign}} className='tc-thead-cell tc-filter-row-cell'>
       <CellEditorDataType
         {...props}
         onValueChange={onValueChange}
       />
-      <div className='tc-filter-row-clear-button' onClick={() => { onValueChange(null); }}>
-        Clear
-      </div>
     </td>
   );
 };

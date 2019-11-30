@@ -50,7 +50,6 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
     <tbody className={defaultOptions.css.tbody} onScroll={(event) => {
       onEvent(Events.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
     }}>
-      {filterRow && <FilterRow columns={columns} filterRow={filterRow} onOptionChanged={onOptionChanged}/>}
       <VirtualizedRows
         {...props}
         data={groupedData}
