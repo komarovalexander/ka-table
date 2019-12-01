@@ -68,6 +68,21 @@ describe('filter data', () => {
     const result = filterGroupAnd(data, items);
     expect(result).toMatchSnapshot();
   });
+  it('filterGroupAnd with inner groups with empty filter', () => {
+    const data = [
+      { id: 1, field: 1, field2: 'text '},
+      { id: 2, field: 1, field2: 'text 2'},
+      { id: 3, field: 2, field2: 'text 3'},
+      { id: 4, field: 1, field2: 'text 2'},
+    ];
+    const items: any = [{
+      field: 'name',
+      key: '1',
+      operator: '<>',
+    }];
+    const result = filterGroupAnd(data, items);
+    expect(result).toEqual(data);
+  });
   it('filterGroupOr', () => {
     const data = [
       { id: 1, field: 1, field2: 'text '},

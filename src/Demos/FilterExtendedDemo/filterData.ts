@@ -1,27 +1,31 @@
 export const isEmpty = (value: any) => (value == null || value.length === 0);
 
-const contains = (data: any[], item: any) => data[item.field].includes(item.value);
-const equals = (data: any[], item: any) => ((typeof item.value === 'string')
-  ? data[item.field].toLowerCase().includes(item.value.toLowerCase())
-  : data[item.field] === item.value);
-const notEqual = (data: any[], item: any) => !equals(data, item);
+const contains = (data: any[], item: any) => {
+  if (!item.value) { return true; }
+  return data[item.field].toLowerCase().includes(item.value.toLowerCase());
+};
+const doesNotContain = (data: any[], item: any) => {
+  if (!item.value) { return true; }
+  return !data[item.field].toLowerCase().includes(item.value.toLowerCase());
+};
+const equals = (data: any[], item: any) => {
+  if (!item.value) { return true; }
+  return data[item.field].toString().toLowerCase() === item.value.toString().toLowerCase();
+};
+const isNotEqual = (data: any[], item: any) => {
+  if (!item.value) { return true; }
+  return data[item.field].toString().toLowerCase() !== item.value.toString().toLowerCase();
+};
 const more = (data: any[], item: any) => data[item.field] > item.value;
-const moreOrEqual = (data: any[], item: any) => data[item.field] >= item.value;
 const less = (data: any[], item: any) => data[item.field] < item.value;
-const lessOrEqual = (data: any[], item: any) => data[item.field] < item.value;
-const blank = (data: any[], item: any) => isEmpty(data[item.field]);
-const notBlank = (data: any[], item: any) => !isEmpty(data[item.field]);
 export const filterItem = (data: any[], filter: any) => {
   switch (filter.operator) {
     case 'contains': return contains(data, filter);
+    case 'doesNotContain': return doesNotContain(data, filter);
     case '=': return equals(data, filter);
-    case '<>': return notEqual(data, filter);
+    case '<>': return isNotEqual(data, filter);
     case '>': return more(data, filter);
-    case '>=': return moreOrEqual(data, filter);
     case '<': return less(data, filter);
-    case '<=': return lessOrEqual(data, filter);
-    case 'blank': return blank(data, filter);
-    case 'notBlank': return notBlank(data, filter);
     default: throw Error('unknown operator');
   }
 };
