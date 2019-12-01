@@ -35,6 +35,9 @@ const tableOption: ITableOption = {
         if (value > 100) {
           return `Value can't be more than 100`;
         }
+        if (!value) {
+          return `Value can't be empty`;
+        }
       },
     },
     {

@@ -56,8 +56,10 @@
     border: 1px solid #FF0C0C;
   }
 }
-.tc-validation-message{
+.tc-validation-message-container{
   position: absolute;
+}
+.tc-validation-message{
   font-size: 12px;
   color: white;
   background-color: #FF0C0C;
