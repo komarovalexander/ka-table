@@ -1,5 +1,7 @@
 import { DataType, SortDirection, TextAlign } from '../enums';
-import { CellFunc, EditorFunc, HeaderCellFunc, SearchFunc, ValidationFunc } from '../types';
+import {
+  CellFunc, EditorFunc, FormatFunc, HeaderCellFunc, SearchFunc, ValidationFunc,
+} from '../types';
 
 /**
  * Describes column of table its look and behaviour
@@ -10,6 +12,7 @@ export class Column {
   public editor?: EditorFunc;
   public filterCell?: EditorFunc;
   public field?: string;
+  public format?: FormatFunc;
   public headCell?: HeaderCellFunc;
   public isCustom?: boolean;
   public isEditable?: boolean;
