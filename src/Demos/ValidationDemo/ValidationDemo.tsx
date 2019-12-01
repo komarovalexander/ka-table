@@ -15,7 +15,17 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '40%' } },
+    {
+      dataType: DataType.String,
+      key: 'name',
+      style: { width: '40%' },
+      title: 'Name',
+      validation: (value: any, rowData: any) => {
+        if (!value) {
+          return `Value can't be empty`;
+        }
+      },
+    },
     {
       dataType: DataType.Number,
       key: 'score',
