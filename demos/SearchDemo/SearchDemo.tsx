@@ -37,7 +37,7 @@ const SearchDemo: React.FC = () => {
   };
   return (
     <>
-      <input defaultValue={option.search} onChange={(event) => {
+      <input type='search' defaultValue={option.search} onChange={(event) => {
         onOptionChanged({ search: event.currentTarget.value });
       }}/>
       <Table

@@ -72,8 +72,18 @@ const tableOption: ITableOption = {
   columns: [
     { dataType: DataType.String, key: 'name', title: 'Name', editor: CustomEditor, style: { width: '30%' } },
     { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%' } },
-    { dataType: DataType.Boolean, key: 'passed', title: 'Passed', editor: CustomLookupEditor, style: { width: '10%' } },
-    { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
+    {
+      dataType: DataType.Boolean,
+      editor: CustomLookupEditor,
+      key: 'passed', title: 'Passed',
+      style: { width: '10%' },
+    },
+    {
+      dataType: DataType.Date,
+      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
+      key: 'nextTry',
+      title: 'Next Try',
+    },
   ],
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
