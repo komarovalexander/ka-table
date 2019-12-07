@@ -75,8 +75,9 @@ const tableOption: ITableOption = {
     {
       dataType: DataType.Boolean,
       editor: CustomLookupEditor,
-      key: 'passed', title: 'Passed',
+      key: 'passed',
       style: { width: '10%' },
+      title: 'Passed',
     },
     {
       dataType: DataType.Date,
