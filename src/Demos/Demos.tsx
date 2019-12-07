@@ -27,7 +27,7 @@ import ValidationDemo from './ValidationDemo/ValidationDemo';
 initializeGA();
 
 const demos: Demo[] = [
-  new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo'),
+  new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo', 'https://stackblitz.com/edit/table-command-column-js', 'https://stackblitz.com/edit/table-command-column-ts'),
   new Demo(CustomCellDemo, '/custom-cell', 'Custom Cell', 'CustomCellDemo'),
   new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo'),
   new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo'),

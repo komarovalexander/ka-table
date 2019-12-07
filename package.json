@@ -1,6 +1,6 @@
 {
   "name": "react-table-control",
-  "version": "0.1.4",
+  "version": "0.2.1",
   "license": "MIT",
   "repository": "github:komarovalexander/react-table-control",
   "homepage": "https://komarovalexander.github.io/react-table-control",
@@ -59,7 +59,8 @@
     "tslint": "^5.20.0",
     "tslint-react": "^4.1.0",
     "typedoc": "^0.15.0",
-    "typescript": "3.6.3"
+    "typescript": "3.6.3",
+    "react-ga": "^2.7.0"
   },
   "lint-staged": {
     "*.{ts,tsx}": "npm run lint"
