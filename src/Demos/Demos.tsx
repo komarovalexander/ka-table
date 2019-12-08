@@ -36,12 +36,28 @@ const demos: Demo[] = [
   new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo', 'https://stackblitz.com/edit/table-filter-extended-js', 'https://stackblitz.com/edit/table-filter-extended-ts'),
   new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo', 'https://stackblitz.com/edit/table-filter-row-js', 'https://stackblitz.com/edit/table-filter-row-ts'),
   new Demo(FilterRowCustomEditorDemo, '/filter-row-custom-editor', 'Filter Row - Custom Editor', 'FilterRowCustomEditorDemo', 'table-filter-row-custom-editor-js', 'https://stackblitz.com/edit/table-filter-row-custom-editor-ts'),
-  new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo', 'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts'), // TODO issue with group margins on stackblitz
-  new Demo(ManyRowsDemo, '/many-rows', '25000 Rows', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts'),
-  new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', '10000 Grouped Rows', 'ManyRowsGroupingDemo', 'https://stackblitz.com/edit/table-many-rows-grouping-js', 'https://stackblitz.com/edit/table-many-rows-grouping-ts'),
+  new Demo(
+    GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo',
+    'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts',
+    true,
+  ),
+  new Demo(
+    ManyRowsDemo, '/many-rows', '25000 Rows', 'ManyRowsDemo',
+    'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts',
+  ),
+  new Demo(
+    ManyRowsGroupingDemo, '/many-rows-grouping', '10000 Grouped Rows', 'ManyRowsGroupingDemo',
+    'https://stackblitz.com/edit/table-many-rows-grouping-js',
+    'https://stackblitz.com/edit/table-many-rows-grouping-ts',
+    true,
+  ),
   new Demo(SearchDemo, '/search', 'Search', 'SearchDemo', 'https://stackblitz.com/edit/table-search-js', 'https://stackblitz.com/edit/table-search-ts'),
   new Demo(SelectionDemo, '/selection', 'Selection', 'SelectionDemo', 'https://stackblitz.com/edit/table-selection-js', 'https://stackblitz.com/edit/table-selection-ts'),
-  new Demo(SortingDemo, '/sorting', 'Sorting', 'SortingDemo', 'https://stackblitz.com/edit/table-sorting-js', 'https://stackblitz.com/edit/table-sorting-ts'), // TODO issue with fonts on stackblitz
+  new Demo(
+    SortingDemo, '/sorting', 'Sorting', 'SortingDemo',
+    'https://stackblitz.com/edit/table-sorting-js', 'https://stackblitz.com/edit/table-sorting-ts',
+    true,
+  ),
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts'),
 ];
 

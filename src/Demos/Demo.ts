@@ -6,6 +6,7 @@ export default class Demo {
     public title: string,
     public fileName: string,
     public jsLink: string = '',
-    public tsLink: string = '') {
+    public tsLink: string = '',
+    public disableOnlineEditor: boolean = false) {
   }
 }
