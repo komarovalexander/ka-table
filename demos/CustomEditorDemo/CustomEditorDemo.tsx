@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'react-table-component';
-import { DataType, EditingMode, Events } from 'react-table-component/enums';
-import { Cell } from 'react-table-component/models';
-import { EditorFuncPropsWithChildren, OptionChangedFunc } from 'react-table-component/types';
-import { columnUtils, typeUtils } from 'react-table-component/utils';
+import { ITableOption, Table } from 'react-table-control';
+import { DataType, EditingMode, Events } from 'react-table-control/enums';
+import { Cell } from 'react-table-control/models';
+import { EditorFuncPropsWithChildren, OptionChangedFunc } from 'react-table-control/types';
+import { columnUtils, typeUtils } from 'react-table-control/utils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },

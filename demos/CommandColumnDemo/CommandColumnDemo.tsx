@@ -2,9 +2,9 @@ import './CommandColumnDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'react-table-component';
-import { DataType, TextAlign } from 'react-table-component/enums';
-import { CellFuncPropsWithChildren, EventFunc, OptionChangedFunc } from 'react-table-component/types';
+import { ITableOption, Table } from 'react-table-control';
+import { DataType, TextAlign } from 'react-table-control/enums';
+import { CellFuncPropsWithChildren, EventFunc, OptionChangedFunc } from 'react-table-control/types';
 
 const DELETE_EVENT = 'delete';
 

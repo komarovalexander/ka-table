@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import FilterControl from 'react-filter-control';
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
 
-import { ITableOption, Table } from 'react-table-component';
-import { DataType, SortDirection, SortingMode } from 'react-table-component/enums';
-import { OptionChangedFunc } from 'react-table-component/types';
+import { ITableOption, Table } from 'react-table-control';
+import { DataType } from 'react-table-control/enums';
+import { OptionChangedFunc } from 'react-table-control/types';
 import { filterData } from './filterData';
 
 const dataArray: any[] = [
@@ -19,12 +19,11 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend },
+    { key: 'name', title: 'Name', dataType: DataType.String },
     { key: 'score', title: 'Score', dataType: DataType.Number },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
   rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
 };
 
 export const fields = [{

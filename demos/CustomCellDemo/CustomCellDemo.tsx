@@ -2,10 +2,10 @@ import './CustomCellDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'react-table-component';
-import { DataType, EditingMode, Events, TextAlign } from 'react-table-component/enums';
-import { Cell } from 'react-table-component/models';
-import { CellFuncPropsWithChildren, OptionChangedFunc } from 'react-table-component/types';
+import { ITableOption, Table } from 'react-table-control';
+import { DataType, EditingMode, Events, TextAlign } from 'react-table-control/enums';
+import { Cell } from 'react-table-control/models';
+import { CellFuncPropsWithChildren, OptionChangedFunc } from 'react-table-control/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, img: 'static/images/man1.PNG' },
