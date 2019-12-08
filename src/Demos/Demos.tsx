@@ -29,20 +29,20 @@ initializeGA();
 const demos: Demo[] = [
   new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo', 'https://stackblitz.com/edit/table-command-column-js', 'https://stackblitz.com/edit/table-command-column-ts'),
   new Demo(CustomCellDemo, '/custom-cell', 'Custom Cell', 'CustomCellDemo', 'https://stackblitz.com/edit/table-custom-cell-js', 'https://stackblitz.com/edit/table-custom-cell-ts'),
-  new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo', '', 'https://stackblitz.com/edit/table-custom-editor-ts'),
-  new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo'),
-  new Demo(EditingDemo, '/editing', 'Editing', 'EditingDemo'),
-  new Demo(EventsDemo, '/events', 'Events', 'EventsDemo'),
-  new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo'),
-  new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo'),
-  new Demo(FilterRowCustomEditorDemo, '/filter-row-custom-editor', 'Filter Row - Custom Editor', 'FilterRowCustomEditorDemo'),
-  new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo'),
-  new Demo(ManyRowsDemo, '/many-rows', '25000 Rows', 'ManyRowsDemo'),
-  new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', '10000 Rows with grouping', 'ManyRowsGroupingDemo'),
-  new Demo(SearchDemo, '/search', 'Search', 'SearchDemo'),
-  new Demo(SelectionDemo, '/selection', 'Selection', 'SelectionDemo'),
-  new Demo(SortingDemo, '/sorting', 'Sorting', 'SortingDemo'),
-  new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo'),
+  new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo', 'https://stackblitz.com/edit/table-custom-editor-js', 'https://stackblitz.com/edit/table-custom-editor-ts'),
+  new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo', 'https://stackblitz.com/edit/table-custom-header-cell-js', 'https://stackblitz.com/edit/table-custom-header-cell-ts'),
+  new Demo(EditingDemo, '/editing', 'Editing', 'EditingDemo', 'https://stackblitz.com/edit/table-editing-js', 'https://stackblitz.com/edit/table-editing-ts'),
+  new Demo(EventsDemo, '/events', 'Events', 'EventsDemo', 'https://stackblitz.com/edit/table-events-js', 'https://stackblitz.com/edit/table-events-ts'),
+  new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo', 'https://stackblitz.com/edit/table-filter-extended-js', 'https://stackblitz.com/edit/table-filter-extended-ts'),
+  new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo', 'https://stackblitz.com/edit/table-filter-row-js', 'https://stackblitz.com/edit/table-filter-row-ts'),
+  new Demo(FilterRowCustomEditorDemo, '/filter-row-custom-editor', 'Filter Row - Custom Editor', 'FilterRowCustomEditorDemo', 'table-filter-row-custom-editor-js', 'https://stackblitz.com/edit/table-filter-row-custom-editor-ts'),
+  new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo', 'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts'), // TODO issue with group margins on stackblitz
+  new Demo(ManyRowsDemo, '/many-rows', '25000 Rows', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts'),
+  new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', '10000 Rows with grouping', 'ManyRowsGroupingDemo', 'https://stackblitz.com/edit/table-many-rows-grouping-js', 'https://stackblitz.com/edit/table-many-rows-grouping-ts'),
+  new Demo(SearchDemo, '/search', 'Search', 'SearchDemo', 'https://stackblitz.com/edit/table-search-js', 'https://stackblitz.com/edit/table-search-ts'),
+  new Demo(SelectionDemo, '/selection', 'Selection', 'SelectionDemo', 'https://stackblitz.com/edit/table-selection-js', 'https://stackblitz.com/edit/table-selection-ts'),
+  new Demo(SortingDemo, '/sorting', 'Sorting', 'SortingDemo', 'https://stackblitz.com/edit/table-sorting-js', 'https://stackblitz.com/edit/table-sorting-ts'), // TODO issue with fonts on stackblitz
+  new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts'),
 ];
 
 const cases = demos.map((d: Demo) => {

@@ -3,7 +3,7 @@ import FilterControl from 'react-filter-control';
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, SortDirection, SortingMode } from '../../lib/enums';
+import { DataType } from '../../lib/enums';
 import { OptionChangedFunc } from '../../lib/types';
 import { filterData } from './filterData';
 
@@ -19,12 +19,11 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend },
+    { key: 'name', title: 'Name', dataType: DataType.String },
     { key: 'score', title: 'Score', dataType: DataType.Number },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
   rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
 };
 
 export const fields = [{
