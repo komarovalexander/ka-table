@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, Events } from '../../lib/enums';
-import { Cell } from '../../lib/models';
-import { EditorFuncPropsWithChildren, OptionChangedFunc } from '../../lib/types';
-import { getField } from '../../lib/Utils/ColumnUtils';
-import { toBoolean } from '../../lib/Utils/TypeUtils';
+import { ITableOption, Table } from 'react-table-component';
+import { DataType, EditingMode, Events } from 'react-table-component/enums';
+import { Cell } from 'react-table-component/models';
+import { EditorFuncPropsWithChildren, OptionChangedFunc } from 'react-table-component/types';
+import { columnUtils, typeUtils } from 'react-table-component/utils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -23,7 +22,7 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
     const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
     onEvent(Events.CloseEditor, { cell });
   };
-  const [value, setValue] = useState(rowData[getField(column)]);
+  const [value, setValue] = useState(rowData[columnUtils.getField(column)]);
   return (
     <div>
     <input
@@ -32,7 +31,7 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
       value={value}
       onChange={(event) => setValue(event.currentTarget.value)}/>
     <button onClick={() => {
-      onValueChange({ ...rowData, ...{ [getField(column)]: value } });
+      onValueChange({ ...rowData, ...{ [columnUtils.getField(column)]: value } });
       close();
     }}>Save</button>
     <button onClick={close}>Cancel</button>
@@ -59,7 +58,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
           close();
         }}
         onChange={(event) => {
-          setValue(toBoolean(event.currentTarget.value));
+          setValue(typeUtils.toBoolean(event.currentTarget.value));
         }}>
         <option value={'true'}>True</option>
         <option value={'false'}>False</option>
@@ -75,8 +74,9 @@ const tableOption: ITableOption = {
     {
       dataType: DataType.Boolean,
       editor: CustomLookupEditor,
-      key: 'passed', title: 'Passed',
+      key: 'passed',
       style: { width: '10%' },
+      title: 'Passed',
     },
     {
       dataType: DataType.Date,

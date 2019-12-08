@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { EventFunc, OptionChangedFunc } from '../../lib/types';
+import { ITableOption, Table } from 'react-table-component';
+import { DataType, EditingMode, SortingMode } from 'react-table-component/enums';
+import { EventFunc, OptionChangedFunc } from 'react-table-component/types';
 
 const dataArray = Array(20).fill(undefined).map(
   (_, index) => ({

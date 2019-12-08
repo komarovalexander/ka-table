@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import FilterControl from 'react-filter-control';
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
 
-import { ITableOption, Table } from '../../lib';
-import { DataType, SortDirection, SortingMode } from '../../lib/enums';
-import { OptionChangedFunc } from '../../lib/types';
+import { ITableOption, Table } from 'react-table-component';
+import { DataType, SortDirection, SortingMode } from 'react-table-component/enums';
+import { OptionChangedFunc } from 'react-table-component/types';
 import { filterData } from './filterData';
 
 const dataArray: any[] = [
