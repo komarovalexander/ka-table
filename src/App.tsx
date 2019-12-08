@@ -1,5 +1,4 @@
 import './App.css';
-import './lib/styles.scss';
 
 import React from 'react';
 

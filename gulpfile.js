@@ -16,7 +16,7 @@ gulp.task('gh-pages', function () {
 gulp.task('demos', function () {
     return gulp
         .src('src/Demos/*/*Demo.tsx')
-        .pipe(replace('../../lib', 'react-table-component'))
+        .pipe(replace('../../lib', 'react-table-control'))
         .pipe(gulp.dest('public/demos'))
         .pipe(gulp.dest('build/demos'));
 });
