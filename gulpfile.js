@@ -6,6 +6,7 @@ var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');
 var jsonfile = require('jsonfile')
 var ghPages = require('gulp-gh-pages');
+var replace = require('gulp-replace');
 
 gulp.task('gh-pages', function () {
     return gulp.src('./build/**/*')
@@ -15,6 +16,7 @@ gulp.task('gh-pages', function () {
 gulp.task('demos', function () {
     return gulp
         .src('src/Demos/*/*Demo.tsx')
+        .pipe(replace('../../lib', 'react-table-component'))
         .pipe(gulp.dest('public/demos'))
         .pipe(gulp.dest('build/demos'));
 });

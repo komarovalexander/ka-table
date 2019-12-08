@@ -47,20 +47,21 @@
     "gulp": "^4.0.2",
     "gulp-file": "^0.4.0",
     "gulp-gh-pages": "^0.5.4",
+    "gulp-replace": "^1.0.0",
     "gulp-typedoc": "^2.2.2",
     "gulp-typescript": "^5.0.1",
     "jsonfile": "^5.0.0",
     "lint-staged": "^10.0.0-0",
     "node-sass": "^4.12.0",
     "react-filter-control": "^2.1.0",
+    "react-ga": "^2.7.0",
     "react-highlight": "^0.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.2",
     "tslint": "^5.20.0",
     "tslint-react": "^4.1.0",
     "typedoc": "^0.15.0",
-    "typescript": "3.6.3",
-    "react-ga": "^2.7.0"
+    "typescript": "3.6.3"
   },
   "lint-staged": {
     "*.{ts,tsx}": "npm run lint"
