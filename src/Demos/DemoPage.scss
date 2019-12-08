@@ -1,2 +1,11 @@
 @import '../../node_modules/highlight.js/styles/vs.css';
 @import '../../src/lib/styles.scss';
+
+.editor-links {
+  text-align: right;
+  font-size: 14px;
+
+  .editor-link-ts {
+    margin-right: 10px;
+  }
+}

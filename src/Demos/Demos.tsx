@@ -28,8 +28,8 @@ initializeGA();
 
 const demos: Demo[] = [
   new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo', 'https://stackblitz.com/edit/table-command-column-js', 'https://stackblitz.com/edit/table-command-column-ts'),
-  new Demo(CustomCellDemo, '/custom-cell', 'Custom Cell', 'CustomCellDemo'),
-  new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo'),
+  new Demo(CustomCellDemo, '/custom-cell', 'Custom Cell', 'CustomCellDemo', 'https://stackblitz.com/edit/table-custom-cell-js', 'https://stackblitz.com/edit/table-custom-cell-ts'),
+  new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo', '', 'https://stackblitz.com/edit/table-custom-editor-ts'),
   new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo'),
   new Demo(EditingDemo, '/editing', 'Editing', 'EditingDemo'),
   new Demo(EventsDemo, '/events', 'Events', 'EventsDemo'),

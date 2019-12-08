@@ -21,6 +21,15 @@ const getDemoPage = (demo: Demo) => {
           <demo.component />
         </div>
         <div className='code'>
+          <div className='editor-links'>
+            <span>Edit demo in stackblitz: </span>
+            <a className='editor-link editor-link-ts' href={demo.tsLink} rel='noopener noreferrer' target='_blank'>
+              TS Example
+            </a>
+            <a className='editor-link editor-link-js' href={demo.jsLink} rel='noopener noreferrer' target='_blank'>
+              JS Example
+            </a>
+          </div>
           <Highlight className='language-typescript'>
             {text}
           </Highlight>
