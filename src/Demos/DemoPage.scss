@@ -4,8 +4,12 @@
 .editor-links {
   text-align: right;
   font-size: 14px;
+  color: #868A8F;
 
   .editor-link-ts {
-    margin-right: 10px;
+    margin: 0 10px;
+  }
+  .editor-link-js{
+    margin-left: 10px;
   }
 }
