@@ -5,4 +5,5 @@
 <rect width="20" height="20" rx="1" stroke="#353C44" stroke-width="4" mask="url(#path-1-inside-1)"/>
 <rect x="1.03125" y="8.78967" width="18.1818" height="2" rx="1" fill="#353C44"/>
 <rect x="9.21289" y="18.7897" width="18.1818" height="2" rx="1" transform="rotate(-90 9.21289 18.7897)" fill="#353C44"/>
+<rect x="11.2129" y="10.7897" width="8.78711" height="9.21033" fill="white"/>
 </svg>
