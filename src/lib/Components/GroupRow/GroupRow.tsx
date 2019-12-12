@@ -23,9 +23,9 @@ const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
     <tr className={defaultOptions.css.groupRow}>
       <EmptyCells count={emptyColumnsCount}/>
       <td
-        className='tc-group-column'
+        className='ka-group-column'
         colSpan={'100%' as any}>
-          <div className='tc-group-column-content'>
+          <div className='ka-group-column-content'>
             <div
               onClick={() => {
                 groupClick(groupsExpanded, groupRowData, onOptionChanged);
@@ -33,7 +33,7 @@ const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
               className={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(groupRowData.key))
                 ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed}
             />
-            <div className='tc-group-text'>{groupRowData.value.toString()}</div>
+            <div className='ka-group-text'>{groupRowData.value.toString()}</div>
           </div>
       </td>
     </tr>

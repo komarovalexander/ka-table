@@ -24,7 +24,7 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
     return c;
   }, {});
   return (
-    <tr className='tc-filter-row tc-tr'>
+    <tr className='ka-filter-row ka-tr'>
       {columns.map((column) => {
         return (
           <FilterCell

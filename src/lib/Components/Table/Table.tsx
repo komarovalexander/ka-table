@@ -75,7 +75,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const tableOnEvent = getOnEventHandler(props);
 
   return (
-    <div className='tc' >
+    <div className='ka' >
       <table className={defaultOptions.css.table}>
         <thead className={defaultOptions.css.thead}>
           <HeadRow

@@ -1,9 +1,9 @@
 {
-  "name": "react-table-control",
+  "name": "ka-table",
   "version": "0.2.3",
   "license": "MIT",
-  "repository": "github:komarovalexander/react-table-control",
-  "homepage": "https://komarovalexander.github.io/react-table-control",
+  "repository": "github:komarovalexander/ka-table",
+  "homepage": "https://komarovalexander.github.io/ka-table",
   "dependencies": {
     "@types/react": "16.9.3",
     "react": "^16.9.0",

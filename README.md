@@ -1,58 +1,58 @@
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/react-table-control/blob/master/LICENSE)
-[![Build Status](https://travis-ci.com/komarovalexander/react-table-control.svg?token=9QUEx9r7MWqF44f9VDer&branch=dev)](https://travis-ci.com/komarovalexander/react-table-control)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/ka-table/blob/master/LICENSE)
+[![Build Status](https://travis-ci.com/komarovalexander/ka-table.svg?token=9QUEx9r7MWqF44f9VDer&branch=dev)](https://travis-ci.com/komarovalexander/ka-table)
 
 *This project is on pre-alpha stage. Stable version with documentation and finished styles will be available no later than January of 2020*
 
 # React Table Control
-The customizable, extendable, lightweight and free React Table Component
+The customizable, extendable, lightweight (~50kb for js or ts scripts) and free React Table Component
 
 Can easily be included in react projects, never mind it is ts or js
 
-![Table](https://komarovalexander.github.io/react-table-control/static/demos-screenshots/command-column.png)
-[Demo link](https://komarovalexander.github.io/react-table-control/#/command-column)
+![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/command-column.png)
+[Demo link](https://komarovalexander.github.io/ka-table/#/command-column)
 
 ## Examples
-[Command Column](https://komarovalexander.github.io/react-table-control/#/command-column) - Functional columns which are not bound to data and used to add custom command to table
+[Command Column](https://komarovalexander.github.io/ka-table/#/command-column) - Functional columns which are not bound to data and used to add custom command to table
 
-[Custom Cell](https://komarovalexander.github.io/react-table-control/#/custom-cell) - Best way to customise look of every column in table
+[Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) - Best way to customise look of every column in table
 
-[Custom Editor](https://komarovalexander.github.io/react-table-control/#/custom-editor) - Table supports user created editors
+[Custom Editor](https://komarovalexander.github.io/ka-table/#/custom-editor) - Table supports user created editors
 
-[Custom Header Cell](https://komarovalexander.github.io/react-table-control/#/custom-header-cell) - Customisation of header cell
+[Custom Header Cell](https://komarovalexander.github.io/ka-table/#/custom-header-cell) - Customisation of header cell
 
-[Editing](https://komarovalexander.github.io/react-table-control/#/editing) - Editing out of the box
+[Editing](https://komarovalexander.github.io/ka-table/#/editing) - Editing out of the box
 
-[Events](https://komarovalexander.github.io/react-table-control/#/events) - Most events are trackable
+[Events](https://komarovalexander.github.io/ka-table/#/events) - Most events are trackable
 
-[Filter Extended](https://komarovalexander.github.io/react-table-control/#/filter-extended) - Easy filtered by extended filters
+[Filter Extended](https://komarovalexander.github.io/ka-table/#/filter-extended) - Easy filtered by extended filters
 
-[Filter Row](https://komarovalexander.github.io/react-table-control/#/filter-row) - Built-in filter row
+[Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) - Built-in filter row
 
-[Filter Row - Custom Editor](https://komarovalexander.github.io/react-table-control/#/filter-row-custom-editor) - Customise filter cell every way you want
+[Filter Row - Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) - Customise filter cell every way you want
 
-[Grouping](https://komarovalexander.github.io/react-table-control/#/grouping) - Group data for most convenient work with it
+[Grouping](https://komarovalexander.github.io/ka-table/#/grouping) - Group data for most convenient work with it
 
-[25000 Rows](https://komarovalexander.github.io/react-table-control/#/many-rows) - Virtualisation are supported
+[25000 Rows](https://komarovalexander.github.io/ka-table/#/many-rows) - Virtualisation are supported
 
-[10000 Grouped Rows](https://komarovalexander.github.io/react-table-control/#/many-rows-grouping) - Virtualisation work well with grouping
+[10000 Grouped Rows](https://komarovalexander.github.io/ka-table/#/many-rows-grouping) - Virtualisation work well with grouping
 
-[Search](https://komarovalexander.github.io/react-table-control/#/search) - Search by the whole Table is easy
+[Search](https://komarovalexander.github.io/ka-table/#/search) - Search by the whole Table is easy
 
-[Selection](https://komarovalexander.github.io/react-table-control/#/selection) - Select and process specific rows
+[Selection](https://komarovalexander.github.io/ka-table/#/selection) - Select and process specific rows
 
-[Sorting](https://komarovalexander.github.io/react-table-control/#/sorting)
+[Sorting](https://komarovalexander.github.io/ka-table/#/sorting)
 
-[Validation](https://komarovalexander.github.io/react-table-control/#/validation)
+[Validation](https://komarovalexander.github.io/ka-table/#/validation)
 
 
 ## Installation
 npm
 ```sh
-npm install react-table-control
+npm install ka-table
 ```
 yarn
 ```sh
-yarn add react-table-control
+yarn add ka-table
 ```
 
 ## Usage
@@ -62,9 +62,9 @@ yarn add react-table-control
 ```js
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'react-table-control';
-import { DataType, SortDirection, SortingMode } from 'react-table-control/enums';
-import { OptionChangedFunc } from 'react-table-control/types';
+import { ITableOption, Table } from 'ka-table';
+import { DataType, SortDirection, SortingMode } from 'ka-table/enums';
+import { OptionChangedFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -108,7 +108,7 @@ const SortingDemo: React.FC = () => {
 export default SortingDemo;
 ```
 
-[Demo link](https://komarovalexander.github.io/react-table-control/#/sorting)
+[Demo link](https://komarovalexander.github.io/ka-table/#/sorting)
 
 ## API
 <a name="Table"></a>

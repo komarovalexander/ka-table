@@ -76,8 +76,8 @@ const Demos: React.FC = () => {
       <div className='demos'>
         <nav>
           <div className='logo-container'>
-            <b>react-table-control</b>
-            <a href='https://github.com/komarovalexander/react-table-control'
+            <b>ka-table</b>
+            <a href='https://github.com/komarovalexander/ka-table'
               onClick={() => { trackEvent('click', 'github_logo'); }}>
               <img src='static/icons/github_logo.svg' alt=''/>
             </a>

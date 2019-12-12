@@ -16,7 +16,7 @@ const CellText: React.FunctionComponent<ICellContentProps> = ({
   const value = getRowValueByColumn(rowData, column);
   const formatedValue = format ? format(value) : !isEmpty(value) && value.toString();
   return (
-    <div className='tc-cell-text'
+    <div className='ka-cell-text'
       onClick={() => {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
         dispatch(Events.OpenEditor, { cell });

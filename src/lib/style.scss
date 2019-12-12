@@ -12,101 +12,101 @@
 
 @import './static/icons.scss';
 
-.tc{
+.ka{
   overflow: hidden;
   background-color: white;
 }
-.tc-table{
+.ka-table{
   font-size: 14px;
   width: 100%;
   border-collapse: collapse;
   height: 100%;
 }
-.tc-thead{
+.ka-thead{
   background-color: #F1F5F7;
 }
-.tc-thead-cell{
+.ka-thead-cell{
   padding: 15px 20px;
   color: #747D86;
 }
-.tc-tbody{
+.ka-tbody{
   display: block;
   overflow-y: overlay;
   height: 100%;
 }
-.tc-thead-cell, .tc-cell{
+.ka-thead-cell, .ka-cell{
   text-align: left;
 }
-.tc-cell{
+.ka-cell{
   padding: 8px 20px;
   line-height: 29px;
   color: #353C44;
 }
-.tc-icon{
+.ka-icon{
   font-weight: 100;
   font-size: 10px;
   font-family: 'icons';
 }
-.tc-input{
+.ka-input{
   max-width: 100%;
 }
-.tc-cell-editor-validation-error {
-  .tc-input{
+.ka-cell-editor-validation-error {
+  .ka-input{
     background: #FFE7E7;
     border: 1px solid #FF0C0C;
   }
 }
-.tc-validation-message-container{
+.ka-validation-message-container{
   position: absolute;
 }
-.tc-validation-message{
+.ka-validation-message{
   font-size: 12px;
   color: white;
   background-color: #FF0C0C;
   padding: 0 10px;
   max-width: 200px;
 }
-.tc-empty-cell{
+.ka-empty-cell{
   width: 40px;
   min-width: 40px;
 }
-.tc-tr {
+.ka-tr {
   display: table;
   width: 100%;
   table-layout: fixed;
 }
-.tc-row{
+.ka-row{
   box-sizing: border-box;
   border-bottom: 1px solid #F9FBFC;
   border-top: 1px solid #F9FBFC;
 }
-.tc-row-selected {
+.ka-row-selected {
   background-color: #F7FcFd;
 }
-.tc-group-row{
+.ka-group-row{
   background-color: #F9FBFC;
   box-sizing: border-box;
   border-bottom: 1px solid white;
   border-top: 1px solid white;
 }
-.tc-group-column{
+.ka-group-column{
   padding: 8px 10px;
 }
-.tc-group-column-content{
+.ka-group-column-content{
   display: flex;
   align-items: center;
 }
-.tc-icon-group-arrow{
+.ka-icon-group-arrow{
   padding: 10px 5px 10px 10px;
   margin-right: 5px;
   cursor: pointer;
 }
-.tc-icon-sort{
+.ka-icon-sort{
   margin-left: 3px;
 }
-.tc-pointer{
+.ka-pointer{
   cursor: pointer;
 }
-.tc-filter-row-cell{
+.ka-filter-row-cell{
   padding: 0 20px 15px 20px;
 }

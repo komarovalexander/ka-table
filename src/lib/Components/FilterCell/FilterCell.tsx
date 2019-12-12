@@ -9,7 +9,7 @@ const FilterCell: React.FunctionComponent<ICellEditorProps> = (props) => {
     onValueChange,
   } = props;
   return (
-    <td style={{textAlign}} className='tc-thead-cell tc-filter-row-cell'>
+    <td style={{textAlign}} className='ka-thead-cell ka-filter-row-cell'>
       {
         filterCell ? filterCell(props) :
         (

@@ -10,8 +10,8 @@ const EmptyCells: React.FunctionComponent<IEmptyCellsProps> = ({ count, shouldUs
     <>
       {[...Array(count)].map((item, index) =>
         shouldUseTh ?
-          <th key={index} className='tc-empty-cell'/> :
-          <td key={index} className='tc-empty-cell'/>)}
+          <th key={index} className='ka-empty-cell'/> :
+          <td key={index} className='ka-empty-cell'/>)}
     </>
   );
 };

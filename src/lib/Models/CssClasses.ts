@@ -1,22 +1,22 @@
 export class CssClasses {
-  public table?: string = 'tc-table';
-  public tbody?: string = 'tc-tbody';
-  public thead?: string = 'tc-thead';
-  public theadRow?: string = 'tc-tr tc-thead-row';
-  public theadCell?: string = 'tc-thead-cell';
-  public groupRow?: string = 'tc-tr tc-group-row';
-  public row?: string = 'tc-tr tc-row';
-  public rowSelected?: string = 'tc-row-selected';
-  public cell?: string = 'tc-cell';
+  public table?: string = 'ka-table';
+  public tbody?: string = 'ka-tbody';
+  public thead?: string = 'ka-thead';
+  public theadRow?: string = 'ka-tr ka-thead-row';
+  public theadCell?: string = 'ka-thead-cell';
+  public groupRow?: string = 'ka-tr ka-group-row';
+  public row?: string = 'ka-tr ka-row';
+  public rowSelected?: string = 'ka-row-selected';
+  public cell?: string = 'ka-cell';
 
-  public iconGroupArrowCollapsed?: string = 'tc-icon tc-icon-group-arrow tc-icon-group-arrow-collapsed';
-  public iconGroupArrowExpanded?: string = 'tc-icon tc-icon-group-arrow tc-icon-group-arrow-expanded';
-  public iconClose?: string = 'tc-icon tc-icon-close';
-  public iconSortArrowDown?: string = 'tc-icon tc-icon-sort tc-icon-sort-arrow-down';
-  public iconSortArrowUp?: string = 'tc-icon tc-icon-sort tc-icon-sort-arrow-up';
+  public iconGroupArrowCollapsed?: string = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-collapsed';
+  public iconGroupArrowExpanded?: string = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-expanded';
+  public iconClose?: string = 'ka-icon ka-icon-close';
+  public iconSortArrowDown?: string = 'ka-icon ka-icon-sort ka-icon-sort-arrow-down';
+  public iconSortArrowUp?: string = 'ka-icon ka-icon-sort ka-icon-sort-arrow-up';
 
-  public checkbox ?: string = 'tc-input';
-  public dateInput ?: string = 'tc-input';
-  public numberInput ?: string = 'tc-input';
-  public textInput ?: string = 'tc-input';
+  public checkbox ?: string = 'ka-input';
+  public dateInput ?: string = 'ka-input';
+  public numberInput ?: string = 'ka-input';
+  public textInput ?: string = 'ka-input';
 }

@@ -26,7 +26,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   } : undefined;
   return (
     <div
-      className={`tc-thead-cell-content ${isSortingEnabled ? 'tc-pointer' : ''}`}
+      className={`ka-thead-cell-content ${isSortingEnabled ? 'ka-pointer' : ''}`}
       onClick={sortClick}
     >
       <span>{title}</span>
