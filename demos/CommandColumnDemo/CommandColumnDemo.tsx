@@ -33,14 +33,14 @@ const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
 };
 
 const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
-  rowData, onEvent,
+  rowData, dispatch,
 }) => {
  return (
    <div>
       <img
         src='static/icons/delete.svg'
         className='button'
-        onClick={() => onEvent(DELETE_EVENT, { rowData })}
+        onClick={() => dispatch(DELETE_EVENT, { rowData })}
         alt=''
       />
    </div>

@@ -16,11 +16,11 @@ const dataArray: any[] = [
 ];
 
 const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column, rowKeyField, rowData, onEvent, onValueChange,
+  column, rowKeyField, rowData, dispatch, onValueChange,
 }) => {
   const close = () => {
     const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-    onEvent(Events.CloseEditor, { cell });
+    dispatch(Events.CloseEditor, { cell });
   };
   const [value, setValue] = useState(rowData[columnUtils.getField(column)]);
   return (
@@ -40,11 +40,11 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
 };
 
 const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { key: field }, rowData, rowKeyField, onEvent, onValueChange,
+  column: { key: field }, rowData, rowKeyField, dispatch, onValueChange,
 }) => {
   const close = () => {
     const cell: Cell = { columnKey: field, rowKey: rowData[rowKeyField] };
-    onEvent(Events.CloseEditor, { cell });
+    dispatch(Events.CloseEditor, { cell });
   };
   const [value, setValue] = useState(rowData[field]);
   return (
