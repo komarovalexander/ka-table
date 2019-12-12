@@ -17,7 +17,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     },
     rowData,
     rowKeyField,
-    onEvent,
+    dispatch,
     onValueChange,
   } = props;
   const [value, changeValue] = useState(rowData);
@@ -30,8 +30,8 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const close = useCallback(() => {
     const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-    onEvent(Events.CloseEditor, { cell });
-  }, [onEvent, column, rowData, rowKeyField]);
+    dispatch(Events.CloseEditor, { cell });
+  }, [dispatch, column, rowData, rowKeyField]);
 
   const closeHandler = useCallback(() => {
     if (!validationValue) {
@@ -46,16 +46,16 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     return addEscEnterKeyEffect(close, closeHandler);
   }, [close, closeHandler]);
 
-  const onEventHandler = (event: string, eventData: any) => {
+  const dispatchHandler = (event: string, eventData: any) => {
     if (event === Events.CloseEditor) {
       closeHandler();
     } else {
-      onEvent(event, eventData);
+      dispatch(event, eventData);
     }
   };
 
   const stateProps = { ...props, ...{
-    onEvent: onEventHandler,
+    dispatch: dispatchHandler,
     onValueChange: onValueStateChange,
     rowData : value,
   }};

@@ -33,7 +33,7 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
             field={getField(column)}
             rowKeyField={''}
             isSelectedRow={false}
-            onEvent={emptyFunc}
+            dispatch={emptyFunc}
             rowData={rowData}
             onValueChange={(value) => {
               filterCellValueChangeHandler(value, column.key, filterRow, onOptionChanged);

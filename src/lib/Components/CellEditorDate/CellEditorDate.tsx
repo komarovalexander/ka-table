@@ -8,7 +8,7 @@ import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   column,
-  onEvent,
+  dispatch,
   onValueChange,
   rowData,
   rowKeyField,
@@ -27,7 +27,7 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
       }}
       onBlur={() => {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-        onEvent(Events.CloseEditor, { cell });
+        dispatch(Events.CloseEditor, { cell });
       }}
     />
   );

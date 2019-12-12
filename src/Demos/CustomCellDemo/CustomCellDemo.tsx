@@ -17,12 +17,12 @@ const dataArray: any[] = [
 ];
 
 const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
-  column: { key }, field, rowData, rowKeyField, onEvent,
+  column: { key }, field, rowData, rowKeyField, dispatch,
 }) => {
   return (
     <div onClick={() => {
       const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-      onEvent(Events.OpenEditor, { cell });
+      dispatch(Events.OpenEditor, { cell });
     }}>
       {rowData[field] ? 'Passed' : 'Failed'}
     </div>

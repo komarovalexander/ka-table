@@ -9,7 +9,7 @@ import HeadCellContent from '../HeadCellContent/HeadCellContent';
 export interface IHeadCellProps {
   column: Column;
   sortingMode: SortingMode;
-  onEvent: EventFunc;
+  dispatch: EventFunc;
 }
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {

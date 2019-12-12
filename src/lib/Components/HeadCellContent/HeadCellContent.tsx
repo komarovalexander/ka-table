@@ -16,13 +16,13 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
     column,
     column: { title, sortDirection },
-    onEvent,
+    dispatch,
     sortingMode,
   } = props;
   const isSortingEnabled = sortingMode === SortingMode.Single;
   const sortClick = isSortingEnabled ? () => {
     const updatedColumn = getColumnWithUpdatedSortDirection(column);
-    onEvent(Events.SortingChanged, { column: updatedColumn });
+    dispatch(Events.SortingChanged, { column: updatedColumn });
   } : undefined;
   return (
     <div

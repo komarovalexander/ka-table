@@ -20,7 +20,7 @@ export interface ITableBodyProps {
   groups?: Group[];
   groupsExpanded?: any[][];
   onDataChanged?: DataChangedFunc;
-  onEvent: EventFunc;
+  dispatch: EventFunc;
   onOptionChanged: OptionChangedFunc;
   rowKeyField: string;
   selectedRows: any[];
@@ -32,7 +32,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
     data,
     groupedColumns,
     groups,
-    onEvent,
+    dispatch,
     onOptionChanged,
   } = props;
   const { groupsExpanded } = props;
@@ -43,7 +43,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
   }
   return (
     <tbody className={defaultOptions.css.tbody} onScroll={(event) => {
-      onEvent(Events.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
+      dispatch(Events.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
     }}>
       <VirtualizedRows
         {...props}

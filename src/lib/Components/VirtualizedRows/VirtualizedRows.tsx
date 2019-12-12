@@ -11,7 +11,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {
     data,
     groupsExpanded = [],
-    onEvent,
+    dispatch,
     onOptionChanged,
     rowKeyField,
     virtualScrolling,
@@ -41,7 +41,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
     virtualized = getVirtualized(virtualScrolling, virtualizedData);
     virtualizedData = virtualized.virtualizedData;
   }
-  const rowDataChangedEvent = onEvent && onEvent.bind(null, Events.RowDataChanged);
+  const rowDataChangedEvent = dispatch && dispatch.bind(null, Events.RowDataChanged);
   let rowRefLink: any = firstRowRef;
   return (
     <>

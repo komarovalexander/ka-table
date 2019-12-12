@@ -15,7 +15,7 @@ export interface IRowProps {
   editableCells: Cell[];
   editingMode: EditingMode;
   groupColumnsCount: number;
-  onEvent: EventFunc;
+  dispatch: EventFunc;
   onRowDataChanged: RowDataChangedFunc;
   rowData: any;
   rowKeyField: string;
@@ -29,7 +29,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
   editableCells,
   editingMode,
   groupColumnsCount,
-  onEvent,
+  dispatch,
   onRowDataChanged,
   rowData,
   rowKeyField,
@@ -48,7 +48,7 @@ const Row: React.FunctionComponent<IRowProps> = ({
           isEditableCell={isEditableCell(editingMode, column, rowEditableCells)}
           isSelectedRow={isSelectedRow}
           key={column.key}
-          onEvent={onEvent}
+          dispatch={dispatch}
           onRowDataChanged={onRowDataChanged}
           rowData={rowData}
           rowKeyField={rowKeyField}

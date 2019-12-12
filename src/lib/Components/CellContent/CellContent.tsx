@@ -9,7 +9,7 @@ export interface ICellContentProps {
   field: string;
   rowData: any;
   rowKeyField: string;
-  onEvent: EventFunc;
+  dispatch: EventFunc;
 }
 
 const CellContent: React.FunctionComponent<ICellContentProps> = (props) => {

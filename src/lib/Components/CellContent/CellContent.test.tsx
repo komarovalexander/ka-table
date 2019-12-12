@@ -10,7 +10,7 @@ const props: ICellContentProps = {
     key: 'columnField',
     title: 'Field',
   },
-  onEvent: () => {},
+  dispatch: () => {},
   rowData: { column : 1 },
   rowKeyField: '',
 };

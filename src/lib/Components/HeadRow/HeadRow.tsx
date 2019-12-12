@@ -11,13 +11,13 @@ export interface IHeadRowProps {
   columns: Column[];
   sortingMode: SortingMode;
   groupColumnsCount: number;
-  onEvent: EventFunc;
+  dispatch: EventFunc;
 }
 
 const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
   columns,
   groupColumnsCount,
-  onEvent,
+  dispatch,
   sortingMode,
 }) => {
   return (
@@ -28,7 +28,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
           <HeadCell
             key={column.key}
             column={column}
-            onEvent={onEvent}
+            dispatch={dispatch}
             sortingMode={sortingMode}
           />
         );

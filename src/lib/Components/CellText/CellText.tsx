@@ -11,7 +11,7 @@ const CellText: React.FunctionComponent<ICellContentProps> = ({
   column,
   rowData,
   rowKeyField,
-  onEvent,
+  dispatch,
 }) => {
   const value = getRowValueByColumn(rowData, column);
   const formatedValue = format ? format(value) : !isEmpty(value) && value.toString();
@@ -19,7 +19,7 @@ const CellText: React.FunctionComponent<ICellContentProps> = ({
     <div className='tc-cell-text'
       onClick={() => {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-        onEvent(Events.OpenEditor, { cell });
+        dispatch(Events.OpenEditor, { cell });
       }}
     >{formatedValue || <>&nbsp;</>}</div>
   );

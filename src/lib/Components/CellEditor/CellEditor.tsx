@@ -10,7 +10,7 @@ export interface ICellEditorProps {
   rowData: any;
   rowKeyField: string;
   isSelectedRow: boolean;
-  onEvent: EventFunc;
+  dispatch: EventFunc;
   onValueChange: ValueChangeFunc;
 }
 

@@ -14,7 +14,7 @@ const dataArray: any[] = [
 ];
 
 const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
-  rowData, rowKeyField, onEvent, isSelectedRow,
+  rowData, rowKeyField, dispatch, isSelectedRow,
 }) => {
   return (
     <input
@@ -23,9 +23,9 @@ const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
       onChange={(event) => {
         const rowKeyValue = rowData[rowKeyField];
         if (event.currentTarget.checked) {
-          onEvent(Events.RowSelected, { rowKeyValue });
+          dispatch(Events.RowSelected, { rowKeyValue });
         } else {
-          onEvent(Events.RowDeselected, { rowKeyValue });
+          dispatch(Events.RowDeselected, { rowKeyValue });
         }
       }}
     />

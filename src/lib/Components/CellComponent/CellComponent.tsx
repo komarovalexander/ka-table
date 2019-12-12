@@ -13,7 +13,7 @@ export interface ICellComponentProps {
   editingMode: EditingMode;
   isEditableCell: boolean;
   isSelectedRow: boolean;
-  onEvent: EventFunc;
+  dispatch: EventFunc;
   onRowDataChanged: RowDataChangedFunc;
   rowData: any;
   rowKeyField: string;
