@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import FilterControl from 'react-filter-control';
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
 
-import { ITableOption, Table } from 'react-table-control';
-import { DataType } from 'react-table-control/enums';
-import { OptionChangedFunc } from 'react-table-control/types';
+import { ITableOption, Table } from 'ka-table';
+import { DataType } from 'ka-table/enums';
+import { OptionChangedFunc } from 'ka-table/types';
 import { filterData } from './filterData';
 
 const dataArray: any[] = [

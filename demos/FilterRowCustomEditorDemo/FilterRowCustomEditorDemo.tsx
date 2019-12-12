@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'react-table-control';
-import { DataType } from 'react-table-control/enums';
-import { EditorFuncPropsWithChildren, OptionChangedFunc } from 'react-table-control/types';
+import { ITableOption, Table } from 'ka-table';
+import { DataType } from 'ka-table/enums';
+import { EditorFuncPropsWithChildren, OptionChangedFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },

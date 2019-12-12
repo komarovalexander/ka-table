@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'react-table-control';
-import { DataType, EditingMode, Events } from 'react-table-control/enums';
-import { Cell } from 'react-table-control/models';
-import { EditorFuncPropsWithChildren, OptionChangedFunc } from 'react-table-control/types';
-import { columnUtils, typeUtils } from 'react-table-control/utils';
+import { ITableOption, Table } from 'ka-table';
+import { DataType, EditingMode, Events } from 'ka-table/enums';
+import { Cell } from 'ka-table/models';
+import { EditorFuncPropsWithChildren, OptionChangedFunc } from 'ka-table/types';
+import { columnUtils, typeUtils } from 'ka-table/utils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'react-table-control';
-import { DataType, SortingMode } from 'react-table-control/enums';
-import { OptionChangedFunc } from 'react-table-control/types';
+import { ITableOption, Table } from 'ka-table';
+import { DataType, SortingMode } from 'ka-table/enums';
+import { OptionChangedFunc } from 'ka-table/types';
 
 const dataArray = Array(10000).fill(undefined).map(
   (_, index) => ({

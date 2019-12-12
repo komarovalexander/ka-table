@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'react-table-control';
-import { DataType, EditingMode } from 'react-table-control/enums';
-import { OptionChangedFunc } from 'react-table-control/types';
+import { ITableOption, Table } from 'ka-table';
+import { DataType, EditingMode } from 'ka-table/enums';
+import { OptionChangedFunc } from 'ka-table/types';
 
 const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },

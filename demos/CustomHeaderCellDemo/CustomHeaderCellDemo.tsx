@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'react-table-control';
-import { TextAlign } from 'react-table-control/enums';
-import { HeaderCellFuncPropsWithChildren, OptionChangedFunc } from 'react-table-control/types';
+import { ITableOption, Table } from 'ka-table';
+import { TextAlign } from 'ka-table/enums';
+import { HeaderCellFuncPropsWithChildren, OptionChangedFunc } from 'ka-table/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
