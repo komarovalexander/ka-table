@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var file = require('gulp-file');
-var typedoc = require('gulp-typedoc');
 
 var ts = require('gulp-typescript');
 var tsProject = ts.createProject('tsconfig.json');

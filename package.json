@@ -6,20 +6,18 @@
   "homepage": "https://komarovalexander.github.io/ka-table",
   "dependencies": {
     "@types/react": "16.9.3",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-ga": "^2.7.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:all": "react-scripts test --watchAll",
-    "test:coverage": "react-scripts test --coverage --watchAll",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
-    "lint:staged": "lint-staged",
     "pack": "gulp compile && cd dist && npm pack && cd .."
   },
   "eslintConfig": {
@@ -41,30 +39,23 @@
     "@types/jest": "24.0.18",
     "@types/node": "12.7.7",
     "@types/react-dom": "16.9.1",
-    "@types/react-highlight": "^0.12.1",
-    "@types/react-router-dom": "^5.1.0",
-    "bootstrap": "^4.3.1",
+    "@types/react-highlight": "^0.12.2",
+    "@types/react-router-dom": "^5.1.3",
     "gulp": "^4.0.2",
     "gulp-file": "^0.4.0",
     "gulp-gh-pages": "^0.5.4",
     "gulp-replace": "^1.0.0",
-    "gulp-typedoc": "^2.2.2",
     "gulp-typescript": "^5.0.1",
     "jsonfile": "^5.0.0",
-    "lint-staged": "^10.0.0-0",
     "node-sass": "^4.12.0",
     "react-filter-control": "^2.1.0",
     "react-ga": "^2.7.0",
     "react-highlight": "^0.12.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.1.2",
+    "react-scripts": "^3.3.0",
     "tslint": "^5.20.0",
     "tslint-react": "^4.1.0",
-    "typedoc": "^0.15.0",
     "typescript": "3.6.3"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": "npm run lint"
   },
   "jest": {
     "collectCoverageFrom": [
