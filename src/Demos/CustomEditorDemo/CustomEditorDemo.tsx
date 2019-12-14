@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, Events } from '../../lib/enums';
 import { Cell } from '../../lib/models';
-import { EditorFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
+import { DataChangeFunc, EditorFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
 import { columnUtils, typeUtils } from '../../lib/utils';
 
 const dataArray: any[] = [
@@ -96,7 +96,7 @@ const CustomEditorDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
+  const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
   return (

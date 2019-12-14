@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
 
 const dataArray = Array(25000).fill(undefined).map(
   (_, index) => ({
@@ -35,7 +35,7 @@ const ManyRowsDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
+  const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
 

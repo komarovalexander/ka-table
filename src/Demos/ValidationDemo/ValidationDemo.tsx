@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -61,7 +61,7 @@ const ValidationDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
+  const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
   return (

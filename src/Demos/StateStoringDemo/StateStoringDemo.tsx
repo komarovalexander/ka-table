@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
 import dataStorage from './dataStorage';
 
 const defaultOption = {
@@ -32,7 +32,7 @@ const StateStoringDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataStorage.get());
-  const onDataChange: OptionChangeFunc = async (newValue) => {
+  const onDataChange: DataChangeFunc = async (newValue) => {
     changeData(newValue);
 
     dataStorage.save(newValue);

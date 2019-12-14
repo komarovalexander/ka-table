@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
-import { CellFuncPropsWithChildren, EventFunc, OptionChangeFunc } from '../../lib/types';
+import {
+  CellFuncPropsWithChildren, DataChangeFunc, EventFunc, OptionChangeFunc,
+} from '../../lib/types';
 
 const DELETE_EVENT = 'delete';
 
@@ -67,7 +69,7 @@ const CommandColumnDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
+  const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
 

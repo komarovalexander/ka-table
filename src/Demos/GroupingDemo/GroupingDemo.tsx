@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
 
 const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
@@ -30,7 +30,7 @@ const GroupingDemo: React.FC = () => {
     changeOptions({...option, ...value });
   };
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
+  const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
   return (
