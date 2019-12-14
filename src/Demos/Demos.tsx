@@ -22,6 +22,7 @@ import ManyRowsGroupingDemo from './ManyRowsGroupingDemo/ManyRowsGroupingDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
 import SelectionDemo from './SelectionDemo/SelectionDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
+import StateStoringDemo from './StateStoringDemo/StateStoringDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
 
 initializeGA();
@@ -58,6 +59,7 @@ const demos: Demo[] = [
     'https://stackblitz.com/edit/table-sorting-js', 'https://stackblitz.com/edit/table-sorting-ts',
     true,
   ),
+  new Demo(StateStoringDemo, '/state-storing', 'State Storing', 'StateStoringDemo', '', '', true),
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts'),
 ];
 

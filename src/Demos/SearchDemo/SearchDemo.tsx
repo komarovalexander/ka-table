@@ -39,7 +39,7 @@ const SearchDemo: React.FC = () => {
     <>
       <input type='search' defaultValue={option.search} onChange={(event) => {
         onOptionChanged({ search: event.currentTarget.value });
-      }}/>
+      }} className='top-element'/>
       <Table
         {...option}
         data={dataArray}

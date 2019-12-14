@@ -1,21 +1,26 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
+import { Column, Group } from '../../models';
 import { GroupRowData } from '../../Models/GroupRowData';
 import { OptionChangedFunc } from '../../types';
 import { groupClick } from '../../Utils/GroupUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
 export interface IGroupRowProps {
+  columns: Column[];
   emptyColumnsCount: number;
   groupRowData: GroupRowData;
+  groups: Group[];
   groupsExpanded: any[][];
   onOptionChanged: OptionChangedFunc;
 }
 
 const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
+  columns,
   emptyColumnsCount,
   groupRowData,
+  groups,
   groupsExpanded,
   onOptionChanged,
 }) => {
@@ -24,7 +29,7 @@ const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
       <EmptyCells count={emptyColumnsCount}/>
       <td
         className='ka-group-column'
-        colSpan={'100%' as any}>
+        colSpan={columns.length - emptyColumnsCount + groups.length}>
           <div className='ka-group-column-content'>
             <div
               onClick={() => {

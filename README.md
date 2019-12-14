@@ -3,7 +3,7 @@
 
 *This project is on pre-alpha stage. Stable version with documentation and finished styles will be available no later than January of 2020*
 
-# React Table Control
+# Overview
 The customizable, extendable, lightweight (~50kb for js or ts scripts) and free React Table Component
 
 Can easily be included in react projects, never mind it is ts or js
@@ -142,8 +142,6 @@ Describes column of table its look and behaviour
 | sortDirection | [<code>SortDirection</code>](#SortDirection) | Sets the direction of sorting for the column |
 | editor | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor if cell is in editable mode |
 | cell | [<code>CellFunc</code>](#CellFunc) | Returns an custom cell if it is not in editable mode |
-| width | <code>number \| string</code> | Sets the width of the column |
-| textAlign | [<code>TextAlign</code>](#TextAlign) | Sets column's text alignment |
 | search | [<code>SearchFunc</code>](#SearchFunc) | Overrides the default search method for the cell. Executes if [Table.search](#Table.search) option is set |
 | validation | [<code>ValidationFunc</code>](#ValidationFunc) | Returns the validation error string or does not return anything in case of passed validation |
 
@@ -221,16 +219,6 @@ specific column |
 | --- | --- |
 | None | 'none' |
 | Single | 'single' |
-
-
-<a name="TextAlign"></a>
-### TextAlign
-
-| Property | String value |
-| --- | --- |
-| Center | 'center' |
-| Left | 'left' |
-| Right | 'right' |
 
 
 <a name="EditorFunc"></a>

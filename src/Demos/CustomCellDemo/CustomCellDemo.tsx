@@ -3,7 +3,7 @@ import './CustomCellDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, Events, TextAlign } from '../../lib/enums';
+import { DataType, EditingMode, Events } from '../../lib/enums';
 import { Cell } from '../../lib/models';
 import { CellFuncPropsWithChildren, OptionChangedFunc } from '../../lib/types';
 
@@ -45,24 +45,22 @@ const tableOption: ITableOption = {
       cell: CustomImageCell,
       dataType: DataType.String,
       key: 'img',
-      style: { width: '10%' },
+      style: { width: '11%' },
       title: 'Image',
     },
     { dataType: DataType.String, key: 'name', title: 'Name', style: { width: '30%' } },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%' }, textAlign: TextAlign.Right },
+    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%', textAlign: 'right' } },
     {
       cell: CustomCell,
       dataType: DataType.Boolean,
       key: 'passed',
-      style: { width: '10%' },
-      textAlign: TextAlign.Right,
+      style: { width: '30%', textAlign: 'center' },
       title: 'Results',
     },
     {
       dataType: DataType.Date,
       format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
       key: 'nextTry',
-      textAlign: TextAlign.Right,
       title: 'Next Try',
     },
   ],

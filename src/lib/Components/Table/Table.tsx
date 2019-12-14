@@ -84,7 +84,15 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
             dispatch={tableOnEvent}
             sortingMode={sortingMode}
           />
-          {filterRow && <FilterRow columns={columns} filterRow={filterRow} onOptionChanged={onOptionChanged}/>}
+          {filterRow &&
+            (
+              <FilterRow
+                columns={columns}
+                filterRow={filterRow}
+                groupColumnsCount={groupColumnsCount}
+                onOptionChanged={onOptionChanged}
+              />
+            )}
         </thead>
         <TableBody
             {...props}

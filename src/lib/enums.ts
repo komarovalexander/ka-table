@@ -35,9 +35,3 @@ export enum SortingMode {
   None = 'none',
   Single = 'single',
 }
-
-export enum TextAlign {
-  Center = 'center',
-  Left = 'left',
-  Right = 'right',
-}

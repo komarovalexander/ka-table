@@ -5,11 +5,11 @@ import CellEditorDataType from '../CellEditorDataType/CellEditorDataType';
 
 const FilterCell: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
-    column: { textAlign, filterCell },
+    column: { style, filterCell },
     onValueChange,
   } = props;
   return (
-    <td style={{textAlign}} className='ka-thead-cell ka-filter-row-cell'>
+    <td style={style} className='ka-thead-cell ka-filter-row-cell'>
       {
         filterCell ? filterCell(props) :
         (

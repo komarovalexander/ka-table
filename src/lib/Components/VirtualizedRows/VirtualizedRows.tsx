@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import { Events } from '../../enums';
-import groupMark from '../../groupMark';
+import { getGroupMark } from '../../Utils/GroupUtils';
 import { getVirtualized } from '../../Utils/Virtualize';
 import DataRow from '../DataRow/DataRow';
 import GroupRow from '../GroupRow/GroupRow';
@@ -9,14 +9,17 @@ import { ITableBodyProps } from '../TableBody/TableBody';
 
 const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {
+    columns,
     data,
-    groupsExpanded = [],
     dispatch,
+    groups = [],
+    groupsExpanded = [],
     onOptionChanged,
     rowKeyField,
     virtualScrolling,
   } = props;
 
+  const groupMark = getGroupMark();
   const firstRowRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (firstRowRef
@@ -52,7 +55,9 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
             <GroupRow
               key={d.key}
               groupRowData={d}
+              columns={columns}
               emptyColumnsCount={d.key.length - 1}
+              groups={groups}
               groupsExpanded={groupsExpanded}
               onOptionChanged={onOptionChanged} />
           );

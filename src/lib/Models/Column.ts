@@ -1,4 +1,4 @@
-import { DataType, SortDirection, TextAlign } from '../enums';
+import { DataType, SortDirection } from '../enums';
 import {
   CellFunc, EditorFunc, FormatFunc, HeaderCellFunc, SearchFunc, ValidationFunc,
 } from '../types';
@@ -20,7 +20,6 @@ export class Column {
   public search?: SearchFunc;
   public sortDirection?: SortDirection;
   public style?: React.CSSProperties;
-  public textAlign?: TextAlign;
   public title?: string;
   public validation?: ValidationFunc;
 }

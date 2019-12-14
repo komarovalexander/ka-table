@@ -1,10 +1,10 @@
-import groupMark from '../groupMark';
 import { Column } from '../models';
 import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import { OptionChangedFunc } from '../types';
 import { getField } from './ColumnUtils';
 
+const groupMark = {};
 export const groupClick = (groupsExpanded: any[][], groupRowData: GroupRowData, onOptionChanged: OptionChangedFunc) => {
   const newGroupsExpanded =
     groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(groupRowData.key));
@@ -103,3 +103,5 @@ export const groupBy = (data: any[], keyGetter: any, isEmptyValue: boolean = fal
   });
   return map;
 };
+
+export const getGroupMark = () => groupMark;
