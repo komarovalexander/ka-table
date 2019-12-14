@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
 import { DataType } from 'ka-table/enums';
-import { CellFuncPropsWithChildren, EventFunc, OptionChangedFunc } from 'ka-table/types';
+import { CellFuncPropsWithChildren, EventFunc, OptionChangeFunc } from 'ka-table/types';
 
 const DELETE_EVENT = 'delete';
 
@@ -62,12 +62,12 @@ const tableOption: ITableOption = {
 
 const CommandColumnDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangeFunc = (value) => {
     changeOptions({...option, ...value });
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangedFunc = (newValue) => {
+  const onDataChange: OptionChangeFunc = (newValue) => {
     changeData(newValue);
   };
 

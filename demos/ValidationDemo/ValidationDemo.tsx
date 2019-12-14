@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
 import { DataType, EditingMode } from 'ka-table/enums';
-import { OptionChangedFunc } from 'ka-table/types';
+import { OptionChangeFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -56,12 +56,12 @@ const tableOption: ITableOption = {
 
 const ValidationDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangeFunc = (value) => {
     changeOptions({ ...option, ...value });
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangedFunc = (newValue) => {
+  const onDataChange: OptionChangeFunc = (newValue) => {
     changeData(newValue);
   };
   return (

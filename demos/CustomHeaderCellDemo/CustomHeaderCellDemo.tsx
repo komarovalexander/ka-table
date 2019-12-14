@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
-import { HeaderCellFuncPropsWithChildren, OptionChangedFunc } from 'ka-table/types';
+import { HeaderCellFuncPropsWithChildren, OptionChangeFunc } from 'ka-table/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -36,12 +36,12 @@ const tableOption: ITableOption = {
 
 const CustomHeaderCellDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangeFunc = (value) => {
     changeOptions({...option, ...value });
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangedFunc = (newValue) => {
+  const onDataChange: OptionChangeFunc = (newValue) => {
     changeData(newValue);
   };
   return (

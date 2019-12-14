@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from 'ka-table';
 import { DataType, EditingMode, Events } from 'ka-table/enums';
 import { Cell } from 'ka-table/models';
-import { EditorFuncPropsWithChildren, OptionChangedFunc } from 'ka-table/types';
+import { EditorFuncPropsWithChildren, OptionChangeFunc } from 'ka-table/types';
 import { columnUtils, typeUtils } from 'ka-table/utils';
 
 const dataArray: any[] = [
@@ -91,12 +91,12 @@ const tableOption: ITableOption = {
 
 const CustomEditorDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangeFunc = (value) => {
     changeOptions({...option, ...value });
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangedFunc = (newValue) => {
+  const onDataChange: OptionChangeFunc = (newValue) => {
     changeData(newValue);
   };
   return (
