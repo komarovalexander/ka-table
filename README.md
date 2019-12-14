@@ -196,7 +196,7 @@ specific column |
 | Name | Type | Description |
 | --- | --- | --- |
 | scrollPosition | number | Current scroll top position |
-| itemHeight | (data: any) => number | Returns height of specific row |
+| itemHeight | ((data: any) => number) \| number | Returns height of specific row |
 | tbodyHeight | number | tbody height |
 
 

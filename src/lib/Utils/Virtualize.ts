@@ -9,7 +9,9 @@ export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[]) 
   data.reduce((acc, value) => {
     const itemHeight = virtualScrolling.itemHeight ?
       (
-        virtualScrolling.itemHeight(value)
+        typeof virtualScrolling.itemHeight === 'number'
+        ? virtualScrolling.itemHeight
+        : virtualScrolling.itemHeight(value)
       )
       : 40;
     if (acc >= scrollPosition - itemHeight) {
