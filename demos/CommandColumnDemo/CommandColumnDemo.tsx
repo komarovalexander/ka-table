@@ -3,7 +3,7 @@ import './CommandColumnDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
-import { DataType, TextAlign } from 'ka-table/enums';
+import { DataType } from 'ka-table/enums';
 import { CellFuncPropsWithChildren, EventFunc, OptionChangedFunc } from 'ka-table/types';
 
 const DELETE_EVENT = 'delete';
@@ -49,13 +49,13 @@ const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'command1', cell: (props) => <AlertCell {...props}/>, style: { width: 40 }, textAlign: TextAlign.Center },
+    { key: 'command1', cell: (props) => <AlertCell {...props}/>, style: { width: 40, textAlign: 'center' } },
     { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: 'command22', cell: (props) => <DeleteRow {...props} />, style: { width: 40, textAlign: TextAlign.Center } },
+    { key: 'command22', cell: (props) => <DeleteRow {...props} />, style: { width: 40, textAlign: 'center' } },
   ],
   rowKeyField: 'column1',
 };

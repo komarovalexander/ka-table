@@ -15,7 +15,7 @@ const dataArray = [
 const tableOption: ITableOption = {
   columns: [
     { key: 'type', title: 'TYPE', dataType: DataType.String },
-    { key: 'name', title: 'NAME', dataType: DataType.String, style: { width: '50%' } },
+    { key: 'name', title: 'NAME', dataType: DataType.String },
     { key: 'country', title: 'COUNTRY', dataType: DataType.String },
     { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' } },
   ],

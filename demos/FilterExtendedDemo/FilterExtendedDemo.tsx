@@ -91,7 +91,9 @@ const FilterExtendedDemo: React.FC = () => {
   const filteredData = filterData(dataArray, filterValue);
   return (
     <>
-      <FilterControl {...{fields, groups, filterValue,  onFilterValueChanged: onFilterChangedChanged}}/>
+      <div className='top-element'>
+        <FilterControl {...{fields, groups, filterValue,  onFilterValueChanged: onFilterChangedChanged}}/>
+      </div>
       <Table
         {...option}
         data={filteredData}
