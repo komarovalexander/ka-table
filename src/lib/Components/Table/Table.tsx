@@ -7,7 +7,7 @@ import { Column } from '../../Models/Column';
 import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import { DataChangedFunc, EventFunc, OptionChangedFunc } from '../../types';
+import { DataChangeFunc, EventFunc, OptionChangeFunc } from '../../types';
 import { getOnEventHandler } from '../../Utils/EventUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
@@ -35,9 +35,9 @@ export interface ITableOption {
 
 export interface ITableEvents {
   /** Called each time Data is changed */
-  onDataChange?: DataChangedFunc;
+  onDataChange?: DataChangeFunc;
   /** Called each time ITableOption changed */
-  onOptionChange: OptionChangedFunc;
+  onOptionChange: OptionChangeFunc;
   /** Called each time when some event emited */
   onEvent?: EventFunc;
 }

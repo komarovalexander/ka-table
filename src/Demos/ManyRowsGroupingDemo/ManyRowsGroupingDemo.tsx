@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, SortingMode } from '../../lib/enums';
-import { OptionChangedFunc } from '../../lib/types';
+import { OptionChangeFunc } from '../../lib/types';
 
 const dataArray = Array(10000).fill(undefined).map(
   (_, index) => ({
@@ -30,7 +30,7 @@ const tableOption: ITableOption = {
 
 const ManyRowsGroupingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangeFunc = (value) => {
     changeOptions({...option, ...value });
   };
 

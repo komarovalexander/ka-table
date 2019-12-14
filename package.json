@@ -1,6 +1,6 @@
 {
   "name": "ka-table",
-  "version": "0.2.3",
+  "version": "1.0.3",
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table",
@@ -18,7 +18,7 @@
     "eject": "react-scripts eject",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
-    "pack": "gulp compile && cd dist && npm pack && cd .."
+    "pack": "gulp build && cd dist && npm pack && cd .."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -62,5 +62,12 @@
       "src/Components/**/*.{ts,tsx}",
       "src/Utils/*.ts"
     ]
-  }
+  },
+  "keywords": [
+    "datagrid",
+    "react",
+    "table",
+    "component",
+    "widget"
+  ]
 }

@@ -6,7 +6,7 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import { DataChangedFunc, EventFunc, OptionChangedFunc } from '../../types';
+import { DataChangeFunc, EventFunc, OptionChangeFunc } from '../../types';
 import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import VirtualizedRows from '../VirtualizedRows/VirtualizedRows';
 
@@ -19,9 +19,9 @@ export interface ITableBodyProps {
   groupColumnsCount: number;
   groups?: Group[];
   groupsExpanded?: any[][];
-  onDataChange?: DataChangedFunc;
+  onDataChange?: DataChangeFunc;
   dispatch: EventFunc;
-  onOptionChange: OptionChangedFunc;
+  onOptionChange: OptionChangeFunc;
   rowKeyField: string;
   selectedRows: any[];
   virtualScrolling?: VirtualScrolling;

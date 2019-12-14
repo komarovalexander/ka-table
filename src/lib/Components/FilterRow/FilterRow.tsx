@@ -3,7 +3,7 @@ import React from 'react';
 import emptyFunc from '../../emptyFunc';
 import { Column } from '../../Models/Column';
 import { FilterCondition } from '../../Models/FilterCondition';
-import { OptionChangedFunc } from '../../types';
+import { OptionChangeFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
 import { filterCellValueChangeHandler } from '../../Utils/FilterUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
@@ -13,7 +13,7 @@ export interface IFilterRowProps {
   columns: Column[];
   filterRow: FilterCondition[];
   groupColumnsCount: number;
-  onOptionChange: OptionChangedFunc;
+  onOptionChange: OptionChangeFunc;
 }
 
 const FilterRow: React.FunctionComponent<IFilterRowProps> = ({

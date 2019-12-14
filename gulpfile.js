@@ -44,6 +44,16 @@ gulp.task('build', function () {
                     'README.md',
                     'LICENSE',
                 ])
-                .pipe(gulp.dest('dist'))
+                .pipe(gulp.dest('dist'));
+            gulp
+                .src([
+                    'src/lib/**/*.scss'
+                ])
+                .pipe(gulp.dest('dist'));
+            gulp
+                .src([
+                    'src/lib/static/**/*'
+                ])
+                .pipe(gulp.dest('dist/static'))
         });
 });

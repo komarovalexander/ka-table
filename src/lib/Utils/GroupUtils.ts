@@ -1,11 +1,11 @@
 import { Column } from '../models';
 import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
-import { OptionChangedFunc } from '../types';
+import { OptionChangeFunc } from '../types';
 import { getField } from './ColumnUtils';
 
 const groupMark = {};
-export const groupClick = (groupsExpanded: any[][], groupRowData: GroupRowData, onOptionChange: OptionChangedFunc) => {
+export const groupClick = (groupsExpanded: any[][], groupRowData: GroupRowData, onOptionChange: OptionChangeFunc) => {
   const newGroupsExpanded =
     groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(groupRowData.key));
   if (newGroupsExpanded.length === groupsExpanded.length) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { HeaderCellFuncPropsWithChildren, OptionChangedFunc } from '../../lib/types';
+import { HeaderCellFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -36,20 +36,15 @@ const tableOption: ITableOption = {
 
 const CustomHeaderCellDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangeFunc = (value) => {
     changeOptions({...option, ...value });
   };
 
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangedFunc = (newValue) => {
-    changeData(newValue);
-  };
   return (
     <Table
       {...option}
-      data={data}
+      data={dataArray}
       onOptionChange={onOptionChange}
-      onDataChange={onDataChange}
     />
   );
 };

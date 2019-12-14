@@ -3,7 +3,7 @@ import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { Column, Group } from '../../models';
 import { GroupRowData } from '../../Models/GroupRowData';
-import { OptionChangedFunc } from '../../types';
+import { OptionChangeFunc } from '../../types';
 import { groupClick } from '../../Utils/GroupUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
@@ -13,7 +13,7 @@ export interface IGroupRowProps {
   groupRowData: GroupRowData;
   groups: Group[];
   groupsExpanded: any[][];
-  onOptionChange: OptionChangedFunc;
+  onOptionChange: OptionChangeFunc;
 }
 
 const GroupRow: React.FunctionComponent<IGroupRowProps> = ({

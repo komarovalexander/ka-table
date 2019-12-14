@@ -1,7 +1,7 @@
 import { Cell } from '../Models/Cell';
 import { Column } from '../Models/Column';
 import { FilterCondition } from '../Models/FilterCondition';
-import { OptionChangedFunc } from '../types';
+import { OptionChangeFunc } from '../types';
 import { getCopyOfArrayAndDeleteItem, getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
 import { getField } from './ColumnUtils';
 import { isEmpty } from './CommonUtils';
@@ -29,7 +29,7 @@ export const filterData = (data: any[], filterRow: FilterCondition[]): any[] => 
 };
 
 export const filterCellValueChangeHandler = (
-    value: any, field: string, filterRow: FilterCondition[], optionChangeHandler: OptionChangedFunc,
+    value: any, field: string, filterRow: FilterCondition[], optionChangeHandler: OptionChangeFunc,
   ) => {
   let newFilterRow;
   const newFRValue: FilterCondition = {
