@@ -40,16 +40,11 @@ const CustomHeaderCellDemo: React.FC = () => {
     changeOptions({...option, ...value });
   };
 
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
-    changeData(newValue);
-  };
   return (
     <Table
       {...option}
-      data={data}
+      data={dataArray}
       onOptionChange={onOptionChange}
-      onDataChange={onDataChange}
     />
   );
 };
