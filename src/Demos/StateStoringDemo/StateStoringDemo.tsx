@@ -19,7 +19,7 @@ const defaultOption = {
   sortingMode: SortingMode.Single,
 };
 
-const OPTION_KEY = 'state-storing-demo--table-option';
+const OPTION_KEY = 'state-storing-demo-table-option';
 const tableOption: ITableOption = {...defaultOption, ...JSON.parse(localStorage.getItem(OPTION_KEY) || '0')};
 
 const StateStoringDemo: React.FC = () => {

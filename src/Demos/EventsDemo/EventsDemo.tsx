@@ -39,7 +39,7 @@ const EventsDemo: React.FC = () => {
 
   const [events, changeEvents] = useState([] as string []);
   const onEvent: EventFunc = (event, eventData) => {
-    changeEvents([`event: ${event}, data:${JSON.stringify(eventData)}`, ...events]);
+    changeEvents([`onEvent: ${event}, data:${JSON.stringify(eventData)}`, ...events]);
   };
   return (
     <>
