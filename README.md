@@ -1,8 +1,6 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/ka-table/blob/master/LICENSE)
 [![Build Status](https://travis-ci.com/komarovalexander/ka-table.svg?token=9QUEx9r7MWqF44f9VDer&branch=dev)](https://travis-ci.com/komarovalexander/ka-table)
 
-*This project is on pre-alpha stage. Stable version with documentation and finished styles will be available no later than January of 2020*
-
 # Overview
 The customizable, extendable, lightweight (~50kb for js or ts scripts) and free React Table Component
 
@@ -117,18 +115,18 @@ export default SortingDemo;
 
 | Name | Type | Description |
 | --- | --- | --- |
-| columns | [<code>Column\[\]</code>](#Column) | Columns in table and their look and behaviour |
+| columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
 | data | <code>any\[\]</code> | The data which is shown in Table's rows |
 | editableCells | [<code>Cell[]</code>](#Cell) | This property contains the array of cells which are being edited |
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode |
 | filterRow | [<code>FilterCondition[]</code>](#FilterCondition) | Sets filters for columns |
 | groups | [<code>Group[]</code>](#Group) | Group's in the table |
-| groupsExpanded | TODO | Contains groups which are expanded in the grid |
+| groupsExpanded | any[][] | Contains groups which are expanded in the grid |
 | rowKeyField | string | Property of data's item which is used to identitify row |
 | search <a name="Table.search"></a> | string | Specifies the text which should be found in the data |
 | selectedRows | any[] | Specifies the array of rows keys which are should be marked as selected |
-| sortingMode | [<code>SortingMode[]</code>](#SortingMode)  | Sorting mode |
-| virtualScrolling | TODO | Virtual scrolling options |
+| sortingMode | [<code>SortingMode</code>](#SortingMode)  | Sorting mode |
+| virtualScrolling | [<code>VirtualScrolling</code>](#VirtualScrolling) | Virtual scrolling options - set it as empty object {} to enable virtual scrolling and auto calculate its parameters |
 
 
 <a name="Column"></a>
@@ -144,7 +142,7 @@ Describes column of table its look and behaviour
 | filterCell | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor for filter row cell |
 | field | string | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
 | format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string |
-| headCell | TODO | Returns a custom header cell |
+| headCell | HeaderCellFunc | Returns a custom header cell |
 | isEditable | boolean | Specifies can column be editable or not |
 | key | string | Mandatory field, specifies unique key for the column |
 | search | [<code>SearchFunc</code>](#SearchFunc) | Overrides the default search method for the cell. Executes if [Table.search](#Table.search) option is set |
@@ -188,6 +186,18 @@ specific column |
 | Name | Type | Description |
 | --- | --- | --- |
 | field | string | The grouped column's field |
+
+
+<a name="VirtualScrolling"></a>
+### VirtualScrolling
+
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| scrollPosition | number | Current scroll top position |
+| itemHeight | (data: any) => number | Returns height of specific row |
+| tbodyHeight | number | tbody height |
 
 
 <a name="DataType"></a>
