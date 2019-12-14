@@ -32,18 +32,18 @@ const tableOption: ITableOption = {
 
 const SearchDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChanged: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangedFunc = (value) => {
     changeOptions({...option, ...value });
   };
   return (
     <>
       <input type='search' defaultValue={option.search} onChange={(event) => {
-        onOptionChanged({ search: event.currentTarget.value });
+        onOptionChange({ search: event.currentTarget.value });
       }} className='top-element'/>
       <Table
         {...option}
         data={dataArray}
-        onOptionChanged={onOptionChanged}
+        onOptionChange={onOptionChange}
       />
     </>
   );

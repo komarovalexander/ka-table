@@ -28,12 +28,12 @@ const tableOption: ITableOption = {
 
 const EventsDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChanged: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangedFunc = (value) => {
     changeOptions({...option, ...value });
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChanged: OptionChangedFunc = (newValue) => {
+  const onDataChange: OptionChangedFunc = (newValue) => {
     changeData(newValue);
   };
 
@@ -46,8 +46,8 @@ const EventsDemo: React.FC = () => {
       <Table
         {...option}
         data={data}
-        onOptionChanged={onOptionChanged}
-        onDataChanged={onDataChanged}
+        onOptionChange={onOptionChange}
+        onDataChange={onDataChange}
         onEvent={onEvent}
       />
       {events.map((e, i) => (<div key={i}>{e}</div>))}

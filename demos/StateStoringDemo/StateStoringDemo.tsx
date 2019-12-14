@@ -24,24 +24,28 @@ const tableOption: ITableOption = {...defaultOption, ...JSON.parse(localStorage.
 
 const StateStoringDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChanged: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangedFunc = (value) => {
     const newOption = {...option, ...value };
     changeOptions({...option, ...value });
+
     localStorage.setItem(OPTION_KEY, JSON.stringify(newOption));
   };
+
   const [data, changeData] = useState(dataStorage.get());
-  const onDataChanged: OptionChangedFunc = async (newValue) => {
+  const onDataChange: OptionChangedFunc = async (newValue) => {
     changeData(newValue);
+
     dataStorage.save(newValue);
   };
+
   return (
     <>
       <button onClick={() => window.location.reload()} className='top-element' >Reload Page</button>
       <Table
         {...option}
         data={data}
-        onOptionChanged={onOptionChanged}
-        onDataChanged={onDataChanged}
+        onOptionChange={onOptionChange}
+        onDataChange={onDataChange}
       />
     </>
   );

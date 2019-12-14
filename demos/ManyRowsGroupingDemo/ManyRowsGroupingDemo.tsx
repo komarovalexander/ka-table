@@ -30,7 +30,7 @@ const tableOption: ITableOption = {
 
 const ManyRowsGroupingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChanged: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangedFunc = (value) => {
     changeOptions({...option, ...value });
   };
 
@@ -39,7 +39,7 @@ const ManyRowsGroupingDemo: React.FC = () => {
       <Table
         {...option}
         data={dataArray}
-        onOptionChanged={onOptionChanged}
+        onOptionChange={onOptionChange}
       />
     </>
   );
