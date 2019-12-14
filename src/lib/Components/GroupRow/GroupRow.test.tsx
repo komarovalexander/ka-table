@@ -6,10 +6,12 @@ import GroupRow, { IGroupRowProps } from './GroupRow';
 
 const props: IGroupRowProps = {
   columns: [
-    { field: 'column', title: 'Column 1', dataType: DataType.String },
-    { field: 'column2', title: 'Column 2', dataType: DataType.String  },
+    { key: '1', field: 'column', title: 'Column 1', dataType: DataType.String },
+    { key: '2', field: 'column2', title: 'Column 2', dataType: DataType.String  },
   ],
+  emptyColumnsCount: 0,
   groupRowData: { key: ['group'], groupMark: {}, value: 123 },
+  groups: [],
   groupsExpanded: [],
   onOptionChanged: () => {},
 };

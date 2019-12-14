@@ -1,8 +1,7 @@
-import groupMark from '../keys';
 import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import {
-  convertToFlat, getExpandedGroups, getGroupedStructure, groupBy, groupClick,
+  convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, groupBy, groupClick,
 } from './GroupUtils';
 
 describe('GroupUtils', () => {
@@ -90,7 +89,7 @@ describe('GroupUtils', () => {
   });
 
   it('getExpandedGroups', () => {
-    const groupRowData: GroupRowData = { key: ['dog'], value: 'Rex', groupMark };
+    const groupRowData: GroupRowData = { key: ['dog'], value: 'Rex', groupMark: getGroupMark() };
     const groupedData: any[] = [{}, groupRowData, {}];
     const result = getExpandedGroups(groupedData);
     expect(result).toEqual([['dog']]);
