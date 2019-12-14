@@ -5,13 +5,13 @@ import { OptionChangedFunc } from '../types';
 import { getField } from './ColumnUtils';
 
 const groupMark = {};
-export const groupClick = (groupsExpanded: any[][], groupRowData: GroupRowData, onOptionChanged: OptionChangedFunc) => {
+export const groupClick = (groupsExpanded: any[][], groupRowData: GroupRowData, onOptionChange: OptionChangedFunc) => {
   const newGroupsExpanded =
     groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(groupRowData.key));
   if (newGroupsExpanded.length === groupsExpanded.length) {
     newGroupsExpanded.push(groupRowData.key);
   }
-  onOptionChanged({ groupsExpanded: newGroupsExpanded });
+  onOptionChange({ groupsExpanded: newGroupsExpanded });
 };
 
 export const getExpandedGroups = (groupedData: any[]): any[][] => {

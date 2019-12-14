@@ -11,7 +11,7 @@ const props: IFilterRowProps = {
     operator: '=',
     value: 'Billi Bob',
   }],
-  onOptionChanged: emptyFunc,
+  onOptionChange: emptyFunc,
 };
 
 it('renders without crashing', () => {

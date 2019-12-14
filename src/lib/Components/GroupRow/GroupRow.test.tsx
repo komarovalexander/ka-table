@@ -13,7 +13,7 @@ const props: IGroupRowProps = {
   groupRowData: { key: ['group'], groupMark: {}, value: 123 },
   groups: [],
   groupsExpanded: [],
-  onOptionChanged: () => {},
+  onOptionChange: () => {},
 };
 
 it('renders without crashing', () => {

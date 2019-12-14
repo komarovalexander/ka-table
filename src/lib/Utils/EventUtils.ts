@@ -9,9 +9,9 @@ export const getOnEventHandler = ({
   columns,
   data,
   editableCells = [],
-  onDataChanged = () => {},
+  onDataChange = () => {},
   onEvent = () => {},
-  onOptionChanged,
+  onOptionChange,
   rowKeyField,
   selectedRows = [],
   virtualScrolling,
@@ -22,33 +22,33 @@ export const getOnEventHandler = ({
         changeCellTextToCellEditorHandler(
           eventData.cell,
           editableCells,
-          onOptionChanged);
+          onOptionChange);
         break;
       case Events.CloseEditor:
         changeCellEditorToCellTextHandler(
           eventData.cell,
           editableCells,
-          onOptionChanged);
+          onOptionChange);
         break;
       case Events.RowDataChanged:
           const newData = getCopyOfArrayAndInsertOrReplaceItem(eventData, rowKeyField, data);
-          onDataChanged(newData);
+          onDataChange(newData);
           break;
       case Events.RowSelected:
-          onOptionChanged({ selectedRows: [...selectedRows, ...[eventData.rowKeyValue]] });
+          onOptionChange({ selectedRows: [...selectedRows, ...[eventData.rowKeyValue]] });
           break;
       case Events.RowDeselected:
-          onOptionChanged({ selectedRows: [...selectedRows].filter((s) => s !== eventData.rowKeyValue) });
+          onOptionChange({ selectedRows: [...selectedRows].filter((s) => s !== eventData.rowKeyValue) });
           break;
       case Events.SortingChanged:
           const sortedColumns = getSortedColumns(columns, eventData.column);
-          onOptionChanged({ columns: sortedColumns });
+          onOptionChange({ columns: sortedColumns });
           break;
       case Events.ScrollTable:
           if (virtualScrolling) {
             const scrollPosition = eventData.scrollTop;
             if (virtualScrolling) {
-              onOptionChanged({ virtualScrolling: { ...virtualScrolling, scrollPosition }});
+              onOptionChange({ virtualScrolling: { ...virtualScrolling, scrollPosition }});
             }
           }
           break;

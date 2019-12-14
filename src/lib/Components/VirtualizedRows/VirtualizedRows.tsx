@@ -14,7 +14,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
     dispatch,
     groups = [],
     groupsExpanded = [],
-    onOptionChanged,
+    onOptionChange,
     rowKeyField,
     virtualScrolling,
   } = props;
@@ -34,9 +34,9 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
         tbodyHeight,
         ...virtualScrolling,
       };
-      onOptionChanged({ virtualScrolling: newVirtualScrolling });
+      onOptionChange({ virtualScrolling: newVirtualScrolling });
     }
-  }, [firstRowRef, onOptionChanged, virtualScrolling]);
+  }, [firstRowRef, onOptionChange, virtualScrolling]);
 
   let virtualizedData = data;
   let virtualized;
@@ -59,7 +59,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
               emptyColumnsCount={d.key.length - 1}
               groups={groups}
               groupsExpanded={groupsExpanded}
-              onOptionChanged={onOptionChanged} />
+              onOptionChange={onOptionChange} />
           );
         } else {
           const dataRow = (

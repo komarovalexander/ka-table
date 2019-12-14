@@ -13,14 +13,14 @@ export interface IFilterRowProps {
   columns: Column[];
   filterRow: FilterCondition[];
   groupColumnsCount: number;
-  onOptionChanged: OptionChangedFunc;
+  onOptionChange: OptionChangedFunc;
 }
 
 const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
   columns,
   filterRow,
   groupColumnsCount,
-  onOptionChanged,
+  onOptionChange,
 }) => {
   const rowData = filterRow.reduce((c: any, f, i, array) => {
     c[f.field] = f.value;
@@ -40,7 +40,7 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
             dispatch={emptyFunc}
             rowData={rowData}
             onValueChange={(value) => {
-              filterCellValueChangeHandler(value, column.key, filterRow, onOptionChanged);
+              filterCellValueChangeHandler(value, column.key, filterRow, onOptionChange);
             }}
           />
         );

@@ -35,9 +35,9 @@ export interface ITableOption {
 
 export interface ITableEvents {
   /** Called each time Data is changed */
-  onDataChanged?: DataChangedFunc;
+  onDataChange?: DataChangedFunc;
   /** Called each time ITableOption changed */
-  onOptionChanged: OptionChangedFunc;
+  onOptionChange: OptionChangedFunc;
   /** Called each time when some event emited */
   onEvent?: EventFunc;
 }
@@ -53,7 +53,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     editingMode = EditingMode.None,
     filterRow,
     groups,
-    onOptionChanged,
+    onOptionChange,
     search,
     selectedRows = [],
     sortingMode = SortingMode.None,
@@ -90,7 +90,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
                 columns={columns}
                 filterRow={filterRow}
                 groupColumnsCount={groupColumnsCount}
-                onOptionChanged={onOptionChanged}
+                onOptionChange={onOptionChange}
               />
             )}
         </thead>

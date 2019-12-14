@@ -15,13 +15,13 @@ export const isEditableCell = (editingMode: EditingMode, column: Column, rowEdit
 };
 
 export const changeCellTextToCellEditorHandler = (
-  item: Cell, editableCells: Cell[], onOptionChanged: OptionChangedFunc) => {
+  item: Cell, editableCells: Cell[], onOptionChange: OptionChangedFunc) => {
     const newEditableCells = getCopyOfArrayAndAddItem(item, editableCells);
-    onOptionChanged({ editableCells: newEditableCells });
+    onOptionChange({ editableCells: newEditableCells });
 };
 
 export const changeCellEditorToCellTextHandler = (
-  item: Cell, editableCells: Cell[], onOptionChanged: OptionChangedFunc) => {
+  item: Cell, editableCells: Cell[], onOptionChange: OptionChangedFunc) => {
     const newEditableCells = editableCells.filter((c) => c.columnKey !== item.columnKey || c.rowKey !== item.rowKey);
-    onOptionChanged({ editableCells: newEditableCells });
+    onOptionChange({ editableCells: newEditableCells });
 };

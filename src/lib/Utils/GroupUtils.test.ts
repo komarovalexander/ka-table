@@ -98,19 +98,19 @@ describe('GroupUtils', () => {
   it('groupClick add', () => {
     const groupsExpanded: any[][] = [['cat']];
     const groupRowData: GroupRowData = { key: ['dog'], value: 'Rex', groupMark: {} };
-    const onOptionChanged = jest.fn((x) => {});
-    groupClick(groupsExpanded, groupRowData, onOptionChanged);
-    expect(onOptionChanged.mock.calls.length).toBe(1);
-    expect(onOptionChanged.mock.calls[0]).toEqual([{groupsExpanded: [['cat'], ['dog']]}]);
+    const onOptionChange = jest.fn((x) => {});
+    groupClick(groupsExpanded, groupRowData, onOptionChange);
+    expect(onOptionChange.mock.calls.length).toBe(1);
+    expect(onOptionChange.mock.calls[0]).toEqual([{groupsExpanded: [['cat'], ['dog']]}]);
   });
 
   it('groupClick remove', () => {
     const groupsExpanded: any[][] = [['cat']];
     const groupRowData: GroupRowData = { key: ['cat'], value: 'Tom', groupMark: {} };
-    const onOptionChanged = jest.fn((x) => {});
-    groupClick(groupsExpanded, groupRowData, onOptionChanged);
-    expect(onOptionChanged.mock.calls.length).toBe(1);
-    expect(onOptionChanged.mock.calls[0]).toEqual([{groupsExpanded: []}]);
+    const onOptionChange = jest.fn((x) => {});
+    groupClick(groupsExpanded, groupRowData, onOptionChange);
+    expect(onOptionChange.mock.calls.length).toBe(1);
+    expect(onOptionChange.mock.calls[0]).toEqual([{groupsExpanded: []}]);
   });
 
   it('groupBy', () => {

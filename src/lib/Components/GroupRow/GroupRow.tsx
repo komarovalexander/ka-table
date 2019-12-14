@@ -13,7 +13,7 @@ export interface IGroupRowProps {
   groupRowData: GroupRowData;
   groups: Group[];
   groupsExpanded: any[][];
-  onOptionChanged: OptionChangedFunc;
+  onOptionChange: OptionChangedFunc;
 }
 
 const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
@@ -22,7 +22,7 @@ const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
   groupRowData,
   groups,
   groupsExpanded,
-  onOptionChanged,
+  onOptionChange,
 }) => {
   return (
     <tr className={defaultOptions.css.groupRow}>
@@ -33,7 +33,7 @@ const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
           <div className='ka-group-column-content'>
             <div
               onClick={() => {
-                groupClick(groupsExpanded, groupRowData, onOptionChanged);
+                groupClick(groupsExpanded, groupRowData, onOptionChange);
               }}
               className={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(groupRowData.key))
                 ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed}

@@ -24,7 +24,7 @@ const tableOption: ITableOption = {...defaultOption, ...JSON.parse(localStorage.
 
 const StateStoringDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChanged: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangedFunc = (value) => {
     const newOption = {...option, ...value };
     changeOptions({...option, ...value });
 
@@ -32,7 +32,7 @@ const StateStoringDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataStorage.get());
-  const onDataChanged: OptionChangedFunc = async (newValue) => {
+  const onDataChange: OptionChangedFunc = async (newValue) => {
     changeData(newValue);
 
     dataStorage.save(newValue);
@@ -44,8 +44,8 @@ const StateStoringDemo: React.FC = () => {
       <Table
         {...option}
         data={data}
-        onOptionChanged={onOptionChanged}
-        onDataChanged={onDataChanged}
+        onOptionChange={onOptionChange}
+        onDataChange={onDataChange}
       />
     </>
   );

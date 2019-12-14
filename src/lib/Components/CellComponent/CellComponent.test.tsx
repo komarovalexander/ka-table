@@ -12,7 +12,7 @@ const props: any = {
   },
   editableCells: [],
   isEditableCell: false,
-  onOptionChanged: () => {},
+  onOptionChange: () => {},
   onRowDataChanged: () => {},
   rowData: {
     column: 1,

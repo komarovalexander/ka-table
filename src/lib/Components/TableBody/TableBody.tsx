@@ -19,9 +19,9 @@ export interface ITableBodyProps {
   groupColumnsCount: number;
   groups?: Group[];
   groupsExpanded?: any[][];
-  onDataChanged?: DataChangedFunc;
+  onDataChange?: DataChangedFunc;
   dispatch: EventFunc;
-  onOptionChanged: OptionChangedFunc;
+  onOptionChange: OptionChangedFunc;
   rowKeyField: string;
   selectedRows: any[];
   virtualScrolling?: VirtualScrolling;
@@ -33,12 +33,12 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
     groupedColumns,
     groups,
     dispatch,
-    onOptionChanged,
+    onOptionChange,
   } = props;
   const { groupsExpanded } = props;
   const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
   if (groups && !groupsExpanded) {
-    onOptionChanged({ groupsExpanded: getExpandedGroups(groupedData) });
+    onOptionChange({ groupsExpanded: getExpandedGroups(groupedData) });
     return <></>;
   }
   return (

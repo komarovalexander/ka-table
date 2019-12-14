@@ -52,14 +52,14 @@ const tableOption: ITableOption = {
 
 const SelectionDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChanged: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangedFunc = (value) => {
     changeOptions({...option, ...value });
   };
   return (
     <Table
       {...option}
       data={dataArray}
-      onOptionChanged={onOptionChanged}
+      onOptionChange={onOptionChange}
     />
   );
 };

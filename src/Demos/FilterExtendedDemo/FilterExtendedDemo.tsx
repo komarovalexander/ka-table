@@ -81,7 +81,7 @@ export const filter: IFilterControlFilterValue = {
 
 const FilterExtendedDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChanged: OptionChangedFunc = (value) => {
+  const onOptionChange: OptionChangedFunc = (value) => {
     changeOptions({...option, ...value });
   };
   const [filterValue, changeFilter] = useState(filter);
@@ -97,7 +97,7 @@ const FilterExtendedDemo: React.FC = () => {
       <Table
         {...option}
         data={filteredData}
-        onOptionChanged={onOptionChanged}
+        onOptionChange={onOptionChange}
       />
     </>
   );
