@@ -14,7 +14,6 @@ export class Column {
   public field?: string;
   public format?: FormatFunc;
   public headCell?: HeaderCellFunc;
-  public isCustom?: boolean;
   public isEditable?: boolean;
   public key!: string;
   public search?: SearchFunc;

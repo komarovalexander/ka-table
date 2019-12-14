@@ -27,13 +27,17 @@ const StateStoringDemo: React.FC = () => {
   const onOptionChanged: OptionChangedFunc = (value) => {
     const newOption = {...option, ...value };
     changeOptions({...option, ...value });
+
     localStorage.setItem(OPTION_KEY, JSON.stringify(newOption));
   };
+
   const [data, changeData] = useState(dataStorage.get());
   const onDataChanged: OptionChangedFunc = async (newValue) => {
     changeData(newValue);
+
     dataStorage.save(newValue);
   };
+
   return (
     <>
       <button onClick={() => window.location.reload()} className='top-element' >Reload Page</button>

@@ -48,16 +48,3 @@ gulp.task('build', function () {
                 .pipe(gulp.dest('dist'))
         });
 });
-
-gulp.task('doc', function (cb) {
-    return gulp
-        .src(["src/**/*.ts", "src/*.tsx"])
-        .pipe(typedoc({
-            module: "file",
-            esModuleInterop: true,
-            jsx: true,
-            out: "docs/",
-            name: "My project title"
-        }))
-    ;
-});

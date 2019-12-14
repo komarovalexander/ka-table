@@ -124,9 +124,11 @@ export default SortingDemo;
 | filterRow | [<code>FilterCondition[]</code>](#FilterCondition) | Sets filters for columns |
 | groups | [<code>Group[]</code>](#Group) | Group's in the table |
 | groupsExpanded | TODO | Contains groups which are expanded in the grid |
-| rowKey | string | Property of data's item which is used to identitify row |
-| sortingMode | [<code>SortingMode[]</code>](#SortingMode)  | Sorting mode |
+| rowKeyField | string | Property of data's item which is used to identitify row |
 | search <a name="Table.search"></a> | string | Specifies the text which should be found in the data |
+| selectedRows | any[] | Specifies the array of rows keys which are should be marked as selected |
+| sortingMode | [<code>SortingMode[]</code>](#SortingMode)  | Sorting mode |
+| virtualScrolling | TODO | Virtual scrolling options |
 
 
 <a name="Column"></a>
@@ -136,13 +138,19 @@ Describes column of table its look and behaviour
 
 | Name | Type | Description |
 | --- | --- | --- |
-| field | string | Specifies the property of data's object which value will be used in column |
-| title | string | Specifies the text of the header |
+| cell | [<code>CellFunc</code>](#CellFunc) | Returns a custom cell if it is not in editable mode |
 | dataType | [<code>DataType</code>](#DataType) | Specifies the type of column |
-| sortDirection | [<code>SortDirection</code>](#SortDirection) | Sets the direction of sorting for the column |
 | editor | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor if cell is in editable mode |
-| cell | [<code>CellFunc</code>](#CellFunc) | Returns an custom cell if it is not in editable mode |
+| filterCell | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor for filter row cell |
+| field | string | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
+| format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string |
+| headCell | TODO | Returns a custom header cell |
+| isEditable | boolean | Specifies can column be editable or not |
+| key | string | Mandatory field, specifies unique key for the column |
 | search | [<code>SearchFunc</code>](#SearchFunc) | Overrides the default search method for the cell. Executes if [Table.search](#Table.search) option is set |
+| sortDirection | [<code>SortDirection</code>](#SortDirection) | Sets the direction of sorting for the column |
+| style | React.CSSProperties | Sets the style options of the elements |
+| title | string | Specifies the text of the header |
 | validation | [<code>ValidationFunc</code>](#ValidationFunc) | Returns the validation error string or does not return anything in case of passed validation |
 
 
@@ -221,13 +229,6 @@ specific column |
 | Single | 'single' |
 
 
-<a name="EditorFunc"></a>
-### EditorFunc
-
-(props: [<code>ICellEditorProps</code>](#ICellEditorProps)) => any;
-
-Function which obtains [<code>ICellEditorProps</code>](#ICellEditorProps) as parameter and returns React component which should be shown instead of default editor.
-
 
 <a name="CellFunc"></a>
 ### CellFunc
@@ -235,6 +236,20 @@ Function which obtains [<code>ICellEditorProps</code>](#ICellEditorProps) as par
 (props: [<code>ICellContentProps</code>](#ICellContentProps)) => any;
 
 Function which obtains [<code>ICellContentProps</code>](#ICellContentProps) as parameter and returns React component which should be shown instead of cell content.
+
+<a name="EditorFunc"></a>
+### EditorFunc
+
+(props: [<code>ICellEditorProps</code>](#ICellEditorProps)) => any;
+
+Function which obtains [<code>ICellEditorProps</code>](#ICellEditorProps) as parameter and returns React component which should be shown instead of default editor.
+
+<a name="FormatFunc"></a>
+### FormatFunc
+
+(value: any) => any;
+
+Function which obtains value as parameter and returns formated value which will be shown in cell.
 
 
 <a name="SearchFunc"></a>
