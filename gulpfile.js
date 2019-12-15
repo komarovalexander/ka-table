@@ -6,6 +6,7 @@ var tsProject = ts.createProject('tsconfig.json');
 var jsonfile = require('jsonfile')
 var ghPages = require('gulp-gh-pages');
 var replace = require('gulp-replace');
+var sass = require('gulp-sass');
 
 gulp.task('gh-pages', function () {
     return gulp.src('./build/**/*')
@@ -33,6 +34,7 @@ gulp.task('build', function () {
         .pipe(gulp.dest('dist'))
         .on('end', () => {
             var pkg = require('./package.json');
+            delete pkg.dependencies;
             delete pkg.devDependencies;
             delete pkg.husky;
             delete pkg.jest;
@@ -49,7 +51,12 @@ gulp.task('build', function () {
                 .src([
                     'src/lib/**/*.scss'
                 ])
-                .pipe(gulp.dest('dist'));
+                .pipe(gulp.dest('dist'))
+                .on('end', () => {
+                    gulp.src('dist/**/*.scss')
+                        .pipe(sass().on('error', sass.logError))
+                        .pipe(gulp.dest('dist'));
+                });
             gulp
                 .src([
                     'src/lib/static/**/*'
