@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
 import { DataType, EditingMode } from 'ka-table/enums';
-import { OptionChangeFunc } from 'ka-table/types';
+import { DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -16,7 +16,7 @@ const dataArray: any[] = [
 const tableOption: ITableOption = {
   columns: [
     { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '30%' } },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%' } },
+    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '40px' } },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: { width: '10%' }},
     {
       dataType: DataType.Date,
@@ -40,7 +40,7 @@ const EditingDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
+  const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
   return (

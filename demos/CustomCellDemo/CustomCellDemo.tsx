@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from 'ka-table';
 import { DataType, EditingMode, Events } from 'ka-table/enums';
 import { Cell } from 'ka-table/models';
-import { CellFuncPropsWithChildren, OptionChangeFunc } from 'ka-table/types';
+import { CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, img: 'static/images/man1.PNG' },
@@ -75,7 +75,7 @@ const CustomCellDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
+  const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
   return (

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
 import { DataType, EditingMode } from 'ka-table/enums';
-import { OptionChangeFunc } from 'ka-table/types';
+import { DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -29,7 +29,7 @@ const tableOption: ITableOption = {
     {
       dataType: DataType.Number,
       key: 'score',
-      style: { width: '10%' },
+      style: { width: '70px' },
       title: 'Score',
       validation: (value: any, rowData: any) => {
         if (value > 100) {
@@ -61,7 +61,7 @@ const ValidationDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
+  const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
   return (

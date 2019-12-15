@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
 import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
-import { EventFunc, OptionChangeFunc } from 'ka-table/types';
+import { DataChangeFunc, EventFunc, OptionChangeFunc } from 'ka-table/types';
 
 const dataArray = Array(20).fill(undefined).map(
   (_, index) => ({
@@ -33,7 +33,7 @@ const EventsDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
+  const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
 

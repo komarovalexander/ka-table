@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
 import { DataType } from 'ka-table/enums';
-import { CellFuncPropsWithChildren, EventFunc, OptionChangeFunc } from 'ka-table/types';
+import {
+  CellFuncPropsWithChildren, DataChangeFunc, EventFunc, OptionChangeFunc,
+} from 'ka-table/types';
 
 const DELETE_EVENT = 'delete';
 
@@ -67,7 +69,7 @@ const CommandColumnDemo: React.FC = () => {
   };
 
   const [data, changeData] = useState(dataArray);
-  const onDataChange: OptionChangeFunc = (newValue) => {
+  const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
 
