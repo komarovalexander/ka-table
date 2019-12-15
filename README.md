@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/komarovalexander/ka-table.svg?token=9QUEx9r7MWqF44f9VDer&branch=dev)](https://travis-ci.com/komarovalexander/ka-table)
 
 # Overview
-The customizable, extendable, lightweight (~50kb for js or ts scripts) and free React Table Component
+The customizable, extendable, lightweight and free React Table Component
 
 Can easily be included in react projects, never mind it is ts or js
 
