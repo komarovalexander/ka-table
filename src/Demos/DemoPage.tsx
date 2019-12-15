@@ -22,10 +22,10 @@ const getDemoPage = (demo: Demo) => {
           <demo.component />
         </div>
         <div className='code'>
-          {demo.disableOnlineEditor ||
-          (
-            <div className='editor-links'>
-              <span>Open in Online Editor: </span>
+          <span>Open in Online Editor: </span>
+          <div className='editor-links'>
+          {demo.disableOnlineEditor || (
+            <>
               <a className='editor-link editor-link-ts'
                 href={demo.tsLink}
                 onClick={() => { trackEvent('click', 'ts_example', demo.path); }}
@@ -33,16 +33,17 @@ const getDemoPage = (demo: Demo) => {
                 target='_blank'>
                   TS Example
               </a>
-              |
-              <a className='editor-link editor-link-js'
-                href={demo.jsLink}
-                onClick={() => { trackEvent('click', 'js_example', demo.path); }}
-                rel='noopener noreferrer'
-                target='_blank'>
-                  JS Example
-              </a>
-            </div>
+              <span>|</span>
+            </>
           )}
+          <a className='editor-link editor-link-js'
+            href={demo.jsLink}
+            onClick={() => { trackEvent('click', 'js_example', demo.path); }}
+            rel='noopener noreferrer'
+            target='_blank'>
+              JS Example
+          </a>
+          </div>
           <Highlight className='language-typescript'>
             {text}
           </Highlight>
