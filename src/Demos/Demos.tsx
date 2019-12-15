@@ -73,31 +73,45 @@ const Demos: React.FC = () => {
     <HashRouter>
       <div className='demos'>
         <nav>
-          <div className='logo-container'>
-            <b>ka-table</b>
-            <a href='https://github.com/komarovalexander/ka-table'
-              onClick={() => { trackEvent('click', 'github_logo'); }}>
-              <img src='static/icons/github_logo.svg' alt=''/>
-            </a>
-            <a href='https://www.npmjs.com/package/react-table-component'
-              onClick={() => { trackEvent('click', 'npm_logo'); }}>
-              <img src='static/icons/npm_logo.svg' alt=''/>
-            </a>
+          <div className='nav-container'>
+            <div className='logo-container'>
+              <b>ka-table</b>
+              <a href='https://github.com/komarovalexander/ka-table'
+                onClick={() => { trackEvent('click', 'github_logo'); }}>
+                <img src='static/icons/github_logo.svg' alt=''/>
+              </a>
+              <a href='https://www.npmjs.com/package/react-table-component'
+                onClick={() => { trackEvent('click', 'npm_logo'); }}>
+                <img src='static/icons/npm_logo.svg' alt=''/>
+              </a>
+            </div>
+            <ul className='menu'>
+            {
+              cases.map((c) => (
+                <li key={c.name}>
+                    <NavLink to={c.path} activeClassName='active'>
+                      <span className='menu-button'>
+                        <span className='menu-icon'><img src={`static/icons/${c.name}.svg`} alt=''/></span>
+                        <span className='menu-button-inner'>{c.title}</span>
+                      </span>
+                    </NavLink>
+                </li>
+              ))
+            }
+            </ul>
           </div>
-          <ul className='menu'>
-          {
-            cases.map((c) => (
-              <li key={c.name}>
-                  <NavLink to={c.path} activeClassName='active'>
-                    <span className='menu-button'>
-                      <span className='menu-icon'><img src={`static/icons/${c.name}.svg`} alt=''/></span>
-                      <span className='menu-button-inner'>{c.title}</span>
-                    </span>
-                  </NavLink>
-              </li>
-            ))
-          }
-          </ul>
+          <div className='developers-links'>
+            <div>
+              <a href='https://github.com/komarovalexander'><img src='static/icons/link.svg' alt=''/>
+                Developed by Alexander Komarov
+              </a>
+            </div>
+            <div>
+              <a href='https://www.behance.net/daryakomarova'><img src='static/icons/link.svg' alt=''/>
+                UI Design by Daria Komarova
+              </a>
+            </div>
+          </div>
         </nav>
         <main>
           {
