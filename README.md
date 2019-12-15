@@ -40,7 +40,7 @@ Can easily be included in react projects, never mind it is ts or js
 
 [Sorting](https://komarovalexander.github.io/ka-table/#/sorting)
 
-[State Storing](https://komarovalexander.github.io/ka-table/#/state-storing)
+[State Storing](https://komarovalexander.github.io/ka-table/#/state-storing) - Save Table's state and restore it after page reload
 
 [Validation](https://komarovalexander.github.io/ka-table/#/validation)
 
@@ -56,7 +56,7 @@ yarn add ka-table
 ```
 
 ## Usage
-### A basic example
+### Basic example
 
 
 ```js
@@ -121,7 +121,7 @@ export default SortingDemo;
 | data | <code>any\[\]</code> | The data which is shown in Table's rows |
 | editableCells | [<code>Cell[]</code>](#Cell) | This property contains the array of cells which are being edited [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| filterRow | [<code>FilterCondition[]</code>](#FilterCondition) | Sets filters for columns [Filter Row Exmaple](https://komarovalexander.github.io/ka-table/#/filter-row) |
+| filterRow | [<code>FilterCondition[]</code>](#FilterCondition) | Sets filters for columns [Filter Row Example](https://komarovalexander.github.io/ka-table/#/filter-row) |
 | groups | [<code>Group[]</code>](#Group) | Group's in the table [Grouping Example](https://komarovalexander.github.io/ka-table/#/grouping) |
 | onDataChange | (data: any[]) => void | This function is executed each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | onOptionChange | (value: any) => void | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
@@ -141,7 +141,7 @@ Describes column of table its look and behaviour
 
 | Name | Type | Description |
 | --- | --- | --- |
-| cell | [<code>CellFunc</code>](#CellFunc) | Returns a custom cell if it is not in editable mode |
+| cell | [<code>CellFunc</code>](#CellFunc) | Returns a custom cell if Table is not in editable mode [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) |
 | dataType | [<code>DataType</code>](#DataType) | Specifies the type of column |
 | editor | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor if cell is in editable mode [Custom Editor Example](https://komarovalexander.github.io/ka-table/#/custom-editor) |
 | filterCell | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor for filter row cell [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) |
@@ -166,9 +166,8 @@ Describes the position of a cell in  the table
 
 | Name | Type | Description |
 | --- | --- | --- |
-| field | string | The field of
-specific column |
-| rowKeyValue | any | Data's key value of еру specific row |
+| field | string | The field of specific column |
+| rowKeyValue | any | Data's key value of every specific row |
 
 
 <a name="FilterCondition"></a>
