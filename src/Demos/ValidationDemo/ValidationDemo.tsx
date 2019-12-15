@@ -29,7 +29,7 @@ const tableOption: ITableOption = {
     {
       dataType: DataType.Number,
       key: 'score',
-      style: { width: '10%' },
+      style: { width: '70px' },
       title: 'Score',
       validation: (value: any, rowData: any) => {
         if (value > 100) {

@@ -40,6 +40,8 @@ Can easily be included in react projects, never mind it is ts or js
 
 [Sorting](https://komarovalexander.github.io/ka-table/#/sorting)
 
+[State Storing](https://komarovalexander.github.io/ka-table/#/state-storing)
+
 [Validation](https://komarovalexander.github.io/ka-table/#/validation)
 
 

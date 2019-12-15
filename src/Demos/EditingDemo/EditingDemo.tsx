@@ -16,7 +16,7 @@ const dataArray: any[] = [
 const tableOption: ITableOption = {
   columns: [
     { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '30%' } },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%' } },
+    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '40px' } },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: { width: '10%' }},
     {
       dataType: DataType.Date,
