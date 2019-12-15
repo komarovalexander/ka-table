@@ -103,7 +103,7 @@ const Demos: React.FC = () => {
           <div className='developers-links'>
             <div>
               <a href='https://github.com/komarovalexander'><img src='static/icons/link.svg' alt=''/>
-                Development by Alexander Komarov
+                Developed by Alexander Komarov
               </a>
             </div>
             <div>
