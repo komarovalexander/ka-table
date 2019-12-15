@@ -1,22 +1,24 @@
 {
-  "name": "react-data-grid",
-  "version": "0.1.0",
-  "private": true,
+  "name": "ka-table",
+  "version": "1.0.8",
+  "license": "MIT",
+  "repository": "github:komarovalexander/ka-table",
+  "homepage": "https://komarovalexander.github.io/ka-table",
   "dependencies": {
-    "@types/jest": "24.0.18",
-    "@types/node": "12.7.7",
-    "@types/react": "16.9.3",
-    "@types/react-dom": "16.9.1",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-scripts": "3.1.2",
-    "typescript": "3.6.3"
+    "@types/react": "16.9.16",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:all": "react-scripts test --watchAll",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "eject": "react-scripts eject",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
+    "pack": "gulp build && cd dist && npm pack && cd .."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,5 +34,41 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.7",
+    "@types/react-dom": "16.9.1",
+    "@types/react-highlight": "^0.12.2",
+    "@types/react-router-dom": "^5.1.3",
+    "gulp": "^4.0.2",
+    "gulp-file": "^0.4.0",
+    "gulp-gh-pages": "^0.5.4",
+    "gulp-replace": "^1.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-typescript": "^5.0.1",
+    "jsonfile": "^5.0.0",
+    "node-sass": "^4.13.0",
+    "react-filter-control": "^2.1.0",
+    "react-ga": "^2.7.0",
+    "react-highlight": "^0.12.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.3.0",
+    "tslint": "^5.20.0",
+    "tslint-react": "^4.1.0",
+    "typescript": "3.6.3"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/lib/Components/**/*.{ts,tsx}",
+      "src/lib/Utils/*.ts"
+    ]
+  },
+  "keywords": [
+    "datagrid",
+    "react",
+    "table",
+    "component",
+    "widget"
+  ]
 }

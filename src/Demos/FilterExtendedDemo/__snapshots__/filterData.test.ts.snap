@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`filter data filterGroupAnd 1`] = `
+Array [
+  Object {
+    "field": 1,
+    "field2": "text 2",
+    "id": 2,
+  },
+  Object {
+    "field": 1,
+    "field2": "text 2",
+    "id": 4,
+  },
+]
+`;
+
+exports[`filter data filterGroupAnd with inner groups 1`] = `
+Array [
+  Object {
+    "field": 1,
+    "field2": "text 2",
+    "id": 2,
+  },
+  Object {
+    "field": 1,
+    "field2": "text 2",
+    "id": 4,
+  },
+]
+`;
+
+exports[`filter data filterGroupAnd with inner groups case 2 1`] = `
+Array [
+  Object {
+    "field": 1,
+    "field2": "text 2",
+    "id": 4,
+  },
+]
+`;
+
+exports[`filter data filterGroupOr 1`] = `
+Array [
+  Object {
+    "field": 1,
+    "field2": "text ",
+    "id": 1,
+  },
+  Object {
+    "field": 3,
+    "field2": "text 2",
+    "id": 2,
+  },
+  Object {
+    "field": 1,
+    "field2": "text 2",
+    "id": 4,
+  },
+]
+`;
+
+exports[`filter data filterGroupOr with inner groups 1`] = `
+Array [
+  Object {
+    "field": 1,
+    "field2": "text ",
+    "id": 1,
+  },
+  Object {
+    "field": 2,
+    "field2": "text 3",
+    "id": 3,
+  },
+  Object {
+    "field": 4,
+    "field2": "text 2",
+    "id": 4,
+  },
+]
+`;
