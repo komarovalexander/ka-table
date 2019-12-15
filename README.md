@@ -123,6 +123,9 @@ export default SortingDemo;
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode |
 | filterRow | [<code>FilterCondition[]</code>](#FilterCondition) | Sets filters for columns |
 | groups | [<code>Group[]</code>](#Group) | Group's in the table |
+| onDataChange | (data: any[]) => void | This function is executed each time when data going to change, use it to override current data [Example](https://komarovalexander.github.io/ka-table/#/editing) |
+| onOptionChange | (value: any) => void | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
+| onEvent | (type: string, data: any) => void | Use this function to track events in Table [Example](https://komarovalexander.github.io/ka-table/#/events) |
 | groupsExpanded | any[][] | Contains groups which are expanded in the grid |
 | rowKeyField | string | Property of data's item which is used to identitify row |
 | search <a name="Table.search"></a> | string | Specifies the text which should be found in the data |
