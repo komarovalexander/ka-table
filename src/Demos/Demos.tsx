@@ -102,12 +102,14 @@ const Demos: React.FC = () => {
           </div>
           <div className='developers-links'>
             <div>
-              <a href='https://github.com/komarovalexander'><img src='static/icons/link.svg' alt=''/>
+              <a href='https://github.com/komarovalexander' rel='noopener noreferrer' target='_blank'>
+                <img src='static/icons/link.svg' alt=''/>
                 Developed by Alexander Komarov
               </a>
             </div>
             <div>
-              <a href='https://www.behance.net/daryakomarova'><img src='static/icons/link.svg' alt=''/>
+              <a href='https://www.behance.net/daryakomarova' rel='noopener noreferrer' target='_blank'>
+                <img src='static/icons/link.svg' alt=''/>
                 UI Design by Daria Komarova
               </a>
             </div>
