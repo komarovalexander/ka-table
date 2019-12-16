@@ -5,46 +5,8 @@
 # Overview
 The customizable, extendable, lightweight and free React Table Component
 
-Can easily be included in react projects, never mind it is ts or js
-
 ![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/command-column.png)
 [Demo link](https://komarovalexander.github.io/ka-table/#/command-column)
-
-## Examples
-[Command Column](https://komarovalexander.github.io/ka-table/#/command-column) - Functional columns which are not bound to data and used to add custom command to table
-
-[Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) - Best way to customise look of every column in table
-
-[Custom Editor](https://komarovalexander.github.io/ka-table/#/custom-editor) - Table supports user created editors
-
-[Custom Header Cell](https://komarovalexander.github.io/ka-table/#/custom-header-cell) - Customisation of header cell
-
-[Editing](https://komarovalexander.github.io/ka-table/#/editing) - Editing out of the box
-
-[Events](https://komarovalexander.github.io/ka-table/#/events) - Most events are trackable
-
-[Filter Extended](https://komarovalexander.github.io/ka-table/#/filter-extended) - Easy filtered by extended filters
-
-[Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) - Built-in filter row
-
-[Filter Row - Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) - Customise filter cell every way you want
-
-[Grouping](https://komarovalexander.github.io/ka-table/#/grouping) - Group data for most convenient work with it
-
-[25000 Rows](https://komarovalexander.github.io/ka-table/#/many-rows) - Virtualisation are supported
-
-[10000 Grouped Rows](https://komarovalexander.github.io/ka-table/#/many-rows-grouping) - Virtualisation work well with grouping
-
-[Search](https://komarovalexander.github.io/ka-table/#/search) - Search by the whole Table is easy
-
-[Selection](https://komarovalexander.github.io/ka-table/#/selection) - Select and process specific rows
-
-[Sorting](https://komarovalexander.github.io/ka-table/#/sorting)
-
-[State Storing](https://komarovalexander.github.io/ka-table/#/state-storing) - Save Table's state and restore it after page reload
-
-[Validation](https://komarovalexander.github.io/ka-table/#/validation)
-
 
 ## Installation
 npm
