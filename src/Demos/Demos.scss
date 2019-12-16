@@ -4,6 +4,7 @@
 body {
   margin: 0;
   padding: 0;
+  min-width: 1350px;
 }
 .demos{
   font-family: 'Roboto',  'Helvetica Neue Light', 'Open Sans', Helvetica;
@@ -84,7 +85,6 @@ body {
     .simulator-content{
       background: #ECF0F4;
       padding: 28px 80px 60px;
-      min-width: 1000px;
 
       h1{
         margin: 0 0 30px 20px;
