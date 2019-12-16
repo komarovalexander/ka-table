@@ -5,7 +5,7 @@
 # Overview
 The customizable, extendable, lightweight and free React Table Component
 
-Can easily be included in react projects, matter if it is ts or js
+Can easily be included in react projects, no matter if it is ts or js
 
 ![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/command-column.png)
 [Demo link](https://komarovalexander.github.io/ka-table/#/command-column)
