@@ -1,9 +1,9 @@
 {
   "name": "ka-table",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
-  "homepage": "https://komarovalexander.github.io/ka-table",
+  "homepage": "https://komarovalexander.github.io/ka-table/#/command-column",
   "dependencies": {
     "@types/react": "16.9.16",
     "react": "^16.12.0",
