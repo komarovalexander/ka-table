@@ -80,7 +80,7 @@ const Demos: React.FC = () => {
                 onClick={() => { trackEvent('click', 'github_logo'); }}>
                 <img src='static/icons/github_logo.svg' alt=''/>
               </a>
-              <a href='https://www.npmjs.com/package/react-table-component'
+              <a href='https://www.npmjs.com/package/ka-table'
                 onClick={() => { trackEvent('click', 'npm_logo'); }}>
                 <img src='static/icons/npm_logo.svg' alt=''/>
               </a>
