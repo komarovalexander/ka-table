@@ -116,18 +116,19 @@ export default SortingDemo;
 | Name | Type | Description |
 | --- | --- | --- |
 | columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
-| data | <code>any\[\]</code> | The data which is shown in Table's rows |
-| editableCells | [<code>Cell[]</code>](#Cell) | This property contains the array of cells which are being edited [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
+| data | <code>any\[\]</code> | The Table's data |
+| dataRow | [<code>DataRowFunc</code>](#DataRowFunc) | Returns Data Row Template [Custom Data Row Example](https://komarovalexander.github.io/ka-table/#/custom-data-row |
+| editableCells | [<code>Cell[]</code>](#Cell) | Array of cells that are in edit mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | filterRow | [<code>FilterCondition[]</code>](#FilterCondition) | Sets filters for columns [Filter Row Example](https://komarovalexander.github.io/ka-table/#/filter-row) |
 | groups | [<code>Group[]</code>](#Group) | Group's in the table [Grouping Example](https://komarovalexander.github.io/ka-table/#/grouping) |
-| onDataChange | (data: any[]) => void | This function is executed each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
+| onDataChange | (data: any[]) => void | This function is called each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | onOptionChange | (value: any) => void | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | onEvent | (type: string, data: any) => void | Use this function to track events in Table [Events Example](https://komarovalexander.github.io/ka-table/#/events) |
-| groupsExpanded | any[][] | Contains groups which are expanded in the grid |
-| rowKeyField | string | Property of data's item which is used to identitify row |
-| search <a name="Table.search"></a> | string | Specifies the text which should be found in the data [Search Example](https://komarovalexander.github.io/ka-table/#/search) |
-| selectedRows | any[] | Specifies the array of rows keys which are should be marked as selected [Selection Example](https://komarovalexander.github.io/ka-table/#/selection) |
+| groupsExpanded | any[][] | Groups that are expanded in the grid |
+| rowKeyField | string | Data's field which is used to identify row |
+| search <a name="Table.search"></a> | string | Specifies the text which are used for search by data [Search Example](https://komarovalexander.github.io/ka-table/#/search) |
+| selectedRows | any[] | Array of rows keys which are marked as selected [Selection Example](https://komarovalexander.github.io/ka-table/#/selection) |
 | sortingMode | [<code>SortingMode</code>](#SortingMode)  | Sorting mode [Sorting Example](https://komarovalexander.github.io/ka-table/#/sorting) |
 | virtualScrolling | [<code>VirtualScrolling</code>](#VirtualScrolling) | Virtual scrolling options - set it as empty object {} to enable virtual scrolling and auto calculate its parameters [Many Rows Example](https://komarovalexander.github.io/ka-table/#/many-rows) |
 
@@ -249,6 +250,13 @@ Describes the position of a cell in  the table
 
 Function which obtains [<code>ICellContentProps</code>](#ICellContentProps) as parameter and returns React component which should be shown instead of cell content.
 
+<a name="DataRowFunc"></a>
+### DataRowFunc
+
+(props: [<code>IDataRowProps</code>](#IDataRowProps)) => any;
+
+Function which obtains [<code>IDataRowProps</code>](#IDataRowProps) as parameter and returns React component which should be shown instead of Row content.
+
 <a name="EditorFunc"></a>
 ### EditorFunc
 
@@ -301,3 +309,19 @@ Function which obtains value of specific cell and row - as parameters and return
 | column | [<code>Column</code>](#Column) | settings of the column in which editor is shown |
 | openEditor | () => void | call this method to open editor of the cell |
 | rowData | any | data of the row in which editor is shown |
+
+
+<a name="IDataRowProps"></a>
+### IDataRowProps
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
+| dispatch | (type: string, data: any) => void | Executes specific event with specific data |
+| editableCells | [<code>Cell[]</code>](#Cell) | Array of cells that are in edit mode |
+| editingMode | [<code>EditingMode</code>](#EditingMode) | Table's editing mode |
+| rowData | any | Data of current row |
+| isSelectedRow | boolean | Describes selected state of current row |
+| rowKeyField | string | Data's field which is used to identify row |
+| selectedRows | any[] | Array of rows keys which are marked as selected |

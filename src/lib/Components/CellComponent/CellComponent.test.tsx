@@ -13,7 +13,6 @@ const props: any = {
   editableCells: [],
   isEditableCell: false,
   onOptionChange: () => {},
-  onRowDataChanged: () => {},
   rowData: {
     column: 1,
   },

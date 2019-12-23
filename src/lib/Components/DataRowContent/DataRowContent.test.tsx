@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { DataType } from '../../enums';
-import Row from './Row';
+import DataRowContent from './DataRowContent';
 
 const props: any = {
   columns: [
@@ -14,7 +14,7 @@ const props: any = {
 };
 
 it('renders without crashing', () => {
-  const element = document.createElement('tbody');
-  ReactDOM.render(<Row {...props} />, element);
+  const element = document.createElement('tr');
+  ReactDOM.render(<DataRowContent {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });

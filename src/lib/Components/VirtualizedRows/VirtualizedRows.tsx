@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 
-import { Events } from '../../enums';
 import { getGroupMark } from '../../Utils/GroupUtils';
 import { getVirtualized } from '../../Utils/Virtualize';
 import DataRow from '../DataRow/DataRow';
@@ -11,7 +10,6 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {
     columns,
     data,
-    dispatch,
     groups = [],
     groupsExpanded = [],
     onOptionChange,
@@ -27,14 +25,16 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
       && (virtualScrolling
       && (!virtualScrolling.itemHeight
       || !virtualScrolling.tbodyHeight))) {
-      const itemHeight = firstRowRef.current.offsetHeight || 40;
-      const tbodyHeight = (firstRowRef.current.parentElement && firstRowRef.current.parentElement.offsetHeight) || 600;
-      const newVirtualScrolling = {
-        itemHeight,
-        tbodyHeight,
-        ...virtualScrolling,
-      };
-      onOptionChange({ virtualScrolling: newVirtualScrolling });
+        const itemHeight = firstRowRef.current.offsetHeight || 40;
+        const tbodyHeight =
+          (firstRowRef.current.parentElement && firstRowRef.current.parentElement.offsetHeight)
+          || 600;
+        const newVirtualScrolling = {
+          itemHeight,
+          tbodyHeight,
+          ...virtualScrolling,
+        };
+        onOptionChange({ virtualScrolling: newVirtualScrolling });
     }
   }, [firstRowRef, onOptionChange, virtualScrolling]);
 
@@ -44,7 +44,6 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
     virtualized = getVirtualized(virtualScrolling, virtualizedData);
     virtualizedData = virtualized.virtualizedData;
   }
-  const rowDataChangedEvent = dispatch && dispatch.bind(null, Events.RowDataChanged);
   let rowRefLink: any = firstRowRef;
   return (
     <>
@@ -68,7 +67,6 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
               trRef={rowRefLink}
               key={d[rowKeyField]}
               rowData={d}
-              onRowDataChanged={rowDataChangedEvent}
             />
           );
           rowRefLink = undefined;
