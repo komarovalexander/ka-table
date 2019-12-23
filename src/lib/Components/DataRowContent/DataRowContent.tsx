@@ -1,26 +1,25 @@
 import React from 'react';
 
-import { Cell } from '../../Models/Cell';
 import { isEditableCell } from '../../Utils/CellUtils';
+import { getRowEditableCells } from '../../Utils/FilterUtils';
 import CellComponent from '../CellComponent/CellComponent';
 import { IRowCommonProps } from '../DataRow/DataRow';
 
 export interface IDataRowProps extends IRowCommonProps {
-  rowKeyValue: any;
-  rowEditableCells: Cell[];
   isSelectedRow: boolean;
 }
 
 const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   columns,
-  rowEditableCells,
+  dispatch,
+  editableCells,
   editingMode,
   isSelectedRow,
-  dispatch,
-  onRowDataChanged,
   rowData,
   rowKeyField,
 }) => {
+  const rowKeyValue = rowData[rowKeyField];
+  const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
   return (
     <>
       {columns.map((column) => (
@@ -31,7 +30,6 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
           isSelectedRow={isSelectedRow}
           key={column.key}
           dispatch={dispatch}
-          onRowDataChanged={onRowDataChanged}
           rowData={rowData}
           rowKeyField={rowKeyField}
         />

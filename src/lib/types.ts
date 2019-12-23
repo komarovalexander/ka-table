@@ -18,7 +18,6 @@ export type FormatFunc = (value: any) => any;
 export type HeaderCellFunc = (props: HeaderCellFuncPropsWithChildren) => any;
 export type HeaderCellFuncPropsWithChildren = PropsWithChildren<IHeadCellProps>;
 export type OptionChangeFunc = (value: any) => void;
-export type RowDataChangedFunc = (data: any) => void;
 export type SearchFunc = (searchText?: string, rowData?: any, column?: Column) => boolean;
 export type ValidationFunc = (value: any, rowData: any) => string | void;
 export type ValueChangeFunc = (newValue: any) => void;

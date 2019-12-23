@@ -20,8 +20,8 @@ import TableBody from '../TableBody/TableBody';
  * Sets the options of the table which are related to its looks
  */
 export interface ITableOption {
-  dataRow?: DataRowFunc;
   columns: Column[];
+  dataRow?: DataRowFunc;
   editableCells?: Cell[];
   editingMode?: EditingMode;
   filterRow?: FilterCondition[];

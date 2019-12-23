@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode } from '../../enums';
+import { EditingMode, Events } from '../../enums';
 import { Column } from '../../Models/Column';
-import { EventFunc, RowDataChangedFunc } from '../../types';
+import { EventFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
 import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
@@ -14,7 +14,6 @@ export interface ICellComponentProps {
   isEditableCell: boolean;
   isSelectedRow: boolean;
   dispatch: EventFunc;
-  onRowDataChanged: RowDataChangedFunc;
   rowData: any;
   rowKeyField: string;
 }
@@ -23,8 +22,8 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
   const {
     column,
     column: { style },
+    dispatch,
     isEditableCell,
-    onRowDataChanged,
   } = props;
   return (
     <td style={style} className={defaultOptions.css.cell}>
@@ -32,7 +31,7 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
           <CellEditor
             {...props}
             field={getField(column)}
-            onValueChange={onRowDataChanged}
+            onValueChange={dispatch.bind(null, Events.RowDataChanged)}
           />
         )
         : (
