@@ -2,12 +2,15 @@ import { PropsWithChildren } from 'react';
 
 import { ICellContentProps } from './Components/CellContent/CellContent';
 import { ICellEditorProps } from './Components/CellEditor/CellEditor';
+import { IDataRowProps } from './Components/DataRowContent/DataRowContent';
 import { IHeadCellProps } from './Components/HeadCell/HeadCell';
 import { Column } from './models';
 
 export type CellFunc = (props: CellFuncPropsWithChildren) => any;
 export type CellFuncPropsWithChildren = PropsWithChildren<ICellContentProps>;
 export type DataChangeFunc = (data: any[]) => void;
+export type DataRowFunc = (props: DataRowFuncPropsWithChildren) => any;
+export type DataRowFuncPropsWithChildren = PropsWithChildren<IDataRowProps>;
 export type EditorFunc = (props: EditorFuncPropsWithChildren) => any;
 export type EditorFuncPropsWithChildren = PropsWithChildren<ICellEditorProps>;
 export type EventFunc = (type: string, data: any) => void;

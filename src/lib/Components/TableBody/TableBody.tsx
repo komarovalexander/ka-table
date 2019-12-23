@@ -6,11 +6,12 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import { DataChangeFunc, EventFunc, OptionChangeFunc } from '../../types';
+import { DataChangeFunc, DataRowFunc, EventFunc, OptionChangeFunc } from '../../types';
 import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import VirtualizedRows from '../VirtualizedRows/VirtualizedRows';
 
 export interface ITableBodyProps {
+  dataRow?: DataRowFunc;
   columns: Column[];
   data: any[];
   editableCells: Cell[];

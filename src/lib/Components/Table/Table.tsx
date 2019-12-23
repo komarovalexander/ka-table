@@ -7,7 +7,7 @@ import { Column } from '../../Models/Column';
 import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import { DataChangeFunc, EventFunc, OptionChangeFunc } from '../../types';
+import { DataChangeFunc, DataRowFunc, EventFunc, OptionChangeFunc } from '../../types';
 import { getOnEventHandler } from '../../Utils/EventUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
@@ -20,6 +20,7 @@ import TableBody from '../TableBody/TableBody';
  * Sets the options of the table which are related to its looks
  */
 export interface ITableOption {
+  dataRow?: DataRowFunc;
   columns: Column[];
   editableCells?: Cell[];
   editingMode?: EditingMode;
