@@ -1,20 +1,13 @@
 import './DemoPage.scss';
 
-import React, { useEffect, useState } from 'react';
-import Highlight from 'react-highlight';
+import React from 'react';
 
 import Demo from './Demo';
+import DemoText from './DemoText';
 import { trackEvent } from './ga';
 
 const getDemoPage = (demo: Demo) => {
   return () => {
-    const [text, changeText]: [string, any] = useState('');
-    useEffect(() => {
-      const name = demo.fileName;
-      fetch(`demos/${name}/${name}.tsx`)
-        .then((res) => res.text())
-        .then((fileText) => changeText(fileText));
-    }, []);
     return (
       <div>
         <div className='simulator-content'>
@@ -44,9 +37,7 @@ const getDemoPage = (demo: Demo) => {
                 JS Example
             </a>
           </div>
-          <Highlight className='language-typescript'>
-            {text}
-          </Highlight>
+          <DemoText demoFileName={demo.fileName}/>
         </div>
       </div>
     );
