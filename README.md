@@ -82,6 +82,7 @@ export default SortingDemo;
 | --- | --- | --- |
 | columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
 | data | <code>any\[\]</code> | The data which is shown in Table's rows |
+| dataRow | [<code>DataRowFunc</code>](#DataRowFunc) | Returns Data Row Template [Custom Data Row Example](https://komarovalexander.github.io/ka-table/#/custom-data-row |
 | editableCells | [<code>Cell[]</code>](#Cell) | This property contains the array of cells which are being edited [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | filterRow | [<code>FilterCondition[]</code>](#FilterCondition) | Sets filters for columns [Filter Row Example](https://komarovalexander.github.io/ka-table/#/filter-row) |
@@ -214,6 +215,13 @@ Describes the position of a cell in  the table
 
 Function which obtains [<code>ICellContentProps</code>](#ICellContentProps) as parameter and returns React component which should be shown instead of cell content.
 
+<a name="DataRowFunc"></a>
+### DataRowFunc
+
+(props: [<code>IDataRowProps</code>](#IDataRowProps)) => any;
+
+Function which obtains [<code>IDataRowProps</code>](#IDataRowProps) as parameter and returns React component which should be shown instead of Row content.
+
 <a name="EditorFunc"></a>
 ### EditorFunc
 
@@ -266,3 +274,17 @@ Function which obtains value of specific cell and row - as parameters and return
 | column | [<code>Column</code>](#Column) | settings of the column in which editor is shown |
 | openEditor | () => void | call this method to open editor of the cell |
 | rowData | any | data of the row in which editor is shown |
+
+
+<a name="IDataRowProps"></a>
+### IDataRowProps
+**Properties**
+
+| columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
+| dispatch | (type: string, data: any) => void | Executes specific event with specific data |
+| editableCells | [<code>Cell[]</code>](#Cell) | Array of cells which are being edited |
+| editingMode | [<code>EditingMode</code>](#EditingMode) | Table's editing mode |
+| rowData | any | Object which contains data of row's fields |
+| isSelectedRow | boolean | Describes selected state of current row |
+| rowKeyField | string | Property of data's item which is used to identitify row |
+| selectedRows | any[] | Array of rows keys which are should be marked as selected |
