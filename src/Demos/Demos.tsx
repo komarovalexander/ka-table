@@ -102,15 +102,21 @@ const Demos: React.FC = () => {
           </div>
           <div className='developers-links'>
             <div>
-              <a href='https://github.com/komarovalexander' rel='noopener noreferrer' target='_blank'>
-                <img src='static/icons/link.svg' alt=''/>
-                Developed by Alexander Komarov
+              <a href='https://github.com/komarovalexander'
+                rel='noopener noreferrer'
+                target='_blank'
+                onClick={() => { trackEvent('click', 'developed_by', 'Alex'); }}>
+                  <img src='static/icons/link.svg' alt=''/>
+                  Developed by Alexander Komarov
               </a>
             </div>
             <div>
-              <a href='https://www.behance.net/daryakomarova' rel='noopener noreferrer' target='_blank'>
-                <img src='static/icons/link.svg' alt=''/>
-                UI Design by Daria Komarova
+              <a href='https://www.behance.net/daryakomarova'
+                rel='noopener noreferrer'
+                target='_blank'
+                onClick={() => { trackEvent('click', 'developed_by', 'Daria'); }}>
+                  <img src='static/icons/link.svg' alt=''/>
+                  UI Design by Daria Komarova
               </a>
             </div>
           </div>
