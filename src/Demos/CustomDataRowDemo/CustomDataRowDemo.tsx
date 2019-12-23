@@ -24,11 +24,13 @@ const DataRow: React.FC<DataRowFuncPropsWithChildren> = ({rowData}) => {
 const tableOption: ITableOption = {
   columns: [
     {
-      dataType: DataType.Number,
-      key: 'score',
+      dataType: DataType.String,
+      key: 'name',
       sortDirection: SortDirection.Descend,
-      title: 'Results',
+      style: { width: 60 },
+      title: 'Student',
     },
+    { key: 'score', title: 'Score', dataType: DataType.Number },
   ],
   dataRow: (props) => <DataRow {...props}/>,
   rowKeyField: 'id',
