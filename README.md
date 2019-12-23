@@ -78,6 +78,8 @@ export default SortingDemo;
 
 [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) - Best way to customise look of every column in table
 
+[Custom DataRow](https://komarovalexander.github.io/ka-table/#/custom-data-row) -Customise look of a row in the table
+
 [Custom Editor](https://komarovalexander.github.io/ka-table/#/custom-editor) - Table supports user created editors
 
 [Custom Header Cell](https://komarovalexander.github.io/ka-table/#/custom-header-cell) - Customisation of header cell
