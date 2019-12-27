@@ -31,7 +31,7 @@ export const getOnEventHandler = ({
           onOptionChange);
         break;
       case Events.RowDataChanged:
-          const newData = getCopyOfArrayAndInsertOrReplaceItem(eventData, rowKeyField, data);
+          const newData = getCopyOfArrayAndInsertOrReplaceItem(eventData.newValue, rowKeyField, data);
           onDataChange(newData);
           break;
       case Events.RowSelected:
