@@ -31,7 +31,7 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
           <CellEditor
             {...props}
             field={getField(column)}
-            onValueChange={dispatch.bind(null, Events.RowDataChanged)}
+            onValueChange={(newValue) => { dispatch(Events.RowDataChanged, { newValue }); }}
           />
         )
         : (

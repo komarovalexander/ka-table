@@ -1,0 +1,19 @@
+.ka-tbody{
+  max-height: 300px;
+}
+
+.events{
+  margin: 20px 0 0 0;
+  max-height: 200px;
+  overflow: auto;
+
+  > div{
+    padding: 5px;
+    background-color: #d1d5d7;
+    border: 1px solid #f1f5f7;
+
+    .type{
+      color: #00f;
+    }
+  }
+}
