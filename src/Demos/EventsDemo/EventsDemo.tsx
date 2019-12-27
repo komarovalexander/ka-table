@@ -44,7 +44,7 @@ const EventsDemo: React.FC = () => {
     changeEvents((prevValue) => ([{ type: event, data: `${JSON.stringify(eventData)}` }, ...prevValue]));
   };
   return (
-    <>
+    <div className='events-demo'>
       <Table
         {...option}
         data={data}
@@ -59,7 +59,7 @@ const EventsDemo: React.FC = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
