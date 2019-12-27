@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`call RowDataChanged when onValueChange 1`] = `
+Array [
+  Array [
+    "RowDataChanged",
+    Object {
+      "newValue": Object {
+        "a": 1,
+      },
+    },
+  ],
+]
+`;
