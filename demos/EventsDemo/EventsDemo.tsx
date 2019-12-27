@@ -1,3 +1,5 @@
+import './EventsDemo.scss';
+
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
@@ -37,9 +39,9 @@ const EventsDemo: React.FC = () => {
     changeData(newValue);
   };
 
-  const [events, changeEvents] = useState([] as string []);
+  const [events, changeEvents] = useState([] as any []);
   const onEvent: EventFunc = (event, eventData) => {
-    changeEvents([`onEvent: ${event}, data:${JSON.stringify(eventData)}`, ...events]);
+    changeEvents((prevValue) => ([{ type: event, data: `${JSON.stringify(eventData)}` }, ...prevValue]));
   };
   return (
     <>
@@ -50,7 +52,13 @@ const EventsDemo: React.FC = () => {
         onDataChange={onDataChange}
         onEvent={onEvent}
       />
-      {events.map((e, i) => (<div key={i}>{e}</div>))}
+      <div className='events'>{events.map((e, i) =>
+        (
+          <div key={i}>
+            <span className='type'>{e.type}</span> <span className='data'>{e.data}</span>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
