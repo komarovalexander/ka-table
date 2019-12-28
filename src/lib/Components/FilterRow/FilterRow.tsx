@@ -30,17 +30,18 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
     <tr className='ka-filter-row ka-tr'>
       <EmptyCells count={groupColumnsCount}/>
       {columns.map((column) => {
+        const field = getField(column);
         return (
           <FilterCell
             key={column.key}
             column={column}
-            field={getField(column)}
+            field={field}
             rowKeyField={''}
             isSelectedRow={false}
             dispatch={emptyFunc}
             rowData={rowData}
             onValueChange={(value) => {
-              filterCellValueChangeHandler(value, column.key, filterRow, onOptionChange);
+              filterCellValueChangeHandler(value, field, filterRow, onOptionChange);
             }}
           />
         );

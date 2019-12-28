@@ -2,7 +2,6 @@ import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import sinon from 'sinon';
 
 import { DataType, Events } from '../../enums';
 import CellEditor from '../CellEditor/CellEditor';
@@ -31,7 +30,7 @@ it('renders without crashing', () => {
 });
 
 it('call RowDataChanged when onValueChange', () => {
-  const dispatch = sinon.spy();
+  const dispatch = jest.fn();
   const newValue = {a: 1};
   const wrapper = mount(
     <CellComponent {...props} isEditableCell='true' dispatch={dispatch} />,
@@ -40,6 +39,6 @@ it('call RowDataChanged when onValueChange', () => {
     },
   );
   wrapper.find(CellEditor).last().prop('onValueChange')(newValue);
-  expect(dispatch.calledOnce).toBeTruthy();
-  expect(dispatch.args).toMatchSnapshot();
+  expect(dispatch).toBeCalledTimes(1);
+  expect(dispatch).toBeCalledWith(Events.RowDataChanged, {newValue});
 });
