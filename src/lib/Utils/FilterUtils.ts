@@ -1,3 +1,4 @@
+import defaultOptions from '../defaultOptions';
 import { DataType } from '../enums';
 import { Cell } from '../Models/Cell';
 import { Column } from '../Models/Column';
@@ -23,7 +24,7 @@ export const filterData = (data: any[], columns: Column[]): any[] => {
   return columns.reduce((initialData, column) => {
     if (isEmpty(column.filterRowValue)) { return initialData; }
     const filterRowOperator = column.filterRowOperator
-      || getDefaultOperatorForType(column.dataType);
+      || getDefaultOperatorForType(column.dataType  || defaultOptions.columnDataType);
     const filterOperator = filterOperators.find((fo) => filterRowOperator === fo.name);
     if (!filterOperator) {
       throw new Error(`'${column.filterRowOperator}' has not found in filter operators array, available operators: ${filterOperators.map((o) => o.name).join(',')}`);

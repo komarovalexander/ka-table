@@ -12,7 +12,6 @@ const CellEditorDataType: React.FunctionComponent<ICellEditorProps> = (props) =>
     case DataType.Boolean: return <CellEditorBoolean {...props} />;
     case DataType.Date: return <CellEditorDate {...props} />;
     case DataType.Number: return <CellEditorNumber {...props} />;
-    case DataType.Command: return <></>;
     default: return <CellEditorString {...props} />;
   }
 };

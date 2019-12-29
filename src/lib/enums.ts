@@ -4,6 +4,10 @@ export enum DataType {
   Number = 'number',
   Object = 'object',
   String = 'string',
+}
+
+export enum ColumnType {
+  Data = 'data',
   Command = 'command',
 }
 

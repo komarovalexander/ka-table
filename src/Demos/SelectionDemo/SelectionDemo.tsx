@@ -35,7 +35,6 @@ const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
 const tableOption: ITableOption = {
   columns: [
     {
-      dataType: DataType.Command,
       editor: SelectionCell,
       isEditable: true,
       key: 'selection',

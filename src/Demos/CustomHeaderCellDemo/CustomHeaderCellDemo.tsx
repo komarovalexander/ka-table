@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType } from '../../lib/enums';
 import { HeaderCellFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(
@@ -25,14 +24,12 @@ const HeadCell: React.FC<HeaderCellFuncPropsWithChildren> = ({
 const tableOption: ITableOption = {
   columns: [
     {
-      dataType: DataType.String,
       headCell: (props) => <HeadCell {...props}/>,
       key: 'column1',
       style: { textAlign: 'left' },
       title: 'Column 1',
     },
     {
-      dataType: DataType.String,
       key: 'column2',
       title: 'Column 2',
     },

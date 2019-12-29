@@ -8,7 +8,7 @@ import {
  */
 export class Column {
   public cell?: CellFunc;
-  public dataType!: DataType;
+  public dataType?: DataType;
   public editor?: EditorFunc;
   public filterRowCell?: EditorFunc;
   public filterRowValue?: any;
