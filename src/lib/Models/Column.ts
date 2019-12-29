@@ -1,5 +1,3 @@
-import { FilterCondition } from '../../../dist/Models/FilterCondition';
-import defaultOptions from '../defaultOptions';
 import { DataType, SortDirection } from '../enums';
 import {
   CellFunc, EditorFunc, FormatFunc, HeaderCellFunc, SearchFunc, ValidationFunc,
@@ -10,7 +8,7 @@ import {
  */
 export class Column {
   public cell?: CellFunc;
-  public dataType?: DataType = defaultOptions.columnDataType;
+  public dataType!: DataType;
   public editor?: EditorFunc;
   public filterRowCell?: EditorFunc;
   public filterRowValue?: any;

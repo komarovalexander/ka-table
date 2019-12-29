@@ -48,7 +48,7 @@ import { convertToColumnTypes } from './TypeUtils';
 }].forEach((test) => {
   describe('TypeUtils, ' + test.dataType, () => {
     const columns: Column[] = [
-      { field: 'columnField', title: 'Column Title', dataType: test.dataType },
+      { key: 'columnField', title: 'Column Title', dataType: test.dataType },
     ];
     test.cases.forEach((testCase) => {
       it('should convert from ' + testCase[0], () => {

@@ -51,13 +51,13 @@ const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'command1', cell: (props) => <AlertCell {...props}/>, style: { width: 40, textAlign: 'center' } },
+    { key: 'command1', cell: (props) => <AlertCell {...props}/>, style: { width: 40, textAlign: 'center' }, dataType: DataType.Command },
     { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: 'command22', cell: (props) => <DeleteRow {...props} />, style: { width: 40, textAlign: 'center' } },
+    { key: 'command22', cell: (props) => <DeleteRow {...props} />, style: { width: 40, textAlign: 'center' }, dataType: DataType.Command },
   ],
   rowKeyField: 'column1',
 };

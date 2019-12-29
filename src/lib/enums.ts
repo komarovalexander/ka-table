@@ -4,6 +4,7 @@ export enum DataType {
   Number = 'number',
   Object = 'object',
   String = 'string',
+  Command = 'command',
 }
 
 export enum EditingMode {
@@ -39,5 +40,5 @@ export enum SortingMode {
 
 export enum FilteringMode {
   None = 'none',
-  FilterRow = 'FilterRow',
+  FilterRow = 'filterRow',
 }
