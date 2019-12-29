@@ -1,8 +1,8 @@
+import defaultOptions from '../defaultOptions';
+import { DataType } from '../enums';
 import { Cell } from '../Models/Cell';
 import { Column } from '../Models/Column';
-import { FilterCondition } from '../Models/FilterCondition';
-import { OptionChangeFunc } from '../types';
-import { getCopyOfArrayAndDeleteItem, getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
+import { FilterOperator } from '../Models/FilterOperator';
 import { getField } from './ColumnUtils';
 import { isEmpty } from './CommonUtils';
 
@@ -20,24 +20,35 @@ export const searchData = (columns: Column[], data: any[], searchText: string): 
   }, []);
 };
 
-export const filterData = (data: any[], filterRow: FilterCondition[]): any[] => {
-  return filterRow.reduce((initialData, f) => {
-    const searcFunc = typeof f.value === 'string' ? (d: any) => d[f.field].toLowerCase().includes(f.value.toLowerCase())
-      : (d: any) => d[f.field] === f.value;
-    return initialData.filter(searcFunc);
+export const filterData = (data: any[], columns: Column[]): any[] => {
+  return columns.reduce((initialData, column) => {
+    if (isEmpty(column.filterRowValue)) { return initialData; }
+    const filterRowOperator = column.filterRowOperator
+      || getDefaultOperatorForType(column.dataType || defaultOptions.columnDataType);
+    const filterOperator = filterOperators.find((fo) => filterRowOperator === fo.name);
+    if (!filterOperator) {
+      throw new Error(`'${column.filterRowOperator}' has not found in filter operators array, available operators: ${filterOperators.map((o) => o.name).join(',')}`);
+    }
+    const compare = filterOperator.compare;
+    return initialData.filter((d: any) => compare(d[getField(column)], column.filterRowValue));
   }, data);
 };
 
-export const filterCellValueChangeHandler = (
-    value: any, field: string, filterRow: FilterCondition[], optionChangeHandler: OptionChangeFunc,
-  ) => {
-  let newFilterRow;
-  const newFRValue: FilterCondition = {
-    field,
-    operator: '=',
-    value,
-  };
-  newFilterRow = isEmpty(value) ? getCopyOfArrayAndDeleteItem(newFRValue, 'field', filterRow)
-    : getCopyOfArrayAndInsertOrReplaceItem(newFRValue, 'field', filterRow);
-  optionChangeHandler({ filterRow: newFilterRow });
+export const getDefaultOperatorForType = (type: DataType): string => {
+  const filterOperator = filterOperators.find((o) => o.defaultForTypes && o.defaultForTypes.includes(type));
+  return (filterOperator && filterOperator.name) || '=';
 };
+
+const filterOperators: FilterOperator[] = [{
+  compare: (fieldValue: any, conditionValue: any): boolean => {
+    return fieldValue === conditionValue;
+  },
+  defaultForTypes: [DataType.Boolean, DataType.Number, DataType.Date],
+  name: '=',
+}, {
+  compare: (fieldValue: any, conditionValue: any): boolean => {
+    return fieldValue.toLowerCase().includes(conditionValue.toLowerCase());
+  },
+  defaultForTypes: [DataType.String],
+  name: 'contains',
+}];

@@ -12,12 +12,13 @@ export enum EditingMode {
 }
 
 export enum Events {
-  ScrollTable = 'ScrollTable',
   CloseEditor = 'CloseEditor',
+  FilterRowChanged = 'FilterRowChanged',
   OpenEditor = 'OpenEditor',
   RowDataChanged = 'RowDataChanged',
   RowDeselected = 'RowDeselected',
   RowSelected = 'RowSelected',
+  ScrollTable = 'ScrollTable',
   SortingChanged = 'SortingChanged',
 }
 
@@ -34,4 +35,9 @@ export enum SortDirection {
 export enum SortingMode {
   None = 'none',
   Single = 'single',
+}
+
+export enum FilteringMode {
+  None = 'none',
+  FilterRow = 'FilterRow',
 }

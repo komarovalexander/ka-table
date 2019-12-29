@@ -30,6 +30,10 @@ export const getOnEventHandler = ({
           editableCells,
           onOptionChange);
         break;
+      case Events.FilterRowChanged:
+          const newColumns = getCopyOfArrayAndInsertOrReplaceItem(eventData.column, 'key', columns);
+          onOptionChange({ columns: newColumns });
+          break;
       case Events.RowDataChanged:
           const newData = getCopyOfArrayAndInsertOrReplaceItem(eventData.newValue, rowKeyField, data);
           onDataChange(newData);

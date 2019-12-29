@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
 import dataStorage from './dataStorage';
 
@@ -13,7 +13,7 @@ const defaultOption = {
     { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' } },
   ],
   editingMode: EditingMode.Cell,
-  filterRow: [],
+  filteringMode: FilteringMode.FilterRow,
   groups: [{ columnKey: 'country' }, { columnKey: 'type' }],
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,

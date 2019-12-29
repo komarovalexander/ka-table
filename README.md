@@ -145,7 +145,7 @@ Describes column of table its look and behaviour
 | cell | [<code>CellFunc</code>](#CellFunc) | Returns a custom cell if Table is not in editable mode [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) |
 | dataType | [<code>DataType</code>](#DataType) | Specifies the type of column |
 | editor | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor if cell is in editable mode [Custom Editor Example](https://komarovalexander.github.io/ka-table/#/custom-editor) |
-| filterCell | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor for filter row cell [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) |
+| filterRowCell | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor for filter row cell [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) |
 | field | string | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
 | format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string [Example](https://komarovalexander.github.io/ka-table/#/custom-cell) |
 | headCell | HeaderCellFunc | Returns a custom header cell [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell) |

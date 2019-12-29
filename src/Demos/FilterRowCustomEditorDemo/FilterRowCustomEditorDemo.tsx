@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType } from '../../lib/enums';
+import { DataType, FilteringMode } from '../../lib/enums';
 import { EditorFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
 
 const dataArray: any[] = [
@@ -45,18 +45,14 @@ const tableOption: ITableOption = {
     {
       dataType: DataType.Boolean,
       editor: CustomLookupEditor,
-      filterCell: CustomLookupEditor,
+      filterRowCell: CustomLookupEditor,
       key: 'passed',
       title: 'Passed',
     },
-    { key: 'name', title: 'Name', dataType: DataType.String, filterCell: () => <></> },
-    { key: 'score', title: 'Score', dataType: DataType.Number, filterCell: () => <></> },
+    { key: 'name', title: 'Name', dataType: DataType.String, filterRowCell: () => <></> },
+    { key: 'score', title: 'Score', dataType: DataType.Number, filterRowCell: () => <></> },
   ],
-  filterRow: [{
-    field: 'passed',
-    operator: '=',
-    value: true,
-  }],
+  filteringMode: FilteringMode.FilterRow,
   rowKeyField: 'id',
 };
 

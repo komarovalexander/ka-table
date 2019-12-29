@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, SortDirection } from '../../lib/enums';
+import { DataType, FilteringMode, SortDirection } from '../../lib/enums';
 import { OptionChangeFunc } from '../../lib/types';
 
 const dataArray: any[] = [
@@ -15,15 +15,11 @@ const dataArray: any[] = [
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend },
+    { key: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend, filterRowValue: 'Billi Bob' },
     { key: 'score', title: 'Score', dataType: DataType.Number },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
-  filterRow: [{
-    field: 'name',
-    operator: '=',
-    value: 'Billi Bob',
-  }],
+  filteringMode: FilteringMode.FilterRow,
   rowKeyField: 'id',
 };
 

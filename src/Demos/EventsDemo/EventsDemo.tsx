@@ -3,7 +3,7 @@ import './EventsDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 import { DataChangeFunc, EventFunc, OptionChangeFunc } from '../../lib/types';
 
 const dataArray = Array(20).fill(undefined).map(
@@ -24,6 +24,7 @@ const tableOption: ITableOption = {
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
   editingMode: EditingMode.Cell,
+  filteringMode: FilteringMode.FilterRow,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };

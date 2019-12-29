@@ -4,25 +4,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import emptyFunc from '../../emptyFunc';
-import * as filterUtils from '../../Utils/FilterUtils';
+import { Events } from '../../enums';
 import FilterCell from '../FilterCell/FilterCell';
 import FilterRow, { IFilterRowProps } from './FilterRow';
 
-jest.mock('../../Utils/FilterUtils', () => ({
-  filterCellValueChangeHandler: jest.fn(),
-}));
 Enzyme.configure({ adapter: new Adapter() });
 
-const props: IFilterRowProps = {
-  columns: [],
-  filterRow: [{
-    field: 'name',
-    operator: '=',
-    value: 'Billi Bob',
-  }],
-  groupColumnsCount: 0,
-  onOptionChange: emptyFunc,
-};
+let props: IFilterRowProps;
+
+beforeEach(() => {
+  props = {
+    columns: [],
+    dispatch: jest.fn(),
+    groupColumnsCount: 0,
+    onOptionChange: emptyFunc,
+  };
+});
 
 it('renders without crashing', () => {
   const element = document.createElement('tbody');
@@ -31,16 +28,18 @@ it('renders without crashing', () => {
 });
 
 it('should pass field name to filterCellValueChangeHandler', () => {
-  const filterCellValueChangeHandler = filterUtils.filterCellValueChangeHandler;
   const newValue = 2;
+  const column = { field: 'name', key: 'nameKey' };
   const wrapper = mount(
-    <FilterRow {...props} columns={[{ field: 'name', key: 'nameKey' }]} />,
+    <FilterRow {...props} columns={[column]} />,
     {
       attachTo: document.createElement('thead'),
     },
   );
   wrapper.find(FilterCell).last().prop('onValueChange')(newValue);
 
-  expect(filterCellValueChangeHandler).toBeCalledTimes(1);
-  expect(filterCellValueChangeHandler).toBeCalledWith(newValue, 'name', props.filterRow, expect.any(Function));
+  expect(props.dispatch).toBeCalledTimes(1);
+  expect(props.dispatch).toBeCalledWith(
+    Events.FilterRowChanged, { column: { field: 'name', key: 'nameKey', filterRowValue: newValue } },
+  );
 });
