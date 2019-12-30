@@ -7,8 +7,8 @@ import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   column,
-  field,
   dispatch,
+  field,
   rowData,
   rowKeyField,
 }) => {

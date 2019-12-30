@@ -3,16 +3,15 @@ import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { Events } from '../../enums';
 import { Cell } from '../../models';
-import { getField } from '../../Utils/ColumnUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
   column,
   dispatch,
+  field,
   rowData,
   rowKeyField,
 }) => {
-  const field = getField(column);
   return (
     <input autoFocus={true}
       type='text'

@@ -42,7 +42,10 @@ const EventsDemo: React.FC = () => {
 
   const [events, changeEvents] = useState([] as any []);
   const onEvent: EventFunc = (event, eventData) => {
-    changeEvents((prevValue) => ([{ type: event, data: `${JSON.stringify(eventData)}` }, ...prevValue]));
+    const date = new Date();
+    const time = date.toLocaleTimeString();
+    const milliseconds = date.getMilliseconds();
+    changeEvents((prevValue) => ([{ type: event, data: `${JSON.stringify(eventData)}`, time, milliseconds }, ...prevValue]));
   };
   return (
     <div className='events-demo'>
@@ -56,7 +59,7 @@ const EventsDemo: React.FC = () => {
       <div className='events'>{events.map((e, i) =>
         (
           <div key={i}>
-            <span className='type'>{e.type}</span> <span className='data'>{e.data}</span>
+            <span className='type'>{e.type}</span> <span className='data'>{e.data}</span> <span className='time'>({e.time}<span className='milliseconds'>:{e.milliseconds}</span>)</span>
           </div>
         ))}
       </div>

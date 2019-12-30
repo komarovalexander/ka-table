@@ -3,13 +3,12 @@ import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { Events } from '../../enums';
 import { Cell } from '../../models';
-import { getField } from '../../Utils/ColumnUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
   column,
-  field,
   dispatch,
+  field,
   rowData,
   rowKeyField,
 }) => {
