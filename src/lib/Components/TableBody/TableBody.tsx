@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { Action, EditingMode } from '../../enums';
+import { ActionType, EditingMode } from '../../enums';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import { ActionExecutedFunc, DataChangeFunc, DataRowFunc, OptionChangeFunc } from '../../types';
+import { ActionExecuteFunc, DataChangeFunc, DataRowFunc, OptionChangeFunc } from '../../types';
 import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import VirtualizedRows from '../VirtualizedRows/VirtualizedRows';
 
@@ -21,7 +21,7 @@ export interface ITableBodyProps {
   groups?: Group[];
   groupsExpanded?: any[][];
   onDataChange?: DataChangeFunc;
-  dispatch: ActionExecutedFunc;
+  dispatch: ActionExecuteFunc;
   onOptionChange: OptionChangeFunc;
   rowKeyField: string;
   selectedRows: any[];
@@ -44,7 +44,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
   }
   return (
     <tbody className={defaultOptions.css.tbody} onScroll={(event) => {
-      dispatch(Action.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
+      dispatch(ActionType.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
     }}>
       <VirtualizedRows
         {...props}

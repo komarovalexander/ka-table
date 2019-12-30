@@ -86,7 +86,7 @@ export default SortingDemo;
 
 [Editing](https://komarovalexander.github.io/ka-table/#/editing) - Editing out of the box
 
-[Action](https://komarovalexander.github.io/ka-table/#/events) - Most events are trackable
+[Events](https://komarovalexander.github.io/ka-table/#/events) - All events are trackable
 
 [Filter Extended](https://komarovalexander.github.io/ka-table/#/filter-extended) - Easy filtered by extended filters
 
@@ -126,7 +126,8 @@ export default SortingDemo;
 | groups | [<code>Group[]</code>](#Group) | Group's in the table [Grouping Example](https://komarovalexander.github.io/ka-table/#/grouping) |
 | onDataChange | (data: any[]) => void | This function is called each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | onOptionChange | (value: any) => void | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| onActionExecuted | (type: string, data: any) => void | Use this function to track all actions in the Table [Action Example](https://komarovalexander.github.io/ka-table/#/events) |
+| onActionExecute | (type: string, data: any) => void | Executes each time when dispatch is called [ActionType Example](https://komarovalexander.github.io/ka-table/#/events) |
+| onActionExecuted | (type: string, data: any) => void | Executes each time after successful completion of onActionExecute [ActionType Example](https://komarovalexander.github.io/ka-table/#/events) |
 | groupsExpanded | any[][] | Groups that are expanded in the grid |
 | rowKeyField | string | Data's field which is used to identify row |
 | search <a name="Table.search"></a> | string | Specifies the text which are used for search by data [Search Example](https://komarovalexander.github.io/ka-table/#/search) |
@@ -146,7 +147,7 @@ Describes column of table its look and behaviour
 | dataType | [<code>DataType</code>](#DataType) | Specifies the type of column |
 | editor | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor if cell is in editable mode [Custom Editor Example](https://komarovalexander.github.io/ka-table/#/custom-editor) |
 | filterRowCell | [<code>FilterRowFunc</code>](#FilterRowFunc) | Returns an editor for filter row cell [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) |
-| filterRowOperator | string | Sets filter row operator [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor). See the list of predefined filter operators: [<code>FilterOperator</code>](#FilterOperator) |
+| filterRowOperator | string | Sets filter row operator [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor). See the list of predefined filter operators [<code>FilterOperatorName</code>](#FilterOperatorName) |
 | filterRowValue | any | Sets filter row value [Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) |
 | field | string | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
 | format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string [Example](https://komarovalexander.github.io/ka-table/#/custom-cell) |
@@ -224,8 +225,8 @@ Describes the position of a cell in  the table
 | FilterRow | 'filterRow' | Filter row is shown |
 
 
-<a name="FilterOperator"></a>
-### FilterOperator
+<a name="FilterOperatorName"></a>
+### FilterOperatorName
 
 | Property | String value |
 | --- | --- |

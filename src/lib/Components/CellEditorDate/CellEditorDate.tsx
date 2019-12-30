@@ -1,7 +1,7 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { Action } from '../../enums';
+import { ActionType } from '../../enums';
 import { Cell } from '../../models';
 import { getDateInputValue } from '../../Utils/DateUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
@@ -23,11 +23,11 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
       value={value || ''}
       onChange={(event) => {
         const targetValue: string = event.currentTarget.value;
-        dispatch(Action.ChangeRowData, {newValue: {...rowData, [field]: targetValue ? new Date(targetValue) : null}});
+        dispatch(ActionType.ChangeRowData, {newValue: {...rowData, [field]: targetValue ? new Date(targetValue) : null}});
       }}
       onBlur={() => {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-        dispatch(Action.CloseEditor, { cell });
+        dispatch(ActionType.CloseEditor, { cell });
       }}
     />
   );

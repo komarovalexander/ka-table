@@ -1,7 +1,7 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { Action } from '../../enums';
+import { ActionType } from '../../enums';
 import { Cell } from '../../models';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
@@ -17,10 +17,10 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
       type='text'
       className={defaultOptions.css.textInput}
       value={rowData[field] || ''}
-      onChange={(event) => dispatch(Action.ChangeRowData, {newValue: {...rowData, [field]: event.currentTarget.value}})}
+      onChange={(event) => dispatch(ActionType.ChangeRowData, {newValue: {...rowData, [field]: event.currentTarget.value}})}
       onBlur={() => {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-        dispatch(Action.CloseEditor, { cell });
+        dispatch(ActionType.CloseEditor, { cell });
       }}
     />
   );

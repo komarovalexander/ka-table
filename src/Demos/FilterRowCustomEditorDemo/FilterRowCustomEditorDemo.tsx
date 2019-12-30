@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { Action, DataType, EditingMode, FilteringMode } from '../../lib/enums';
+import { ActionType, DataType, EditingMode, FilteringMode } from '../../lib/enums';
 import { FilterRowFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
 import { dateUtils } from '../../lib/utils';
 
@@ -32,7 +32,7 @@ const CustomLookupEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
         autoFocus={true}
         defaultValue={column.filterRowValue}
         onChange={(event) => {
-          dispatch(Action.ChangeFilterRow, { column: {...column, filterRowValue: toNullableBoolean(event.currentTarget.value)}});
+          dispatch(ActionType.ChangeFilterRow, { column: {...column, filterRowValue: toNullableBoolean(event.currentTarget.value)}});
         }}>
         <option value=''/>
         <option value={'true'}>True</option>
@@ -50,7 +50,7 @@ const FilterOperators: React.FC<FilterRowFuncPropsWithChildren> = ({
       className='form-control'
       defaultValue={column.filterRowOperator}
       onChange={(event) => {
-        dispatch(Action.ChangeFilterRow, { column: {...column, filterRowOperator: event.currentTarget.value}});
+        dispatch(ActionType.ChangeFilterRow, { column: {...column, filterRowOperator: event.currentTarget.value}});
       }}>
       <option value={'='}>=</option>
       <option value={'<'}>{'<'}</option>
@@ -71,7 +71,7 @@ const NumberEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
         defaultValue={column.filterRowValue}
         onChange={(event) => {
           const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
-          dispatch(Action.ChangeFilterRow, { column: {...column, filterRowValue}});
+          dispatch(ActionType.ChangeFilterRow, { column: {...column, filterRowValue}});
         }}
         type='number'
       />
@@ -94,7 +94,7 @@ const DateEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
           const targetValue = event.currentTarget.value;
           const filterRowValue = targetValue ? new Date(targetValue) : null;
           const updatedColumn = {...column, filterRowValue};
-          dispatch(Action.ChangeFilterRow, {column: updatedColumn});
+          dispatch(ActionType.ChangeFilterRow, {column: updatedColumn});
         }}
       />
     </div>

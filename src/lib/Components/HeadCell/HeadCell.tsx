@@ -3,13 +3,13 @@ import * as React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { SortingMode } from '../../enums';
 import { Column } from '../../Models/Column';
-import { ActionExecutedFunc } from '../../types';
+import { ActionExecuteFunc } from '../../types';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
 
 export interface IHeadCellProps {
   column: Column;
   sortingMode: SortingMode;
-  dispatch: ActionExecutedFunc;
+  dispatch: ActionExecuteFunc;
 }
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {

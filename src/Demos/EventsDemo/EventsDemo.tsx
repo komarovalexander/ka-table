@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
-import { ActionExecutedFunc, DataChangeFunc, OptionChangeFunc } from '../../lib/types';
+import { ActionExecuteFunc, DataChangeFunc, OptionChangeFunc } from '../../lib/types';
 
 const dataArray = Array(20).fill(undefined).map(
   (_, index) => ({
@@ -41,7 +41,7 @@ const EventsDemo: React.FC = () => {
   };
 
   const [events, changeEvents] = useState([] as any []);
-  const onActionExecuted: ActionExecutedFunc = (action, actionData) => {
+  const onActionExecuted: ActionExecuteFunc = (action, actionData) => {
     const date = new Date();
     const time = date.toLocaleTimeString();
     const milliseconds = date.getMilliseconds();

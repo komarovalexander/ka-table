@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Column } from '../../Models/Column';
-import { ActionExecutedFunc } from '../../types';
+import { ActionExecuteFunc } from '../../types';
 import CellText from '../CellText/CellText';
 
 export interface ICellContentProps {
@@ -9,7 +9,7 @@ export interface ICellContentProps {
   field: string;
   rowData: any;
   rowKeyField: string;
-  dispatch: ActionExecutedFunc;
+  dispatch: ActionExecuteFunc;
 }
 
 const CellContent: React.FunctionComponent<ICellContentProps> = (props) => {

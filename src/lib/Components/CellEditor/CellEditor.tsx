@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 import { Column } from '../../Models/Column';
-import { ActionExecutedFunc } from '../../types';
+import { ActionExecuteFunc } from '../../types';
 import CellEditorState from '../CellEditorState/CellEditorState';
 
 export interface IFilterRowEditorProps {
   column: Column;
-  dispatch: ActionExecutedFunc;
+  dispatch: ActionExecuteFunc;
 }
 
 export interface ICellEditorProps extends IFilterRowEditorProps {

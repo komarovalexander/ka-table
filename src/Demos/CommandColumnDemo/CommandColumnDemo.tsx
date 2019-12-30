@@ -5,10 +5,11 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
 import {
-  ActionExecutedFunc, CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc,
+  ActionExecutedFunc, ActionExecuteFunc, CellFuncPropsWithChildren, DataChangeFunc,
+  OptionChangeFunc,
 } from '../../lib/types';
 
-const DELETE_EVENT = 'delete';
+const DELETE_ACTION = 'delete';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -28,7 +29,7 @@ const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
         src='static/icons/alert.svg'
         className='button'
         alt=''
-        onClick={() => alert(`row data: ${JSON.stringify(rowData)}`)}
+        onClick={() => alert(`Row data: \r\n${JSON.stringify(rowData)}`)}
       />
     </div>
   );
@@ -42,7 +43,7 @@ const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
       <img
         src='static/icons/delete.svg'
         className='button'
-        onClick={() => dispatch(DELETE_EVENT, { rowData })}
+        onClick={() => dispatch(DELETE_ACTION, { rowData })}
         alt=''
       />
    </div>
@@ -73,11 +74,19 @@ const CommandColumnDemo: React.FC = () => {
     changeData(newValue);
   };
 
+  const onActionExecute: ActionExecuteFunc = (action, actionData) => {
+    if (action === DELETE_ACTION) {
+      if (window.confirm(`You are going to delete row \r\n'${JSON.stringify(actionData.rowData)}'. \r\nPress 'OK' to continue`)) {
+        const newValue = data.filter(
+          (d: any) => d[tableOption.rowKeyField] !== actionData.rowData[tableOption.rowKeyField]);
+        changeData(newValue);
+      }
+    }
+  };
+
   const onActionExecuted: ActionExecutedFunc = (action, actionData) => {
-    if (action === DELETE_EVENT) {
-      const newValue = data.filter(
-        (d: any) => d[tableOption.rowKeyField] !== actionData.rowData[tableOption.rowKeyField]);
-      changeData(newValue);
+    if (action === DELETE_ACTION) {
+      alert(`Row has been deleted \r\n'${JSON.stringify(actionData.rowData)}'`);
     }
   };
   return (
@@ -86,6 +95,7 @@ const CommandColumnDemo: React.FC = () => {
       data={data}
       onOptionChange={onOptionChange}
       onDataChange={onDataChange}
+      onActionExecute={onActionExecute}
       onActionExecuted={onActionExecuted}
     />
   );

@@ -11,7 +11,7 @@ export enum EditingMode {
   Cell = 'cell',
 }
 
-export enum Action {
+export enum ActionType {
   CloseEditor = 'CloseEditor',
   ChangeFilterRow = 'ChangeFilterRow',
   OpenEditor = 'OpenEditor',
@@ -42,7 +42,7 @@ export enum FilteringMode {
   FilterRow = 'filterRow',
 }
 
-export enum FilterOperator {
+export enum FilterOperatorName {
   Equal = '=',
   MoreThan = '>',
   LessThan = '<',

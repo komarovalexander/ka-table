@@ -3,7 +3,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Action, DataType } from '../../enums';
+import { ActionType, DataType } from '../../enums';
 import FilterRowNumber from './FilterRowNumber';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -33,7 +33,7 @@ describe('FilterRowNumber', () => {
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      Action.ChangeFilterRow, { column: { ...column, filterRowValue: newValue } },
+      ActionType.ChangeFilterRow, { column: { ...column, filterRowValue: newValue } },
     );
   });
 });

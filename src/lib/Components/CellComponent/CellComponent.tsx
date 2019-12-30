@@ -3,7 +3,7 @@ import * as React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
 import { Column } from '../../Models/Column';
-import { ActionExecutedFunc } from '../../types';
+import { ActionExecuteFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
 import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
@@ -13,7 +13,7 @@ export interface ICellComponentProps {
   editingMode: EditingMode;
   isEditableCell: boolean;
   isSelectedRow: boolean;
-  dispatch: ActionExecutedFunc;
+  dispatch: ActionExecuteFunc;
   rowData: any;
   rowKeyField: string;
 }
