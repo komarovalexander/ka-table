@@ -1,10 +1,9 @@
-import Enzyme, { mount } from 'enzyme';
+import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataType, Action } from '../../enums';
-import CellEditor from '../CellEditor/CellEditor';
+import { DataType } from '../../enums';
 import CellComponent from './CellComponent';
 
 Enzyme.configure({ adapter: new Adapter() });

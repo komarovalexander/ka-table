@@ -3,7 +3,7 @@ import './CustomCellDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, Action } from '../../lib/enums';
+import { Action, DataType, EditingMode } from '../../lib/enums';
 import { Cell } from '../../lib/models';
 import { CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc } from '../../lib/types';
 

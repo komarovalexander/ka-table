@@ -13,7 +13,7 @@ export type DataRowFunc = (props: DataRowFuncPropsWithChildren) => any;
 export type DataRowFuncPropsWithChildren = PropsWithChildren<IDataRowProps>;
 export type EditorFunc = (props: EditorFuncPropsWithChildren) => any;
 export type EditorFuncPropsWithChildren = PropsWithChildren<ICellEditorProps>;
-export type EventFunc = (type: string, data: any) => void;
+export type ActionExecutedFunc = (type: string, data: any) => void;
 export type FilterRowFunc = (props: FilterRowFuncPropsWithChildren) => any;
 export type FilterRowFuncPropsWithChildren = PropsWithChildren<IFilterRowEditorProps>;
 export type FormatFunc = (value: any) => any;

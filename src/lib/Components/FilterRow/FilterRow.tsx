@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { Column } from '../../Models/Column';
-import { EventFunc } from '../../types';
+import { ActionExecutedFunc } from '../../types';
 import EmptyCells from '../EmptyCells/EmptyCells';
 import FilterCell from '../FilterCell/FilterCell';
 
 export interface IFilterRowProps {
   columns: Column[];
-  dispatch: EventFunc;
+  dispatch: ActionExecutedFunc;
   groupColumnsCount: number;
 }
 

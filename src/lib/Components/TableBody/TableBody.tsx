@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode, Action } from '../../enums';
+import { Action, EditingMode } from '../../enums';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import { DataChangeFunc, DataRowFunc, EventFunc, OptionChangeFunc } from '../../types';
+import { ActionExecutedFunc, DataChangeFunc, DataRowFunc, OptionChangeFunc } from '../../types';
 import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import VirtualizedRows from '../VirtualizedRows/VirtualizedRows';
 
@@ -21,7 +21,7 @@ export interface ITableBodyProps {
   groups?: Group[];
   groupsExpanded?: any[][];
   onDataChange?: DataChangeFunc;
-  dispatch: EventFunc;
+  dispatch: ActionExecutedFunc;
   onOptionChange: OptionChangeFunc;
   rowKeyField: string;
   selectedRows: any[];

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
 import {
-  CellFuncPropsWithChildren, DataChangeFunc, EventFunc, OptionChangeFunc,
+  ActionExecutedFunc, CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc,
 } from '../../lib/types';
 
 const DELETE_EVENT = 'delete';
@@ -73,7 +73,7 @@ const CommandColumnDemo: React.FC = () => {
     changeData(newValue);
   };
 
-  const onActionExecuted: EventFunc = (event, eventData) => {
+  const onActionExecuted: ActionExecutedFunc = (event, eventData) => {
     if (event === DELETE_EVENT) {
       const newValue = data.filter(
         (d: any) => d[tableOption.rowKeyField] !== eventData.rowData[tableOption.rowKeyField]);

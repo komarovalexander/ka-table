@@ -4,7 +4,7 @@ import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
-import { DataRowFunc, EventFunc } from '../../types';
+import { ActionExecutedFunc, DataRowFunc } from '../../types';
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
@@ -12,7 +12,7 @@ export interface IRowCommonProps {
   columns: Column[];
   editableCells: Cell[];
   editingMode: EditingMode;
-  dispatch: EventFunc;
+  dispatch: ActionExecutedFunc;
   rowData: any;
   rowKeyField: string;
   selectedRows: any[];
