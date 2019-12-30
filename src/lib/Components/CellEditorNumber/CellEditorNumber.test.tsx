@@ -8,18 +8,23 @@ import { ICellEditorProps } from '../CellEditor/CellEditor';
 import CellEditorNumber from './CellEditorNumber';
 
 Enzyme.configure({ adapter: new Adapter() });
-const props: ICellEditorProps = {
-  column: {
-    dataType: DataType.String,
-    key: 'fieldName',
-    title: 'Field',
-  },
-  dispatch: jest.fn(),
-  field: 'fieldName',
-  isSelectedRow: true,
-  rowData: { column: 1 },
-  rowKeyField: '',
-};
+
+let props: ICellEditorProps;
+
+beforeEach(() => {
+  props = {
+    column: {
+      dataType: DataType.String,
+      key: 'fieldName',
+      title: 'Field',
+    },
+    dispatch: jest.fn(),
+    field: 'fieldName',
+    isSelectedRow: true,
+    rowData: { fieldName: 1, id: 1 },
+    rowKeyField: 'id',
+  };
+});
 
 describe('CellEditorNumber', () => {
   it('renders without crashing', () => {
@@ -30,13 +35,22 @@ describe('CellEditorNumber', () => {
 
   it('should fire RowDataChanged', () => {
     const newValue = 2;
-    const rowData = { fieldName: 1 };
-    const wrapper = mount(<CellEditorNumber {...props} rowData={rowData} />);
+    const wrapper = mount(<CellEditorNumber {...props} />);
 
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      Events.RowDataChanged, { newValue: { fieldName: newValue } },
+      Events.RowDataChanged, { newValue: { fieldName: newValue, id: 1 } },
+    );
+  });
+
+  it('should fire CloseEditor on blur', () => {
+    const wrapper = mount(<CellEditorNumber {...props} />);
+    wrapper.find('input').simulate('blur');
+
+    expect(props.dispatch).toBeCalledTimes(1);
+    expect(props.dispatch).toBeCalledWith(
+      Events.CloseEditor, { cell: { columnKey: 'fieldName', rowKey: 1 } },
     );
   });
 });

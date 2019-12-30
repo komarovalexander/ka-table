@@ -1,7 +1,8 @@
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
-import { FilterCondition } from '../Models/FilterCondition';
-import { filterData, getRowEditableCells, searchData } from './FilterUtils';
+import {
+  filterData, getDefaultOperatorForType, getRowEditableCells, predefinedFilterOperators, searchData,
+} from './FilterUtils';
 
 describe('FilterUtils', () => {
   it('getRowEditableCells should return required cells from table EditableCells', () => {
@@ -13,6 +14,12 @@ describe('FilterUtils', () => {
       rowKey: 2,
     }]);
     expect(rowEditableCells).toMatchSnapshot();
+  });
+
+  it('getDefaultOperatorForType', () => {
+    expect(getDefaultOperatorForType(DataType.Number)).toBe('=');
+    expect(getDefaultOperatorForType(DataType.Object)).toBe('=');
+    expect(getDefaultOperatorForType(DataType.String)).toBe('contains');
   });
 
   describe('filterData', () => {
@@ -44,6 +51,50 @@ describe('FilterUtils', () => {
       }];
       const result = filterData(data, columns);
       expect(result).toMatchSnapshot();
+    });
+
+    it('should throw an error in case of unknown filterOperator', () => {
+      const columns = [{
+        filterRowOperator: 'unknownOperator',
+        filterRowValue: 'Billi Bob',
+        key: 'name',
+      }];
+      expect(() => filterData(data, columns)).toThrowError('\'unknownOperator\' has not found in predefinedFilterOperators array, available operators: =, >, <, >=, <=, contains');
+    });
+  });
+
+  [{
+    falsy: [1, 2],
+    name: '=',
+    truthy: [1, 1],
+  }, {
+    falsy: [1, 1],
+    name: '>',
+    truthy: [2, 1],
+  }, {
+    falsy: [2, 1],
+    name: '<',
+    truthy: [1, 2],
+  }, {
+    falsy: [1, 2],
+    name: '>=',
+    truthy: [1, 1],
+  }, {
+    falsy: [2, 1],
+    name: '<=',
+    truthy: [1, 1],
+  }, {
+    falsy: ['abs', 'ss'],
+    name: 'contains',
+    truthy: ['hello', 'hell'],
+  }].forEach((d) => {
+    it(`predefinedFilterOperators operator ${d.name} truthy: ${d.truthy} falsy: ${d.falsy}`, () => {
+      const operator = predefinedFilterOperators.find((o) => o.name === d.name);
+      if (!operator) {
+        throw new Error(`${d.name} was not found`);
+      }
+      expect(operator.compare(d.truthy[0], d.truthy[1])).toBeTruthy();
+      expect(operator.compare(d.falsy[0], d.falsy[1])).toBeFalsy();
     });
   });
 

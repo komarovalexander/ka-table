@@ -41,3 +41,12 @@ export enum FilteringMode {
   None = 'none',
   FilterRow = 'filterRow',
 }
+
+export enum PredefinedFilterOperator {
+  Equal = '=',
+  MoreThan = '>',
+  LessThan = '<',
+  MoreThanOrEqual = '>=',
+  LessThanOrEqual = '<=',
+  Contains = 'contains',
+}

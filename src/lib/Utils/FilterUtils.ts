@@ -1,5 +1,5 @@
 import defaultOptions from '../defaultOptions';
-import { DataType } from '../enums';
+import { DataType, PredefinedFilterOperator } from '../enums';
 import { Cell } from '../Models/Cell';
 import { Column } from '../Models/Column';
 import { FilterOperator } from '../Models/FilterOperator';
@@ -25,9 +25,9 @@ export const filterData = (data: any[], columns: Column[]): any[] => {
     if (isEmpty(column.filterRowValue)) { return initialData; }
     const filterRowOperator = column.filterRowOperator
       || getDefaultOperatorForType(column.dataType  || defaultOptions.columnDataType);
-    const filterOperator = filterOperators.find((fo) => filterRowOperator === fo.name);
+    const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
     if (!filterOperator) {
-      throw new Error(`'${column.filterRowOperator}' has not found in filter operators array, available operators: ${filterOperators.map((o) => o.name).join(',')}`);
+      throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
     }
     const compare = filterOperator.compare;
     return initialData.filter((d: any) => {
@@ -43,34 +43,34 @@ export const filterData = (data: any[], columns: Column[]): any[] => {
 };
 
 export const getDefaultOperatorForType = (type: DataType): string => {
-  const filterOperator = filterOperators.find((o) => o.defaultForTypes && o.defaultForTypes.includes(type));
+  const filterOperator = predefinedFilterOperators.find((o) => o.defaultForTypes && o.defaultForTypes.includes(type));
   return (filterOperator && filterOperator.name) || '=';
 };
 
-const filterOperators: FilterOperator[] = [{
+export const predefinedFilterOperators: FilterOperator[] = [{
   compare: (fieldValue: any, conditionValue: any) =>
     fieldValue === conditionValue,
   defaultForTypes: [DataType.Boolean, DataType.Number, DataType.Date],
-  name: '=',
+  name: PredefinedFilterOperator.Equal,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
     fieldValue > conditionValue,
-  name: '>',
+  name: PredefinedFilterOperator.MoreThan,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
     fieldValue < conditionValue,
-  name: '<',
+  name: PredefinedFilterOperator.LessThan,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
     fieldValue >= conditionValue,
-  name: '>=',
+  name: PredefinedFilterOperator.MoreThanOrEqual,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
     fieldValue <= conditionValue,
-  name: '<=',
+  name: PredefinedFilterOperator.LessThanOrEqual,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
       fieldValue.toString().toLowerCase().includes(conditionValue.toString().toLowerCase()),
   defaultForTypes: [DataType.String],
-  name: 'contains',
+  name: PredefinedFilterOperator.Contains,
 }];
