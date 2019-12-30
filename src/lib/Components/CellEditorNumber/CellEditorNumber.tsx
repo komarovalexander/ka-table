@@ -8,11 +8,11 @@ import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
   column,
+  field,
   dispatch,
   rowData,
   rowKeyField,
 }) => {
-  const field = getField(column);
   const value = rowData[field];
   return (
     <input autoFocus={true}

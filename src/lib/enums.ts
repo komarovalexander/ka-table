@@ -6,11 +6,6 @@ export enum DataType {
   String = 'string',
 }
 
-export enum ColumnType {
-  Data = 'data',
-  Command = 'command',
-}
-
 export enum EditingMode {
   None = 'none',
   Cell = 'cell',

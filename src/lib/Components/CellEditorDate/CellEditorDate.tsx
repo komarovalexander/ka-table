@@ -3,16 +3,15 @@ import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { Events } from '../../enums';
 import { Cell } from '../../models';
-import { getField } from '../../Utils/ColumnUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   column,
+  field,
   dispatch,
   rowData,
   rowKeyField,
 }) => {
-  const field = getField(column);
   const fieldValue = rowData[field];
   const value = fieldValue && fieldValue.toISOString().split('T')[0];
   return (

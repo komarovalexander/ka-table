@@ -28,17 +28,3 @@ it('renders without crashing', () => {
   ReactDOM.render(<CellComponent {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });
-
-it('call RowDataChanged when onValueChange', () => {
-  const dispatch = jest.fn();
-  const newValue = {a: 1};
-  const wrapper = mount(
-    <CellComponent {...props} isEditableCell='true' dispatch={dispatch} />,
-    {
-      attachTo: document.createElement('tr'),
-    },
-  );
-  wrapper.find(CellEditor).last().prop('onValueChange')(newValue);
-  expect(dispatch).toBeCalledTimes(1);
-  expect(dispatch).toBeCalledWith(Events.RowDataChanged, {newValue});
-});
