@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Events } from '../../enums';
+import { Action } from '../../enums';
 import { Cell } from '../../models';
 import { getField } from '../../Utils/ColumnUtils';
 import { isEmpty } from '../../Utils/CommonUtils';
@@ -20,7 +20,7 @@ const CellText: React.FunctionComponent<ICellContentProps> = ({
     <div className='ka-cell-text'
       onClick={() => {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-        dispatch(Events.OpenEditor, { cell });
+        dispatch(Action.OpenEditor, { cell });
       }}
     >{formatedValue || <>&nbsp;</>}</div>
   );

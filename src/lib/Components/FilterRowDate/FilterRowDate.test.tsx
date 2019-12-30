@@ -3,7 +3,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataType, Events } from '../../enums';
+import { Action, DataType } from '../../enums';
 import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
 import FilterRowDate from './FilterRowDate';
 
@@ -32,7 +32,7 @@ describe('FliterRowDate', () => {
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      Events.FilterRowChanged, { column: { ...column, filterRowValue: newValue } },
+      Action.ChangeFilterRow, { column: { ...column, filterRowValue: newValue } },
     );
   });
 });

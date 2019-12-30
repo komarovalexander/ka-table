@@ -1,16 +1,16 @@
 
 import { ITableAllProps } from '../';
-import { Events } from '../enums';
+import { Action } from '../enums';
 import { getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
 import { changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler } from './CellUtils';
 import { getSortedColumns } from './HeadRowUtils';
 
-export const getOnEventHandler = ({
+export const wrapDispatch = ({
   columns,
   data,
   editableCells = [],
   onDataChange = () => {},
-  onEvent = () => {},
+  onActionExecuted = () => {},
   onOptionChange,
   rowKeyField,
   selectedRows = [],
@@ -18,37 +18,37 @@ export const getOnEventHandler = ({
 }: ITableAllProps) => {
   return (event: string, eventData: any) => {
     switch (event) {
-      case Events.OpenEditor:
+      case Action.OpenEditor:
         changeCellTextToCellEditorHandler(
           eventData.cell,
           editableCells,
           onOptionChange);
         break;
-      case Events.CloseEditor:
+      case Action.CloseEditor:
         changeCellEditorToCellTextHandler(
           eventData.cell,
           editableCells,
           onOptionChange);
         break;
-      case Events.FilterRowChanged:
+      case Action.ChangeFilterRow:
           const newColumns = getCopyOfArrayAndInsertOrReplaceItem(eventData.column, 'key', columns);
           onOptionChange({ columns: newColumns });
           break;
-      case Events.RowDataChanged:
+      case Action.ChangeRowData:
           const newData = getCopyOfArrayAndInsertOrReplaceItem(eventData.newValue, rowKeyField, data);
           onDataChange(newData);
           break;
-      case Events.RowSelected:
+      case Action.SelectRow:
           onOptionChange({ selectedRows: [...selectedRows, ...[eventData.rowKeyValue]] });
           break;
-      case Events.RowDeselected:
+      case Action.DeselectRowData:
           onOptionChange({ selectedRows: [...selectedRows].filter((s) => s !== eventData.rowKeyValue) });
           break;
-      case Events.SortingChanged:
+      case Action.ChangeSorting:
           const sortedColumns = getSortedColumns(columns, eventData.column);
           onOptionChange({ columns: sortedColumns });
           break;
-      case Events.ScrollTable:
+      case Action.ScrollTable:
           if (virtualScrolling) {
             const scrollPosition = eventData.scrollTop;
             if (virtualScrolling) {
@@ -57,6 +57,6 @@ export const getOnEventHandler = ({
           }
           break;
     }
-    onEvent(event, eventData);
+    onActionExecuted(event, eventData);
   };
 };

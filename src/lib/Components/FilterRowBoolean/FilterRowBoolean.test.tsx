@@ -3,7 +3,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataType, Events } from '../../enums';
+import { Action, DataType } from '../../enums';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 import FilterRowBoolean from './FilterRowBoolean';
 
@@ -41,7 +41,7 @@ describe('FilterRowBoolean', () => {
     wrapper.find('input').props().onChange!({currentTarget: { checked: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      Events.FilterRowChanged, { column: { ...column, filterRowValue: newValue } },
+      Action.ChangeFilterRow, { column: { ...column, filterRowValue: newValue } },
     );
   });
 
@@ -53,7 +53,7 @@ describe('FilterRowBoolean', () => {
     wrapper.find('input').props().onChange!({currentTarget: { checked: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      Events.FilterRowChanged, { column: { ...column, filterRowValue: undefined } },
+      Action.ChangeFilterRow, { column: { ...column, filterRowValue: undefined } },
     );
   });
 });

@@ -7,7 +7,7 @@ import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { DataChangeFunc, DataRowFunc, EventFunc, OptionChangeFunc } from '../../types';
-import { getOnEventHandler } from '../../Utils/EventUtils';
+import { wrapDispatch } from '../../Utils/ActionUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
 import { convertToColumnTypes } from '../../Utils/TypeUtils';
@@ -39,7 +39,7 @@ export interface ITableEvents {
   /** Called each time ITableOption changed */
   onOptionChange: OptionChangeFunc;
   /** Called each time when some event emited */
-  onEvent?: EventFunc;
+  onActionExecuted?: EventFunc;
 }
 
 export interface ITableAllProps extends ITableEvents, ITableOption {
@@ -71,7 +71,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
 
-  const dispatch = getOnEventHandler(props);
+  const dispatch = wrapDispatch(props);
 
   return (
     <div className='ka' >

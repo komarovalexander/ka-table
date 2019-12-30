@@ -1,7 +1,7 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { Events } from '../../enums';
+import { Action } from '../../enums';
 import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
 
 const FilterRowNumber: React.FunctionComponent<IFilterRowEditorProps> = ({
@@ -17,7 +17,7 @@ const FilterRowNumber: React.FunctionComponent<IFilterRowEditorProps> = ({
       onChange={(event) => {
         const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
         const updatedColumn = {...column, filterRowValue};
-        dispatch(Events.FilterRowChanged, {column: updatedColumn});
+        dispatch(Action.ChangeFilterRow, {column: updatedColumn});
       }}
     />
   );

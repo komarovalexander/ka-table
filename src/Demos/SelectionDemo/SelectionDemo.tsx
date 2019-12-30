@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, Events, SortDirection, SortingMode } from '../../lib/enums';
+import { Action, DataType, SortDirection, SortingMode } from '../../lib/enums';
 import { EditorFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
 
 const dataArray: any[] = [
@@ -23,9 +23,9 @@ const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
       onChange={(event) => {
         const rowKeyValue = rowData[rowKeyField];
         if (event.currentTarget.checked) {
-          dispatch(Events.RowSelected, { rowKeyValue });
+          dispatch(Action.SelectRow, { rowKeyValue });
         } else {
-          dispatch(Events.RowDeselected, { rowKeyValue });
+          dispatch(Action.DeselectRowData, { rowKeyValue });
         }
       }}
     />

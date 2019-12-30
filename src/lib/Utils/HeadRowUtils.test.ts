@@ -38,11 +38,28 @@ describe('sortUtilsClickHandler', () => {
     expect(sortedColumns[2].sortDirection).toBe(SortDirection.Ascend);
   });
 
-  it('getColumnWithUpdatedSortDirection', () => {
-    const column = columns[0];
-    const newColumn = getColumnWithUpdatedSortDirection(column);
-    expect(column).not.toBe(newColumn);
-    expect(column.sortDirection).toBe(SortDirection.Descend);
-    expect(newColumn.sortDirection).toBe(SortDirection.Ascend);
+  describe('getColumnWithUpdatedSortDirection', () => {
+    it('Descend -> Ascend', () => {
+      const column = columns[0];
+      const newColumn = getColumnWithUpdatedSortDirection(column);
+      expect(column).not.toBe(newColumn);
+      expect(column.sortDirection).toBe(SortDirection.Descend);
+      expect(newColumn.sortDirection).toBe(SortDirection.Ascend);
+    });
+    it('Ascend -> Descend', () => {
+      const column = columns[1];
+      const newColumn = getColumnWithUpdatedSortDirection(column);
+      expect(column).not.toBe(newColumn);
+      expect(column.sortDirection).toBe(SortDirection.Ascend);
+      expect(newColumn.sortDirection).toBe(SortDirection.Descend);
+    });
+    it('? -> Ascend', () => {
+      const column = columns[2];
+      const newColumn = getColumnWithUpdatedSortDirection(column);
+      expect(column).not.toBe(newColumn);
+      expect(column.sortDirection).toBeUndefined();
+      expect(newColumn.sortDirection).toBe(SortDirection.Ascend);
+    });
   });
+
 });

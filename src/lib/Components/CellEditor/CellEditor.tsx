@@ -10,10 +10,10 @@ export interface IFilterRowEditorProps {
 }
 
 export interface ICellEditorProps extends IFilterRowEditorProps {
-  rowKeyField: string;
-  rowData: any;
   field: string;
   isSelectedRow: boolean;
+  rowData: any;
+  rowKeyField: string;
 }
 
 const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {

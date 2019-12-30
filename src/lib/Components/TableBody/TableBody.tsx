@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode, Events } from '../../enums';
+import { EditingMode, Action } from '../../enums';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
@@ -44,7 +44,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
   }
   return (
     <tbody className={defaultOptions.css.tbody} onScroll={(event) => {
-      dispatch(Events.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
+      dispatch(Action.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
     }}>
       <VirtualizedRows
         {...props}

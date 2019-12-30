@@ -3,7 +3,7 @@ import './CustomCellDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, Events } from '../../lib/enums';
+import { DataType, EditingMode, Action } from '../../lib/enums';
 import { Cell } from '../../lib/models';
 import { CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc } from '../../lib/types';
 
@@ -22,7 +22,7 @@ const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
   return (
     <div onClick={() => {
       const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-      dispatch(Events.OpenEditor, { cell });
+      dispatch(Action.OpenEditor, { cell });
     }}>
       {rowData[field] ? 'Passed' : 'Failed'}
     </div>

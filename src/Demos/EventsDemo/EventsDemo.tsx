@@ -41,7 +41,7 @@ const EventsDemo: React.FC = () => {
   };
 
   const [events, changeEvents] = useState([] as any []);
-  const onEvent: EventFunc = (event, eventData) => {
+  const onActionExecuted: EventFunc = (event, eventData) => {
     const date = new Date();
     const time = date.toLocaleTimeString();
     const milliseconds = date.getMilliseconds();
@@ -54,7 +54,7 @@ const EventsDemo: React.FC = () => {
         data={data}
         onOptionChange={onOptionChange}
         onDataChange={onDataChange}
-        onEvent={onEvent}
+        onActionExecuted={onActionExecuted}
       />
       <div className='events'>{events.map((e, i) =>
         (

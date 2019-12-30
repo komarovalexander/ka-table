@@ -73,7 +73,7 @@ const CommandColumnDemo: React.FC = () => {
     changeData(newValue);
   };
 
-  const onEvent: EventFunc = (event, eventData) => {
+  const onActionExecuted: EventFunc = (event, eventData) => {
     if (event === DELETE_EVENT) {
       const newValue = data.filter(
         (d: any) => d[tableOption.rowKeyField] !== eventData.rowData[tableOption.rowKeyField]);
@@ -86,7 +86,7 @@ const CommandColumnDemo: React.FC = () => {
       data={data}
       onOptionChange={onOptionChange}
       onDataChange={onDataChange}
-      onEvent={onEvent}
+      onActionExecuted={onActionExecuted}
     />
   );
 };

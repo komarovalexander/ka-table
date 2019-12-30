@@ -3,7 +3,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataType, Events } from '../../enums';
+import { Action, DataType } from '../../enums';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 import CellEditorBoolean from './CellEditorBoolean';
 
@@ -36,7 +36,7 @@ describe('CellEditorBoolean', () => {
     wrapper.find('input').props().onChange!({currentTarget: { checked: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      Events.RowDataChanged, { newValue: { fieldName: newValue } },
+      Action.ChangeRowData, { newValue: { fieldName: newValue } },
     );
   });
 });

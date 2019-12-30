@@ -11,15 +11,15 @@ export enum EditingMode {
   Cell = 'cell',
 }
 
-export enum Events {
+export enum Action {
   CloseEditor = 'CloseEditor',
-  FilterRowChanged = 'FilterRowChanged',
+  ChangeFilterRow = 'ChangeFilterRow',
   OpenEditor = 'OpenEditor',
-  RowDataChanged = 'RowDataChanged',
-  RowDeselected = 'RowDeselected',
-  RowSelected = 'RowSelected',
+  ChangeRowData = 'ChangeRowData',
+  DeselectRowData = 'DeselectRowData',
+  SelectRow = 'SelectRow',
   ScrollTable = 'ScrollTable',
-  SortingChanged = 'SortingChanged',
+  ChangeSorting = 'ChangeSorting',
 }
 
 export enum KeyboardEnum {

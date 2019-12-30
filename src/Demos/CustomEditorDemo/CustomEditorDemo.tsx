@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, Events } from '../../lib/enums';
+import { Action, DataType, EditingMode } from '../../lib/enums';
 import { Cell } from '../../lib/models';
 import { DataChangeFunc, EditorFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
 import { typeUtils } from '../../lib/utils';
@@ -20,7 +20,7 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
 }) => {
   const close = () => {
     const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-    dispatch(Events.CloseEditor, { cell });
+    dispatch(Action.CloseEditor, { cell });
   };
   const [value, setValue] = useState(rowData[key]);
   return (
@@ -32,7 +32,7 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
       onChange={(event) => setValue(event.currentTarget.value)}/>
     <button onClick={() => {
       const newValue = { ...rowData, ...{ [key]: value } };
-      dispatch(Events.RowDataChanged, { newValue });
+      dispatch(Action.ChangeRowData, { newValue });
       close();
     }}>Save</button>
     <button onClick={close}>Cancel</button>
@@ -45,7 +45,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
 }) => {
   const close = () => {
     const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-    dispatch(Events.CloseEditor, { cell });
+    dispatch(Action.CloseEditor, { cell });
   };
   const [value, setValue] = useState(rowData[key]);
   return (
@@ -56,7 +56,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
         defaultValue={value}
         onBlur={() => {
           const newValue = { ...rowData, ...{ [key]: value } };
-          dispatch(Events.RowDataChanged, { newValue });
+          dispatch(Action.ChangeRowData, { newValue });
           close();
         }}
         onChange={(event) => {

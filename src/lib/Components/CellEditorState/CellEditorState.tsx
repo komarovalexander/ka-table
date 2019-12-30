@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Events } from '../../enums';
+import { Action } from '../../enums';
 import { Cell } from '../../models';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import { getValidationValue } from '../../Utils/Validation';
@@ -28,13 +28,13 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const close = useCallback(() => {
     const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-    dispatch(Events.CloseEditor, { cell });
+    dispatch(Action.CloseEditor, { cell });
   }, [dispatch, column, rowData, rowKeyField]);
 
   const closeHandler = useCallback(() => {
     if (!validationValue) {
       if (rowData[key] !== value[key]) {
-        dispatch(Events.RowDataChanged, { newValue: { ...rowData, ...{ [key]: value[key] } } });
+        dispatch(Action.ChangeRowData, { newValue: { ...rowData, ...{ [key]: value[key] } } });
       }
       close();
     }
@@ -45,9 +45,9 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   }, [close, closeHandler]);
 
   const dispatchHandler = (event: string, eventData: any) => {
-    if (event === Events.CloseEditor) {
+    if (event === Action.CloseEditor) {
       closeHandler();
-    } else if (event === Events.RowDataChanged) {
+    } else if (event === Action.ChangeRowData) {
       onValueStateChange(eventData.newValue);
     } else {
       dispatch(event, eventData);

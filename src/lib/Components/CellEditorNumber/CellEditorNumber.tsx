@@ -1,7 +1,7 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { Events } from '../../enums';
+import { Action } from '../../enums';
 import { Cell } from '../../models';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
@@ -20,11 +20,11 @@ const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
       value={value === null || value === undefined ? '' : value}
       onChange={(event) => {
         const newValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
-        dispatch(Events.RowDataChanged, {newValue: {...rowData, [field]: newValue}});
+        dispatch(Action.ChangeRowData, {newValue: {...rowData, [field]: newValue}});
       }}
       onBlur={() => {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-        dispatch(Events.CloseEditor, { cell });
+        dispatch(Action.CloseEditor, { cell });
       }}
     />
   );

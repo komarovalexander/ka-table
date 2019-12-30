@@ -3,7 +3,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataType, Events } from '../../enums';
+import { DataType, Action } from '../../enums';
 import CellEditor from '../CellEditor/CellEditor';
 import CellComponent from './CellComponent';
 
