@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode, Events } from '../../enums';
+import { EditingMode } from '../../enums';
 import { Column } from '../../Models/Column';
 import { EventFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
@@ -22,7 +22,6 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
   const {
     column,
     column: { style },
-    dispatch,
     isEditableCell,
   } = props;
   return (
@@ -31,7 +30,6 @@ const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
           <CellEditor
             {...props}
             field={getField(column)}
-            onValueChange={(newValue) => { dispatch(Events.RowDataChanged, { newValue }); }}
           />
         )
         : (

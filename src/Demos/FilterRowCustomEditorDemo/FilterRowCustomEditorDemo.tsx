@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, FilteringMode } from '../../lib/enums';
-import { EditorFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
+import { DataType, Events, FilteringMode } from '../../lib/enums';
+import { FilterRowFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -13,8 +13,8 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { key: field }, rowData, onValueChange,
+const CustomLookupEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+  column, dispatch,
 }) => {
   const toNullableBoolean = (value: any) => {
     switch (value) {
@@ -28,14 +28,40 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
       <select
         className='form-control'
         autoFocus={true}
-        defaultValue={rowData[field]}
+        defaultValue={column.filterRowValue}
         onChange={(event) => {
-          onValueChange(toNullableBoolean(event.currentTarget.value));
+          dispatch(Events.FilterRowChanged, { column: {...column, filterRowValue: toNullableBoolean(event.currentTarget.value)}});
         }}>
         <option value=''/>
         <option value={'true'}>True</option>
         <option value={'false'}>False</option>
       </select>
+    </div >
+  );
+};
+
+const MultipleConditionsEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+  column, dispatch,
+}) => {
+  return (
+    <div>
+      <select
+        className='form-control'
+        defaultValue={column.filterRowOperator}
+        onChange={(event) => {
+          dispatch(Events.FilterRowChanged, { column: {...column, filterRowOperator: event.currentTarget.value}});
+        }}>
+        <option value={'='}>=</option>
+        <option value={'contains'}>contains</option>
+      </select>
+      <input
+        defaultValue={column.filterRowValue}
+        onChange={(event) => {
+          const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
+          dispatch(Events.FilterRowChanged, { column: {...column, filterRowValue}});
+        }}
+        type='number'
+      />
     </div >
   );
 };
@@ -50,7 +76,12 @@ const tableOption: ITableOption = {
       title: 'Passed',
     },
     { key: 'name', title: 'Name', dataType: DataType.String, filterRowCell: () => <></> },
-    { key: 'score', title: 'Score', dataType: DataType.Number, filterRowCell: () => <></> },
+    {
+      dataType: DataType.Number,
+      filterRowCell: MultipleConditionsEditor,
+      key: 'score',
+      title: 'Score',
+    },
   ],
   filteringMode: FilteringMode.FilterRow,
   rowKeyField: 'id',

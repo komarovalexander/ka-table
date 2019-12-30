@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import emptyFunc from '../../emptyFunc';
 import VirtualizedRows from './VirtualizedRows';
 
 const tableProps: any = {
@@ -13,7 +12,6 @@ const tableProps: any = {
     { column: 1, column2: 2, id: 1 },
     { column: 12, column2: 22, id: 2 },
   ],
-  onOptionChange: emptyFunc,
   rowKeyField: 'id',
 };
 

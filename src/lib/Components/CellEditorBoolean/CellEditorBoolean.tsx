@@ -3,25 +3,25 @@ import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { Events } from '../../enums';
 import { Cell } from '../../models';
+import { getField } from '../../Utils/ColumnUtils';
 import { isEmpty } from '../../Utils/CommonUtils';
-import { getRowValueByColumn } from '../../Utils/RowUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
   column,
   dispatch,
-  onValueChange,
   rowData,
   rowKeyField,
 }) => {
-  const value = getRowValueByColumn(rowData, column);
+  const field = getField(column);
+  const value = rowData[field];
   return (
     <input autoFocus={true}
       className={defaultOptions.css.checkbox}
       type='checkbox'
       ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}
       checked={value || false}
-      onChange={(event) => onValueChange(event.currentTarget.checked)}
+      onChange={(event) => dispatch(Events.RowDataChanged, {newValue: {...rowData, [field]: event.currentTarget.checked}})}
       onBlur={() => {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
         dispatch(Events.CloseEditor, { cell });

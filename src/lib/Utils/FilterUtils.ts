@@ -47,7 +47,7 @@ const filterOperators: FilterOperator[] = [{
   name: '=',
 }, {
   compare: (fieldValue: any, conditionValue: any): boolean => {
-    return fieldValue.toLowerCase().includes(conditionValue.toLowerCase());
+    return fieldValue.toString().toLowerCase().includes(conditionValue.toString().toLowerCase());
   },
   defaultForTypes: [DataType.String],
   name: 'contains',

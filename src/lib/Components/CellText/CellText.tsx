@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { Events } from '../../enums';
 import { Cell } from '../../models';
+import { getField } from '../../Utils/ColumnUtils';
 import { isEmpty } from '../../Utils/CommonUtils';
-import { getRowValueByColumn } from '../../Utils/RowUtils';
 import { ICellContentProps } from '../CellContent/CellContent';
 
 const CellText: React.FunctionComponent<ICellContentProps> = ({
@@ -13,7 +13,8 @@ const CellText: React.FunctionComponent<ICellContentProps> = ({
   rowKeyField,
   dispatch,
 }) => {
-  const value = getRowValueByColumn(rowData, column);
+  const field = getField(column);
+  const value = rowData[field];
   const formatedValue = format ? format(value) : !isEmpty(value) && value.toString();
   return (
     <div className='ka-cell-text'

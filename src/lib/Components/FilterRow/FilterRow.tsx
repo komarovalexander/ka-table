@@ -1,7 +1,5 @@
 import React from 'react';
 
-import emptyFunc from '../../emptyFunc';
-import { Events } from '../../enums';
 import { Column } from '../../Models/Column';
 import { EventFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
@@ -19,10 +17,6 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
   dispatch,
   groupColumnsCount,
 }) => {
-  const filterRowData = columns.reduce((prevValue: any, column, i, array) => {
-    prevValue[column.key] = column.filterRowValue;
-    return prevValue;
-  }, {});
   return (
     <tr className='ka-filter-row ka-tr'>
       <EmptyCells count={groupColumnsCount}/>
@@ -32,14 +26,7 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
             key={column.key}
             column={column}
             field={getField(column)}
-            rowKeyField={''}
-            isSelectedRow={false}
-            dispatch={emptyFunc}
-            rowData={filterRowData}
-            onValueChange={(filterRowValue) => {
-              const updatedColumn = {...column, filterRowValue};
-              dispatch(Events.FilterRowChanged, { column: updatedColumn });
-            }}
+            dispatch={dispatch}
           />
         );
       })}

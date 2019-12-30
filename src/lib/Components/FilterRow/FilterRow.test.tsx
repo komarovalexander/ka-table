@@ -3,7 +3,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import emptyFunc from '../../emptyFunc';
 import { Events } from '../../enums';
 import FilterCell from '../FilterCell/FilterCell';
 import FilterRow, { IFilterRowProps } from './FilterRow';
@@ -17,7 +16,6 @@ beforeEach(() => {
     columns: [],
     dispatch: jest.fn(),
     groupColumnsCount: 0,
-    onOptionChange: emptyFunc,
   };
 });
 

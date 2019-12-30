@@ -1,21 +1,19 @@
 import * as React from 'react';
 
-import { ICellEditorProps } from '../CellEditor/CellEditor';
-import CellEditorDataType from '../CellEditorDataType/CellEditorDataType';
+import { IFilterRowEditor } from '../CellEditor/CellEditor';
+import FilterRowDataType from '../FilterRowDataType/FilterRowDataType';
 
-const FilterCell: React.FunctionComponent<ICellEditorProps> = (props) => {
+const FilterCell: React.FunctionComponent<IFilterRowEditor> = (props) => {
   const {
     column: { style, filterRowCell },
-    onValueChange,
   } = props;
   return (
     <td style={style} className='ka-thead-cell ka-filter-row-cell'>
       {
         filterRowCell ? filterRowCell(props) :
         (
-          <CellEditorDataType
+          <FilterRowDataType
             {...props}
-            onValueChange={onValueChange}
           />
         )
       }
