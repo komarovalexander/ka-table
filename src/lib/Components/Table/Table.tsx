@@ -44,6 +44,7 @@ export interface ITableEvents {
   onActionExecute?: ActionExecuteFunc;
   /** Called each time when some action completed */
   onActionExecuted?: ActionExecutedFunc;
+  onActionRejected?: ActionExecuteFunc;
 }
 
 export interface ITableAllProps extends ITableEvents, ITableOption {

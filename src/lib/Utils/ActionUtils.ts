@@ -1,6 +1,7 @@
 
 import { ITableAllProps } from '../';
 import { ActionType } from '../enums';
+import { ActionCommand } from '../Models/ActionCommand';
 import { getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
 import { changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler } from './CellUtils';
 import { getSortedColumns } from './HeadRowUtils';
@@ -9,16 +10,22 @@ export const wrapDispatch = ({
   columns,
   data,
   editableCells = [],
-  onDataChange = () => {},
-  onActionExecuted = () => {},
   onActionExecute = () => {},
+  onActionExecuted = () => {},
+  onActionRejected = () => {},
+  onDataChange = () => {},
   onOptionChange,
   rowKeyField,
   selectedRows = [],
   virtualScrolling,
 }: ITableAllProps) => {
   return (action: string, actionData: any) => {
-    onActionExecute(action, actionData);
+    const actionCommand = new ActionCommand();
+    onActionExecute(action, actionData, actionCommand);
+    if (actionCommand.rejected) {
+      onActionRejected(action, actionData, actionCommand);
+      return;
+    }
     switch (action) {
       case ActionType.OpenEditor:
         changeCellTextToCellEditorHandler(

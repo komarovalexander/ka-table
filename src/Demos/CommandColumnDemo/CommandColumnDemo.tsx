@@ -74,12 +74,14 @@ const CommandColumnDemo: React.FC = () => {
     changeData(newValue);
   };
 
-  const onActionExecute: ActionExecuteFunc = (action, actionData) => {
+  const onActionExecute: ActionExecuteFunc = (action, actionData, command) => {
     if (action === DELETE_ACTION) {
       if (window.confirm(`You are going to delete row \r\n'${JSON.stringify(actionData.rowData)}'. \r\nPress 'OK' to continue`)) {
         const newValue = data.filter(
           (d: any) => d[tableOption.rowKeyField] !== actionData.rowData[tableOption.rowKeyField]);
         changeData(newValue);
+      } else {
+        command.reject();
       }
     }
   };
@@ -87,6 +89,12 @@ const CommandColumnDemo: React.FC = () => {
   const onActionExecuted: ActionExecutedFunc = (action, actionData) => {
     if (action === DELETE_ACTION) {
       alert(`Row has been deleted \r\n'${JSON.stringify(actionData.rowData)}'`);
+    }
+  };
+
+  const onActionRejected: ActionExecutedFunc = (action, actionData) => {
+    if (action === DELETE_ACTION) {
+      alert(`Delete action has been rejected \r\n'${JSON.stringify(actionData.rowData)}'`);
     }
   };
   return (
@@ -97,6 +105,7 @@ const CommandColumnDemo: React.FC = () => {
       onDataChange={onDataChange}
       onActionExecute={onActionExecute}
       onActionExecuted={onActionExecuted}
+      onActionRejected={onActionRejected}
     />
   );
 };
