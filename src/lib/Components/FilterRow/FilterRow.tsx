@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Column } from '../../Models/Column';
 import { EventFunc } from '../../types';
-import { getField } from '../../Utils/ColumnUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
 import FilterCell from '../FilterCell/FilterCell';
 
@@ -25,7 +24,6 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
           <FilterCell
             key={column.key}
             column={column}
-            field={getField(column)}
             dispatch={dispatch}
           />
         );

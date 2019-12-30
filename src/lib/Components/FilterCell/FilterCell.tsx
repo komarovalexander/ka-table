@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { IFilterRowEditor } from '../CellEditor/CellEditor';
+import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
 import FilterRowDataType from '../FilterRowDataType/FilterRowDataType';
 
-const FilterCell: React.FunctionComponent<IFilterRowEditor> = (props) => {
+const FilterCell: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
   const {
     column: { style, filterRowCell },
   } = props;

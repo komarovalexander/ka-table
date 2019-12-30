@@ -2,9 +2,9 @@ import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { Events } from '../../enums';
-import { IFilterRowEditor } from '../CellEditor/CellEditor';
+import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
 
-const FilterRowNumber: React.FunctionComponent<IFilterRowEditor> = ({
+const FilterRowNumber: React.FunctionComponent<IFilterRowEditorProps> = ({
   column,
   dispatch,
 }) => {

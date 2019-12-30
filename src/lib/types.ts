@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 import { ICellContentProps } from './Components/CellContent/CellContent';
-import { ICellEditorProps, IFilterRowEditor } from './Components/CellEditor/CellEditor';
+import { ICellEditorProps, IFilterRowEditorProps } from './Components/CellEditor/CellEditor';
 import { IDataRowProps } from './Components/DataRowContent/DataRowContent';
 import { IHeadCellProps } from './Components/HeadCell/HeadCell';
 import { Column } from './models';
@@ -15,7 +15,7 @@ export type EditorFunc = (props: EditorFuncPropsWithChildren) => any;
 export type EditorFuncPropsWithChildren = PropsWithChildren<ICellEditorProps>;
 export type EventFunc = (type: string, data: any) => void;
 export type FilterRowFunc = (props: FilterRowFuncPropsWithChildren) => any;
-export type FilterRowFuncPropsWithChildren = PropsWithChildren<IFilterRowEditor>;
+export type FilterRowFuncPropsWithChildren = PropsWithChildren<IFilterRowEditorProps>;
 export type FormatFunc = (value: any) => any;
 export type HeaderCellFunc = (props: HeaderCellFuncPropsWithChildren) => any;
 export type HeaderCellFuncPropsWithChildren = PropsWithChildren<IHeadCellProps>;

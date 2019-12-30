@@ -1,13 +1,14 @@
 import React from 'react';
 
 import { DataType } from '../../enums';
-import { IFilterRowEditor } from '../CellEditor/CellEditor';
+import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
+import FilterRowBoolean from '../FilterRowBoolean/FilterRowBoolean';
 import FilterRowNumber from '../FilterRowNumber/FilterRowNumber';
 import FilterRowString from '../FilterRowString/FilterRowString';
 
-const FilterRowDataType: React.FunctionComponent<IFilterRowEditor> = (props) => {
+const FilterRowDataType: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
   switch (props.column.dataType) {
-    // case DataType.Boolean: return <CellEditorBoolean {...props} />;
+    case DataType.Boolean: return <FilterRowBoolean {...props} />;
     // case DataType.Date: return <CellEditorDate {...props} />;
     case DataType.Number: return <FilterRowNumber {...props} />;
     default: return <FilterRowString {...props} />;

@@ -4,15 +4,15 @@ import { Column } from '../../Models/Column';
 import { EventFunc } from '../../types';
 import CellEditorState from '../CellEditorState/CellEditorState';
 
-export interface IFilterRowEditor {
+export interface IFilterRowEditorProps {
   column: Column;
-  field: string;
   dispatch: EventFunc;
 }
 
-export interface ICellEditorProps extends IFilterRowEditor {
+export interface ICellEditorProps extends IFilterRowEditorProps {
   rowKeyField: string;
   rowData: any;
+  field: string;
   isSelectedRow: boolean;
 }
 
