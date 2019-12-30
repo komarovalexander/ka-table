@@ -358,3 +358,13 @@ Function which obtains value of specific cell and row - as parameters and return
 | isSelectedRow | boolean | Describes selected state of current row |
 | rowKeyField | string | Data's field which is used to identify row |
 | selectedRows | any[] | Array of rows keys which are marked as selected |
+
+
+<a name="ActionCommand"></a>
+### ActionCommand
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| reject | () => void | Notify action that something went wrong and it must be rejected |
+| rejected | () => void | Gets the current rejected state |
