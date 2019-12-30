@@ -30,7 +30,15 @@ export const filterData = (data: any[], columns: Column[]): any[] => {
       throw new Error(`'${column.filterRowOperator}' has not found in filter operators array, available operators: ${filterOperators.map((o) => o.name).join(',')}`);
     }
     const compare = filterOperator.compare;
-    return initialData.filter((d: any) => compare(d[getField(column)], column.filterRowValue));
+    return initialData.filter((d: any) => {
+      let fieldValue = d[getField(column)];
+      let conditionValue = column.filterRowValue;
+      if (column.dataType === DataType.Date) {
+        fieldValue = new Date(fieldValue).setHours(0, 0, 0, 0);
+        conditionValue = new Date(conditionValue).setHours(0, 0, 0, 0);
+      }
+      return compare(fieldValue, conditionValue);
+    });
   }, data);
 };
 
@@ -40,15 +48,29 @@ export const getDefaultOperatorForType = (type: DataType): string => {
 };
 
 const filterOperators: FilterOperator[] = [{
-  compare: (fieldValue: any, conditionValue: any): boolean => {
-    return fieldValue === conditionValue;
-  },
+  compare: (fieldValue: any, conditionValue: any) =>
+    fieldValue === conditionValue,
   defaultForTypes: [DataType.Boolean, DataType.Number, DataType.Date],
   name: '=',
 }, {
-  compare: (fieldValue: any, conditionValue: any): boolean => {
-    return fieldValue.toString().toLowerCase().includes(conditionValue.toString().toLowerCase());
-  },
+  compare: (fieldValue: any, conditionValue: any) =>
+    fieldValue > conditionValue,
+  name: '>',
+}, {
+  compare: (fieldValue: any, conditionValue: any) =>
+    fieldValue < conditionValue,
+  name: '<',
+}, {
+  compare: (fieldValue: any, conditionValue: any) =>
+    fieldValue >= conditionValue,
+  name: '>=',
+}, {
+  compare: (fieldValue: any, conditionValue: any) =>
+    fieldValue <= conditionValue,
+  name: '<=',
+}, {
+  compare: (fieldValue: any, conditionValue: any) =>
+      fieldValue.toString().toLowerCase().includes(conditionValue.toString().toLowerCase()),
   defaultForTypes: [DataType.String],
   name: 'contains',
 }];

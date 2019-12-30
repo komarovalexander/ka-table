@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, Events, FilteringMode } from '../../lib/enums';
+import { DataType, EditingMode, Events, FilteringMode } from '../../lib/enums';
 import { FilterRowFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
 
 const dataArray: any[] = [
-  { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
-  { id: 2, name: 'Billi Bob', score: 55, passed: false },
-  { id: 3, name: 'Tom Williams', score: 45, passed: false },
-  { id: 4, name: 'Kurt Cobain', score: 75, passed: true },
-  { id: 5, name: 'Marshall Bruce', score: 77, passed: true },
-  { id: 6, name: 'Sunny Fox', score: 33, passed: false },
+  { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
+  { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2021, 12, 9) },
+  { id: 3, name: 'Tom Williams', score: 45, passed: false, nextTry: new Date(2021, 7, 9) },
+  { id: 4, name: 'Kurt Cobain', score: 75, passed: true, nextTry: new Date(2021, 10, 12) },
+  { id: 5, name: 'Marshall Bruce', score: 77, passed: true, nextTry: new Date(2021, 10, 15) },
+  { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 7) },
+  { id: 7, name: 'Alex Brzowsky', score: 48, passed: false, nextTry: new Date(2021, 11, 11) },
 ];
 
 const CustomLookupEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
@@ -52,7 +53,10 @@ const MultipleConditionsEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
           dispatch(Events.FilterRowChanged, { column: {...column, filterRowOperator: event.currentTarget.value}});
         }}>
         <option value={'='}>=</option>
-        <option value={'contains'}>contains</option>
+        <option value={'<'}>{'<'}</option>
+        <option value={'>'}>{'>'}</option>
+        <option value={'<='}>{'<='}</option>
+        <option value={'>='}>{'>='}</option>
       </select>
       <input
         defaultValue={column.filterRowValue}
@@ -62,7 +66,7 @@ const MultipleConditionsEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
         }}
         type='number'
       />
-    </div >
+    </div>
   );
 };
 
@@ -72,17 +76,33 @@ const tableOption: ITableOption = {
       dataType: DataType.Boolean,
       editor: CustomLookupEditor,
       filterRowCell: CustomLookupEditor,
+      filterRowValue: false,
       key: 'passed',
       title: 'Passed',
     },
-    { key: 'name', title: 'Name', dataType: DataType.String, filterRowCell: () => <></> },
+    {
+      dataType: DataType.String,
+      filterRowCell: () => <></>,
+      key: 'name',
+      title: 'Name',
+    },
     {
       dataType: DataType.Number,
       filterRowCell: MultipleConditionsEditor,
+      filterRowOperator: '>=',
+      filterRowValue: 45,
       key: 'score',
       title: 'Score',
     },
+    {
+      dataType: DataType.Date,
+      filterRowValue: new Date(2021, 7, 9),
+      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
+      key: 'nextTry',
+      title: 'Next Try',
+    },
   ],
+  editingMode: EditingMode.Cell,
   filteringMode: FilteringMode.FilterRow,
   rowKeyField: 'id',
 };

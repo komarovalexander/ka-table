@@ -4,36 +4,32 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { DataType, Events } from '../../enums';
-import { ICellEditorProps } from '../CellEditor/CellEditor';
-import FilterRowBoolean from './FilterRowBoolean';
+import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
+import FilterRowDate from './FilterRowDate';
 
 Enzyme.configure({ adapter: new Adapter() });
-const props: ICellEditorProps = {
+const props: IFilterRowEditorProps = {
   column: {
-    dataType: DataType.Boolean,
+    dataType: DataType.Date,
     key: 'fieldName',
     title: 'Field',
   },
   dispatch: jest.fn(),
-  field: 'fieldName',
-  isSelectedRow: true,
-  rowData: { column: 1 },
-  rowKeyField: '',
 };
 
-describe('FilterRowBoolean', () => {
+describe('FliterRowDate', () => {
   it('renders without crashing', () => {
     const element = document.createElement('td');
-    ReactDOM.render(<FilterRowBoolean {...props} />, element);
+    ReactDOM.render(<FilterRowDate {...props} />, element);
     ReactDOM.unmountComponentAtNode(element);
   });
 
   it('should fire FilterRowChanged', () => {
-    const newValue = false;
-    const column = { field: 'name', key: 'nameKey', dataType: DataType.Boolean };
-    const wrapper = mount(<FilterRowBoolean {...props}  column={column} />);
+    const newValue = new Date(2020, 1, 2);
+    const column = { field: 'name', key: 'nameKey', dataType: DataType.Date };
+    const wrapper = mount(<FilterRowDate {...props} column={column}/>);
 
-    wrapper.find('input').props().onChange!({currentTarget: { checked: newValue} } as any);
+    wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
       Events.FilterRowChanged, { column: { ...column, filterRowValue: newValue } },

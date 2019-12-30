@@ -3,6 +3,7 @@ import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { Events } from '../../enums';
 import { Cell } from '../../models';
+import { getDateInputValue } from '../../Utils/DateUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
@@ -13,7 +14,7 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   rowKeyField,
 }) => {
   const fieldValue = rowData[field];
-  const value = fieldValue && fieldValue.toISOString().split('T')[0];
+  const value = fieldValue && getDateInputValue(fieldValue);
   return (
     <input
       autoFocus={true}
