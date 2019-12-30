@@ -1,5 +1,5 @@
 import defaultOptions from '../defaultOptions';
-import { DataType, PredefinedFilterOperator } from '../enums';
+import { DataType, FilterOperator } from '../enums';
 import { Cell } from '../Models/Cell';
 import { Column } from '../Models/Column';
 import { FilterOperator } from '../Models/FilterOperator';
@@ -51,26 +51,26 @@ export const predefinedFilterOperators: FilterOperator[] = [{
   compare: (fieldValue: any, conditionValue: any) =>
     fieldValue === conditionValue,
   defaultForTypes: [DataType.Boolean, DataType.Number, DataType.Date],
-  name: PredefinedFilterOperator.Equal,
+  name: FilterOperator.Equal,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
     fieldValue > conditionValue,
-  name: PredefinedFilterOperator.MoreThan,
+  name: FilterOperator.MoreThan,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
     fieldValue < conditionValue,
-  name: PredefinedFilterOperator.LessThan,
+  name: FilterOperator.LessThan,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
     fieldValue >= conditionValue,
-  name: PredefinedFilterOperator.MoreThanOrEqual,
+  name: FilterOperator.MoreThanOrEqual,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
     fieldValue <= conditionValue,
-  name: PredefinedFilterOperator.LessThanOrEqual,
+  name: FilterOperator.LessThanOrEqual,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
       fieldValue.toString().toLowerCase().includes(conditionValue.toString().toLowerCase()),
   defaultForTypes: [DataType.String],
-  name: PredefinedFilterOperator.Contains,
+  name: FilterOperator.Contains,
 }];

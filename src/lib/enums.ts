@@ -42,7 +42,7 @@ export enum FilteringMode {
   FilterRow = 'filterRow',
 }
 
-export enum PredefinedFilterOperator {
+export enum FilterOperator {
   Equal = '=',
   MoreThan = '>',
   LessThan = '<',
