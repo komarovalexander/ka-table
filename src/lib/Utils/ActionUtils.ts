@@ -16,47 +16,47 @@ export const wrapDispatch = ({
   selectedRows = [],
   virtualScrolling,
 }: ITableAllProps) => {
-  return (event: string, eventData: any) => {
-    switch (event) {
+  return (action: string, actionData: any) => {
+    switch (action) {
       case Action.OpenEditor:
         changeCellTextToCellEditorHandler(
-          eventData.cell,
+          actionData.cell,
           editableCells,
           onOptionChange);
         break;
       case Action.CloseEditor:
         changeCellEditorToCellTextHandler(
-          eventData.cell,
+          actionData.cell,
           editableCells,
           onOptionChange);
         break;
       case Action.ChangeFilterRow:
-          const newColumns = getCopyOfArrayAndInsertOrReplaceItem(eventData.column, 'key', columns);
+          const newColumns = getCopyOfArrayAndInsertOrReplaceItem(actionData.column, 'key', columns);
           onOptionChange({ columns: newColumns });
           break;
       case Action.ChangeRowData:
-          const newData = getCopyOfArrayAndInsertOrReplaceItem(eventData.newValue, rowKeyField, data);
+          const newData = getCopyOfArrayAndInsertOrReplaceItem(actionData.newValue, rowKeyField, data);
           onDataChange(newData);
           break;
       case Action.SelectRow:
-          onOptionChange({ selectedRows: [...selectedRows, ...[eventData.rowKeyValue]] });
+          onOptionChange({ selectedRows: [...selectedRows, ...[actionData.rowKeyValue]] });
           break;
       case Action.DeselectRowData:
-          onOptionChange({ selectedRows: [...selectedRows].filter((s) => s !== eventData.rowKeyValue) });
+          onOptionChange({ selectedRows: [...selectedRows].filter((s) => s !== actionData.rowKeyValue) });
           break;
       case Action.ChangeSorting:
-          const sortedColumns = getSortedColumns(columns, eventData.column);
+          const sortedColumns = getSortedColumns(columns, actionData.column);
           onOptionChange({ columns: sortedColumns });
           break;
       case Action.ScrollTable:
           if (virtualScrolling) {
-            const scrollPosition = eventData.scrollTop;
+            const scrollPosition = actionData.scrollTop;
             if (virtualScrolling) {
               onOptionChange({ virtualScrolling: { ...virtualScrolling, scrollPosition }});
             }
           }
           break;
     }
-    onActionExecuted(event, eventData);
+    onActionExecuted(action, actionData);
   };
 };

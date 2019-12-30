@@ -44,13 +44,13 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     return addEscEnterKeyEffect(close, closeHandler);
   }, [close, closeHandler]);
 
-  const dispatchHandler = (event: string, eventData: any) => {
-    if (event === Action.CloseEditor) {
+  const dispatchHandler = (action: string, actionData: any) => {
+    if (action === Action.CloseEditor) {
       closeHandler();
-    } else if (event === Action.ChangeRowData) {
-      onValueStateChange(eventData.newValue);
+    } else if (action === Action.ChangeRowData) {
+      onValueStateChange(actionData.newValue);
     } else {
-      dispatch(event, eventData);
+      dispatch(action, actionData);
     }
   };
 

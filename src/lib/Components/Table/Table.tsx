@@ -38,7 +38,7 @@ export interface ITableEvents {
   onDataChange?: DataChangeFunc;
   /** Called each time ITableOption changed */
   onOptionChange: OptionChangeFunc;
-  /** Called each time when some event emited */
+  /** Called each time when some action emited */
   onActionExecuted?: ActionExecutedFunc;
 }
 

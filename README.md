@@ -334,7 +334,7 @@ Function which obtains value of specific cell and row - as parameters and return
 | Name | Type | Description |
 | --- | --- | --- |
 | columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
-| dispatch | (type: string, data: any) => void | Executes specific event with specific data |
+| dispatch | (type: string, data: any) => void | Executes specific action with specific data |
 | editableCells | [<code>Cell[]</code>](#Cell) | Array of cells that are in edit mode |
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Table's editing mode |
 | rowData | any | Data of current row |

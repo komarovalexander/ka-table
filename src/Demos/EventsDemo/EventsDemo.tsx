@@ -41,11 +41,11 @@ const EventsDemo: React.FC = () => {
   };
 
   const [events, changeEvents] = useState([] as any []);
-  const onActionExecuted: ActionExecutedFunc = (event, eventData) => {
+  const onActionExecuted: ActionExecutedFunc = (action, actionData) => {
     const date = new Date();
     const time = date.toLocaleTimeString();
     const milliseconds = date.getMilliseconds();
-    changeEvents((prevValue) => ([{ type: event, data: `${JSON.stringify(eventData)}`, time, milliseconds }, ...prevValue]));
+    changeEvents((prevValue) => ([{ type: action, data: `${JSON.stringify(actionData)}`, time, milliseconds }, ...prevValue]));
   };
   return (
     <div className='events-demo'>
