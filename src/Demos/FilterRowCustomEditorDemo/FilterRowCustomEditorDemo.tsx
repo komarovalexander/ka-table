@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, Events, FilteringMode } from '../../lib/enums';
 import { FilterRowFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
+import { dateUtils } from '../../lib/utils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
@@ -41,23 +42,31 @@ const CustomLookupEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
   );
 };
 
-const MultipleConditionsEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+const FilterOperators: React.FC<FilterRowFuncPropsWithChildren> = ({
+  column, dispatch,
+}) => {
+  return (
+    <select
+      className='form-control'
+      defaultValue={column.filterRowOperator}
+      onChange={(event) => {
+        dispatch(Events.FilterRowChanged, { column: {...column, filterRowOperator: event.currentTarget.value}});
+      }}>
+      <option value={'='}>=</option>
+      <option value={'<'}>{'<'}</option>
+      <option value={'>'}>{'>'}</option>
+      <option value={'<='}>{'<='}</option>
+      <option value={'>='}>{'>='}</option>
+    </select>
+  );
+};
+
+const NumberEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
   column, dispatch,
 }) => {
   return (
     <div>
-      <select
-        className='form-control'
-        defaultValue={column.filterRowOperator}
-        onChange={(event) => {
-          dispatch(Events.FilterRowChanged, { column: {...column, filterRowOperator: event.currentTarget.value}});
-        }}>
-        <option value={'='}>=</option>
-        <option value={'<'}>{'<'}</option>
-        <option value={'>'}>{'>'}</option>
-        <option value={'<='}>{'<='}</option>
-        <option value={'>='}>{'>='}</option>
-      </select>
+      <FilterOperators column={column} dispatch={dispatch}/>
       <input
         defaultValue={column.filterRowValue}
         onChange={(event) => {
@@ -65,6 +74,28 @@ const MultipleConditionsEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
           dispatch(Events.FilterRowChanged, { column: {...column, filterRowValue}});
         }}
         type='number'
+      />
+    </div>
+  );
+};
+
+const DateEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+  column, dispatch,
+}) => {
+  const fieldValue = column.filterRowValue;
+  const value = fieldValue && dateUtils.getDateInputValue(fieldValue);
+  return (
+    <div>
+      <FilterOperators column={column} dispatch={dispatch}/>
+      <input
+        type='date'
+        value={value || ''}
+        onChange={(event) => {
+          const targetValue = event.currentTarget.value;
+          const filterRowValue = targetValue ? new Date(targetValue) : null;
+          const updatedColumn = {...column, filterRowValue};
+          dispatch(Events.FilterRowChanged, {column: updatedColumn});
+        }}
       />
     </div>
   );
@@ -88,7 +119,7 @@ const tableOption: ITableOption = {
     },
     {
       dataType: DataType.Number,
-      filterRowCell: MultipleConditionsEditor,
+      filterRowCell: NumberEditor,
       filterRowOperator: '>=',
       filterRowValue: 45,
       key: 'score',
@@ -96,7 +127,9 @@ const tableOption: ITableOption = {
     },
     {
       dataType: DataType.Date,
-      filterRowValue: new Date(2021, 7, 9),
+      filterRowCell: DateEditor,
+      filterRowOperator: '<=',
+      filterRowValue: new Date(2021, 11, 11),
       format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
       key: 'nextTry',
       title: 'Next Try',
