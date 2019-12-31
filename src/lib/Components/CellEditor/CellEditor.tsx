@@ -1,17 +1,19 @@
 import * as React from 'react';
 
 import { Column } from '../../Models/Column';
-import { EventFunc, ValueChangeFunc } from '../../types';
+import { DispatchFunc } from '../../types';
 import CellEditorState from '../CellEditorState/CellEditorState';
 
-export interface ICellEditorProps {
+export interface IFilterRowEditorProps {
   column: Column;
+  dispatch: DispatchFunc;
+}
+
+export interface ICellEditorProps extends IFilterRowEditorProps {
   field: string;
+  isSelectedRow: boolean;
   rowData: any;
   rowKeyField: string;
-  isSelectedRow: boolean;
-  dispatch: EventFunc;
-  onValueChange: ValueChangeFunc;
 }
 
 const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {

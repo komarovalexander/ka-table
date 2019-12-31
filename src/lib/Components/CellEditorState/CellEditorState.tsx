@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Events } from '../../enums';
+import { ActionType } from '../../enums';
 import { Cell } from '../../models';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import { getValidationValue } from '../../Utils/Validation';
@@ -18,45 +18,44 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     rowData,
     rowKeyField,
     dispatch,
-    onValueChange,
   } = props;
   const [value, changeValue] = useState(rowData);
 
   const validationValue = getValidationValue(value, field, column.validation);
-  const onValueStateChange = (newValue: any): void => {
-    const rowValue = { ...rowData, ...{ [key]: newValue } };
+  const onValueStateChange = (rowValue: any): void => {
     changeValue(rowValue);
   };
 
   const close = useCallback(() => {
     const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-    dispatch(Events.CloseEditor, { cell });
+    dispatch(ActionType.CloseEditor, { cell });
   }, [dispatch, column, rowData, rowKeyField]);
 
   const closeHandler = useCallback(() => {
     if (!validationValue) {
       if (rowData[key] !== value[key]) {
-        onValueChange({ ...rowData, ...{ [key]: value[key] } });
+        dispatch(ActionType.ChangeRowData, { newValue: { ...rowData, ...{ [key]: value[key] } } });
       }
       close();
     }
-  }, [validationValue, onValueChange, close, value, key, rowData]);
+  }, [validationValue, dispatch, close, value, key, rowData]);
 
   useEffect(() => {
     return addEscEnterKeyEffect(close, closeHandler);
   }, [close, closeHandler]);
 
-  const dispatchHandler = (event: string, eventData: any) => {
-    if (event === Events.CloseEditor) {
+  const dispatchHandler = (action: string, actionData: any) => {
+    if (action === ActionType.CloseEditor) {
       closeHandler();
+    } else if (action === ActionType.ChangeRowData) {
+      onValueStateChange(actionData.newValue);
     } else {
-      dispatch(event, eventData);
+      dispatch(action, actionData);
     }
   };
 
   const stateProps = { ...props, ...{
     dispatch: dispatchHandler,
-    onValueChange: onValueStateChange,
     rowData : value,
   }};
 

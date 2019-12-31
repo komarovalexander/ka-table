@@ -11,14 +11,15 @@ export enum EditingMode {
   Cell = 'cell',
 }
 
-export enum Events {
-  ScrollTable = 'ScrollTable',
+export enum ActionType {
   CloseEditor = 'CloseEditor',
+  ChangeFilterRow = 'ChangeFilterRow',
   OpenEditor = 'OpenEditor',
-  RowDataChanged = 'RowDataChanged',
-  RowDeselected = 'RowDeselected',
-  RowSelected = 'RowSelected',
-  SortingChanged = 'SortingChanged',
+  ChangeRowData = 'ChangeRowData',
+  DeselectRowData = 'DeselectRowData',
+  SelectRow = 'SelectRow',
+  ScrollTable = 'ScrollTable',
+  ChangeSorting = 'ChangeSorting',
 }
 
 export enum KeyboardEnum {
@@ -34,4 +35,18 @@ export enum SortDirection {
 export enum SortingMode {
   None = 'none',
   Single = 'single',
+}
+
+export enum FilteringMode {
+  None = 'none',
+  FilterRow = 'filterRow',
+}
+
+export enum FilterOperatorName {
+  Equal = '=',
+  MoreThan = '>',
+  LessThan = '<',
+  MoreThanOrEqual = '>=',
+  LessThanOrEqual = '<=',
+  Contains = 'contains',
 }

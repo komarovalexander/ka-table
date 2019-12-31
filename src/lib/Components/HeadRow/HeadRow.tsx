@@ -3,7 +3,7 @@ import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { SortingMode } from '../../enums';
 import { Column } from '../../Models/Column';
-import { EventFunc } from '../../types';
+import { DispatchFunc } from '../../types';
 import EmptyCells from '../EmptyCells/EmptyCells';
 import HeadCell from '../HeadCell/HeadCell';
 
@@ -11,7 +11,7 @@ export interface IHeadRowProps {
   columns: Column[];
   sortingMode: SortingMode;
   groupColumnsCount: number;
-  dispatch: EventFunc;
+  dispatch: DispatchFunc;
 }
 
 const HeadRow: React.FunctionComponent<IHeadRowProps> = ({

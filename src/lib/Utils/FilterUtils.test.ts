@@ -1,8 +1,7 @@
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
-import { FilterCondition } from '../Models/FilterCondition';
 import {
-  filterCellValueChangeHandler, filterData, getRowEditableCells, searchData,
+  filterData, getDefaultOperatorForType, getRowEditableCells, predefinedFilterOperators, searchData,
 } from './FilterUtils';
 
 describe('FilterUtils', () => {
@@ -17,6 +16,12 @@ describe('FilterUtils', () => {
     expect(rowEditableCells).toMatchSnapshot();
   });
 
+  it('getDefaultOperatorForType', () => {
+    expect(getDefaultOperatorForType(DataType.Number)).toBe('=');
+    expect(getDefaultOperatorForType(DataType.Object)).toBe('=');
+    expect(getDefaultOperatorForType(DataType.String)).toBe('contains');
+  });
+
   describe('filterData', () => {
     const data: any[] = [
       { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -27,68 +32,69 @@ describe('FilterUtils', () => {
       { id: 6, name: 'Sunny Fox', score: 33, passed: false },
     ];
     it('one item', () => {
-      const filterRow = [{
-        field: 'name',
-        operator: '=',
-        value: 'Billi Bob',
+      const columns = [{
+        filterRowValue: 'Billi Bob',
+        key: 'name',
       }];
-      const result = filterData(data, filterRow);
+      const result = filterData(data, columns);
       expect(result).toMatchSnapshot();
     });
 
     it('two item', () => {
-      const filterRow: FilterCondition[] = [{
-        field: 'name',
-        operator: '=',
-        value: 'Billi Bob',
+      const columns = [{
+        filterRowValue: 'Billi Bob',
+        key: 'name',
       }, {
-        field: 'score',
-        operator: '=',
-        value: 45,
+        dataType: DataType.Number,
+        filterRowValue: 45,
+        key: 'score',
       }];
-      const result = filterData(data, filterRow);
+      const result = filterData(data, columns);
       expect(result).toMatchSnapshot();
+    });
+
+    it('should throw an error in case of unknown filterOperator', () => {
+      const columns = [{
+        filterRowOperator: 'unknownOperator',
+        filterRowValue: 'Billi Bob',
+        key: 'name',
+      }];
+      expect(() => filterData(data, columns)).toThrowError('\'unknownOperator\' has not found in predefinedFilterOperators array, available operators: =, >, <, >=, <=, contains');
     });
   });
 
-  describe('filterCellValueChangeHandler', () => {
-    let filterRow: FilterCondition[];
-    beforeEach(() => {
-      filterRow = [{
-        field: 'name',
-        operator: '=',
-        value: 'Billi Bob',
-      }, {
-        field: 'score',
-        operator: '=',
-        value: 45,
-      }];
-    });
-    it('repace item', () => {
-      const field = 'name';
-      const value = 'Sasha';
-      const optionChangeHandler = jest.fn();
-      filterCellValueChangeHandler(value, field, filterRow, optionChangeHandler);
-      expect(optionChangeHandler.mock.calls.length).toBe(1);
-      expect(optionChangeHandler.mock.calls[0]).toMatchSnapshot();
-    });
-
-    it('add item', () => {
-      const field = 'position';
-      const value = 'Professor';
-      const optionChangeHandler = jest.fn();
-      filterCellValueChangeHandler(value, field, filterRow, optionChangeHandler);
-      expect(optionChangeHandler.mock.calls.length).toBe(1);
-      expect(optionChangeHandler.mock.calls[0]).toMatchSnapshot();
-    });
-
-    it('delete item', () => {
-      const field = 'name';
-      const value = '';
-      const optionChangeHandler = jest.fn();
-      filterCellValueChangeHandler(value, field, filterRow, optionChangeHandler);
-      expect(optionChangeHandler.mock.calls.length).toBe(1);
-      expect(optionChangeHandler.mock.calls[0]).toMatchSnapshot();
+  [{
+    falsy: [1, 2],
+    name: '=',
+    truthy: [1, 1],
+  }, {
+    falsy: [1, 1],
+    name: '>',
+    truthy: [2, 1],
+  }, {
+    falsy: [2, 1],
+    name: '<',
+    truthy: [1, 2],
+  }, {
+    falsy: [1, 2],
+    name: '>=',
+    truthy: [1, 1],
+  }, {
+    falsy: [2, 1],
+    name: '<=',
+    truthy: [1, 1],
+  }, {
+    falsy: ['abs', 'ss'],
+    name: 'contains',
+    truthy: ['hello', 'hell'],
+  }].forEach((d) => {
+    it(`predefinedFilterOperators operator ${d.name} truthy: ${d.truthy} falsy: ${d.falsy}`, () => {
+      const operator = predefinedFilterOperators.find((o) => o.name === d.name);
+      if (!operator) {
+        throw new Error(`${d.name} was not found`);
+      }
+      expect(operator.compare(d.truthy[0], d.truthy[1])).toBeTruthy();
+      expect(operator.compare(d.falsy[0], d.falsy[1])).toBeFalsy();
     });
   });
 

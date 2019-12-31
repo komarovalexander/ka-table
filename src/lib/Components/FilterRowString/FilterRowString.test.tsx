@@ -4,39 +4,38 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ActionType, DataType } from '../../enums';
-import { ICellEditorProps } from '../CellEditor/CellEditor';
-import CellEditorDate from './CellEditorDate';
+import FilterRowString from './FilterRowString';
 
 Enzyme.configure({ adapter: new Adapter() });
-const props: ICellEditorProps = {
+
+const props: any = {
   column: {
-    dataType: DataType.Date,
-    key: 'fieldName',
+    dataType: DataType.String,
+    key: 'columnField',
     title: 'Field',
   },
   dispatch: jest.fn(),
-  field: 'fieldName',
   isSelectedRow: true,
   rowData: { column: 1 },
   rowKeyField: '',
 };
 
-describe('CellEditorDate', () => {
+describe('FilterRowString', () => {
   it('renders without crashing', () => {
     const element = document.createElement('td');
-    ReactDOM.render(<CellEditorDate {...props} />, element);
+    ReactDOM.render(<FilterRowString {...props} />, element);
     ReactDOM.unmountComponentAtNode(element);
   });
 
-  it('should fire RowDataChanged', () => {
-    const newValue = new Date(2020, 1, 2);
-    const rowData = { fieldName: new Date(2020, 0, 2) };
-    const wrapper = mount(<CellEditorDate {...props} rowData={rowData} field='fieldName' />);
+  it('FilterRowString: should pass field name to filterCellValueChangeHandler', () => {
+    const newValue = '2';
+    const column = { field: 'name', key: 'nameKey' };
+    const wrapper = mount(<FilterRowString {...props} column={column} />);
 
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeRowData, { newValue: { fieldName: newValue } },
+      ActionType.ChangeFilterRow, { column: { field: 'name', key: 'nameKey', filterRowValue: newValue } },
     );
   });
 });

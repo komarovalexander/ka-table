@@ -6,6 +6,7 @@
     ]
   },
   "rules": {
+    "max-line-length": false,
     "no-submodule-imports": false,
     "quotemark": [true, "single", "jsx-single"],
     "jsx-no-multiline-js": false,

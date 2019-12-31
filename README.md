@@ -87,7 +87,7 @@ export default SortingDemo;
 
 [Editing](https://komarovalexander.github.io/ka-table/#/editing) - Editing out of the box
 
-[Events](https://komarovalexander.github.io/ka-table/#/events) - Most events are trackable
+[Events](https://komarovalexander.github.io/ka-table/#/events) - All events are trackable
 
 [Filter Extended](https://komarovalexander.github.io/ka-table/#/filter-extended) - Easy filtered by extended filters
 
@@ -123,11 +123,12 @@ export default SortingDemo;
 | dataRow | [<code>DataRowFunc</code>](#DataRowFunc) | Returns Data Row Template [Custom Data Row Example](https://komarovalexander.github.io/ka-table/#/custom-data-row |
 | editableCells | [<code>Cell[]</code>](#Cell) | Array of cells that are in edit mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| filterRow | [<code>FilterCondition[]</code>](#FilterCondition) | Sets filters for columns [Filter Row Example](https://komarovalexander.github.io/ka-table/#/filter-row) |
+| filterRow | [<code>FilteringMode</code>](#FilteringMode) | Show filtering related UI elements in Table [Filter Row Example](https://komarovalexander.github.io/ka-table/#/filter-row) |
 | groups | [<code>Group[]</code>](#Group) | Group's in the table [Grouping Example](https://komarovalexander.github.io/ka-table/#/grouping) |
 | onDataChange | (data: any[]) => void | This function is called each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | onOptionChange | (value: any) => void | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| onEvent | (type: string, data: any) => void | Use this function to track events in Table [Events Example](https://komarovalexander.github.io/ka-table/#/events) |
+| onEvent | (type: string, data: any) => void | Executes each time when dispatch is called [Events](https://komarovalexander.github.io/ka-table/#/events) |
+| onActionRejected | (type: string, data: any, command: [ActionCommand](#ActionCommand)) => void | Executes each time after action has been rejected [Command Column](https://komarovalexander.github.io/ka-table/#/command-column) |
 | groupsExpanded | any[][] | Groups that are expanded in the grid |
 | rowKeyField | string | Data's field which is used to identify row |
 | search <a name="Table.search"></a> | string | Specifies the text which are used for search by data [Search Example](https://komarovalexander.github.io/ka-table/#/search) |
@@ -146,7 +147,9 @@ Describes column of table its look and behaviour
 | cell | [<code>CellFunc</code>](#CellFunc) | Returns a custom cell if Table is not in editable mode [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) |
 | dataType | [<code>DataType</code>](#DataType) | Specifies the type of column |
 | editor | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor if cell is in editable mode [Custom Editor Example](https://komarovalexander.github.io/ka-table/#/custom-editor) |
-| filterCell | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor for filter row cell [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) |
+| filterRowCell | [<code>FilterRowFunc</code>](#FilterRowFunc) | Returns an editor for filter row cell [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) |
+| filterRowOperator | string | Sets filter row operator [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor). See the list of predefined filter operators [<code>FilterOperatorName</code>](#FilterOperatorName) |
+| filterRowValue | any | Sets filter row value [Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) |
 | field | string | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
 | format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string [Example](https://komarovalexander.github.io/ka-table/#/custom-cell) |
 | headCell | HeaderCellFunc | Returns a custom header cell [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell) |
@@ -170,19 +173,6 @@ Describes the position of a cell in  the table
 | --- | --- | --- |
 | field | string | The field of specific column |
 | rowKeyValue | any | Data's key value of every specific row |
-
-
-<a name="FilterCondition"></a>
-### FilterCondition
-
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| field | string | The filtered column's field |
-| operator | string | Operator which will be applied for filtering |
-| value | any | Filtered value |
-
 
 <a name="Group"></a>
 ### Group
@@ -227,6 +217,28 @@ Describes the position of a cell in  the table
 | Cell | 'cell' | Data is edited by cell to cell, click by cell activates editing |
 
 
+<a name="FilteringMode"></a>
+### FilteringMode
+
+| Property | String value | Description |
+| --- | --- | --- |
+| None | 'none' | All filtering elements are hidden |
+| FilterRow | 'filterRow' | Filter row is shown |
+
+
+<a name="FilterOperatorName"></a>
+### FilterOperatorName
+
+| Property | String value |
+| --- | --- |
+| Equal | '=' |
+| MoreThan | '>' |
+| LessThan | '<' |
+| MoreThanOrEqual | '>=' |
+| LessThanOrEqual | '<=' |
+| Contains | 'contains' |
+
+
 <a name="SortDirection"></a>
 ### SortDirection
 
@@ -267,6 +279,13 @@ Function which obtains [<code>IDataRowProps</code>](#IDataRowProps) as parameter
 
 Function which obtains [<code>ICellEditorProps</code>](#ICellEditorProps) as parameter and returns React component which should be shown instead of default editor.
 
+<a name="FilterRowFunc"></a>
+### FilterRowFunc
+
+(props: [<code>IFilterRowEditorProps</code>](#IFilterRowEditorProps)) => any;
+
+Function which obtains [<code>IFilterRowEditorProps</code>](#IFilterRowEditorProps) as parameter and returns React component which should be shown instead of default filter row's editor.
+
 <a name="FormatFunc"></a>
 ### FormatFunc
 
@@ -297,10 +316,21 @@ Function which obtains value of specific cell and row - as parameters and return
 
 | Name | Type | Description |
 | --- | --- | --- |
-| column | [<code>Column</code>](#Column) | settings of the column in which editor is shown |
+| column | [<code>Column</code>](#Column) | column of the editor |
+| dispatch | (type: string, data: any) => void | can forse Table make change in data, close the editor, and other actions |
+| field | string | field name of current column |
 | rowData | any | data of the row in which editor is shown |
-| close | () => void | call this method to close editor |
-| onValueChange | (newValue: any) => void | call this method to change value of the row: <code>onValueChange({ ...rowData, ...{ [field]: value } })</code> |
+| isSelectedRow | boolean | selection state of the current row |
+| rowKeyField | string | field which is used to identify row |
+
+<a name="IFilterRowEditorProps"></a>
+### IFilterRowEditorProps
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| column | [<code>Column</code>](#Column) | column of the editor |
+| dispatch | (type: string, data: any) => void |  can forse Table make change in filter data and other actions  |
 
 
 <a name="ICellContentProps"></a>
@@ -321,7 +351,7 @@ Function which obtains value of specific cell and row - as parameters and return
 | Name | Type | Description |
 | --- | --- | --- |
 | columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
-| dispatch | (type: string, data: any) => void | Executes specific event with specific data |
+| dispatch | (type: string, data: any) => void | Executes specific action with specific data |
 | editableCells | [<code>Cell[]</code>](#Cell) | Array of cells that are in edit mode |
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Table's editing mode |
 | rowData | any | Data of current row |

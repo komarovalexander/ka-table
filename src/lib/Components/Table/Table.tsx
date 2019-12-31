@@ -1,14 +1,13 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode, SortingMode } from '../../enums';
+import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
-import { FilterCondition } from '../../Models/FilterCondition';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { DataChangeFunc, DataRowFunc, EventFunc, OptionChangeFunc } from '../../types';
-import { getOnEventHandler } from '../../Utils/EventUtils';
+import { wrapDispatch } from '../../Utils/ActionUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
 import { convertToColumnTypes } from '../../Utils/TypeUtils';
@@ -24,7 +23,7 @@ export interface ITableOption {
   dataRow?: DataRowFunc;
   editableCells?: Cell[];
   editingMode?: EditingMode;
-  filterRow?: FilterCondition[];
+  filteringMode?: FilteringMode;
   groups?: Group[];
   groupsExpanded?: any[][];
   rowKeyField: string;
@@ -39,7 +38,7 @@ export interface ITableEvents {
   onDataChange?: DataChangeFunc;
   /** Called each time ITableOption changed */
   onOptionChange: OptionChangeFunc;
-  /** Called each time when some event emited */
+  /** Called each time when action was completed */
   onEvent?: EventFunc;
 }
 
@@ -52,9 +51,8 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     editableCells = [],
     editingMode = EditingMode.None,
-    filterRow,
+    filteringMode,
     groups,
-    onOptionChange,
     search,
     selectedRows = [],
     sortingMode = SortingMode.None,
@@ -62,7 +60,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   let { columns, data } = props;
   data = search ? searchData(columns, data, search) : data;
   data = convertToColumnTypes(data, columns);
-  data = filterRow ? filterData(data, filterRow) : data;
+  data = filterData(data, columns);
   data = sortData(columns, data);
 
   let groupColumnsCount = 0;
@@ -73,7 +71,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
 
-  const tableOnEvent = getOnEventHandler(props);
+  const dispatch = wrapDispatch(props);
 
   return (
     <div className='ka' >
@@ -82,16 +80,15 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
           <HeadRow
             groupColumnsCount={groupColumnsCount}
             columns={columns}
-            dispatch={tableOnEvent}
+            dispatch={dispatch}
             sortingMode={sortingMode}
           />
-          {filterRow &&
+          {filteringMode === FilteringMode.FilterRow &&
             (
               <FilterRow
                 columns={columns}
-                filterRow={filterRow}
+                dispatch={dispatch}
                 groupColumnsCount={groupColumnsCount}
-                onOptionChange={onOptionChange}
               />
             )}
         </thead>
@@ -103,7 +100,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
             editingMode={editingMode}
             groupColumnsCount={groupColumnsCount}
             groupedColumns={groupedColumns}
-            dispatch={tableOnEvent}
+            dispatch={dispatch}
             selectedRows={selectedRows}
         />
       </table>

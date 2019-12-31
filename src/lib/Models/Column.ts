@@ -1,6 +1,6 @@
 import { DataType, SortDirection } from '../enums';
 import {
-  CellFunc, EditorFunc, FormatFunc, HeaderCellFunc, SearchFunc, ValidationFunc,
+  CellFunc, EditorFunc, FilterRowFunc, FormatFunc, HeaderCellFunc, SearchFunc, ValidationFunc,
 } from '../types';
 
 /**
@@ -8,9 +8,11 @@ import {
  */
 export class Column {
   public cell?: CellFunc;
-  public dataType?: DataType = DataType.String;
+  public dataType?: DataType;
   public editor?: EditorFunc;
-  public filterCell?: EditorFunc;
+  public filterRowCell?: FilterRowFunc;
+  public filterRowValue?: any;
+  public filterRowOperator?: any;
   public field?: string;
   public format?: FormatFunc;
   public headCell?: HeaderCellFunc;
