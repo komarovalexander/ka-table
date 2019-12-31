@@ -111,7 +111,7 @@ const tableOption: ITableOption = {
       filterRowValue: false,
       key: 'passed',
       style: {width: 90},
-      title: 'Passed'
+      title: 'Passed',
     },
     {
       dataType: DataType.String,
