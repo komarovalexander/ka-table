@@ -1,0 +1,32 @@
+.events-demo{
+  .ka-tbody{
+    max-height: 300px;
+  }
+
+  .events{
+    margin: 20px 0 0 0;
+    max-height: 200px;
+    overflow: auto;
+    background-color: white;
+
+    > div{
+      padding: 5px;
+      border: 1px solid #d1d5d7;
+      border-width: 1px 0 0 0;
+      &:last-child{
+        border-width: 1px 0;
+      }
+      .time{
+        color: #888;
+        font-size: 12px;
+      }
+      .milliseconds{
+        color: #aaa;
+        font-size: 10px;
+      }
+      .type{
+        color: #00f;
+      }
+    }
+  }
+}

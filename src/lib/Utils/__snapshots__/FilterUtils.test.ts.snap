@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterUtils filterData one item 1`] = `
+Array [
+  Object {
+    "id": 2,
+    "name": "Billi Bob",
+    "passed": false,
+    "score": 55,
+  },
+]
+`;
+
+exports[`FilterUtils filterData two item 1`] = `Array []`;
+
+exports[`FilterUtils getRowEditableCells should return required cells from table EditableCells 1`] = `
+Array [
+  Object {
+    "columnKey": "10",
+    "rowKey": 10,
+  },
+]
+`;
+
+exports[`FilterUtils searchData by boolean 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "name": "Mike Wazowski",
+    "passed": true,
+    "score": 80,
+  },
+  Object {
+    "id": 4,
+    "name": "Kurt Cobain",
+    "passed": true,
+    "score": 75,
+  },
+  Object {
+    "id": 5,
+    "name": "Marshall Bruce",
+    "passed": true,
+    "score": 77,
+  },
+]
+`;
+
+exports[`FilterUtils searchData by string 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "name": "Mike Wazowski",
+    "passed": true,
+    "score": 80,
+  },
+]
+`;
+
+exports[`FilterUtils searchData should find value by search handler 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "name": "Mike Wazowski",
+    "passed": true,
+    "score": 80,
+  },
+  Object {
+    "id": 4,
+    "name": "Kurt Cobain",
+    "passed": true,
+    "score": 75,
+  },
+  Object {
+    "id": 5,
+    "name": "Marshall Bruce",
+    "passed": true,
+    "score": 77,
+  },
+]
+`;
+
+exports[`FilterUtils searchData should not find value by search handler 1`] = `Array []`;
