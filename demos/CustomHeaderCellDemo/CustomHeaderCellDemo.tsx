@@ -29,7 +29,10 @@ const tableOption: ITableOption = {
       style: { textAlign: 'left' },
       title: 'Column 1',
     },
-    { key: 'column2', title: 'Column 2' },
+    {
+      key: 'column2',
+      title: 'Column 2',
+    },
   ],
   rowKeyField: 'id',
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
-import { DataType, Events, SortDirection, SortingMode } from 'ka-table/enums';
+import { ActionType, DataType, SortDirection, SortingMode } from 'ka-table/enums';
 import { EditorFuncPropsWithChildren, OptionChangeFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
@@ -23,9 +23,9 @@ const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
       onChange={(event) => {
         const rowKeyValue = rowData[rowKeyField];
         if (event.currentTarget.checked) {
-          dispatch(Events.RowSelected, { rowKeyValue });
+          dispatch(ActionType.SelectRow, { rowKeyValue });
         } else {
-          dispatch(Events.RowDeselected, { rowKeyValue });
+          dispatch(ActionType.DeselectRowData, { rowKeyValue });
         }
       }}
     />
@@ -34,7 +34,11 @@ const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { key: 'commandColumn:selection', editor: SelectionCell, isEditable: true },
+    {
+      editor: SelectionCell,
+      isEditable: true,
+      key: 'selection',
+    },
     {
       dataType: DataType.String,
       key: 'name',

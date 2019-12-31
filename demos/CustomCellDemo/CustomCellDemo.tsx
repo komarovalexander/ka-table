@@ -3,7 +3,7 @@ import './CustomCellDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
-import { DataType, EditingMode, Events } from 'ka-table/enums';
+import { ActionType, DataType, EditingMode } from 'ka-table/enums';
 import { Cell } from 'ka-table/models';
 import { CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
 
@@ -22,7 +22,7 @@ const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
   return (
     <div onClick={() => {
       const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-      dispatch(Events.OpenEditor, { cell });
+      dispatch(ActionType.OpenEditor, { cell });
     }}>
       {rowData[field] ? 'Passed' : 'Failed'}
     </div>

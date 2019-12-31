@@ -8,7 +8,7 @@ import {
   CellFuncPropsWithChildren, DataChangeFunc, EventFunc, OptionChangeFunc,
 } from 'ka-table/types';
 
-const DELETE_EVENT = 'delete';
+const DELETE_ACTION = 'delete';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -28,7 +28,7 @@ const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
         src='static/icons/alert.svg'
         className='button'
         alt=''
-        onClick={() => alert(`row data: ${JSON.stringify(rowData)}`)}
+        onClick={() => alert(`Row data: \r\n${JSON.stringify(rowData)}`)}
       />
     </div>
   );
@@ -42,7 +42,7 @@ const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
       <img
         src='static/icons/delete.svg'
         className='button'
-        onClick={() => dispatch(DELETE_EVENT, { rowData })}
+        onClick={() => dispatch(DELETE_ACTION, { rowData })}
         alt=''
       />
    </div>
@@ -74,12 +74,13 @@ const CommandColumnDemo: React.FC = () => {
   };
 
   const onEvent: EventFunc = (event, eventData) => {
-    if (event === DELETE_EVENT) {
+    if (event === DELETE_ACTION) {
       const newValue = data.filter(
         (d: any) => d[tableOption.rowKeyField] !== eventData.rowData[tableOption.rowKeyField]);
       changeData(newValue);
     }
   };
+
   return (
     <Table
       {...option}
