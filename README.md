@@ -127,7 +127,6 @@ export default SortingDemo;
 | onDataChange | (data: any[]) => void | This function is called each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | onOptionChange | (value: any) => void | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | onEvent | (type: string, data: any) => void | Executes each time when dispatch is called [Events](https://komarovalexander.github.io/ka-table/#/events) |
-| onActionRejected | (type: string, data: any, command: [ActionCommand](#ActionCommand)) => void | Executes each time after action has been rejected [Command Column](https://komarovalexander.github.io/ka-table/#/command-column) |
 | groupsExpanded | any[][] | Groups that are expanded in the grid |
 | rowKeyField | string | Data's field which is used to identify row |
 | search <a name="Table.search"></a> | string | Specifies the text which are used for search by data [Search Example](https://komarovalexander.github.io/ka-table/#/search) |
