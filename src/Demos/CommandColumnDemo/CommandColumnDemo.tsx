@@ -5,8 +5,7 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
 import {
-  ActionExecutedFunc, ActionExecuteFunc, CellFuncPropsWithChildren, DataChangeFunc,
-  OptionChangeFunc,
+  CellFuncPropsWithChildren, DataChangeFunc, EventFunc, OptionChangeFunc,
 } from '../../lib/types';
 
 const DELETE_ACTION = 'delete';
@@ -74,38 +73,21 @@ const CommandColumnDemo: React.FC = () => {
     changeData(newValue);
   };
 
-  const onActionExecute: ActionExecuteFunc = (action, actionData, command) => {
-    if (action === DELETE_ACTION) {
-      if (window.confirm(`You are going to delete row \r\n'${JSON.stringify(actionData.rowData)}'. \r\nPress 'OK' to continue`)) {
-        const newValue = data.filter(
-          (d: any) => d[tableOption.rowKeyField] !== actionData.rowData[tableOption.rowKeyField]);
-        changeData(newValue);
-      } else {
-        command.reject();
-      }
+  const onEvent: EventFunc = (event, eventData) => {
+    if (event === DELETE_ACTION) {
+      const newValue = data.filter(
+        (d: any) => d[tableOption.rowKeyField] !== eventData.rowData[tableOption.rowKeyField]);
+      changeData(newValue);
     }
   };
 
-  const onActionExecuted: ActionExecutedFunc = (action, actionData) => {
-    if (action === DELETE_ACTION) {
-      alert(`Row has been deleted \r\n'${JSON.stringify(actionData.rowData)}'`);
-    }
-  };
-
-  const onActionRejected: ActionExecutedFunc = (action, actionData) => {
-    if (action === DELETE_ACTION) {
-      alert(`Delete action has been rejected \r\n'${JSON.stringify(actionData.rowData)}'`);
-    }
-  };
   return (
     <Table
       {...option}
       data={data}
       onOptionChange={onOptionChange}
       onDataChange={onDataChange}
-      onActionExecute={onActionExecute}
-      onActionExecuted={onActionExecuted}
-      onActionRejected={onActionRejected}
+      onEvent={onEvent}
     />
   );
 };

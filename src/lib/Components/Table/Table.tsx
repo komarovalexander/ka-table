@@ -6,9 +6,7 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import {
-  ActionExecutedFunc, ActionExecuteFunc, DataChangeFunc, DataRowFunc, OptionChangeFunc,
-} from '../../types';
+import { DataChangeFunc, DataRowFunc, EventFunc, OptionChangeFunc } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { sortData } from '../../Utils/SortUtils';
@@ -40,11 +38,8 @@ export interface ITableEvents {
   onDataChange?: DataChangeFunc;
   /** Called each time ITableOption changed */
   onOptionChange: OptionChangeFunc;
-  /** Called each time when some action emited */
-  onActionExecute?: ActionExecuteFunc;
-  /** Called each time when some action completed */
-  onActionExecuted?: ActionExecutedFunc;
-  onActionRejected?: ActionExecuteFunc;
+  /** Called each time when action was completed */
+  onEvent?: EventFunc;
 }
 
 export interface ITableAllProps extends ITableEvents, ITableOption {

@@ -5,12 +5,9 @@ import { ICellEditorProps, IFilterRowEditorProps } from './Components/CellEditor
 import { IDataRowProps } from './Components/DataRowContent/DataRowContent';
 import { IHeadCellProps } from './Components/HeadCell/HeadCell';
 import { Column } from './models';
-import { ActionCommand } from './Models/ActionCommand';
 
 export type DispatchFunc = (type: string, data: any) => void;
-export type ActionExecuteFunc = (type: string, data: any, command: ActionCommand) => void;
-export type ActionExecutedFunc = (type: string, data: any) => void;
-export type ActionRejected = (type: string, data: any, command: ActionCommand) => void;
+export type EventFunc = (type: string, data: any) => void;
 export type CellFunc = (props: CellFuncPropsWithChildren) => any;
 export type CellFuncPropsWithChildren = PropsWithChildren<ICellContentProps>;
 export type DataChangeFunc = (data: any[]) => void;
