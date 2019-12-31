@@ -69,6 +69,7 @@ const NumberEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
       <FilterOperators column={column} dispatch={dispatch}/>
       <input
         defaultValue={column.filterRowValue}
+        style={{width: 60}}
         onChange={(event) => {
           const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
           dispatch(ActionType.ChangeFilterRow, { column: {...column, filterRowValue}});
@@ -109,12 +110,14 @@ const tableOption: ITableOption = {
       filterRowCell: CustomLookupEditor,
       filterRowValue: false,
       key: 'passed',
-      title: 'Passed',
+      style: {width: 90},
+      title: 'Passed'
     },
     {
       dataType: DataType.String,
       filterRowCell: () => <></>,
       key: 'name',
+      style: {width: 100},
       title: 'Name',
     },
     {
@@ -123,6 +126,7 @@ const tableOption: ITableOption = {
       filterRowOperator: '>=',
       filterRowValue: 45,
       key: 'score',
+      style: {width: 120},
       title: 'Score',
     },
     {
@@ -132,6 +136,7 @@ const tableOption: ITableOption = {
       filterRowValue: new Date(2021, 11, 11),
       format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
       key: 'nextTry',
+      style: {width: 220},
       title: 'Next Try',
     },
   ],
