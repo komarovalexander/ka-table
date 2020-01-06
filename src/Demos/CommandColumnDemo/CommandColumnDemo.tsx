@@ -23,14 +23,12 @@ const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
    rowData,
 }) => {
   return (
-    <div>
-      <img
-        src='static/icons/alert.svg'
-        className='button'
-        alt=''
-        onClick={() => alert(`Row data: \r\n${JSON.stringify(rowData)}`)}
-      />
-    </div>
+    <img
+      src='static/icons/alert.svg'
+      className='command-column-button'
+      alt=''
+      onClick={() => alert(`Row data: \r\n${JSON.stringify(rowData)}`)}
+    />
   );
 };
 
@@ -38,14 +36,12 @@ const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
   rowData, dispatch,
 }) => {
  return (
-   <div>
-      <img
-        src='static/icons/delete.svg'
-        className='button'
-        onClick={() => dispatch(DELETE_ACTION, { rowData })}
-        alt=''
-      />
-   </div>
+    <img
+      src='static/icons/delete.svg'
+      className='command-column-button'
+      onClick={() => dispatch(DELETE_ACTION, { rowData })}
+      alt=''
+    />
  );
 };
 
