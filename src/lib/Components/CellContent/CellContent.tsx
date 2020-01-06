@@ -1,15 +1,18 @@
 import * as React from 'react';
 
-import { Column } from '../../Models/Column';
+import { EditingMode } from '../../enums';
+import { ChildAttributes, Column } from '../../models';
 import { DispatchFunc } from '../../types';
 import CellText from '../CellText/CellText';
 
 export interface ICellContentProps {
+  childAttributes?: ChildAttributes;
   column: Column;
+  dispatch: DispatchFunc;
+  editingMode: EditingMode;
   field: string;
   rowData: any;
   rowKeyField: string;
-  dispatch: DispatchFunc;
 }
 
 const CellContent: React.FunctionComponent<ICellContentProps> = (props) => {

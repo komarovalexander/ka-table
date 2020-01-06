@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { ActionType, EditingMode } from '../../enums';
+import { ChildAttributes } from '../../models';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
@@ -11,17 +12,18 @@ import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import VirtualizedRows from '../VirtualizedRows/VirtualizedRows';
 
 export interface ITableBodyProps {
-  dataRow?: DataRowFunc;
+  childAttributes?: ChildAttributes;
   columns: Column[];
   data: any[];
+  dataRow?: DataRowFunc;
+  dispatch: DispatchFunc;
   editableCells: Cell[];
   editingMode: EditingMode;
-  groupedColumns: Column[];
   groupColumnsCount: number;
+  groupedColumns: Column[];
   groups?: Group[];
   groupsExpanded?: any[][];
   onDataChange?: DataChangeFunc;
-  dispatch: DispatchFunc;
   onOptionChange: OptionChangeFunc;
   rowKeyField: string;
   selectedRows: any[];

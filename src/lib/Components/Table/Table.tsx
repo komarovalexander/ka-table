@@ -3,6 +3,7 @@ import * as React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 import { Cell } from '../../Models/Cell';
+import { ChildAttributes } from '../../Models/ChildAttributes';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
@@ -45,6 +46,7 @@ export interface ITableEvents {
 export interface ITableAllProps extends ITableEvents, ITableOption {
   /** The data which is shown in Table's rows */
   data: any[];
+  childAttributes?: ChildAttributes;
 }
 
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {

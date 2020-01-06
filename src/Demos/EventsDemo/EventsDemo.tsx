@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
+import { ChildAttributes } from '../../lib/models';
 import { DataChangeFunc, EventFunc, OptionChangeFunc } from '../../lib/types';
 
 const dataArray = Array(20).fill(undefined).map(
@@ -29,6 +30,56 @@ const tableOption: ITableOption = {
   sortingMode: SortingMode.Single,
 };
 
+const childAttributes: ChildAttributes = {
+  cell: {
+    className: '123',
+    onClick: (e, extendedEvent): any => {
+      const { childProps: { dispatch } } = extendedEvent;
+      dispatch('MY_CELL_onClick', { extendedEvent });
+    },
+    onContextMenu: (e, extendedEvent) => {
+      extendedEvent.dispatch('MY_CELL_onContextMenu', { extendedEvent });
+    },
+    onDoubleClick: (e, extendedEvent) => {
+      const { dispatch, childElementAttributes } = extendedEvent;
+      childElementAttributes.onClick?.(e);
+      dispatch('MY_CELL_onDoubleClick', { extendedEvent });
+    },
+  },
+};
+
+const EventsLog: React.FC<any> = ({ events, showDataClick }) => {
+  const eventsLog: any[] = events.map((e: any) => {
+    const time = e.date.toLocaleTimeString();
+    const milliseconds = e.date.getMilliseconds();
+    return {
+      data: `${JSON.stringify(e.data, (key, val) => {
+        if (typeof val === 'function') {
+          return `(${val})`; // make it a string, surround it by parenthesis to ensure we can revive it as an anonymous function
+        }
+        return val;
+      }, 2)}`,
+      date: e.date,
+      milliseconds,
+      showData: e.showData,
+      time,
+      type: e.type,
+    };
+  });
+  return (
+    <div className='events'>{eventsLog.map((e: any, i: number) =>
+      (
+        <div key={i}>
+            <span className={`type ${e.type.startsWith('MY_') ? 'custom' : ''}`}>{e.type}</span> {
+              e.showData ? <pre className='data'>{e.data}</pre>
+              : <span style={{textDecoration: 'underline', textDecorationStyle: 'dotted'}} onClick={() => {showDataClick(e); }}>show data</span>
+            } <span className='time'>({e.time}<span className='milliseconds'>:{e.milliseconds}</span>)</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const EventsDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const onOptionChange: OptionChangeFunc = (value) => {
@@ -42,10 +93,7 @@ const EventsDemo: React.FC = () => {
 
   const [events, changeEvents] = useState([] as any []);
   const onEvent: EventFunc = (type, eventData) => {
-    const date = new Date();
-    const time = date.toLocaleTimeString();
-    const milliseconds = date.getMilliseconds();
-    changeEvents((prevValue) => ([{ type, data: `${JSON.stringify(eventData)}`, time, milliseconds }, ...prevValue]));
+    changeEvents((prevValue) => ([{ type, data: eventData, date: new Date(), showData: false }, ...prevValue]));
   };
   return (
     <div className='events-demo'>
@@ -55,14 +103,13 @@ const EventsDemo: React.FC = () => {
         onOptionChange={onOptionChange}
         onDataChange={onDataChange}
         onEvent={onEvent}
+        childAttributes={childAttributes}
       />
-      <div className='events'>{events.map((e, i) =>
-        (
-          <div key={i}>
-            <span className='type'>{e.type}</span> <span className='data'>{e.data}</span> <span className='time'>({e.time}<span className='milliseconds'>:{e.milliseconds}</span>)</span>
-          </div>
-        ))}
-      </div>
+      <EventsLog events={events} showDataClick={(eventData: any) => {
+        const newEvents = [...events];
+        newEvents.find((e) => e.date === eventData.date).showData = true;
+        changeEvents(newEvents);
+      }}/>
     </div>
   );
 };

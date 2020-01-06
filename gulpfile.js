@@ -9,7 +9,6 @@ var replace = require('gulp-replace');
 var sass = require('gulp-sass');
 
 gulp.task('gh-pages', function () {
-
     return gulp.src('./build/**/*')
         .pipe(ghPages());
 });
