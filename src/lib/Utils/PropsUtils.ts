@@ -1,12 +1,12 @@
 import { HTMLAttributes } from 'react';
 import { isFunction } from 'util';
 
-import { ChildAttributesItem, IChildProps } from '../types';
+import { ChildAttributesItem, ChildProps } from '../types';
 
 const emptyFunc = () => {};
 export const mergeProps = (
   childElementAttributes: HTMLAttributes<HTMLElement>,
-  childProps: IChildProps,
+  childProps: ChildProps,
   childCustomAttributes: ChildAttributesItem): React.HTMLAttributes<HTMLElement> => {
   const customPropsWithEvents: any = {};
   for (const prop in childCustomAttributes) {

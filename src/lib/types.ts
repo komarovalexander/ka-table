@@ -16,7 +16,7 @@ type WithExtraParameters<T> = {
   [P in keyof T ] : AddParameters<T[P]>;
 };
 
-export type IChildProps = ICellContentProps;
+export type ChildProps = ICellContentProps;
 export type CellFunc = (props: CellFuncPropsWithChildren) => any;
 export type CellFuncPropsWithChildren = PropsWithChildren<ICellContentProps>;
 export type DataChangeFunc = (data: any[]) => void;
