@@ -43,8 +43,8 @@ const childAttributes: ChildAttributes = {
     },
     onDoubleClick: (e, extendedEvent) => {
       const { dispatch, childElementAttributes } = extendedEvent;
-      childElementAttributes.onClick!(e);
       dispatch('MY_CELL_onDoubleClick', { extendedEvent });
+      childElementAttributes.onClick!(e);
     },
   },
 };
