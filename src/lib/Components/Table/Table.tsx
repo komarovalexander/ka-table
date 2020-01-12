@@ -10,6 +10,7 @@ import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { DataChangeFunc, DataRowFunc, EventFunc, OptionChangeFunc } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
+import { extendProps } from '../../Utils/PropsUtils';
 import { sortData } from '../../Utils/SortUtils';
 import { convertToColumnTypes } from '../../Utils/TypeUtils';
 import FilterRow from '../FilterRow/FilterRow';
@@ -51,6 +52,7 @@ export interface ITableAllProps extends ITableEvents, ITableOption {
 
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
+    childAttributes = {},
     editableCells = [],
     editingMode = EditingMode.None,
     filteringMode,
@@ -75,9 +77,14 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
 
   const dispatch = wrapDispatch(props);
 
+  const componentProps: React.HTMLAttributes<HTMLTableElement> = {
+    className: defaultOptions.css.table,
+  };
+
+  const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
   return (
     <div className='ka' >
-      <table className={defaultOptions.css.table}>
+      <table {...tableProps}>
         <thead className={defaultOptions.css.thead}>
           <HeadRow
             groupColumnsCount={groupColumnsCount}
@@ -97,6 +104,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         <TableBody
             {...props}
             columns={columns}
+            childAttributes={childAttributes}
             data={data}
             editableCells={editableCells}
             editingMode={editingMode}

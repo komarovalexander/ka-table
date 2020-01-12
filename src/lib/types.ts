@@ -1,24 +1,22 @@
 import { PropsWithChildren } from 'react';
 
-import { ICellContentProps } from './Components/CellContent/CellContent';
 import { ICellEditorProps, IFilterRowEditorProps } from './Components/CellEditor/CellEditor';
 import { IDataRowProps } from './Components/DataRowContent/DataRowContent';
 import { IHeadCellProps } from './Components/HeadCell/HeadCell';
-import { Column } from './models';
-import { AttributeTableData } from './Models/AttributeTableData';
+import { ICellContentProps } from './interfaces';
+import { AttributeTableData, Column } from './models';
 
-type AddParameters<T> =
+type AddParameters<T, I> =
 T extends (e: infer E) => void ? (
-    (e: E, extendedEvent: AttributeTableData) => void
+    (e: E, extendedEvent: AttributeTableData<I>) => void
 ) : T;
-
-type WithExtraParameters<T> = {
-  [P in keyof T ] : AddParameters<T[P]>;
+type WithExtraParameters<T, I> = {
+  [P in keyof T ] : AddParameters<T[P], I>;
 };
 
-export type ChildProps = ICellContentProps;
 export type CellFunc = (props: CellFuncPropsWithChildren) => any;
 export type CellFuncPropsWithChildren = PropsWithChildren<ICellContentProps>;
+export type ChildAttributesItem<T> = WithExtraParameters<React.HTMLAttributes<HTMLElement>, T>;
 export type DataChangeFunc = (data: any[]) => void;
 export type DataRowFunc = (props: DataRowFuncPropsWithChildren) => any;
 export type DataRowFuncPropsWithChildren = PropsWithChildren<IDataRowProps>;
@@ -29,7 +27,6 @@ export type EventFunc = (type: string, data: any) => void;
 export type FilterRowFunc = (props: FilterRowFuncPropsWithChildren) => any;
 export type FilterRowFuncPropsWithChildren = PropsWithChildren<IFilterRowEditorProps>;
 export type FormatFunc = (value: any) => any;
-export type ChildAttributesItem = WithExtraParameters<React.HTMLAttributes<HTMLElement>>;
 export type HeaderCellFunc = (props: HeaderCellFuncPropsWithChildren) => any;
 export type HeaderCellFuncPropsWithChildren = PropsWithChildren<IHeadCellProps>;
 export type OptionChangeFunc = (value: any) => void;
