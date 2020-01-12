@@ -1,3 +1,5 @@
+import './CustomEditorDemo.scss';
+
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
@@ -24,18 +26,18 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
   };
   const [value, setValue] = useState(rowData[key]);
   return (
-    <div>
-    <input
-      className='form-control'
-      type='text'
-      value={value}
-      onChange={(event) => setValue(event.currentTarget.value)}/>
-    <button onClick={() => {
-      const newValue = { ...rowData, ...{ [key]: value } };
-      dispatch(ActionType.ChangeRowData, { newValue });
-      close();
-    }}>Save</button>
-    <button onClick={close}>Cancel</button>
+    <div className='custom-editor'>
+      <input
+        className='form-control'
+        type='text'
+        value={value}
+        onChange={(event) => setValue(event.currentTarget.value)}/>
+      <button className='custom-editor-button custom-editor-button-save' onClick={() => {
+        const newValue = { ...rowData, ...{ [key]: value } };
+        dispatch(ActionType.ChangeRowData, { newValue });
+        close();
+      }}>Save</button>
+      <button className='custom-editor-button custom-editor-button-cancel' onClick={close}>Cancel</button>
     </div>
   );
 };
@@ -71,13 +73,13 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tableOption: ITableOption = {
   columns: [
-    { dataType: DataType.String, key: 'name', title: 'Name', editor: CustomEditor, style: { width: '30%' } },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%' } },
+    { dataType: DataType.String, key: 'name', title: 'Name', editor: CustomEditor, style: { width: '330px' } },
+    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '50px' } },
     {
       dataType: DataType.Boolean,
       editor: CustomLookupEditor,
       key: 'passed',
-      style: { width: '10%' },
+      style: { width: '50px' },
       title: 'Passed',
     },
     {
@@ -87,6 +89,7 @@ const tableOption: ITableOption = {
       title: 'Next Try',
     },
   ],
+  editableCells: [{ columnKey: 'name', rowKey: 1 }],
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
 };
@@ -107,6 +110,7 @@ const CustomEditorDemo: React.FC = () => {
       data={data}
       onOptionChange={onOptionChange}
       onDataChange={onDataChange}
+      childAttributes={{table: {className: 'custom-editor-demo-table'} }}
     />
   );
 };

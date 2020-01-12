@@ -34,7 +34,7 @@ const tableOption: ITableOption = {
 const childAttributes: ChildAttributes = {
   cell: {
     className: 'my-cell-class',
-    onClick: (e, extendedEvent): any => {
+    onClick: (e, extendedEvent) => {
       const { childProps: { dispatch } } = extendedEvent;
       dispatch('MY_CELL_onClick', { extendedEvent });
     },
@@ -45,6 +45,12 @@ const childAttributes: ChildAttributes = {
       const { dispatch, childElementAttributes } = extendedEvent;
       dispatch('MY_CELL_onDoubleClick', { extendedEvent });
       childElementAttributes.onClick!(e);
+    },
+  },
+  table: {
+    onMouseEnter: (e, extendedEvent) => {
+      const { dispatch } = extendedEvent;
+      dispatch('MY_TABLE_onMouseEnter', { extendedEvent });
     },
   },
 };
