@@ -183,7 +183,7 @@ It is possible to override default behaviour just specify particular handler [Ev
 | Name | Type | Description |
 | --- | --- | --- |
 | cell | <code>[ChildAttributesItem](#ChildAttributesItem)<[ICellContentProps](#ICellContentProps)></code> | Sets custom attributes for cell element |
-| table | <code>[ChildAttributesItem](#ChildAttributesItem)<[Table](#Table)></code> | Sets custom attributes for table element |
+| table | <code>[ChildAttributesItem](#ChildAttributesItem)<[Table](#ITableAllProps)></code> | Sets custom attributes for table element |
 
 
 <a name="ChildAttributesItem"></a>
