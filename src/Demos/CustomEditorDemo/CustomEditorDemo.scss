@@ -1,0 +1,31 @@
+.custom-editor-demo-table{
+  td{
+    height: 40px;
+  }
+}
+.custom-editor{
+  white-space: nowrap;
+  overflow: hidden;
+  .custom-editor-button{
+    margin-left: 5px;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    margin-left: 10px;
+    &.custom-editor-button-save{
+      background-color: #4285F4;
+      border-radius: 5px;
+      color: #FFFFFF;
+      padding: 10px 15px;
+    }
+    &.custom-editor-button-cancel{
+      background: none;
+      font-weight: 500;
+      padding: 10px 5px;
+    }
+  }
+  input{
+    border: 1px solid #CBDCE4;
+    padding: 10px 15px;
+  }
+}

@@ -6,7 +6,7 @@ import { DispatchFunc } from '../../types';
 import CellText from '../CellText/CellText';
 
 export interface ICellContentProps {
-  childAttributes?: ChildAttributes;
+  childAttributes: ChildAttributes;
   column: Column;
   dispatch: DispatchFunc;
   editingMode: EditingMode;

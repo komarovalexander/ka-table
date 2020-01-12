@@ -4,7 +4,7 @@ import { ActionType, EditingMode } from '../../enums';
 import { Cell } from '../../models';
 import { getField } from '../../Utils/ColumnUtils';
 import { isEmpty } from '../../Utils/CommonUtils';
-import { mergeProps } from '../../Utils/PropsUtils';
+import { extendProps } from '../../Utils/PropsUtils';
 import { ICellContentProps } from '../CellContent/CellContent';
 
 const CellText: React.FunctionComponent<ICellContentProps> = (props) => {
@@ -32,10 +32,7 @@ const CellText: React.FunctionComponent<ICellContentProps> = (props) => {
     },
   };
 
-  let divProps = componentProps;
-  if (childAttributes && childAttributes.cell) {
-    divProps = mergeProps(componentProps, props, childAttributes.cell);
-  }
+  const divProps = extendProps(componentProps, props, childAttributes.cell, props.dispatch);
   return (
     <div {...divProps}>{formatedValue || <>&nbsp;</>}</div>
   );

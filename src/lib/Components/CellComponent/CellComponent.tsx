@@ -10,7 +10,7 @@ import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
 
 export interface ICellComponentProps {
-  childAttributes?: ChildAttributes;
+  childAttributes: ChildAttributes;
   column: Column;
   dispatch: DispatchFunc;
   editingMode: EditingMode;

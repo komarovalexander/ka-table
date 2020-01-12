@@ -182,7 +182,8 @@ It is possible to override default behaviour just specify particular handler [Ev
 
 | Name | Type | Description |
 | --- | --- | --- |
-| cell | [<code>ChildAttributesItem</code>](#ChildAttributesItem) | Sets custom attributes for cell component |
+| cell | <code>[ChildAttributesItem](#ChildAttributesItem)<[ICellContentProps](#ICellContentProps)></code> | Sets custom attributes for cell element |
+| table | <code>[ChildAttributesItem](#ChildAttributesItem)<[Table](#Table)></code> | Sets custom attributes for table element |
 
 
 <a name="ChildAttributesItem"></a>
@@ -197,7 +198,7 @@ A second parameter in each [react Synthetic Event](https://reactjs.org/docs/even
 | --- | --- | --- |
 | baseFunc | <code>any</code> | Contains default function for overrided function - it is easy to add additional logic and execute default behaviour where you want it |
 | childElementAttributes | <code>HTMLAttributes&lt;HTMLElement&gt;</code> | Default HTMLAttributes of the component |
-| childProps | <code>ChildProps</code> | Props of the component |
+| childProps | <code>any</code> | Props of the component |
 | dispatch | <code>(type: string, data: any) => void</code> | Executes specific action with specific data |
 
 <a name="Group"></a>
