@@ -187,18 +187,18 @@ It is possible to override default behaviour just specify particular handler [Ev
 
 
 <a name="ChildAttributesItem"></a>
-#### ChildAttributesItem
+#### ChildAttributesItem&lt;T&gt;
 This object is an extension for React HTMLAttributes. It contains all attributes and all [react Synthetic Events](https://reactjs.org/docs/events.html), but in each event it adds a second parameter which contains additional data with <code>[AttributeTableData type](#AttributeTableData)</code>.
 
 <a name="AttributeTableData"></a>
-#### AttributeTableData
+#### AttributeTableData&lt;T&gt;
 A second parameter in each [react Synthetic Event](https://reactjs.org/docs/events.html). Contains component-related information.
 
 | Name | Type | Description |
 | --- | --- | --- |
 | baseFunc | <code>any</code> | Contains default function for overrided function - it is easy to add additional logic and execute default behaviour where you want it |
 | childElementAttributes | <code>HTMLAttributes&lt;HTMLElement&gt;</code> | Default HTMLAttributes of the component |
-| childProps | <code>any</code> | Props of the component |
+| childProps | <code>T</code> | Props of the component |
 | dispatch | <code>(type: string, data: any) => void</code> | Executes specific action with specific data |
 
 <a name="Group"></a>
