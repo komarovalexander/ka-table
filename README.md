@@ -126,13 +126,13 @@ export default SortingDemo;
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | filterRow | [<code>FilteringMode</code>](#FilteringMode) | Show filtering related UI elements in Table [Filter Row Example](https://komarovalexander.github.io/ka-table/#/filter-row) |
 | groups | [<code>Group[]</code>](#Group) | Group's in the table [Grouping Example](https://komarovalexander.github.io/ka-table/#/grouping) |
-| onDataChange | (data: any[]) => void | This function is called each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| onOptionChange | (value: any) => void | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| onEvent | (type: string, data: any) => void | Executes each time when dispatch is called [Events](https://komarovalexander.github.io/ka-table/#/events) |
-| groupsExpanded | any[][] | Groups that are expanded in the grid |
-| rowKeyField | string | Data's field which is used to identify row |
-| search <a name="Table.search"></a> | string | Specifies the text which are used for search by data [Search Example](https://komarovalexander.github.io/ka-table/#/search) |
-| selectedRows | any[] | Array of rows keys which are marked as selected [Selection Example](https://komarovalexander.github.io/ka-table/#/selection) |
+| onDataChange | <code>(data: any[]) => void</code> | This function is called each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
+| onOptionChange | <code>(value: any) => void</code> | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
+| onEvent | <code>(type: string, data: any) => void</code> | Executes each time when dispatch is called [Events](https://komarovalexander.github.io/ka-table/#/events) |
+| groupsExpanded | <code>any[][]</code> | Groups that are expanded in the grid |
+| rowKeyField | <code>string</code> | Data's field which is used to identify row |
+| search <a name="Table.search"></a> | <code>string</code> | Specifies the text which are used for search by data [Search Example](https://komarovalexander.github.io/ka-table/#/search) |
+| selectedRows | <code>any[]</code> | Array of rows keys which are marked as selected [Selection Example](https://komarovalexander.github.io/ka-table/#/selection) |
 | sortingMode | [<code>SortingMode</code>](#SortingMode)  | Sorting mode [Sorting Example](https://komarovalexander.github.io/ka-table/#/sorting) |
 | virtualScrolling | [<code>VirtualScrolling</code>](#VirtualScrolling) | Virtual scrolling options - set it as empty object {} to enable virtual scrolling and auto calculate its parameters [Many Rows Example](https://komarovalexander.github.io/ka-table/#/many-rows) |
 
@@ -187,7 +187,7 @@ It is possible to override default behaviour just specify particular handler [Ev
 
 <a name="ChildAttributesItem"></a>
 #### ChildAttributesItem
-This object is an extension for React HTMLAttributes. It contains all attributes and all [react Synthetic Events](https://reactjs.org/docs/events.html), but in each event it adds a second parameter which contains additional data with [AttributeTableData type](#AttributeTableData).
+This object is an extension for React HTMLAttributes. It contains all attributes and all [react Synthetic Events](https://reactjs.org/docs/events.html), but in each event it adds a second parameter which contains additional data with <code>[AttributeTableData type](#AttributeTableData)</code>.
 
 <a name="AttributeTableData"></a>
 #### AttributeTableData
@@ -287,35 +287,35 @@ A second parameter in each [react Synthetic Event](https://reactjs.org/docs/even
 <a name="CellFunc"></a>
 ### CellFunc
 
-(props: [<code>ICellContentProps</code>](#ICellContentProps)) => any;
+<code>(props: [ICellContentProps](#ICellContentProps)) => any;</code>
 
 Function which obtains [<code>ICellContentProps</code>](#ICellContentProps) as parameter and returns React component which should be shown instead of cell content.
 
 <a name="DataRowFunc"></a>
 ### DataRowFunc
 
-(props: [<code>IDataRowProps</code>](#IDataRowProps)) => any;
+<code>(props: [IDataRowProps](#IDataRowProps)) => any;</code>
 
 Function which obtains [<code>IDataRowProps</code>](#IDataRowProps) as parameter and returns React component which should be shown instead of Row content.
 
 <a name="EditorFunc"></a>
 ### EditorFunc
 
-(props: [<code>ICellEditorProps</code>](#ICellEditorProps)) => any;
+<code>(props: [ICellEditorProps](#ICellEditorProps)) => any;</code>
 
 Function which obtains [<code>ICellEditorProps</code>](#ICellEditorProps) as parameter and returns React component which should be shown instead of default editor.
 
 <a name="FilterRowFunc"></a>
 ### FilterRowFunc
 
-(props: [<code>IFilterRowEditorProps</code>](#IFilterRowEditorProps)) => any;
+<code>(props: [IFilterRowEditorProps](#IFilterRowEditorProps)) => any;</code>
 
 Function which obtains [<code>IFilterRowEditorProps</code>](#IFilterRowEditorProps) as parameter and returns React component which should be shown instead of default filter row's editor.
 
 <a name="FormatFunc"></a>
 ### FormatFunc
 
-(value: any) => any;
+<code>(value: any) => any;</code>
 
 Function which obtains value as parameter and returns formated value which will be shown in cell.
 
@@ -323,15 +323,15 @@ Function which obtains value as parameter and returns formated value which will 
 <a name="SearchFunc"></a>
 ### SearchFunc
 
-(searchText?: string, rowData?: any, column?: Column) => boolean;
+<code>(searchText?: string, rowData?: any, column?: Column) => boolean;</code>
 
-Function which obtains searchText?: string, rowData?: any, column?: Column - as parameters and returns boolean value which is true if cell's value is matched with searched value and false otherwise.
+Function which obtains <code>searchText?: string, rowData?: any, column?: Column</code> - as parameters and returns <code>boolean</code> value which is true if cell's value is matched with searched value and false otherwise.
 
 
 <a name="ValidationFunc"></a>
 ### ValidationFunc
 
-(value: any, rowData: any) => string | void;
+<code>(value: any, rowData: any) => string | void;</code>
 
 Function which obtains value of specific cell and row - as parameters and returns validation error string or does not return anything in case of passed validation.
 
