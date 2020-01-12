@@ -148,17 +148,17 @@ Describes column of table its look and behaviour
 | dataType | [<code>DataType</code>](#DataType) | Specifies the type of column |
 | editor | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor if cell is in editable mode [Custom Editor Example](https://komarovalexander.github.io/ka-table/#/custom-editor) |
 | filterRowCell | [<code>FilterRowFunc</code>](#FilterRowFunc) | Returns an editor for filter row cell [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) |
-| filterRowOperator | string | Sets filter row operator [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor). See the list of predefined filter operators [<code>FilterOperatorName</code>](#FilterOperatorName) |
-| filterRowValue | any | Sets filter row value [Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) |
-| field | string | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
+| filterRowOperator | <code>string</code> | Sets filter row operator [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor). See the list of predefined filter operators [<code>FilterOperatorName</code>](#FilterOperatorName) |
+| filterRowValue | <code>any</code> | Sets filter row value [Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) |
+| field | <code>string</code> | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
 | format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string [Example](https://komarovalexander.github.io/ka-table/#/custom-cell) |
-| headCell | HeaderCellFunc | Returns a custom header cell [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell) |
-| isEditable | boolean | Specifies can column be editable or not |
-| key | string | Mandatory field, specifies unique key for the column |
+| headCell | <code>HeaderCellFunc</code> | Returns a custom header cell [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell) |
+| isEditable | <code>boolean</code> | Specifies can column be editable or not |
+| key | <code>string</code> | Mandatory field, specifies unique key for the column |
 | search | [<code>SearchFunc</code>](#SearchFunc) | Overrides the default search method for the cell. Executes if [Table.search](#Table.search) option is set |
 | sortDirection | [<code>SortDirection</code>](#SortDirection) | Sets the direction of sorting for the column |
-| style | React.CSSProperties | Sets the style options of the elements |
-| title | string | Specifies the text of the header |
+| style | <code>React.CSSProperties</code> | Sets the style options of the elements |
+| title | <code>string</code> | Specifies the text of the header |
 | validation | [<code>ValidationFunc</code>](#ValidationFunc) | Returns the validation error string or does not return anything in case of passed validation [Validation Example](https://komarovalexander.github.io/ka-table/#/validation) |
 
 
@@ -171,8 +171,8 @@ Describes the position of a cell in  the table
 
 | Name | Type | Description |
 | --- | --- | --- |
-| field | string | The field of specific column |
-| rowKeyValue | any | Data's key value of every specific row |
+| field | <code>string</code> | The field of specific column |
+| rowKeyValue | <code>any</code> | Data's key value of every specific row |
 
 
 <a name="ChildAttributes"></a>
@@ -182,7 +182,7 @@ It is possible to override default behaviour just specify particular handler [Ev
 
 | Name | Type | Description |
 | --- | --- | --- |
-| cell | [ChildAttributesItem](#ChildAttributesItem) | Sets custom attributes for cell component |
+| cell | [<code>ChildAttributesItem</code>](#ChildAttributesItem) | Sets custom attributes for cell component |
 
 
 <a name="ChildAttributesItem"></a>
@@ -195,10 +195,10 @@ A second parameter in each [react Synthetic Event](https://reactjs.org/docs/even
 
 | Name | Type | Description |
 | --- | --- | --- |
-| baseFunc | any | Contains default function for overrided function - it is easy to add additional logic and execute default behaviour where you want it |
-| childElementAttributes | HTMLAttributes< HTMLElement > | Default HTMLAttributes of the component |
-| childProps | ChildProps | Props of the component |
-| dispatch | (type: string, data: any) => void | Executes specific action with specific data |
+| baseFunc | <code>any</code> | Contains default function for overrided function - it is easy to add additional logic and execute default behaviour where you want it |
+| childElementAttributes | <code>HTMLAttributes&lt;HTMLElement&gt;</code> | Default HTMLAttributes of the component |
+| childProps | <code>ChildProps</code> | Props of the component |
+| dispatch | <code>(type: string, data: any) => void</code> | Executes specific action with specific data |
 
 <a name="Group"></a>
 ### Group
@@ -207,7 +207,7 @@ A second parameter in each [react Synthetic Event](https://reactjs.org/docs/even
 
 | Name | Type | Description |
 | --- | --- | --- |
-| field | string | The grouped column's field |
+| field | <code>string</code> | The grouped column's field |
 
 
 <a name="VirtualScrolling"></a>
@@ -217,9 +217,9 @@ A second parameter in each [react Synthetic Event](https://reactjs.org/docs/even
 
 | Name | Type | Description |
 | --- | --- | --- |
-| scrollPosition | number | Current scroll top position |
-| itemHeight | ((data: any) => number) \| number | Returns height of specific row |
-| tbodyHeight | number | tbody height |
+| scrollPosition | <code>number</code> | Current scroll top position |
+| itemHeight | <code>((data: any) => number)</code> \| <code>number</code> | Returns height of specific row |
+| tbodyHeight | <code>number</code> | tbody height |
 
 
 <a name="DataType"></a>
@@ -343,11 +343,11 @@ Function which obtains value of specific cell and row - as parameters and return
 | Name | Type | Description |
 | --- | --- | --- |
 | column | [<code>Column</code>](#Column) | column of the editor |
-| dispatch | (type: string, data: any) => void | can forse Table make change in data, close the editor, and other actions |
-| field | string | field name of current column |
-| rowData | any | data of the row in which editor is shown |
-| isSelectedRow | boolean | selection state of the current row |
-| rowKeyField | string | field which is used to identify row |
+| dispatch | <code>(type: string, data: any) => void</code> | can forse Table make change in data, close the editor, and other actions |
+| field | <code>string</code> | field name of current column |
+| rowData | <code>any</code> | data of the row in which editor is shown |
+| isSelectedRow | <code>boolean</code> | selection state of the current row |
+| rowKeyField | <code>string</code> | field which is used to identify row |
 
 <a name="IFilterRowEditorProps"></a>
 ### IFilterRowEditorProps
@@ -356,7 +356,7 @@ Function which obtains value of specific cell and row - as parameters and return
 | Name | Type | Description |
 | --- | --- | --- |
 | column | [<code>Column</code>](#Column) | column of the editor |
-| dispatch | (type: string, data: any) => void |  can forse Table make change in filter data and other actions  |
+| dispatch | <code>(type: string, data: any) => void</code> |  can forse Table make change in filter data and other actions  |
 
 
 <a name="ICellContentProps"></a>
@@ -366,8 +366,8 @@ Function which obtains value of specific cell and row - as parameters and return
 | Name | Type | Description |
 | --- | --- | --- |
 | column | [<code>Column</code>](#Column) | settings of the column in which editor is shown |
-| openEditor | () => void | call this method to open editor of the cell |
-| rowData | any | data of the row in which editor is shown |
+| openEditor | <code>() => void</code> | call this method to open editor of the cell |
+| rowData | <code>any</code> | data of the row in which editor is shown |
 
 
 <a name="IDataRowProps"></a>
@@ -377,10 +377,10 @@ Function which obtains value of specific cell and row - as parameters and return
 | Name | Type | Description |
 | --- | --- | --- |
 | columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
-| dispatch | (type: string, data: any) => void | Executes specific action with specific data |
+| dispatch | <code>(type: string, data: any) => void</code> | Executes specific action with specific data |
 | editableCells | [<code>Cell[]</code>](#Cell) | Array of cells that are in edit mode |
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Table's editing mode |
-| rowData | any | Data of current row |
-| isSelectedRow | boolean | Describes selected state of current row |
-| rowKeyField | string | Data's field which is used to identify row |
-| selectedRows | any[] | Array of rows keys which are marked as selected |
+| rowData | <code>any</code> | Data of current row |
+| isSelectedRow | <code>boolean</code> | Describes selected state of current row |
+| rowKeyField | <code>string</code> | Data's field which is used to identify row |
+| selectedRows | <code>any[]</code> | Array of rows keys which are marked as selected |
