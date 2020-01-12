@@ -6,8 +6,8 @@ import { FilterOperator } from '../Models/FilterOperator';
 import { getField } from './ColumnUtils';
 import { isEmpty } from './CommonUtils';
 
-export const getRowEditableCells = (rowKeyValue: any, editableCells?: Cell[]): Cell[] => {
-  return editableCells ? editableCells.filter((c) => c.rowKey === rowKeyValue) : [];
+export const getRowEditableCells = (rowKeyValue: any, editableCells: Cell[]): Cell[] => {
+  return editableCells.filter((c) => c.rowKey === rowKeyValue);
 };
 
 export const searchData = (columns: Column[], data: any[], searchText: string): any[] => {
