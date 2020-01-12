@@ -119,6 +119,7 @@ export default SortingDemo;
 | Name | Type | Description |
 | --- | --- | --- |
 | columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
+| childAttributes | <code>[ChildAttributes](#ChildAttributes)</code> | Object describes attributes for data grid child components [Events Demo](https://komarovalexander.github.io/ka-table/#/events) |
 | data | <code>any\[\]</code> | The Table's data |
 | dataRow | [<code>DataRowFunc</code>](#DataRowFunc) | Returns Data Row Template [Custom Data Row Example](https://komarovalexander.github.io/ka-table/#/custom-data-row |
 | editableCells | [<code>Cell[]</code>](#Cell) | Array of cells that are in edit mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
@@ -172,6 +173,32 @@ Describes the position of a cell in  the table
 | --- | --- | --- |
 | field | string | The field of specific column |
 | rowKeyValue | any | Data's key value of every specific row |
+
+
+<a name="ChildAttributes"></a>
+### ChildAttributes
+Describes the attributes for a specific child component
+It is possible to override default behaviour just specify particular handler [Events Demo](https://komarovalexander.github.io/ka-table/#/events)
+
+| Name | Type | Description |
+| --- | --- | --- |
+| cell | [ChildAttributesItem](#ChildAttributesItem) | Sets custom attributes for cell component |
+
+
+<a name="ChildAttributesItem"></a>
+#### ChildAttributesItem
+This object is an extension for React HTMLAttributes. It contains all attributes and all [react Synthetic Events](https://reactjs.org/docs/events.html), but in each event it adds a second parameter which contains additional data with [AttributeTableData type](#AttributeTableData).
+
+<a name="AttributeTableData"></a>
+#### AttributeTableData
+A second parameter in each [react Synthetic Event](https://reactjs.org/docs/events.html). Contains component-related information.
+
+| Name | Type | Description |
+| --- | --- | --- |
+| baseFunc | any | Contains default function for overrided function - it is easy to add additional logic and execute default behaviour where you want it |
+| childElementAttributes | HTMLAttributes< HTMLElement > | Default HTMLAttributes of the component |
+| childProps | ChildProps | Props of the component |
+| dispatch | (type: string, data: any) => void | Executes specific action with specific data |
 
 <a name="Group"></a>
 ### Group
