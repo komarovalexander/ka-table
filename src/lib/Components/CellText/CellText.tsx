@@ -33,7 +33,7 @@ const CellText: React.FunctionComponent<ICellContentProps> = (props) => {
   };
 
   let divProps = componentProps;
-  if (childAttributes?.cell) {
+  if (childAttributes && childAttributes.cell) {
     divProps = mergeProps(componentProps, props, childAttributes.cell);
   }
   return (
