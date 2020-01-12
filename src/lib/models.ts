@@ -1,4 +1,4 @@
-export * from './Models/AttributeTableData';
+
 export * from './Models/AttributeTableData';
 export * from './Models/Cell';
 export * from './Models/ChildAttributes';

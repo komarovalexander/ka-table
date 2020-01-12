@@ -1,16 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataType } from '../../enums';
+import { DataType, EditingMode } from '../../enums';
 import CellContent, { ICellContentProps } from './CellContent';
 
 const props: ICellContentProps = {
+  childAttributes: {},
   column: {
     dataType: DataType.String,
     key: 'columnField',
     title: 'Field',
   },
   dispatch: () => {},
+  editingMode: EditingMode.None,
+  field: 'columnField',
   rowData: { column : 1 },
   rowKeyField: '',
 };

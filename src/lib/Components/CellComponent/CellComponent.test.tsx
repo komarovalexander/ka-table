@@ -3,23 +3,26 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataType } from '../../enums';
-import CellComponent from './CellComponent';
+import { DataType, EditingMode } from '../../enums';
+import CellComponent, { ICellComponentProps } from './CellComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
-const props: any = {
+
+const props: ICellComponentProps = {
+  childAttributes: {},
   column: {
     dataType: DataType.String,
-    field: 'columnField',
+    key: 'columnField',
     title: 'Field',
   },
-  editableCells: [],
+  dispatch: () => {},
+  editingMode: EditingMode.None,
   isEditableCell: false,
-  onOptionChange: () => {},
+  isSelectedRow: false,
   rowData: {
     column: 1,
   },
-  rowKey: '1',
+  rowKeyField: '1',
 };
 
 it('renders without crashing', () => {

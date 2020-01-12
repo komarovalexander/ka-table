@@ -11,6 +11,7 @@ import CellText from './CellText';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: ICellContentProps = {
+  childAttributes: {},
   column: {
     dataType: DataType.String,
     key: 'columnField',
@@ -22,6 +23,8 @@ const props: ICellContentProps = {
   rowData: { columnField: 'columnFieldValue', id: 1 },
   rowKeyField: 'id',
 };
+
+afterEach(() => jest.clearAllMocks());
 
 describe('CellText', () => {
   it('renders without crashing', () => {
@@ -39,5 +42,11 @@ describe('CellText', () => {
     expect(props.dispatch).toBeCalledWith(
       ActionType.OpenEditor, { cell },
     );
+  });
+
+  it('should skip OpenEditor', () => {
+    const wrapper = mount(<CellText {...props} editingMode={EditingMode.None} />);
+    wrapper.find('.ka-cell-text').simulate('click');
+    expect(props.dispatch).toBeCalledTimes(0);
   });
 });

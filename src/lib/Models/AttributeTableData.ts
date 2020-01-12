@@ -1,10 +1,10 @@
 import { HTMLAttributes } from 'react';
 
-import { ChildProps, DispatchFunc } from '../types';
+import { DispatchFunc } from '../types';
 
-export class AttributeTableData {
+export class AttributeTableData<T> {
   public baseFunc!: any;
   public childElementAttributes!: HTMLAttributes<HTMLElement>;
-  public childProps!: ChildProps;
   public dispatch!: DispatchFunc;
+  public childProps!: T;
 }

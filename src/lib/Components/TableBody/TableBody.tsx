@@ -12,7 +12,7 @@ import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import VirtualizedRows from '../VirtualizedRows/VirtualizedRows';
 
 export interface ITableBodyProps {
-  childAttributes?: ChildAttributes;
+  childAttributes: ChildAttributes;
   columns: Column[];
   data: any[];
   dataRow?: DataRowFunc;

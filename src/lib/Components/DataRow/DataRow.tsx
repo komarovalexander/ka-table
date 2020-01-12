@@ -10,7 +10,7 @@ import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
 export interface IRowCommonProps {
-  childAttributes?: ChildAttributes;
+  childAttributes: ChildAttributes;
   columns: Column[];
   dispatch: DispatchFunc;
   editableCells: Cell[];
@@ -32,7 +32,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
     rowData,
     rowKeyField,
     dataRow,
-    selectedRows = [],
+    selectedRows,
     trRef,
   } = props;
   const rowKeyValue = rowData[rowKeyField];
