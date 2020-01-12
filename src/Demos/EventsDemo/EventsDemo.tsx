@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
+import { ChildAttributes } from '../../lib/models';
 import { DataChangeFunc, EventFunc, OptionChangeFunc } from '../../lib/types';
+import { EventsLog } from './EventsLog';
 
 const dataArray = Array(20).fill(undefined).map(
   (_, index) => ({
@@ -29,6 +31,24 @@ const tableOption: ITableOption = {
   sortingMode: SortingMode.Single,
 };
 
+const childAttributes: ChildAttributes = {
+  cell: {
+    className: 'my-cell-class',
+    onClick: (e, extendedEvent): any => {
+      const { childProps: { dispatch } } = extendedEvent;
+      dispatch('MY_CELL_onClick', { extendedEvent });
+    },
+    onContextMenu: (e, extendedEvent) => {
+      extendedEvent.dispatch('MY_CELL_onContextMenu', { extendedEvent });
+    },
+    onDoubleClick: (e, extendedEvent) => {
+      const { dispatch, childElementAttributes } = extendedEvent;
+      dispatch('MY_CELL_onDoubleClick', { extendedEvent });
+      childElementAttributes.onClick!(e);
+    },
+  },
+};
+
 const EventsDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const onOptionChange: OptionChangeFunc = (value) => {
@@ -42,10 +62,7 @@ const EventsDemo: React.FC = () => {
 
   const [events, changeEvents] = useState([] as any []);
   const onEvent: EventFunc = (type, eventData) => {
-    const date = new Date();
-    const time = date.toLocaleTimeString();
-    const milliseconds = date.getMilliseconds();
-    changeEvents((prevValue) => ([{ type, data: `${JSON.stringify(eventData)}`, time, milliseconds }, ...prevValue]));
+    changeEvents((prevValue) => ([{ type, data: eventData, date: new Date(), showData: false }, ...prevValue]));
   };
   return (
     <div className='events-demo'>
@@ -55,14 +72,13 @@ const EventsDemo: React.FC = () => {
         onOptionChange={onOptionChange}
         onDataChange={onDataChange}
         onEvent={onEvent}
+        childAttributes={childAttributes}
       />
-      <div className='events'>{events.map((e, i) =>
-        (
-          <div key={i}>
-            <span className='type'>{e.type}</span> <span className='data'>{e.data}</span> <span className='time'>({e.time}<span className='milliseconds'>:{e.milliseconds}</span>)</span>
-          </div>
-        ))}
-      </div>
+      <EventsLog events={events} showDataClick={(eventData: any) => {
+        const newEvents = [...events];
+        newEvents.find((e) => e.date === eventData.date).showData = true;
+        changeEvents(newEvents);
+      }}/>
     </div>
   );
 };

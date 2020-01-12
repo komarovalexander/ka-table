@@ -1,6 +1,8 @@
-.button {
+.command-column-button {
   cursor: pointer;
   opacity: 0.75;
+  display: inline-block;
+  vertical-align: middle;
   &:hover{
     opacity: 1;
   }

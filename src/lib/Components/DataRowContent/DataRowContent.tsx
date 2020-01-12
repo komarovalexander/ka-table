@@ -10,6 +10,7 @@ export interface IDataRowProps extends IRowCommonProps {
 }
 
 const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
+  childAttributes,
   columns,
   dispatch,
   editableCells,
@@ -25,6 +26,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
       {columns.map((column) => (
         <CellComponent
           column={column}
+          childAttributes={childAttributes}
           editingMode={editingMode}
           isEditableCell={isEditableCell(editingMode, column, rowEditableCells)}
           isSelectedRow={isSelectedRow}

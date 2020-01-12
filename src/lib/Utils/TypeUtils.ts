@@ -30,3 +30,10 @@ export const toBoolean = (value: any) => {
   }
   return Boolean(value);
 };
+
+export function isFunction(variableToCheck: any) {
+  if (variableToCheck instanceof Function) {
+      return true;
+  }
+  return false;
+}
