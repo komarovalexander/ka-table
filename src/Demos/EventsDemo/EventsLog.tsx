@@ -7,7 +7,7 @@ export const EventsLog: React.FC<any> = ({ events, showDataClick }) => {
     return {
       data: `${JSON.stringify(e.data, (key, val) => {
         if (typeof val === 'function') {
-          return `(${val})`; // make it a string, surround it by parenthesis to ensure we can revive it as an anonymous function
+          return `(${val})`;
         }
         return val;
       }, 2)}`,
