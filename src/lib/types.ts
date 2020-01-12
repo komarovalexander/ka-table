@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react';
 
+import { ICellContentProps } from './Components/CellContent/CellContent';
 import { ICellEditorProps, IFilterRowEditorProps } from './Components/CellEditor/CellEditor';
 import { IDataRowProps } from './Components/DataRowContent/DataRowContent';
 import { IHeadCellProps } from './Components/HeadCell/HeadCell';
-import { ICellContentProps } from './interfaces';
 import { AttributeTableData, Column } from './models';
 
 type AddParameters<T, I> =
