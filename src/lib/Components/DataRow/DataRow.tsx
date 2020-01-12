@@ -32,7 +32,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
     rowData,
     rowKeyField,
     dataRow,
-    selectedRows = [],
+    selectedRows,
     trRef,
   } = props;
   const rowKeyValue = rowData[rowKeyField];

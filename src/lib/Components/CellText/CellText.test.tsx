@@ -24,6 +24,8 @@ const props: ICellContentProps = {
   rowKeyField: 'id',
 };
 
+afterEach(() => jest.clearAllMocks());
+
 describe('CellText', () => {
   it('renders without crashing', () => {
     const element = document.createElement('td');
@@ -40,5 +42,11 @@ describe('CellText', () => {
     expect(props.dispatch).toBeCalledWith(
       ActionType.OpenEditor, { cell },
     );
+  });
+
+  it('should skip OpenEditor', () => {
+    const wrapper = mount(<CellText {...props} editingMode={EditingMode.None} />);
+    wrapper.find('.ka-cell-text').simulate('click');
+    expect(props.dispatch).toBeCalledTimes(0);
   });
 });
