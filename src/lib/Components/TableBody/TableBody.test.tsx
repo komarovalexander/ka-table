@@ -39,7 +39,7 @@ describe('TableBody', () => {
 
   it('should dispatch ScrollTable on scroll', () => {
     const wrapper = mount(<TableBody {...props} />, {
-      wrappingComponent: () => <table/>,
+      attachTo: document.createElement('table'),
     });
     const scrollTop = 11;
     const timeStamp = 12;

@@ -39,7 +39,7 @@ describe('Rows', () => {
   it('should render noDataRow in case there are no data and noDataRow option is set', () => {
     const noDataText = 'no data';
     const wrapper = mount(<Rows {...props} data={[]} noDataRow={() => noDataText}/>, {
-      wrappingComponent: () => <tbody/>,
+      attachTo: document.createElement('tbody'),
     });
 
     expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
