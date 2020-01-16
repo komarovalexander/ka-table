@@ -1,3 +1,5 @@
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -5,7 +7,9 @@ import { EditingMode } from '../../enums';
 import { ITableBodyProps } from '../TableBody/TableBody';
 import Rows from './Rows';
 
-const tableProps: ITableBodyProps = {
+Enzyme.configure({ adapter: new Adapter() });
+
+const props: ITableBodyProps = {
   childAttributes: {},
   columns: [
     { key: 'column', title: 'Column 1' },
@@ -25,8 +29,17 @@ const tableProps: ITableBodyProps = {
   selectedRows: [],
 };
 
-it('renders without crashing', () => {
-  const div = document.createElement('tbody');
-  ReactDOM.render(<Rows {...tableProps} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+describe('Rows', () => {
+  it('renders without crashing', () => {
+    const div = document.createElement('tbody');
+    ReactDOM.render(<Rows {...props} />, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+
+  it('should render noDataRow in case there are no data and noDataRow option is set', () => {
+    const noDataText = 'no data';
+    const wrapper = mount(<Rows {...props} data={[]} noDataRow={() => noDataText}/>);
+
+    expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
+  });
 });

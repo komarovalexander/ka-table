@@ -39,7 +39,7 @@ describe('Virtualize', () => {
 
     it('itemHeight 40', () => {
       const virtualScrolling: VirtualScrolling = {
-        itemHeight: () => 40,
+        itemHeight: 40,
         scrollPosition: 0,
         tbodyHeight: 160,
       };
