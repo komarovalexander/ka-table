@@ -31,14 +31,16 @@ const props: ITableBodyProps = {
 
 describe('Rows', () => {
   it('renders without crashing', () => {
-    const div = document.createElement('tbody');
-    ReactDOM.render(<Rows {...props} />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    const element = document.createElement('tbody');
+    ReactDOM.render(<Rows {...props} />, element);
+    ReactDOM.unmountComponentAtNode(element);
   });
 
   it('should render noDataRow in case there are no data and noDataRow option is set', () => {
     const noDataText = 'no data';
-    const wrapper = mount(<Rows {...props} data={[]} noDataRow={() => noDataText}/>);
+    const wrapper = mount(<Rows {...props} data={[]} noDataRow={() => noDataText}/>, {
+      wrappingComponent: () => <tbody/>,
+    });
 
     expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
   });

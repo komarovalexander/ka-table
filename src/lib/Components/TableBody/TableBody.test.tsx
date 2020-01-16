@@ -32,13 +32,15 @@ afterEach(() => jest.clearAllMocks());
 
 describe('TableBody', () => {
   it('renders without crashing', () => {
-    const div = document.createElement('table');
-    ReactDOM.render(<TableBody {...props} />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    const element = document.createElement('table');
+    ReactDOM.render(<TableBody {...props} />, element);
+    ReactDOM.unmountComponentAtNode(element);
   });
 
   it('should dispatch ScrollTable on scroll', () => {
-    const wrapper = mount(<TableBody {...props} />);
+    const wrapper = mount(<TableBody {...props} />, {
+      wrappingComponent: () => <table/>,
+    });
     const scrollTop = 11;
     const timeStamp = 12;
 
