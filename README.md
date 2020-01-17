@@ -118,24 +118,24 @@ export default SortingDemo;
 
 | Name | Type | Description |
 | --- | --- | --- |
-| columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
 | childAttributes | <code>[ChildAttributes](#ChildAttributes)</code> | Object describes attributes for data grid child components [Events Demo](https://komarovalexander.github.io/ka-table/#/events) |
+| columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
 | data | <code>any\[\]</code> | The Table's data |
 | dataRow | [<code>DataRowFunc</code>](#DataRowFunc) | Returns Data Row Template [Custom Data Row Example](https://komarovalexander.github.io/ka-table/#/custom-data-row |
 | editableCells | [<code>Cell[]</code>](#Cell) | Array of cells that are in edit mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | filterRow | [<code>FilteringMode</code>](#FilteringMode) | Show filtering related UI elements in Table [Filter Row Example](https://komarovalexander.github.io/ka-table/#/filter-row) |
 | groups | [<code>Group[]</code>](#Group) | Group's in the table [Grouping Example](https://komarovalexander.github.io/ka-table/#/grouping) |
-| onDataChange | <code>(data: any[]) => void</code> | This function is called each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| onOptionChange | <code>(value: any) => void</code> | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| onEvent | <code>(type: string, data: any) => void</code> | Executes each time when dispatch is called [Events](https://komarovalexander.github.io/ka-table/#/events) |
 | groupsExpanded | <code>any[][]</code> | Groups that are expanded in the grid |
+| noDataRow | <code>() => any</code> | The function returns string or a component which should appear when there are no data to show |
+| onDataChange | <code>(data: any[]) => void</code> | This function is called each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
+| onEvent | <code>(type: string, data: any) => void</code> | Executes each time when dispatch is called [Events](https://komarovalexander.github.io/ka-table/#/events) |
+| onOptionChange | <code>(value: any) => void</code> | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
 | rowKeyField | <code>string</code> | Data's field which is used to identify row |
 | search <a name="Table.search"></a> | <code>string</code> | Specifies the text which are used for search by data [Search Example](https://komarovalexander.github.io/ka-table/#/search) |
 | selectedRows | <code>any[]</code> | Array of rows keys which are marked as selected [Selection Example](https://komarovalexander.github.io/ka-table/#/selection) |
 | sortingMode | [<code>SortingMode</code>](#SortingMode)  | Sorting mode [Sorting Example](https://komarovalexander.github.io/ka-table/#/sorting) |
 | virtualScrolling | [<code>VirtualScrolling</code>](#VirtualScrolling) | Virtual scrolling options - set it as empty object {} to enable virtual scrolling and auto calculate its parameters [Many Rows Example](https://komarovalexander.github.io/ka-table/#/many-rows) |
-
 
 <a name="Column"></a>
 ### Column
