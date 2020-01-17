@@ -26,6 +26,7 @@ const tableOption: ITableOption = {
       title: 'Passed',
     },
   ],
+  noDataRow: () => 'No Data Found',
   rowKeyField: 'id',
   search: 'Billi Bob',
 };
