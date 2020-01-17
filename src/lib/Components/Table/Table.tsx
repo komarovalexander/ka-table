@@ -7,7 +7,9 @@ import { ChildAttributes } from '../../Models/ChildAttributes';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import { DataChangeFunc, DataRowFunc, EventFunc, OptionChangeFunc } from '../../types';
+import {
+  DataChangeFunc, DataRowFunc, EventFunc, NoDataRowFunc, OptionChangeFunc,
+} from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { extendProps } from '../../Utils/PropsUtils';
@@ -28,6 +30,7 @@ export interface ITableOption {
   filteringMode?: FilteringMode;
   groups?: Group[];
   groupsExpanded?: any[][];
+  noDataRow?: NoDataRowFunc;
   rowKeyField: string;
   search?: string;
   selectedRows?: any[];
