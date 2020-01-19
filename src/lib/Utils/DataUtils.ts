@@ -2,8 +2,8 @@ import { Column } from '../Models/Column';
 import { Field } from '../types';
 import { getField } from './ColumnUtils';
 
-export const getParentValue = (rowData: any, parentFields: Field[], sameObj = false) => {
-  const parentValue = parentFields.reduce((previousValue, currentValue) => {
+export const getParentValue = (rowData: any, fieldParents: Field[], sameObj = false) => {
+  const parentValue = fieldParents.reduce((previousValue, currentValue) => {
     const result = (previousValue && previousValue[currentValue]);
     return result !== undefined ? result : undefined;
   },
@@ -11,12 +11,12 @@ export const getParentValue = (rowData: any, parentFields: Field[], sameObj = fa
   return {...parentValue};
 };
 
-const createObjByFields = (parentFields: Field[], field: Field, value: any) => {
+const createObjByFields = (fieldParents: Field[], field: Field, value: any) => {
   const parentValue: any = {};
-  parentFields.reduce((previousValue, currentItem, currentIndex) => {
+  fieldParents.reduce((previousValue, currentItem, currentIndex) => {
     const lastObj: any = {};
     previousValue[currentItem] = lastObj;
-    if (currentIndex === (parentFields.length - 1)) {
+    if (currentIndex === (fieldParents.length - 1)) {
       lastObj[field] = value;
     }
     return lastObj;
@@ -26,12 +26,12 @@ const createObjByFields = (parentFields: Field[], field: Field, value: any) => {
 };
 
 export const getValueByColumn = (rowData: any, column: Column) => {
-  return getValueByField(rowData, getField(column), column.parentFields);
+  return getValueByField(rowData, getField(column), column.fieldParents);
 };
 
-export const getValueByField = (rowData: any, field: Field, parentFields?: Field[]) => {
-  if (parentFields && parentFields.length) {
-    const parentValue = getParentValue(rowData, parentFields);
+export const getValueByField = (rowData: any, field: Field, fieldParents?: Field[]) => {
+  if (fieldParents && fieldParents.length) {
+    const parentValue = getParentValue(rowData, fieldParents);
     if (parentValue) {
       return parentValue[field];
     }
@@ -41,15 +41,15 @@ export const getValueByField = (rowData: any, field: Field, parentFields?: Field
   }
 };
 
-export const mergeValues = (rowData: any, field: Field, newValue: any, parentFields?: Field[]) => {
-  if (parentFields && parentFields.length) {
-    let parentValue = getParentValue(rowData, parentFields);
+export const mergeValues = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]) => {
+  if (fieldParents && fieldParents.length) {
+    let parentValue = getParentValue(rowData, fieldParents);
     if (parentValue) {
       parentValue[field] = newValue;
     } else {
-      parentValue = createObjByFields(parentFields, field, newValue);
+      parentValue = createObjByFields(fieldParents, field, newValue);
     }
-    const parentsOfParent = [...parentFields];
+    const parentsOfParent = [...fieldParents];
     const parentFieldName = parentsOfParent.pop() as string;
     const result = { ...rowData};
     replaceValueForField(result, parentFieldName, parentValue, parentsOfParent);
@@ -59,12 +59,12 @@ export const mergeValues = (rowData: any, field: Field, newValue: any, parentFie
   }
 };
 
-export const replaceValueForField = (rowData: any, field: Field, newValue: any, parentFields?: Field[]): void => {
-  if (parentFields && parentFields.length) {
-    const parentValue = getParentValue(rowData, parentFields);
+export const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
+  if (fieldParents && fieldParents.length) {
+    const parentValue = getParentValue(rowData, fieldParents);
     if (parentValue) {
       parentValue[field] = newValue;
-      const parentsOfParent = [...parentFields];
+      const parentsOfParent = [...fieldParents];
       const parentFieldName = parentsOfParent.pop() as string;
       replaceValueForField(rowData, parentFieldName, parentValue, parentsOfParent);
     }

@@ -15,7 +15,7 @@ export class Column {
   public filterRowValue?: any;
   public filterRowOperator?: any;
   public field?: Field;
-  public parentFields?: Field[];
+  public fieldParents?: Field[];
   public format?: FormatFunc;
   public headCell?: HeaderCellFunc;
   public isEditable?: boolean;

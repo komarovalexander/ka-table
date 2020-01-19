@@ -74,7 +74,7 @@ describe('DataUtils', () => {
         },
       };
 
-      expect(getValueByColumn(data, { key: 'b.c', field: 'd', parentFields: ['b'] })).toBe(2);
+      expect(getValueByColumn(data, { key: 'b.c', field: 'd', fieldParents: ['b'] })).toBe(2);
     });
   });
 
