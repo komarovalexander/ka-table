@@ -5,16 +5,17 @@ import { Column } from '../Models/Column';
 import { FilterOperator } from '../Models/FilterOperator';
 import { getField } from './ColumnUtils';
 import { isEmpty } from './CommonUtils';
+import { getValueByColumn } from './DataUtils';
 
 export const getRowEditableCells = (rowKeyValue: any, editableCells: Cell[]): Cell[] => {
   return editableCells.filter((c) => c.rowKey === rowKeyValue);
 };
 
 export const searchData = (columns: Column[], data: any[], searchText: string): any[] => {
-  return columns.reduce((initialData: any[], c) => {
+  return columns.reduce((initialData: any[], c: Column) => {
     const filterFunction = (item: any) => {
       return c.search ? c.search(searchText, item, c) : initialData.indexOf(item) < 0
-        && item[getField(c)].toString().toLowerCase().includes(searchText.toLowerCase());
+        && getValueByColumn(item, c).toString().toLowerCase().includes(searchText.toLowerCase());
     };
     return initialData.concat(data.filter(filterFunction));
   }, []);

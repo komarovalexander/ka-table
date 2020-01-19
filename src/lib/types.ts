@@ -24,6 +24,7 @@ export type DispatchFunc = (type: string, data: any) => void;
 export type EditorFunc = (props: EditorFuncPropsWithChildren) => any;
 export type EditorFuncPropsWithChildren = PropsWithChildren<ICellEditorProps>;
 export type EventFunc = (type: string, data: any) => void;
+export type Field = string;
 export type FilterRowFunc = (props: FilterRowFuncPropsWithChildren) => any;
 export type FilterRowFuncPropsWithChildren = PropsWithChildren<IFilterRowEditorProps>;
 export type FormatFunc = (value: any) => any;

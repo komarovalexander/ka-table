@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Column } from '../../Models/Column';
-import { DispatchFunc } from '../../types';
+import { DispatchFunc, Field } from '../../types';
 import CellEditorState from '../CellEditorState/CellEditorState';
 
 export interface IFilterRowEditorProps {
@@ -10,7 +10,8 @@ export interface IFilterRowEditorProps {
 }
 
 export interface ICellEditorProps extends IFilterRowEditorProps {
-  field: string;
+  field: Field;
+  value: any;
   isSelectedRow: boolean;
   rowData: any;
   rowKeyField: string;

@@ -6,35 +6,33 @@ import { ITableOption, Table } from '../../lib';
 import { ActionType, DataType, EditingMode } from '../../lib/enums';
 import { Cell } from '../../lib/models';
 import { CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc } from '../../lib/types';
-
-const dataArray: any[] = [
-  { id: 1, name: 'Mike Wazowski', score: 80, passed: true, img: 'static/images/man1.PNG' },
-  { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2019, 10, 8, 10), img: 'static/images/man2.PNG' },
-  { id: 3, name: 'Tom Williams', score: 45, passed: false, nextTry: new Date(2019, 11, 8, 10), img: 'static/images/man3.PNG' },
-  { id: 4, name: 'Kurt Cobain', score: 75, passed: true, img: 'static/images/man4.PNG' },
-  { id: 5, name: 'Marshall Bruce', score: 77, passed: true, img: 'static/images/man5.PNG'  },
-  { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2019, 10, 9, 10), img: 'static/images/man6.PNG'  },
-];
+import dataArray from './data';
 
 const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
-  column: { key }, field, rowData, rowKeyField, dispatch,
+  column: {
+    key,
+  },
+  dispatch,
+  rowData,
+  rowKeyField,
+  value,
 }) => {
   return (
     <div onClick={() => {
       const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
       dispatch(ActionType.OpenEditor, { cell });
     }}>
-      {rowData[field] ? 'Passed' : 'Failed'}
+      {value ? 'Passed' : 'Failed'}
     </div>
   );
 };
 
 const CustomImageCell: React.FC<CellFuncPropsWithChildren> = ({
-  field, rowData,
+  value,
 }) => {
   return (
     <div>
-      <img className='custom-cell-image' src={rowData[field]} alt=''/>
+      <img className='custom-cell-image' src={value} alt=''/>
     </div>
   );
 };
@@ -44,18 +42,34 @@ const tableOption: ITableOption = {
     {
       cell: CustomImageCell,
       dataType: DataType.String,
-      key: 'img',
+      field: 'image',
+      key: 'representative.image',
+      parentFields: ['representative'],
       style: { width: '11%' },
       title: 'Image',
     },
-    { dataType: DataType.String, key: 'name', title: 'Name', style: { width: '30%' } },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%', textAlign: 'right' } },
+    {
+      dataType: DataType.String,
+      field: 'name',
+      key: 'representative.name',
+      parentFields: ['representative'],
+      style: { width: '30%' },
+      title: 'Name',
+    },
     {
       cell: CustomCell,
       dataType: DataType.Boolean,
-      key: 'passed',
+      key: 'hasLoyalProgram',
       style: { width: '30%', textAlign: 'center' },
-      title: 'Results',
+      title: 'Loyal Program',
+    },
+    {
+      dataType: DataType.Number,
+      field: 'price',
+      key: 'product.price',
+      parentFields: ['product'],
+      style: { width: '10%', textAlign: 'right' },
+      title: 'Price',
     },
     {
       dataType: DataType.Date,
