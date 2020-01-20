@@ -69,8 +69,16 @@ const tableOption: ITableOption = {
       field: 'price',
       fieldParents: ['product'],
       key: 'product.price',
-      style: { width: '10%', textAlign: 'right' },
+      style: {
+        textAlign: 'right',
+        width: '10%',
+      },
       title: 'Price',
+      validation: (value) => {
+        if (value < 0) {
+          return 'value can\'t be less than 0';
+        }
+      },
     },
     {
       dataType: DataType.Date,
@@ -81,6 +89,7 @@ const tableOption: ITableOption = {
   ],
   editingMode: EditingMode.Cell,
   filteringMode: FilteringMode.FilterRow,
+  groups: [{ columnKey: 'hasLoyalProgram' }],
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };
