@@ -20,6 +20,7 @@ import { withTracker } from './GAWrapper';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
 import ManyRowsDemo from './ManyRowsDemo/ManyRowsDemo';
 import ManyRowsGroupingDemo from './ManyRowsGroupingDemo/ManyRowsGroupingDemo';
+import OverviewDemo from './OverviewDemo/OverviewDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
 import SelectionDemo from './SelectionDemo/SelectionDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
@@ -29,6 +30,7 @@ import ValidationDemo from './ValidationDemo/ValidationDemo';
 initializeGA();
 
 const demos: Demo[] = [
+  new Demo(OverviewDemo, '/overview', 'Overview', 'OverviewDemo', '', ''),
   new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo', 'https://stackblitz.com/edit/table-command-column-js', 'https://stackblitz.com/edit/table-command-column-ts'),
   new Demo(CustomCellDemo, '/custom-cell', 'Custom Cell', 'CustomCellDemo', 'https://stackblitz.com/edit/table-custom-cell-js', 'https://stackblitz.com/edit/table-custom-cell-ts'),
   new Demo(CustomDataRowDemo, '/custom-data-row', 'Custom Row', 'CustomDataRowDemo', 'https://stackblitz.com/edit/table-custom-data-row-js', 'https://stackblitz.com/edit/table-custom-data-row-ts'),

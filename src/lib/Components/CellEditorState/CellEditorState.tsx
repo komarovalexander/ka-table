@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { ActionType } from '../../enums';
 import { Cell } from '../../models';
+import { getValueByColumn, replaceValue } from '../../Utils/DataUtils';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import { getValidationValue } from '../../Utils/Validation';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
@@ -11,17 +12,13 @@ import CellEditorValidationMessage from '../CellEditorValidationMessage/CellEdit
 const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
     column,
-    field,
-    column: {
-      key,
-    },
     rowData,
     rowKeyField,
     dispatch,
   } = props;
-  const [value, changeValue] = useState(rowData);
+  const [rowDataState, changeValue] = useState(rowData);
 
-  const validationValue = getValidationValue(value, field, column.validation);
+  const validationValue = getValidationValue(rowDataState, column);
   const onValueStateChange = (rowValue: any): void => {
     changeValue(rowValue);
   };
@@ -33,12 +30,13 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const closeHandler = useCallback(() => {
     if (!validationValue) {
-      if (rowData[key] !== value[key]) {
-        dispatch(ActionType.ChangeRowData, { newValue: { ...rowData, ...{ [key]: value[key] } } });
+      const newValue = getValueByColumn(rowDataState, column);
+      if (getValueByColumn(rowData, column) !== newValue) {
+        dispatch(ActionType.ChangeRowData, { newValue: replaceValue(rowData, column, newValue)});
       }
       close();
     }
-  }, [validationValue, dispatch, close, value, key, rowData]);
+  }, [validationValue, dispatch, close, rowDataState, column, rowData]);
 
   useEffect(() => {
     return addEscEnterKeyEffect(close, closeHandler);
@@ -56,7 +54,8 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const stateProps = { ...props, ...{
     dispatch: dispatchHandler,
-    rowData : value,
+    rowData : rowDataState,
+    value: getValueByColumn(rowDataState, column),
   }};
 
   return (

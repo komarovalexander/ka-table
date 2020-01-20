@@ -62,3 +62,7 @@ export const replaceValueForField = (rowData: any, field: Field, newValue: any, 
   }
   return result;
 };
+
+export const replaceValue = (rowData: any, column: Column, newValue: any) => {
+  return replaceValueForField(rowData, getField(column), newValue, column.fieldParents);
+};
