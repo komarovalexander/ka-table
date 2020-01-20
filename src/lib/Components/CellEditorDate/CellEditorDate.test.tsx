@@ -17,9 +17,13 @@ const props: ICellEditorProps = {
   dispatch: jest.fn(),
   field: 'fieldName',
   isSelectedRow: true,
-  rowData: { column: 1 },
-  rowKeyField: '',
+  rowData: { fieldName: new Date(2020, 0, 2), id: 2 },
+  rowKeyField: 'id',
 };
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('CellEditorDate', () => {
   it('renders without crashing', () => {
@@ -30,13 +34,22 @@ describe('CellEditorDate', () => {
 
   it('should fire RowDataChanged', () => {
     const newValue = new Date(2020, 1, 2);
-    const rowData = { fieldName: new Date(2020, 0, 2) };
-    const wrapper = mount(<CellEditorDate {...props} rowData={rowData} field='fieldName' />);
+    const wrapper = mount(<CellEditorDate {...props} />);
 
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeRowData, { newValue: { fieldName: newValue } },
+      ActionType.ChangeRowData, { newValue: { fieldName: newValue, id: 2 } },
+    );
+  });
+
+  it('should dispatch CloseEditor', () => {
+    const wrapper = mount(<CellEditorDate {...props} />);
+
+    wrapper.find('input').props().onBlur!({} as any);
+    expect(props.dispatch).toBeCalledTimes(1);
+    expect(props.dispatch).toBeCalledWith(
+      ActionType.CloseEditor, { cell: { columnKey: 'fieldName', rowKey: 2 } },
     );
   });
 });

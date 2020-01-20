@@ -1,4 +1,7 @@
-import { getParentValue, getValueByColumn, getValueByField, mergeValues } from './DataUtils';
+import {
+  createObjByFields, getParentValue, getValueByColumn, getValueByField, mergeValues,
+  replaceValueForField,
+} from './DataUtils';
 
 describe('DataUtils', () => {
   describe('getValueByField', () => {
@@ -10,6 +13,17 @@ describe('DataUtils', () => {
       };
 
       expect(getValueByField(data, 'c', ['b'])).toBe(1);
+    });
+    it('b.c.x', () => {
+      const data = {
+        b: {
+          c: {
+            x: 1,
+          },
+        },
+      };
+
+      expect(getValueByField(data, 'x', ['b', 'c'])).toBe(1);
     });
     it('data is empty', () => {
       const data = {  };
@@ -78,24 +92,6 @@ describe('DataUtils', () => {
     });
   });
 
-  describe('mergeValues', () => {
-    it('simple merge', () => {
-      const data = {
-        a: 11,
-        b: {
-          c: 1,
-        },
-      };
-
-      expect(mergeValues(data, 'c', 2, ['b'])).toEqual({
-        a: 11,
-        b: {
-          c: 2,
-        },
-      });
-    });
-  });
-
   describe('getParentValue', () => {
     it('getParentValue', () => {
       const data = {
@@ -109,11 +105,103 @@ describe('DataUtils', () => {
         c: 1,
       });
     });
-    it('getParentValue: data is empty', () => {
+    it('getParentValue: data is undefined', () => {
       const data = {
       };
 
-      expect(getParentValue(data, ['b'])).toEqual({});
+      expect(getParentValue(data, ['b'])).toEqual(undefined);
+    });
+  });
+
+  describe('replaceValueForField', () => {
+    it('parrents is empty', () => {
+      const data = {
+        a: 11,
+      };
+
+      expect(replaceValueForField(data, 'a', 1)).toEqual({
+        a: 1,
+      });
+    });
+    it('parrent is b', () => {
+      const data = {
+        b: {
+          a: 11,
+        },
+      };
+
+      expect(replaceValueForField(data, 'a', 1, ['b'])).toEqual({
+        b: {
+          a: 1,
+        },
+      });
+    });
+    it('parrent is b and it is undefined', () => {
+      const data = { };
+
+      expect(replaceValueForField(data, 'a', 1, ['b'])).toEqual({
+        b: {
+          a: 1,
+        },
+      });
+    });
+    it('parrent is b.c', () => {
+      const data = {
+        b: {
+          c: {
+            a: 11,
+          },
+        },
+      };
+
+      expect(replaceValueForField(data, 'a', 1, ['b', 'c'])).toEqual({
+        b: {
+          c: {
+            a: 1,
+          },
+        },
+      });
+    });
+    it('parrent is b.c.x', () => {
+      const data = {
+        b: {
+          c: {
+            x: 1,
+          },
+        },
+      };
+
+      expect(replaceValueForField(data, 'x', 2, ['b', 'c'])).toEqual({
+        b: {
+          c: {
+            x: 2,
+          },
+        },
+      });
+    });
+  });
+
+  describe('createObjByFields', () => {
+    it('parrents is empty', () => {
+      expect(createObjByFields([], 'a', 1)).toEqual({
+        a: 1,
+      });
+    });
+    it('has parrents b', () => {
+      expect(createObjByFields(['b'], 'a', 1)).toEqual({
+        b: {
+          a: 1,
+        },
+      });
+    });
+    it('has parrents b.c', () => {
+      expect(createObjByFields(['b', 'c'], 'a', 1)).toEqual({
+        b: {
+          c: {
+            a: 1,
+          },
+        },
+      });
     });
   });
 });

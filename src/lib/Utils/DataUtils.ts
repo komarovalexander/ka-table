@@ -8,20 +8,24 @@ export const getParentValue = (rowData: any, fieldParents: Field[], sameObj = fa
     return result !== undefined ? result : undefined;
   },
   rowData);
-  return {...parentValue};
+  return parentValue ? {...parentValue} : undefined;
 };
 
-const createObjByFields = (fieldParents: Field[], field: Field, value: any) => {
+export const createObjByFields = (fieldParents: Field[], field: Field, value: any) => {
   const parentValue: any = {};
-  fieldParents.reduce((previousValue, currentItem, currentIndex) => {
-    const lastObj: any = {};
-    previousValue[currentItem] = lastObj;
-    if (currentIndex === (fieldParents.length - 1)) {
-      lastObj[field] = value;
-    }
-    return lastObj;
-  },
-  parentValue);
+  if (fieldParents.length) {
+    fieldParents.reduce((previousValue, currentItem, currentIndex) => {
+      const lastObj: any = {};
+      previousValue[currentItem] = lastObj;
+      if (currentIndex === (fieldParents.length - 1)) {
+        lastObj[field] = value;
+      }
+      return lastObj;
+    },
+    parentValue);
+  } else {
+    parentValue[field] = value;
+  }
   return {...parentValue};
 };
 
@@ -41,34 +45,20 @@ export const getValueByField = (rowData: any, field: Field, fieldParents?: Field
   }
 };
 
-export const mergeValues = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]) => {
+export const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
+  let result = {...rowData};
   if (fieldParents && fieldParents.length) {
-    let parentValue = getParentValue(rowData, fieldParents);
+    const parentsOfParent = [...fieldParents];
+    const parentFieldName = parentsOfParent.pop() as string;
+    let parentValue = getParentValue(result, fieldParents);
     if (parentValue) {
       parentValue[field] = newValue;
     } else {
-      parentValue = createObjByFields(fieldParents, field, newValue);
+      parentValue = createObjByFields(parentsOfParent, field, newValue);
     }
-    const parentsOfParent = [...fieldParents];
-    const parentFieldName = parentsOfParent.pop() as string;
-    const result = { ...rowData};
-    replaceValueForField(result, parentFieldName, parentValue, parentsOfParent);
-    return result;
+    result = replaceValueForField(result, parentFieldName, parentValue, parentsOfParent);
   } else {
-    return { ...rowData, [field]: newValue };
+    result[field] = newValue;
   }
-};
-
-export const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
-  if (fieldParents && fieldParents.length) {
-    const parentValue = getParentValue(rowData, fieldParents);
-    if (parentValue) {
-      parentValue[field] = newValue;
-      const parentsOfParent = [...fieldParents];
-      const parentFieldName = parentsOfParent.pop() as string;
-      replaceValueForField(rowData, parentFieldName, parentValue, parentsOfParent);
-    }
-  } else {
-    rowData[field] = newValue;
-  }
+  return result;
 };
