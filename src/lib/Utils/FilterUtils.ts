@@ -3,7 +3,6 @@ import { DataType, FilterOperatorName } from '../enums';
 import { Cell } from '../Models/Cell';
 import { Column } from '../Models/Column';
 import { FilterOperator } from '../Models/FilterOperator';
-import { getField } from './ColumnUtils';
 import { isEmpty } from './CommonUtils';
 import { getValueByColumn } from './DataUtils';
 
@@ -32,7 +31,7 @@ export const filterData = (data: any[], columns: Column[]): any[] => {
     }
     const compare = filterOperator.compare;
     return initialData.filter((d: any) => {
-      let fieldValue = d[getField(column)];
+      let fieldValue = getValueByColumn(d, column);
       let conditionValue = column.filterRowValue;
       if (column.dataType === DataType.Date) {
         fieldValue = new Date(fieldValue).setHours(0, 0, 0, 0);
