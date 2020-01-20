@@ -45,17 +45,14 @@ export const getValueByField = (rowData: any, field: Field, fieldParents?: Field
   }
 };
 
-export const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
+const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
   let result = {...rowData};
   if (fieldParents && fieldParents.length) {
+    const parentValue = getParentValue(result, fieldParents) || {};
+    parentValue[field] = newValue;
+
     const parentsOfParent = [...fieldParents];
     const parentFieldName = parentsOfParent.pop() as string;
-    let parentValue = getParentValue(result, fieldParents);
-    if (parentValue) {
-      parentValue[field] = newValue;
-    } else {
-      parentValue = createObjByFields(parentsOfParent, field, newValue);
-    }
     result = replaceValueForField(result, parentFieldName, parentValue, parentsOfParent);
   } else {
     result[field] = newValue;
