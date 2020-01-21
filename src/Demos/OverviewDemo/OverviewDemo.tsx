@@ -46,50 +46,90 @@ const tableOption: ITableOption = {
       fieldParents: ['representative'],
       filterRowCell: () => <></>,
       key: 'representative.image',
-      style: { width: '11%' },
-      title: 'Image',
+      style: { width: '20px' },
     },
     {
       dataType: DataType.String,
       field: 'name',
       fieldParents: ['representative'],
       key: 'representative.name',
-      style: { width: '30%' },
-      title: 'Name',
+      style: { width: '130px' },
+      title: 'Representative Name',
     },
     {
       cell: CustomCell,
       dataType: DataType.Boolean,
       key: 'hasLoyalProgram',
-      style: { width: '30%', textAlign: 'center' },
       title: 'Loyal Program',
+    },
+    {
+      dataType: DataType.String,
+      field: 'name',
+      fieldParents: ['company'],
+      key: 'company.name',
+      style: {
+        width: '90px',
+      },
+      title: 'Company Name',
+    },
+    {
+      dataType: DataType.String,
+      field: 'name',
+      fieldParents: ['product'],
+      key: 'product.name',
+      style: {
+        width: '90px',
+      },
+      title: 'Product Name',
     },
     {
       dataType: DataType.Number,
       field: 'price',
       fieldParents: ['product'],
+      format: (value: number) => {
+        return `$${value}`;
+      },
       key: 'product.price',
       style: {
         textAlign: 'right',
-        width: '10%',
+        width: '90px',
       },
-      title: 'Price',
+      title: 'Product Price',
       validation: (value) => {
         if (value < 0) {
           return 'value can\'t be less than 0';
+        }
+        if (!value && value !== 0) {
+          return 'value can\'t be undefined';
         }
       },
     },
     {
       dataType: DataType.Date,
-      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
-      key: 'nextTry',
-      title: 'Next Try',
+      field: 'firstDealDate',
+      format: (value: Date) => {
+        const ageDifMs = Date.now() - value.getTime();
+        const ageDate = new Date(ageDifMs);
+        const count = Math.abs(ageDate.getUTCFullYear() - 1970);
+        const dateString = value.toLocaleDateString('en', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        });
+        return `${dateString} (${count} year${count === 1 ? '' : 's' } ago)`;
+      },
+      key: 'firstDealDate1',
+      style: {
+        textAlign: 'right',
+        width: '130px',
+      },
+      title: 'First Deal Date',
     },
   ],
   editingMode: EditingMode.Cell,
   filteringMode: FilteringMode.FilterRow,
   groups: [{ columnKey: 'hasLoyalProgram' }],
+  groupsExpanded: [[true]],
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };
