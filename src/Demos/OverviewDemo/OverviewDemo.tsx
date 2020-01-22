@@ -5,7 +5,10 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from '../../lib';
 import { ActionType, DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 import { Cell } from '../../lib/models';
-import { CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc } from '../../lib/types';
+import {
+  CellFuncPropsWithChildren, DataChangeFunc, FilterRowFuncPropsWithChildren, OptionChangeFunc,
+} from '../../lib/types';
+import { dateUtils } from '../../lib/utils';
 import dataArray from './data';
 
 const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
@@ -37,6 +40,66 @@ const CustomImageCell: React.FC<CellFuncPropsWithChildren> = ({
   );
 };
 
+const FilterOperators: React.FC<FilterRowFuncPropsWithChildren> = ({
+  column, dispatch,
+}) => {
+  return (
+    <select
+      className='form-control'
+      defaultValue={column.filterRowOperator}
+      onChange={(event) => {
+        dispatch(ActionType.ChangeFilterRow, { column: {...column, filterRowOperator: event.currentTarget.value}});
+      }}>
+      <option value={'='}>=</option>
+      <option value={'<'}>{'<'}</option>
+      <option value={'>'}>{'>'}</option>
+      <option value={'<='}>{'<='}</option>
+      <option value={'>='}>{'>='}</option>
+    </select>
+  );
+};
+
+const CustomNumberFilterEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+  column, dispatch,
+}) => {
+  return (
+    <div>
+      <FilterOperators column={column} dispatch={dispatch}/>
+      <input
+        defaultValue={column.filterRowValue}
+        style={{width: 60}}
+        onChange={(event) => {
+          const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
+          dispatch(ActionType.ChangeFilterRow, { column: {...column, filterRowValue}});
+        }}
+        type='number'
+      />
+    </div>
+  );
+};
+
+const CustomDateFilterEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+  column, dispatch,
+}) => {
+  const fieldValue = column.filterRowValue;
+  const value = fieldValue && dateUtils.getDateInputValue(fieldValue);
+  return (
+    <div>
+      <FilterOperators column={column} dispatch={dispatch}/>
+      <input
+        type='date'
+        value={value || ''}
+        onChange={(event) => {
+          const targetValue = event.currentTarget.value;
+          const filterRowValue = targetValue ? new Date(targetValue) : null;
+          const updatedColumn = {...column, filterRowValue};
+          dispatch(ActionType.ChangeFilterRow, {column: updatedColumn});
+        }}
+      />
+    </div>
+  );
+};
+
 const tableOption: ITableOption = {
   columns: [
     {
@@ -53,7 +116,7 @@ const tableOption: ITableOption = {
       field: 'name',
       fieldParents: ['representative'],
       key: 'representative.name',
-      style: { width: '130px' },
+      style: { width: '120px' },
       title: 'Representative Name',
     },
     {
@@ -68,7 +131,7 @@ const tableOption: ITableOption = {
       fieldParents: ['company'],
       key: 'company.name',
       style: {
-        width: '90px',
+        width: '130px',
       },
       title: 'Company Name',
     },
@@ -78,7 +141,7 @@ const tableOption: ITableOption = {
       fieldParents: ['product'],
       key: 'product.name',
       style: {
-        width: '90px',
+        width: '80px',
       },
       title: 'Product Name',
     },
@@ -86,13 +149,16 @@ const tableOption: ITableOption = {
       dataType: DataType.Number,
       field: 'price',
       fieldParents: ['product'],
+      filterRowCell: CustomNumberFilterEditor,
+      filterRowOperator: '>',
+      filterRowValue: 4000,
       format: (value: number) => {
         return `$${value}`;
       },
       key: 'product.price',
       style: {
         textAlign: 'right',
-        width: '90px',
+        width: '95px',
       },
       title: 'Product Price',
       validation: (value) => {
@@ -107,6 +173,9 @@ const tableOption: ITableOption = {
     {
       dataType: DataType.Date,
       field: 'firstDealDate',
+      filterRowCell: CustomDateFilterEditor,
+      filterRowOperator: '<',
+      filterRowValue: new Date(2015, 1, 2),
       format: (value: Date) => {
         const ageDifMs = Date.now() - value.getTime();
         const ageDate = new Date(ageDifMs);
@@ -121,7 +190,7 @@ const tableOption: ITableOption = {
       key: 'firstDealDate1',
       style: {
         textAlign: 'right',
-        width: '130px',
+        width: '165px',
       },
       title: 'First Deal Date',
     },
@@ -145,12 +214,20 @@ const OverviewDemo: React.FC = () => {
     changeData(newValue);
   };
   return (
-    <Table
-      {...option}
-      data={data}
-      onOptionChange={onOptionChange}
-      onDataChange={onDataChange}
-    />
+    <>
+      <div className='overview-search-container'>
+        <input type='search' defaultValue={option.search} onChange={(event) => {
+          onOptionChange({ search: event.currentTarget.value });
+        }} placeholder='type to search by data..' className='overview-search'/>
+      </div>
+      <Table
+        {...option}
+        data={data}
+        childAttributes={{table: {className: 'overview-table'}}}
+        onOptionChange={onOptionChange}
+        onDataChange={onDataChange}
+      />
+    </>
   );
 };
 
