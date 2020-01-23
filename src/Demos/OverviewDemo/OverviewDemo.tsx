@@ -148,7 +148,7 @@ const tableOption: ITableOption = {
       style: {
         width: '80px',
       },
-      title: 'Product Name',
+      title: 'Product',
     },
     {
       dataType: DataType.Number,

@@ -1,18 +1,19 @@
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
 import { getField } from './ColumnUtils';
+import { getValueByColumn, replaceValue } from './DataUtils';
 
 export const convertToColumnTypes = (data: any[], columns: Column[]) => {
   const newData: any[] = data.map((d) => {
-    const nd = {...d};
+    let nd = {...d};
     columns.forEach((c) => {
       const field = getField(c);
       if (nd[field] != null) {
         switch (c.dataType) {
-          case DataType.String: nd[field] = nd[field].toString(); break;
-          case DataType.Number: nd[field] = Number(nd[field]); break;
-          case DataType.Date: nd[field] = new Date(nd[field]); break;
-          case DataType.Boolean: nd[field] = toBoolean(nd[field]); break;
+          case DataType.String: nd = replaceValue(nd, c, getValueByColumn(nd, c).toString()); break;
+          case DataType.Number: nd = replaceValue(nd, c, Number(getValueByColumn(nd, c))); break;
+          case DataType.Date: nd = replaceValue(nd, c, new Date(getValueByColumn(nd, c))); break;
+          case DataType.Boolean: nd = replaceValue(nd, c, toBoolean(getValueByColumn(nd, c))); break;
         }
       }
     });

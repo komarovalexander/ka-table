@@ -49,7 +49,7 @@ export const getGroupedStructure = (
   groups = [...groups];
   const group = groups.shift();
   if (group) {
-    const column = groupedColumns && groupedColumns.find((g) => g.key = group.columnKey);
+    const column = groupedColumns && groupedColumns.find((g) => g.key === group.columnKey);
     if (column) {
       const grouped = groupBy(data, (item: any) => getValueByColumn(item, column));
       grouped.forEach((value, key) => {
@@ -96,7 +96,7 @@ export const groupBy = (data: any[], keyGetter: any, isEmptyValue: boolean = fal
 
 export const getGroupMark = () => groupMark;
 
-export const getGroupText = (value: any, column: Column) => {
+export const getGroupText = (value: any, column?: Column) => {
   const format = column && column.format;
   return format ? format(value) : `${column && column.title && (column.title + ': ')}${value}`;
 };

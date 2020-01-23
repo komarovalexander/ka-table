@@ -27,7 +27,8 @@ const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
   groupsExpanded,
   dispatch,
 }) => {
-  const column = groupedColumns && groupedColumns[emptyColumnsCount];
+  const group = groups && groups[emptyColumnsCount];
+  const column = group && groupedColumns.find((c) => c.key === group.columnKey);
   return (
     <tr className={defaultOptions.css.groupRow}>
       <EmptyCells count={emptyColumnsCount}/>
