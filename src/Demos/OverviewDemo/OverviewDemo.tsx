@@ -3,7 +3,9 @@ import './OverviewDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { ActionType, DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
+import {
+  ActionType, DataType, EditingMode, FilteringMode, SortDirection, SortingMode,
+} from '../../lib/enums';
 import { Cell } from '../../lib/models';
 import {
   CellFuncPropsWithChildren, DataChangeFunc, FilterRowFuncPropsWithChildren, OptionChangeFunc,
@@ -117,12 +119,15 @@ const tableOption: ITableOption = {
       fieldParents: ['representative'],
       key: 'representative.name',
       style: { width: '120px' },
-      title: 'Representative Name',
+      title: 'Representative',
     },
     {
       cell: CustomCell,
       dataType: DataType.Boolean,
+      fieldParents: ['company'],
+      format: (value) => `Loyal program: ${ value ? 'Yes' : 'No'}`,
       key: 'hasLoyalProgram',
+      sortDirection: SortDirection.Ascend,
       title: 'Loyal Program',
     },
     {
@@ -189,7 +194,7 @@ const tableOption: ITableOption = {
       },
       key: 'firstDealDate1',
       style: {
-        textAlign: 'right',
+        textAlign: 'center',
         width: '165px',
       },
       title: 'First Deal Date',

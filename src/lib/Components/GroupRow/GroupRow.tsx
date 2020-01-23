@@ -1,29 +1,33 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
+import { ActionType } from '../../enums';
 import { Column, Group } from '../../models';
 import { GroupRowData } from '../../Models/GroupRowData';
-import { OptionChangeFunc } from '../../types';
-import { groupClick } from '../../Utils/GroupUtils';
+import { DispatchFunc } from '../../types';
+import { getGroupText, updateExpandedGroups } from '../../Utils/GroupUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
 export interface IGroupRowProps {
   columns: Column[];
   emptyColumnsCount: number;
   groupRowData: GroupRowData;
+  groupedColumns: Column[];
   groups: Group[];
   groupsExpanded: any[][];
-  onOptionChange: OptionChangeFunc;
+  dispatch: DispatchFunc;
 }
 
 const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
   columns,
   emptyColumnsCount,
   groupRowData,
+  groupedColumns,
   groups,
   groupsExpanded,
-  onOptionChange,
+  dispatch,
 }) => {
+  const column = groupedColumns && groupedColumns[emptyColumnsCount];
   return (
     <tr className={defaultOptions.css.groupRow}>
       <EmptyCells count={emptyColumnsCount}/>
@@ -33,12 +37,13 @@ const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
           <div className='ka-group-column-content'>
             <div
               onClick={() => {
-                groupClick(groupsExpanded, groupRowData, onOptionChange);
+                const updatedGroupsExpanded = updateExpandedGroups(groupsExpanded, groupRowData);
+                dispatch(ActionType.UpdateGroupsExpanded, { newValue: { groupsExpanded: updatedGroupsExpanded }});
               }}
               className={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(groupRowData.key))
                 ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed}
             />
-            <div className='ka-group-text'>{groupRowData.value.toString()}</div>
+            <div className='ka-group-text'>{getGroupText(groupRowData.value, column)}</div>
           </div>
       </td>
     </tr>

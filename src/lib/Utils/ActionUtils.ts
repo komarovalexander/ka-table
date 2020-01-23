@@ -56,6 +56,9 @@ export const wrapDispatch = ({
             }
           }
           break;
+      case ActionType.UpdateGroupsExpanded:
+        onOptionChange(actionData.newValue);
+        break;
     }
     onEvent(action, actionData);
   };

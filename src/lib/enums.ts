@@ -12,14 +12,15 @@ export enum EditingMode {
 }
 
 export enum ActionType {
-  CloseEditor = 'CloseEditor',
   ChangeFilterRow = 'ChangeFilterRow',
-  OpenEditor = 'OpenEditor',
   ChangeRowData = 'ChangeRowData',
-  DeselectRowData = 'DeselectRowData',
-  SelectRow = 'SelectRow',
-  ScrollTable = 'ScrollTable',
   ChangeSorting = 'ChangeSorting',
+  CloseEditor = 'CloseEditor',
+  DeselectRowData = 'DeselectRowData',
+  OpenEditor = 'OpenEditor',
+  ScrollTable = 'ScrollTable',
+  SelectRow = 'SelectRow',
+  UpdateGroupsExpanded = 'UpdateGroupsExpanded',
 }
 
 export enum KeyboardEnum {

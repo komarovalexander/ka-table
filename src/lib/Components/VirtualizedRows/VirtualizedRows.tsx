@@ -10,6 +10,8 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {
     columns,
     data,
+    dispatch,
+    groupedColumns,
     groups = [],
     groupsExpanded = [],
     onOptionChange,
@@ -52,13 +54,14 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
         if (d.groupMark === groupMark) {
           return (
             <GroupRow
-              key={d.key}
-              groupRowData={d}
               columns={columns}
+              dispatch={dispatch}
               emptyColumnsCount={d.key.length - 1}
+              groupRowData={d}
+              groupedColumns={groupedColumns}
               groups={groups}
               groupsExpanded={groupsExpanded}
-              onOptionChange={onOptionChange} />
+              key={d.key} />
           );
         } else {
           const dataRow = (
