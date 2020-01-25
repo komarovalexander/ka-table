@@ -21,8 +21,8 @@ const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
     <div onClick={() => {
       const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
       dispatch(ActionType.OpenEditor, { cell });
-    }}>
-      {value ? 'Passed' : 'Failed'}
+    }} className={value ? 'custom-cell-demo-loyal' : 'custom-cell-demo-no-loyal'}>
+      {value ? 'Loyal Program Member' : 'No Loyal Programm'}
     </div>
   );
 };
@@ -45,7 +45,9 @@ const tableOption: ITableOption = {
       field: 'image',
       fieldParents: ['representative'],
       key: 'representative.image',
-      style: { width: '11%' },
+      style: {
+        width: '40px',
+      },
       title: 'Image',
     },
     {
@@ -53,29 +55,43 @@ const tableOption: ITableOption = {
       field: 'name',
       fieldParents: ['representative'],
       key: 'representative.name',
-      style: { width: '30%' },
-      title: 'Name',
+      style: { width: '200px' },
+      title: 'Representative',
     },
     {
       cell: CustomCell,
       dataType: DataType.Boolean,
+      fieldParents: ['company'],
       key: 'hasLoyalProgram',
-      style: { width: '30%', textAlign: 'center' },
+      style: { width: '170px', textAlign: 'center' },
       title: 'Loyal Program',
+    },
+    {
+      dataType: DataType.String,
+      field: 'name',
+      fieldParents: ['product'],
+      key: 'product.name',
+      style: {
+        width: '80px',
+      },
+      title: 'Product',
     },
     {
       dataType: DataType.Number,
       field: 'price',
       fieldParents: ['product'],
+      format: (value: number) => {
+        return `$${value}`;
+      },
       key: 'product.price',
-      style: { width: '10%', textAlign: 'right' },
+      style: { width: '150px', textAlign: 'right' },
       title: 'Price',
     },
     {
       dataType: DataType.Date,
       format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
-      key: 'nextTry',
-      title: 'Next Try',
+      key: 'firstDealDate',
+      title: 'First Deal Date',
     },
   ],
   editingMode: EditingMode.Cell,
