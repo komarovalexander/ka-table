@@ -7,7 +7,7 @@
 The customizable, extendable, lightweight and free React Table Component
 
 ![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/command-column.png)
-[Demo link](https://komarovalexander.github.io/ka-table/#/command-column)
+[Demo link](https://komarovalexander.github.io/ka-table/#/overview)
 
 ## Installation
 npm
@@ -75,6 +75,8 @@ export default SortingDemo;
 [Demo link](https://komarovalexander.github.io/ka-table/#/sorting)
 
 ## Examples
+[Overview](https://komarovalexander.github.io/ka-table/#/command-column) - Main features on one page
+
 [Command Column](https://komarovalexander.github.io/ka-table/#/command-column) - Functional columns which are not bound to data and used to add custom command to table
 
 [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) - Best way to customise look of every column in table
