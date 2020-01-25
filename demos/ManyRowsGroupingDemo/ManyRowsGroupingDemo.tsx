@@ -6,10 +6,10 @@ import { OptionChangeFunc } from 'ka-table/types';
 
 const dataArray = Array(10000).fill(undefined).map(
   (_, index) => ({
-    column1: `column:1 row:${index % 100}00`,
-    column2: `column:2 row:${index % 50}0`,
-    column3: `column:3 row:${index}`,
-    column4: `column:4 row:${index}`,
+    column1: `value:${index % 25}`,
+    column2: `value:${index % 100}`,
+    column3: `value:${index}`,
+    column4: `value:${index}`,
     id: index,
   }),
 );
