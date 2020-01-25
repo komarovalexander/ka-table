@@ -177,7 +177,7 @@ export default [
     },
     company: {
       hasLoyalProgram: true,
-      name: 'Windler, Conn and Fritsch',
+      name: 'Windler, Conn',
     },
     dealsHistory: [
       269499.84,
@@ -294,7 +294,7 @@ export default [
     },
     company: {
       hasLoyalProgram: true,
-      name: 'Lebsack, Harvey and Barrows',
+      name: 'Lebsack, Harvey',
     },
     dealsHistory: [
       80951.96,
@@ -679,7 +679,7 @@ export default [
     },
     company: {
       hasLoyalProgram: true,
-      name: 'Heidenreich, Lehner and Herzog',
+      name: 'Heidenreich, Lehner',
     },
     dealsHistory: [
       742884.29,
@@ -789,7 +789,7 @@ export default [
     },
     company: {
       hasLoyalProgram: true,
-      name: 'Homenick, Gulgowski and Deckow',
+      name: 'Homenick, Gulgowski',
     },
     dealsHistory: [
       663372.35,
@@ -835,7 +835,7 @@ export default [
     },
     company: {
       hasLoyalProgram: false,
-      name: 'Moore, Monahan and Steuber',
+      name: 'Moore, Monahan',
     },
     dealsHistory: [
       263584.98,
@@ -1801,7 +1801,7 @@ export default [
     },
     company: {
       hasLoyalProgram: true,
-      name: 'Romaguera, Kshlerin and Baumbach',
+      name: 'Romaguera, Kshlerin',
     },
     dealsHistory: [
       646033.06,
