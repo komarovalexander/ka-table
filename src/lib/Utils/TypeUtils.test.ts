@@ -1,12 +1,24 @@
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
-import { convertToColumnTypes, isFunction } from './TypeUtils';
+import { convertToColumnTypes, getColumnsWithWrongType, isFunction } from './TypeUtils';
+
+interface ITestOptions {
+  sameObject?: boolean;
+  sameType?: boolean;
+}
+type TestCase = Array<string | undefined | boolean | number | Date | ITestOptions>;
+class TestSettings {
+  public cases!: TestCase[];
+  public dataType!: DataType;
+}
 
 describe('TypeUtils', () => {
-  [{
+  const settings: TestSettings[] = [{
     cases: [
       ['empty', undefined, undefined],
-      ['fromBoolean', true, true],
+      ['fromBoolean', true, true, {
+        sameType: true,
+      }],
       ['fromDate', Date.UTC(2019, 10, 8), true],
       ['fromNumber', 12, true],
       ['fromObject', {}, true],
@@ -19,8 +31,12 @@ describe('TypeUtils', () => {
     cases: [
       ['empty', undefined, undefined],
       ['fromBoolean', true, 1],
-      ['fromDate', Date.UTC(2019, 10, 8), 1573171200000],
-      ['fromNumber', 12, 12],
+      ['fromDate', Date.UTC(2019, 10, 8), 1573171200000, {
+        sameType: true,
+      }],
+      ['fromNumber', 12, 12, {
+        sameType: true,
+      }],
       ['fromObject', {}, NaN],
       ['fromStringNumber', '12', 12],
       ['fromString', 'a', NaN],
@@ -32,7 +48,10 @@ describe('TypeUtils', () => {
       ['fromBoolean', true, true],
       ['fromDate', Date.UTC(2019, 10, 8),  Date.UTC(2019, 10, 8)],
       ['fromNumber', 12, 12],
-      ['fromObject', {}, {}, true],
+      ['fromObject', {}, {}, {
+        sameObject: true,
+        sameType: true,
+      }],
       ['fromString', 'str', 'str'],
     ],
     dataType: DataType.Object,
@@ -43,26 +62,50 @@ describe('TypeUtils', () => {
       ['fromDate', Date.UTC(2019, 10, 8), '1573171200000'],
       ['fromNumber', 12, '12'],
       ['fromObject', {}, '[object Object]'],
-      ['fromString', 'str', 'str'],
+      ['fromString', 'str', 'str', {
+        sameType: true,
+      }],
     ],
     dataType: DataType.String,
-  }].forEach((test) => {
+  }];
+  settings.forEach((test) => {
     describe(test.dataType, () => {
       const columns: Column[] = [
         { key: 'columnField', title: 'Column Title', dataType: test.dataType },
       ];
-      test.cases.forEach((testCase) => {
+      test.cases.forEach((testCase: TestCase) => {
         it('should convert from ' + testCase[0], () => {
           const data = [{ columnField: testCase[1] }];
           const newData = convertToColumnTypes(data, columns);
-          if (testCase[3]) {
-            expect(newData[0].columnField).toStrictEqual(testCase[2] || {});
+          const options: ITestOptions = testCase[3] as ITestOptions;
+          if (options && options.sameObject) {
+            expect(newData[0].columnField).toStrictEqual(testCase[2]);
           } else {
             expect(newData[0].columnField).toBe(testCase[2]);
           }
         });
+
+        it('find columns for ' + testCase[0], () => {
+          const data = [{ columnField: testCase[1] }];
+          const columnsWithWrongType = getColumnsWithWrongType(data, columns);
+          const options: ITestOptions = testCase[3] as ITestOptions;
+          if (options && options.sameType) {
+            expect(columnsWithWrongType.length).toEqual(0);
+          } else {
+            expect(columnsWithWrongType.length).toEqual(1);
+          }
+        });
       });
     });
+  });
+
+  it('getColumnsWithWrongType - empty columns for empty data', () => {
+    const data: any[] = [];
+    const columns: Column[] = [
+      { key: 'columnField', title: 'Column Title', dataType: DataType.String },
+    ];
+    const columnsWithWrongType = getColumnsWithWrongType(data, columns);
+    expect(columnsWithWrongType.length).toEqual(0);
   });
 
   it('isFunction', () => {

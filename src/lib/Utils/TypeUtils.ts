@@ -22,6 +22,28 @@ export const convertToColumnTypes = (data: any[], columns: Column[]) => {
   return newData;
 };
 
+export const getColumnsWithWrongType = (data: any[], columns: Column[]): Column[] => {
+  if (!data.length) {
+    return [];
+  }
+  const item = data[0];
+  const columnsWithWrongType = columns.filter((c) => {
+    const field = getField(c);
+    const value = item[field];
+    if (value != null) {
+      switch (c.dataType) {
+        case DataType.String: return value.constructor !== String;
+        case DataType.Number: return value.constructor !== Number;
+        case DataType.Date: return value.constructor !== Date;
+        case DataType.Boolean: return value.constructor !== Boolean;
+        case DataType.Object: return value.constructor !== Object;
+      }
+    }
+    return true;
+  });
+  return columnsWithWrongType;
+};
+
 export const toBoolean = (value: any) => {
   if (typeof value === 'string') {
     switch (value.toLowerCase().trim()) {

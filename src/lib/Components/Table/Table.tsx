@@ -14,7 +14,7 @@ import { wrapDispatch } from '../../Utils/ActionUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
 import { extendProps } from '../../Utils/PropsUtils';
 import { sortData } from '../../Utils/SortUtils';
-import { convertToColumnTypes } from '../../Utils/TypeUtils';
+import { convertToColumnTypes, getColumnsWithWrongType } from '../../Utils/TypeUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
 import TableBody from '../TableBody/TableBody';
@@ -64,9 +64,15 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     selectedRows = [],
     sortingMode = SortingMode.None,
   } = props;
-  let { columns, data } = props;
+  let {
+    columns,
+    data = [],
+  } = props;
   data = search ? searchData(columns, data, search) : data;
-  data = convertToColumnTypes(data, columns);
+
+  const columnsWithWrongType = getColumnsWithWrongType(data, columns);
+  data = columnsWithWrongType.length ? convertToColumnTypes(data, columnsWithWrongType) : data;
+
   data = filterData(data, columns);
   data = sortData(columns, data);
 
