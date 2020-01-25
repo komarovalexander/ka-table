@@ -6,8 +6,8 @@
 # Overview
 The customizable, extendable, lightweight and free React Table Component
 
-![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/command-column.png)
-[Demo link](https://komarovalexander.github.io/ka-table/#/command-column)
+![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/overview.png)
+[Demo link](https://komarovalexander.github.io/ka-table/#/overview)
 
 ## Installation
 npm
@@ -75,6 +75,8 @@ export default SortingDemo;
 [Demo link](https://komarovalexander.github.io/ka-table/#/sorting)
 
 ## Examples
+[Overview](https://komarovalexander.github.io/ka-table/#/overview)
+
 [Command Column](https://komarovalexander.github.io/ka-table/#/command-column) - Functional columns which are not bound to data and used to add custom command to table
 
 [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) - Best way to customise look of every column in table
@@ -151,6 +153,7 @@ Describes column of table its look and behaviour
 | filterRowOperator | <code>string</code> | Sets filter row operator [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor). See the list of predefined filter operators [<code>FilterOperatorName</code>](#FilterOperatorName) |
 | filterRowValue | <code>any</code> | Sets filter row value [Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) |
 | field | <code>string</code> | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
+| fieldParents | <code>string[]</code> | Array contains names of parents for specific field. I.e. to set field company.representative.name column's option should be { key: 'company.representative.name', field: 'name', fieldParents: ['company', 'representative'] } |
 | format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string [Example](https://komarovalexander.github.io/ka-table/#/custom-cell) |
 | headCell | <code>HeaderCellFunc</code> | Returns a custom header cell [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell) |
 | isEditable | <code>boolean</code> | Specifies can column be editable or not |

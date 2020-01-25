@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { EditingMode } from '../../enums';
 import { ChildAttributes, Column } from '../../models';
-import { DispatchFunc } from '../../types';
+import { DispatchFunc, Field } from '../../types';
 import CellText from '../CellText/CellText';
 
 export interface ICellContentProps {
@@ -10,7 +10,8 @@ export interface ICellContentProps {
   column: Column;
   dispatch: DispatchFunc;
   editingMode: EditingMode;
-  field: string;
+  value: any;
+  field: Field;
   rowData: any;
   rowKeyField: string;
 }

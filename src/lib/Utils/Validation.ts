@@ -1,7 +1,10 @@
-import { ValidationFunc } from '../types';
+import { Column } from '../models';
+import { getValueByColumn } from './DataUtils';
 
-export const getValidationValue = (rowData: any, field: string, validation?: ValidationFunc) => {
+export const getValidationValue = (rowData: any, column: Column) => {
+  const { validation } = column;
   if (validation) {
-    return validation(rowData[field], rowData);
+    const value = getValueByColumn(rowData, column);
+    return validation(value, rowData);
   }
 };

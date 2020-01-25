@@ -1,0 +1,23 @@
+.overview-table{
+  .ka-cell {
+    line-height: 17px;
+  }
+  .ka-empty-cell {
+    display: none;
+  }
+  .custom-cell-image{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 25px;
+  }
+}
+
+.overview-search-container{
+  text-align: right;
+  width: 100%;
+  .overview-search{
+    margin-bottom: 20px;
+    width: 200px;
+  }
+}

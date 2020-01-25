@@ -3,17 +3,17 @@ import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { ActionType } from '../../enums';
 import { Cell } from '../../models';
+import { getValueByColumn, replaceValue } from '../../Utils/DataUtils';
 import { getDateInputValue } from '../../Utils/DateUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   column,
   dispatch,
-  field,
   rowData,
   rowKeyField,
 }) => {
-  const fieldValue = rowData[field];
+  const fieldValue = getValueByColumn(rowData, column);
   const value = fieldValue && getDateInputValue(fieldValue);
   return (
     <input
@@ -23,7 +23,8 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
       value={value || ''}
       onChange={(event) => {
         const targetValue: string = event.currentTarget.value;
-        dispatch(ActionType.ChangeRowData, {newValue: {...rowData, [field]: targetValue ? new Date(targetValue) : null}});
+        const newValue = targetValue ? new Date(targetValue) : null;
+        dispatch(ActionType.ChangeRowData, {newValue: replaceValue(rowData, column, newValue)});
       }}
       onBlur={() => {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };

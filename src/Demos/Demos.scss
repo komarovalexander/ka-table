@@ -103,3 +103,25 @@ body {
 .ka-tbody{
   max-height: 600px;
 }
+
+@media (max-width: 1500px){
+
+  .demos{
+    nav{
+      width: 280px;
+    }
+    main{
+      width: calc(100% - 280px);
+      .simulator-content{
+        padding: 28px 40px 60px;
+
+        h1{
+          margin: 0 0 15px 20px;
+        }
+      }
+      .code{
+        padding: 60px 40px;
+      }
+    }
+  }
+}

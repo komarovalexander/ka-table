@@ -2,10 +2,11 @@ import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import {
   convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, groupBy, groupClick,
+  updateExpandedGroups,
 } from './GroupUtils';
 
 describe('GroupUtils', () => {
-  const columnMap = { country: 'country', type: 'type' };
+  const groupedColumns = [{key: 'country'}, {key: 'type'}];
   const data = [
     { type: 'Cat', name: 'Kas', country: 'Czech Republic' },
     { type: 'Dog', name: 'Rex', country: 'Montenegro' },
@@ -95,22 +96,18 @@ describe('GroupUtils', () => {
     expect(result).toEqual([['dog']]);
   });
 
-  it('groupClick add', () => {
+  it('updateExpandedGroups add', () => {
     const groupsExpanded: any[][] = [['cat']];
     const groupRowData: GroupRowData = { key: ['dog'], value: 'Rex', groupMark: {} };
-    const onOptionChange = jest.fn((x) => {});
-    groupClick(groupsExpanded, groupRowData, onOptionChange);
-    expect(onOptionChange.mock.calls.length).toBe(1);
-    expect(onOptionChange.mock.calls[0]).toEqual([{groupsExpanded: [['cat'], ['dog']]}]);
+    const updated = updateExpandedGroups(groupsExpanded, groupRowData);
+    expect(updated).toEqual([['cat'], ['dog']]);
   });
 
-  it('groupClick remove', () => {
+  it('updateExpandedGroups remove', () => {
     const groupsExpanded: any[][] = [['cat']];
     const groupRowData: GroupRowData = { key: ['cat'], value: 'Tom', groupMark: {} };
-    const onOptionChange = jest.fn((x) => {});
-    groupClick(groupsExpanded, groupRowData, onOptionChange);
-    expect(onOptionChange.mock.calls.length).toBe(1);
-    expect(onOptionChange.mock.calls[0]).toEqual([{groupsExpanded: []}]);
+    const updated = updateExpandedGroups(groupsExpanded, groupRowData);
+    expect(updated).toEqual([]);
   });
 
   it('groupBy', () => {
@@ -125,29 +122,29 @@ describe('GroupUtils', () => {
 
   describe('getGroupedStructure', () => {
     it('basic', () => {
-      const result = getGroupedStructure(data, groups, columnMap);
+      const result = getGroupedStructure(data, groups, groupedColumns);
       expect(result).toMatchSnapshot();
     });
 
     it('expanded root', () => {
-      const result = getGroupedStructure(data, groups, columnMap, 0, [['Czech Republic']]);
+      const result = getGroupedStructure(data, groups, groupedColumns, 0, [['Czech Republic']]);
       expect(result).toMatchSnapshot();
     });
     it('expanded second', () => {
-      const result = getGroupedStructure(data, groups, columnMap, 0, [['Czech Republic'], ['Czech Republic', 'Cat']]);
+      const result = getGroupedStructure(data, groups, groupedColumns, 0, [['Czech Republic'], ['Czech Republic', 'Cat']]);
       expect(result).toMatchSnapshot();
     });
     it('should not expand second', () => {
-      const result = getGroupedStructure(data, groups, columnMap, 0, [['Czech Republic', 'Cat']]);
+      const result = getGroupedStructure(data, groups, groupedColumns, 0, [['Czech Republic', 'Cat']]);
       expect(result).toMatchSnapshot();
     });
     it('expanded couple', () => {
-      const result = getGroupedStructure(data, groups, columnMap, 0,
+      const result = getGroupedStructure(data, groups, groupedColumns, 0,
         [['Czech Republic'], ['Czech Republic', 'Cat'], ['Montenegro']]);
       expect(result).toMatchSnapshot();
     });
     it('expanded couple (skip Czech Republic)', () => {
-      const result = getGroupedStructure(data, groups, columnMap, 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
+      const result = getGroupedStructure(data, groups, groupedColumns, 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
       expect(result).toMatchSnapshot();
     });
   });

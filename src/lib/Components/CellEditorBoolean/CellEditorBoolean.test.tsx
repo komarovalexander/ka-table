@@ -17,9 +17,13 @@ const props: ICellEditorProps = {
   dispatch: jest.fn(),
   field: 'fieldName',
   isSelectedRow: true,
-  rowData: { column: 1 },
-  rowKeyField: '',
+  rowData: { fieldName: true, id: 2 },
+  rowKeyField: 'id',
 };
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('CellEditorBoolean', () => {
   it('renders without crashing', () => {
@@ -28,15 +32,24 @@ describe('CellEditorBoolean', () => {
     ReactDOM.unmountComponentAtNode(element);
   });
 
-  it('should fire RowDataChanged', () => {
+  it('should dispatch RowDataChanged', () => {
     const newValue = false;
-    const rowData = { fieldName: true };
-    const wrapper = mount(<CellEditorBoolean {...props} rowData={rowData} field='fieldName' />);
+    const wrapper = mount(<CellEditorBoolean {...props} />);
 
     wrapper.find('input').props().onChange!({currentTarget: { checked: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeRowData, { newValue: { fieldName: newValue } },
+      ActionType.ChangeRowData, { newValue: { fieldName: newValue, id: 2 } },
+    );
+  });
+
+  it('should dispatch CloseEditor', () => {
+    const wrapper = mount(<CellEditorBoolean {...props} />);
+
+    wrapper.find('input').props().onBlur!({} as any);
+    expect(props.dispatch).toBeCalledTimes(1);
+    expect(props.dispatch).toBeCalledWith(
+      ActionType.CloseEditor, { cell: { columnKey: 'fieldName', rowKey: 2 } },
     );
   });
 });

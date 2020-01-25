@@ -12,10 +12,13 @@ const props: ICellEditorProps = {
     title: 'Field',
   },
   dispatch: () => {},
+  field: 'columnField',
   isSelectedRow: true,
-  onValueChange: () => {},
-  rowData: { column: 1 },
+  rowData: {
+    column: 1,
+  },
   rowKeyField: '',
+  value: 1,
 };
 
 it('renders without crashing', () => {
