@@ -6,35 +6,33 @@ import { ITableOption, Table } from 'ka-table';
 import { ActionType, DataType, EditingMode } from 'ka-table/enums';
 import { Cell } from 'ka-table/models';
 import { CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
-
-const dataArray: any[] = [
-  { id: 1, name: 'Mike Wazowski', score: 80, passed: true, img: 'static/images/man1.PNG' },
-  { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2019, 10, 8, 10), img: 'static/images/man2.PNG' },
-  { id: 3, name: 'Tom Williams', score: 45, passed: false, nextTry: new Date(2019, 11, 8, 10), img: 'static/images/man3.PNG' },
-  { id: 4, name: 'Kurt Cobain', score: 75, passed: true, img: 'static/images/man4.PNG' },
-  { id: 5, name: 'Marshall Bruce', score: 77, passed: true, img: 'static/images/man5.PNG'  },
-  { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2019, 10, 9, 10), img: 'static/images/man6.PNG'  },
-];
+import dataArray from './data';
 
 const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
-  column: { key }, field, rowData, rowKeyField, dispatch,
+  column: {
+    key,
+  },
+  dispatch,
+  rowData,
+  rowKeyField,
+  value,
 }) => {
   return (
     <div onClick={() => {
       const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
       dispatch(ActionType.OpenEditor, { cell });
-    }}>
-      {rowData[field] ? 'Passed' : 'Failed'}
+    }} className={value ? 'custom-cell-demo-loyal' : 'custom-cell-demo-no-loyal'}>
+      {value ? 'Loyal Program Member' : 'No Loyal Programm'}
     </div>
   );
 };
 
 const CustomImageCell: React.FC<CellFuncPropsWithChildren> = ({
-  field, rowData,
+  value,
 }) => {
   return (
     <div>
-      <img className='custom-cell-image' src={rowData[field]} alt=''/>
+      <img className='custom-cell-image' src={value} alt=''/>
     </div>
   );
 };
@@ -44,24 +42,56 @@ const tableOption: ITableOption = {
     {
       cell: CustomImageCell,
       dataType: DataType.String,
-      key: 'img',
-      style: { width: '11%' },
+      field: 'image',
+      fieldParents: ['representative'],
+      key: 'representative.image',
+      style: {
+        width: '40px',
+      },
       title: 'Image',
     },
-    { dataType: DataType.String, key: 'name', title: 'Name', style: { width: '30%' } },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%', textAlign: 'right' } },
+    {
+      dataType: DataType.String,
+      field: 'name',
+      fieldParents: ['representative'],
+      key: 'representative.name',
+      style: { width: '200px' },
+      title: 'Representative',
+    },
     {
       cell: CustomCell,
       dataType: DataType.Boolean,
-      key: 'passed',
-      style: { width: '30%', textAlign: 'center' },
-      title: 'Results',
+      fieldParents: ['company'],
+      key: 'hasLoyalProgram',
+      style: { width: '170px', textAlign: 'center' },
+      title: 'Loyal Program',
+    },
+    {
+      dataType: DataType.String,
+      field: 'name',
+      fieldParents: ['product'],
+      key: 'product.name',
+      style: {
+        width: '80px',
+      },
+      title: 'Product',
+    },
+    {
+      dataType: DataType.Number,
+      field: 'price',
+      fieldParents: ['product'],
+      format: (value: number) => {
+        return `$${value}`;
+      },
+      key: 'product.price',
+      style: { width: '150px', textAlign: 'right' },
+      title: 'Price',
     },
     {
       dataType: DataType.Date,
       format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
-      key: 'nextTry',
-      title: 'Next Try',
+      key: 'firstDealDate',
+      title: 'First Deal Date',
     },
   ],
   editingMode: EditingMode.Cell,

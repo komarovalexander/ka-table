@@ -9,12 +9,12 @@ import { filterData } from './filterData';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
-  { id: 3, name: 'Tom Bruce', score: 67, passed: false },
   { id: 2, name: 'Billi Bob', score: 55, passed: false },
   { id: 3, name: 'Tom Parker', score: 45, passed: false },
   { id: 4, name: 'Kurt Cobain', score: 75, passed: true },
   { id: 5, name: 'Tom Williams', score: 77, passed: true },
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
+  { id: 7, name: 'Tom Bruce', score: 67, passed: false },
 ];
 
 const tableOption: ITableOption = {
