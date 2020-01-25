@@ -75,7 +75,7 @@ export default SortingDemo;
 [Demo link](https://komarovalexander.github.io/ka-table/#/sorting)
 
 ## Examples
-[Overview](https://komarovalexander.github.io/ka-table/#/command-column) - Main features on one page
+[Overview](https://komarovalexander.github.io/ka-table/#/command-column)
 
 [Command Column](https://komarovalexander.github.io/ka-table/#/command-column) - Functional columns which are not bound to data and used to add custom command to table
 
