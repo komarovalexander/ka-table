@@ -15,35 +15,35 @@ Array [
 exports[`FilterUtils filterData IsNotEmpty for date 1`] = `
 Array [
   Object {
-    "date": 2021-12-20T08:00:00.000Z,
+    "date": 2021-12-20T09:00:00.000Z,
     "id": 1,
     "name": "Mike Wazowski",
     "passed": true,
     "score": 80,
   },
   Object {
-    "date": 2021-12-20T12:00:00.000Z,
+    "date": 2021-12-20T13:00:00.000Z,
     "id": 2,
     "name": "Billi Bob",
     "passed": false,
     "score": 55,
   },
   Object {
-    "date": 2021-11-20T12:00:00.000Z,
+    "date": 2021-11-20T13:00:00.000Z,
     "id": 3,
     "name": "Tom Williams",
     "passed": false,
     "score": 45,
   },
   Object {
-    "date": 2021-12-19T12:00:00.000Z,
+    "date": 2021-12-19T13:00:00.000Z,
     "id": 4,
     "name": "Kurt Cobain",
     "passed": true,
     "score": 75,
   },
   Object {
-    "date": 2021-12-17T12:00:00.000Z,
+    "date": 2021-12-17T13:00:00.000Z,
     "id": 6,
     "name": "Sunny Fox",
     "passed": false,
@@ -55,14 +55,14 @@ Array [
 exports[`FilterUtils filterData by date 1`] = `
 Array [
   Object {
-    "date": 2021-12-20T08:00:00.000Z,
+    "date": 2021-12-20T09:00:00.000Z,
     "id": 1,
     "name": "Mike Wazowski",
     "passed": true,
     "score": 80,
   },
   Object {
-    "date": 2021-12-20T12:00:00.000Z,
+    "date": 2021-12-20T13:00:00.000Z,
     "id": 2,
     "name": "Billi Bob",
     "passed": false,
@@ -74,7 +74,7 @@ Array [
 exports[`FilterUtils filterData one item 1`] = `
 Array [
   Object {
-    "date": 2021-12-20T12:00:00.000Z,
+    "date": 2021-12-20T13:00:00.000Z,
     "id": 2,
     "name": "Billi Bob",
     "passed": false,

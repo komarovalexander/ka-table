@@ -24,12 +24,12 @@ describe('FilterUtils', () => {
 
   describe('filterData', () => {
     const data: any[] = [
-      { id: 1, name: 'Mike Wazowski', score: 80, passed: true, date: new Date(2021, 11, 20, 9) },
-      { id: 2, name: 'Billi Bob', score: 55, passed: false, date: new Date(2021, 11, 20, 13) },
-      { id: 3, name: 'Tom Williams', score: 45, passed: false, date: new Date(2021, 10, 20, 13) },
-      { id: 4, name: 'Kurt Cobain', score: 75, passed: true, date: new Date(2021, 11, 19, 13) },
+      { id: 1, name: 'Mike Wazowski', score: 80, passed: true, date: new Date(Date.UTC(2021, 11, 20, 9)) },
+      { id: 2, name: 'Billi Bob', score: 55, passed: false, date: new Date(Date.UTC(2021, 11, 20, 13)) },
+      { id: 3, name: 'Tom Williams', score: 45, passed: false, date: new Date(Date.UTC(2021, 10, 20, 13)) },
+      { id: 4, name: 'Kurt Cobain', score: 75, passed: true, date: new Date(Date.UTC(2021, 11, 19, 13)) },
       { id: 5, name: 'Marshall Bruce', score: 77, passed: true, date: null },
-      { id: 6, name: 'Sunny Fox', score: 33, passed: false, date: new Date(2021, 11, 17, 13) },
+      { id: 6, name: 'Sunny Fox', score: 33, passed: false, date: new Date(Date.UTC(2021, 11, 17, 13)) },
     ];
     it('one item', () => {
       const columns = [{
@@ -44,7 +44,7 @@ describe('FilterUtils', () => {
       const columnsDate: Column[] = [
         {
           dataType: DataType.Date,
-          filterRowValue: new Date(2021, 11, 20, 19, 18, 12),
+          filterRowValue: new Date(Date.UTC(2021, 11, 20, 19, 18, 12)),
           key: 'date',
         },
       ];
