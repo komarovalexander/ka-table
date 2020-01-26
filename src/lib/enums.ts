@@ -50,4 +50,6 @@ export enum FilterOperatorName {
   MoreThanOrEqual = '>=',
   LessThanOrEqual = '<=',
   Contains = 'contains',
+  IsEmpty = 'IsEmpty',
+  IsNotEmpty = 'IsNotEmpty',
 }

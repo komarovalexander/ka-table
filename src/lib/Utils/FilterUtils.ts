@@ -13,8 +13,17 @@ export const getRowEditableCells = (rowKeyValue: any, editableCells: Cell[]): Ce
 export const searchData = (columns: Column[], data: any[], searchText: string): any[] => {
   return columns.reduce((initialData: any[], c: Column) => {
     const filterFunction = (item: any) => {
-      return c.search ? c.search(searchText, item, c) : initialData.indexOf(item) < 0
-        && getValueByColumn(item, c).toString().toLowerCase().includes(searchText.toLowerCase());
+      if (c.search) {
+        return c.search(searchText, item, c);
+      }
+      if (initialData.indexOf(item) >= 0) {
+        return false;
+      }
+      const columnValue = getValueByColumn(item, c);
+      if (columnValue == null) {
+        return false;
+      }
+      return columnValue.toString().toLowerCase().includes(searchText.toLowerCase());
     };
     return initialData.concat(data.filter(filterFunction));
   }, []);
@@ -22,7 +31,13 @@ export const searchData = (columns: Column[], data: any[], searchText: string): 
 
 export const filterData = (data: any[], columns: Column[]): any[] => {
   return columns.reduce((initialData, column) => {
-    if (isEmpty(column.filterRowValue)) { return initialData; }
+    if (
+      isEmpty(column.filterRowValue)
+      && column.filterRowOperator !== FilterOperatorName.IsEmpty
+      && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
+    ) {
+      return initialData;
+    }
     const filterRowOperator = column.filterRowOperator
       || getDefaultOperatorForType(column.dataType  || defaultOptions.columnDataType);
     const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
@@ -34,8 +49,8 @@ export const filterData = (data: any[], columns: Column[]): any[] => {
       let fieldValue = getValueByColumn(d, column);
       let conditionValue = column.filterRowValue;
       if (column.dataType === DataType.Date) {
-        fieldValue = new Date(fieldValue).setHours(0, 0, 0, 0);
-        conditionValue = new Date(conditionValue).setHours(0, 0, 0, 0);
+        fieldValue = fieldValue == null ? fieldValue : new Date(fieldValue).setHours(0, 0, 0, 0);
+        conditionValue = conditionValue == null ? conditionValue : new Date(conditionValue).setHours(0, 0, 0, 0);
       }
       return compare(fieldValue, conditionValue);
     });
@@ -70,7 +85,15 @@ export const predefinedFilterOperators: FilterOperator[] = [{
   name: FilterOperatorName.LessThanOrEqual,
 }, {
   compare: (fieldValue: any, conditionValue: any) =>
-      fieldValue.toString().toLowerCase().includes(conditionValue.toString().toLowerCase()),
+    fieldValue != null && fieldValue.toString().toLowerCase().includes(conditionValue.toString().toLowerCase()),
   defaultForTypes: [DataType.String],
   name: FilterOperatorName.Contains,
+}, {
+  compare: (fieldValue: any) =>
+    isEmpty(fieldValue),
+  name: FilterOperatorName.IsEmpty,
+}, {
+  compare: (fieldValue: any) =>
+    !isEmpty(fieldValue),
+  name: FilterOperatorName.IsNotEmpty,
 }];
