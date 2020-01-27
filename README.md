@@ -1,6 +1,6 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/ka-table/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/ka-table.svg?style=flat-square)](https://www.npmjs.com/package/ka-table)
-[![Coverage Status](https://coveralls.io/repos/github/komarovalexander/ka-table/badge.svg?branch=master)](https://coveralls.io/github/komarovalexander/ka-table?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/komarovalexander/ka-table/badge.svg?branch=master&service=github)](https://coveralls.io/github/komarovalexander/ka-table?branch=master&service=github)
 [![Build Status](https://travis-ci.com/komarovalexander/ka-table.svg?token=9QUEx9r7MWqF44f9VDer&branch=master)](https://travis-ci.com/komarovalexander/ka-table)
 
 # Overview
@@ -153,7 +153,7 @@ Describes column of table its look and behaviour
 | filterRowOperator | <code>string</code> | Sets filter row operator [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor). See the list of predefined filter operators [<code>FilterOperatorName</code>](#FilterOperatorName) |
 | filterRowValue | <code>any</code> | Sets filter row value [Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) |
 | field | <code>string</code> | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
-| fieldParents | <code>string[]</code> | Array contains names of parents for specific field. I.e. to set field company.representative.name column's option should be { key: 'company.representative.name', field: 'name', fieldParents: ['company', 'representative'] } |
+| fieldParents | <code>string[]</code> | Array contains names of parents for specific field [Overview Demo](https://komarovalexander.github.io/ka-table/#/overview) |
 | format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string [Example](https://komarovalexander.github.io/ka-table/#/custom-cell) |
 | headCell | <code>HeaderCellFunc</code> | Returns a custom header cell [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell) |
 | isEditable | <code>boolean</code> | Specifies can column be editable or not |
