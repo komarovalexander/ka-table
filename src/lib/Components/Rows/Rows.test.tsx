@@ -25,7 +25,6 @@ const props: IRowsProps = {
   groupColumnsCount: 0,
   groupedColumns: [],
   onFirstRowRendered: () => {},
-  onOptionChange: () => {},
   rowKeyField: 'id',
   selectedRows: [],
 };

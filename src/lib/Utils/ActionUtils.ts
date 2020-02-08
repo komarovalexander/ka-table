@@ -53,6 +53,9 @@ export const wrapDispatch = (tableProps: ITableAllProps) => {
           const sortedColumns = getSortedColumns(columns, actionData.column);
           onOptionChange({ columns: sortedColumns });
           break;
+      case ActionType.ChangeVirtualScrollingHeightSettings:
+          onOptionChange(actionData);
+          break;
       case ActionType.ScrollTable:
           if (virtualScrolling) {
             const scrollPosition = actionData.scrollTop;

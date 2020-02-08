@@ -1,5 +1,6 @@
 import React, { RefObject } from 'react';
 
+import { ActionType } from '../../enums';
 import { getVirtualized } from '../../Utils/Virtualize';
 import Rows from '../Rows/Rows';
 import { ITableBodyProps } from '../TableBody/TableBody';
@@ -7,7 +8,7 @@ import { ITableBodyProps } from '../TableBody/TableBody';
 const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {
     data,
-    onOptionChange,
+    dispatch,
     virtualScrolling,
   } = props;
 
@@ -26,7 +27,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
           tbodyHeight,
           ...virtualScrolling,
         };
-        onOptionChange({ virtualScrolling: newVirtualScrolling });
+        dispatch(ActionType.ChangeVirtualScrollingHeightSettings, { virtualScrolling: newVirtualScrolling });
     }
   };
 

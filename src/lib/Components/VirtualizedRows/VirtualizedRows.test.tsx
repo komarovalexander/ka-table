@@ -20,7 +20,6 @@ const tableProps: ITableBodyProps = {
   editingMode: EditingMode.None,
   groupColumnsCount: 0,
   groupedColumns: [],
-  onOptionChange: () => {},
   rowKeyField: 'id',
   selectedRows: [],
 };

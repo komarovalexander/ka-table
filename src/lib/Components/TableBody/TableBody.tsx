@@ -7,9 +7,7 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import {
-  DataChangeFunc, DataRowFunc, DispatchFunc, NoDataRowFunc, OptionChangeFunc,
-} from '../../types';
+import { DataChangeFunc, DataRowFunc, DispatchFunc, NoDataRowFunc } from '../../types';
 import TableBodyContent from '../TableBodyContent/TableBodyContent';
 
 export interface ITableBodyProps {
@@ -26,7 +24,6 @@ export interface ITableBodyProps {
   groupsExpanded?: any[][];
   noDataRow?: NoDataRowFunc;
   onDataChange?: DataChangeFunc;
-  onOptionChange: OptionChangeFunc;
   rowKeyField: string;
   selectedRows: any[];
   virtualScrolling?: VirtualScrolling;
