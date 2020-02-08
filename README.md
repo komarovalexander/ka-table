@@ -364,7 +364,7 @@ Function which obtains value of specific cell and row - as parameters and return
 
 
 <a name="ICellContentProps"></a>
-### ICellEditorProps
+### ICellContentProps
 **Properties**
 
 | Name | Type | Description |
