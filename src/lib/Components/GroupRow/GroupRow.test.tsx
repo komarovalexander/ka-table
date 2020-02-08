@@ -27,13 +27,4 @@ describe('GroupRow', () => {
     ReactDOM.render(<GroupRow {...props} />, element);
     ReactDOM.unmountComponentAtNode(element);
   });
-
-  it('onClick should change groupsExpanded', () => {
-    const wrapper = mount(<GroupRow {...props} />, {
-      attachTo: document.createElement('tbody'),
-    });
-    wrapper.find('.ka-icon-group-arrow').simulate('click');
-    expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith(ActionType.UpdateGroupsExpanded, {newValue: {groupsExpanded: [['group']]}});
-  });
 });

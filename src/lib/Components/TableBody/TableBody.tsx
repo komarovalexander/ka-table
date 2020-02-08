@@ -10,7 +10,7 @@ import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import {
   DataChangeFunc, DataRowFunc, DispatchFunc, NoDataRowFunc, OptionChangeFunc,
 } from '../../types';
-import Rows from '../Rows/Rows';
+import TableBodyContent from '../TableBodyContent/TableBodyContent';
 
 export interface ITableBodyProps {
   childAttributes: ChildAttributes;
@@ -38,7 +38,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
     <tbody className={defaultOptions.css.tbody} onScroll={(event) => {
       dispatch(ActionType.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
     }}>
-      <Rows
+      <TableBodyContent
         {...props}
       />
     </tbody>

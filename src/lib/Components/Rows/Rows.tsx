@@ -1,32 +1,65 @@
-import React from 'react';
+import React, { RefObject, useEffect, useRef } from 'react';
 
-import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
-import NoDataRow from '../NoDataRow/NoDataRow';
+import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
+import DataRow from '../DataRow/DataRow';
+import GroupRow from '../GroupRow/GroupRow';
 import { ITableBodyProps } from '../TableBody/TableBody';
-import VirtualizedRows from '../VirtualizedRows/VirtualizedRows';
 
-const Rows: React.FunctionComponent<ITableBodyProps> = (props) => {
+export interface IRowsProps extends ITableBodyProps {
+  onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;
+}
+
+const Rows: React.FunctionComponent<IRowsProps> = (props) => {
   const {
+    columns,
     data,
+    dispatch,
     groupedColumns,
-    groups,
+    groups = [],
+    groupsExpanded = [],
+    onFirstRowRendered,
+    rowKeyField,
   } = props;
+  const groupMark = getGroupMark();
 
-  if (!data.length && props.noDataRow) {
-    return <NoDataRow {...props} noDataRow={props.noDataRow}/>;
-  }
+  const firstRowRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    onFirstRowRendered(firstRowRef);
+  }, [firstRowRef, onFirstRowRendered]);
 
-  let { groupsExpanded } = props;
-  const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
-  if (groups && !groupsExpanded) {
-    groupsExpanded = getExpandedGroups(groupedData);
-  }
+  let rowRefLink: any = firstRowRef;
   return (
-      <VirtualizedRows
-        {...props}
-        data={groupedData}
-        groupsExpanded={groupsExpanded}
-      />
+    <>
+      {data.map((d) => {
+      if (d.groupMark === groupMark) {
+        const emptyColumnsCount = d.key.length - 1;
+        const group = groups && groups[emptyColumnsCount];
+        const column = group && groupedColumns.find((c) => c.key === group.columnKey);
+        return (
+          <GroupRow
+            contentColSpan={columns.length - emptyColumnsCount + groups.length}
+            dispatch={dispatch}
+            emptyColumnsCount={emptyColumnsCount}
+            groupKey={d.key}
+            isExpanded={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(d.key))}
+            text={getGroupText(d.value, column)}
+            key={d.key}
+          />
+        );
+      } else {
+        const dataRow = (
+          <DataRow
+            {...props}
+            trRef={rowRefLink}
+            key={d[rowKeyField]}
+            rowData={d}
+          />
+        );
+        rowRefLink = undefined;
+        return dataRow;
+      }
+    })}
+  </>
   );
 };
 

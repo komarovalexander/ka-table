@@ -98,15 +98,13 @@ describe('GroupUtils', () => {
 
   it('updateExpandedGroups add', () => {
     const groupsExpanded: any[][] = [['cat']];
-    const groupRowData: GroupRowData = { key: ['dog'], value: 'Rex', groupMark: {} };
-    const updated = updateExpandedGroups(groupsExpanded, groupRowData);
+    const updated = updateExpandedGroups(groupsExpanded, ['dog']);
     expect(updated).toEqual([['cat'], ['dog']]);
   });
 
   it('updateExpandedGroups remove', () => {
     const groupsExpanded: any[][] = [['cat']];
-    const groupRowData: GroupRowData = { key: ['cat'], value: 'Tom', groupMark: {} };
-    const updated = updateExpandedGroups(groupsExpanded, groupRowData);
+    const updated = updateExpandedGroups(groupsExpanded, ['cat']);
     expect(updated).toEqual([]);
   });
 

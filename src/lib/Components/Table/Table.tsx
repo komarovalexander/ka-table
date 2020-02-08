@@ -12,6 +12,7 @@ import {
 } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
+import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import { extendProps } from '../../Utils/PropsUtils';
 import { sortData } from '../../Utils/SortUtils';
 import { convertToColumnTypes, getColumnsWithWrongType } from '../../Utils/TypeUtils';
@@ -84,7 +85,13 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
 
-  const dispatch = wrapDispatch(props);
+  let { groupsExpanded } = props;
+  const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
+  if (groups && !groupsExpanded) {
+    groupsExpanded = getExpandedGroups(groupedData);
+  }
+
+  const dispatch = wrapDispatch({ ...props, groupsExpanded });
 
   const componentProps: React.HTMLAttributes<HTMLTableElement> = {
     className: defaultOptions.css.table,
@@ -112,14 +119,15 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         </thead>
         <TableBody
             {...props}
-            columns={columns}
             childAttributes={childAttributes}
-            data={data}
+            columns={columns}
+            data={groupedData}
+            dispatch={dispatch}
             editableCells={editableCells}
             editingMode={editingMode}
             groupColumnsCount={groupColumnsCount}
             groupedColumns={groupedColumns}
-            dispatch={dispatch}
+            groupsExpanded={groupsExpanded}
             selectedRows={selectedRows}
         />
       </table>

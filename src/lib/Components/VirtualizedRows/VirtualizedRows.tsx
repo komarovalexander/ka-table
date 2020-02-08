@@ -1,27 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { RefObject } from 'react';
 
-import { getGroupMark } from '../../Utils/GroupUtils';
 import { getVirtualized } from '../../Utils/Virtualize';
-import DataRow from '../DataRow/DataRow';
-import GroupRow from '../GroupRow/GroupRow';
+import Rows from '../Rows/Rows';
 import { ITableBodyProps } from '../TableBody/TableBody';
 
 const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {
-    columns,
     data,
-    dispatch,
-    groupedColumns,
-    groups = [],
-    groupsExpanded = [],
     onOptionChange,
-    rowKeyField,
     virtualScrolling,
   } = props;
 
-  const groupMark = getGroupMark();
-  const firstRowRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
+  const onFirstRowRendered = (firstRowRef: RefObject<HTMLElement>) => {
     if (firstRowRef
       && firstRowRef.current
       && (virtualScrolling
@@ -38,7 +28,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
         };
         onOptionChange({ virtualScrolling: newVirtualScrolling });
     }
-  }, [firstRowRef, onOptionChange, virtualScrolling]);
+  };
 
   let virtualizedData = data;
   let virtualized;
@@ -46,36 +36,13 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
     virtualized = getVirtualized(virtualScrolling, virtualizedData);
     virtualizedData = virtualized.virtualizedData;
   }
-  let rowRefLink: any = firstRowRef;
   return (
     <>
       {virtualized && <tr style={{height: virtualized.beginHeight}} />}
-      {virtualizedData.map((d) => {
-        if (d.groupMark === groupMark) {
-          return (
-            <GroupRow
-              columns={columns}
-              dispatch={dispatch}
-              emptyColumnsCount={d.key.length - 1}
-              groupRowData={d}
-              groupedColumns={groupedColumns}
-              groups={groups}
-              groupsExpanded={groupsExpanded}
-              key={d.key} />
-          );
-        } else {
-          const dataRow = (
-            <DataRow
-              {...props}
-              trRef={rowRefLink}
-              key={d[rowKeyField]}
-              rowData={d}
-            />
-          );
-          rowRefLink = undefined;
-          return dataRow;
-        }
-      })}
+      <Rows
+        {...props}
+        data={virtualizedData}
+        onFirstRowRendered={onFirstRowRendered}/>
       {virtualized && <tr style={{height: virtualized.endHeight}} />}
     </>
   );
