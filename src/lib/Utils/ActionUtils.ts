@@ -2,7 +2,7 @@
 import { ITableAllProps } from '../';
 import { ActionType } from '../enums';
 import { getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
-import { changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler } from './CellUtils';
+import { addItemToEditableCells, removeItemFromEditableCells } from './CellUtils';
 import { updateExpandedGroups } from './GroupUtils';
 import { getSortedColumns } from './HeadRowUtils';
 
@@ -21,18 +21,20 @@ export const wrapDispatch = (tableProps: ITableAllProps) => {
   } = tableProps;
   return (action: string, actionData: any) => {
     switch (action) {
-      case ActionType.OpenEditor:
-        changeCellTextToCellEditorHandler(
+      case ActionType.OpenEditor: {
+        const newEditableCells = addItemToEditableCells(
           actionData.cell,
-          editableCells,
-          onOptionChange);
+          editableCells);
+        onOptionChange({ editableCells: newEditableCells });
         break;
-      case ActionType.CloseEditor:
-        changeCellEditorToCellTextHandler(
+      }
+      case ActionType.CloseEditor: {
+        const newEditableCells = removeItemFromEditableCells(
           actionData.cell,
-          editableCells,
-          onOptionChange);
+          editableCells);
+        onOptionChange({ editableCells: newEditableCells });
         break;
+      }
       case ActionType.ChangeFilterRow:
           const newColumns = getCopyOfArrayAndInsertOrReplaceItem(actionData.column, 'key', columns);
           onOptionChange({ columns: newColumns });

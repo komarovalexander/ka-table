@@ -3,7 +3,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ActionType, DataType } from '../../enums';
+import { ActionType } from '../../enums';
 import GroupRowContent, { IGroupRowProps } from './GroupRowContent';
 
 Enzyme.configure({ adapter: new Adapter() });

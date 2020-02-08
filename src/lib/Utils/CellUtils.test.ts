@@ -1,8 +1,6 @@
 import { EditingMode } from '../enums';
 import { Cell } from '../Models/Cell';
-import {
-  changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler, isEditableCell,
-} from './CellUtils';
+import { addItemToEditableCells, isEditableCell, removeItemFromEditableCells } from './CellUtils';
 
 describe('CellUtils', () => {
   it('isEditableCell equals true', () => {
@@ -30,8 +28,7 @@ describe('CellUtils', () => {
   });
 
   describe('CellHandlers', () => {
-    it('changeCellTextToCellEditorHandler', () => {
-      const onOptionChangedMock = jest.fn((x) => {});
+    it('addItemToEditableCells', () => {
       const editableCells: Cell[] = [{
         columnKey: 'column',
         rowKey: 1,
@@ -40,13 +37,11 @@ describe('CellUtils', () => {
         columnKey: 'column2',
         rowKey: 2,
       };
-      changeCellTextToCellEditorHandler(item, editableCells, onOptionChangedMock);
-      expect(onOptionChangedMock.mock.calls.length).toBe(1);
-      expect(onOptionChangedMock.mock.calls[0]).toMatchSnapshot();
+      const newEditableCells = addItemToEditableCells(item, editableCells);
+      expect(newEditableCells).toMatchSnapshot();
     });
 
-    it('changeCellEditorToCellTextHandler', () => {
-      const onOptionChangedMock = jest.fn();
+    it('removeItemFromEditableCells', () => {
       const editableCells: Cell[] = [{
         columnKey: 'column',
         rowKey: 1,
@@ -61,9 +56,8 @@ describe('CellUtils', () => {
         columnKey: 'column2',
         rowKey: 2,
       };
-      changeCellEditorToCellTextHandler(item, editableCells, onOptionChangedMock);
-      expect(onOptionChangedMock.mock.calls.length).toBe(1);
-      expect(onOptionChangedMock.mock.calls[0]).toMatchSnapshot();
+      const newEditableCells = removeItemFromEditableCells(item, editableCells);
+      expect(newEditableCells).toMatchSnapshot();
     });
   });
 });

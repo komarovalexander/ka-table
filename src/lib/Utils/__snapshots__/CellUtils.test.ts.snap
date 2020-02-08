@@ -1,35 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CellUtils CellHandlers changeCellEditorToCellTextHandler 1`] = `
+exports[`CellUtils CellHandlers addItemToEditableCells 1`] = `
 Array [
   Object {
-    "editableCells": Array [
-      Object {
-        "columnKey": "column",
-        "rowKey": 1,
-      },
-      Object {
-        "columnKey": "column",
-        "rowKey": 2,
-      },
-    ],
+    "columnKey": "column",
+    "rowKey": 1,
+  },
+  Object {
+    "columnKey": "column2",
+    "rowKey": 2,
   },
 ]
 `;
 
-exports[`CellUtils CellHandlers changeCellTextToCellEditorHandler 1`] = `
+exports[`CellUtils CellHandlers removeItemFromEditableCells 1`] = `
 Array [
   Object {
-    "editableCells": Array [
-      Object {
-        "columnKey": "column",
-        "rowKey": 1,
-      },
-      Object {
-        "columnKey": "column2",
-        "rowKey": 2,
-      },
-    ],
+    "columnKey": "column",
+    "rowKey": 1,
+  },
+  Object {
+    "columnKey": "column",
+    "rowKey": 2,
   },
 ]
 `;
