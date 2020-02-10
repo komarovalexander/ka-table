@@ -43,7 +43,7 @@ const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
                 ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed}
             />
             {
-              column.groupCell ? column.groupCell(props) : <div className='ka-group-text'>{text}</div>
+              column && column.groupCell ? column.groupCell(props) : <div className='ka-group-text'>{text}</div>
             }
           </div>
       </td>

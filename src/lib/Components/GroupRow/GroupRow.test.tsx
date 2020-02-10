@@ -1,24 +1,22 @@
-import Enzyme, { mount } from 'enzyme';
+import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ActionType, DataType } from '../../enums';
-import GroupRow, { IGroupRowProps } from './GroupRow';
+import { DataType } from '../../enums';
+import { IGroupRowProps } from '../GroupRowContent/GroupRowContent';
+import GroupRow from './GroupRow';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IGroupRowProps = {
-  columns: [
-    { key: '1', field: 'column', title: 'Column 1', dataType: DataType.String },
-    { key: '2', field: 'column2', title: 'Column 2', dataType: DataType.String  },
-  ],
+  column: { key: '1', field: 'column', title: 'Column 1', dataType: DataType.String },
+  contentColSpan: 2,
   dispatch: jest.fn(),
-  emptyColumnsCount: 0,
-  groupRowData: { key: ['group'], groupMark: {}, value: 123 },
-  groupedColumns: [],
-  groups: [],
-  groupsExpanded: [],
+  groupIndex: 0,
+  groupKey: ['group'],
+  isExpanded: true,
+  text: '',
 };
 
 describe('GroupRow', () => {
