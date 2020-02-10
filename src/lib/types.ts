@@ -15,8 +15,6 @@ type WithExtraParameters<T, I> = {
   [P in keyof T ] : AddParameters<T[P], I>;
 };
 
-export type GroupCellFunc = (props: GroupCellFuncPropsWithChildren) => any;
-export type GroupCellFuncPropsWithChildren = PropsWithChildren<IGroupRowProps>;
 export type CellFunc = (props: CellFuncPropsWithChildren) => any;
 export type CellFuncPropsWithChildren = PropsWithChildren<ICellContentProps>;
 export type ChildAttributesItem<T> = WithExtraParameters<React.HTMLAttributes<HTMLElement>, T>;
@@ -31,6 +29,10 @@ export type Field = string;
 export type FilterRowFunc = (props: FilterRowFuncPropsWithChildren) => any;
 export type FilterRowFuncPropsWithChildren = PropsWithChildren<IFilterRowEditorProps>;
 export type FormatFunc = (value: any) => any;
+export type GroupCellFunc = (props: GroupCellFuncPropsWithChildren) => any;
+export type GroupCellFuncPropsWithChildren = PropsWithChildren<IGroupRowProps>;
+export type GroupRowFunc = (props: GroupRowFuncPropsWithChildren) => any;
+export type GroupRowFuncPropsWithChildren = PropsWithChildren<IGroupRowProps>;
 export type HeaderCellFunc = (props: HeaderCellFuncPropsWithChildren) => any;
 export type HeaderCellFuncPropsWithChildren = PropsWithChildren<IHeadCellProps>;
 export type NoDataRowFunc = () => any;

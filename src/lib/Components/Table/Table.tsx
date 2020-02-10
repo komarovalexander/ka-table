@@ -8,7 +8,7 @@ import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import {
-  DataChangeFunc, DataRowFunc, EventFunc, NoDataRowFunc, OptionChangeFunc,
+  DataChangeFunc, DataRowFunc, EventFunc, GroupRowFunc, NoDataRowFunc, OptionChangeFunc,
 } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
@@ -29,6 +29,7 @@ export interface ITableOption {
   editableCells?: Cell[];
   editingMode?: EditingMode;
   filteringMode?: FilteringMode;
+  groupRow?: GroupRowFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
   noDataRow?: NoDataRowFunc;

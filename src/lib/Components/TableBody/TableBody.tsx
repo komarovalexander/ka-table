@@ -7,7 +7,9 @@ import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import { DataChangeFunc, DataRowFunc, DispatchFunc, NoDataRowFunc } from '../../types';
+import {
+  DataChangeFunc, DataRowFunc, DispatchFunc, GroupRowFunc, NoDataRowFunc,
+} from '../../types';
 import TableBodyContent from '../TableBodyContent/TableBodyContent';
 
 export interface ITableBodyProps {
@@ -19,6 +21,7 @@ export interface ITableBodyProps {
   editableCells: Cell[];
   editingMode: EditingMode;
   groupColumnsCount: number;
+  groupRow?: GroupRowFunc;
   groupedColumns: Column[];
   groups?: Group[];
   groupsExpanded?: any[][];

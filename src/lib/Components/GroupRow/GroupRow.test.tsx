@@ -1,4 +1,4 @@
-import Enzyme from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -24,5 +24,13 @@ describe('GroupRow', () => {
     const element = document.createElement('tbody');
     ReactDOM.render(<GroupRow {...props} />, element);
     ReactDOM.unmountComponentAtNode(element);
+  });
+
+  it('Should render custom group cell', () => {
+    const groupRow = () => <td className='custom-group-row'/>;
+    const wrapper = mount(<GroupRow {...props} groupRow={groupRow}/>, {
+      attachTo: document.createElement('tbody'),
+    });
+    expect(wrapper.find('.custom-group-row').length).toBe(1);
   });
 });
