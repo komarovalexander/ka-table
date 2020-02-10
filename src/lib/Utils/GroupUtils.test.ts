@@ -1,7 +1,7 @@
 import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import {
-  convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, groupBy, groupClick,
+  convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, groupBy,
   updateExpandedGroups,
 } from './GroupUtils';
 
@@ -144,6 +144,10 @@ describe('GroupUtils', () => {
     it('expanded couple (skip Czech Republic)', () => {
       const result = getGroupedStructure(data, groups, groupedColumns, 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
       expect(result).toMatchSnapshot();
+    });
+    it('groupedColumns are empty', () => {
+      const result = getGroupedStructure(data, groups, [], 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
+      expect(result).toBeUndefined();
     });
   });
 });
