@@ -12,3 +12,9 @@ it('renders without crashing', () => {
   ReactDOM.render(<EmptyCells {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });
+
+it('renders without crashing with shouldUseTh', () => {
+  const element = document.createElement('tr');
+  ReactDOM.render(<EmptyCells {...props} shouldUseTh={true}/>, element);
+  ReactDOM.unmountComponentAtNode(element);
+});
