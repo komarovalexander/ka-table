@@ -1,6 +1,6 @@
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
-import { convertToColumnTypes, getColumnsWithWrongType, isFunction } from './TypeUtils';
+import { convertToColumnTypes, isFunction } from './TypeUtils';
 
 interface ITestOptions {
   sameObject?: boolean;
@@ -84,28 +84,8 @@ describe('TypeUtils', () => {
             expect(newData[0].columnField).toBe(testCase[2]);
           }
         });
-
-        it('find columns for ' + testCase[0], () => {
-          const data = [{ columnField: testCase[1] }];
-          const columnsWithWrongType = getColumnsWithWrongType(data, columns);
-          const options: ITestOptions = testCase[3] as ITestOptions;
-          if (options && options.sameType) {
-            expect(columnsWithWrongType.length).toEqual(0);
-          } else {
-            expect(columnsWithWrongType.length).toEqual(1);
-          }
-        });
       });
     });
-  });
-
-  it('getColumnsWithWrongType - empty columns for empty data', () => {
-    const data: any[] = [];
-    const columns: Column[] = [
-      { key: 'columnField', title: 'Column Title', dataType: DataType.String },
-    ];
-    const columnsWithWrongType = getColumnsWithWrongType(data, columns);
-    expect(columnsWithWrongType.length).toEqual(0);
   });
 
   it('isFunction', () => {
