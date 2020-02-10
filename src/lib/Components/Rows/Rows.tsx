@@ -32,14 +32,15 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     <>
       {data.map((d) => {
       if (d.groupMark === groupMark) {
-        const emptyColumnsCount = d.key.length - 1;
-        const group = groups && groups[emptyColumnsCount];
+        const groupIndex = d.key.length - 1;
+        const group = groups && groups[groupIndex];
         const column = group && groupedColumns.find((c) => c.key === group.columnKey);
         return (
           <GroupRow
-            contentColSpan={columns.length - emptyColumnsCount + groups.length}
+            column={column!}
+            contentColSpan={columns.length - groupIndex + groups.length}
             dispatch={dispatch}
-            emptyColumnsCount={emptyColumnsCount}
+            groupIndex={groupIndex}
             groupKey={d.key}
             isExpanded={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(d.key))}
             text={getGroupText(d.value, column)}

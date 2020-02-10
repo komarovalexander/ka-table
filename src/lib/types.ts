@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react';
 import { ICellContentProps } from './Components/CellContent/CellContent';
 import { ICellEditorProps, IFilterRowEditorProps } from './Components/CellEditor/CellEditor';
 import { IDataRowProps } from './Components/DataRowContent/DataRowContent';
+import { IGroupRowProps } from './Components/GroupRowContent/GroupRowContent';
 import { IHeadCellProps } from './Components/HeadCell/HeadCell';
 import { AttributeTableData, Column } from './models';
 
@@ -14,6 +15,8 @@ type WithExtraParameters<T, I> = {
   [P in keyof T ] : AddParameters<T[P], I>;
 };
 
+export type GroupCellFunc = (props: GroupCellFuncPropsWithChildren) => any;
+export type GroupCellFuncPropsWithChildren = PropsWithChildren<IGroupRowProps>;
 export type CellFunc = (props: CellFuncPropsWithChildren) => any;
 export type CellFuncPropsWithChildren = PropsWithChildren<ICellContentProps>;
 export type ChildAttributesItem<T> = WithExtraParameters<React.HTMLAttributes<HTMLElement>, T>;

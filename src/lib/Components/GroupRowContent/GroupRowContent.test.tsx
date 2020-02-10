@@ -9,9 +9,10 @@ import GroupRowContent, { IGroupRowProps } from './GroupRowContent';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IGroupRowProps = {
+  column: { key: 'field' },
   contentColSpan: 0,
   dispatch: jest.fn(),
-  emptyColumnsCount: 0,
+  groupIndex: 0,
   groupKey: ['group'],
   isExpanded: false,
   text: '',
@@ -31,5 +32,16 @@ describe('GroupRowContent', () => {
     wrapper.find('.ka-icon-group-arrow').simulate('click');
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(ActionType.UpdateGroupsExpanded, {groupKey: ['group']});
+  });
+
+  it('Should render custom group cell', () => {
+    const column = {
+      groupCell: () => <div className='custom-group-cell'/>,
+      key: 'field',
+    };
+    const wrapper = mount(<GroupRowContent {...props} column={column}/>, {
+      attachTo: document.createElement('tr'),
+    });
+    expect(wrapper.find('.custom-group-cell').length).toBe(1);
   });
 });
