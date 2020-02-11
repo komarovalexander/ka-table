@@ -2,34 +2,39 @@
 import { ITableAllProps } from '../';
 import { ActionType } from '../enums';
 import { getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
-import { changeCellEditorToCellTextHandler, changeCellTextToCellEditorHandler } from './CellUtils';
+import { addItemToEditableCells, removeItemFromEditableCells } from './CellUtils';
+import { updateExpandedGroups } from './GroupUtils';
 import { getSortedColumns } from './HeadRowUtils';
 
-export const wrapDispatch = ({
-  columns,
-  data,
-  editableCells = [],
-  onEvent = () => {},
-  onDataChange = () => {},
-  onOptionChange,
-  rowKeyField,
-  selectedRows = [],
-  virtualScrolling,
-}: ITableAllProps) => {
+export const wrapDispatch = (tableProps: ITableAllProps) => {
+  const {
+    columns,
+    data,
+    editableCells = [],
+    groupsExpanded = [],
+    onDataChange = () => {},
+    onEvent = () => {},
+    onOptionChange,
+    rowKeyField,
+    selectedRows = [],
+    virtualScrolling,
+  } = tableProps;
   return (action: string, actionData: any) => {
     switch (action) {
-      case ActionType.OpenEditor:
-        changeCellTextToCellEditorHandler(
+      case ActionType.OpenEditor: {
+        const newEditableCells = addItemToEditableCells(
           actionData.cell,
-          editableCells,
-          onOptionChange);
+          editableCells);
+        onOptionChange({ editableCells: newEditableCells });
         break;
-      case ActionType.CloseEditor:
-        changeCellEditorToCellTextHandler(
+      }
+      case ActionType.CloseEditor: {
+        const newEditableCells = removeItemFromEditableCells(
           actionData.cell,
-          editableCells,
-          onOptionChange);
+          editableCells);
+        onOptionChange({ editableCells: newEditableCells });
         break;
+      }
       case ActionType.ChangeFilterRow:
           const newColumns = getCopyOfArrayAndInsertOrReplaceItem(actionData.column, 'key', columns);
           onOptionChange({ columns: newColumns });
@@ -48,6 +53,9 @@ export const wrapDispatch = ({
           const sortedColumns = getSortedColumns(columns, actionData.column);
           onOptionChange({ columns: sortedColumns });
           break;
+      case ActionType.ChangeVirtualScrollingHeightSettings:
+          onOptionChange(actionData);
+          break;
       case ActionType.ScrollTable:
           if (virtualScrolling) {
             const scrollPosition = actionData.scrollTop;
@@ -57,7 +65,12 @@ export const wrapDispatch = ({
           }
           break;
       case ActionType.UpdateGroupsExpanded:
-        onOptionChange(actionData.newValue);
+        const newGroupsExpanded = updateExpandedGroups(
+          groupsExpanded,
+          actionData.groupKey,
+        );
+        actionData.newValue = { groupsExpanded: newGroupsExpanded }; // BC
+        onOptionChange({ groupsExpanded: newGroupsExpanded });
         break;
     }
     onEvent(action, actionData);

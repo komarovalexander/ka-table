@@ -1,7 +1,7 @@
 import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import {
-  convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, groupBy, groupClick,
+  convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, groupBy,
   updateExpandedGroups,
 } from './GroupUtils';
 
@@ -98,15 +98,13 @@ describe('GroupUtils', () => {
 
   it('updateExpandedGroups add', () => {
     const groupsExpanded: any[][] = [['cat']];
-    const groupRowData: GroupRowData = { key: ['dog'], value: 'Rex', groupMark: {} };
-    const updated = updateExpandedGroups(groupsExpanded, groupRowData);
+    const updated = updateExpandedGroups(groupsExpanded, ['dog']);
     expect(updated).toEqual([['cat'], ['dog']]);
   });
 
   it('updateExpandedGroups remove', () => {
     const groupsExpanded: any[][] = [['cat']];
-    const groupRowData: GroupRowData = { key: ['cat'], value: 'Tom', groupMark: {} };
-    const updated = updateExpandedGroups(groupsExpanded, groupRowData);
+    const updated = updateExpandedGroups(groupsExpanded, ['cat']);
     expect(updated).toEqual([]);
   });
 
@@ -146,6 +144,10 @@ describe('GroupUtils', () => {
     it('expanded couple (skip Czech Republic)', () => {
       const result = getGroupedStructure(data, groups, groupedColumns, 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
       expect(result).toMatchSnapshot();
+    });
+    it('groupedColumns are empty', () => {
+      const result = getGroupedStructure(data, groups, [], 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
+      expect(result).toBeUndefined();
     });
   });
 });

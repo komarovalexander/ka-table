@@ -1,7 +1,6 @@
 import { EditingMode } from '../enums';
 import { Column } from '../models';
 import { Cell } from '../Models/Cell';
-import { OptionChangeFunc } from '../types';
 import { getCopyOfArrayAndAddItem } from './ArrayUtils';
 
 export const isEditableCell = (editingMode: EditingMode, column: Column, rowEditableCells: Cell[]): boolean => {
@@ -14,14 +13,12 @@ export const isEditableCell = (editingMode: EditingMode, column: Column, rowEdit
   return false;
 };
 
-export const changeCellTextToCellEditorHandler = (
-  item: Cell, editableCells: Cell[], onOptionChange: OptionChangeFunc) => {
-    const newEditableCells = getCopyOfArrayAndAddItem(item, editableCells);
-    onOptionChange({ editableCells: newEditableCells });
+export const addItemToEditableCells = (
+  item: Cell, editableCells: Cell[]): Cell[] => {
+    return getCopyOfArrayAndAddItem(item, editableCells);
 };
 
-export const changeCellEditorToCellTextHandler = (
-  item: Cell, editableCells: Cell[], onOptionChange: OptionChangeFunc) => {
-    const newEditableCells = editableCells.filter((c) => c.columnKey !== item.columnKey || c.rowKey !== item.rowKey);
-    onOptionChange({ editableCells: newEditableCells });
+export const removeItemFromEditableCells = (
+  item: Cell, editableCells: Cell[]): Cell[] => {
+    return editableCells.filter((c) => c.columnKey !== item.columnKey || c.rowKey !== item.rowKey);
 };

@@ -5,11 +5,11 @@ import ReactDOM from 'react-dom';
 
 import { EditingMode } from '../../enums';
 import { ITableBodyProps } from '../TableBody/TableBody';
-import Rows, { IRowsProps } from './Rows';
+import TableBodyContent from './TableBodyContent';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const props: IRowsProps = {
+const props: ITableBodyProps = {
   childAttributes: {},
   columns: [
     { key: 'column', title: 'Column 1' },
@@ -24,15 +24,23 @@ const props: IRowsProps = {
   editingMode: EditingMode.None,
   groupColumnsCount: 0,
   groupedColumns: [],
-  onFirstRowRendered: () => {},
   rowKeyField: 'id',
   selectedRows: [],
 };
 
-describe('Rows', () => {
+describe('TableBodyContent', () => {
   it('renders without crashing', () => {
     const element = document.createElement('tbody');
-    ReactDOM.render(<Rows {...props} />, element);
+    ReactDOM.render(<TableBodyContent {...props} />, element);
     ReactDOM.unmountComponentAtNode(element);
+  });
+
+  it('should render noDataRow in case there are no data and noDataRow option is set', () => {
+    const noDataText = 'no data';
+    const wrapper = mount(<TableBodyContent {...props} data={[]} noDataRow={() => noDataText}/>, {
+      attachTo: document.createElement('tbody'),
+    });
+
+    expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
   });
 });

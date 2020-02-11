@@ -15,18 +15,29 @@ const tableProps: ITableBodyProps = {
     { column: 1, column2: 2, id: 1 },
     { column: 12, column2: 22, id: 2 },
   ],
-  dispatch: () => {},
+  dispatch: jest.fn(),
   editableCells: [],
   editingMode: EditingMode.None,
   groupColumnsCount: 0,
   groupedColumns: [],
-  onOptionChange: () => {},
   rowKeyField: 'id',
   selectedRows: [],
 };
+
+beforeEach(() => jest.clearAllMocks());
 
 it('renders without crashing', () => {
   const div = document.createElement('tbody');
   ReactDOM.render(<VirtualizedRows {...tableProps} />, div);
   ReactDOM.unmountComponentAtNode(div);
+});
+
+it('Should call dispatch when virtualScrolling.itemHeight is not set', (done) => {
+  const div = document.createElement('tbody');
+  ReactDOM.render(<VirtualizedRows {...tableProps} virtualScrolling={{tbodyHeight: 1}} />, div, () => {
+    setTimeout(() => {
+      expect(tableProps.dispatch).toHaveBeenCalledTimes(1);
+      done();
+    }, 10);
+  });
 });

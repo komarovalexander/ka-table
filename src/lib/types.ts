@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react';
 import { ICellContentProps } from './Components/CellContent/CellContent';
 import { ICellEditorProps, IFilterRowEditorProps } from './Components/CellEditor/CellEditor';
 import { IDataRowProps } from './Components/DataRowContent/DataRowContent';
+import { IGroupRowProps } from './Components/GroupRowContent/GroupRowContent';
 import { IHeadCellProps } from './Components/HeadCell/HeadCell';
 import { AttributeTableData, Column } from './models';
 
@@ -28,6 +29,8 @@ export type Field = string;
 export type FilterRowFunc = (props: FilterRowFuncPropsWithChildren) => any;
 export type FilterRowFuncPropsWithChildren = PropsWithChildren<IFilterRowEditorProps>;
 export type FormatFunc = (value: any) => any;
+export type GroupCellFunc = (props: IGroupRowProps) => any;
+export type GroupRowFunc = (props: IGroupRowProps) => any;
 export type HeaderCellFunc = (props: HeaderCellFuncPropsWithChildren) => any;
 export type HeaderCellFuncPropsWithChildren = PropsWithChildren<IHeadCellProps>;
 export type NoDataRowFunc = () => any;

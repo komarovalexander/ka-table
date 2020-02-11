@@ -1,47 +1,40 @@
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
-import { getField } from './ColumnUtils';
 import { getValueByColumn, replaceValue } from './DataUtils';
 
 export const convertToColumnTypes = (data: any[], columns: Column[]) => {
   const newData: any[] = data.map((d) => {
     let nd = {...d};
     columns.forEach((c) => {
-      const field = getField(c);
-      if (nd[field] != null) {
+      const value = getValueByColumn(nd, c);
+      if (value != null) {
         switch (c.dataType) {
-          case DataType.String: nd = replaceValue(nd, c, getValueByColumn(nd, c).toString()); break;
-          case DataType.Number: nd = replaceValue(nd, c, Number(getValueByColumn(nd, c))); break;
-          case DataType.Date: nd = replaceValue(nd, c, new Date(getValueByColumn(nd, c))); break;
-          case DataType.Boolean: nd = replaceValue(nd, c, toBoolean(getValueByColumn(nd, c))); break;
+          case DataType.String:
+            if (value.constructor !== String) {
+              nd = replaceValue(nd, c, value.toString());
+            }
+            break;
+          case DataType.Number:
+            if (value.constructor !== Number) {
+              nd = replaceValue(nd, c, Number(value));
+            }
+            break;
+          case DataType.Date:
+            if (value.constructor !== Date) {
+              nd = replaceValue(nd, c, new Date(value));
+            }
+            break;
+          case DataType.Boolean:
+            if (value.constructor !== Boolean) {
+              nd = replaceValue(nd, c, toBoolean(value));
+            }
+            break;
         }
       }
     });
     return nd;
   });
   return newData;
-};
-
-export const getColumnsWithWrongType = (data: any[], columns: Column[]): Column[] => {
-  if (!data.length) {
-    return [];
-  }
-  const item = data[0];
-  const columnsWithWrongType = columns.filter((c) => {
-    const field = getField(c);
-    const value = item[field];
-    if (value != null) {
-      switch (c.dataType) {
-        case DataType.String: return value.constructor !== String;
-        case DataType.Number: return value.constructor !== Number;
-        case DataType.Date: return value.constructor !== Date;
-        case DataType.Boolean: return value.constructor !== Boolean;
-        case DataType.Object: return value.constructor !== Object;
-      }
-    }
-    return true;
-  });
-  return columnsWithWrongType;
 };
 
 export const toBoolean = (value: any) => {

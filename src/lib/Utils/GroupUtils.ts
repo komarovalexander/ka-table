@@ -1,14 +1,13 @@
 import { Column } from '../models';
 import { Group } from '../Models/Group';
-import { GroupRowData } from '../Models/GroupRowData';
 import { getValueByColumn } from './DataUtils';
 
 const groupMark = {};
-export const updateExpandedGroups = (groupsExpanded: any[][], groupRowData: GroupRowData): any[][] => {
+export const updateExpandedGroups = (groupsExpanded: any[][], groupKey: any[]): any[][] => {
   const newGroupsExpanded =
-    groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(groupRowData.key));
+    groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(groupKey));
   if (newGroupsExpanded.length === groupsExpanded.length) {
-    newGroupsExpanded.push(groupRowData.key);
+    newGroupsExpanded.push(groupKey);
   }
   return newGroupsExpanded;
 };

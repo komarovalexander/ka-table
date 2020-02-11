@@ -15,6 +15,7 @@ export enum ActionType {
   ChangeFilterRow = 'ChangeFilterRow',
   ChangeRowData = 'ChangeRowData',
   ChangeSorting = 'ChangeSorting',
+  ChangeVirtualScrollingHeightSettings = 'ChangeVirtualScrollingHeightSettings',
   CloseEditor = 'CloseEditor',
   DeselectRowData = 'DeselectRowData',
   OpenEditor = 'OpenEditor',

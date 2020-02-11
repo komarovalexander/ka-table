@@ -8,9 +8,9 @@ import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import {
-  DataChangeFunc, DataRowFunc, DispatchFunc, NoDataRowFunc, OptionChangeFunc,
+  DataChangeFunc, DataRowFunc, DispatchFunc, GroupRowFunc, NoDataRowFunc,
 } from '../../types';
-import Rows from '../Rows/Rows';
+import TableBodyContent from '../TableBodyContent/TableBodyContent';
 
 export interface ITableBodyProps {
   childAttributes: ChildAttributes;
@@ -21,12 +21,12 @@ export interface ITableBodyProps {
   editableCells: Cell[];
   editingMode: EditingMode;
   groupColumnsCount: number;
+  groupRow?: GroupRowFunc;
   groupedColumns: Column[];
   groups?: Group[];
   groupsExpanded?: any[][];
   noDataRow?: NoDataRowFunc;
   onDataChange?: DataChangeFunc;
-  onOptionChange: OptionChangeFunc;
   rowKeyField: string;
   selectedRows: any[];
   virtualScrolling?: VirtualScrolling;
@@ -38,7 +38,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
     <tbody className={defaultOptions.css.tbody} onScroll={(event) => {
       dispatch(ActionType.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
     }}>
-      <Rows
+      <TableBodyContent
         {...props}
       />
     </tbody>

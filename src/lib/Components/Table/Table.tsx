@@ -8,13 +8,14 @@ import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import {
-  DataChangeFunc, DataRowFunc, EventFunc, NoDataRowFunc, OptionChangeFunc,
+  DataChangeFunc, DataRowFunc, EventFunc, GroupRowFunc, NoDataRowFunc, OptionChangeFunc,
 } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
+import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
 import { extendProps } from '../../Utils/PropsUtils';
 import { sortData } from '../../Utils/SortUtils';
-import { convertToColumnTypes, getColumnsWithWrongType } from '../../Utils/TypeUtils';
+import { convertToColumnTypes } from '../../Utils/TypeUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
 import TableBody from '../TableBody/TableBody';
@@ -28,6 +29,7 @@ export interface ITableOption {
   editableCells?: Cell[];
   editingMode?: EditingMode;
   filteringMode?: FilteringMode;
+  groupRow?: GroupRowFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
   noDataRow?: NoDataRowFunc;
@@ -70,8 +72,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   } = props;
   data = search ? searchData(columns, data, search) : data;
 
-  const columnsWithWrongType = getColumnsWithWrongType(data, columns);
-  data = columnsWithWrongType.length ? convertToColumnTypes(data, columnsWithWrongType) : data;
+  data = convertToColumnTypes(data, columns);
 
   data = filterData(data, columns);
   data = sortData(columns, data);
@@ -84,7 +85,13 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
 
-  const dispatch = wrapDispatch(props);
+  let { groupsExpanded } = props;
+  const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
+  if (groups && !groupsExpanded) {
+    groupsExpanded = getExpandedGroups(groupedData);
+  }
+
+  const dispatch = wrapDispatch({ ...props, groupsExpanded });
 
   const componentProps: React.HTMLAttributes<HTMLTableElement> = {
     className: defaultOptions.css.table,
@@ -112,14 +119,15 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         </thead>
         <TableBody
             {...props}
-            columns={columns}
             childAttributes={childAttributes}
-            data={data}
+            columns={columns}
+            data={groupedData}
+            dispatch={dispatch}
             editableCells={editableCells}
             editingMode={editingMode}
             groupColumnsCount={groupColumnsCount}
             groupedColumns={groupedColumns}
-            dispatch={dispatch}
+            groupsExpanded={groupsExpanded}
             selectedRows={selectedRows}
         />
       </table>
