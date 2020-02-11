@@ -99,6 +99,10 @@ export default SortingDemo;
 
 [Grouping](https://komarovalexander.github.io/ka-table/#/grouping) - Group data for most convenient work with it
 
+[Grouping](https://komarovalexander.github.io/ka-table/#/grouping-custom-cell) - Customize group cell
+
+[Grouping](https://komarovalexander.github.io/ka-table/#/grouping-custom-row) - Customize group row
+
 [25000 Rows](https://komarovalexander.github.io/ka-table/#/many-rows) - Virtualisation are supported
 
 [10000 Grouped Rows](https://komarovalexander.github.io/ka-table/#/many-rows-grouping) - Virtualisation work well with grouping
@@ -120,7 +124,7 @@ export default SortingDemo;
 
 | Name | Type | Description |
 | --- | --- | --- |
-| childAttributes | <code>[ChildAttributes](#ChildAttributes)</code> | Object describes attributes for data grid child components [Events Demo](https://komarovalexander.github.io/ka-table/#/events) |
+| childAttributes | <code>[ChildAttributes](#ChildAttributes)</code> | Object describes attributes for data grid child components (Demo: [Events](https://komarovalexander.github.io/ka-table/#/events)) |
 | columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
 | data | <code>any\[\]</code> | The Table's data |
 | dataRow | [<code>DataRowFunc</code>](#DataRowFunc) | Returns Data Row Template (Demo: [Custom Data Row Example](https://komarovalexander.github.io/ka-table/#/custom-data-row)) |
