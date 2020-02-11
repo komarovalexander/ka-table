@@ -5,8 +5,10 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from 'ka-table';
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from 'ka-table/enums';
 import { DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
+import {
+  CustomDateFilterEditor, CustomImageCell, CustomNumberFilterEditor,
+} from './CellComponents';
 import dataArray from './data';
-import { CustomDateFilterEditor, CustomImageCell, CustomNumberFilterEditor } from './Editors';
 
 const tableOption: ITableOption = {
   columns: [
