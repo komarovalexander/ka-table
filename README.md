@@ -123,21 +123,22 @@ export default SortingDemo;
 | childAttributes | <code>[ChildAttributes](#ChildAttributes)</code> | Object describes attributes for data grid child components [Events Demo](https://komarovalexander.github.io/ka-table/#/events) |
 | columns | [<code>Column[]</code>](#Column) | Columns in table and their look and behaviour |
 | data | <code>any\[\]</code> | The Table's data |
-| dataRow | [<code>DataRowFunc</code>](#DataRowFunc) | Returns Data Row Template [Custom Data Row Example](https://komarovalexander.github.io/ka-table/#/custom-data-row |
-| editableCells | [<code>Cell[]</code>](#Cell) | Array of cells that are in edit mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| filterRow | [<code>FilteringMode</code>](#FilteringMode) | Show filtering related UI elements in Table [Filter Row Example](https://komarovalexander.github.io/ka-table/#/filter-row) |
-| groups | [<code>Group[]</code>](#Group) | Group's in the table [Grouping Example](https://komarovalexander.github.io/ka-table/#/grouping) |
-| groupsExpanded | <code>any[][]</code> | Groups that are expanded in the grid |
+| dataRow | [<code>DataRowFunc</code>](#DataRowFunc) | Returns Data Row Template (Demo: [Custom Data Row Example](https://komarovalexander.github.io/ka-table/#/custom-data-row)) |
+| editableCells | [<code>Cell[]</code>](#Cell) | Array of cells currently editing (Demo: [Editing Example](https://komarovalexander.github.io/ka-table/#/editing)) |
+| editingMode | [<code>EditingMode</code>](#EditingMode) | Sets the table's editing mode (Demo: [Editing Example](https://komarovalexander.github.io/ka-table/#/editing)) |
+| filteringMode | [<code>FilteringMode</code>](#FilteringMode) | Show filter UI elements in Table (Demo: [Filter Row Example](https://komarovalexander.github.io/ka-table/#/filter-row)) |
+| groupRow | [<code>GroupRowFunc</code>](#GroupRowFunc) | Returns Group Row Template |
+| groups | [<code>Group[]</code>](#Group) | Group's in the table (Demo: [Grouping Example](https://komarovalexander.github.io/ka-table/#/grouping)) |
+| groupsExpanded | <code>any[][]</code> | Expanded groups - array of group keys |
 | noDataRow | <code>() => any</code> | The function returns string or a component which should appear when there are no data to show |
-| onDataChange | <code>(data: any[]) => void</code> | This function is called each time when data going to change, use it to override current data [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
-| onEvent | <code>(type: string, data: any) => void</code> | Executes each time when dispatch is called [Events](https://komarovalexander.github.io/ka-table/#/events) |
-| onOptionChange | <code>(value: any) => void</code> | This is mandatory function, this executes each time when grid going to change its state, use it to override current state [Example](https://komarovalexander.github.io/ka-table/#/editing) |
+| onDataChange | <code>(data: any[]) => void</code> | This function is called each time when data going to change, use it to override current data (Demo: [Editing Example](https://komarovalexander.github.io/ka-table/#/editing)) |
+| onEvent | <code>(type: string, data: any) => void</code> | Executes each time when dispatch is called (Demo: [Events](https://komarovalexander.github.io/ka-table/#/events)) |
+| onOptionChange | <code>(value: any) => void</code> | This is mandatory function, this executes each time when grid going to change its state, use it to override current state (Demo: [Example](https://komarovalexander.github.io/ka-table/#/editing)) |
 | rowKeyField | <code>string</code> | Data's field which is used to identify row |
-| search <a name="Table.search"></a> | <code>string</code> | Specifies the text which are used for search by data [Search Example](https://komarovalexander.github.io/ka-table/#/search) |
-| selectedRows | <code>any[]</code> | Array of rows keys which are marked as selected [Selection Example](https://komarovalexander.github.io/ka-table/#/selection) |
-| sortingMode | [<code>SortingMode</code>](#SortingMode)  | Sorting mode [Sorting Example](https://komarovalexander.github.io/ka-table/#/sorting) |
-| virtualScrolling | [<code>VirtualScrolling</code>](#VirtualScrolling) | Virtual scrolling options - set it as empty object {} to enable virtual scrolling and auto calculate its parameters [Many Rows Example](https://komarovalexander.github.io/ka-table/#/many-rows) |
+| search <a name="Table.search"></a> | <code>string</code> | Specifies the text for search by data (Demo: [Search Example](https://komarovalexander.github.io/ka-table/#/search)) |
+| selectedRows | <code>any[]</code> | Array of selected rows keys (Demo: [Selection Example](https://komarovalexander.github.io/ka-table/#/selection)) |
+| sortingMode | [<code>SortingMode</code>](#SortingMode)  | Sorting mode (Demo: [Sorting Example](https://komarovalexander.github.io/ka-table/#/sorting)) |
+| virtualScrolling | [<code>VirtualScrolling</code>](#VirtualScrolling) | Virtual scrolling options (Demo: [Many Rows Example](https://komarovalexander.github.io/ka-table/#/many-rows)) |
 
 <a name="Column"></a>
 ### Column
@@ -146,23 +147,24 @@ Describes column of table its look and behaviour
 
 | Name | Type | Description |
 | --- | --- | --- |
-| cell | [<code>CellFunc</code>](#CellFunc) | Returns a custom cell if Table is not in editable mode [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) |
+| cell | [<code>CellFunc</code>](#CellFunc) | Returns a custom cell if Table is not in editable mode (Demo: [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell)) |
 | dataType | [<code>DataType</code>](#DataType) | Specifies the type of column |
-| editor | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor if cell is in editable mode [Custom Editor Example](https://komarovalexander.github.io/ka-table/#/custom-editor) |
-| filterRowCell | [<code>FilterRowFunc</code>](#FilterRowFunc) | Returns an editor for filter row cell [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) |
-| filterRowOperator | <code>string</code> | Sets filter row operator [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor). See the list of predefined filter operators [<code>FilterOperatorName</code>](#FilterOperatorName) |
-| filterRowValue | <code>any</code> | Sets filter row value [Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) |
+| editor | [<code>EditorFunc</code>](#EditorFunc) | Returns an editor if cell is in editable mode (Demo: [Custom Editor Example](https://komarovalexander.github.io/ka-table/#/custom-editor)) |
+| filterRowCell | [<code>FilterRowFunc</code>](#FilterRowFunc) | Returns an editor for filter row cell (Demo: [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor)) |
+| filterRowOperator | <code>string</code> | Sets filter row operator (Demo: [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor)). See the list of predefined filter operators [<code>FilterOperatorName</code>](#FilterOperatorName) |
+| filterRowValue | <code>any</code> | Sets filter row value (Demo: [Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row)) |
 | field | <code>string</code> | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
-| fieldParents | <code>string[]</code> | Array contains names of parents for specific field [Overview Demo](https://komarovalexander.github.io/ka-table/#/overview) |
-| format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string [Example](https://komarovalexander.github.io/ka-table/#/custom-cell) |
-| headCell | <code>HeaderCellFunc</code> | Returns a custom header cell [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell) |
+| fieldParents | <code>string[]</code> | Array contains names of parents for specific field (Demo: [Overview Demo](https://komarovalexander.github.io/ka-table/#/overview)) |
+| format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string (Demo: [Example](https://komarovalexander.github.io/ka-table/#/custom-cell)) |
+| groupCell | <code>GroupCellFunc</code> | Returns a custom group cell |
+| headCell | <code>HeaderCellFunc</code> | Returns a custom header cell (Demo: [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell)) |
 | isEditable | <code>boolean</code> | Specifies can column be editable or not |
 | key | <code>string</code> | Mandatory field, specifies unique key for the column |
-| search | [<code>SearchFunc</code>](#SearchFunc) | Overrides the default search method for the cell. Executes if [Table.search](#Table.search) option is set |
+| search | [<code>SearchFunc</code>](#SearchFunc) | Overrides the default search method for the cell. Executes if (Demo: [Table.search](#Table.search)) option is set |
 | sortDirection | [<code>SortDirection</code>](#SortDirection) | Sets the direction of sorting for the column |
 | style | <code>React.CSSProperties</code> | Sets the style options of the elements |
 | title | <code>string</code> | Specifies the text of the header |
-| validation | [<code>ValidationFunc</code>](#ValidationFunc) | Returns the validation error string or does not return anything in case of passed validation [Validation Example](https://komarovalexander.github.io/ka-table/#/validation) |
+| validation | [<code>ValidationFunc</code>](#ValidationFunc) | Returns the validation error string or does not return anything in case of passed validation (Demo: [Validation Example](https://komarovalexander.github.io/ka-table/#/validation)) |
 
 
 
@@ -225,6 +227,7 @@ A second parameter in each [react Synthetic Event](https://reactjs.org/docs/even
 | itemHeight | <code>((data: any) => number)</code> \| <code>number</code> | Returns height of specific row |
 | tbodyHeight | <code>number</code> | tbody height |
 
+You can set VirtualScrolling as empty object {} to enable virtual scrolling and auto calculate its parameters
 
 <a name="DataType"></a>
 ### DataType
@@ -323,6 +326,26 @@ Function which obtains [<code>IFilterRowEditorProps</code>](#IFilterRowEditorPro
 
 Function which obtains value as parameter and returns formated value which will be shown in cell.
 
+<a name="GroupCellFunc"></a>
+### GroupCellFunc
+
+<code>(props:[<code>IGroupRowProps</code>](#IGroupRowProps)) => any;</code>
+
+
+Function which obtains [<code>IGroupRowProps</code>](#IGroupRowProps) as parameter and returns returns group cell content.
+
+Function which obtains props as parameter and returns group row content.
+
+<a name="GroupRowFunc"></a>
+### GroupRowFunc
+
+<code>(props:[<code>IGroupRowProps</code>](#IGroupRowProps)) => any;</code>
+
+
+Function which obtains [<code>IGroupRowProps</code>](#IGroupRowProps) as parameter and returns returns group row content.
+
+Function which obtains props as parameter and returns group row content.
+
 
 <a name="SearchFunc"></a>
 ### SearchFunc
@@ -388,3 +411,18 @@ Function which obtains value of specific cell and row - as parameters and return
 | isSelectedRow | <code>boolean</code> | Describes selected state of current row |
 | rowKeyField | <code>string</code> | Data's field which is used to identify row |
 | selectedRows | <code>any[]</code> | Array of rows keys which are marked as selected |
+
+
+<a name="IGroupRowProps"></a>
+### IGroupRowProps
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| column | [<code>Column</code>](#Column) | Grouped column |
+| contentColSpan | <code>number</code> | colSpan for content cell |
+| dispatch | <code>(type: string, data: any) => void</code> | Executes specific action with specific data |
+| groupIndex | <code>number</code> | grouped column index relative another grouped columns |
+| groupKey | <code>any[]</code> | key of current row, array because group could be inner for another: <code>['parentGroupKey', 'currentGroupKey']</code> |
+| isExpanded | <code>boolean</code> | Expanded state of current group |
+| text | <code>string</code> | Formatted text of group row |
