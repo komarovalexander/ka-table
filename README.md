@@ -156,7 +156,7 @@ Describes column of table its look and behaviour
 | field | <code>string</code> | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
 | fieldParents | <code>string[]</code> | Array contains names of parents for specific field (Demo: [Overview Demo](https://komarovalexander.github.io/ka-table/#/overview)) |
 | format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string (Demo: [Example](https://komarovalexander.github.io/ka-table/#/custom-cell)) |
-| groupCell | <code>GroupCellFunc</code> | Returns a custom group cell |
+| groupCell | <code>[<code>GroupCellFunc</code>](#GroupCellFunc)</code> | Returns a custom group cell |
 | headCell | <code>HeaderCellFunc</code> | Returns a custom header cell (Demo: [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell)) |
 | isEditable | <code>boolean</code> | Specifies can column be editable or not |
 | key | <code>string</code> | Mandatory field, specifies unique key for the column |
