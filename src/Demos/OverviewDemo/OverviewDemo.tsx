@@ -5,8 +5,10 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
 import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
+import {
+  CustomDateFilterEditor, CustomImageCell, CustomNumberFilterEditor,
+} from './CellComponents';
 import dataArray from './data';
-import { CustomDateFilterEditor, CustomImageCell, CustomNumberFilterEditor } from './Editors';
 
 const tableOption: ITableOption = {
   columns: [

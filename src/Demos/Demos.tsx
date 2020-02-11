@@ -33,7 +33,7 @@ import ValidationDemo from './ValidationDemo/ValidationDemo';
 initializeGA();
 
 const demos: Demo[] = [
-  new Demo(OverviewDemo, '/overview', 'Overview', 'OverviewDemo', 'https://stackblitz.com/edit/table-overview-js?file=Demo.js', 'https://stackblitz.com/edit/table-overview-ts?file=Demo.tsx'),
+  new Demo(OverviewDemo, '/overview', 'Overview', 'OverviewDemo', 'https://stackblitz.com/edit/table-overview-js', 'https://stackblitz.com/edit/table-overview-ts'),
   new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo', 'https://stackblitz.com/edit/table-command-column-js', 'https://stackblitz.com/edit/table-command-column-ts'),
   new Demo(CustomCellDemo, '/custom-cell', 'Custom Cell', 'CustomCellDemo', 'https://stackblitz.com/edit/table-custom-cell-js', 'https://stackblitz.com/edit/table-custom-cell-ts'),
   new Demo(CustomDataRowDemo, '/custom-data-row', 'Custom Row', 'CustomDataRowDemo', 'https://stackblitz.com/edit/table-custom-data-row-js', 'https://stackblitz.com/edit/table-custom-data-row-ts'),
