@@ -13,9 +13,8 @@ if (host !== 'localhost') {
   };
   trackEvent = (category: string, action: string, label: string = '') => {
     ReactGA.event({
-      action,
-      category,
-      label,
+      action: '',
+      category: `${action} ${label}`,
     });
   };
 }
