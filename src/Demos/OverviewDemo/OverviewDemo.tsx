@@ -84,8 +84,8 @@ const tableOption: ITableOption = {
       dataType: DataType.Date,
       field: 'firstDealDate',
       filterRowCell: CustomDateFilterEditor,
-      filterRowOperator: '<',
-      filterRowValue: new Date(2015, 1, 2),
+      filterRowOperator: '>=',
+      filterRowValue: new Date(2015, 1, 25),
       format: (value: Date) => value.toLocaleDateString('en', {
         day: '2-digit',
         month: '2-digit',
