@@ -22,45 +22,33 @@ gulp.task('demos', function () {
 });
 
 gulp.task('build', function () {
-    return gulp
+    var pkg = require('./package.json');
+    delete pkg.dependencies;
+    delete pkg.devDependencies;
+    delete pkg.husky;
+    delete pkg.jest;
+    var outputFile = 'dist/package.json';
+    file(outputFile, '');
+    jsonfile.writeFile('dist/package.json', pkg, { spaces: 2 });
+    gulp
         .src([
-            'src/lib/**/*.tsx',
-            '!src/**/*.test.tsx',
-            'src/lib/**/*.ts',
-            '!src/**/*.test.ts',
+            'README.md',
+            'LICENSE',
+        ])
+        .pipe(gulp.dest('dist'));
+    gulp
+        .src([
+            'src/lib/**/*.scss'
         ])
         .pipe(gulp.dest('dist'))
-        .pipe(tsProject())
-        .pipe(gulp.dest('dist'))
         .on('end', () => {
-            var pkg = require('./package.json');
-            delete pkg.dependencies;
-            delete pkg.devDependencies;
-            delete pkg.husky;
-            delete pkg.jest;
-            var outputFile = 'dist/package.json';
-            file(outputFile, '');
-            jsonfile.writeFile('dist/package.json', pkg, { spaces: 2 });
-            gulp
-                .src([
-                    'README.md',
-                    'LICENSE',
-                ])
+            gulp.src('dist/**/*.scss')
+                .pipe(sass().on('error', sass.logError))
                 .pipe(gulp.dest('dist'));
-            gulp
-                .src([
-                    'src/lib/**/*.scss'
-                ])
-                .pipe(gulp.dest('dist'))
-                .on('end', () => {
-                    gulp.src('dist/**/*.scss')
-                        .pipe(sass().on('error', sass.logError))
-                        .pipe(gulp.dest('dist'));
-                });
-            gulp
-                .src([
-                    'src/lib/static/**/*'
-                ])
-                .pipe(gulp.dest('dist/static'))
         });
+    return gulp
+        .src([
+            'src/lib/static/**/*'
+        ])
+        .pipe(gulp.dest('dist/static'))
 });
