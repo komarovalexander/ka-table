@@ -41,12 +41,13 @@ describe('TableBody', () => {
       attachTo: document.createElement('table'),
     });
     const scrollTop = 11;
+    const scrollLeft = 13;
     const timeStamp = 12;
 
-    wrapper.find('tbody').prop('onScroll')!({ currentTarget: {scrollTop}, timeStamp } as any);
+    wrapper.find('tbody').prop('onScroll')!({ currentTarget: {scrollTop, scrollLeft}, timeStamp } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.ScrollTable, { scrollTop, timeStamp },
+      ActionType.ScrollTable, { scrollTop, scrollLeft, timeStamp },
     );
   });
 

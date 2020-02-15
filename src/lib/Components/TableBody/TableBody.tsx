@@ -36,7 +36,11 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
   const { dispatch } = props;
   return (
     <tbody className={defaultOptions.css.tbody} onScroll={(event) => {
-      dispatch(ActionType.ScrollTable, { scrollTop: event.currentTarget.scrollTop, timeStamp: event.timeStamp  });
+      dispatch(ActionType.ScrollTable, {
+        scrollLeft: event.currentTarget.scrollLeft,
+        scrollTop: event.currentTarget.scrollTop,
+        timeStamp: event.timeStamp,
+      });
     }}>
       <TableBodyContent
         {...props}
