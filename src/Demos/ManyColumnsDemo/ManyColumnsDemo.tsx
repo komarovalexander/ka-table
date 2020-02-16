@@ -5,7 +5,7 @@ import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { Column } from '../../lib/models';
 import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
 
-const columns: Column[] = Array(30).fill(undefined).map(
+const columns: Column[] = Array(100).fill(undefined).map(
   (_, index) => ({
     key: 'column' + index,
     style: { width: 150 },
@@ -14,7 +14,7 @@ const columns: Column[] = Array(30).fill(undefined).map(
   }),
 );
 
-const dataArray = Array(100).fill(undefined).map(
+const dataArray = Array(30).fill(undefined).map(
   (_, index) => columns.reduce((previousValue: any, currentValue) => {
     previousValue[currentValue.key] = `${currentValue.key} row:${index}`;
     return previousValue;
