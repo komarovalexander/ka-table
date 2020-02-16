@@ -91,17 +91,19 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     groupsExpanded = getExpandedGroups(groupedData);
   }
 
-  const dispatch = wrapDispatch({ ...props, groupsExpanded });
+  const theadRef = React.useRef<HTMLTableSectionElement>(null);
+  const dispatch = wrapDispatch({ ...props, groupsExpanded }, theadRef);
 
   const componentProps: React.HTMLAttributes<HTMLTableElement> = {
     className: defaultOptions.css.table,
   };
 
   const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
+
   return (
     <div className='ka' >
       <table {...tableProps}>
-        <thead className={defaultOptions.css.thead}>
+        <thead className={defaultOptions.css.thead} ref={theadRef}>
           <HeadRow
             groupColumnsCount={groupColumnsCount}
             columns={columns}

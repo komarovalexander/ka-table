@@ -1,6 +1,6 @@
 {
   "name": "ka-table",
-  "version": "2.6.1",
+  "version": "2.9.4",
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table/#/command-column",
@@ -21,6 +21,7 @@
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
+    "dist": "tsc --declaration --jsx react --esModuleInterop true --outDir dist src/lib/index.ts && gulp build",
     "pack": "gulp build && cd dist && npm pack && cd .."
   },
   "eslintConfig": {

@@ -7,10 +7,13 @@
 .ka-table{
   font-size: 14px;
   width: 100%;
+  display: block;
   border-collapse: collapse;
   height: 100%;
 }
 .ka-thead{
+  overflow: hidden;
+  display: block;
   background-color: #F1F5F7;
 }
 .ka-thead-cell{

@@ -1,4 +1,6 @@
 
+import { RefObject } from 'react';
+
 import { ITableAllProps } from '../';
 import { ActionType } from '../enums';
 import { getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
@@ -6,7 +8,7 @@ import { addItemToEditableCells, removeItemFromEditableCells } from './CellUtils
 import { updateExpandedGroups } from './GroupUtils';
 import { getSortedColumns } from './HeadRowUtils';
 
-export const wrapDispatch = (tableProps: ITableAllProps) => {
+export const wrapDispatch = (tableProps: ITableAllProps, theadRef: RefObject<HTMLTableSectionElement>) => {
   const {
     columns,
     data,
@@ -57,13 +59,16 @@ export const wrapDispatch = (tableProps: ITableAllProps) => {
           onOptionChange(actionData);
           break;
       case ActionType.ScrollTable:
-          if (virtualScrolling) {
+        if (theadRef.current) {
+          theadRef.current.scrollTo({ left: actionData.scrollLeft});
+        }
+        if (virtualScrolling) {
             const scrollPosition = actionData.scrollTop;
             if (virtualScrolling) {
               onOptionChange({ virtualScrolling: { ...virtualScrolling, scrollPosition }});
             }
           }
-          break;
+        break;
       case ActionType.UpdateGroupsExpanded:
         const newGroupsExpanded = updateExpandedGroups(
           groupsExpanded,
