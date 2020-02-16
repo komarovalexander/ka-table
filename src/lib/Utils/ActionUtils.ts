@@ -59,7 +59,9 @@ export const wrapDispatch = (tableProps: ITableAllProps, theadRef: RefObject<HTM
           onOptionChange(actionData);
           break;
       case ActionType.ScrollTable:
-        theadRef.current?.scrollTo({ left: actionData.scrollLeft});
+        if (theadRef.current) {
+          theadRef.current.scrollTo({ left: actionData.scrollLeft});
+        }
         if (virtualScrolling) {
             const scrollPosition = actionData.scrollTop;
             if (virtualScrolling) {
