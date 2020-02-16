@@ -99,9 +99,11 @@ export default SortingDemo;
 
 [Grouping](https://komarovalexander.github.io/ka-table/#/grouping) - Group data for most convenient work with it
 
-[Grouping](https://komarovalexander.github.io/ka-table/#/grouping-custom-cell) - Customize group cell
+[Grouping Custom Cell](https://komarovalexander.github.io/ka-table/#/grouping-custom-cell) - Customize group cell
 
-[Grouping](https://komarovalexander.github.io/ka-table/#/grouping-custom-row) - Customize group row
+[Grouping Custom Row](https://komarovalexander.github.io/ka-table/#/grouping-custom-row) - Customize group row
+
+[Many Columns](https://komarovalexander.github.io/ka-table/#/many-columns)
 
 [25000 Rows](https://komarovalexander.github.io/ka-table/#/many-rows) - Virtualisation are supported
 
