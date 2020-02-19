@@ -52,10 +52,18 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
       } else {
         const dataRow = (
           <DataRow
-            {...props}
-            trRef={rowRefLink}
+            childAttributes={props.childAttributes}
+            columns={props.columns}
+            dataRow={props.dataRow}
+            dispatch={props.dispatch}
+            editableCells={props.editableCells}
+            editingMode={props.editingMode}
+            groupColumnsCount={props.groupColumnsCount}
             key={d[rowKeyField]}
             rowData={d}
+            rowKeyField={props.rowKeyField}
+            selectedRows={props.selectedRows}
+            trRef={rowRefLink}
           />
         );
         rowRefLink = undefined;

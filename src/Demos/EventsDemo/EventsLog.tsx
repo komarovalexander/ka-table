@@ -9,6 +9,9 @@ export const EventsLog: React.FC<any> = ({ events, showDataClick }) => {
         if (typeof val === 'function') {
           return `(${val})`;
         }
+        if (key === 'trRef') {
+          return '';
+        }
         return val;
       }, 2)}`,
       date: e.date,

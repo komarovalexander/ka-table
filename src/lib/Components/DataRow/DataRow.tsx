@@ -6,6 +6,7 @@ import { ChildAttributes } from '../../models';
 import { Cell } from '../../Models/Cell';
 import { Column } from '../../Models/Column';
 import { DataRowFunc, DispatchFunc } from '../../types';
+import { extendProps } from '../../Utils/PropsUtils';
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
@@ -28,6 +29,7 @@ export interface IRowProps extends IRowCommonProps {
 
 const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   const {
+    childAttributes,
     groupColumnsCount,
     rowData,
     rowKeyField,
@@ -38,9 +40,16 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   const rowKeyValue = rowData[rowKeyField];
   const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
   const dataRowProps = {...props, isSelectedRow, rowKeyValue };
+
+  const componentProps: React.HTMLAttributes<HTMLTableRowElement> = {
+    className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`,
+  };
+
+  const divProps = extendProps(componentProps, props, childAttributes.dataRow, props.dispatch);
+
   const dataRowContent = dataRow && dataRow(dataRowProps);
   return (
-    <tr ref={trRef} className={`${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`}>
+    <tr {...divProps} ref={trRef} >
       <EmptyCells count={groupColumnsCount}/>
       {dataRowContent
         ? <td className={defaultOptions.css.cell}>{dataRowContent}</td>
