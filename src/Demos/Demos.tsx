@@ -1,7 +1,7 @@
 import './Demos.scss';
 
 import React from 'react';
-import { HashRouter, NavLink, Route } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 
 import CommandColumnDemo from './CommandColumnDemo/CommandColumnDemo';
 import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
@@ -9,7 +9,9 @@ import CustomDataRowDemo from './CustomDataRowDemo/CustomDataRowDemo';
 import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
 import CustomHeaderCellDemo from './CustomHeaderCellDemo/CustomHeaderCellDemo';
 import Demo from './Demo';
+import { DemoCase } from './DemoCase';
 import getDemoPage from './DemoPage';
+import DemosMenu from './DemosMenu';
 import EditingDemo from './EditingDemo/EditingDemo';
 import EventsDemo from './EventsDemo/EventsDemo';
 import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
@@ -20,6 +22,7 @@ import { withTracker } from './GAWrapper';
 import GroupingCustomCellDemo from './GroupingCustomCellDemo/GroupingCustomCellDemo';
 import GroupingCustomRowDemo from './GroupingCustomRowDemo/GroupingCustomRowDemo';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
+import HoverRowDemo from './HoverRowDemo/HoverRowDemo';
 import ManyColumnsDemo from './ManyColumnsDemo/ManyColumnsDemo';
 import ManyRowsDemo from './ManyRowsDemo/ManyRowsDemo';
 import ManyRowsGroupingDemo from './ManyRowsGroupingDemo/ManyRowsGroupingDemo';
@@ -27,6 +30,7 @@ import NullableCellDataDemo from './NullableCellDataDemo/NullableCellDataDemo';
 import OverviewDemo from './OverviewDemo/OverviewDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
 import SelectionDemo from './SelectionDemo/SelectionDemo';
+import SelectionSingleDemo from './SelectionSingleDemo/SelectionSingleDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
 import StateStoringDemo from './StateStoringDemo/StateStoringDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
@@ -48,18 +52,20 @@ const demos: Demo[] = [
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo', 'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts', true),
   new Demo(GroupingCustomCellDemo, '/grouping-custom-cell', 'Grouping Custom Cell', 'GroupingCustomCellDemo', 'https://stackblitz.com/edit/table-grouping-custom-cell-js', 'https://stackblitz.com/edit/table-grouping-custom-cell-ts', true),
   new Demo(GroupingCustomRowDemo, '/grouping-custom-row', 'Grouping Custom Row', 'GroupingCustomRowDemo', 'https://stackblitz.com/edit/table-grouping-custom-row-js', 'https://stackblitz.com/edit/table-grouping-custom-row-ts', true),
+  new Demo(HoverRowDemo, '/hover-row', 'Hover Row', 'HoverRowDemo', 'https://stackblitz.com/edit/table-hover-row-js', 'https://stackblitz.com/edit/table-hover-row-ts'),
   new Demo(ManyColumnsDemo, '/many-columns', 'Many Columns', 'ManyColumnsDemo', 'https://stackblitz.com/edit/table-many-columns-js', 'https://stackblitz.com/edit/table-many-columns-ts'),
   new Demo(ManyRowsDemo, '/many-rows', 'Many Rows (25k)', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts'),
   new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', 'Many Rows (10k Grouped)', 'ManyRowsGroupingDemo', 'https://stackblitz.com/edit/table-many-rows-grouping-js', 'https://stackblitz.com/edit/table-many-rows-grouping-ts', true),
   new Demo(NullableCellDataDemo, '/nullable-cell-data', 'Nullable Cell Data', 'NullableCellDataDemo', 'https://stackblitz.com/edit/table-nullable-cell-data-js', 'https://stackblitz.com/edit/table-nullable-cell-data-ts'),
   new Demo(SearchDemo, '/search', 'Search', 'SearchDemo', 'https://stackblitz.com/edit/table-search-js', 'https://stackblitz.com/edit/table-search-ts'),
-  new Demo(SelectionDemo, '/selection', 'Selection', 'SelectionDemo', 'https://stackblitz.com/edit/table-selection-js', 'https://stackblitz.com/edit/table-selection-ts'),
+  new Demo(SelectionDemo, '/selection', 'Selection - Multiple', 'SelectionDemo', 'https://stackblitz.com/edit/table-selection-js', 'https://stackblitz.com/edit/table-selection-ts'),
+  new Demo(SelectionSingleDemo, '/selection-single', 'Selection - Single', 'SelectionSingleDemo', 'https://stackblitz.com/edit/table-selection-single-js', 'https://stackblitz.com/edit/table-selection-single-ts'),
   new Demo(SortingDemo, '/sorting', 'Sorting', 'SortingDemo', 'https://stackblitz.com/edit/table-sorting-js', 'https://stackblitz.com/edit/table-sorting-ts'),
   new Demo(StateStoringDemo, '/state-storing', 'State Storing', 'StateStoringDemo', 'https://stackblitz.com/edit/table-state-storing-js', '', true),
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts'),
 ];
 
-const cases = demos.map((d: Demo) => {
+const cases: DemoCase[] = demos.map((d: Demo) => {
   return ({
     demoComponent: getDemoPage(d),
     name: d.fileName,
@@ -77,35 +83,22 @@ const Demos: React.FC = () => {
             <div className='logo-container'>
               <b>ka-table</b>
               <a href='https://github.com/komarovalexander/ka-table'
-                onClick={() => { trackEvent('click', 'github_logo'); }}>
+                onMouseDown={() => { trackEvent('click', 'github_logo'); }}>
                 <img src='static/icons/github_logo.svg' alt=''/>
               </a>
               <a href='https://www.npmjs.com/package/ka-table'
-                onClick={() => { trackEvent('click', 'npm_logo'); }}>
+                onMouseDown={() => { trackEvent('click', 'npm_logo'); }}>
                 <img src='static/icons/npm_logo.svg' alt=''/>
               </a>
             </div>
-            <ul className='menu'>
-            {
-              cases.map((c) => (
-                <li key={c.name}>
-                    <NavLink to={c.path} activeClassName='active'>
-                      <span className='menu-button'>
-                        <span className='menu-icon'><img src={`static/icons/${c.name}.svg`} alt=''/></span>
-                        <span className='menu-button-inner'>{c.title}</span>
-                      </span>
-                    </NavLink>
-                </li>
-              ))
-            }
-            </ul>
+            <DemosMenu cases={cases} />
           </div>
           <div className='developers-links'>
             <div>
               <a href='https://github.com/komarovalexander'
                 rel='noopener noreferrer'
                 target='_blank'
-                onClick={() => { trackEvent('click', 'developed_by', 'Alex'); }}>
+                onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex'); }}>
                   <img src='static/icons/link.svg' alt=''/>
                   Developed by Alexander Komarov
               </a>
@@ -114,7 +107,7 @@ const Demos: React.FC = () => {
               <a href='https://www.behance.net/daryakomarova'
                 rel='noopener noreferrer'
                 target='_blank'
-                onClick={() => { trackEvent('click', 'developed_by', 'Daria'); }}>
+                onMouseDown={() => { trackEvent('click', 'developed_by', 'Daria'); }}>
                   <img src='static/icons/link.svg' alt=''/>
                   UI Design by Daria Komarova
               </a>

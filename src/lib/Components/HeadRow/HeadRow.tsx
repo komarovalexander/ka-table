@@ -8,13 +8,15 @@ import EmptyCells from '../EmptyCells/EmptyCells';
 import HeadCell from '../HeadCell/HeadCell';
 
 export interface IHeadRowProps {
+  areAllRowsSelected: boolean;
   columns: Column[];
-  sortingMode: SortingMode;
-  groupColumnsCount: number;
   dispatch: DispatchFunc;
+  groupColumnsCount: number;
+  sortingMode: SortingMode;
 }
 
 const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
+  areAllRowsSelected,
   columns,
   groupColumnsCount,
   dispatch,
@@ -26,9 +28,10 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
       {columns.map((column) => {
         return (
           <HeadCell
-            key={column.key}
+            areAllRowsSelected={areAllRowsSelected}
             column={column}
             dispatch={dispatch}
+            key={column.key}
             sortingMode={sortingMode}
           />
         );

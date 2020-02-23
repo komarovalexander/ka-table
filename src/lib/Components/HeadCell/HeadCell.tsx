@@ -7,9 +7,10 @@ import { DispatchFunc } from '../../types';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
 
 export interface IHeadCellProps {
+  areAllRowsSelected: boolean;
   column: Column;
-  sortingMode: SortingMode;
   dispatch: DispatchFunc;
+  sortingMode: SortingMode;
 }
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {

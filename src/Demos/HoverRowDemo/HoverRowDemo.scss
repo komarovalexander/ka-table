@@ -1,0 +1,13 @@
+.hover-row-demo{
+  .ka-row{
+    cursor: pointer;
+
+    &:hover{
+      background-color: #F7FcFd;
+    }
+  }
+  .info{
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+}

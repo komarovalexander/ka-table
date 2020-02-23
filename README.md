@@ -72,52 +72,10 @@ const SortingDemo: React.FC = () => {
 export default SortingDemo;
 ```
 
-[Demo link](https://komarovalexander.github.io/ka-table/#/sorting)
+[Example link](https://komarovalexander.github.io/ka-table/#/sorting)
 
 ## Examples
-[Overview](https://komarovalexander.github.io/ka-table/#/overview)
-
-[Command Column](https://komarovalexander.github.io/ka-table/#/command-column) - Functional columns which are not bound to data and used to add custom command to table
-
-[Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) - Best way to customise look of every column in table
-
-[Custom DataRow](https://komarovalexander.github.io/ka-table/#/custom-data-row) - Customise look of a row in the table
-
-[Custom Editor](https://komarovalexander.github.io/ka-table/#/custom-editor) - Table supports user created editors
-
-[Custom Header Cell](https://komarovalexander.github.io/ka-table/#/custom-header-cell) - Customisation of header cell
-
-[Editing](https://komarovalexander.github.io/ka-table/#/editing) - Editing out of the box
-
-[Events](https://komarovalexander.github.io/ka-table/#/events) - All events are trackable
-
-[Filter Extended](https://komarovalexander.github.io/ka-table/#/filter-extended) - Easy filtered by extended filters
-
-[Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) - Built-in filter row
-
-[Filter Row - Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) - Customise filter cell every way you want
-
-[Grouping](https://komarovalexander.github.io/ka-table/#/grouping) - Group data for most convenient work with it
-
-[Grouping Custom Cell](https://komarovalexander.github.io/ka-table/#/grouping-custom-cell) - Customize group cell
-
-[Grouping Custom Row](https://komarovalexander.github.io/ka-table/#/grouping-custom-row) - Customize group row
-
-[Many Columns](https://komarovalexander.github.io/ka-table/#/many-columns)
-
-[25000 Rows](https://komarovalexander.github.io/ka-table/#/many-rows) - Virtualisation are supported
-
-[10000 Grouped Rows](https://komarovalexander.github.io/ka-table/#/many-rows-grouping) - Virtualisation work well with grouping
-
-[Search](https://komarovalexander.github.io/ka-table/#/search) - Search by the whole Table is easy
-
-[Selection](https://komarovalexander.github.io/ka-table/#/selection) - Select and process specific rows
-
-[Sorting](https://komarovalexander.github.io/ka-table/#/sorting)
-
-[State Storing](https://komarovalexander.github.io/ka-table/#/state-storing) - Save Table's state and restore it after page reload
-
-[Validation](https://komarovalexander.github.io/ka-table/#/validation)
+[Examples are available by this link](https://komarovalexander.github.io/ka-table/#/overview)
 
 ## API
 <a name="Table"></a>
@@ -163,7 +121,7 @@ Describes column of table its look and behaviour
 | fieldParents | <code>string[]</code> | Array contains names of parents for specific field (Demo: [Overview Demo](https://komarovalexander.github.io/ka-table/#/overview)) |
 | format | [<code>FormatFunc</code>](#FormatFunc) | Returns formated cell string (Demo: [Example](https://komarovalexander.github.io/ka-table/#/custom-cell)) |
 | groupCell | <code>[<code>GroupCellFunc</code>](#GroupCellFunc)</code> | Returns a custom group cell |
-| headCell | <code>HeaderCellFunc</code> | Returns a custom header cell (Demo: [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell)) |
+| headCell | <code>[<code>HeaderCellFunc</code>](#HeaderCellFunc)</code> | Returns a custom header cell (Demo: [Custom Head Cell Example](https://komarovalexander.github.io/ka-table/#/custom-header-cell)) |
 | isEditable | <code>boolean</code> | Specifies can column be editable or not |
 | key | <code>string</code> | Mandatory field, specifies unique key for the column |
 | search | [<code>SearchFunc</code>](#SearchFunc) | Overrides the default search method for the cell. Executes if (Demo: [Table.search](#Table.search)) option is set |
@@ -194,6 +152,7 @@ It is possible to override default behaviour just specify particular handler [Ev
 | Name | Type | Description |
 | --- | --- | --- |
 | cell | <code>[ChildAttributesItem](#ChildAttributesItem)<[ICellContentProps](#ICellContentProps)></code> | Sets custom attributes for cell element |
+| dataRow | <code>[ChildAttributesItem](#ChildAttributesItem)<[IDataRowProps](#IDataRowProps)></code> | Sets custom attributes for table element |
 | table | <code>[ChildAttributesItem](#ChildAttributesItem)<[Table](#ITableAllProps)></code> | Sets custom attributes for table element |
 
 
@@ -337,20 +296,21 @@ Function which obtains value as parameter and returns formated value which will 
 
 <code>(props:[<code>IGroupRowProps</code>](#IGroupRowProps)) => any;</code>
 
-
-Function which obtains [<code>IGroupRowProps</code>](#IGroupRowProps) as parameter and returns returns group cell content.
-
-Function which obtains props as parameter and returns group row content.
+Function which obtains [<code>IGroupRowProps</code>](#IGroupRowProps) as parameter and returns group cell content.
 
 <a name="GroupRowFunc"></a>
 ### GroupRowFunc
 
 <code>(props:[<code>IGroupRowProps</code>](#IGroupRowProps)) => any;</code>
 
+Function which obtains [<code>IGroupRowProps</code>](#IGroupRowProps) as parameter and returns group row content.
 
-Function which obtains [<code>IGroupRowProps</code>](#IGroupRowProps) as parameter and returns returns group row content.
+<a name="HeaderCellFunc"></a>
+### HeaderCellFunc
 
-Function which obtains props as parameter and returns group row content.
+<code>(props:[<code>IHeadCellProps</code>](#IHeadCellProps)) => any;</code>
+
+Function which obtains [<code>IHeadCellProps</code>](#IHeadCellProps) as parameter and returns header cell content.
 
 
 <a name="SearchFunc"></a>
@@ -378,9 +338,10 @@ Function which obtains value of specific cell and row - as parameters and return
 | column | [<code>Column</code>](#Column) | column of the editor |
 | dispatch | <code>(type: string, data: any) => void</code> | can forse Table make change in data, close the editor, and other actions |
 | field | <code>string</code> | field name of current column |
-| rowData | <code>any</code> | data of the row in which editor is shown |
 | isSelectedRow | <code>boolean</code> | selection state of the current row |
+| rowData | <code>any</code> | data of the row in which editor is shown |
 | rowKeyField | <code>string</code> | field which is used to identify row |
+| rowKeyValue | <code>any</code> | value of the field which is used to identify row |
 
 <a name="IFilterRowEditorProps"></a>
 ### IFilterRowEditorProps
@@ -398,9 +359,16 @@ Function which obtains value of specific cell and row - as parameters and return
 
 | Name | Type | Description |
 | --- | --- | --- |
-| column | [<code>Column</code>](#Column) | settings of the column in which editor is shown |
-| openEditor | <code>() => void</code> | call this method to open editor of the cell |
+| childAttributes | <code>[ChildAttributes](#ChildAttributes)</code> | Object describes attributes for data grid child components (Demo: [Events](https://komarovalexander.github.io/ka-table/#/events)) |
+| column | [<code>Column</code>](#Column) | column of the cell |
+| dispatch | <code>(type: string, data: any) => void</code> | can forse Table make change in data, open the editor, and other actions |
+| editingMode | [<code>EditingMode</code>](#EditingMode) | Editing mode of cell column |
+| field | <code>string</code> | field name of cell column |
+| isSelectedRow | <code>boolean</code> | selection state of the cell row |
 | rowData | <code>any</code> | data of the row in which editor is shown |
+| rowKeyField | <code>string</code> | field which is used to identify row |
+| rowKeyValue | <code>any</code> | value of the field which is used to identify cell row |
+| value | <code>any</code> | value of the cell |
 
 
 <a name="IDataRowProps"></a>
@@ -432,3 +400,14 @@ Function which obtains value of specific cell and row - as parameters and return
 | groupKey | <code>any[]</code> | key of current row, array because group could be inner for another: <code>['parentGroupKey', 'currentGroupKey']</code> |
 | isExpanded | <code>boolean</code> | Expanded state of current group |
 | text | <code>string</code> | Formatted text of group row |
+
+<a name="IHeadCellProps"></a>
+### IHeadCellProps
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| areAllRowsSelected | <code>boolean</code> | Indicates selection state of all columns |
+| column | [<code>Column</code>](#Column) | Grouped column |
+| sortingMode | <code>number</code> | [<code>SortingMode</code>](#SortingMode) of current cell column |
+| dispatch | <code>(type: string, data: any) => void</code> | Executes specific action with specific data |

@@ -19,6 +19,7 @@ export interface ICellComponentProps {
   isSelectedRow: boolean;
   rowData: any;
   rowKeyField: string;
+  rowKeyValue: any;
 }
 
 const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {

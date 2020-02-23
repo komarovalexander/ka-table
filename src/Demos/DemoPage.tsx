@@ -21,7 +21,7 @@ const getDemoPage = (demo: Demo) => {
               <>
                 <a className='editor-link editor-link-ts'
                   href={demo.tsLink}
-                  onClick={() => { trackEvent('click', 'ts_example', demo.path); }}
+                  onMouseDown={() => { trackEvent('click', 'ts_example', demo.path); }}
                   rel='noopener noreferrer'
                   target='_blank'>
                     TS Example
@@ -31,7 +31,7 @@ const getDemoPage = (demo: Demo) => {
             )}
             <a className='editor-link editor-link-js'
               href={demo.jsLink}
-              onClick={() => { trackEvent('click', 'js_example', demo.path); }}
+              onMouseDown={() => { trackEvent('click', 'js_example', demo.path); }}
               rel='noopener noreferrer'
               target='_blank'>
                 JS Example
