@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from 'ka-table';
 import { ActionType, DataType, SortDirection, SortingMode } from 'ka-table/enums';
-import { EditorFuncPropsWithChildren, OptionChangeFunc } from 'ka-table/types';
+import {
+  EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren, OptionChangeFunc,
+} from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -14,18 +16,35 @@ const dataArray: any[] = [
 ];
 
 const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
-  rowData, rowKeyField, dispatch, isSelectedRow,
+  rowKeyValue, dispatch, isSelectedRow,
 }) => {
   return (
     <input
       type='checkbox'
       checked={isSelectedRow}
       onChange={(event) => {
-        const rowKeyValue = rowData[rowKeyField];
         if (event.currentTarget.checked) {
           dispatch(ActionType.SelectRow, { rowKeyValue });
         } else {
-          dispatch(ActionType.DeselectRowData, { rowKeyValue });
+          dispatch(ActionType.DeselectRow, { rowKeyValue });
+        }
+      }}
+    />
+  );
+};
+
+const SelectionHeader: React.FC<HeaderCellFuncPropsWithChildren> = ({
+  dispatch, areAllRowsSelected,
+}) => {
+  return (
+    <input
+      type='checkbox'
+      checked={areAllRowsSelected}
+      onChange={(event) => {
+        if (event.currentTarget.checked) {
+          dispatch(ActionType.SelectAllRows, {  });
+        } else {
+          dispatch(ActionType.DeselectAllRows, {  });
         }
       }}
     />
@@ -36,6 +55,7 @@ const tableOption: ITableOption = {
   columns: [
     {
       editor: SelectionCell,
+      headCell: SelectionHeader,
       isEditable: true,
       key: 'selection',
     },

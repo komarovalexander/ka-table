@@ -47,6 +47,12 @@ const childAttributes: ChildAttributes = {
       childElementAttributes.onClick!(e);
     },
   },
+  dataRow: {
+    onClick: (e, extendedEvent) => {
+      const { childProps: { dispatch } } = extendedEvent;
+      dispatch('MY_ROW_onClick', { extendedEvent });
+    },
+  },
   table: {
     onMouseEnter: (e, extendedEvent) => {
       const { dispatch } = extendedEvent;
