@@ -1,7 +1,7 @@
 import './Demos.scss';
 
 import React from 'react';
-import { HashRouter, NavLink, Route } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 
 import CommandColumnDemo from './CommandColumnDemo/CommandColumnDemo';
 import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
@@ -9,7 +9,9 @@ import CustomDataRowDemo from './CustomDataRowDemo/CustomDataRowDemo';
 import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
 import CustomHeaderCellDemo from './CustomHeaderCellDemo/CustomHeaderCellDemo';
 import Demo from './Demo';
+import { DemoCase } from './DemoCase';
 import getDemoPage from './DemoPage';
+import DemosMenu from './DemosMenu';
 import EditingDemo from './EditingDemo/EditingDemo';
 import EventsDemo from './EventsDemo/EventsDemo';
 import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
@@ -63,7 +65,7 @@ const demos: Demo[] = [
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts'),
 ];
 
-const cases = demos.map((d: Demo) => {
+const cases: DemoCase[] = demos.map((d: Demo) => {
   return ({
     demoComponent: getDemoPage(d),
     name: d.fileName,
@@ -81,35 +83,22 @@ const Demos: React.FC = () => {
             <div className='logo-container'>
               <b>ka-table</b>
               <a href='https://github.com/komarovalexander/ka-table'
-                onClick={() => { trackEvent('click', 'github_logo'); }}>
+                onMouseDown={() => { trackEvent('click', 'github_logo'); }}>
                 <img src='static/icons/github_logo.svg' alt=''/>
               </a>
               <a href='https://www.npmjs.com/package/ka-table'
-                onClick={() => { trackEvent('click', 'npm_logo'); }}>
+                onMouseDown={() => { trackEvent('click', 'npm_logo'); }}>
                 <img src='static/icons/npm_logo.svg' alt=''/>
               </a>
             </div>
-            <ul className='menu'>
-            {
-              cases.map((c) => (
-                <li key={c.name}>
-                    <NavLink to={c.path} activeClassName='active'>
-                      <span className='menu-button'>
-                        <span className='menu-icon'><img src={`static/icons/${c.name}.svg`} alt=''/></span>
-                        <span className='menu-button-inner'>{c.title}</span>
-                      </span>
-                    </NavLink>
-                </li>
-              ))
-            }
-            </ul>
+            <DemosMenu cases={cases} />
           </div>
           <div className='developers-links'>
             <div>
               <a href='https://github.com/komarovalexander'
                 rel='noopener noreferrer'
                 target='_blank'
-                onClick={() => { trackEvent('click', 'developed_by', 'Alex'); }}>
+                onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex'); }}>
                   <img src='static/icons/link.svg' alt=''/>
                   Developed by Alexander Komarov
               </a>
@@ -118,7 +107,7 @@ const Demos: React.FC = () => {
               <a href='https://www.behance.net/daryakomarova'
                 rel='noopener noreferrer'
                 target='_blank'
-                onClick={() => { trackEvent('click', 'developed_by', 'Daria'); }}>
+                onMouseDown={() => { trackEvent('click', 'developed_by', 'Daria'); }}>
                   <img src='static/icons/link.svg' alt=''/>
                   UI Design by Daria Komarova
               </a>
