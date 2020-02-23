@@ -72,10 +72,10 @@ const SortingDemo: React.FC = () => {
 export default SortingDemo;
 ```
 
-[Demo link](https://komarovalexander.github.io/ka-table/#/sorting)
+[Example link](https://komarovalexander.github.io/ka-table/#/sorting)
 
 ## Examples
-[Demos portal link](https://komarovalexander.github.io/ka-table/#/overview)
+[Examples are available by this link](https://komarovalexander.github.io/ka-table/#/overview)
 
 ## API
 <a name="Table"></a>
