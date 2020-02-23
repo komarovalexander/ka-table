@@ -18,11 +18,13 @@ export interface IRowCommonProps {
   editingMode: EditingMode;
   rowData: any;
   rowKeyField: string;
+  rowKeyValue: any;
   selectedRows: any[];
 }
 
 export interface IRowProps extends IRowCommonProps {
   groupColumnsCount: number;
+  isSelectedRow: boolean;
   dataRow?: DataRowFunc;
   trRef?: any;
 }
@@ -30,15 +32,12 @@ export interface IRowProps extends IRowCommonProps {
 const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   const {
     childAttributes,
-    groupColumnsCount,
-    rowData,
-    rowKeyField,
     dataRow,
-    selectedRows,
+    groupColumnsCount,
+    isSelectedRow,
+    rowKeyValue,
     trRef,
   } = props;
-  const rowKeyValue = rowData[rowKeyField];
-  const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
   const dataRowProps = {...props, isSelectedRow, rowKeyValue };
 
   const componentProps: React.HTMLAttributes<HTMLTableRowElement> = {

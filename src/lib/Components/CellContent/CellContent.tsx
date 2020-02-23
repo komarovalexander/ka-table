@@ -10,10 +10,12 @@ export interface ICellContentProps {
   column: Column;
   dispatch: DispatchFunc;
   editingMode: EditingMode;
-  value: any;
   field: Field;
+  isSelectedRow: boolean;
   rowData: any;
   rowKeyField: string;
+  rowKeyValue: any;
+  value: any;
 }
 
 const CellContent: React.FunctionComponent<ICellContentProps> = (props) => {

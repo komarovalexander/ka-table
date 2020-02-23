@@ -99,12 +99,14 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   };
 
   const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
+  const areAllRowsSelected = data.length === selectedRows.length;
 
   return (
     <div className='ka' >
       <table {...tableProps}>
         <thead className={defaultOptions.css.thead} ref={theadRef}>
           <HeadRow
+            areAllRowsSelected={areAllRowsSelected}
             groupColumnsCount={groupColumnsCount}
             columns={columns}
             dispatch={dispatch}

@@ -17,9 +17,13 @@ export enum ActionType {
   ChangeSorting = 'ChangeSorting',
   ChangeVirtualScrollingHeightSettings = 'ChangeVirtualScrollingHeightSettings',
   CloseEditor = 'CloseEditor',
+  DeselectAllRows = 'DeselectAllRows',
+  DeselectRow = 'DeselectRow',
   DeselectRowData = 'DeselectRowData',
   OpenEditor = 'OpenEditor',
   ScrollTable = 'ScrollTable',
+  SelectAllRows = 'SelectAllRows',
+  SelectSingleRow = 'SelectSingleRow',
   SelectRow = 'SelectRow',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',
 }

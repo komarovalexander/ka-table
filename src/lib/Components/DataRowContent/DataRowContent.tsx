@@ -18,22 +18,23 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   isSelectedRow,
   rowData,
   rowKeyField,
+  rowKeyValue,
 }) => {
-  const rowKeyValue = rowData[rowKeyField];
   const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
   return (
     <>
       {columns.map((column) => (
         <CellComponent
-          column={column}
           childAttributes={childAttributes}
+          column={column}
+          dispatch={dispatch}
           editingMode={editingMode}
           isEditableCell={isEditableCell(editingMode, column, rowEditableCells)}
           isSelectedRow={isSelectedRow}
           key={column.key}
-          dispatch={dispatch}
           rowData={rowData}
           rowKeyField={rowKeyField}
+          rowKeyValue={rowKeyValue}
         />
       ))}
     </>

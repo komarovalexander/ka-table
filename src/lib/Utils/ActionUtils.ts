@@ -8,7 +8,7 @@ import { addItemToEditableCells, removeItemFromEditableCells } from './CellUtils
 import { updateExpandedGroups } from './GroupUtils';
 import { getSortedColumns } from './HeadRowUtils';
 
-export const wrapDispatch = (tableProps: ITableAllProps, theadRef: RefObject<HTMLTableSectionElement>) => {
+export const wrapDispatch = (tableProps: ITableAllProps, theadRef?: RefObject<HTMLTableSectionElement>) => {
   const {
     columns,
     data,
@@ -45,10 +45,24 @@ export const wrapDispatch = (tableProps: ITableAllProps, theadRef: RefObject<HTM
           const newData = getCopyOfArrayAndInsertOrReplaceItem(actionData.newValue, rowKeyField, data);
           onDataChange(newData);
           break;
+      case ActionType.SelectAllRows: {
+        const newSelectedRows = data.map((d) => d[rowKeyField]);
+        onOptionChange({ selectedRows: newSelectedRows });
+        break;
+      }
+      case ActionType.SelectSingleRow: {
+        const newSelectedRows = [actionData.rowKeyValue];
+        onOptionChange({ selectedRows: newSelectedRows });
+        break;
+      }
+      case ActionType.DeselectAllRows:
+        onOptionChange({ selectedRows: [] });
+        break;
       case ActionType.SelectRow:
           onOptionChange({ selectedRows: [...selectedRows, ...[actionData.rowKeyValue]] });
           break;
       case ActionType.DeselectRowData:
+      case ActionType.DeselectRow:
           onOptionChange({ selectedRows: [...selectedRows].filter((s) => s !== actionData.rowKeyValue) });
           break;
       case ActionType.ChangeSorting:
@@ -59,7 +73,7 @@ export const wrapDispatch = (tableProps: ITableAllProps, theadRef: RefObject<HTM
           onOptionChange(actionData);
           break;
       case ActionType.ScrollTable:
-        if (theadRef.current) {
+        if (theadRef && theadRef.current) {
           theadRef.current.scrollTo({ left: actionData.scrollLeft});
         }
         if (virtualScrolling) {

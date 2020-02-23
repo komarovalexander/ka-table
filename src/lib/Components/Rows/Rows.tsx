@@ -14,12 +14,13 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     columns,
     data,
     dispatch,
+    groupRow,
     groupedColumns,
     groups = [],
     groupsExpanded = [],
-    groupRow,
     onFirstRowRendered,
     rowKeyField,
+    selectedRows,
   } = props;
   const groupMark = getGroupMark();
 
@@ -50,6 +51,8 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
           />
         );
       } else {
+        const rowKeyValue = d[rowKeyField];
+        const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
         const dataRow = (
           <DataRow
             childAttributes={props.childAttributes}
@@ -59,9 +62,11 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             editableCells={props.editableCells}
             editingMode={props.editingMode}
             groupColumnsCount={props.groupColumnsCount}
+            isSelectedRow={isSelectedRow}
             key={d[rowKeyField]}
             rowData={d}
             rowKeyField={props.rowKeyField}
+            rowKeyValue={rowKeyValue}
             selectedRows={props.selectedRows}
             trRef={rowRefLink}
           />

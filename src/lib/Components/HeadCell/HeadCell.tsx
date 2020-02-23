@@ -9,6 +9,7 @@ import HeadCellContent from '../HeadCellContent/HeadCellContent';
 export interface IHeadCellProps {
   column: Column;
   sortingMode: SortingMode;
+  areAllRowsSelected: boolean;
   dispatch: DispatchFunc;
 }
 
