@@ -75,7 +75,54 @@ export default SortingDemo;
 [Example link](https://komarovalexander.github.io/ka-table/#/sorting)
 
 ## Examples
-[Examples are available by this link](https://komarovalexander.github.io/ka-table/#/overview)
+
+[Overview](https://komarovalexander.github.io/ka-table/#/overview) - combination of main features in one demo
+
+[Command Column](https://komarovalexander.github.io/ka-table/#/command-column) - Functional columns which are not bound to data and used to add custom command to table
+
+[Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) - Best way to customise look of every column in table
+
+[Custom DataRow](https://komarovalexander.github.io/ka-table/#/custom-data-row) - Customise look of a row in the table
+
+[Custom Editor](https://komarovalexander.github.io/ka-table/#/custom-editor) - Table supports user created editors
+
+[Custom Header Cell](https://komarovalexander.github.io/ka-table/#/custom-header-cell) - Customisation of header cell
+
+[Editing](https://komarovalexander.github.io/ka-table/#/editing) - Editing out of the box
+
+[Events](https://komarovalexander.github.io/ka-table/#/events) - All events are trackable
+
+[Filter Extended](https://komarovalexander.github.io/ka-table/#/filter-extended) - Easy filtered by extended filters
+
+[Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) - Built-in filter row
+
+[Filter Row - Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) - Customise filter cell every way you want
+
+[Grouping](https://komarovalexander.github.io/ka-table/#/grouping) - Group data for most convenient work with it
+
+[Grouping Custom Cell](https://komarovalexander.github.io/ka-table/#/grouping-custom-cell) - Customize group cell
+
+[Grouping Custom Row](https://komarovalexander.github.io/ka-table/#/grouping-custom-row) - Customize group row
+
+[Hover Row](https://komarovalexander.github.io/ka-table/#/hover-row) - Get row data by hover
+
+[Many Columns](https://komarovalexander.github.io/ka-table/#/many-columns) - Grid works fine with big amount of columns
+
+[25000 Rows](https://komarovalexander.github.io/ka-table/#/many-rows) - Virtualisation are supported
+
+[10000 Grouped Rows](https://komarovalexander.github.io/ka-table/#/many-rows-grouping) - Virtualisation work well with grouping
+
+[Search](https://komarovalexander.github.io/ka-table/#/search) - Search by the whole Table is easy
+
+[Selection - Multiple](https://komarovalexander.github.io/ka-table/#/selection) - Select multiple row clickeng by checkboxes
+
+[Selection - Single](https://komarovalexander.github.io/ka-table/#/selection) - Single row selection by click
+
+[Sorting](https://komarovalexander.github.io/ka-table/#/sorting) - Sorting by specific column
+
+[State Storing](https://komarovalexander.github.io/ka-table/#/state-storing) - Save Table's state and restore it after page reload
+
+[Validation](https://komarovalexander.github.io/ka-table/#/validation) - Validate editor value before apply it
 
 ## API
 <a name="Table"></a>
