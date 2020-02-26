@@ -29,7 +29,6 @@ const CustomLookupEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
     <div>
       <select
         className='form-control'
-        autoFocus={true}
         defaultValue={column.filterRowValue}
         onChange={(event) => {
           dispatch(ActionType.ChangeFilterRow, { column: {...column, filterRowValue: toNullableBoolean(event.currentTarget.value)}});

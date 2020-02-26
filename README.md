@@ -6,8 +6,8 @@
 # Overview
 The customizable, extendable, lightweight and free React Table Component
 
-![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/overview.png)
-[Demo link](https://komarovalexander.github.io/ka-table/#/overview)
+![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/command-column.png)
+[Demo link](https://komarovalexander.github.io/ka-table/#/command-column)
 
 ## Installation
 npm

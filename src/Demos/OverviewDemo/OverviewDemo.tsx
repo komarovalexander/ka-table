@@ -1,110 +1,27 @@
-import './OverviewDemo.scss';
-
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
+import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
-import {
-  CustomDateFilterEditor, CustomImageCell, CustomNumberFilterEditor,
-} from './CellComponents';
-import dataArray from './data';
+
+const dataArray = Array(10).fill(undefined).map(
+  (_, index) => ({
+    column1: `column:1 row:${index}`,
+    column2: `column:2 row:${index}`,
+    column3: `column:3 row:${index}`,
+    column4: `column:4 row:${index}`,
+    id: index,
+  }),
+);
 
 const tableOption: ITableOption = {
   columns: [
-    {
-      cell: CustomImageCell,
-      dataType: DataType.String,
-      field: 'image',
-      fieldParents: ['representative'],
-      filterRowCell: () => <></>,
-      key: 'representative.image',
-      style: { width: '20px' },
-    },
-    {
-      dataType: DataType.String,
-      field: 'name',
-      fieldParents: ['representative'],
-      key: 'representative.name',
-      style: { width: '120px' },
-      title: 'Representative',
-    },
-    {
-      dataType: DataType.Boolean,
-      fieldParents: ['company'],
-      format: (value) => `Loyal program: ${ value ? 'Yes' : 'No'}`,
-      key: 'hasLoyalProgram',
-      sortDirection: SortDirection.Ascend,
-      title: 'Loyal Program',
-    },
-    {
-      dataType: DataType.String,
-      field: 'name',
-      fieldParents: ['company'],
-      key: 'company.name',
-      style: {
-        width: '130px',
-      },
-      title: 'Company Name',
-    },
-    {
-      dataType: DataType.String,
-      field: 'name',
-      fieldParents: ['product'],
-      key: 'product.name',
-      style: {
-        width: '80px',
-      },
-      title: 'Product',
-    },
-    {
-      dataType: DataType.Number,
-      field: 'price',
-      fieldParents: ['product'],
-      filterRowCell: CustomNumberFilterEditor,
-      filterRowOperator: '>',
-      filterRowValue: 4000,
-      format: (value: number) => {
-        return `$${value}`;
-      },
-      key: 'product.price',
-      style: {
-        textAlign: 'right',
-        width: '95px',
-      },
-      title: 'Product Price',
-      validation: (value) => {
-        if (value < 0) {
-          return 'value can\'t be less than 0';
-        }
-        if (!value && value !== 0) {
-          return 'value can\'t be undefined';
-        }
-      },
-    },
-    {
-      dataType: DataType.Date,
-      field: 'firstDealDate',
-      filterRowCell: CustomDateFilterEditor,
-      filterRowOperator: '>=',
-      filterRowValue: new Date(2015, 1, 25),
-      format: (value: Date) => value.toLocaleDateString('en', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      }),
-      key: 'firstDealDate1',
-      style: {
-        textAlign: 'center',
-        width: '165px',
-      },
-      title: 'First Deal Date',
-    },
+    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
   editingMode: EditingMode.Cell,
-  filteringMode: FilteringMode.FilterRow,
-  groups: [{ columnKey: 'hasLoyalProgram' }],
-  groupsExpanded: [[true]],
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };
@@ -119,21 +36,14 @@ const OverviewDemo: React.FC = () => {
   const onDataChange: DataChangeFunc = (newValue) => {
     changeData(newValue);
   };
+
   return (
-    <>
-      <div className='overview-search-container'>
-        <input type='search' defaultValue={option.search} onChange={(event) => {
-          onOptionChange({ search: event.currentTarget.value });
-        }} placeholder='type to search by data..' className='overview-search'/>
-      </div>
-      <Table
-        {...option}
-        data={data}
-        childAttributes={{table: {className: 'overview-table'}}}
-        onOptionChange={onOptionChange}
-        onDataChange={onDataChange}
-      />
-    </>
+    <Table
+      {...option}
+      data={data}
+      onOptionChange={onOptionChange}
+      onDataChange={onDataChange}
+    />
   );
 };
 
