@@ -12,7 +12,7 @@ body {
   color: #353C44;
 
   nav{
-    width: 320px;
+    width: 350px;
     min-height: 1200px;
     box-sizing: border-box;
     border-right: 1px solid #CBDCE4;
@@ -44,12 +44,11 @@ body {
       a {
         color: #53585B;
         display: block;
-        padding: 5px 0 5px 40px;
+        padding: 10px 0 10px 40px;
         text-decoration: none;
         .menu-button{
           display: flex;
           .menu-icon {
-            display: none;
             opacity: 0.6;
             width: 40px;
           }
@@ -60,7 +59,7 @@ body {
 
         &.active{
           pointer-events: none;
-          padding: 5px 0 5px 36px;
+          padding: 10px 0 10px 36px;
           border-left: 4px solid #353C44;
           color: #353C44;
           .menu-button{
@@ -86,7 +85,7 @@ body {
   }
 
   main{
-    width: calc(100% - 320px);
+    width: calc(100% - 350px);
     box-sizing: border-box;
 
     .simulator-content{
