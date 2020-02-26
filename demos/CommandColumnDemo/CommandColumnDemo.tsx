@@ -16,6 +16,7 @@ const dataArray = Array(10).fill(undefined).map(
     column2: `column:2 row:${index}`,
     column3: `column:3 row:${index}`,
     column4: `column:4 row:${index}`,
+    id: index,
   }),
 );
 
@@ -55,7 +56,7 @@ const tableOption: ITableOption = {
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
     { key: 'command22', cell: (props) => <DeleteRow {...props} />, style: { width: 40, textAlign: 'center' } },
   ],
-  rowKeyField: 'column1',
+  rowKeyField: 'id',
 };
 
 const CommandColumnDemo: React.FC = () => {
