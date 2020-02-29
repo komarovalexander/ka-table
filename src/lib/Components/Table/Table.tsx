@@ -7,6 +7,7 @@ import { ChildAttributes } from '../../Models/ChildAttributes';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
+import { TableStateStore } from '../../state';
 import {
   DataChangeFunc, DataRowFunc, EventFunc, GroupRowFunc, NoDataRowFunc, OptionChangeFunc,
 } from '../../types';
@@ -38,24 +39,30 @@ export interface ITableOption {
   selectedRows?: any[];
   sortingMode?: SortingMode;
   virtualScrolling?: VirtualScrolling;
+  data?: any[];
 }
 
 export interface ITableEvents {
   /** Called each time Data is changed */
   onDataChange?: DataChangeFunc;
   /** Called each time ITableOption changed */
-  onOptionChange: OptionChangeFunc;
+  onOptionChange?: OptionChangeFunc;
   /** Called each time when action was completed */
   onEvent?: EventFunc;
 }
 
-export interface ITableAllProps extends ITableEvents, ITableOption {
-  /** The data which is shown in Table's rows */
-  data: any[];
-  childAttributes?: ChildAttributes;
+export interface ITableProps {
+  state: TableStateStore;
 }
 
-export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
+export interface ITableAllProps extends ITableEvents, ITableOption {
+  childAttributes?: ChildAttributes;
+  data?: any[];
+}
+
+export const Table: React.FunctionComponent<ITableAllProps | ITableProps> = (props) => {
+  const store = (props as ITableProps).state;
+  const gridState = store.getState();
   const {
     childAttributes = {},
     editableCells = [],
@@ -65,11 +72,11 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     search,
     selectedRows = [],
     sortingMode = SortingMode.None,
-  } = props;
+  } = gridState;
   let {
     columns,
     data = [],
-  } = props;
+  } = gridState;
   data = search ? searchData(columns, data, search) : data;
 
   data = convertToColumnTypes(data, columns);
@@ -85,20 +92,20 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
 
-  let { groupsExpanded } = props;
+  let { groupsExpanded } = gridState;
   const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
   if (groups && !groupsExpanded) {
     groupsExpanded = getExpandedGroups(groupedData);
   }
 
   const theadRef = React.useRef<HTMLTableSectionElement>(null);
-  const dispatch = wrapDispatch({ ...props, groupsExpanded }, theadRef);
+  const dispatch = wrapDispatch({ ...gridState, groupsExpanded }, theadRef, store.onOptionChange);
 
   const componentProps: React.HTMLAttributes<HTMLTableElement> = {
     className: defaultOptions.css.table,
   };
 
-  const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
+  const tableProps = extendProps(componentProps, gridState, childAttributes.table, dispatch);
   const areAllRowsSelected = data.length === selectedRows.length;
 
   return (
@@ -122,7 +129,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
             )}
         </thead>
         <TableBody
-            {...props}
+            {...gridState}
             childAttributes={childAttributes}
             columns={columns}
             data={groupedData}

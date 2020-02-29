@@ -3,6 +3,7 @@ import './Demos.scss';
 import React from 'react';
 import { HashRouter, Route } from 'react-router-dom';
 
+import ClassComponentDemo from './ClassComponentDemo/ClassComponentDemo';
 import CommandColumnDemo from './CommandColumnDemo/CommandColumnDemo';
 import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
 import CustomDataRowDemo from './CustomDataRowDemo/CustomDataRowDemo';
@@ -39,6 +40,7 @@ initializeGA();
 
 const demos: Demo[] = [
   new Demo(OverviewDemo, '/overview', 'Basics', 'OverviewDemo', 'https://stackblitz.com/edit/table-overview-js', 'https://stackblitz.com/edit/table-overview-ts'),
+  new Demo(ClassComponentDemo, '/class-component', 'Class Component', 'ClassComponent', 'https://stackblitz.com/edit/table-class-component-js', 'https://stackblitz.com/edit/table-class-component-ts'),
   new Demo(CommandColumnDemo, '/command-column', 'Command Column', 'CommandColumnDemo', 'https://stackblitz.com/edit/table-command-column-js', 'https://stackblitz.com/edit/table-command-column-ts'),
   new Demo(CustomCellDemo, '/custom-cell', 'Custom Cell', 'CustomCellDemo', 'https://stackblitz.com/edit/table-custom-cell-js', 'https://stackblitz.com/edit/table-custom-cell-ts'),
   new Demo(CustomDataRowDemo, '/custom-data-row', 'Custom Row', 'CustomDataRowDemo', 'https://stackblitz.com/edit/table-custom-data-row-js', 'https://stackblitz.com/edit/table-custom-data-row-ts'),

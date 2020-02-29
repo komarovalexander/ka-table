@@ -3,20 +3,23 @@ import { RefObject } from 'react';
 
 import { ITableAllProps } from '../';
 import { ActionType } from '../enums';
+import { OptionChangeFunc } from '../types';
 import { getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from './CellUtils';
 import { updateExpandedGroups } from './GroupUtils';
 import { getSortedColumns } from './HeadRowUtils';
 
-export const wrapDispatch = (tableProps: ITableAllProps, theadRef?: RefObject<HTMLTableSectionElement>) => {
+export const wrapDispatch = (
+  tableProps: ITableAllProps,
+  theadRef?: RefObject<HTMLTableSectionElement>,
+  onOptionChange: OptionChangeFunc = () => {}) => {
   const {
     columns,
-    data,
+    data = [],
     editableCells = [],
     groupsExpanded = [],
     onDataChange = () => {},
     onEvent = () => {},
-    onOptionChange,
     rowKeyField,
     selectedRows = [],
     virtualScrolling,
@@ -43,6 +46,7 @@ export const wrapDispatch = (tableProps: ITableAllProps, theadRef?: RefObject<HT
           break;
       case ActionType.ChangeRowData:
           const newData = getCopyOfArrayAndInsertOrReplaceItem(actionData.newValue, rowKeyField, data);
+          onOptionChange({ data: newData });
           onDataChange(newData);
           break;
       case ActionType.SelectAllRows: {
