@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { TableStateStore } from '../../lib/state';
 
 const dataArray = Array(20).fill(undefined).map(
   (_, index) => ({
@@ -14,7 +13,7 @@ const dataArray = Array(20).fill(undefined).map(
   }),
 );
 
-const tableOption: ITableOption = {
+const tableOptions: ITableOption = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -26,17 +25,29 @@ const tableOption: ITableOption = {
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };
-const tableStateStore = new TableStateStore();
-class ClassComponentDemo extends React.Component<any, ITableOption> {
+
+class ClassComponentDemo extends React.Component<any, { tableOptions: ITableOption }> {
   constructor(props: any) {
     super(props);
-    this.state = tableOption;
-    tableStateStore.useState([this.state, this.setState]);
+    this.state = { tableOptions };
+    this.onOptionChange = this.onOptionChange.bind(this);
   }
+
   public render() {
     return (
-      <Table state={tableStateStore} />
+      <Table
+      {...this.state.tableOptions}
+      onOptionChange={this.onOptionChange} />
     );
+  }
+
+  private onOptionChange(value: any) {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        ...{tableOptions: {...prevState.tableOptions, ...value}},
+      };
+    });
   }
 }
 

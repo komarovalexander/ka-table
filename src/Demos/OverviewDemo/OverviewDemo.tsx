@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { TableStateStore } from '../../lib/state';
+import { OptionChangeFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -27,11 +27,17 @@ const tableOption: ITableOption = {
   sortingMode: SortingMode.Single,
 };
 
-const tableStateStore = new TableStateStore();
 const OverviewDemo: React.FC = () => {
-  tableStateStore.useState(useState(tableOption));
+  const [option, changeOptions] = useState(tableOption);
+  const onOptionChange: OptionChangeFunc = (value) => {
+    changeOptions((prevState) => ({...prevState, ...value }));
+  };
+
   return (
-    <Table state={tableStateStore} />
+    <Table
+      {...option}
+      onOptionChange={onOptionChange}
+    />
   );
 };
 
