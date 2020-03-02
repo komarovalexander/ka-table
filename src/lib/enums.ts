@@ -17,6 +17,7 @@ export enum ActionType {
   ChangeSorting = 'ChangeSorting',
   ChangeVirtualScrollingHeightSettings = 'ChangeVirtualScrollingHeightSettings',
   CloseEditor = 'CloseEditor',
+  DeleteRow = 'DeleteRow',
   DeselectAllRows = 'DeselectAllRows',
   DeselectRow = 'DeselectRow',
   DeselectRowData = 'DeselectRowData',
@@ -26,6 +27,7 @@ export enum ActionType {
   SelectSingleRow = 'SelectSingleRow',
   SelectRow = 'SelectRow',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',
+  ChangeRow = 'ChangeRow',
 }
 
 export enum KeyboardEnum {

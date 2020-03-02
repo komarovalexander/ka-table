@@ -32,8 +32,15 @@ const defaultReducer = (state: ITableOption, actionType: string, actionData: any
       const newColumns = getCopyOfArrayAndInsertOrReplaceItem(actionData.column, 'key', columns);
       return { ...state, columns: newColumns };
     case ActionType.ChangeRowData:
+    case ActionType.ChangeRow: {
       const newData = getCopyOfArrayAndInsertOrReplaceItem(actionData.newValue, rowKeyField, data);
       return { ...state, data: newData };
+    }
+    case ActionType.DeleteRow: {
+      const newData = data.filter(
+        (d: any) => d[rowKeyField] !== actionData.rowData[rowKeyField]);
+      return { ...state, data: newData };
+    }
     case ActionType.SelectAllRows: {
       const newSelectedRows = data.map((d) => d[rowKeyField]);
       return { ...state, selectedRows: newSelectedRows };

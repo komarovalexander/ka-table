@@ -9,6 +9,7 @@ import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
 import CustomDataRowDemo from './CustomDataRowDemo/CustomDataRowDemo';
 import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
 import CustomHeaderCellDemo from './CustomHeaderCellDemo/CustomHeaderCellDemo';
+import DeleteRowDemo from './DeleteRowDemo/DeleteRowDemo';
 import Demo from './Demo';
 import { DemoCase } from './DemoCase';
 import getDemoPage from './DemoPage';
@@ -46,6 +47,7 @@ const demos: Demo[] = [
   new Demo(CustomDataRowDemo, '/custom-data-row', 'Custom Row', 'CustomDataRowDemo', 'https://stackblitz.com/edit/table-custom-data-row-js', 'https://stackblitz.com/edit/table-custom-data-row-ts'),
   new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo', 'https://stackblitz.com/edit/table-custom-editor-js', 'https://stackblitz.com/edit/table-custom-editor-ts'),
   new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo', 'https://stackblitz.com/edit/table-custom-header-cell-js', 'https://stackblitz.com/edit/table-custom-header-cell-ts'),
+  new Demo(DeleteRowDemo, '/delete-row', 'Delete Row', 'DeleteRow', 'https://stackblitz.com/edit/table-delete-row-js', 'https://stackblitz.com/edit/table-delete-row-ts'),
   new Demo(EditingDemo, '/editing', 'Editing', 'EditingDemo', 'https://stackblitz.com/edit/table-editing-js', 'https://stackblitz.com/edit/table-editing-ts'),
   new Demo(EventsDemo, '/events', 'Events', 'EventsDemo', 'https://stackblitz.com/edit/table-events-js', 'https://stackblitz.com/edit/table-events-ts'),
   new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo', 'https://stackblitz.com/edit/table-filter-extended-js', 'https://stackblitz.com/edit/table-filter-extended-ts'),

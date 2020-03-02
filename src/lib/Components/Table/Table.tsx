@@ -8,7 +8,8 @@ import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import {
-  DataChangeFunc, DataRowFunc, EventFunc, GroupRowFunc, NoDataRowFunc, OptionChangeFunc,
+  DataChangeFunc, DataRowFunc, DispatchFunc, EventFunc, GroupRowFunc, NoDataRowFunc,
+  OptionChangeFunc,
 } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { filterData, searchData } from '../../Utils/FilterUtils';
@@ -42,12 +43,10 @@ export interface ITableOption {
 }
 
 export interface ITableEvents {
-  /** Called each time Data is changed */
   onDataChange?: DataChangeFunc;
-  /** Called each time ITableOption changed */
-  onOptionChange?: OptionChangeFunc;
-  /** Called each time when action was completed */
+  onDispath?: DispatchFunc;
   onEvent?: EventFunc;
+  onOptionChange?: OptionChangeFunc;
 }
 
 export interface ITableAllProps extends ITableEvents, ITableOption {
