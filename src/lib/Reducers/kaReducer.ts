@@ -5,7 +5,7 @@ import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/Ce
 import { updateExpandedGroups } from '../Utils/GroupUtils';
 import { getSortedColumns } from '../Utils/HeadRowUtils';
 
-const defaultReducer = (state: ITableOption, actionType: string, actionData: any) => {
+const kaReducer = (state: ITableOption, actionType: string, actionData: any) => {
   const {
     columns,
     data = [],
@@ -38,7 +38,7 @@ const defaultReducer = (state: ITableOption, actionType: string, actionData: any
     }
     case ActionType.DeleteRow: {
       const newData = data.filter(
-        (d: any) => d[rowKeyField] !== actionData.rowData[rowKeyField]);
+        (d: any) => d[rowKeyField] !== actionData.rowKeyValue);
       return { ...state, data: newData };
     }
     case ActionType.SelectAllRows: {
@@ -80,5 +80,5 @@ const defaultReducer = (state: ITableOption, actionType: string, actionData: any
 };
 
 export {
-  defaultReducer,
+  kaReducer,
 };

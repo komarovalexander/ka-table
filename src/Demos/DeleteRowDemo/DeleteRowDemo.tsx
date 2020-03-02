@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { ActionType, DataType } from '../../lib/enums';
-import { defaultReducer } from '../../lib/reducers';
+import { kaReducer } from '../../lib/reducers';
 import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
@@ -18,13 +18,13 @@ const dataArray = Array(10).fill(undefined).map(
 );
 
 const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
-  rowData, dispatch,
+  dispatch, rowKeyValue,
 }) => {
  return (
     <img
       src='static/icons/delete.svg'
       className='delete-row-column-button'
-      onClick={() => dispatch(ActionType.DeleteRow, { rowData })}
+      onClick={() => dispatch(ActionType.DeleteRow, { rowKeyValue })}
       alt=''
     />
  );
@@ -47,11 +47,13 @@ const DeleteRowDemo: React.FC = () => {
   const [loading, changeLoading] = useState(false);
   const [option, changeOptions] = useState(tableOption);
   const onDispath: DispatchFunc = (actionType, actionData) => {
-    changeLoading((prevState) => true);
-    setTimeout(() => {
-      changeOptions((prevState: ITableOption) => defaultReducer(prevState, actionType, actionData));
-      changeLoading((prevState) => false);
-    }, 1000);
+    if (actionType === ActionType.DeleteRow) {
+      changeLoading((prevState) => true);
+      setTimeout(() => {
+        changeOptions((prevState: ITableOption) => kaReducer(prevState, actionType, actionData));
+        changeLoading((prevState) => false);
+      }, 1000);
+    }
   };
 
   return (

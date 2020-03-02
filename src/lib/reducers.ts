@@ -1,1 +1,1 @@
-export * from './Reducers/defaultReducer';
+export * from './Reducers/kaReducer';

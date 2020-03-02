@@ -3,7 +3,7 @@ import { RefObject } from 'react';
 
 import { ActionType } from '../enums';
 import { ITableAllProps } from '../index';
-import { defaultReducer } from '../reducers';
+import { kaReducer } from '../reducers';
 
 export const wrapDispatch = (
   tableProps: ITableAllProps,
@@ -32,7 +32,7 @@ export const wrapDispatch = (
     };
   } else if (onOptionChange) {
     return (action: string, actionData: any) => {
-      lastState = defaultReducer(lastState, action, actionData);
+      lastState = kaReducer(lastState, action, actionData);
 
       switch (action) {
         case ActionType.OpenEditor:
