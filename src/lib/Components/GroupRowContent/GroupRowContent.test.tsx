@@ -31,7 +31,10 @@ describe('GroupRowContent', () => {
     });
     wrapper.find('.ka-icon-group-arrow').simulate('click');
     expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith(ActionType.ExpandGroup, {groupKey: ['group']});
+    expect(props.dispatch).toBeCalledWith({
+      groupKey: ['group'],
+      type: ActionType.ExpandGroup,
+    });
   });
 
   it('Should render custom group cell', () => {

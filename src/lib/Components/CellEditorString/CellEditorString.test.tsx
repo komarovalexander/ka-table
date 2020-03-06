@@ -23,6 +23,7 @@ beforeEach(() => {
     isSelectedRow: true,
     rowData: { fieldName: 'fieldNameText', id: 1 },
     rowKeyField: 'id',
+    rowKeyValue: 1,
   };
 });
 
@@ -40,8 +41,10 @@ describe('CellEditorNumber', () => {
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith({
+      columnKey: 'fieldName',
+      rowKeyValue: 1,
       type: ActionType.ChangeCellValue,
-      ...{ newValue: { fieldName: newValue, id: 2 } },
+      value: newValue,
     });
   });
 
@@ -51,7 +54,7 @@ describe('CellEditorNumber', () => {
 
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.CloseEditor, { cell: { columnKey: 'fieldName', rowKeyValue: 1 } },
+      { type: ActionType.CloseEditor, columnKey: 'fieldName', rowKeyValue: 1 },
     );
   });
 });

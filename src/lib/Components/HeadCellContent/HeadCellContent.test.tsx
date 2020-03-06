@@ -29,6 +29,9 @@ describe('HeadCellContent', () => {
     const wrapper = mount(<HeadCellContent {...props} column={{key: 'fieldTest', sortDirection: SortDirection.Ascend}}/>);
     wrapper.find('.ka-thead-cell-content').simulate('click');
     expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith(ActionType.ChangeSorting, {column: {key: 'fieldTest', sortDirection: SortDirection.Descend}});
+    expect(props.dispatch).toBeCalledWith({
+      columnKey: 'fieldTest',
+      type: ActionType.ChangeSortingDirection,
+    });
   });
 });

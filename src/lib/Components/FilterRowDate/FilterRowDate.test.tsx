@@ -24,7 +24,7 @@ describe('FliterRowDate', () => {
     ReactDOM.unmountComponentAtNode(element);
   });
 
-  it('should fire FilterRowChanged', () => {
+  it('should fire ChangeFilterRowValue', () => {
     const newValue = new Date(2020, 1, 2);
     const column = { field: 'name', key: 'nameKey', dataType: DataType.Date };
     const wrapper = mount(<FilterRowDate {...props} column={column}/>);
@@ -32,7 +32,7 @@ describe('FliterRowDate', () => {
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeFilterRow, { column: { ...column, filterRowValue: newValue } },
+      { type: ActionType.ChangeFilterRowValue, filterRowValue: newValue, columnKey: 'nameKey' },
     );
   });
 });

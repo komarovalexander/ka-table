@@ -32,8 +32,10 @@ describe('FilterRowNumber', () => {
 
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeFilterRow, { column: { ...column, filterRowValue: newValue } },
-    );
+    expect(props.dispatch).toBeCalledWith({
+      columnKey: 'nameKey',
+      filterRowValue: newValue,
+      type: ActionType.ChangeFilterRowValue,
+    });
   });
 });

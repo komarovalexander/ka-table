@@ -1,4 +1,6 @@
-import { deselectRow } from '../actionCreators';
+import {
+  deleteRow, deselectAllRows, deselectRow, selectAllRows, selectSingleRow,
+} from '../actionCreators';
 import { ActionType } from '../enums';
 import { kaReducer } from './kaReducer';
 
@@ -10,7 +12,7 @@ describe('kaReducer', () => {
       data: [],
       rowKeyField: '',
     };
-    const newState = kaReducer(intialState, ActionType.ScrollTable, { scrollLeft });
+    const newState = kaReducer(intialState, { type: ActionType.ScrollTable, scrollLeft });
     expect(newState).toEqual(intialState);
   });
   it('SelectAllRows', () => {
@@ -19,8 +21,8 @@ describe('kaReducer', () => {
       data: [{ id: 1 }, { id: 2 }],
       rowKeyField: 'id',
     };
-    const newState = kaReducer(intialState, ActionType.SelectAllRows);
-    expect(newState).toEqual({ ...newState, selectedRows: [1, 2] });
+    const newState = kaReducer(intialState, selectAllRows());
+    expect(newState).toEqual({ ...intialState, selectedRows: [1, 2] });
   });
   it('SelectSingleRow', () => {
     const intialState = {
@@ -29,8 +31,8 @@ describe('kaReducer', () => {
       rowKeyField: 'id',
       selectedRows: [1],
     };
-    const newState = kaReducer(intialState, ActionType.SelectSingleRow, { rowKeyValue: 2 });
-    expect(newState).toEqual({ ...newState, selectedRows: [2] });
+    const newState = kaReducer(intialState, selectSingleRow(2));
+    expect(newState).toEqual({ ...intialState, selectedRows: [2] });
   });
   it('DeleteRow', () => {
     const intialState = {
@@ -38,8 +40,8 @@ describe('kaReducer', () => {
       data: [{ id: 1 }, { id: 2 }],
       rowKeyField: 'id',
     };
-    const newState = kaReducer(intialState, ActionType.DeleteRow, { rowKeyValue: 2 });
-    expect(newState).toEqual({ ...newState, data: [{ id: 1 }] });
+    const newState = kaReducer(intialState, deleteRow(2));
+    expect(newState).toEqual({ ...intialState, data: [{ id: 1 }] });
   });
   it('DeselectAllRows', () => {
     const intialState = {
@@ -48,8 +50,8 @@ describe('kaReducer', () => {
       rowKeyField: 'id',
       selectedRows: [1, 2],
     };
-    const newState = kaReducer(intialState, ActionType.DeselectAllRows, { });
-    expect(newState).toEqual({ ...newState, selectedRows: [] });
+    const newState = kaReducer(intialState, deselectAllRows());
+    expect(newState).toEqual({ ...intialState, selectedRows: [] });
   });
   it('DeselectRow', () => {
     const intialState = {
@@ -59,6 +61,6 @@ describe('kaReducer', () => {
       selectedRows: [1, 2],
     };
     const newState = kaReducer(intialState, deselectRow(2));
-    expect(newState).toEqual({ ...newState, selectedRows: [1] });
+    expect(newState).toEqual({ ...intialState, selectedRows: [1] });
   });
 });
