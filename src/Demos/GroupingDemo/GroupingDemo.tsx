@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode } from '../../lib/enums';
-import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
@@ -19,6 +20,7 @@ const tableOption: ITableOption = {
     { key: 'country', title: 'COUNTRY', dataType: DataType.String },
     { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' } },
   ],
+  data: dataArray,
   editingMode: EditingMode.Cell,
   groups: [{ columnKey: 'country' }, { columnKey: 'type' }],
   rowKeyField: 'id',
@@ -26,19 +28,13 @@ const tableOption: ITableOption = {
 
 const GroupingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
-  };
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
   return (
     <Table
       {...option}
-      data={data}
-      onOptionChange={onOptionChange}
-      onDataChange={onDataChange}
+      dispatch={dispatch}
     />
   );
 };

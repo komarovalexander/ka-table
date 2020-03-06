@@ -38,9 +38,10 @@ describe('CellEditorDate', () => {
 
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeRowData, { newValue: { fieldName: newValue, id: 2 } },
-    );
+    expect(props.dispatch).toBeCalledWith({
+      type: ActionType.ChangeCellValue,
+      ...{ newValue: { fieldName: newValue, id: 2 } },
+    });
   });
 
   it('should dispatch CloseEditor', () => {
@@ -49,7 +50,7 @@ describe('CellEditorDate', () => {
     wrapper.find('input').props().onBlur!({} as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.CloseEditor, { cell: { columnKey: 'fieldName', rowKey: 2 } },
+      ActionType.CloseEditor, { cell: { columnKey: 'fieldName', rowKeyValue: 2 } },
     );
   });
 });

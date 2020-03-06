@@ -1,8 +1,8 @@
 import * as React from 'react';
 
+import { changeSortingDirection } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { ActionType, SortDirection, SortingMode } from '../../enums';
-import { getColumnWithUpdatedSortDirection } from '../../Utils/HeadRowUtils';
+import { SortDirection, SortingMode } from '../../enums';
 import { IHeadCellProps } from '../HeadCell/HeadCell';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
@@ -15,26 +15,24 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
 
   const {
     column,
-    column: { title, sortDirection },
     dispatch,
     sortingMode,
   } = props;
   const isSortingEnabled = sortingMode === SortingMode.Single;
   const sortClick = isSortingEnabled ? () => {
-    const updatedColumn = getColumnWithUpdatedSortDirection(column);
-    dispatch({ type: ActionType.ChangeSorting, column: updatedColumn });
+    dispatch(changeSortingDirection(column.key));
   } : undefined;
   return (
     <div
       className={`ka-thead-cell-content ${isSortingEnabled ? 'ka-pointer' : ''}`}
       onClick={sortClick}
     >
-      <span>{title}</span>
+      <span>{column.title}</span>
       {
-        sortDirection && isSortingEnabled && (
+        column.sortDirection && isSortingEnabled && (
           <span
             className={
-              sortDirection === SortDirection.Ascend
+              column.sortDirection === SortDirection.Ascend
                 ? defaultOptions.css.iconSortArrowUp
                 : defaultOptions.css.iconSortArrowDown
             }

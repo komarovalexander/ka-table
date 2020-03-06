@@ -5,7 +5,8 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 import { ChildAttributes } from '../../lib/models';
-import { DataChangeFunc, EventFunc, OptionChangeFunc } from '../../lib/types';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc } from '../../lib/types';
 import { EventsLog } from './EventsLog';
 
 const dataArray = Array(20).fill(undefined).map(
@@ -25,6 +26,7 @@ const tableOption: ITableOption = {
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
+  data: dataArray,
   editingMode: EditingMode.Cell,
   filteringMode: FilteringMode.FilterRow,
   rowKeyField: 'id',
@@ -36,54 +38,43 @@ const childAttributes: ChildAttributes = {
     className: 'my-cell-class',
     onClick: (e, extendedEvent) => {
       const { childProps: { dispatch } } = extendedEvent;
-      dispatch('MY_CELL_onClick', { extendedEvent });
+      dispatch({ type: 'MY_CELL_onClick', ...{ extendedEvent }});
     },
     onContextMenu: (e, extendedEvent) => {
-      extendedEvent.dispatch('MY_CELL_onContextMenu', { extendedEvent });
+      extendedEvent.dispatch({ type: 'MY_CELL_onContextMenu', ...{ extendedEvent }});
     },
     onDoubleClick: (e, extendedEvent) => {
       const { dispatch, childElementAttributes } = extendedEvent;
-      dispatch('MY_CELL_onDoubleClick', { extendedEvent });
+      dispatch({ type: 'MY_CELL_onDoubleClick', ...{ extendedEvent }});
       childElementAttributes.onClick!(e);
     },
   },
   dataRow: {
     onClick: (e, extendedEvent) => {
       const { childProps: { dispatch } } = extendedEvent;
-      dispatch('MY_ROW_onClick', { extendedEvent });
+      dispatch({ type: 'MY_ROW_onClick', ...{ extendedEvent }});
     },
   },
   table: {
     onMouseEnter: (e, extendedEvent) => {
       const { dispatch } = extendedEvent;
-      dispatch('MY_TABLE_onMouseEnter', { extendedEvent });
+      dispatch({ type: 'MY_TABLE_onMouseEnter', ...{ extendedEvent }});
     },
   },
 };
 
 const EventsDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
-  };
-
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
-  };
-
   const [events, changeEvents] = useState([] as any []);
-  const onEvent: EventFunc = (type, eventData) => {
-    changeEvents((prevValue) => ([{ type, data: eventData, date: new Date(), showData: false }, ...prevValue]));
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeEvents((prevValue) => ([{ type: action.type, data: action, date: new Date(), showData: false }, ...prevValue]));
   };
   return (
     <div className='events-demo'>
       <Table
         {...option}
-        data={data}
-        onOptionChange={onOptionChange}
-        onDataChange={onDataChange}
-        onEvent={onEvent}
+        dispatch={dispatch}
         childAttributes={childAttributes}
       />
       <EventsLog events={events} showDataClick={(eventData: any) => {

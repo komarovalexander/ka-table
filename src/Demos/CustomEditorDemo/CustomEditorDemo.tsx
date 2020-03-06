@@ -3,9 +3,10 @@ import './CustomEditorDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { ActionType, DataType, EditingMode } from '../../lib/enums';
-import { Cell } from '../../lib/models';
-import { DataChangeFunc, EditorFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
+import { changeCellValue, closeEditor } from '../../lib/actionCreators';
+import { DataType, EditingMode } from '../../lib/enums';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc, EditorFuncPropsWithChildren } from '../../lib/types';
 import { typeUtils } from '../../lib/utils';
 
 const dataArray: any[] = [
@@ -18,47 +19,44 @@ const dataArray: any[] = [
 ];
 
 const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { key }, rowKeyField, rowData, dispatch,
+  column, rowKeyValue, dispatch, value,
 }) => {
   const close = () => {
-    const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-    dispatch({ type: ActionType.CloseEditor, ...cell });
+    dispatch(closeEditor(rowKeyValue, column.key));
   };
-  const [value, setValue] = useState(rowData[key]);
+  const [editorValue, setValue] = useState(value);
   return (
     <div className='custom-editor'>
       <input
         className='form-control'
         type='text'
-        value={value}
+        value={editorValue}
         onChange={(event) => setValue(event.currentTarget.value)}/>
-      <button className='custom-editor-button custom-editor-button-save' onClick={() => {
-        const newValue = { ...rowData, ...{ [key]: value } };
-        dispatch({ type: ActionType.ChangeRowData, newValue });
-        close();
-      }}>Save</button>
+      <button className='custom-editor-button custom-editor-button-save'
+        onClick={() => {
+          dispatch(changeCellValue(rowKeyValue, column.key, editorValue));
+          close();
+        }}>Save</button>
       <button className='custom-editor-button custom-editor-button-cancel' onClick={close}>Cancel</button>
     </div>
   );
 };
 
 const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { key }, rowData, rowKeyField, dispatch,
+  column, dispatch, rowKeyValue, value,
 }) => {
   const close = () => {
-    const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-    dispatch({ type: ActionType.CloseEditor, cell });
+    dispatch(closeEditor(rowKeyValue, column.key));
   };
-  const [value, setValue] = useState(rowData[key]);
+  const [editorValue, setValue] = useState(value);
   return (
     <div>
       <select
         className='form-control'
         autoFocus={true}
-        defaultValue={value}
+        defaultValue={editorValue}
         onBlur={() => {
-          const newValue = { ...rowData, ...{ [key]: value } };
-          dispatch({ type: ActionType.ChangeRowData, newValue });
+          dispatch(changeCellValue(rowKeyValue, column.key, editorValue));
           close();
         }}
         onChange={(event) => {
@@ -89,27 +87,21 @@ const tableOption: ITableOption = {
       title: 'Next Try',
     },
   ],
-  editableCells: [{ columnKey: 'name', rowKey: 1 }],
+  data: dataArray,
+  editableCells: [{ columnKey: 'name', rowKeyValue: 1 }],
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
 };
 
 const CustomEditorDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
-  };
-
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
   return (
     <Table
       {...option}
-      data={data}
-      onOptionChange={onOptionChange}
-      onDataChange={onDataChange}
+      dispatch={dispatch}
       childAttributes={{table: {className: 'custom-editor-demo-table'} }}
     />
   );

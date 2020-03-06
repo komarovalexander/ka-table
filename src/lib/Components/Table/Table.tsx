@@ -7,16 +7,10 @@ import { ChildAttributes } from '../../Models/ChildAttributes';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import {
-  DataChangeFunc, DataRowFunc, DispatchFunc, EventFunc, GroupRowFunc, NoDataRowFunc,
-  OptionChangeFunc,
-} from '../../types';
+import { DataRowFunc, DispatchFunc, GroupRowFunc, NoDataRowFunc } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
-import { filterData, searchData } from '../../Utils/FilterUtils';
-import { getExpandedGroups, getGroupedData } from '../../Utils/GroupUtils';
-import { extendProps } from '../../Utils/PropsUtils';
-import { sortData } from '../../Utils/SortUtils';
-import { convertToColumnTypes } from '../../Utils/TypeUtils';
+import { getExpandedGroups } from '../../Utils/GroupUtils';
+import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
 import TableBody from '../TableBody/TableBody';
@@ -29,6 +23,7 @@ export interface ITableOption {
   dataRow?: DataRowFunc;
   editableCells?: Cell[];
   editingMode?: EditingMode;
+  extendedFilter?: (data: any[]) => any[];
   filteringMode?: FilteringMode;
   groupRow?: GroupRowFunc;
   groups?: Group[];
@@ -39,19 +34,15 @@ export interface ITableOption {
   selectedRows?: any[];
   sortingMode?: SortingMode;
   virtualScrolling?: VirtualScrolling;
-  data?: any[];
+  data: any[];
 }
 
 export interface ITableEvents {
-  onDataChange?: DataChangeFunc;
-  onDispath?: DispatchFunc;
-  onEvent?: EventFunc;
-  onOptionChange?: OptionChangeFunc;
+  dispatch: DispatchFunc;
 }
 
 export interface ITableAllProps extends ITableEvents, ITableOption {
   childAttributes?: ChildAttributes;
-  data?: any[];
 }
 
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
@@ -60,38 +51,22 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     editableCells = [],
     editingMode = EditingMode.None,
     filteringMode,
-    groups,
-    search,
-    selectedRows = [],
     sortingMode = SortingMode.None,
+    selectedRows = [],
+    groups,
+    data,
   } = props;
   let {
-    columns,
-    data = [],
+    groupsExpanded,
   } = props;
-  data = search ? searchData(columns, data, search) : data;
 
-  data = convertToColumnTypes(data, columns);
-
-  data = filterData(data, columns);
-  data = sortData(columns, data);
-
-  let groupColumnsCount = 0;
-  let groupedColumns: Column[] = [];
-  if (groups) {
-    groupColumnsCount = groups.length;
-    groupedColumns = columns.filter((c) => groups.some((g) => g.columnKey === c.key));
-    columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
-  }
-
-  let { groupsExpanded } = props;
-  const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
+  const preparedOptions = prepareTableOptions(props);
   if (groups && !groupsExpanded) {
-    groupsExpanded = getExpandedGroups(groupedData);
+    groupsExpanded = getExpandedGroups(preparedOptions.groupedData);
   }
 
   const theadRef = React.useRef<HTMLTableSectionElement>(null);
-  const dispatch = wrapDispatch({ ...props, groupsExpanded }, theadRef);
+  const dispatch = wrapDispatch({ ...props }, theadRef);
 
   const componentProps: React.HTMLAttributes<HTMLTableElement> = {
     className: defaultOptions.css.table,
@@ -106,30 +81,30 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         <thead className={defaultOptions.css.thead} ref={theadRef}>
           <HeadRow
             areAllRowsSelected={areAllRowsSelected}
-            groupColumnsCount={groupColumnsCount}
-            columns={columns}
+            groupColumnsCount={preparedOptions.groupColumnsCount}
+            columns={preparedOptions.columns}
             dispatch={dispatch}
             sortingMode={sortingMode}
           />
           {filteringMode === FilteringMode.FilterRow &&
             (
               <FilterRow
-                columns={columns}
+                columns={preparedOptions.columns}
                 dispatch={dispatch}
-                groupColumnsCount={groupColumnsCount}
+                groupColumnsCount={preparedOptions.groupColumnsCount}
               />
             )}
         </thead>
         <TableBody
             {...props}
             childAttributes={childAttributes}
-            columns={columns}
-            data={groupedData}
+            columns={preparedOptions.columns}
+            data={preparedOptions.groupedData}
             dispatch={dispatch}
             editableCells={editableCells}
             editingMode={editingMode}
-            groupColumnsCount={groupColumnsCount}
-            groupedColumns={groupedColumns}
+            groupColumnsCount={preparedOptions.groupColumnsCount}
+            groupedColumns={preparedOptions.groupedColumns}
             groupsExpanded={groupsExpanded}
             selectedRows={selectedRows}
         />

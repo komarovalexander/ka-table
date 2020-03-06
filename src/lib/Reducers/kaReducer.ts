@@ -1,45 +1,69 @@
+
 import { ActionType } from '../enums';
 import { ITableOption } from '../index';
+import { Column } from '../models';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
-import { updateExpandedGroups } from '../Utils/GroupUtils';
+import { replaceValue } from '../Utils/DataUtils';
+import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getSortedColumns } from '../Utils/HeadRowUtils';
+import { prepareTableOptions } from '../Utils/PropsUtils';
 
-const kaReducer = (state: ITableOption, action: any, actionData: any) => {
+const kaReducer = (state: ITableOption, action: any) => {
   const {
     columns,
     data = [],
     editableCells = [],
-    groupsExpanded = [],
+    groupsExpanded,
     rowKeyField,
     selectedRows = [],
     virtualScrolling,
   } = state;
 
-  if (actionData) {
-    console.warn('ka-table: dispatch(actionType, actionData) is deprecated, use dispatch({ type: actionType, ...actionData }) instead');
-    action = { type: action, ...actionData };
-  }
-
   switch (action.type) {
     case ActionType.OpenEditor: {
       const newEditableCells = addItemToEditableCells(
-        action.cell,
+        action,
         editableCells);
       return { ...state, editableCells: newEditableCells };
     }
     case ActionType.CloseEditor: {
       const newEditableCells = removeItemFromEditableCells(
-        action.cell,
+        action,
         editableCells);
       return { ...state, editableCells: newEditableCells };
     }
-    case ActionType.ChangeFilterRow:
-      const newColumns = getCopyOfArrayAndInsertOrReplaceItem(action.column, 'key', columns);
+    case ActionType.ChangeFilterRowValue: {
+      const column = columns.find((c: Column) => c.key === action.columnKey)!;
+      const newColumn: Column = {
+        ...column,
+        filterRowValue: action.filterRowValue,
+      };
+      const newColumns = getCopyOfArrayAndInsertOrReplaceItem(
+        newColumn,
+        'key',
+        columns,
+      );
       return { ...state, columns: newColumns };
-    case ActionType.ChangeRowData:
-    case ActionType.ChangeRow: {
-      const newData = getCopyOfArrayAndInsertOrReplaceItem(action.newValue, rowKeyField, data);
+    }
+    case ActionType.ChangeFilterRowOperator: {
+      const column = columns.find((c: Column) => c.key === action.columnKey)!;
+      const newColumn: Column = {
+        ...column,
+        filterRowOperator: action.filterRowOperator,
+      };
+      const newColumns = getCopyOfArrayAndInsertOrReplaceItem(
+        newColumn,
+        'key',
+        columns,
+      );
+      return { ...state, columns: newColumns };
+    }
+    case ActionType.ChangeCellValue: {
+      const row = data.find((d) => d[rowKeyField] === action.rowKeyValue);
+      const column = columns.find((c) => c.key === action.columnKey)!;
+      const newRowData = replaceValue(row, column, action.value);
+      const newData = getCopyOfArrayAndInsertOrReplaceItem(newRowData, rowKeyField, data);
       return { ...state, data: newData };
     }
     case ActionType.DeleteRow: {
@@ -51,6 +75,9 @@ const kaReducer = (state: ITableOption, action: any, actionData: any) => {
       const newSelectedRows = data.map((d) => d[rowKeyField]);
       return { ...state, selectedRows: newSelectedRows };
     }
+    case ActionType.Search: {
+      return { ...state, search: action.search };
+    }
     case ActionType.SelectSingleRow: {
       const newSelectedRows = [action.rowKeyValue];
       return { ...state, selectedRows: newSelectedRows };
@@ -59,13 +86,12 @@ const kaReducer = (state: ITableOption, action: any, actionData: any) => {
       return { ...state, selectedRows: [] };
     case ActionType.SelectRow:
         return { ...state, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
-    case ActionType.DeselectRowData:
     case ActionType.DeselectRow: {
       const newSelectedRows = [...selectedRows].filter((s) => s !== action.rowKeyValue);
       return { ...state, selectedRows: newSelectedRows };
     }
-    case ActionType.ChangeSorting:
-      const sortedColumns = getSortedColumns(columns, action.column);
+    case ActionType.ChangeSortingDirection:
+      const sortedColumns = getSortedColumns(columns, action.columnKey);
       return { ...state, columns: sortedColumns };
     case ActionType.ChangeVirtualScrollingHeightSettings:
       return { ...state, virtualScrolling: action.virtualScrolling };
@@ -75,12 +101,18 @@ const kaReducer = (state: ITableOption, action: any, actionData: any) => {
           return {...state, ...{virtualScrolling: { ...virtualScrolling, scrollPosition }}};
         }
       break;
-    case ActionType.UpdateGroupsExpanded:
+    case ActionType.ExpandGroup: {
+      let currentGroupsExpanded = groupsExpanded;
+      if (!currentGroupsExpanded) {
+        const preparedOptions = prepareTableOptions(state);
+        currentGroupsExpanded = getExpandedGroups(preparedOptions.groupedData);
+      }
       const newGroupsExpanded = updateExpandedGroups(
-        groupsExpanded,
+        currentGroupsExpanded,
         action.groupKey,
       );
       return { ...state, groupsExpanded: newGroupsExpanded };
+    }
   }
   return state;
 };

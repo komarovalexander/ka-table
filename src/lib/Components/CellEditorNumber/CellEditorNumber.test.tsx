@@ -39,9 +39,10 @@ describe('CellEditorNumber', () => {
 
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeRowData, { newValue: { fieldName: newValue, id: 1 } },
-    );
+    expect(props.dispatch).toBeCalledWith({
+      type: ActionType.ChangeCellValue,
+      ...{ newValue: { fieldName: newValue, id: 2 } },
+    });
   });
 
   it('should fire CloseEditor on blur', () => {
@@ -50,7 +51,7 @@ describe('CellEditorNumber', () => {
 
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.CloseEditor, { cell: { columnKey: 'fieldName', rowKey: 1 } },
+      ActionType.CloseEditor, { cell: { columnKey: 'fieldName', rowKeyValue: 1 } },
     );
   });
 });

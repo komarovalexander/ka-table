@@ -1,3 +1,4 @@
+import { deselectAllRows, deselectRow, selectSingleRow } from '../actionCreators';
 import { ActionType } from '../enums';
 import { wrapDispatch } from './ActionUtils';
 
@@ -48,7 +49,7 @@ describe('ActionUtils', () => {
         selectedRows: [1],
       });
 
-      dispath(ActionType.SelectSingleRow, { rowKeyValue: 2 });
+      dispath(selectSingleRow(2));
 
       expect(onOptionChange).toHaveBeenCalledTimes(1);
       expect(onOptionChange).toHaveBeenCalledWith({ selectedRows: [2] });
@@ -65,7 +66,7 @@ describe('ActionUtils', () => {
         selectedRows: [1, 2],
       });
 
-      dispath(ActionType.DeselectAllRows, { });
+      dispath(deselectAllRows());
 
       expect(onOptionChange).toHaveBeenCalledTimes(1);
       expect(onOptionChange).toHaveBeenCalledWith({ selectedRows: [] });
@@ -82,7 +83,7 @@ describe('ActionUtils', () => {
         selectedRows: [1, 2],
       });
 
-      dispath(ActionType.DeselectRow, { rowKeyValue: 2 });
+      dispath(deselectRow(2));
 
       expect(onOptionChange).toHaveBeenCalledTimes(1);
       expect(onOptionChange).toHaveBeenCalledWith({ selectedRows: [1] });

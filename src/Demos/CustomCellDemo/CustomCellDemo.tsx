@@ -3,24 +3,21 @@ import './CustomCellDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { ActionType, DataType, EditingMode } from '../../lib/enums';
-import { Cell } from '../../lib/models';
-import { CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc } from '../../lib/types';
+import { openEditor } from '../../lib/actionCreators';
+import { DataType, EditingMode } from '../../lib/enums';
+import { kaReducer } from '../../lib/reducers';
+import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
 import dataArray from './data';
 
 const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
-  column: {
-    key,
-  },
+  column,
   dispatch,
-  rowData,
-  rowKeyField,
+  rowKeyValue,
   value,
 }) => {
   return (
     <div onClick={() => {
-      const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-      dispatch({ type: ActionType.OpenEditor, ...cell });
+      dispatch(openEditor(rowKeyValue, column.key));
     }} className={value ? 'custom-cell-demo-loyal' : 'custom-cell-demo-no-loyal'}>
       {value ? 'Loyal Program Member' : 'No Loyal Programm'}
     </div>
@@ -94,26 +91,20 @@ const tableOption: ITableOption = {
       title: 'First Deal Date',
     },
   ],
+  data: dataArray,
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
 };
 
 const CustomCellDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
-  };
-
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
+  const onDispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
   return (
     <Table
       {...option}
-      data={data}
-      onOptionChange={onOptionChange}
-      onDataChange={onDataChange}
+      dispatch={onDispatch}
     />
   );
 };

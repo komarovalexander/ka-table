@@ -1,9 +1,13 @@
+import './SelectionDemo.scss';
+
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { ActionType, DataType, SortDirection, SortingMode } from '../../lib/enums';
+import { deselectAllRows, deselectRow, selectAllRows, selectRow } from '../../lib/actionCreators';
+import { DataType, SortDirection, SortingMode } from '../../lib/enums';
+import { kaReducer } from '../../lib/reducers';
 import {
-  EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren, OptionChangeFunc,
+  DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
 } from '../../lib/types';
 
 const dataArray: any[] = [
@@ -24,9 +28,9 @@ const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
       checked={isSelectedRow}
       onChange={(event) => {
         if (event.currentTarget.checked) {
-          dispatch({ type: ActionType.SelectRow, rowKeyValue });
+          dispatch(selectRow(rowKeyValue));
         } else {
-          dispatch({ type: ActionType.DeselectRow, rowKeyValue });
+          dispatch(deselectRow(rowKeyValue));
         }
       }}
     />
@@ -42,9 +46,9 @@ const SelectionHeader: React.FC<HeaderCellFuncPropsWithChildren> = ({
       checked={areAllRowsSelected}
       onChange={(event) => {
         if (event.currentTarget.checked) {
-          dispatch({ type: ActionType.SelectAllRows,  });
+          dispatch(selectAllRows());
         } else {
-          dispatch({ type: ActionType.DeselectAllRows,  });
+          dispatch(deselectAllRows());
         }
       }}
     />
@@ -69,6 +73,7 @@ const tableOption: ITableOption = {
     { key: 'score', title: 'Score', style: { width: '10%' }, dataType: DataType.Number },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
+  data: dataArray,
   rowKeyField: 'id',
   selectedRows: [3, 5],
   sortingMode: SortingMode.Single,
@@ -76,15 +81,17 @@ const tableOption: ITableOption = {
 
 const SelectionDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
   return (
-    <Table
-      {...option}
-      data={dataArray}
-      onOptionChange={onOptionChange}
-    />
+    <div className='selection-demo'>
+      <Table
+        {...option}
+        data={dataArray}
+        dispatch={dispatch}
+      />
+    </div>
   );
 };
 

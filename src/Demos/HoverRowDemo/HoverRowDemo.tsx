@@ -5,7 +5,8 @@ import React, { useState } from 'react';
 import { ITableOption, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
 import { ChildAttributes } from '../../lib/models';
-import { OptionChangeFunc } from '../../lib/types';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc } from '../../lib/types';
 import dataArray from './data';
 
 const ROW_MOUSE_ENTER = 'ROW_MOUSE_ENTER';
@@ -36,6 +37,7 @@ const tableOption: ITableOption = {
       title: 'Company Name',
     },
   ],
+  data: dataArray,
   rowKeyField: 'id',
 };
 
@@ -48,12 +50,10 @@ const childAttributes: ChildAttributes = {
         },
         dispatch,
       } = extendedEvent;
-      dispatch(ROW_MOUSE_ENTER, {
-        rowKeyValue,
-      });
+      dispatch({ type: ROW_MOUSE_ENTER, rowKeyValue });
     },
     onMouseLeave: (event, { dispatch }) => {
-      dispatch(ROW_MOUSE_LEAVE, { });
+      dispatch({ type: ROW_MOUSE_LEAVE });
     },
   },
 };
@@ -61,22 +61,18 @@ const childAttributes: ChildAttributes = {
 const HoverRowDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const [selectedItem, changeSelectedItem] = useState();
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
-  };
-  const onEvent = (type: string, eventData: any) => {
-    if (type === ROW_MOUSE_ENTER || type === ROW_MOUSE_LEAVE) {
-      changeSelectedItem(dataArray.find((i) => i.id === eventData.rowKeyValue));
+  const dispatch: DispatchFunc = (action) => {
+    if (action.type === ROW_MOUSE_ENTER || action.type === ROW_MOUSE_LEAVE) {
+      changeSelectedItem(dataArray.find((i) => i.id === action.rowKeyValue));
     }
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
   return (
     <div className='hover-row-demo'>
       <Table
         {...option}
-        data={dataArray}
-        onOptionChange={onOptionChange}
+        dispatch={dispatch}
         childAttributes={childAttributes}
-        onEvent={onEvent}
       />
       { selectedItem && (
         <div className='info'>

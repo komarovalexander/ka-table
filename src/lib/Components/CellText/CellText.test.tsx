@@ -38,7 +38,7 @@ describe('CellText', () => {
 
     wrapper.find('.ka-cell-text').simulate('click');
     expect(props.dispatch).toBeCalledTimes(1);
-    const cell: Cell = { columnKey: 'columnField', rowKey: 1 };
+    const cell: Cell = { columnKey: 'columnField', rowKeyValue: 1 };
     expect(props.dispatch).toBeCalledWith(
       ActionType.OpenEditor, { cell },
     );

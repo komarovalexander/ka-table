@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { kaReducer } from '../../lib/reducers';
 
 const dataArray = Array(20).fill(undefined).map(
   (_, index) => ({
@@ -30,22 +31,22 @@ class ClassComponentDemo extends React.Component<any, { tableOptions: ITableOpti
   constructor(props: any) {
     super(props);
     this.state = { tableOptions };
-    this.onOptionChange = this.onOptionChange.bind(this);
+    this.dispatch = this.dispatch.bind(this);
   }
 
   public render() {
     return (
       <Table
       {...this.state.tableOptions}
-      onOptionChange={this.onOptionChange} />
+      dispatch={this.dispatch} />
     );
   }
 
-  private onOptionChange(value: any) {
+  private dispatch(action: any) {
     this.setState((prevState) => {
       return {
         ...prevState,
-        ...{tableOptions: {...prevState.tableOptions, ...value}},
+        ...{tableOptions: kaReducer(prevState.tableOptions, action)},
       };
     });
   }

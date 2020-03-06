@@ -35,8 +35,7 @@ class OverviewDemo extends React.Component<any, ITableOption> {
     return (
       <Table
         {...this.state}
-        onOptionChange={() => {}}
-        onDataChange={() => {}}
+        dispatch={() => {}}
       />
     );
   }
