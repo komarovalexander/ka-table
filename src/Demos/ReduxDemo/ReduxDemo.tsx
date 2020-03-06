@@ -63,5 +63,4 @@ const ReduxDemo = () => {
   );
 };
 
-
 export default ReduxDemo;
