@@ -21,20 +21,26 @@ export const wrapDispatch = (
   } = state;
   let lastState = {...state};
   if (onDispath) {
-    return (action: string, actionData: any) => {
-      switch (action) {
+    return (action: any, actionData: any) => {
+      if (actionData) {
+        action = { type: action, ...actionData };
+      }
+      switch (action.type) {
         case ActionType.ScrollTable:
           if (theadRef && theadRef.current) {
-            theadRef.current.scrollTo({ left: actionData.scrollLeft});
+            theadRef.current.scrollTo({ left: action.scrollLeft});
           }
       }
-      onDispath(action, actionData);
+      onDispath(action);
     };
   } else if (onOptionChange) {
-    return (action: string, actionData: any) => {
+    return (action: any, actionData: any) => {
+      if (actionData) {
+        action = { type: action, ...actionData };
+      }
       lastState = kaReducer(lastState, action, actionData);
 
-      switch (action) {
+      switch (action.type) {
         case ActionType.OpenEditor:
         case ActionType.CloseEditor:
           onOptionChange({ editableCells: lastState.editableCells });
@@ -56,11 +62,11 @@ export const wrapDispatch = (
           onOptionChange({ selectedRows: lastState.selectedRows });
           break;
         case ActionType.ChangeVirtualScrollingHeightSettings:
-          onOptionChange(actionData);
+          onOptionChange({ virtualScrolling: action.virtualScrolling });
           break;
         case ActionType.ScrollTable:
           if (theadRef && theadRef.current) {
-            theadRef.current.scrollTo({ left: actionData.scrollLeft});
+            theadRef.current.scrollTo({ left: action.scrollLeft});
           }
           if (virtualScrolling) {
             onOptionChange({ virtualScrolling: lastState.virtualScrolling});
@@ -71,9 +77,9 @@ export const wrapDispatch = (
           onOptionChange({ groupsExpanded: lastState.groupsExpanded });
           break;
       }
-      onEvent(action, actionData);
+      onEvent(action.type, actionData);
     };
   } else {
-    return (action: string, actionData: any) => {};
+    return (action: any) => {};
   }
 };

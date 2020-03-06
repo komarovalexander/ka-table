@@ -24,9 +24,9 @@ const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
       checked={isSelectedRow}
       onChange={(event) => {
         if (event.currentTarget.checked) {
-          dispatch(ActionType.SelectRow, { rowKeyValue });
+          dispatch({ type: ActionType.SelectRow, rowKeyValue });
         } else {
-          dispatch(ActionType.DeselectRow, { rowKeyValue });
+          dispatch({ type: ActionType.DeselectRow, rowKeyValue });
         }
       }}
     />
@@ -42,9 +42,9 @@ const SelectionHeader: React.FC<HeaderCellFuncPropsWithChildren> = ({
       checked={areAllRowsSelected}
       onChange={(event) => {
         if (event.currentTarget.checked) {
-          dispatch(ActionType.SelectAllRows, {  });
+          dispatch({ type: ActionType.SelectAllRows,  });
         } else {
-          dispatch(ActionType.DeselectAllRows, {  });
+          dispatch({ type: ActionType.DeselectAllRows,  });
         }
       }}
     />

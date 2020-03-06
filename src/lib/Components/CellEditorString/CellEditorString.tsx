@@ -23,7 +23,7 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
       }}
       onBlur={() => {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-        dispatch(ActionType.CloseEditor, { cell });
+        dispatch({ type: ActionType.CloseEditor, cell });
       }}
     />
   );

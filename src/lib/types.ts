@@ -15,13 +15,15 @@ type WithExtraParameters<T, I> = {
   [P in keyof T ] : AddParameters<T[P], I>;
 };
 
+type DeprecatedDispatch = ((type: any, data?: any) => void);
+
 export type CellFunc = (props: CellFuncPropsWithChildren) => any;
 export type CellFuncPropsWithChildren = PropsWithChildren<ICellContentProps>;
 export type ChildAttributesItem<T> = WithExtraParameters<React.HTMLAttributes<HTMLElement>, T>;
 export type DataChangeFunc = (data: any[]) => void;
 export type DataRowFunc = (props: DataRowFuncPropsWithChildren) => any;
 export type DataRowFuncPropsWithChildren = PropsWithChildren<IDataRowProps>;
-export type DispatchFunc = (type: string, data: any) => void;
+export type DispatchFunc = ((action: any) => void) | DeprecatedDispatch;
 export type EditorFunc = (props: EditorFuncPropsWithChildren) => any;
 export type EditorFuncPropsWithChildren = PropsWithChildren<ICellEditorProps>;
 export type EventFunc = (type: string, data: any) => void;

@@ -22,7 +22,7 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
 }) => {
   const close = () => {
     const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-    dispatch(ActionType.CloseEditor, { cell });
+    dispatch({ type: ActionType.CloseEditor, ...cell });
   };
   const [value, setValue] = useState(rowData[key]);
   return (
@@ -34,7 +34,7 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
         onChange={(event) => setValue(event.currentTarget.value)}/>
       <button className='custom-editor-button custom-editor-button-save' onClick={() => {
         const newValue = { ...rowData, ...{ [key]: value } };
-        dispatch(ActionType.ChangeRowData, { newValue });
+        dispatch({ type: ActionType.ChangeRowData, newValue });
         close();
       }}>Save</button>
       <button className='custom-editor-button custom-editor-button-cancel' onClick={close}>Cancel</button>
@@ -47,7 +47,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
 }) => {
   const close = () => {
     const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-    dispatch(ActionType.CloseEditor, { cell });
+    dispatch({ type: ActionType.CloseEditor, cell });
   };
   const [value, setValue] = useState(rowData[key]);
   return (
@@ -58,7 +58,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
         defaultValue={value}
         onBlur={() => {
           const newValue = { ...rowData, ...{ [key]: value } };
-          dispatch(ActionType.ChangeRowData, { newValue });
+          dispatch({ type: ActionType.ChangeRowData, newValue });
           close();
         }}
         onChange={(event) => {

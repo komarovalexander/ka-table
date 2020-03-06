@@ -24,7 +24,7 @@ const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
     <img
       src='static/icons/delete.svg'
       className='delete-row-column-button'
-      onClick={() => dispatch(ActionType.DeleteRow, { rowKeyValue })}
+      onClick={() => dispatch({ type: ActionType.DeleteRow, rowKeyValue })}
       alt=''
     />
  );

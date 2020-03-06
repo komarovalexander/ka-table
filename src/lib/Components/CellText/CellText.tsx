@@ -25,7 +25,7 @@ const CellText: React.FunctionComponent<ICellContentProps> = (props) => {
     onClick: () => {
       if (editingMode === EditingMode.Cell) {
         const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-        dispatch(ActionType.OpenEditor, { cell });
+        dispatch({ type: ActionType.OpenEditor, cell });
       }
     },
   };

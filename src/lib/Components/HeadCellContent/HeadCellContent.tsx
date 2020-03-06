@@ -22,7 +22,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const isSortingEnabled = sortingMode === SortingMode.Single;
   const sortClick = isSortingEnabled ? () => {
     const updatedColumn = getColumnWithUpdatedSortDirection(column);
-    dispatch(ActionType.ChangeSorting, { column: updatedColumn });
+    dispatch({ type: ActionType.ChangeSorting, column: updatedColumn });
   } : undefined;
   return (
     <div

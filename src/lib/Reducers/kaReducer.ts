@@ -5,7 +5,7 @@ import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/Ce
 import { updateExpandedGroups } from '../Utils/GroupUtils';
 import { getSortedColumns } from '../Utils/HeadRowUtils';
 
-const kaReducer = (state: ITableOption, actionType: string, actionData: any) => {
+const kaReducer = (state: ITableOption, action: any, actionData: any) => {
   const {
     columns,
     data = [],
@@ -15,30 +15,36 @@ const kaReducer = (state: ITableOption, actionType: string, actionData: any) => 
     selectedRows = [],
     virtualScrolling,
   } = state;
-  switch (actionType) {
+
+  if (actionData) {
+    console.warn('ka-table: dispatch(actionType, actionData) is deprecated, use dispatch({ type: actionType, ...actionData }) instead');
+    action = { type: action, ...actionData };
+  }
+
+  switch (action.type) {
     case ActionType.OpenEditor: {
       const newEditableCells = addItemToEditableCells(
-        actionData.cell,
+        action.cell,
         editableCells);
       return { ...state, editableCells: newEditableCells };
     }
     case ActionType.CloseEditor: {
       const newEditableCells = removeItemFromEditableCells(
-        actionData.cell,
+        action.cell,
         editableCells);
       return { ...state, editableCells: newEditableCells };
     }
     case ActionType.ChangeFilterRow:
-      const newColumns = getCopyOfArrayAndInsertOrReplaceItem(actionData.column, 'key', columns);
+      const newColumns = getCopyOfArrayAndInsertOrReplaceItem(action.column, 'key', columns);
       return { ...state, columns: newColumns };
     case ActionType.ChangeRowData:
     case ActionType.ChangeRow: {
-      const newData = getCopyOfArrayAndInsertOrReplaceItem(actionData.newValue, rowKeyField, data);
+      const newData = getCopyOfArrayAndInsertOrReplaceItem(action.newValue, rowKeyField, data);
       return { ...state, data: newData };
     }
     case ActionType.DeleteRow: {
       const newData = data.filter(
-        (d: any) => d[rowKeyField] !== actionData.rowKeyValue);
+        (d: any) => d[rowKeyField] !== action.rowKeyValue);
       return { ...state, data: newData };
     }
     case ActionType.SelectAllRows: {
@@ -46,33 +52,33 @@ const kaReducer = (state: ITableOption, actionType: string, actionData: any) => 
       return { ...state, selectedRows: newSelectedRows };
     }
     case ActionType.SelectSingleRow: {
-      const newSelectedRows = [actionData.rowKeyValue];
+      const newSelectedRows = [action.rowKeyValue];
       return { ...state, selectedRows: newSelectedRows };
     }
     case ActionType.DeselectAllRows:
       return { ...state, selectedRows: [] };
     case ActionType.SelectRow:
-        return { ...state, selectedRows: [...selectedRows, ...[actionData.rowKeyValue]] };
+        return { ...state, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
     case ActionType.DeselectRowData:
     case ActionType.DeselectRow: {
-      const newSelectedRows = [...selectedRows].filter((s) => s !== actionData.rowKeyValue);
+      const newSelectedRows = [...selectedRows].filter((s) => s !== action.rowKeyValue);
       return { ...state, selectedRows: newSelectedRows };
     }
     case ActionType.ChangeSorting:
-      const sortedColumns = getSortedColumns(columns, actionData.column);
+      const sortedColumns = getSortedColumns(columns, action.column);
       return { ...state, columns: sortedColumns };
     case ActionType.ChangeVirtualScrollingHeightSettings:
-      return { ...state, ...actionData };
+      return { ...state, virtualScrolling: action.virtualScrolling };
     case ActionType.ScrollTable:
       if (virtualScrolling) {
-          const scrollPosition = actionData.scrollTop;
+          const scrollPosition = action.scrollTop;
           return {...state, ...{virtualScrolling: { ...virtualScrolling, scrollPosition }}};
         }
       break;
     case ActionType.UpdateGroupsExpanded:
       const newGroupsExpanded = updateExpandedGroups(
         groupsExpanded,
-        actionData.groupKey,
+        action.groupKey,
       );
       return { ...state, groupsExpanded: newGroupsExpanded };
   }

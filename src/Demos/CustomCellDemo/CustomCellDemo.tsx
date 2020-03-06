@@ -20,7 +20,7 @@ const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
   return (
     <div onClick={() => {
       const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-      dispatch(ActionType.OpenEditor, { cell });
+      dispatch({ type: ActionType.OpenEditor, ...cell });
     }} className={value ? 'custom-cell-demo-loyal' : 'custom-cell-demo-no-loyal'}>
       {value ? 'Loyal Program Member' : 'No Loyal Programm'}
     </div>

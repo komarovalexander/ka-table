@@ -25,7 +25,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const close = useCallback(() => {
     const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-    dispatch(ActionType.CloseEditor, { cell });
+    dispatch({ type: ActionType.CloseEditor, cell });
   }, [dispatch, column, rowData, rowKeyField]);
 
   const closeHandler = useCallback(() => {

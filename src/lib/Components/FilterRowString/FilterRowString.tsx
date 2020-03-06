@@ -15,7 +15,7 @@ const FilterRowString: React.FunctionComponent<IFilterRowEditorProps> = ({
       value={column.filterRowValue || ''}
       onChange={(event) => {
         const updatedColumn = {...column, filterRowValue: event.currentTarget.value};
-        dispatch(ActionType.ChangeFilterRow, { column: updatedColumn });
+        dispatch({ type: ActionType.ChangeFilterRow, column: updatedColumn });
       }}
     />
   );
