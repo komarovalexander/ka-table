@@ -9,7 +9,7 @@ import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getSortedColumns } from '../Utils/HeadRowUtils';
 import { prepareTableOptions } from '../Utils/PropsUtils';
 
-const kaReducer = (state: ITableOption, action: any) => {
+const kaReducer: any = (state: ITableOption, action: any) => {
   const {
     columns,
     data = [],

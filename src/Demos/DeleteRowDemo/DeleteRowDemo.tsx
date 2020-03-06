@@ -44,16 +44,21 @@ const tableOption: ITableOption = {
   rowKeyField: 'id',
 };
 
+const CHANGE_LOADING = 'CHANGE_LOADING';
 const DeleteRowDemo: React.FC = () => {
   const [loading, changeLoading] = useState(false);
   const [option, changeOptions] = useState(tableOption);
   const dispatch: DispatchFunc = (action) => {
     if (action.type === ActionType.DeleteRow) {
-      changeLoading((prevState) => true);
+      dispatch({ type: CHANGE_LOADING, loading: true });
       setTimeout(() => {
         changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
-        changeLoading((prevState) => false);
+        dispatch({ type: CHANGE_LOADING, loading: false });
       }, 1000);
+    } else if (action.type === CHANGE_LOADING) {
+      changeLoading(action.loading);
+    } else {
+      changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
     }
   };
 

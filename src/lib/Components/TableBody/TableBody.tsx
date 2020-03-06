@@ -39,7 +39,6 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
       dispatch({
         scrollLeft: event.currentTarget.scrollLeft,
         scrollTop: event.currentTarget.scrollTop,
-        timeStamp: event.timeStamp,
         type: ActionType.ScrollTable,
       });
     }}>

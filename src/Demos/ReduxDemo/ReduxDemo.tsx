@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect, ConnectedProps, Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { kaReducer } from '../../lib/reducers';
 
-const dataArray = Array(1000).fill(undefined).map(
+const dataArray = Array(30).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -26,19 +29,39 @@ const tableOption: ITableOption = {
   sortingMode: SortingMode.Single,
 };
 
-class OverviewDemo extends React.Component<any, ITableOption> {
-  constructor(props: any) {
-    super(props);
-    this.state = tableOption;
-  }
-  public render() {
-    return (
-      <Table
-        {...this.state}
-        dispatch={() => {}}
-      />
-    );
-  }
-}
+const store = createStore(
+  kaReducer,
+  tableOption,
+  (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__(),
+);
+const mapState = (state: ITableOption) => ({
+  tableState: state,
+});
 
-export default OverviewDemo;
+const mapDispatch = {
+  dispatch: (action: any) => action,
+};
+
+const connector = connect(mapState, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const ReduxTableComponent = (props: PropsFromRedux) => {
+  return (
+    <Table
+      {...props.tableState}
+      dispatch={props.dispatch}
+    />
+  );
+};
+const ReduxComponent = connector(ReduxTableComponent);
+
+const ReduxDemo = () => {
+  return (
+    <Provider store={store}>
+      <ReduxComponent />
+    </Provider>
+  );
+};
+
+
+export default ReduxDemo;
