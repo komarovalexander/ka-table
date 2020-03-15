@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import {
-  ActionType, DataType, EditingMode, FilteringMode, SortDirection, SortingMode,
-} from '../../lib/enums';
-import { FilterRowFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
+import { changeFilterRowValue, search } from '../../lib/actionCreators';
+import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc, FilterRowFuncPropsWithChildren } from '../../lib/types';
 import { dateUtils } from '../../lib/utils';
 import dataArray from './data';
 
@@ -22,8 +22,7 @@ const CustomDateFilterEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
         onChange={(event) => {
           const targetValue = event.currentTarget.value;
           const filterRowValue = targetValue ? new Date(targetValue) : null;
-          const updatedColumn = {...column, filterRowValue};
-          dispatch(ActionType.ChangeFilterRow, {column: updatedColumn});
+          dispatch(changeFilterRowValue(column.key, filterRowValue));
         }}
       />
     </div>
@@ -88,6 +87,7 @@ const tableOption: ITableOption = {
       title: 'First Deal Date',
     },
   ],
+  data: dataArray,
   editingMode: EditingMode.Cell,
   filteringMode: FilteringMode.FilterRow,
   groups: [{ columnKey: 'hasLoyalProgram' }],
@@ -99,18 +99,17 @@ const tableOption: ITableOption = {
 
 const NullableCellDataDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
   return (
     <>
       <input type='search' defaultValue={option.search} onChange={(event) => {
-        onOptionChange({ search: event.currentTarget.value });
+        dispatch(search(event.currentTarget.value));
       }} className='top-element'/>
       <Table
         {...option}
-        data={dataArray}
-        onOptionChange={onOptionChange}
+        dispatch={dispatch}
       />
     </>
   );

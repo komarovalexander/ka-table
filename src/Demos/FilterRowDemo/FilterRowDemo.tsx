@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, FilteringMode, SortDirection } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
@@ -25,20 +26,21 @@ const tableOption: ITableOption = {
       title: 'Next Try',
     },
   ],
+  data: dataArray,
   filteringMode: FilteringMode.FilterRow,
   rowKeyField: 'id',
 };
 
 const FilterRowDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
   return (
     <Table
       {...option}
       data={dataArray}
-      onOptionChange={onOptionChange}
+      dispatch={dispatch}
     />
   );
 };

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, SortingMode } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10000).fill(undefined).map(
   (_, index) => ({
@@ -21,6 +22,7 @@ const tableOption: ITableOption = {
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
+  data: dataArray,
   groups: [{ columnKey: 'column1'}, { columnKey: 'column2' }],
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
@@ -30,8 +32,8 @@ const tableOption: ITableOption = {
 
 const ManyRowsGroupingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
 
   return (
@@ -39,7 +41,7 @@ const ManyRowsGroupingDemo: React.FC = () => {
       <Table
         {...option}
         data={dataArray}
-        onOptionChange={onOptionChange}
+        dispatch={dispatch}
       />
     </>
   );

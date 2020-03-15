@@ -10,15 +10,17 @@ import CellEditorBoolean from './CellEditorBoolean';
 Enzyme.configure({ adapter: new Adapter() });
 const props: ICellEditorProps = {
   column: {
-    dataType: DataType.Boolean,
+    dataType: DataType.String,
     key: 'fieldName',
     title: 'Field',
   },
   dispatch: jest.fn(),
   field: 'fieldName',
-  isSelectedRow: true,
-  rowData: { fieldName: true, id: 2 },
+  isSelectedRow: false,
+  rowData: { fieldName: 'columnFieldValue', id: 2 },
   rowKeyField: 'id',
+  rowKeyValue: 2,
+  value: 'columnFieldValue',
 };
 
 beforeEach(() => {
@@ -38,9 +40,12 @@ describe('CellEditorBoolean', () => {
 
     wrapper.find('input').props().onChange!({currentTarget: { checked: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeRowData, { newValue: { fieldName: newValue, id: 2 } },
-    );
+    expect(props.dispatch).toBeCalledWith({
+      columnKey: 'fieldName',
+      rowKeyValue: 2,
+      type: ActionType.ChangeCellValue,
+      value: false,
+    });
   });
 
   it('should dispatch CloseEditor', () => {
@@ -49,7 +54,7 @@ describe('CellEditorBoolean', () => {
     wrapper.find('input').props().onBlur!({} as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.CloseEditor, { cell: { columnKey: 'fieldName', rowKey: 2 } },
+      { type: ActionType.CloseEditor, columnKey: 'fieldName', rowKeyValue: 2 },
     );
   });
 });

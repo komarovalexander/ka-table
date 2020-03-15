@@ -7,7 +7,7 @@ import { isEmpty } from './CommonUtils';
 import { getValueByColumn } from './DataUtils';
 
 export const getRowEditableCells = (rowKeyValue: any, editableCells: Cell[]): Cell[] => {
-  return editableCells.filter((c) => c.rowKey === rowKeyValue);
+  return editableCells.filter((c) => c.rowKeyValue === rowKeyValue);
 };
 
 export const searchData = (columns: Column[], data: any[], searchText: string): any[] => {

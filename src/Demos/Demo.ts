@@ -1,7 +1,7 @@
 
 export default class Demo {
   constructor(
-    public component: React.FC,
+    public component: React.ElementType,
     public path: string,
     public title: string,
     public fileName: string,

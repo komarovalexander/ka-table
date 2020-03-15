@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { HeaderCellFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc, HeaderCellFuncPropsWithChildren } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -34,20 +35,20 @@ const tableOption: ITableOption = {
       title: 'Column 2',
     },
   ],
+  data: dataArray,
   rowKeyField: 'id',
 };
 
 const CustomHeaderCellDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
 
   return (
     <Table
       {...option}
-      data={dataArray}
-      onOptionChange={onOptionChange}
+      dispatch={dispatch}
     />
   );
 };

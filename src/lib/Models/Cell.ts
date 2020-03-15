@@ -10,5 +10,5 @@ export class Cell {
   /*
   * Specifies the value of row's key where cell is placed
   */
-  public rowKey!: any;
+  public rowKeyValue!: any;
 }

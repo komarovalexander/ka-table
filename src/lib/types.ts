@@ -21,7 +21,7 @@ export type ChildAttributesItem<T> = WithExtraParameters<React.HTMLAttributes<HT
 export type DataChangeFunc = (data: any[]) => void;
 export type DataRowFunc = (props: DataRowFuncPropsWithChildren) => any;
 export type DataRowFuncPropsWithChildren = PropsWithChildren<IDataRowProps>;
-export type DispatchFunc = (type: string, data: any) => void;
+export type DispatchFunc = (action: any) => void;
 export type EditorFunc = (props: EditorFuncPropsWithChildren) => any;
 export type EditorFuncPropsWithChildren = PropsWithChildren<ICellEditorProps>;
 export type EventFunc = (type: string, data: any) => void;

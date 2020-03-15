@@ -8,10 +8,10 @@ describe('FilterUtils', () => {
   it('getRowEditableCells should return required cells from table EditableCells', () => {
     const rowEditableCells = getRowEditableCells(10, [{
       columnKey: '10',
-      rowKey: 10,
+      rowKeyValue: 10,
     }, {
       columnKey: '10',
-      rowKey: 2,
+      rowKeyValue: 2,
     }]);
     expect(rowEditableCells).toMatchSnapshot();
   });

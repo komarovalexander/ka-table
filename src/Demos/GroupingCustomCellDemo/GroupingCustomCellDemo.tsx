@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc } from '../../lib/types';
 
-const data = [
+const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
   { id: 2, type: 'Dog', name: 'Rex', country: 'Montenegro', age: 6 },
   { id: 3, type: 'Cat', name: 'Simba', country: 'France', age: 12 },
@@ -44,20 +45,20 @@ const tableOption: ITableOption = {
       title: 'AGE',
     },
   ],
+  data: dataArray,
   groups: [{ columnKey: 'country' }, { columnKey: 'type' }],
   rowKeyField: 'id',
 };
 
 const GroupingCustomCellDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
   return (
     <Table
       {...option}
-      data={data}
-      onOptionChange={onOptionChange}
+      dispatch={dispatch}
     />
   );
 };

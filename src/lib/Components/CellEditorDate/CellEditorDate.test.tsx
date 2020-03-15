@@ -19,6 +19,7 @@ const props: ICellEditorProps = {
   isSelectedRow: true,
   rowData: { fieldName: new Date(2020, 0, 2), id: 2 },
   rowKeyField: 'id',
+  rowKeyValue: 2,
 };
 
 beforeEach(() => {
@@ -38,9 +39,12 @@ describe('CellEditorDate', () => {
 
     wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeRowData, { newValue: { fieldName: newValue, id: 2 } },
-    );
+    expect(props.dispatch).toBeCalledWith({
+      columnKey: 'fieldName',
+      rowKeyValue: 2,
+      type: ActionType.ChangeCellValue,
+      value: newValue,
+    });
   });
 
   it('should dispatch CloseEditor', () => {
@@ -49,7 +53,7 @@ describe('CellEditorDate', () => {
     wrapper.find('input').props().onBlur!({} as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.CloseEditor, { cell: { columnKey: 'fieldName', rowKey: 2 } },
+      { type: ActionType.CloseEditor, columnKey: 'fieldName', rowKeyValue: 2 },
     );
   });
 });

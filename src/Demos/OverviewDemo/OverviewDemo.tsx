@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -21,6 +22,7 @@ const tableOption: ITableOption = {
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
+  data: dataArray,
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
@@ -28,21 +30,14 @@ const tableOption: ITableOption = {
 
 const OverviewDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
-  };
-
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
 
   return (
     <Table
       {...option}
-      data={data}
-      onOptionChange={onOptionChange}
-      onDataChange={onDataChange}
+      dispatch={dispatch}
     />
   );
 };

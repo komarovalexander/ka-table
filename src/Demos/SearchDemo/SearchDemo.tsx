@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
+import { search } from '../../lib/actionCreators';
 import { DataType } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -26,6 +28,7 @@ const tableOption: ITableOption = {
       title: 'Passed',
     },
   ],
+  data: dataArray,
   noDataRow: () => 'No Data Found',
   rowKeyField: 'id',
   search: 'Billi Bob',
@@ -33,18 +36,17 @@ const tableOption: ITableOption = {
 
 const SearchDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
   return (
     <>
       <input type='search' defaultValue={option.search} onChange={(event) => {
-        onOptionChange({ search: event.currentTarget.value });
+        dispatch(search(event.currentTarget.value));
       }} className='top-element'/>
       <Table
         {...option}
-        data={dataArray}
-        onOptionChange={onOptionChange}
+        dispatch={dispatch}
       />
     </>
   );

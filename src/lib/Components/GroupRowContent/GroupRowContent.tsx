@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { expandGroup } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { ActionType } from '../../enums';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
 import EmptyCells from '../EmptyCells/EmptyCells';
@@ -35,9 +35,7 @@ const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
           <div className='ka-group-column-content'>
             <div
               onClick={() => {
-                dispatch(ActionType.UpdateGroupsExpanded, {
-                  groupKey,
-                });
+                dispatch(expandGroup(groupKey));
               }}
               className={isExpanded
                 ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed}

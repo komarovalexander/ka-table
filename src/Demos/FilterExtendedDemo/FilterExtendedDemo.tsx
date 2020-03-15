@@ -3,8 +3,9 @@ import FilterControl from 'react-filter-control';
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
 
 import { ITableOption, Table } from '../../lib';
-import { DataType } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { DataType, EditingMode } from '../../lib/enums';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc } from '../../lib/types';
 import { filterData } from './filterData';
 
 const dataArray: any[] = [
@@ -23,6 +24,8 @@ const tableOption: ITableOption = {
     { key: 'score', title: 'Score', dataType: DataType.Number },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
+  data: dataArray,
+  editingMode: EditingMode.Cell,
   rowKeyField: 'id',
 };
 
@@ -81,23 +84,22 @@ export const filter: IFilterControlFilterValue = {
 
 const FilterExtendedDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
   const [filterValue, changeFilter] = useState(filter);
-  const onFilterChangedChanged = (newFilterValue: IFilterControlFilterValue) => {
+  const onFilterChanged = (newFilterValue: IFilterControlFilterValue) => {
     changeFilter(newFilterValue);
   };
-  const filteredData = filterData(dataArray, filterValue);
   return (
     <>
       <div className='top-element'>
-        <FilterControl {...{fields, groups, filterValue,  onFilterValueChanged: onFilterChangedChanged}}/>
+        <FilterControl {...{fields, groups, filterValue,  onFilterValueChanged: onFilterChanged}}/>
       </div>
       <Table
         {...option}
-        data={filteredData}
-        onOptionChange={onOptionChange}
+        dispatch={dispatch}
+        extendedFilter={(data) => filterData(data, filterValue)}
       />
     </>
   );

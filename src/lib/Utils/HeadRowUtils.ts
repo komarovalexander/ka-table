@@ -1,23 +1,22 @@
 import defaultOptions from '../defaultOptions';
 import { SortDirection } from '../enums';
 import { Column } from '../Models/Column';
-import { compareColumns } from './ColumnUtils';
 
 export const getSortedColumns = (
   columns: Column[],
-  column: Column,
+  columnKey: string,
 ) => {
-  const index = columns.findIndex((c) => compareColumns(c, column));
+  const index = columns.findIndex((c) => c.key === columnKey);
   const newColumns = [...columns];
 
   newColumns.forEach((c, newColumnIndex) => {
-    if (c.sortDirection) {
+    if (index === newColumnIndex) {
+      newColumns[index] = getColumnWithUpdatedSortDirection(newColumns[index]);
+    } else if (c.sortDirection) {
       newColumns[newColumnIndex] = {...c};
       newColumns[newColumnIndex].sortDirection = undefined;
     }
   });
-
-  newColumns[index] = {...column};
   return newColumns;
 };
 

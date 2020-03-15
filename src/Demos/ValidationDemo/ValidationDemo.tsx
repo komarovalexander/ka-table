@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { DataType, EditingMode } from '../../lib/enums';
-import { DataChangeFunc, OptionChangeFunc } from '../../lib/types';
+import { kaReducer } from '../../lib/reducers';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -46,9 +47,10 @@ const tableOption: ITableOption = {
       title: 'Passed',
     },
   ],
+  data: dataArray,
   editableCells: [{
     columnKey: 'score',
-    rowKey: 2,
+    rowKeyValue: 2,
   }],
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
@@ -56,21 +58,15 @@ const tableOption: ITableOption = {
 
 const ValidationDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({ ...option, ...value });
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
 
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
-  };
   return (
     <>
       <Table
         {...option}
-        data={data}
-        onOptionChange={onOptionChange}
-        onDataChange={onDataChange}
+        dispatch={dispatch}
       />
     </>
   );

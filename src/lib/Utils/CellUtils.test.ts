@@ -6,7 +6,7 @@ describe('CellUtils', () => {
   it('isEditableCell equals true', () => {
     const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column' }, [{
       columnKey: 'column',
-      rowKey: 10,
+      rowKeyValue: 10,
     }]);
     expect(rowEditableCells).toBeTruthy();
   });
@@ -14,7 +14,7 @@ describe('CellUtils', () => {
   it('isEditableCell equals false', () => {
     const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column2' }, [{
       columnKey: 'column',
-      rowKey: 10,
+      rowKeyValue: 10,
     }]);
     expect(rowEditableCells).toBeFalsy();
   });
@@ -22,7 +22,7 @@ describe('CellUtils', () => {
   it('isEditableCell always equals false when EditingMode.None', () => {
     const rowEditableCells = isEditableCell(EditingMode.None, { key: 'column' }, [{
       columnKey: 'column',
-      rowKey: 10,
+      rowKeyValue: 10,
     }]);
     expect(rowEditableCells).toBeFalsy();
   });
@@ -31,11 +31,11 @@ describe('CellUtils', () => {
     it('addItemToEditableCells', () => {
       const editableCells: Cell[] = [{
         columnKey: 'column',
-        rowKey: 1,
+        rowKeyValue: 1,
       }];
       const item: Cell = {
         columnKey: 'column2',
-        rowKey: 2,
+        rowKeyValue: 2,
       };
       const newEditableCells = addItemToEditableCells(item, editableCells);
       expect(newEditableCells).toMatchSnapshot();
@@ -44,17 +44,17 @@ describe('CellUtils', () => {
     it('removeItemFromEditableCells', () => {
       const editableCells: Cell[] = [{
         columnKey: 'column',
-        rowKey: 1,
+        rowKeyValue: 1,
       }, {
         columnKey: 'column2',
-        rowKey: 2,
+        rowKeyValue: 2,
       }, {
         columnKey: 'column',
-        rowKey: 2,
+        rowKeyValue: 2,
       }];
       const item: Cell = {
         columnKey: 'column2',
-        rowKey: 2,
+        rowKeyValue: 2,
       };
       const newEditableCells = removeItemFromEditableCells(item, editableCells);
       expect(newEditableCells).toMatchSnapshot();

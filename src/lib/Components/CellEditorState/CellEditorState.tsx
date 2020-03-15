@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { changeCellValue, closeEditor } from '../../actionCreators';
 import { ActionType } from '../../enums';
-import { Cell } from '../../models';
+import { DispatchFunc } from '../../types';
 import { getValueByColumn, replaceValue } from '../../Utils/DataUtils';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import { getValidationValue } from '../../Utils/Validation';
@@ -13,42 +14,42 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
     column,
     rowData,
-    rowKeyField,
+    rowKeyValue,
     dispatch,
   } = props;
   const [rowDataState, changeValue] = useState(rowData);
 
   const validationValue = getValidationValue(rowDataState, column);
-  const onValueStateChange = (rowValue: any): void => {
-    changeValue(rowValue);
+  const onValueStateChange = (action: any): void => {
+    const newRowValue = replaceValue(rowData, column, action.value);
+    changeValue(newRowValue);
   };
 
   const close = useCallback(() => {
-    const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-    dispatch(ActionType.CloseEditor, { cell });
-  }, [dispatch, column, rowData, rowKeyField]);
+    dispatch(closeEditor(rowKeyValue, column.key));
+  }, [dispatch, column, rowKeyValue]);
 
   const closeHandler = useCallback(() => {
     if (!validationValue) {
       const newValue = getValueByColumn(rowDataState, column);
       if (getValueByColumn(rowData, column) !== newValue) {
-        dispatch(ActionType.ChangeRowData, { newValue: replaceValue(rowData, column, newValue)});
+        dispatch(changeCellValue(rowKeyValue, column.key, newValue));
       }
       close();
     }
-  }, [validationValue, dispatch, close, rowDataState, column, rowData]);
+  }, [validationValue, dispatch, close, rowDataState, column, rowData, rowKeyValue]);
 
   useEffect(() => {
     return addEscEnterKeyEffect(close, closeHandler);
   }, [close, closeHandler]);
 
-  const dispatchHandler = (action: string, actionData: any) => {
-    if (action === ActionType.CloseEditor) {
+  const dispatchHandler: DispatchFunc = (action: any) => {
+    if (action.type === ActionType.CloseEditor) {
       closeHandler();
-    } else if (action === ActionType.ChangeRowData) {
-      onValueStateChange(actionData.newValue);
+    } else if (action.type === ActionType.ChangeCellValue) {
+      onValueStateChange(action);
     } else {
-      dispatch(action, actionData);
+      dispatch(action);
     }
   };
 

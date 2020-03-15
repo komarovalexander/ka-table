@@ -40,9 +40,11 @@ describe('FilterRowBoolean', () => {
 
     wrapper.find('input').props().onChange!({currentTarget: { checked: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeFilterRow, { column: { ...column, filterRowValue: newValue } },
-    );
+    expect(props.dispatch).toBeCalledWith({
+      columnKey: column.key,
+      filterRowValue: newValue,
+      type: ActionType.ChangeFilterRowValue,
+    });
   });
 
   it('should set as unspecified after unchecked', () => {
@@ -53,7 +55,7 @@ describe('FilterRowBoolean', () => {
     wrapper.find('input').props().onChange!({currentTarget: { checked: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      ActionType.ChangeFilterRow, { column: { ...column, filterRowValue: undefined } },
+      { type: ActionType.ChangeFilterRowValue, filterRowValue: undefined, columnKey: column.key },
     );
   });
 });
