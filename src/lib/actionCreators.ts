@@ -6,7 +6,7 @@ export const changeFilterRowValue = (columnKey: string, filterRowValue: any) => 
   type: ActionType.ChangeFilterRowValue,
 });
 
-export const changeFilterRowOperator = (columnKey: string, filterRowOperator: any) => ({
+export const changeFilterRowOperator = (columnKey: string, filterRowOperator: string) => ({
   columnKey,
   filterRowOperator,
   type: ActionType.ChangeFilterRowOperator,
