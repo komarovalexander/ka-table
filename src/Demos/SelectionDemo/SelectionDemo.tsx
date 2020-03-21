@@ -58,10 +58,9 @@ const SelectionHeader: React.FC<HeaderCellFuncPropsWithChildren> = ({
 const tableOption: ITableOption = {
   columns: [
     {
-      editor: SelectionCell,
+      cell: SelectionCell,
       headCell: SelectionHeader,
-      isEditable: true,
-      key: 'selection',
+      key: '!selection-cell!',
     },
     {
       dataType: DataType.String,

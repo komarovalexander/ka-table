@@ -60,7 +60,7 @@ const childAttributes: ChildAttributes = {
 
 const HoverRowDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
-  const [selectedItem, changeSelectedItem] = useState();
+  const [selectedItem, changeSelectedItem] = useState<any>();
   const dispatch: DispatchFunc = (action) => {
     if (action.type === ROW_MOUSE_ENTER || action.type === ROW_MOUSE_LEAVE) {
       changeSelectedItem(dataArray.find((i) => i.id === action.rowKeyValue));
