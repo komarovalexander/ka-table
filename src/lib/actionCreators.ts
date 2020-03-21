@@ -73,3 +73,8 @@ export const expandGroup = (groupKey: any[]) => ({
   groupKey,
   type: ActionType.ExpandGroup,
 });
+
+export const changeData = (data: any[]) => ({
+  data,
+  type: ActionType.ChangeData,
+});

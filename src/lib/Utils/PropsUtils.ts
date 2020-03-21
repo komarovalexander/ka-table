@@ -65,7 +65,7 @@ export const prepareTableOptions = (props: ITableOption) => {
   } = props;
   let {
     columns,
-    data,
+    data = [],
   } = props;
   data = extendedFilter ? extendedFilter(data) : data;
   data = search ? searchData(columns, data, search) : data;

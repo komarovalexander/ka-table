@@ -95,6 +95,8 @@ const kaReducer: any = (state: ITableOption, action: any) => {
       return { ...state, columns: sortedColumns };
     case ActionType.ChangeVirtualScrollingHeightSettings:
       return { ...state, virtualScrolling: action.virtualScrolling };
+    case ActionType.ChangeData:
+      return { ...state, data: action.data };
     case ActionType.ScrollTable:
       if (virtualScrolling) {
           const scrollPosition = action.scrollTop;

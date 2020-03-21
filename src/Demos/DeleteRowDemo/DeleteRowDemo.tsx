@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
 import { deleteRow } from '../../lib/actionCreators';
-import { ActionType, DataType } from '../../lib/enums';
+import { DataType } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
 import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
 
@@ -44,32 +44,17 @@ const tableOption: ITableOption = {
   rowKeyField: 'id',
 };
 
-const CHANGE_LOADING = 'CHANGE_LOADING';
 const DeleteRowDemo: React.FC = () => {
-  const [loading, changeLoading] = useState(false);
   const [option, changeOptions] = useState(tableOption);
   const dispatch: DispatchFunc = (action) => {
-    if (action.type === ActionType.DeleteRow) {
-      dispatch({ type: CHANGE_LOADING, loading: true });
-      setTimeout(() => {
-        changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
-        dispatch({ type: CHANGE_LOADING, loading: false });
-      }, 1000);
-    } else if (action.type === CHANGE_LOADING) {
-      changeLoading(action.loading);
-    } else {
-      changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
-    }
+    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
   };
 
   return (
-    <>
-      {loading && <div>Loading...</div>}
-      <Table
-        {...option}
-        dispatch={dispatch}
-      />
-    </>
+    <Table
+      {...option}
+      dispatch={dispatch}
+    />
   );
 };
 

@@ -34,7 +34,7 @@ export interface ITableOption {
   selectedRows?: any[];
   sortingMode?: SortingMode;
   virtualScrolling?: VirtualScrolling;
-  data: any[];
+  data?: any[];
 }
 
 export interface ITableEvents {
@@ -54,7 +54,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     sortingMode = SortingMode.None,
     selectedRows = [],
     groups,
-    data,
+    data = [],
   } = props;
   let {
     groupsExpanded,

@@ -13,6 +13,7 @@ export enum EditingMode {
 
 export enum ActionType {
   ChangeCellValue = 'ChangeCellValue',
+  ChangeData = 'ChangeData',
   ChangeFilterRowOperator = 'ChangeFilterRowOperator',
   ChangeFilterRowValue = 'ChangeFilterRowValue',
   ChangeSortingDirection = 'ChangeSortingDirection',
