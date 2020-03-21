@@ -6,7 +6,7 @@ interface ITestOptions {
   sameObject?: boolean;
   sameType?: boolean;
 }
-type TestCase = Array<string | undefined | boolean | number | Date | ITestOptions>;
+type TestCase = (string | undefined | boolean | number | Date | ITestOptions)[];
 class TestSettings {
   public cases!: TestCase[];
   public dataType!: DataType;
