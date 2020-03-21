@@ -1,5 +1,5 @@
 import {
-  changeData, deleteRow, deselectAllRows, deselectRow, selectAllRows, selectSingleRow,
+  deleteRow, deselectAllRows, deselectRow, selectAllRows, selectSingleRow, updateData,
 } from '../actionCreators';
 import { ActionType } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -63,7 +63,7 @@ describe('kaReducer', () => {
     const newState = kaReducer(intialState, deselectRow(2));
     expect(newState).toEqual({ ...intialState, selectedRows: [1] });
   });
-  it('ChangeData', () => {
+  it('UpdateData', () => {
     const newData =  [{ id: 3 }, { id: 4 }];
     const intialState = {
       columns: [],
@@ -71,7 +71,7 @@ describe('kaReducer', () => {
       rowKeyField: 'id',
       selectedRows: [1, 2],
     };
-    const newState = kaReducer(intialState, changeData(newData));
+    const newState = kaReducer(intialState, updateData(newData));
     expect(newState.data).toEqual(newData);
   });
 });

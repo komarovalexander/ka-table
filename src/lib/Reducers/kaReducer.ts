@@ -33,7 +33,7 @@ const kaReducer: any = (state: ITableOption, action: any) => {
         editableCells);
       return { ...state, editableCells: newEditableCells };
     }
-    case ActionType.ChangeFilterRowValue: {
+    case ActionType.UpdateFilterRowValue: {
       const column = columns.find((c: Column) => c.key === action.columnKey)!;
       const newColumn: Column = {
         ...column,
@@ -46,7 +46,7 @@ const kaReducer: any = (state: ITableOption, action: any) => {
       );
       return { ...state, columns: newColumns };
     }
-    case ActionType.ChangeFilterRowOperator: {
+    case ActionType.UpdateFilterRowOperator: {
       const column = columns.find((c: Column) => c.key === action.columnKey)!;
       const newColumn: Column = {
         ...column,
@@ -59,7 +59,7 @@ const kaReducer: any = (state: ITableOption, action: any) => {
       );
       return { ...state, columns: newColumns };
     }
-    case ActionType.ChangeCellValue: {
+    case ActionType.UpdateCellValue: {
       const row = data.find((d) => d[rowKeyField] === action.rowKeyValue);
       const column = columns.find((c) => c.key === action.columnKey)!;
       const newRowData = replaceValue(row, column, action.value);
@@ -90,17 +90,17 @@ const kaReducer: any = (state: ITableOption, action: any) => {
       const newSelectedRows = [...selectedRows].filter((s) => s !== action.rowKeyValue);
       return { ...state, selectedRows: newSelectedRows };
     }
-    case ActionType.ChangeSortingDirection:
+    case ActionType.UpdateSortingDirection:
       const sortedColumns = getSortedColumns(columns, action.columnKey);
       return { ...state, columns: sortedColumns };
-    case ActionType.ChangeVirtualScrollingHeightSettings:
+    case ActionType.UpdateVirtualScrolling:
       return { ...state, virtualScrolling: action.virtualScrolling };
-    case ActionType.ChangeData:
+    case ActionType.UpdateData:
       return { ...state, data: action.data };
     case ActionType.ScrollTable:
       if (virtualScrolling) {
-          const scrollPosition = action.scrollTop;
-          return {...state, ...{virtualScrolling: { ...virtualScrolling, scrollPosition }}};
+          const scrollTop = action.scrollTop;
+          return {...state, ...{virtualScrolling: { ...virtualScrolling, scrollTop }}};
         }
       break;
     case ActionType.ExpandGroup: {

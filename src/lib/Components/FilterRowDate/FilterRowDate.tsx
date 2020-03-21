@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { changeFilterRowValue } from '../../actionCreators';
+import { updateFilterRowValue } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { getDateInputValue } from '../../Utils/DateUtils';
 import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
@@ -19,7 +19,7 @@ const FilterRowDate: React.FunctionComponent<IFilterRowEditorProps> = ({
       onChange={(event) => {
         const targetValue = event.currentTarget.value;
         const filterRowValue = targetValue ? new Date(targetValue) : null;
-        dispatch(changeFilterRowValue(column.key, filterRowValue));
+        dispatch(updateFilterRowValue(column.key, filterRowValue));
       }}
     />
   );

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { changeCellValue, closeEditor } from '../../actionCreators';
+import { closeEditor, updateCellValue } from '../../actionCreators';
 import { ActionType } from '../../enums';
 import { DispatchFunc } from '../../types';
 import { getValueByColumn, replaceValue } from '../../Utils/DataUtils';
@@ -33,7 +33,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     if (!validationValue) {
       const newValue = getValueByColumn(rowDataState, column);
       if (getValueByColumn(rowData, column) !== newValue) {
-        dispatch(changeCellValue(rowKeyValue, column.key, newValue));
+        dispatch(updateCellValue(rowKeyValue, column.key, newValue));
       }
       close();
     }
@@ -46,7 +46,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   const dispatchHandler: DispatchFunc = (action: any) => {
     if (action.type === ActionType.CloseEditor) {
       closeHandler();
-    } else if (action.type === ActionType.ChangeCellValue) {
+    } else if (action.type === ActionType.UpdateCellValue) {
       onValueStateChange(action);
     } else {
       dispatch(action);

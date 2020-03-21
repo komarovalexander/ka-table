@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { changeCellValue, closeEditor } from '../../actionCreators';
+import { closeEditor, updateCellValue } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
@@ -17,7 +17,7 @@ const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
       value={value === null || value === undefined ? '' : value}
       onChange={(event) => {
         const newValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
-        dispatch(changeCellValue(rowKeyValue, column.key, newValue));
+        dispatch(updateCellValue(rowKeyValue, column.key, newValue));
       }}
       onBlur={() => {
         dispatch(closeEditor(rowKeyValue, column.key));

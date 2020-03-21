@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { changeCellValue, closeEditor } from '../../actionCreators';
+import { closeEditor, updateCellValue } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { isEmpty } from '../../Utils/CommonUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
@@ -18,7 +18,7 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
       ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}
       checked={value || false}
       onChange={(event) =>
-        dispatch(changeCellValue(rowKeyValue, column.key, event.currentTarget.checked))
+        dispatch(updateCellValue(rowKeyValue, column.key, event.currentTarget.checked))
       }
       onBlur={() => {
         dispatch(closeEditor(rowKeyValue, column.key));

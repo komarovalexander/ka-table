@@ -3,7 +3,7 @@ import './CustomEditorDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { changeCellValue, closeEditor } from '../../lib/actionCreators';
+import { closeEditor, updateCellValue } from '../../lib/actionCreators';
 import { DataType, EditingMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc, EditorFuncPropsWithChildren } from '../../lib/types';
@@ -34,7 +34,7 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
         onChange={(event) => setValue(event.currentTarget.value)}/>
       <button className='custom-editor-button custom-editor-button-save'
         onClick={() => {
-          dispatch(changeCellValue(rowKeyValue, column.key, editorValue));
+          dispatch(updateCellValue(rowKeyValue, column.key, editorValue));
           close();
         }}>Save</button>
       <button className='custom-editor-button custom-editor-button-cancel' onClick={close}>Cancel</button>
@@ -56,7 +56,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
         autoFocus={true}
         defaultValue={editorValue}
         onBlur={() => {
-          dispatch(changeCellValue(rowKeyValue, column.key, editorValue));
+          dispatch(updateCellValue(rowKeyValue, column.key, editorValue));
           close();
         }}
         onChange={(event) => {

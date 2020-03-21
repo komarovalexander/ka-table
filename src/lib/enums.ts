@@ -12,12 +12,12 @@ export enum EditingMode {
 }
 
 export enum ActionType {
-  ChangeCellValue = 'ChangeCellValue',
-  ChangeData = 'ChangeData',
-  ChangeFilterRowOperator = 'ChangeFilterRowOperator',
-  ChangeFilterRowValue = 'ChangeFilterRowValue',
-  ChangeSortingDirection = 'ChangeSortingDirection',
-  ChangeVirtualScrollingHeightSettings = 'ChangeVirtualScrollingHeightSettings',
+  UpdateCellValue = 'UpdateCellValue',
+  UpdateData = 'UpdateData',
+  UpdateFilterRowOperator = 'UpdateFilterRowOperator',
+  UpdateFilterRowValue = 'UpdateFilterRowValue',
+  UpdateSortingDirection = 'UpdateSortingDirection',
+  UpdateVirtualScrolling = 'UpdateVirtualScrolling',
   CloseEditor = 'CloseEditor',
   DeleteRow = 'DeleteRow',
   DeselectAllRows = 'DeselectAllRows',

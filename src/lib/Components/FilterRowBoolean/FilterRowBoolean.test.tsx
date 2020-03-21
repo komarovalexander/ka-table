@@ -43,7 +43,7 @@ describe('FilterRowBoolean', () => {
     expect(props.dispatch).toBeCalledWith({
       columnKey: column.key,
       filterRowValue: newValue,
-      type: ActionType.ChangeFilterRowValue,
+      type: ActionType.UpdateFilterRowValue,
     });
   });
 
@@ -55,7 +55,7 @@ describe('FilterRowBoolean', () => {
     wrapper.find('input').props().onChange!({currentTarget: { checked: newValue} } as any);
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith(
-      { type: ActionType.ChangeFilterRowValue, filterRowValue: undefined, columnKey: column.key },
+      { type: ActionType.UpdateFilterRowValue, filterRowValue: undefined, columnKey: column.key },
     );
   });
 });

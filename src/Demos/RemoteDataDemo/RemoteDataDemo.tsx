@@ -3,7 +3,7 @@ import './RemoteDataDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { changeData, deleteRow } from '../../lib/actionCreators';
+import { deleteRow, updateData } from '../../lib/actionCreators';
 import { ActionType, DataType, EditingMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
 import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
@@ -44,15 +44,15 @@ const RemoteDataDemo: React.FC = () => {
     if (action.type === ActionType.DeleteRow) {
       dispatch({ type: CHANGE_LOADING, loading: 'Deleting Row..' });
       serverEmulator.delete(action.rowKeyValue).then((data) => {
-        dispatch(changeData(data));
+        dispatch(updateData(data));
         dispatch({ type: CHANGE_LOADING, loading: '' });
       });
-    } else if (action.type === ActionType.ChangeCellValue) {
+    } else if (action.type === ActionType.UpdateCellValue) {
       dispatch({ type: CHANGE_LOADING, loading: 'Changing Data..' });
       const column = option.columns.find((c) => c.key === action.columnKey)!;
       changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
       serverEmulator.update(action.rowKeyValue, { [getField(column)]: action.value }).then((data) => {
-        dispatch(changeData(data));
+        dispatch(updateData(data));
         dispatch({ type: CHANGE_LOADING, loading: '' });
       });
     } else if (action.type === CHANGE_LOADING) {
@@ -65,7 +65,7 @@ const RemoteDataDemo: React.FC = () => {
   if (!option.data) {
     serverEmulator.get().then(
       (data) => {
-        dispatch(changeData(data));
+        dispatch(updateData(data));
         dispatch({ type: CHANGE_LOADING, loading: '' });
       },
     );

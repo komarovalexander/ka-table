@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { changeFilterRowValue, search } from '../../lib/actionCreators';
+import { search, updateFilterRowValue } from '../../lib/actionCreators';
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc, FilterRowFuncPropsWithChildren } from '../../lib/types';
@@ -22,7 +22,7 @@ const CustomDateFilterEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
         onChange={(event) => {
           const targetValue = event.currentTarget.value;
           const filterRowValue = targetValue ? new Date(targetValue) : null;
-          dispatch(changeFilterRowValue(column.key, filterRowValue));
+          dispatch(updateFilterRowValue(column.key, filterRowValue));
         }}
       />
     </div>

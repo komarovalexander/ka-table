@@ -1,27 +1,27 @@
 import { ActionType } from './enums';
 
-export const changeFilterRowValue = (columnKey: string, filterRowValue: any) => ({
+export const updateFilterRowValue = (columnKey: string, filterRowValue: any) => ({
   columnKey,
   filterRowValue,
-  type: ActionType.ChangeFilterRowValue,
+  type: ActionType.UpdateFilterRowValue,
 });
 
-export const changeFilterRowOperator = (columnKey: string, filterRowOperator: string) => ({
+export const updateFilterRowOperator = (columnKey: string, filterRowOperator: string) => ({
   columnKey,
   filterRowOperator,
-  type: ActionType.ChangeFilterRowOperator,
+  type: ActionType.UpdateFilterRowOperator,
 });
 
-export const changeCellValue = (rowKeyValue: any, columnKey: string, value: any) => ({
+export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any) => ({
   columnKey,
   rowKeyValue,
-  type: ActionType.ChangeCellValue,
+  type: ActionType.UpdateCellValue,
   value,
 });
 
-export const changeSortingDirection = (columnKey: string) => ({
+export const updateSortingDirection = (columnKey: string) => ({
   columnKey,
-  type: ActionType.ChangeSortingDirection,
+  type: ActionType.UpdateSortingDirection,
 });
 
 export const closeEditor = (rowKeyValue: any, columnKey: string) => ({
@@ -74,7 +74,7 @@ export const expandGroup = (groupKey: any[]) => ({
   type: ActionType.ExpandGroup,
 });
 
-export const changeData = (data: any[]) => ({
+export const updateData = (data: any[]) => ({
   data,
-  type: ActionType.ChangeData,
+  type: ActionType.UpdateData,
 });

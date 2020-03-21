@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { changeFilterRowValue } from '../../actionCreators';
+import { updateFilterRowValue } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
 
@@ -16,7 +16,7 @@ const FilterRowNumber: React.FunctionComponent<IFilterRowEditorProps> = ({
       value={value === null || value === undefined ? '' : value}
       onChange={(event) => {
         const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
-        dispatch(changeFilterRowValue(column.key, filterRowValue));
+        dispatch(updateFilterRowValue(column.key, filterRowValue));
       }}
     />
   );

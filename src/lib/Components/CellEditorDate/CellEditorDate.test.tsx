@@ -42,7 +42,7 @@ describe('CellEditorDate', () => {
     expect(props.dispatch).toBeCalledWith({
       columnKey: 'fieldName',
       rowKeyValue: 2,
-      type: ActionType.ChangeCellValue,
+      type: ActionType.UpdateCellValue,
       value: newValue,
     });
   });

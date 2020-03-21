@@ -43,7 +43,7 @@ describe('CellEditorNumber', () => {
     expect(props.dispatch).toBeCalledWith({
       columnKey: 'fieldName',
       rowKeyValue: 1,
-      type: ActionType.ChangeCellValue,
+      type: ActionType.UpdateCellValue,
       value: newValue,
     });
   });

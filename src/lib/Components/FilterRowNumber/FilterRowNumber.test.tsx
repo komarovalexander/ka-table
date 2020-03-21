@@ -35,7 +35,7 @@ describe('FilterRowNumber', () => {
     expect(props.dispatch).toBeCalledWith({
       columnKey: 'nameKey',
       filterRowValue: newValue,
-      type: ActionType.ChangeFilterRowValue,
+      type: ActionType.UpdateFilterRowValue,
     });
   });
 });
