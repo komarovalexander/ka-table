@@ -13,6 +13,7 @@ import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
+import Loading from '../Loading/Loading';
 import TableBody from '../TableBody/TableBody';
 
 /**
@@ -109,6 +110,9 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
             selectedRows={selectedRows}
         />
       </table>
+      <Loading
+        loading={false}
+      />
     </div >
   );
 };
