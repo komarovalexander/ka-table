@@ -19,9 +19,9 @@ export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any)
   value,
 });
 
-export const updateSortingDirection = (columnKey: string) => ({
+export const updateSortDirection = (columnKey: string) => ({
   columnKey,
-  type: ActionType.UpdateSortingDirection,
+  type: ActionType.UpdateSortDirection,
 });
 
 export const closeEditor = (rowKeyValue: any, columnKey: string) => ({

@@ -16,7 +16,7 @@ export enum ActionType {
   UpdateData = 'UpdateData',
   UpdateFilterRowOperator = 'UpdateFilterRowOperator',
   UpdateFilterRowValue = 'UpdateFilterRowValue',
-  UpdateSortingDirection = 'UpdateSortingDirection',
+  UpdateSortDirection = 'UpdateSortDirection',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
   CloseEditor = 'CloseEditor',
   DeleteRow = 'DeleteRow',

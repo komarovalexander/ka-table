@@ -90,7 +90,7 @@ const kaReducer: any = (state: ITableOption, action: any) => {
       const newSelectedRows = [...selectedRows].filter((s) => s !== action.rowKeyValue);
       return { ...state, selectedRows: newSelectedRows };
     }
-    case ActionType.UpdateSortingDirection:
+    case ActionType.UpdateSortDirection:
       const sortedColumns = getSortedColumns(columns, action.columnKey);
       return { ...state, columns: sortedColumns };
     case ActionType.UpdateVirtualScrolling:
