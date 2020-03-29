@@ -33,7 +33,7 @@ describe('GroupRowContent', () => {
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith({
       groupKey: ['group'],
-      type: ActionType.ExpandGroup,
+      type: ActionType.UpdateGroupsExpanded,
     });
   });
 

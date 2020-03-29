@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
-import { expandGroup } from '../../lib/actionCreators';
+import { updateGroupsExpanded } from '../../lib/actionCreators';
 import EmptyCells from '../../lib/Components/EmptyCells/EmptyCells';
 import { DataType } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
@@ -52,7 +52,7 @@ const tableOption: ITableOption = {
       <EmptyCells count={groupIndex}/>
       <td className='ka-group-column' colSpan={contentColSpan}>
         <button
-          onClick={() => dispatch(expandGroup(groupKey))}
+          onClick={() => dispatch(updateGroupsExpanded(groupKey))}
           style={{marginRight: 5}}>{isExpanded ? 'Hide Group Items' : 'Show Group Items'}</button>
         {text}
       </td>

@@ -103,7 +103,7 @@ const kaReducer: any = (state: ITableOption, action: any) => {
           return {...state, ...{virtualScrolling: { ...virtualScrolling, scrollTop }}};
         }
       break;
-    case ActionType.ExpandGroup: {
+    case ActionType.UpdateGroupsExpanded: {
       let currentGroupsExpanded = groupsExpanded;
       if (!currentGroupsExpanded) {
         const preparedOptions = prepareTableOptions(state);

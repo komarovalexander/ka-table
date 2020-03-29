@@ -69,9 +69,9 @@ export const selectRow = (rowKeyValue: any) => ({
   type: ActionType.SelectRow,
 });
 
-export const expandGroup = (groupKey: any[]) => ({
+export const updateGroupsExpanded = (groupKey: any[]) => ({
   groupKey,
-  type: ActionType.ExpandGroup,
+  type: ActionType.UpdateGroupsExpanded,
 });
 
 export const updateData = (data: any[]) => ({
