@@ -2,7 +2,7 @@ import './SelectionSingleDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { deselectAllRows, selectSingleRow } from '../../lib/actionCreators';
 import { ActionType, DataType } from '../../lib/enums';
 import { ChildAttributes } from '../../lib/models';
@@ -10,7 +10,7 @@ import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc } from '../../lib/types';
 import dataArray from './data';
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
@@ -56,18 +56,18 @@ const selectedItemReducer = (state: any, action: any) => {
 };
 
 const SelectionSingleDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const [selectedItem, changeSelectedItem] = useState<any>();
 
   const dispatch: DispatchFunc = (action) => {
     changeSelectedItem((prevState: any) => selectedItemReducer(prevState, action));
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
     <div className='selection-single-demo'>
       <Table
-        {...option}
+        {...tableProps}
         dispatch={dispatch}
         childAttributes={childAttributes}
       />

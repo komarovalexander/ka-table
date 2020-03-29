@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
 
@@ -14,7 +14,7 @@ const dataArray = Array(20).fill(undefined).map(
   }),
 );
 
-const tableOptions: ITableOption = {
+const tableProps: ITableProps = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -27,17 +27,17 @@ const tableOptions: ITableOption = {
   sortingMode: SortingMode.Single,
 };
 
-class ClassComponentDemo extends React.Component<any, { tableOptions: ITableOption }> {
+class ClassComponentDemo extends React.Component<any, { tableProps: ITableProps }> {
   constructor(props: any) {
     super(props);
-    this.state = { tableOptions };
+    this.state = { tableProps };
     this.dispatch = this.dispatch.bind(this);
   }
 
   public render() {
     return (
       <Table
-      {...this.state.tableOptions}
+      {...this.state.tableProps}
       dispatch={this.dispatch} />
     );
   }
@@ -46,7 +46,7 @@ class ClassComponentDemo extends React.Component<any, { tableOptions: ITableOpti
     this.setState((prevState) => {
       return {
         ...prevState,
-        ...{tableOptions: kaReducer(prevState.tableOptions, action)},
+        ...{tableProps: kaReducer(prevState.tableProps, action)},
       };
     });
   }

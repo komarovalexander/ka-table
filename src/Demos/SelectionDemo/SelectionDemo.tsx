@@ -2,7 +2,7 @@ import './SelectionDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { deselectAllRows, deselectRow, selectAllRows, selectRow } from '../../lib/actionCreators';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
@@ -55,7 +55,7 @@ const SelectionHeader: React.FC<HeaderCellFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       cell: SelectionCell,
@@ -79,14 +79,14 @@ const tableOption: ITableOption = {
 };
 
 const SelectionDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <div className='selection-demo'>
       <Table
-        {...option}
+        {...tableProps}
         data={dataArray}
         dispatch={dispatch}
       />

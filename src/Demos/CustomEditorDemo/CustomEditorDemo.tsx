@@ -2,7 +2,7 @@ import './CustomEditorDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { closeEditor, updateCellValue } from '../../lib/actionCreators';
 import { DataType, EditingMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
@@ -69,7 +69,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { dataType: DataType.String, key: 'name', title: 'Name', editor: CustomEditor, style: { width: '330px' } },
     { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '50px' } },
@@ -94,13 +94,13 @@ const tableOption: ITableOption = {
 };
 
 const CustomEditorDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
       childAttributes={{table: {className: 'custom-editor-demo-table'} }}
     />

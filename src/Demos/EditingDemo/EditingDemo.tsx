@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { DataType, EditingMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc } from '../../lib/types';
@@ -14,7 +14,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9, 10) },
 ];
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '30%' } },
     { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '40px' } },
@@ -36,14 +36,14 @@ const tableOption: ITableOption = {
 };
 
 const EditingDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
     />
   );

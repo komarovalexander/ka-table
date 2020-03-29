@@ -2,7 +2,7 @@ import './CustomCellDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { openEditor } from '../../lib/actionCreators';
 import { DataType, EditingMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
@@ -34,7 +34,7 @@ const CustomImageCell: React.FC<CellFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       cell: CustomImageCell,
@@ -97,13 +97,13 @@ const tableOption: ITableOption = {
 };
 
 const CustomCellDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const onDispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={onDispatch}
     />
   );

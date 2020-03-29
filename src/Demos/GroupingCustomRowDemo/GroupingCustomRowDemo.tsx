@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { updateGroupsExpanded } from '../../lib/actionCreators';
 import EmptyCells from '../../lib/Components/EmptyCells/EmptyCells';
 import { DataType } from '../../lib/enums';
@@ -15,7 +15,7 @@ const dataArray = [
   { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
 ];
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
@@ -63,13 +63,13 @@ const tableOption: ITableOption = {
 };
 
 const GroupingCustomRowDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
     />
   );

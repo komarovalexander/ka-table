@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
 import { DataRowFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
@@ -22,7 +22,7 @@ const DataRow: React.FC<DataRowFuncPropsWithChildren> = ({rowData}) => {
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
@@ -40,13 +40,13 @@ const tableOption: ITableOption = {
 };
 
 const CustomDataRowDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
     />
   );

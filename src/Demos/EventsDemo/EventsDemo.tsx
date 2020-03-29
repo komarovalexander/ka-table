@@ -2,7 +2,7 @@ import './EventsDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 import { ChildAttributes } from '../../lib/models';
 import { kaReducer } from '../../lib/reducers';
@@ -19,7 +19,7 @@ const dataArray = Array(20).fill(undefined).map(
   }),
 );
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -64,16 +64,16 @@ const childAttributes: ChildAttributes = {
 };
 
 const EventsDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const [events, changeEvents] = useState([] as any []);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
     changeEvents((prevValue) => ([{ type: action.type, data: action, date: new Date(), showData: false }, ...prevValue]));
   };
   return (
     <div className='events-demo'>
       <Table
-        {...option}
+        {...tableProps}
         dispatch={dispatch}
         childAttributes={childAttributes}
       />

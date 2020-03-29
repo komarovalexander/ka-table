@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
 import { DataType, EditingMode, FilteringMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
@@ -102,7 +102,7 @@ const DateEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.Boolean,
@@ -147,13 +147,13 @@ const tableOption: ITableOption = {
 };
 
 const FilterRowCustomEditorDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
     />
   );

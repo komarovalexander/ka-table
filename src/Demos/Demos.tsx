@@ -89,17 +89,20 @@ const Demos: React.FC = () => {
         <nav>
           <div className='nav-container'>
             <div className='logo-container'>
-              <b>ka-table</b>
-              <a href='https://github.com/komarovalexander/ka-table'
-                onMouseDown={() => { trackEvent('click', 'github_logo'); }}>
-                <img src='static/icons/github_logo.svg' alt=''/>
-              </a>
-              <a href='https://www.npmjs.com/package/ka-table'
-                onMouseDown={() => { trackEvent('click', 'npm_logo'); }}>
-                <img src='static/icons/npm_logo.svg' alt=''/>
-              </a>
+              <a href='/ka-table/#/overview' className='logo'><img src='static/logo.svg' alt='ka-table'/></a>
+              <a href='http://ka-table.com/docs_get_started.html' className='docs-link'>Docs</a>
             </div>
             <DemosMenu cases={cases} />
+          </div>
+          <div className='resources-icons'>
+            <a href='https://github.com/komarovalexander/ka-table'
+              onMouseDown={() => { trackEvent('click', 'github_logo'); }}>
+              <img src='static/icons/github_logo.svg' alt=''/>
+            </a>
+            <a href='https://www.npmjs.com/package/ka-table'
+              onMouseDown={() => { trackEvent('click', 'npm_logo'); }}>
+              <img src='static/icons/npm_logo.svg' alt=''/>
+            </a>
           </div>
           <div className='developers-links'>
             <div>

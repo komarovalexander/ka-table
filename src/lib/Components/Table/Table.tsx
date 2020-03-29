@@ -18,7 +18,7 @@ import TableBody from '../TableBody/TableBody';
 /**
  * Sets the options of the table which are related to its looks
  */
-export interface ITableOption {
+export interface ITableProps {
   columns: Column[];
   dataRow?: DataRowFunc;
   editableCells?: Cell[];
@@ -41,7 +41,7 @@ export interface ITableEvents {
   dispatch: DispatchFunc;
 }
 
-export interface ITableAllProps extends ITableEvents, ITableOption {
+export interface ITableAllProps extends ITableEvents, ITableProps {
   childAttributes?: ChildAttributes;
 }
 

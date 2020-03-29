@@ -2,7 +2,7 @@ import './AlertCellDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
 import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
@@ -30,7 +30,7 @@ const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'command1', cell: (props) => <AlertCell {...props}/>, style: { width: 40, textAlign: 'center' } },
     { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
@@ -44,15 +44,15 @@ const tableOption: ITableOption = {
 };
 
 const AlertCellDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
 
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
     />
   );

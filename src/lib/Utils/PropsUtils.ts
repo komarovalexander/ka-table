@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react';
 import { isFunction } from 'util';
 
-import { ITableOption } from '../';
+import { ITableProps } from '../';
 import { Column } from '../models';
 import { ChildAttributesItem } from '../types';
 import { filterData, searchData } from './FilterUtils';
@@ -56,7 +56,7 @@ export const mergeProps = (
   return mergedResult;
 };
 
-export const prepareTableOptions = (props: ITableOption) => {
+export const prepareTableOptions = (props: ITableProps) => {
   const {
     extendedFilter,
     groups,

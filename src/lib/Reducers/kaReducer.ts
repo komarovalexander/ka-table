@@ -1,6 +1,6 @@
 
 import { ActionType } from '../enums';
-import { ITableOption } from '../index';
+import { ITableProps } from '../index';
 import { Column } from '../models';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
@@ -9,7 +9,7 @@ import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getSortedColumns } from '../Utils/HeadRowUtils';
 import { prepareTableOptions } from '../Utils/PropsUtils';
 
-const kaReducer: any = (state: ITableOption, action: any) => {
+const kaReducer: any = (state: ITableProps, action: any) => {
   const {
     columns,
     data = [],

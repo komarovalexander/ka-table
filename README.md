@@ -41,7 +41,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableOption = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -55,14 +55,14 @@ const tableOption: ITableOption = {
 };
 
 const OverviewDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableOption) => kaReducer(prevState, action));
   };
 
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
     />
   );
