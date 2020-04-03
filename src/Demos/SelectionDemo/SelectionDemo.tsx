@@ -2,10 +2,9 @@ import './SelectionDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableProps, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { deselectAllRows, deselectRow, selectAllRows, selectRow } from '../../lib/actionCreators';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import {
   DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
 } from '../../lib/types';

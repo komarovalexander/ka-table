@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-import { ITableProps, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = [

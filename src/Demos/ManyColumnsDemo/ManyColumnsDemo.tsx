@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableProps, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { Column } from '../../lib/models';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc } from '../../lib/types';
 
 const columns: Column[] = Array(100).fill(undefined).map(

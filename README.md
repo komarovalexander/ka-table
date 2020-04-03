@@ -26,9 +26,8 @@ yarn add ka-table
 ```js
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
+import { ITableOption, kaReducer, Table } from 'ka-table';
 import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
-import { kaReducer } from 'ka-table/reducers';
 import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(10).fill(undefined).map(

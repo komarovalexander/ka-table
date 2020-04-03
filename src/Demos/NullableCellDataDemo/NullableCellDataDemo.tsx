@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableProps, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { search, updateFilterRowValue } from '../../lib/actionCreators';
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc, FilterRowFuncPropsWithChildren } from '../../lib/types';
 import { dateUtils } from '../../lib/utils';
 import dataArray from './data';

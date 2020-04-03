@@ -2,10 +2,9 @@ import './HoverRowDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableProps, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
 import { ChildAttributes } from '../../lib/models';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc } from '../../lib/types';
 import dataArray from './data';
 

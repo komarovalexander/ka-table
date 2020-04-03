@@ -2,9 +2,8 @@ import React from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 
-import { ITableProps, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 
 const dataArray = Array(30).fill(undefined).map(
   (_, index) => ({

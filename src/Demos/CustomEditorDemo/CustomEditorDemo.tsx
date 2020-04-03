@@ -2,10 +2,9 @@ import './CustomEditorDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableProps, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { closeEditor, updateCellValue } from '../../lib/actionCreators';
 import { DataType, EditingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc, EditorFuncPropsWithChildren } from '../../lib/types';
 import { typeUtils } from '../../lib/utils';
 

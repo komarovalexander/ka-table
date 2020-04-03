@@ -2,10 +2,9 @@ import './RemoteDataDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableProps, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { deleteRow, updateData } from '../../lib/actionCreators';
 import { ActionType, DataType, EditingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
 import { getField } from '../../lib/Utils/ColumnUtils';
 import serverEmulator from './serverEmulator';

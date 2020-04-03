@@ -90,7 +90,7 @@ const Demos: React.FC = () => {
           <div className='nav-container'>
             <div className='logo-container'>
               <a href='/ka-table/#/overview' className='logo'><img src='static/logo.svg' alt='ka-table'/></a>
-              <a href='http://ka-table.com/docs_get_started.html' className='docs-link'>Docs</a>
+              <a href='http://ka-table.com/docs_props.html' className='docs-link'>Docs</a>
             </div>
             <DemosMenu cases={cases} />
           </div>

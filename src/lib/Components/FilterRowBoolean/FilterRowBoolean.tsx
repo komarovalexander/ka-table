@@ -11,7 +11,7 @@ const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = ({
 }) => {
   const value = column.filterRowValue;
   return (
-    <input autoFocus={true}
+    <input
       className={defaultOptions.css.checkbox}
       type='checkbox'
       ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}

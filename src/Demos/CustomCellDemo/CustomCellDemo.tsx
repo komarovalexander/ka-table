@@ -2,10 +2,9 @@ import './CustomCellDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableProps, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { openEditor } from '../../lib/actionCreators';
 import { DataType, EditingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
 import dataArray from './data';
 

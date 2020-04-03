@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import { ITableProps, Table } from '../../lib';
-import { kaReducer } from '../../lib/reducers';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DispatchFunc, HeaderCellFuncPropsWithChildren } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(

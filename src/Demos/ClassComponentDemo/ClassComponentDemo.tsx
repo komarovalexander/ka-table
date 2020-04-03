@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { ITableProps, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 
 const dataArray = Array(20).fill(undefined).map(
   (_, index) => ({
@@ -43,12 +42,10 @@ class ClassComponentDemo extends React.Component<any, { tableProps: ITableProps 
   }
 
   private dispatch(action: any) {
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        ...{tableProps: kaReducer(prevState.tableProps, action)},
-      };
-    });
+    this.setState((prevState) => ({
+      ...prevState,
+      ...{tableProps: kaReducer(prevState.tableProps, action)}
+    }));
   }
 }
 
