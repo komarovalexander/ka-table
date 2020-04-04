@@ -105,3 +105,21 @@
 .ka-filter-row-cell{
   padding: 0 20px 15px 20px;
 }
+.ka-loading{
+  width: 250px;	
+  height: 150px;
+  border-width: 1px;
+  border-color: #b5b7ba;
+  border-style: solid;
+  background-color: #dfdfdf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ka-loading-text{
+  color: red;
+}
+.ka-loading-icon{
+  padding-right: 5px;
+}

@@ -13,7 +13,7 @@ import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
-import Loading from '../Loading/Loading';
+import Loading, { LoadingOptions } from '../Loading/Loading';
 import TableBody from '../TableBody/TableBody';
 
 /**
@@ -21,6 +21,7 @@ import TableBody from '../TableBody/TableBody';
  */
 export interface ITableOption {
   columns: Column[];
+  data?: any[];
   dataRow?: DataRowFunc;
   editableCells?: Cell[];
   editingMode?: EditingMode;
@@ -29,13 +30,13 @@ export interface ITableOption {
   groupRow?: GroupRowFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
+  loading?: LoadingOptions;
   noDataRow?: NoDataRowFunc;
   rowKeyField: string;
   search?: string;
   selectedRows?: any[];
   sortingMode?: SortingMode;
   virtualScrolling?: VirtualScrolling;
-  data?: any[];
 }
 
 export interface ITableEvents {
@@ -49,13 +50,14 @@ export interface ITableAllProps extends ITableEvents, ITableOption {
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     childAttributes = {},
+    data = [],
     editableCells = [],
     editingMode = EditingMode.None,
     filteringMode,
-    sortingMode = SortingMode.None,
-    selectedRows = [],
     groups,
-    data = [],
+    loading,
+    selectedRows = [],
+    sortingMode = SortingMode.None,
   } = props;
   let {
     groupsExpanded,
@@ -111,7 +113,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         />
       </table>
       <Loading
-        loading={false}
+        loading={loading}
       />
     </div >
   );

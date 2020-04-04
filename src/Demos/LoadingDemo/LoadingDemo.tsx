@@ -23,7 +23,10 @@ const tableOption: ITableOption = {
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
   data: dataArray,
-  //loading: true,
+  loading: {
+    enabled: true,
+    text: 'Hello'
+  },
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
