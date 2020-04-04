@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/komarovalexander/ka-table/badge.svg?branch=master&service=github)](https://coveralls.io/github/komarovalexander/ka-table?branch=master&service=github)
 [![Build Status](https://travis-ci.com/komarovalexander/ka-table.svg?token=9QUEx9r7MWqF44f9VDer&branch=master)](https://travis-ci.com/komarovalexander/ka-table)
 
-![Logo](http://ka-table.com/images/logo.svg)
+<a href="http://ka-table.com"><img src="http://ka-table.com/images/logo.svg"/></a>
 
 The customizable, extendable, lightweight and free React Table Component
 
