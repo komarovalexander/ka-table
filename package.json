@@ -1,9 +1,9 @@
 {
   "name": "ka-table",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
-  "homepage": "https://komarovalexander.github.io/ka-table/#/command-column",
+  "homepage": "http://ka-table.com",
   "dependencies": {
     "@types/enzyme": "^3.10.5",
     "@types/enzyme-adapter-react-16": "^1.0.6",
