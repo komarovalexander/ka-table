@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, SortDirection, SortingMode } from 'ka-table/enums';
-import { DataRowFuncPropsWithChildren, OptionChangeFunc } from 'ka-table/types';
+import { DataRowFuncPropsWithChildren, DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -21,7 +21,7 @@ const DataRow: React.FC<DataRowFuncPropsWithChildren> = ({rowData}) => {
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
@@ -32,21 +32,21 @@ const tableOption: ITableOption = {
     },
     { key: 'score', title: 'Score', dataType: DataType.Number },
   ],
+  data: dataArray,
   dataRow: (props) => <DataRow {...props}/>,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };
 
 const CustomDataRowDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
-      data={dataArray}
-      onOptionChange={onOptionChange}
+      {...tableProps}
+      dispatch={dispatch}
     />
   );
 };

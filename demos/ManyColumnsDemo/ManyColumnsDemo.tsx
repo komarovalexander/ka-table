@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
 import { Column } from 'ka-table/models';
-import { DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
+import { DispatchFunc } from 'ka-table/types';
 
 const columns: Column[] = Array(100).fill(undefined).map(
   (_, index) => ({
@@ -21,31 +21,25 @@ const dataArray = Array(30).fill(undefined).map(
   }, { id: index }),
 );
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns,
+  data: dataArray,
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };
 
 const ManyColumnsDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
-  };
-
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
     <>
       <Table
-        {...option}
-        data={data}
-        onOptionChange={onOptionChange}
-        onDataChange={onDataChange}
+        {...tableProps}
+        dispatch={dispatch}
       />
     </>
   );

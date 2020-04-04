@@ -1,9 +1,12 @@
+import './SelectionDemo.scss';
+
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
-import { ActionType, DataType, SortDirection, SortingMode } from 'ka-table/enums';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { deselectAllRows, deselectRow, selectAllRows, selectRow } from 'ka-table/actionCreators';
+import { DataType, SortDirection, SortingMode } from 'ka-table/enums';
 import {
-  EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren, OptionChangeFunc,
+  DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
 } from 'ka-table/types';
 
 const dataArray: any[] = [
@@ -24,9 +27,9 @@ const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
       checked={isSelectedRow}
       onChange={(event) => {
         if (event.currentTarget.checked) {
-          dispatch(ActionType.SelectRow, { rowKeyValue });
+          dispatch(selectRow(rowKeyValue));
         } else {
-          dispatch(ActionType.DeselectRow, { rowKeyValue });
+          dispatch(deselectRow(rowKeyValue));
         }
       }}
     />
@@ -42,22 +45,21 @@ const SelectionHeader: React.FC<HeaderCellFuncPropsWithChildren> = ({
       checked={areAllRowsSelected}
       onChange={(event) => {
         if (event.currentTarget.checked) {
-          dispatch(ActionType.SelectAllRows, {  });
+          dispatch(selectAllRows());
         } else {
-          dispatch(ActionType.DeselectAllRows, {  });
+          dispatch(deselectAllRows());
         }
       }}
     />
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
-      editor: SelectionCell,
+      cell: SelectionCell,
       headCell: SelectionHeader,
-      isEditable: true,
-      key: 'selection',
+      key: '!selection-cell!',
     },
     {
       dataType: DataType.String,
@@ -69,22 +71,25 @@ const tableOption: ITableOption = {
     { key: 'score', title: 'Score', style: { width: '10%' }, dataType: DataType.Number },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
+  data: dataArray,
   rowKeyField: 'id',
   selectedRows: [3, 5],
   sortingMode: SortingMode.Single,
 };
 
 const SelectionDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
-    <Table
-      {...option}
-      data={dataArray}
-      onOptionChange={onOptionChange}
-    />
+    <div className='selection-demo'>
+      <Table
+        {...tableProps}
+        data={dataArray}
+        dispatch={dispatch}
+      />
+    </div>
   );
 };
 

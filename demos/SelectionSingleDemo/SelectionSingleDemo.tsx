@@ -2,13 +2,14 @@ import './SelectionSingleDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { deselectAllRows, selectSingleRow } from 'ka-table/actionCreators';
 import { ActionType, DataType } from 'ka-table/enums';
 import { ChildAttributes } from 'ka-table/models';
-import { OptionChangeFunc } from 'ka-table/types';
+import { DispatchFunc } from 'ka-table/types';
 import dataArray from './data';
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
@@ -33,54 +34,49 @@ const tableOption: ITableOption = {
       title: 'Company Name',
     },
   ],
+  data: dataArray,
   rowKeyField: 'id',
 };
 
 const childAttributes: ChildAttributes = {
   dataRow: {
-    onClick: (event, extendedEvent) => {
-      const {
-        childProps: {
-          rowKeyValue,
-        },
-        dispatch,
-      } = extendedEvent;
-      dispatch(ActionType.SelectSingleRow, {
-        rowKeyValue,
-      });
+    onClick: (event, { dispatch, childProps }) => {
+      dispatch(selectSingleRow(childProps.rowKeyValue));
     },
   },
 };
 
+const selectedItemReducer = (state: any, action: any) => {
+  switch (action.type) {
+    case ActionType.SelectSingleRow: return dataArray.find((i) => i.id === action.rowKeyValue);
+    case ActionType.DeselectAllRows: return null;
+    default: return state;
+  }
+};
+
 const SelectionSingleDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const [selectedItem, changeSelectedItem] = useState();
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const [selectedItem, changeSelectedItem] = useState<any>();
+
+  const dispatch: DispatchFunc = (action) => {
+    changeSelectedItem((prevState: any) => selectedItemReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
-  const onEvent = (type: string, eventData: any) => {
-    if (type === ActionType.SelectSingleRow) {
-      changeSelectedItem(dataArray.find((i) => i.id === eventData.rowKeyValue));
-    }
-  };
-  const deselectClick = () => {
-    changeSelectedItem(null);
-    changeOptions({...option, ...{selectedRows: []} });
-  };
+
   return (
     <div className='selection-single-demo'>
       <Table
-        {...option}
-        data={dataArray}
-        onOptionChange={onOptionChange}
+        {...tableProps}
+        dispatch={dispatch}
         childAttributes={childAttributes}
-        onEvent={onEvent}
       />
       { selectedItem && (
         <div className='info'>
           <div>
             Selected: {selectedItem.name} ({selectedItem.company.name})
-            <button onClick={deselectClick}>Deselect</button>
+            <button onClick={() => {
+              dispatch(deselectAllRows());
+            }}>Deselect</button>
           </div>
         </div>
       )}

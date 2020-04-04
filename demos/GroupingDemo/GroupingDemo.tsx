@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, EditingMode } from 'ka-table/enums';
-import { DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
@@ -12,33 +12,28 @@ const dataArray = [
   { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
 ];
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'type', title: 'TYPE', dataType: DataType.String },
     { key: 'name', title: 'NAME', dataType: DataType.String },
     { key: 'country', title: 'COUNTRY', dataType: DataType.String },
     { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' } },
   ],
+  data: dataArray,
   editingMode: EditingMode.Cell,
   groups: [{ columnKey: 'country' }, { columnKey: 'type' }],
   rowKeyField: 'id',
 };
 
 const GroupingDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
-  };
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
-      data={data}
-      onOptionChange={onOptionChange}
-      onDataChange={onDataChange}
+      {...tableProps}
+      dispatch={dispatch}
     />
   );
 };

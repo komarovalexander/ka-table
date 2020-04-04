@@ -1,8 +1,10 @@
+import './AlertCellDemo.scss';
+
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
-import { DispatchFunc } from 'ka-table/types';
+import { DataType } from 'ka-table/enums';
+import { CellFuncPropsWithChildren, DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -14,21 +16,35 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
+const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
+   rowData,
+}) => {
+  return (
+    <img
+      src='static/icons/alert.svg'
+      className='alert-cell-button'
+      alt=''
+      onClick={() => alert(`Row data: \r\n${JSON.stringify(rowData)}`)}
+    />
+  );
+};
+
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'command1', cell: (props) => <AlertCell {...props}/>, style: { width: 40, textAlign: 'center' } },
+    { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
   data: dataArray,
-  editingMode: EditingMode.Cell,
   rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
 };
 
-const OverviewDemo: React.FC = () => {
+const AlertCellDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
+
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
@@ -41,4 +57,4 @@ const OverviewDemo: React.FC = () => {
   );
 };
 
-export default OverviewDemo;
+export default AlertCellDemo;

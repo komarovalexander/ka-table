@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
-import { DispatchFunc } from 'ka-table/types';
 
-const dataArray = Array(10).fill(undefined).map(
+const dataArray = Array(20).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -14,7 +13,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const tablePropsInit: ITableProps = {
+const tableProps: ITableProps = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -27,18 +26,27 @@ const tablePropsInit: ITableProps = {
   sortingMode: SortingMode.Single,
 };
 
-const OverviewDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
+class ClassComponentDemo extends React.Component<any, { tableProps: ITableProps }> {
+  constructor(props: any) {
+    super(props);
+    this.state = { tableProps };
+    this.dispatch = this.dispatch.bind(this);
+  }
 
-  return (
-    <Table
-      {...tableProps}
-      dispatch={dispatch}
-    />
-  );
-};
+  public render() {
+    return (
+      <Table
+      {...this.state.tableProps}
+      dispatch={this.dispatch} />
+    );
+  }
 
-export default OverviewDemo;
+  private dispatch(action: any) {
+    this.setState((prevState) => ({
+      ...prevState,
+      ...{tableProps: kaReducer(prevState.tableProps, action)}
+    }));
+  }
+}
+
+export default ClassComponentDemo;

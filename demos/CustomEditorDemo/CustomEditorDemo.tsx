@@ -2,10 +2,10 @@ import './CustomEditorDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
-import { ActionType, DataType, EditingMode } from 'ka-table/enums';
-import { Cell } from 'ka-table/models';
-import { DataChangeFunc, EditorFuncPropsWithChildren, OptionChangeFunc } from 'ka-table/types';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { closeEditor, updateCellValue } from 'ka-table/actionCreators';
+import { DataType, EditingMode } from 'ka-table/enums';
+import { DispatchFunc, EditorFuncPropsWithChildren } from 'ka-table/types';
 import { typeUtils } from 'ka-table/utils';
 
 const dataArray: any[] = [
@@ -18,47 +18,44 @@ const dataArray: any[] = [
 ];
 
 const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { key }, rowKeyField, rowData, dispatch,
+  column, rowKeyValue, dispatch, value,
 }) => {
   const close = () => {
-    const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-    dispatch(ActionType.CloseEditor, { cell });
+    dispatch(closeEditor(rowKeyValue, column.key));
   };
-  const [value, setValue] = useState(rowData[key]);
+  const [editorValue, setValue] = useState(value);
   return (
     <div className='custom-editor'>
       <input
         className='form-control'
         type='text'
-        value={value}
+        value={editorValue}
         onChange={(event) => setValue(event.currentTarget.value)}/>
-      <button className='custom-editor-button custom-editor-button-save' onClick={() => {
-        const newValue = { ...rowData, ...{ [key]: value } };
-        dispatch(ActionType.ChangeRowData, { newValue });
-        close();
-      }}>Save</button>
+      <button className='custom-editor-button custom-editor-button-save'
+        onClick={() => {
+          dispatch(updateCellValue(rowKeyValue, column.key, editorValue));
+          close();
+        }}>Save</button>
       <button className='custom-editor-button custom-editor-button-cancel' onClick={close}>Cancel</button>
     </div>
   );
 };
 
 const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
-  column: { key }, rowData, rowKeyField, dispatch,
+  column, dispatch, rowKeyValue, value,
 }) => {
   const close = () => {
-    const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-    dispatch(ActionType.CloseEditor, { cell });
+    dispatch(closeEditor(rowKeyValue, column.key));
   };
-  const [value, setValue] = useState(rowData[key]);
+  const [editorValue, setValue] = useState(value);
   return (
     <div>
       <select
         className='form-control'
         autoFocus={true}
-        defaultValue={value}
+        defaultValue={editorValue}
         onBlur={() => {
-          const newValue = { ...rowData, ...{ [key]: value } };
-          dispatch(ActionType.ChangeRowData, { newValue });
+          dispatch(updateCellValue(rowKeyValue, column.key, editorValue));
           close();
         }}
         onChange={(event) => {
@@ -71,7 +68,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { dataType: DataType.String, key: 'name', title: 'Name', editor: CustomEditor, style: { width: '330px' } },
     { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '50px' } },
@@ -89,27 +86,21 @@ const tableOption: ITableOption = {
       title: 'Next Try',
     },
   ],
-  editableCells: [{ columnKey: 'name', rowKey: 1 }],
+  data: dataArray,
+  editableCells: [{ columnKey: 'name', rowKeyValue: 1 }],
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
 };
 
 const CustomEditorDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
-  };
-
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
-      data={data}
-      onOptionChange={onOptionChange}
-      onDataChange={onDataChange}
+      {...tableProps}
+      dispatch={dispatch}
       childAttributes={{table: {className: 'custom-editor-demo-table'} }}
     />
   );

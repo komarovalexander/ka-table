@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, EditingMode } from 'ka-table/enums';
-import { DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -13,7 +13,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
@@ -46,31 +46,26 @@ const tableOption: ITableOption = {
       title: 'Passed',
     },
   ],
+  data: dataArray,
   editableCells: [{
     columnKey: 'score',
-    rowKey: 2,
+    rowKeyValue: 2,
   }],
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
 };
 
 const ValidationDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({ ...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
-  };
   return (
     <>
       <Table
-        {...option}
-        data={data}
-        onOptionChange={onOptionChange}
-        onDataChange={onDataChange}
+        {...tableProps}
+        dispatch={dispatch}
       />
     </>
   );

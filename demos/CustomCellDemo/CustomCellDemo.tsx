@@ -2,25 +2,21 @@ import './CustomCellDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
-import { ActionType, DataType, EditingMode } from 'ka-table/enums';
-import { Cell } from 'ka-table/models';
-import { CellFuncPropsWithChildren, DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { openEditor } from 'ka-table/actionCreators';
+import { DataType, EditingMode } from 'ka-table/enums';
+import { CellFuncPropsWithChildren, DispatchFunc } from 'ka-table/types';
 import dataArray from './data';
 
 const CustomCell: React.FC<CellFuncPropsWithChildren> = ({
-  column: {
-    key,
-  },
+  column,
   dispatch,
-  rowData,
-  rowKeyField,
+  rowKeyValue,
   value,
 }) => {
   return (
     <div onClick={() => {
-      const cell: Cell = { columnKey: key, rowKey: rowData[rowKeyField] };
-      dispatch(ActionType.OpenEditor, { cell });
+      dispatch(openEditor(rowKeyValue, column.key));
     }} className={value ? 'custom-cell-demo-loyal' : 'custom-cell-demo-no-loyal'}>
       {value ? 'Loyal Program Member' : 'No Loyal Programm'}
     </div>
@@ -37,7 +33,7 @@ const CustomImageCell: React.FC<CellFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       cell: CustomImageCell,
@@ -94,26 +90,20 @@ const tableOption: ITableOption = {
       title: 'First Deal Date',
     },
   ],
+  data: dataArray,
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
 };
 
 const CustomCellDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
-  };
-
-  const [data, changeData] = useState(dataArray);
-  const onDataChange: DataChangeFunc = (newValue) => {
-    changeData(newValue);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const onDispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
-      data={data}
-      onOptionChange={onOptionChange}
-      onDataChange={onDataChange}
+      {...tableProps}
+      dispatch={onDispatch}
     />
   );
 };

@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, EditingMode, FilteringMode, SortingMode } from 'ka-table/enums';
-import { DataChangeFunc, OptionChangeFunc } from 'ka-table/types';
-import dataStorage from './dataStorage';
+import { DispatchFunc } from 'ka-table/types';
+
+const initDataArray = [
+  { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
+  { id: 2, type: 'Dog', name: 'Rex', country: 'Montenegro', age: 6 },
+  { id: 3, type: 'Cat', name: 'Simba', country: 'France', age: 12 },
+  { id: 4, type: 'Dog', name: 'Beethoven', country: 'Czech Republic', age: 3 },
+  { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
+];
 
 const defaultOption = {
   columns: [
@@ -12,6 +19,7 @@ const defaultOption = {
     { key: 'country', title: 'COUNTRY', dataType: DataType.String },
     { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' } },
   ],
+  data: initDataArray,
   editingMode: EditingMode.Cell,
   filteringMode: FilteringMode.FilterRow,
   groups: [{ columnKey: 'country' }, { columnKey: 'type' }],
@@ -20,32 +28,24 @@ const defaultOption = {
 };
 
 const OPTION_KEY = 'state-storing-demo-table-option';
-const tableOption: ITableOption = {...defaultOption, ...JSON.parse(localStorage.getItem(OPTION_KEY) || '0')};
+const tablePropsInit: ITableProps = {...defaultOption, ...JSON.parse(localStorage.getItem(OPTION_KEY) || '0')};
 
 const StateStoringDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    const newOption = {...option, ...value };
-    changeOptions({...option, ...value });
-
-    localStorage.setItem(OPTION_KEY, JSON.stringify(newOption));
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => {
+      const newState = kaReducer(prevState, action);
+      const { data, ...settingsWithoutData } = newState;
+      localStorage.setItem(OPTION_KEY, JSON.stringify(settingsWithoutData));
+      return newState;
+    });
   };
-
-  const [data, changeData] = useState(dataStorage.get());
-  const onDataChange: DataChangeFunc = async (newValue) => {
-    changeData(newValue);
-
-    dataStorage.save(newValue);
-  };
-
   return (
     <>
       <button onClick={() => window.location.reload()} className='top-element' >Reload Page</button>
       <Table
-        {...option}
-        data={data}
-        onOptionChange={onOptionChange}
-        onDataChange={onDataChange}
+        {...tableProps}
+        dispatch={dispatch}
       />
     </>
   );

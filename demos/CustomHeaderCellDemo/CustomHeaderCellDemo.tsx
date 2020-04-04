@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from 'ka-table';
-import { HeaderCellFuncPropsWithChildren, OptionChangeFunc } from 'ka-table/types';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { DispatchFunc, HeaderCellFuncPropsWithChildren } from 'ka-table/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -21,7 +21,7 @@ const HeadCell: React.FC<HeaderCellFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       headCell: (props) => <HeadCell {...props}/>,
@@ -34,20 +34,20 @@ const tableOption: ITableOption = {
       title: 'Column 2',
     },
   ],
+  data: dataArray,
   rowKeyField: 'id',
 };
 
 const CustomHeaderCellDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
     <Table
-      {...option}
-      data={dataArray}
-      onOptionChange={onOptionChange}
+      {...tableProps}
+      dispatch={dispatch}
     />
   );
 };
