@@ -6,7 +6,6 @@ import { ITableProps, kaReducer, Table } from 'ka-table';
 import { closeEditor, updateCellValue } from 'ka-table/actionCreators';
 import { DataType, EditingMode } from 'ka-table/enums';
 import { DispatchFunc, EditorFuncPropsWithChildren } from 'ka-table/types';
-import { typeUtils } from 'ka-table/utils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -59,7 +58,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
           close();
         }}
         onChange={(event) => {
-          setValue(typeUtils.toBoolean(event.currentTarget.value));
+          setValue(event.currentTarget.value === 'true');
         }}>
         <option value={'true'}>True</option>
         <option value={'false'}>False</option>
