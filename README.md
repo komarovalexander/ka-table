@@ -4,6 +4,9 @@
 [![Build Status](https://travis-ci.com/komarovalexander/ka-table.svg?token=9QUEx9r7MWqF44f9VDer&branch=master)](https://travis-ci.com/komarovalexander/ka-table)
 
 # Overview
+
+![Logo](http://ka-table.com/images/logo.svg)
+
 The customizable, extendable, lightweight and free React Table Component
 
 [Site](http://ka-table.com) | [Demos](https://komarovalexander.github.io/ka-table/#/overview) | [Docs](http://ka-table.com/docs_get_started.html)
