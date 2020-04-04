@@ -4,10 +4,10 @@ import { getVirtualized } from './Virtualize';
 describe('Virtualize', () => {
   const data: any[] = new Array(100).fill(0).map((_, index) => index);
   describe('getVirtualized', () => {
-    it('scrollPosition 0', () => {
+    it('scrollTop 0', () => {
       const virtualScrolling: VirtualScrolling = {
         itemHeight: () => 10,
-        scrollPosition: 0,
+        scrollTop: 0,
         tbodyHeight: 40,
       };
       const result = getVirtualized(virtualScrolling, data);
@@ -15,10 +15,10 @@ describe('Virtualize', () => {
       expect(result).toMatchSnapshot();
     });
 
-    it('scrollPosition 100', () => {
+    it('scrollTop 100', () => {
       const virtualScrolling: VirtualScrolling = {
         itemHeight: () => 10,
-        scrollPosition: 100,
+        scrollTop: 100,
         tbodyHeight: 40,
       };
       const result = getVirtualized(virtualScrolling, data);
@@ -26,10 +26,10 @@ describe('Virtualize', () => {
       expect(result).toMatchSnapshot();
     });
 
-    it('scrollPosition 900', () => {
+    it('scrollTop 900', () => {
       const virtualScrolling: VirtualScrolling = {
         itemHeight: () => 10,
-        scrollPosition: 900,
+        scrollTop: 900,
         tbodyHeight: 40,
       };
       const result = getVirtualized(virtualScrolling, data);
@@ -40,7 +40,7 @@ describe('Virtualize', () => {
     it('itemHeight 40', () => {
       const virtualScrolling: VirtualScrolling = {
         itemHeight: 40,
-        scrollPosition: 0,
+        scrollTop: 0,
         tbodyHeight: 160,
       };
       const result = getVirtualized(virtualScrolling, data);

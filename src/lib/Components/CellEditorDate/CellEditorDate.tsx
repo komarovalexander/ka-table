@@ -1,34 +1,30 @@
 import React from 'react';
 
+import { closeEditor, updateCellValue } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { ActionType } from '../../enums';
-import { Cell } from '../../models';
-import { getValueByColumn, replaceValue } from '../../Utils/DataUtils';
 import { getDateInputValue } from '../../Utils/DateUtils';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   column,
   dispatch,
-  rowData,
-  rowKeyField,
+  rowKeyValue,
+  value,
 }) => {
-  const fieldValue = getValueByColumn(rowData, column);
-  const value = fieldValue && getDateInputValue(fieldValue);
+  const inputValue = value && getDateInputValue(value);
   return (
     <input
       autoFocus={true}
       className={defaultOptions.css.dateInput}
       type='date'
-      value={value || ''}
+      value={inputValue || ''}
       onChange={(event) => {
         const targetValue: string = event.currentTarget.value;
         const newValue = targetValue ? new Date(targetValue) : null;
-        dispatch(ActionType.ChangeRowData, {newValue: replaceValue(rowData, column, newValue)});
+        dispatch(updateCellValue(rowKeyValue, column.key, newValue));
       }}
       onBlur={() => {
-        const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-        dispatch(ActionType.CloseEditor, { cell });
+        dispatch(closeEditor(rowKeyValue, column.key));
       }}
     />
   );

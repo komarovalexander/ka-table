@@ -12,20 +12,23 @@ export enum EditingMode {
 }
 
 export enum ActionType {
-  ChangeFilterRow = 'ChangeFilterRow',
-  ChangeRowData = 'ChangeRowData',
-  ChangeSorting = 'ChangeSorting',
-  ChangeVirtualScrollingHeightSettings = 'ChangeVirtualScrollingHeightSettings',
   CloseEditor = 'CloseEditor',
+  DeleteRow = 'DeleteRow',
   DeselectAllRows = 'DeselectAllRows',
   DeselectRow = 'DeselectRow',
-  DeselectRowData = 'DeselectRowData',
   OpenEditor = 'OpenEditor',
   ScrollTable = 'ScrollTable',
+  Search = 'Search',
   SelectAllRows = 'SelectAllRows',
-  SelectSingleRow = 'SelectSingleRow',
   SelectRow = 'SelectRow',
+  SelectSingleRow = 'SelectSingleRow',
+  UpdateCellValue = 'UpdateCellValue',
+  UpdateData = 'UpdateData',
+  UpdateFilterRowOperator = 'UpdateFilterRowOperator',
+  UpdateFilterRowValue = 'UpdateFilterRowValue',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',
+  UpdateSortDirection = 'UpdateSortDirection',
+  UpdateVirtualScrolling = 'UpdateVirtualScrolling',
 }
 
 export enum KeyboardEnum {

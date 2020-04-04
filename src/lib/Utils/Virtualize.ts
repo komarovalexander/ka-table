@@ -2,7 +2,7 @@ import { VirtualScrolling } from '../Models/VirtualScrolling';
 
 export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[]) => {
   const virtualizedData: any[] = [];
-  const { scrollPosition = 0 } = virtualScrolling;
+  const { scrollTop = 0 } = virtualScrolling;
   let { tbodyHeight = 600 } = virtualScrolling;
   let beginHeight = 0;
   let endHeight = 0;
@@ -14,7 +14,7 @@ export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[]) 
         : virtualScrolling.itemHeight(value)
       )
       : 40;
-    if (acc >= scrollPosition - itemHeight) {
+    if (acc >= scrollTop - itemHeight) {
       if (tbodyHeight >= -(itemHeight * 5)) {
         tbodyHeight = tbodyHeight - itemHeight;
         virtualizedData.push(value);

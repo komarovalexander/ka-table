@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { ActionType, EditingMode } from '../../enums';
-import { Cell } from '../../models';
+import { openEditor } from '../../actionCreators';
+import { EditingMode } from '../../enums';
 import { isEmpty } from '../../Utils/CommonUtils';
 import { extendProps } from '../../Utils/PropsUtils';
 import { ICellContentProps } from '../CellContent/CellContent';
@@ -13,8 +13,7 @@ const CellText: React.FunctionComponent<ICellContentProps> = (props) => {
     column: { format },
     dispatch,
     editingMode,
-    rowData,
-    rowKeyField,
+    rowKeyValue,
     value,
   } = props;
 
@@ -24,8 +23,7 @@ const CellText: React.FunctionComponent<ICellContentProps> = (props) => {
     className: 'ka-cell-text',
     onClick: () => {
       if (editingMode === EditingMode.Cell) {
-        const cell: Cell = { columnKey: column.key, rowKey: rowData[rowKeyField] };
-        dispatch(ActionType.OpenEditor, { cell });
+        dispatch(openEditor(rowKeyValue, column.key));
       }
     },
   };

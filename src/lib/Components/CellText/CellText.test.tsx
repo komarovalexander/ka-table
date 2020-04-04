@@ -20,8 +20,11 @@ const props: ICellContentProps = {
   dispatch: jest.fn(),
   editingMode: EditingMode.Cell,
   field: 'columnField',
+  isSelectedRow: false,
   rowData: { columnField: 'columnFieldValue', id: 1 },
   rowKeyField: 'id',
+  rowKeyValue: 1,
+  value: 'columnFieldValue',
 };
 
 afterEach(() => jest.clearAllMocks());
@@ -38,9 +41,8 @@ describe('CellText', () => {
 
     wrapper.find('.ka-cell-text').simulate('click');
     expect(props.dispatch).toBeCalledTimes(1);
-    const cell: Cell = { columnKey: 'columnField', rowKey: 1 };
     expect(props.dispatch).toBeCalledWith(
-      ActionType.OpenEditor, { cell },
+      { type: ActionType.OpenEditor, columnKey: 'columnField', rowKeyValue: 1 },
     );
   });
 

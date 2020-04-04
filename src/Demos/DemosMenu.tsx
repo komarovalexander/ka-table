@@ -9,6 +9,7 @@ import { trackEvent } from './ga';
 interface IDemosMenuProps {
   cases: DemoCase[];
 }
+let timeoutId: any = null;
 const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
   const [search, changeSearch] = useState('');
   const filteredCases = search ? cases.filter((c) => c.title.toLowerCase().includes(search.toLowerCase())) : cases;
@@ -16,7 +17,12 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
     <ul className='menu'>
       <input className='menu-search' type='search' placeholder='search by demos..' value={search} onChange={(e) => {
         const searchValue = e.currentTarget.value;
-        trackEvent('type', 'search:', searchValue);
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          if (searchValue) {
+            trackEvent('type', 'search:', searchValue);
+          }
+        }, 300);
         changeSearch(searchValue);
       }} />
       {

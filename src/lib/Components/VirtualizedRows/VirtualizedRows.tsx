@@ -27,7 +27,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
           tbodyHeight,
           ...virtualScrolling,
         };
-        dispatch(ActionType.ChangeVirtualScrollingHeightSettings, { virtualScrolling: newVirtualScrolling });
+        dispatch({ type: ActionType.UpdateVirtualScrolling, virtualScrolling: newVirtualScrolling });
     }
   };
 

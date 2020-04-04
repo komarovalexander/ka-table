@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import FilterControl from 'react-filter-control';
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
 
-import { ITableOption, Table } from '../../lib';
-import { DataType } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { ITableProps, kaReducer, Table } from '../../lib';
+import { DataType, EditingMode } from '../../lib/enums';
+import { DispatchFunc } from '../../lib/types';
 import { filterData } from './filterData';
 
 const dataArray: any[] = [
@@ -17,12 +17,14 @@ const dataArray: any[] = [
   { id: 7, name: 'Tom Bruce', score: 67, passed: false },
 ];
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'name', title: 'Name', dataType: DataType.String },
     { key: 'score', title: 'Score', dataType: DataType.Number },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
+  data: dataArray,
+  editingMode: EditingMode.Cell,
   rowKeyField: 'id',
 };
 
@@ -80,24 +82,23 @@ export const filter: IFilterControlFilterValue = {
 };
 
 const FilterExtendedDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   const [filterValue, changeFilter] = useState(filter);
-  const onFilterChangedChanged = (newFilterValue: IFilterControlFilterValue) => {
+  const onFilterChanged = (newFilterValue: IFilterControlFilterValue) => {
     changeFilter(newFilterValue);
   };
-  const filteredData = filterData(dataArray, filterValue);
   return (
     <>
       <div className='top-element'>
-        <FilterControl {...{fields, groups, filterValue,  onFilterValueChanged: onFilterChangedChanged}}/>
+        <FilterControl {...{fields, groups, filterValue,  onFilterValueChanged: onFilterChanged}}/>
       </div>
       <Table
-        {...option}
-        data={filteredData}
-        onOptionChange={onOptionChange}
+        {...tableProps}
+        dispatch={dispatch}
+        extendedFilter={(data) => filterData(data, filterValue)}
       />
     </>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, FilteringMode, SortDirection } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
@@ -13,7 +13,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9) },
 ];
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend, filterRowValue: 'Billi Bob' },
     { key: 'score', title: 'Score', dataType: DataType.Number },
@@ -25,20 +25,21 @@ const tableOption: ITableOption = {
       title: 'Next Try',
     },
   ],
+  data: dataArray,
   filteringMode: FilteringMode.FilterRow,
   rowKeyField: 'id',
 };
 
 const FilterRowDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
+      {...tableProps}
       data={dataArray}
-      onOptionChange={onOptionChange}
+      dispatch={dispatch}
     />
   );
 };

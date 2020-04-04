@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { updateFilterRowValue } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { ActionType } from '../../enums';
 import { isEmpty } from '../../Utils/CommonUtils';
 import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
 
@@ -11,7 +11,7 @@ const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = ({
 }) => {
   const value = column.filterRowValue;
   return (
-    <input autoFocus={true}
+    <input
       className={defaultOptions.css.checkbox}
       type='checkbox'
       ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}
@@ -23,8 +23,7 @@ const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = ({
             filterRowValue = undefined;
           }
         }
-        const updatedColumn = {...column, filterRowValue};
-        dispatch(ActionType.ChangeFilterRow, {column: updatedColumn});
+        dispatch(updateFilterRowValue(column.key, filterRowValue));
       }}
     />
   );

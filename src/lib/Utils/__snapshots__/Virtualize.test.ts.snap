@@ -19,7 +19,7 @@ Object {
 }
 `;
 
-exports[`Virtualize getVirtualized scrollPosition 0 1`] = `
+exports[`Virtualize getVirtualized scrollTop 0 1`] = `
 Object {
   "beginHeight": 0,
   "endHeight": 900,
@@ -38,7 +38,7 @@ Object {
 }
 `;
 
-exports[`Virtualize getVirtualized scrollPosition 100 1`] = `
+exports[`Virtualize getVirtualized scrollTop 100 1`] = `
 Object {
   "beginHeight": 70,
   "endHeight": 810,
@@ -57,7 +57,7 @@ Object {
 }
 `;
 
-exports[`Virtualize getVirtualized scrollPosition 900 1`] = `
+exports[`Virtualize getVirtualized scrollTop 900 1`] = `
 Object {
   "beginHeight": 870,
   "endHeight": 10,

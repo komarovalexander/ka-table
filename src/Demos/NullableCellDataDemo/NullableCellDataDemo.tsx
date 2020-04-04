@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
-import {
-  ActionType, DataType, EditingMode, FilteringMode, SortDirection, SortingMode,
-} from '../../lib/enums';
-import { FilterRowFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
+import { ITableProps, kaReducer, Table } from '../../lib';
+import { search, updateFilterRowValue } from '../../lib/actionCreators';
+import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
+import { DispatchFunc, FilterRowFuncPropsWithChildren } from '../../lib/types';
 import { dateUtils } from '../../lib/utils';
 import dataArray from './data';
 
@@ -22,15 +21,14 @@ const CustomDateFilterEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
         onChange={(event) => {
           const targetValue = event.currentTarget.value;
           const filterRowValue = targetValue ? new Date(targetValue) : null;
-          const updatedColumn = {...column, filterRowValue};
-          dispatch(ActionType.ChangeFilterRow, {column: updatedColumn});
+          dispatch(updateFilterRowValue(column.key, filterRowValue));
         }}
       />
     </div>
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
@@ -88,6 +86,7 @@ const tableOption: ITableOption = {
       title: 'First Deal Date',
     },
   ],
+  data: dataArray,
   editingMode: EditingMode.Cell,
   filteringMode: FilteringMode.FilterRow,
   groups: [{ columnKey: 'hasLoyalProgram' }],
@@ -98,19 +97,18 @@ const tableOption: ITableOption = {
 };
 
 const NullableCellDataDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <>
-      <input type='search' defaultValue={option.search} onChange={(event) => {
-        onOptionChange({ search: event.currentTarget.value });
+      <input type='search' defaultValue={tableProps.search} onChange={(event) => {
+        dispatch(search(event.currentTarget.value));
       }} className='top-element'/>
       <Table
-        {...option}
-        data={dataArray}
-        onOptionChange={onOptionChange}
+        {...tableProps}
+        dispatch={dispatch}
       />
     </>
   );

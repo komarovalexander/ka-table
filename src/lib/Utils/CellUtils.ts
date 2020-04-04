@@ -20,5 +20,5 @@ export const addItemToEditableCells = (
 
 export const removeItemFromEditableCells = (
   item: Cell, editableCells: Cell[]): Cell[] => {
-    return editableCells.filter((c) => c.columnKey !== item.columnKey || c.rowKey !== item.rowKey);
+    return editableCells.filter((c) => c.columnKey !== item.columnKey || c.rowKeyValue !== item.rowKeyValue);
 };

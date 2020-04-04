@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
-import { ActionType, DataType, EditingMode, FilteringMode } from '../../lib/enums';
-import { FilterRowFuncPropsWithChildren, OptionChangeFunc } from '../../lib/types';
+import { ITableProps, kaReducer, Table } from '../../lib';
+import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
+import { DataType, EditingMode, FilteringMode } from '../../lib/enums';
+import { DispatchFunc, FilterRowFuncPropsWithChildren } from '../../lib/types';
 import { dateUtils } from '../../lib/utils';
 
 const dataArray: any[] = [
@@ -31,7 +32,7 @@ const CustomLookupEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
         className='form-control'
         defaultValue={column.filterRowValue}
         onChange={(event) => {
-          dispatch(ActionType.ChangeFilterRow, { column: {...column, filterRowValue: toNullableBoolean(event.currentTarget.value)}});
+          dispatch(updateFilterRowValue(column.key, toNullableBoolean(event.currentTarget.value)));
         }}>
         <option value=''/>
         <option value={'true'}>True</option>
@@ -49,7 +50,7 @@ const FilterOperators: React.FC<FilterRowFuncPropsWithChildren> = ({
       className='form-control'
       defaultValue={column.filterRowOperator}
       onChange={(event) => {
-        dispatch(ActionType.ChangeFilterRow, { column: {...column, filterRowOperator: event.currentTarget.value}});
+        dispatch(updateFilterRowOperator(column.key, event.currentTarget.value));
       }}>
       <option value={'='}>=</option>
       <option value={'<'}>{'<'}</option>
@@ -71,7 +72,7 @@ const NumberEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
         style={{width: 60}}
         onChange={(event) => {
           const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
-          dispatch(ActionType.ChangeFilterRow, { column: {...column, filterRowValue}});
+          dispatch(updateFilterRowValue(column.key, filterRowValue));
         }}
         type='number'
       />
@@ -93,15 +94,14 @@ const DateEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
         onChange={(event) => {
           const targetValue = event.currentTarget.value;
           const filterRowValue = targetValue ? new Date(targetValue) : null;
-          const updatedColumn = {...column, filterRowValue};
-          dispatch(ActionType.ChangeFilterRow, {column: updatedColumn});
+          dispatch(updateFilterRowValue(column.key, filterRowValue));
         }}
       />
     </div>
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.Boolean,
@@ -139,21 +139,21 @@ const tableOption: ITableOption = {
       title: 'Next Try',
     },
   ],
+  data: dataArray,
   editingMode: EditingMode.Cell,
   filteringMode: FilteringMode.FilterRow,
   rowKeyField: 'id',
 };
 
 const FilterRowCustomEditorDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
-      data={dataArray}
-      onOptionChange={onOptionChange}
+      {...tableProps}
+      dispatch={dispatch}
     />
   );
 };

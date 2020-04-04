@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
-const data = [
+const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
   { id: 2, type: 'Dog', name: 'Rex', country: 'Montenegro', age: 6 },
   { id: 3, type: 'Cat', name: 'Simba', country: 'France', age: 12 },
@@ -12,7 +12,7 @@ const data = [
   { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
 ];
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
@@ -44,20 +44,20 @@ const tableOption: ITableOption = {
       title: 'AGE',
     },
   ],
+  data: dataArray,
   groups: [{ columnKey: 'country' }, { columnKey: 'type' }],
   rowKeyField: 'id',
 };
 
 const GroupingCustomCellDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
-      data={data}
-      onOptionChange={onOptionChange}
+      {...tableProps}
+      dispatch={dispatch}
     />
   );
 };

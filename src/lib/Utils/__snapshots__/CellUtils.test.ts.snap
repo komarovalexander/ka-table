@@ -4,11 +4,11 @@ exports[`CellUtils CellHandlers addItemToEditableCells 1`] = `
 Array [
   Object {
     "columnKey": "column",
-    "rowKey": 1,
+    "rowKeyValue": 1,
   },
   Object {
     "columnKey": "column2",
-    "rowKey": 2,
+    "rowKeyValue": 2,
   },
 ]
 `;
@@ -17,11 +17,11 @@ exports[`CellUtils CellHandlers removeItemFromEditableCells 1`] = `
 Array [
   Object {
     "columnKey": "column",
-    "rowKey": 1,
+    "rowKeyValue": 1,
   },
   Object {
     "columnKey": "column",
-    "rowKey": 2,
+    "rowKeyValue": 2,
   },
 ]
 `;

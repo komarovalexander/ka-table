@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, SortingMode } from '../../lib/enums';
-import { OptionChangeFunc } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10000).fill(undefined).map(
   (_, index) => ({
@@ -14,13 +14,14 @@ const dataArray = Array(10000).fill(undefined).map(
   }),
 );
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
+  data: dataArray,
   groups: [{ columnKey: 'column1'}, { columnKey: 'column2' }],
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
@@ -29,17 +30,17 @@ const tableOption: ITableOption = {
 };
 
 const ManyRowsGroupingDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
-  const onOptionChange: OptionChangeFunc = (value) => {
-    changeOptions({...option, ...value });
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
     <>
       <Table
-        {...option}
+        {...tableProps}
         data={dataArray}
-        onOptionChange={onOptionChange}
+        dispatch={dispatch}
       />
     </>
   );

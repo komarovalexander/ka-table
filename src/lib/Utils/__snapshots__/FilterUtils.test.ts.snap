@@ -89,7 +89,7 @@ exports[`FilterUtils getRowEditableCells should return required cells from table
 Array [
   Object {
     "columnKey": "10",
-    "rowKey": 10,
+    "rowKeyValue": 10,
   },
 ]
 `;

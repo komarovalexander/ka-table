@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import CommandColumnDemo from './CommandColumnDemo';
+import OverviewDemo from './ClassComponentDemo';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<CommandColumnDemo />, div);
+  ReactDOM.render(<OverviewDemo />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
