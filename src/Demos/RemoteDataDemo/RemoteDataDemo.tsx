@@ -33,6 +33,7 @@ const tablePropsInit: ITableProps = {
   ],
   editingMode: EditingMode.Cell,
   loading: true,
+  noDataRow: () => 'No data',
   rowKeyField: 'id',
 };
 
