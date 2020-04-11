@@ -16,7 +16,6 @@ export enum ActionType {
   DeleteRow = 'DeleteRow',
   DeselectAllRows = 'DeselectAllRows',
   DeselectRow = 'DeselectRow',
-  ExpandGroup = 'ExpandGroup',
   HideLoading = 'HideLoading',
   OpenEditor = 'OpenEditor',
   ScrollTable = 'ScrollTable',
@@ -29,7 +28,8 @@ export enum ActionType {
   UpdateData = 'UpdateData',
   UpdateFilterRowOperator = 'UpdateFilterRowOperator',
   UpdateFilterRowValue = 'UpdateFilterRowValue',
-  UpdateSortingDirection = 'UpdateSortingDirection',
+  UpdateGroupsExpanded = 'UpdateGroupsExpanded',
+  UpdateSortDirection = 'UpdateSortDirection',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
 }
 

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { search, updateFilterRowValue } from '../../lib/actionCreators';
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc, FilterRowFuncPropsWithChildren } from '../../lib/types';
 import { dateUtils } from '../../lib/utils';
 import dataArray from './data';
@@ -29,7 +28,7 @@ const CustomDateFilterEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
@@ -98,17 +97,17 @@ const tableOption: ITableOption = {
 };
 
 const NullableCellDataDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <>
-      <input type='search' defaultValue={option.search} onChange={(event) => {
+      <input type='search' defaultValue={tableProps.search} onChange={(event) => {
         dispatch(search(event.currentTarget.value));
       }} className='top-element'/>
       <Table
-        {...option}
+        {...tableProps}
         dispatch={dispatch}
       />
     </>

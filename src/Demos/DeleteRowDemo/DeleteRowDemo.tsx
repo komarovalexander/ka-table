@@ -2,10 +2,9 @@ import './DeleteRowDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { deleteRow } from '../../lib/actionCreators';
 import { DataType } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
@@ -31,7 +30,7 @@ const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
  );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
@@ -45,14 +44,14 @@ const tableOption: ITableOption = {
 };
 
 const DeleteRowDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
     />
   );

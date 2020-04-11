@@ -2,10 +2,9 @@ import './RemoteDataDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { deleteRow, updateData } from '../../lib/actionCreators';
 import { ActionType, DataType, EditingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
 import { getField } from '../../lib/Utils/ColumnUtils';
 import serverEmulator from './serverEmulator';
@@ -23,7 +22,7 @@ const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
  );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
@@ -39,7 +38,7 @@ const tableOption: ITableOption = {
 const CHANGE_LOADING = 'CHANGE_LOADING';
 const RemoteDataDemo: React.FC = () => {
   const [loadingText, changeLoading] = useState('Loading Data..');
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
     if (action.type === ActionType.DeleteRow) {
       dispatch({ type: CHANGE_LOADING, loading: 'Deleting Row..' });
@@ -49,8 +48,8 @@ const RemoteDataDemo: React.FC = () => {
       });
     } else if (action.type === ActionType.UpdateCellValue) {
       dispatch({ type: CHANGE_LOADING, loading: 'Changing Data..' });
-      const column = option.columns.find((c) => c.key === action.columnKey)!;
-      changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+      const column = tableProps.columns.find((c) => c.key === action.columnKey)!;
+      changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
       serverEmulator.update(action.rowKeyValue, { [getField(column)]: action.value }).then((data) => {
         dispatch(updateData(data));
         dispatch({ type: CHANGE_LOADING, loading: '' });
@@ -58,11 +57,11 @@ const RemoteDataDemo: React.FC = () => {
     } else if (action.type === CHANGE_LOADING) {
       changeLoading(action.loading);
     } else {
-      changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+      changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
     }
   };
 
-  if (!option.data) {
+  if (!tableProps.data) {
     serverEmulator.get().then(
       (data) => {
         dispatch(updateData(data));
@@ -75,7 +74,7 @@ const RemoteDataDemo: React.FC = () => {
     <div className='remote-data-demo'>
       {loadingText && <div className='remote-data-demo-loading'>{loadingText}</div>}
       <Table
-        {...option}
+        {...tableProps}
         dispatch={dispatch}
       />
     </div>

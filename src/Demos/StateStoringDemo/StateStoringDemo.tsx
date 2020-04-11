@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc } from '../../lib/types';
 
 const initDataArray = [
@@ -29,12 +28,12 @@ const defaultOption = {
 };
 
 const OPTION_KEY = 'state-storing-demo-table-option';
-const tableOption: ITableOption = {...defaultOption, ...JSON.parse(localStorage.getItem(OPTION_KEY) || '0')};
+const tablePropsInit: ITableProps = {...defaultOption, ...JSON.parse(localStorage.getItem(OPTION_KEY) || '0')};
 
 const StateStoringDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => {
+    changeTableProps((prevState: ITableProps) => {
       const newState = kaReducer(prevState, action);
       const { data, ...settingsWithoutData } = newState;
       localStorage.setItem(OPTION_KEY, JSON.stringify(settingsWithoutData));
@@ -45,7 +44,7 @@ const StateStoringDemo: React.FC = () => {
     <>
       <button onClick={() => window.location.reload()} className='top-element' >Reload Page</button>
       <Table
-        {...option}
+        {...tableProps}
         dispatch={dispatch}
       />
     </>

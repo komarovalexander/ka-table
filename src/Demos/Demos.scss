@@ -19,11 +19,44 @@ body {
 
     .logo-container {
       padding: 20px 40px;
-      height: 20px;
+      height: 28px;
       border-bottom: 1px solid #CBDCE4;
       display: flex;
       a{
         line-height: 27px;
+        vertical-align: middle;
+        display: flex;
+        &.logo{
+          width: 140px;
+        }
+      }
+      b, a{
+        margin-right: 10px;
+      }
+
+      .docs-link{
+        text-decoration: none;
+        font-size: 18px;
+        color: #53585b;
+        margin-right: 60px;
+        position: relative;
+        top: 4px;
+        left: 18px;
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .resources-icons {
+      padding: 40px 0 0 40px;
+      height: 28px;
+      border-top: 1px solid #CBDCE4;
+      display: flex;
+      a{
+        line-height: 27px;
+        vertical-align: middle;
+        display: flex;
       }
       b, a{
         margin-right: 10px;
@@ -71,7 +104,7 @@ body {
       }
     }
     .developers-links {
-      margin: 40px 0 0 40px;
+      margin: 20px 0 0 40px;
       font-size: 12px;
       line-height: 25px;
       img{

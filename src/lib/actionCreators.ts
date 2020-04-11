@@ -19,9 +19,9 @@ export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any)
   value,
 });
 
-export const updateSortingDirection = (columnKey: string) => ({
+export const updateSortDirection = (columnKey: string) => ({
   columnKey,
-  type: ActionType.UpdateSortingDirection,
+  type: ActionType.UpdateSortDirection,
 });
 
 export const closeEditor = (rowKeyValue: any, columnKey: string) => ({
@@ -69,9 +69,9 @@ export const selectRow = (rowKeyValue: any) => ({
   type: ActionType.SelectRow,
 });
 
-export const expandGroup = (groupKey: any[]) => ({
+export const updateGroupsExpanded = (groupKey: any[]) => ({
   groupKey,
-  type: ActionType.ExpandGroup,
+  type: ActionType.UpdateGroupsExpanded,
 });
 
 export const updateData = (data: any[]) => ({

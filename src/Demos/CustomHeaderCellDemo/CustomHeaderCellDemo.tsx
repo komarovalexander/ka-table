@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
-import { kaReducer } from '../../lib/reducers';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DispatchFunc, HeaderCellFuncPropsWithChildren } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(
@@ -22,7 +21,7 @@ const HeadCell: React.FC<HeaderCellFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       headCell: (props) => <HeadCell {...props}/>,
@@ -40,14 +39,14 @@ const tableOption: ITableOption = {
 };
 
 const CustomHeaderCellDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
     />
   );

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, SortingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10000).fill(undefined).map(
@@ -15,7 +14,7 @@ const dataArray = Array(10000).fill(undefined).map(
   }),
 );
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -31,15 +30,15 @@ const tableOption: ITableOption = {
 };
 
 const ManyRowsGroupingDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
     <>
       <Table
-        {...option}
+        {...tableProps}
         data={dataArray}
         dispatch={dispatch}
       />

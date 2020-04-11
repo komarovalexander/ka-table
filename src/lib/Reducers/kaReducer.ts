@@ -1,6 +1,6 @@
 
 import { ActionType } from '../enums';
-import { ITableOption } from '../index';
+import { ITableProps } from '../index';
 import { Column } from '../models';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
@@ -9,7 +9,7 @@ import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getSortedColumns } from '../Utils/HeadRowUtils';
 import { prepareTableOptions } from '../Utils/PropsUtils';
 
-const kaReducer: any = (state: ITableOption, action: any) => {
+const kaReducer: any = (state: ITableProps, action: any) => {
   const {
     columns,
     data = [],
@@ -96,7 +96,7 @@ const kaReducer: any = (state: ITableOption, action: any) => {
       const newSelectedRows = [...selectedRows].filter((s) => s !== action.rowKeyValue);
       return { ...state, selectedRows: newSelectedRows };
     }
-    case ActionType.UpdateSortingDirection:
+    case ActionType.UpdateSortDirection:
       const sortedColumns = getSortedColumns(columns, action.columnKey);
       return { ...state, columns: sortedColumns };
     case ActionType.UpdateVirtualScrolling:
@@ -109,7 +109,7 @@ const kaReducer: any = (state: ITableOption, action: any) => {
           return {...state, ...{virtualScrolling: { ...virtualScrolling, scrollTop }}};
         }
       break;
-    case ActionType.ExpandGroup: {
+    case ActionType.UpdateGroupsExpanded: {
       let currentGroupsExpanded = groupsExpanded;
       if (!currentGroupsExpanded) {
         const preparedOptions = prepareTableOptions(state);

@@ -2,12 +2,10 @@ import './CustomEditorDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { closeEditor, updateCellValue } from '../../lib/actionCreators';
 import { DataType, EditingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc, EditorFuncPropsWithChildren } from '../../lib/types';
-import { typeUtils } from '../../lib/utils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -60,7 +58,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
           close();
         }}
         onChange={(event) => {
-          setValue(typeUtils.toBoolean(event.currentTarget.value));
+          setValue(event.currentTarget.value === 'true');
         }}>
         <option value={'true'}>True</option>
         <option value={'false'}>False</option>
@@ -69,7 +67,7 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
   );
 };
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { dataType: DataType.String, key: 'name', title: 'Name', editor: CustomEditor, style: { width: '330px' } },
     { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '50px' } },
@@ -94,13 +92,13 @@ const tableOption: ITableOption = {
 };
 
 const CustomEditorDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
       childAttributes={{table: {className: 'custom-editor-demo-table'} }}
     />

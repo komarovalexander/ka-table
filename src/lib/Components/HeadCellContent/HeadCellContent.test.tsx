@@ -31,7 +31,7 @@ describe('HeadCellContent', () => {
     expect(props.dispatch).toBeCalledTimes(1);
     expect(props.dispatch).toBeCalledWith({
       columnKey: 'fieldTest',
-      type: ActionType.UpdateSortingDirection,
+      type: ActionType.UpdateSortDirection,
     });
   });
 });

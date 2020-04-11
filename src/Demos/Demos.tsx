@@ -44,7 +44,7 @@ initializeGA();
 
 const demos: Demo[] = [
   new Demo(OverviewDemo, '/overview', 'Basics', 'OverviewDemo', 'https://stackblitz.com/edit/table-overview-js', 'https://stackblitz.com/edit/table-overview-ts'),
-  new Demo(AlertCellDemo, '/alert-cell', 'Alert Cell', 'AlertCellDemo', 'https://stackblitz.com/edit/table-allert-cell-js', 'https://stackblitz.com/edit/table-allert-cell-ts'),
+  new Demo(AlertCellDemo, '/alert-cell', 'Alert Cell', 'AlertCellDemo', 'https://stackblitz.com/edit/table-alert-cell-js', 'https://stackblitz.com/edit/table-alert-cell-ts'),
   new Demo(ClassComponentDemo, '/class-component', 'Class Component', 'ClassComponentDemo', 'https://stackblitz.com/edit/table-class-component-js', 'https://stackblitz.com/edit/table-class-component-ts'),
   new Demo(CustomCellDemo, '/custom-cell', 'Custom Cell', 'CustomCellDemo', 'https://stackblitz.com/edit/table-custom-cell-js', 'https://stackblitz.com/edit/table-custom-cell-ts'),
   new Demo(CustomDataRowDemo, '/custom-data-row', 'Custom Row', 'CustomDataRowDemo', 'https://stackblitz.com/edit/table-custom-data-row-js', 'https://stackblitz.com/edit/table-custom-data-row-ts'),
@@ -91,17 +91,20 @@ const Demos: React.FC = () => {
         <nav>
           <div className='nav-container'>
             <div className='logo-container'>
-              <b>ka-table</b>
-              <a href='https://github.com/komarovalexander/ka-table'
-                onMouseDown={() => { trackEvent('click', 'github_logo'); }}>
-                <img src='static/icons/github_logo.svg' alt=''/>
-              </a>
-              <a href='https://www.npmjs.com/package/ka-table'
-                onMouseDown={() => { trackEvent('click', 'npm_logo'); }}>
-                <img src='static/icons/npm_logo.svg' alt=''/>
-              </a>
+              <a href='/ka-table/#/overview' className='logo'><img src='static/logo.svg' alt='ka-table'/></a>
+              <a href='http://ka-table.com/docs_props.html' className='docs-link'>Docs</a>
             </div>
             <DemosMenu cases={cases} />
+          </div>
+          <div className='resources-icons'>
+            <a href='https://github.com/komarovalexander/ka-table'
+              onMouseDown={() => { trackEvent('click', 'github_logo'); }}>
+              <img src='static/icons/github_logo.svg' alt=''/>
+            </a>
+            <a href='https://www.npmjs.com/package/ka-table'
+              onMouseDown={() => { trackEvent('click', 'npm_logo'); }}>
+              <img src='static/icons/npm_logo.svg' alt=''/>
+            </a>
           </div>
           <div className='developers-links'>
             <div>

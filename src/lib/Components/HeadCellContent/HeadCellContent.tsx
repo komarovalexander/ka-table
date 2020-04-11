@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { updateSortingDirection } from '../../actionCreators';
+import { updateSortDirection } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { SortDirection, SortingMode } from '../../enums';
 import { IHeadCellProps } from '../HeadCell/HeadCell';
@@ -20,7 +20,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   } = props;
   const isSortingEnabled = sortingMode === SortingMode.Single;
   const sortClick = isSortingEnabled ? () => {
-    dispatch(updateSortingDirection(column.key));
+    dispatch(updateSortDirection(column.key));
   } : undefined;
   return (
     <div

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
-import { expandGroup } from '../../lib/actionCreators';
+import { ITableProps, kaReducer, Table } from '../../lib';
+import { updateGroupsExpanded } from '../../lib/actionCreators';
 import EmptyCells from '../../lib/Components/EmptyCells/EmptyCells';
 import { DataType } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = [
@@ -15,7 +14,7 @@ const dataArray = [
   { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
 ];
 
-const tableOption: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
@@ -52,7 +51,7 @@ const tableOption: ITableOption = {
       <EmptyCells count={groupIndex}/>
       <td className='ka-group-column' colSpan={contentColSpan}>
         <button
-          onClick={() => dispatch(expandGroup(groupKey))}
+          onClick={() => dispatch(updateGroupsExpanded(groupKey))}
           style={{marginRight: 5}}>{isExpanded ? 'Hide Group Items' : 'Show Group Items'}</button>
         {text}
       </td>
@@ -63,13 +62,13 @@ const tableOption: ITableOption = {
 };
 
 const GroupingCustomRowDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <Table
-      {...option}
+      {...tableProps}
       dispatch={dispatch}
     />
   );
