@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableOption, Table } from '../../lib';
+import { hideLoading, showLoading } from '../../lib/actionCreators';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc } from '../../lib/types';
@@ -23,10 +24,7 @@ const tableOption: ITableOption = {
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
   data: dataArray,
-  loading: {
-    enabled: true,
-    text: 'Hello'
-  },
+  loading: true,
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
@@ -39,10 +37,15 @@ const LoadingDemo: React.FC = () => {
   };
 
   return (
-    <Table
-      {...option}
-      dispatch={dispatch}
-    />
+    <>
+      <button onClick={(e) => dispatch(option.loading ? hideLoading() : showLoading()) }>
+        {option.loading ? 'Hide Loading' :  'Show Loading'}
+      </button>
+      <Table
+        {...option}
+        dispatch={dispatch}
+      />
+    </>
   );
 };
 

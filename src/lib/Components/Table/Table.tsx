@@ -13,7 +13,7 @@ import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
-import Loading, { LoadingOptions } from '../Loading/Loading';
+import Loading from '../Loading/Loading';
 import TableBody from '../TableBody/TableBody';
 
 /**
@@ -30,7 +30,7 @@ export interface ITableOption {
   groupRow?: GroupRowFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
-  loading?: LoadingOptions;
+  loading?: boolean;
   noDataRow?: NoDataRowFunc;
   rowKeyField: string;
   search?: string;
@@ -77,9 +77,11 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
 
   const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
   const areAllRowsSelected = data.length === selectedRows.length;
+  const isLoadingActive = loading;
+  const kaCss = isLoadingActive? 'ka ka-loading-active' : 'ka';
 
   return (
-    <div className='ka' >
+    <div className={kaCss}>
       <table {...tableProps}>
         <thead className={defaultOptions.css.thead} ref={theadRef}>
           <HeadRow
