@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { hideLoading, showLoading } from '../../lib/actionCreators';
-import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { DataType } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
