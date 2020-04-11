@@ -37,7 +37,7 @@ const LoadingDemo: React.FC = () => {
 
   return (
     <>
-      <button onClick={(e) => dispatch(option.loading ? hideLoading() : showLoading())}>
+      <button onClick={(e) => dispatch(option.loading ? hideLoading() : showLoading())} className='top-element'>
         {option.loading ? 'Hide Loading' :  'Show Loading'}
       </button>
       <Table
