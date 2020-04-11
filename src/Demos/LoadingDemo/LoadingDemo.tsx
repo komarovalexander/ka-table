@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import { ITableOption, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { hideLoading, showLoading } from '../../lib/actionCreators';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { kaReducer } from '../../lib/reducers';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
@@ -16,7 +15,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const tableOption: ITableOption = {
+const tableOption: ITableProps = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -33,12 +32,12 @@ const tableOption: ITableOption = {
 const LoadingDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableOption) => kaReducer(prevState, action));
+    changeOptions((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
     <>
-      <button onClick={(e) => dispatch(option.loading ? hideLoading() : showLoading()) }>
+      <button onClick={(e) => dispatch(option.loading ? hideLoading() : showLoading())}>
         {option.loading ? 'Hide Loading' :  'Show Loading'}
       </button>
       <Table

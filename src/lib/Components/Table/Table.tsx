@@ -78,7 +78,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
   const areAllRowsSelected = data.length === selectedRows.length;
   const isLoadingActive = loading;
-  const kaCss = isLoadingActive? 'ka ka-loading-active' : 'ka';
+  const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
   return (
     <div className={kaCss}>

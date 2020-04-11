@@ -11,9 +11,8 @@ const Loading: React.FunctionComponent<ILoadingProps> = (props) => {
   if (loading) {
     return (
       <div className='ka-loading'>
-        <div className='ka-loading-icon'>           
-        </div>
-      </div>   
+        <div className='ka-loading-icon'/>
+      </div>
     );
   }
   return (<></>);
