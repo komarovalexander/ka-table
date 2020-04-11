@@ -9,9 +9,11 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
   dispatch,
   value,
   rowKeyValue,
+  autoFocus
 }) => {
   return (
-    <input autoFocus={true}
+    <input
+      autoFocus={autoFocus}
       type='text'
       className={defaultOptions.css.textInput}
       value={value || ''}

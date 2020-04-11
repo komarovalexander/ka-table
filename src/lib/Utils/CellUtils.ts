@@ -7,10 +7,14 @@ export const isEditableCell = (editingMode: EditingMode, column: Column, rowEdit
   if (column.isEditable !== undefined) {
     return column.isEditable;
   }
-  if (editingMode === EditingMode.Cell) {
-    return !!rowEditableCells.find((c) => c.columnKey === column.key);
+  return !!rowEditableCells.find((c) => c.columnKey === column.key);
+};
+
+export const getEditableCell = (column: Column, rowEditableCells: Cell[]): Cell | undefined => {
+  if (column.isEditable === false) {
+    return undefined;
   }
-  return false;
+  return rowEditableCells.find((c) => c.columnKey === column.key);
 };
 
 export const addItemToEditableCells = (

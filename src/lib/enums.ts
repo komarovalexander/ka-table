@@ -22,6 +22,7 @@ export enum ActionType {
   SelectAllRows = 'SelectAllRows',
   SelectRow = 'SelectRow',
   SelectSingleRow = 'SelectSingleRow',
+  UpdateEditorValue = 'UpdateEditorValue',
   UpdateCellValue = 'UpdateCellValue',
   UpdateData = 'UpdateData',
   UpdateFilterRowOperator = 'UpdateFilterRowOperator',

@@ -12,6 +12,13 @@ export const updateFilterRowOperator = (columnKey: string, filterRowOperator: st
   type: ActionType.UpdateFilterRowOperator,
 });
 
+export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: any) => ({
+  columnKey,
+  rowKeyValue,
+  type: ActionType.UpdateEditorValue,
+  value,
+});
+
 export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any) => ({
   columnKey,
   rowKeyValue,

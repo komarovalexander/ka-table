@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { closeEditor, updateCellValue } from '../../actionCreators';
+import { closeEditor, updateCellValue, updateEditorValue } from '../../actionCreators';
 import { ActionType } from '../../enums';
 import { DispatchFunc } from '../../types';
 import { getValueByColumn, replaceValue } from '../../Utils/DataUtils';
@@ -16,13 +16,12 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     rowData,
     rowKeyValue,
     dispatch,
+    value,
   } = props;
-  const [rowDataState, changeValue] = useState(rowData);
 
-  const validationValue = getValidationValue(rowDataState, column);
+  const validationValue = getValidationValue(value, rowData, column);
   const onValueStateChange = (action: any): void => {
-    const newRowValue = replaceValue(rowData, column, action.value);
-    changeValue(newRowValue);
+    dispatch(updateEditorValue(rowKeyValue, column.key, action.value));
   };
 
   const close = useCallback(() => {
@@ -31,13 +30,12 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const closeHandler = useCallback(() => {
     if (!validationValue) {
-      const newValue = getValueByColumn(rowDataState, column);
-      if (getValueByColumn(rowData, column) !== newValue) {
-        dispatch(updateCellValue(rowKeyValue, column.key, newValue));
+      if (getValueByColumn(rowData, column) !== value) {
+        dispatch(updateCellValue(rowKeyValue, column.key, value));
       }
       close();
     }
-  }, [validationValue, dispatch, close, rowDataState, column, rowData, rowKeyValue]);
+  }, [validationValue, dispatch, close, column, rowData, rowKeyValue, value]);
 
   useEffect(() => {
     return addEscEnterKeyEffect(close, closeHandler);
@@ -55,8 +53,6 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const stateProps = { ...props, ...{
     dispatch: dispatchHandler,
-    rowData : rowDataState,
-    value: getValueByColumn(rowDataState, column),
   }};
 
   return (

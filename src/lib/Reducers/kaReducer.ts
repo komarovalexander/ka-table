@@ -59,6 +59,12 @@ const kaReducer: any = (state: ITableProps, action: any) => {
       );
       return { ...state, columns: newColumns };
     }
+    case ActionType.UpdateEditorValue: {
+      const newEditableCells = [...editableCells];
+      const editableCellIndex = newEditableCells.findIndex((c) => c.columnKey === action.columnKey || c.rowKeyValue === action.rowKeyValue);
+      newEditableCells[editableCellIndex] = { ...newEditableCells[editableCellIndex], value: action.value };
+      return { ...state, editableCells: newEditableCells };
+    }
     case ActionType.UpdateCellValue: {
       const row = data.find((d) => d[rowKeyField] === action.rowKeyValue);
       const column = columns.find((c) => c.key === action.columnKey)!;

@@ -19,14 +19,6 @@ describe('CellUtils', () => {
     expect(rowEditableCells).toBeFalsy();
   });
 
-  it('isEditableCell always equals false when EditingMode.None', () => {
-    const rowEditableCells = isEditableCell(EditingMode.None, { key: 'column' }, [{
-      columnKey: 'column',
-      rowKeyValue: 10,
-    }]);
-    expect(rowEditableCells).toBeFalsy();
-  });
-
   describe('CellHandlers', () => {
     it('addItemToEditableCells', () => {
       const editableCells: Cell[] = [{
