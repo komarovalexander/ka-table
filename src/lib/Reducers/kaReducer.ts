@@ -21,6 +21,12 @@ const kaReducer: any = (state: ITableProps, action: any) => {
   } = state;
 
   switch (action.type) {
+    case ActionType.HideLoading: {
+      return { ...state, loading: false };
+    }
+    case ActionType.ShowLoading: {
+      return { ...state, loading: true };
+    }
     case ActionType.OpenEditor: {
       const newEditableCells = addItemToEditableCells(
         action,
