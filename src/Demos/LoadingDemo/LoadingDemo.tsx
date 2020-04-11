@@ -24,9 +24,7 @@ const tableOption: ITableProps = {
   ],
   data: dataArray,
   loading: true,
-  editingMode: EditingMode.Cell,
   rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
 };
 
 const LoadingDemo: React.FC = () => {
