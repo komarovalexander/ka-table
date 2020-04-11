@@ -13,6 +13,7 @@ import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
+import Loading from '../Loading/Loading';
 import TableBody from '../TableBody/TableBody';
 
 /**
@@ -20,6 +21,7 @@ import TableBody from '../TableBody/TableBody';
  */
 export interface ITableProps {
   columns: Column[];
+  data?: any[];
   dataRow?: DataRowFunc;
   editableCells?: Cell[];
   editingMode?: EditingMode;
@@ -28,13 +30,13 @@ export interface ITableProps {
   groupRow?: GroupRowFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
+  loading?: boolean;
   noDataRow?: NoDataRowFunc;
   rowKeyField: string;
   search?: string;
   selectedRows?: any[];
   sortingMode?: SortingMode;
   virtualScrolling?: VirtualScrolling;
-  data?: any[];
 }
 
 export interface ITableEvents {
@@ -48,13 +50,14 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     childAttributes = {},
+    data = [],
     editableCells = [],
     editingMode = EditingMode.None,
     filteringMode,
-    sortingMode = SortingMode.None,
-    selectedRows = [],
     groups,
-    data = [],
+    loading,
+    selectedRows = [],
+    sortingMode = SortingMode.None,
   } = props;
   let {
     groupsExpanded,
@@ -74,9 +77,11 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
 
   const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
   const areAllRowsSelected = data.length === selectedRows.length;
+  const isLoadingActive = loading;
+  const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
   return (
-    <div className='ka' >
+    <div className={kaCss}>
       <table {...tableProps}>
         <thead className={defaultOptions.css.thead} ref={theadRef}>
           <HeadRow
@@ -109,6 +114,9 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
             selectedRows={selectedRows}
         />
       </table>
+      <Loading
+        loading={loading}
+      />
     </div >
   );
 };

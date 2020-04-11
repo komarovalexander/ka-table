@@ -78,3 +78,10 @@ export const updateData = (data: any[]) => ({
   data,
   type: ActionType.UpdateData,
 });
+
+export const showLoading = () => ({
+  type: ActionType.ShowLoading,
+});
+export const hideLoading = () => ({
+  type: ActionType.HideLoading,
+});
