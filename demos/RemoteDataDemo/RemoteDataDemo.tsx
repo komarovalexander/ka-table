@@ -32,7 +32,7 @@ const tablePropsInit: ITableProps = {
     { key: ':delete', cell: (props) => <DeleteRow {...props} />, style: { width: 40, textAlign: 'center' } },
   ],
   editingMode: EditingMode.Cell,
-  loading: true,
+  loading: { enabled: true },
   noDataRow: () => 'No data',
   rowKeyField: 'id',
 };

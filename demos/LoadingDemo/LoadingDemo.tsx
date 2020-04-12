@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
 import { hideLoading, showLoading } from 'ka-table/actionCreators';
-import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
+import { DataType } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(10).fill(undefined).map(
@@ -23,10 +23,8 @@ const tableOption: ITableProps = {
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
   data: dataArray,
-  loading: true,
-  editingMode: EditingMode.Cell,
+  loading: { enabled: true },
   rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
 };
 
 const LoadingDemo: React.FC = () => {
@@ -37,8 +35,8 @@ const LoadingDemo: React.FC = () => {
 
   return (
     <>
-      <button onClick={(e) => dispatch(option.loading ? hideLoading() : showLoading())} className='top-element'>
-        {option.loading ? 'Hide Loading' :  'Show Loading'}
+      <button onClick={(e) => dispatch(option.loading?.enabled ? hideLoading() : showLoading())} className='top-element'>
+        {option.loading?.enabled ? 'Hide Loading' :  'Show Loading'}
       </button>
       <Table
         {...option}
