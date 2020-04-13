@@ -1,14 +1,14 @@
 import * as React from 'react';
 
 export interface ILoadingProps {
-  loading?: boolean;
+  enabled?: boolean;
 }
 
 const Loading: React.FunctionComponent<ILoadingProps> = (props) => {
   const {
-    loading,
+    enabled,
   } = props;
-  if (loading) {
+  if (enabled) {
     return (
       <div className='ka-loading'>
         <div className='ka-loading-icon'/>

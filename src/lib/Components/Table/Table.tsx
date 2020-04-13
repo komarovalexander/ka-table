@@ -13,7 +13,7 @@ import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
-import Loading from '../Loading/Loading';
+import Loading, { ILoadingProps } from '../Loading/Loading';
 import TableBody from '../TableBody/TableBody';
 
 /**
@@ -30,7 +30,7 @@ export interface ITableProps {
   groupRow?: GroupRowFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
-  loading?: boolean;
+  loading?: ILoadingProps;
   noDataRow?: NoDataRowFunc;
   rowKeyField: string;
   search?: string;
@@ -77,7 +77,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
 
   const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
   const areAllRowsSelected = data.length === selectedRows.length;
-  const isLoadingActive = loading;
+  const isLoadingActive = loading && loading.enabled;
   const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
   return (
@@ -115,7 +115,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         />
       </table>
       <Loading
-        loading={loading}
+        enabled={isLoadingActive}
       />
     </div >
   );

@@ -1,5 +1,5 @@
 import {
-    deleteRow, deselectAllRows, deselectRow, selectAllRows, selectSingleRow, updateData
+  deleteRow, deselectAllRows, deselectRow, selectAllRows, selectSingleRow, updateData,
 } from '../actionCreators';
 import { ActionType } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -76,16 +76,16 @@ describe('kaReducer', () => {
   });
   it('ShowLoading', () => {
     const intialState = {
-      loading: false
+      loading: { enabled: false }
     };
     const newState = kaReducer(intialState, { type: ActionType.ShowLoading });
-    expect(newState.loading).toEqual(true);
+    expect(newState.loading.enabled).toEqual(true);
   });
   it('HideLoading', () => {
     const intialState = {
-      loading: true
+      loading: { enabled: true }
     };
     const newState = kaReducer(intialState, { type: ActionType.HideLoading });
-    expect(newState.loading).toEqual(false);
+    expect(newState.loading.enabled).toEqual(false);
   });
 });

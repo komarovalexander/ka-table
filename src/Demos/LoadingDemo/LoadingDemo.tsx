@@ -23,7 +23,7 @@ const tableOption: ITableProps = {
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
   data: dataArray,
-  loading: true,
+  loading: { enabled: true },
   rowKeyField: 'id',
 };
 
@@ -35,8 +35,8 @@ const LoadingDemo: React.FC = () => {
 
   return (
     <>
-      <button onClick={(e) => dispatch(option.loading ? hideLoading() : showLoading())} className='top-element'>
-        {option.loading ? 'Hide Loading' :  'Show Loading'}
+      <button onClick={(e) => dispatch(option.loading?.enabled ? hideLoading() : showLoading())} className='top-element'>
+        {option.loading?.enabled ? 'Hide Loading' :  'Show Loading'}
       </button>
       <Table
         {...option}
