@@ -79,7 +79,8 @@ export const updateData = (data: any[]) => ({
   type: ActionType.UpdateData,
 });
 
-export const showLoading = () => ({
+export const showLoading = (text?: string) => ({
+  text,
   type: ActionType.ShowLoading,
 });
 export const hideLoading = () => ({

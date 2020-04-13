@@ -15,6 +15,7 @@ const kaReducer: any = (state: ITableProps, action: any) => {
     data = [],
     editableCells = [],
     groupsExpanded,
+    loading,
     rowKeyField,
     selectedRows = [],
     virtualScrolling,
@@ -22,10 +23,11 @@ const kaReducer: any = (state: ITableProps, action: any) => {
 
   switch (action.type) {
     case ActionType.HideLoading: {
-      return { ...state, loading: { enabled: false } };
+      return { ...state, loading: {...loading, enabled: false } };
     }
     case ActionType.ShowLoading: {
-      return { ...state, loading: { enabled: true } };
+      const text = action.text === undefined && loading ? loading.text : action.text;
+      return { ...state, loading: {...loading, text, enabled: true } };
     }
     case ActionType.OpenEditor: {
       const newEditableCells = addItemToEditableCells(

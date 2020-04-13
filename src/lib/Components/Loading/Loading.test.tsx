@@ -7,8 +7,8 @@ import Loading, { ILoadingProps } from './Loading';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const props: ILoadingProps = {
-  loading: true
+const props: ILoadingProps = { 
+    enabled: true
 };
 
 it('renders without crashing', () => {

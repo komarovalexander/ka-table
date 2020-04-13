@@ -115,7 +115,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         />
       </table>
       <Loading
-        enabled={isLoadingActive}
+        {...loading}
       />
     </div >
   );
