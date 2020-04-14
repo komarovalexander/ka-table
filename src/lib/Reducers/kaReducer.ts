@@ -26,8 +26,11 @@ const kaReducer: any = (state: ITableProps, action: any) => {
       return { ...state, loading: {...loading, enabled: false } };
     }
     case ActionType.ShowLoading: {
-      const text = action.text === undefined && loading ? loading.text : action.text;
-      return { ...state, loading: {...loading, text, enabled: true } };
+      const newLoading = {...loading, enabled: true };
+      if (action.text !== undefined) {
+        newLoading.text = action.text;
+      }
+      return { ...state, loading: newLoading };
     }
     case ActionType.OpenEditor: {
       const newEditableCells = addItemToEditableCells(
