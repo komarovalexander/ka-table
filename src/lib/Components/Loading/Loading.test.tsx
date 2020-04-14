@@ -7,7 +7,7 @@ import Loading, { ILoadingProps } from './Loading';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const props: ILoadingProps = { 
+const props: ILoadingProps = {
     enabled: true
 };
 

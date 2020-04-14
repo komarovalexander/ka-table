@@ -76,9 +76,9 @@ describe('kaReducer', () => {
   });
   it('ShowLoading', () => {
     const intialState = {
-      loading: { 
+      loading: {
         enabled: false,
-        text: 'test' 
+        text: 'test'
       }
     };
     const newState = kaReducer(intialState, { type: ActionType.ShowLoading });
@@ -87,9 +87,9 @@ describe('kaReducer', () => {
   });
   it('ShowLoading - change text', () => {
     const intialState = {
-      loading: { 
+      loading: {
         enabled: false,
-        text: 'test' 
+        text: 'test'
       }
     };
     const newState = kaReducer(intialState, { type: ActionType.ShowLoading, text: '2' });
@@ -98,9 +98,9 @@ describe('kaReducer', () => {
   });
   it('HideLoading', () => {
     const intialState = {
-      loading: { 
+      loading: {
         enabled: true,
-        text: 'test' 
+        text: 'test'
       }
     };
     const newState = kaReducer(intialState, { type: ActionType.HideLoading });

@@ -23,9 +23,9 @@ const tableOption: ITableProps = {
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
   data: dataArray,
-  loading: { 
+  loading: {
     enabled: true,
-    text: 'Loading data' 
+    text: 'Loading data'
   },
   rowKeyField: 'id',
 };
