@@ -1,5 +1,3 @@
-import './RemoteDataDemo.scss';
-
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
@@ -32,7 +30,10 @@ const tablePropsInit: ITableProps = {
     { key: ':delete', cell: (props) => <DeleteRow {...props} />, style: { width: 40, textAlign: 'center' } },
   ],
   editingMode: EditingMode.Cell,
-  loading: { enabled: true },
+  loading: {
+    enabled: true,
+    text: 'Loading Data..'
+  },
   noDataRow: () => 'No data',
   rowKeyField: 'id',
 };
@@ -41,13 +42,13 @@ const RemoteDataDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
     if (action.type === ActionType.DeleteRow) {
-      dispatch(showLoading());
+      dispatch(showLoading('Deleting Row..'));
       serverEmulator.delete(action.rowKeyValue).then((data) => {
         dispatch(updateData(data));
         dispatch(hideLoading());
       });
     } else if (action.type === ActionType.UpdateCellValue) {
-      dispatch(showLoading());
+      dispatch(showLoading('Updating Data..'));
       const column = tableProps.columns.find((c) => c.key === action.columnKey)!;
       serverEmulator.update(action.rowKeyValue, { [getField(column)]: action.value }).then((data) => {
         dispatch(updateData(data));
