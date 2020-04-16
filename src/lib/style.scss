@@ -115,6 +115,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column; 
 }
 .ka-loading-active{
   position: relative;
@@ -147,4 +148,7 @@
   100%{    
     box-shadow: none;
   }  
+ }
+ .ka-loading-text{
+    margin-top: 15px
  }
