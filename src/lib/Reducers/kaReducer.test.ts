@@ -76,16 +76,35 @@ describe('kaReducer', () => {
   });
   it('ShowLoading', () => {
     const intialState = {
-      loading: false
+      loading: {
+        enabled: false,
+        text: 'test'
+      }
     };
     const newState = kaReducer(intialState, { type: ActionType.ShowLoading });
-    expect(newState.loading).toEqual(true);
+    expect(newState.loading.enabled).toEqual(true);
+    expect(newState.loading.text).toEqual('test');
+  });
+  it('ShowLoading - change text', () => {
+    const intialState = {
+      loading: {
+        enabled: false,
+        text: 'test'
+      }
+    };
+    const newState = kaReducer(intialState, { type: ActionType.ShowLoading, text: '2' });
+    expect(newState.loading.enabled).toEqual(true);
+    expect(newState.loading.text).toEqual('2');
   });
   it('HideLoading', () => {
     const intialState = {
-      loading: true
+      loading: {
+        enabled: true,
+        text: 'test'
+      }
     };
     const newState = kaReducer(intialState, { type: ActionType.HideLoading });
-    expect(newState.loading).toEqual(false);
+    expect(newState.loading.enabled).toEqual(false);
+    expect(newState.loading.text).toEqual('test');
   });
 });
