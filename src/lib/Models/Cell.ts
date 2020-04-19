@@ -4,5 +4,4 @@
 export class Cell {
   public columnKey!: string;
   public rowKeyValue!: any;
-  public value?: any;
 }

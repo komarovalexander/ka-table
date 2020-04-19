@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType, EditingMode } from '../../lib/enums';
+import { DataType } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [

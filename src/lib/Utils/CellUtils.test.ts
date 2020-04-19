@@ -1,5 +1,5 @@
 import { EditingMode } from '../enums';
-import { Cell } from '../Models/Cell';
+import { EditableCell } from '../models';
 import { addItemToEditableCells, isEditableCell, removeItemFromEditableCells } from './CellUtils';
 
 describe('CellUtils', () => {
@@ -21,11 +21,11 @@ describe('CellUtils', () => {
 
   describe('CellHandlers', () => {
     it('addItemToEditableCells', () => {
-      const editableCells: Cell[] = [{
+      const editableCells: EditableCell[] = [{
         columnKey: 'column',
         rowKeyValue: 1,
       }];
-      const item: Cell = {
+      const item: EditableCell = {
         columnKey: 'column2',
         rowKeyValue: 2,
       };
@@ -34,7 +34,7 @@ describe('CellUtils', () => {
     });
 
     it('removeItemFromEditableCells', () => {
-      const editableCells: Cell[] = [{
+      const editableCells: EditableCell[] = [{
         columnKey: 'column',
         rowKeyValue: 1,
       }, {
@@ -44,7 +44,7 @@ describe('CellUtils', () => {
         columnKey: 'column',
         rowKeyValue: 2,
       }];
-      const item: Cell = {
+      const item: EditableCell = {
         columnKey: 'column2',
         rowKeyValue: 2,
       };

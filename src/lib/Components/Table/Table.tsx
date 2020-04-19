@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
-import { Cell } from '../../Models/Cell';
+import { EditableCell } from '../../models';
 import { ChildAttributes } from '../../Models/ChildAttributes';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
@@ -21,7 +21,7 @@ import TableBody from '../TableBody/TableBody';
 export interface ITableProps {
   columns: Column[];
   dataRow?: DataRowFunc;
-  editableCells?: Cell[];
+  editableCells?: EditableCell[];
   editingMode?: EditingMode;
   extendedFilter?: (data: any[]) => any[];
   filteringMode?: FilteringMode;

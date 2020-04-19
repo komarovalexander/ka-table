@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { getEditableCell, isEditableCell } from '../../Utils/CellUtils';
+import { getEditableCell } from '../../Utils/CellUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
-import CellComponent, { unspecifiedEditorValue } from '../CellComponent/CellComponent';
+import CellComponent from '../CellComponent/CellComponent';
 import { IRowCommonProps } from '../DataRow/DataRow';
 
 export interface IDataRowProps extends IRowCommonProps {
@@ -32,9 +32,10 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
             column={column}
             dispatch={dispatch}
             editingMode={editingMode}
-            editorValue={(editableCell && editableCell.hasOwnProperty('value')) ?  editableCell.value : unspecifiedEditorValue}
             isEditableCell={!!editableCell}
             isSelectedRow={isSelectedRow}
+            editorValue={editableCell && editableCell.editorValue}
+            hasEditorValue={editableCell && editableCell.hasOwnProperty('editorValue')}
             key={column.key}
             rowData={rowData}
             rowKeyField={rowKeyField}

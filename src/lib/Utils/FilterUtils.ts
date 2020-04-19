@@ -1,12 +1,12 @@
 import defaultOptions from '../defaultOptions';
 import { DataType, FilterOperatorName } from '../enums';
-import { Cell } from '../Models/Cell';
 import { Column } from '../Models/Column';
+import { EditableCell } from '../Models/EditableCell';
 import { FilterOperator } from '../Models/FilterOperator';
 import { isEmpty } from './CommonUtils';
 import { getValueByColumn } from './DataUtils';
 
-export const getRowEditableCells = (rowKeyValue: any, editableCells: Cell[]): Cell[] => {
+export const getRowEditableCells = (rowKeyValue: any, editableCells: EditableCell[]): EditableCell[] => {
   return editableCells.filter((c) => c.rowKeyValue === rowKeyValue);
 };
 

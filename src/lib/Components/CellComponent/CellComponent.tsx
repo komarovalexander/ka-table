@@ -10,36 +10,31 @@ import { getValueByColumn } from '../../Utils/DataUtils';
 import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
 
-export const unspecifiedEditorValue = {};
 export interface ICellComponentProps {
   childAttributes: ChildAttributes;
   column: Column;
   dispatch: DispatchFunc;
   editingMode: EditingMode;
+  editorValue?: any;
+  hasEditorValue?: any;
   isEditableCell: boolean;
   isSelectedRow: boolean;
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
-  editorValue?: any;
 }
 
 const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
   const {
     column,
-    rowData,
     column: { style },
-    isEditableCell,
     editorValue,
+    hasEditorValue,
+    isEditableCell,
+    rowData,
   } = props;
 
-  let value;
-
-  if (isEditableCell && editorValue !== unspecifiedEditorValue) {
-    value = editorValue;
-  } else {
-    value = getValueByColumn(rowData, column);
-  }
+  const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
   return (
     <td style={style} className={defaultOptions.css.cell}>
       { isEditableCell ? (

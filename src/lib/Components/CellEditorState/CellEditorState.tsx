@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { closeEditor, updateCellValue, updateEditorValue } from '../../actionCreators';
 import { ActionType } from '../../enums';
 import { DispatchFunc } from '../../types';
-import { getValueByColumn, replaceValue } from '../../Utils/DataUtils';
+import { getValueByColumn } from '../../Utils/DataUtils';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import { getValidationValue } from '../../Utils/Validation';
 import { ICellEditorProps } from '../CellEditor/CellEditor';

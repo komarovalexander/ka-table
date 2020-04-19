@@ -4,7 +4,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ActionType, DataType, EditingMode } from '../../enums';
-import { Cell } from '../../models';
 import { ICellContentProps } from '../CellContent/CellContent';
 import CellText from './CellText';
 
