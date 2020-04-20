@@ -1,3 +1,5 @@
+import { HeaderCellFuncPropsWithChildren } from '../../dist/types';
+
 export enum DataType {
   Boolean = 'boolean',
   Date = 'date',
@@ -16,15 +18,17 @@ export enum ActionType {
   DeleteRow = 'DeleteRow',
   DeselectAllRows = 'DeselectAllRows',
   DeselectRow = 'DeselectRow',
+  HideLoading = 'HideLoading',
   OpenEditor = 'OpenEditor',
   ScrollTable = 'ScrollTable',
   Search = 'Search',
   SelectAllRows = 'SelectAllRows',
   SelectRow = 'SelectRow',
   SelectSingleRow = 'SelectSingleRow',
-  UpdateEditorValue = 'UpdateEditorValue',
+  ShowLoading = 'ShowLoading',
   UpdateCellValue = 'UpdateCellValue',
   UpdateData = 'UpdateData',
+  UpdateEditorValue = 'UpdateEditorValue',
   UpdateFilterRowOperator = 'UpdateFilterRowOperator',
   UpdateFilterRowValue = 'UpdateFilterRowValue',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',

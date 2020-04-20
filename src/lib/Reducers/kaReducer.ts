@@ -15,12 +15,23 @@ const kaReducer: any = (state: ITableProps, action: any) => {
     data = [],
     editableCells = [],
     groupsExpanded,
+    loading,
     rowKeyField,
     selectedRows = [],
     virtualScrolling,
   } = state;
 
   switch (action.type) {
+    case ActionType.HideLoading: {
+      return { ...state, loading: {...loading, enabled: false } };
+    }
+    case ActionType.ShowLoading: {
+      const newLoading = {...loading, enabled: true };
+      if (action.text !== undefined) {
+        newLoading.text = action.text;
+      }
+      return { ...state, loading: newLoading };
+    }
     case ActionType.OpenEditor: {
       const newEditableCells = addItemToEditableCells(
         action,

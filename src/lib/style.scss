@@ -105,3 +105,50 @@
 .ka-filter-row-cell{
   padding: 0 20px 15px 20px;
 }
+.ka-loading{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;	
+  height: 100%;
+  background-color: #ffffff88;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; 
+}
+.ka-loading-active{
+  position: relative;
+}
+.ka-loading-icon{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: typing 1s linear infinite alternate;
+  position: relative;
+  left: -20px;
+}
+
+@keyframes typing{
+  0%{
+    background-color: #747D86;
+    box-shadow: 20px 0px 0px 0px rgba(116,125,134,0.2),
+                40px 0px 0px 0px rgba(116,125,134,0.2);
+  }
+  25%{
+    background-color: rgba(116,125,134, 0.4);
+    box-shadow: 20px 0px 0px 0px rgba(116,125,134,2),
+                40px 0px 0px 0px rgba(116,125,134,0.2);
+  }
+  75%{ 
+    background-color: rgba(116,125,134, 0.4);
+    box-shadow: 20px 0px 0px 0px rgba(116,125,134,0.2),
+                40px 0px 0px 0px rgba(116,125,134,1);
+  }
+  100%{    
+    box-shadow: none;
+  }  
+ }
+ .ka-loading-text{
+    margin-top: 15px
+ }

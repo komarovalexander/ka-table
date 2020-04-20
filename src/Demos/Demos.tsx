@@ -26,6 +26,7 @@ import GroupingCustomCellDemo from './GroupingCustomCellDemo/GroupingCustomCellD
 import GroupingCustomRowDemo from './GroupingCustomRowDemo/GroupingCustomRowDemo';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
 import HoverRowDemo from './HoverRowDemo/HoverRowDemo';
+import LoadingDemo from './LoadingDemo/LoadingDemo';
 import ManyColumnsDemo from './ManyColumnsDemo/ManyColumnsDemo';
 import ManyRowsDemo from './ManyRowsDemo/ManyRowsDemo';
 import ManyRowsGroupingDemo from './ManyRowsGroupingDemo/ManyRowsGroupingDemo';
@@ -61,6 +62,7 @@ const demos: Demo[] = [
   new Demo(GroupingCustomCellDemo, '/grouping-custom-cell', 'Grouping Custom Cell', 'GroupingCustomCellDemo', 'https://stackblitz.com/edit/table-grouping-custom-cell-js', 'https://stackblitz.com/edit/table-grouping-custom-cell-ts', true),
   new Demo(GroupingCustomRowDemo, '/grouping-custom-row', 'Grouping Custom Row', 'GroupingCustomRowDemo', 'https://stackblitz.com/edit/table-grouping-custom-row-js', 'https://stackblitz.com/edit/table-grouping-custom-row-ts', true),
   new Demo(HoverRowDemo, '/hover-row', 'Hover Row', 'HoverRowDemo', 'https://stackblitz.com/edit/table-hover-row-js', 'https://stackblitz.com/edit/table-hover-row-ts'),
+  new Demo(LoadingDemo, '/loading', 'Loading', 'LoadingDemo', 'https://stackblitz.com/edit/table-loading-js', 'https://stackblitz.com/edit/table-loading-ts'),
   new Demo(ManyColumnsDemo, '/many-columns', 'Many Columns', 'ManyColumnsDemo', 'https://stackblitz.com/edit/table-many-columns-js', 'https://stackblitz.com/edit/table-many-columns-ts'),
   new Demo(ManyRowsDemo, '/many-rows', 'Many Rows (25k)', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts'),
   new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', 'Many Rows (10k Grouped)', 'ManyRowsGroupingDemo', 'https://stackblitz.com/edit/table-many-rows-grouping-js', 'https://stackblitz.com/edit/table-many-rows-grouping-ts', true),
