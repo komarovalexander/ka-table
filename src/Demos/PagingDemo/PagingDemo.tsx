@@ -25,7 +25,7 @@ const tableOption: ITableProps = {
   paging: {
     enabled: true,
     pageIndex: 2,
-    pageSize: 2,
+    pageSize: 4,
   },
   rowKeyField: 'id',
 };

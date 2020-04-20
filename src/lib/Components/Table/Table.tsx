@@ -10,6 +10,7 @@ import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { DataRowFunc, DispatchFunc, GroupRowFunc, NoDataRowFunc } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
+import { getPagesCount } from '../../Utils/PagingUtils';
 import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
@@ -81,7 +82,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
   const areAllRowsSelected = data.length === selectedRows.length;
   const isLoadingActive = loading && loading.enabled;
-  const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
+  const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';  
 
   return (
     <div className={kaCss}>
@@ -119,6 +120,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
       </table>
       <Paging
         {...paging}
+        pagesCount={getPagesCount(preparedOptions.groupedData, paging)}
       />
       <Loading
         {...loading}
