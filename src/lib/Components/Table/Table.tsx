@@ -10,7 +10,6 @@ import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { DataRowFunc, DispatchFunc, GroupRowFunc, NoDataRowFunc } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
-import { getPagesCount } from '../../Utils/PagingUtils';
 import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
@@ -120,7 +119,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
       </table>
       <Paging
         {...paging}
-        pagesCount={getPagesCount(preparedOptions.groupedData, paging)}
+        pagesCount={preparedOptions.pagesCount}
       />
       <Loading
         {...loading}
