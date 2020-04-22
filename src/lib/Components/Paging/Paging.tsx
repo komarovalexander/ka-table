@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+import { updatePageIndex } from '../../actionCreators';
+import { DispatchFunc } from '../../types';
+
 export interface IPagingProps {
   enabled?: boolean;
   pageIndex?: number;
@@ -8,19 +11,82 @@ export interface IPagingProps {
 
 interface IPagingExtendedProps extends IPagingProps {
   pagesCount: number;
+  dispatch: DispatchFunc;
 }
+
+interface IPageIndexProps extends IPagingProps {
+  activePageIndex: number;
+  dispatch: DispatchFunc;
+  pageIndex: number;
+}
+const PageIndex: React.FunctionComponent<IPageIndexProps> = ({ 
+  dispatch,
+  activePageIndex,
+  pageIndex
+}) => {
+  return  (
+    <div 
+      onClick={() => dispatch(updatePageIndex(pageIndex)) } 
+      className={`ka-paging-page-index ${activePageIndex === pageIndex ? 'ka-paging-page-index-active' : ''}`}
+    >
+      {pageIndex + 1}
+    </div>
+  );
+};
+
 const Paging: React.FunctionComponent<IPagingExtendedProps> = ({ 
     enabled,
     pagesCount,
-    pageIndex,
+    pageIndex = 1,
+    dispatch,
   }) => {
-    const pages = new Array(pagesCount).fill(undefined).map((_, index) =>  index += 1);
+    const centerLength = 5;
+    let pages = new Array(pagesCount).fill(undefined).map((_, index) =>  index);
+    
+    const isEndShown = pageIndex < pages.length - centerLength && pages.length > centerLength + 3;
+    let lastIndex = 0;
+    if(isEndShown){
+      lastIndex = pages[pages.length-1];
+    }
+    const isStartShown = pageIndex >= centerLength && pages.length > centerLength + 3;
+    if(isStartShown || isEndShown){
+      pages = pages.filter(index => 
+        (isStartShown ? isEndShown ? (index >= pageIndex - Math.floor(centerLength / 2)) : (index >= pages.length - centerLength - 1) : (index >= pageIndex - centerLength)) 
+        && (isEndShown ? isStartShown ? (index <= pageIndex + Math.floor(centerLength / 2)) : (index <= centerLength) : (index <= pageIndex + centerLength))
+      );
+    }
   if(enabled){
     return (
-      <div>{
-        pages.map((value, index) => {
-        return <div className={`ka-page-number ${pageIndex === index ? 'ka-page-number-active' : ''}`} key={index}>{value}</div>})}
-      </div>);
+      <div className='ka-paging'>      
+        <div className='ka-paging-pages'>
+          { isStartShown && 
+            <>
+              <PageIndex dispatch={dispatch} pageIndex={0} activePageIndex={pageIndex}/>    
+              <div className={`ka-paging-page-index`} 
+                key={-1}>
+                ...
+              </div>
+            </>
+          }
+          {
+            pages.map((value, index) => {
+              return (
+                <PageIndex dispatch={dispatch} pageIndex={value} activePageIndex={pageIndex} key={value}/>
+              );
+            })
+          }
+           { isEndShown && 
+            <>
+              <div className={`ka-paging-page-index`} 
+                key={-2}>
+                  ...
+              </div>
+              <PageIndex dispatch={dispatch} pageIndex={lastIndex} activePageIndex={pageIndex} />
+            </>
+          }
+        </div>
+      </div>
+    )
   }
     return (<></>);   
 }

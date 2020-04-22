@@ -152,6 +152,27 @@
  .ka-loading-text{
     margin-top: 15px;
  }
- .ka-page-number-active{
-    color: red;
+ .ka-paging{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+ }
+ .ka-paging-pages{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+ }
+ .ka-paging-page-index{
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  line-height: 10px;  
+  text-align: center;
+ }
+ .ka-paging-page-index-active{ 
+  background-color: #f1f5f7;
+  font-weight: bold;
  }
