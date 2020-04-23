@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { updatePageIndex } from '../../actionCreators';
 import { DispatchFunc } from '../../types';
+import { centerLength, getPagesForCenter } from '../../Utils/PagingUtils';
 
 export interface IPagingProps {
   enabled?: boolean;
@@ -40,24 +41,12 @@ const Paging: React.FunctionComponent<IPagingExtendedProps> = ({
     pageIndex = 1,
     dispatch,
   }) => {
-    const centerLength = 5;
     let pages = new Array(pagesCount).fill(undefined).map((_, index) =>  index);
     
     const isEndShown = pageIndex < pages.length - centerLength && pages.length > centerLength + Math.ceil(centerLength / 2);
-    let lastIndex = 0;
-    if(isEndShown){
-      lastIndex = pages[pages.length-1];
-    }
     const isStartShown = pageIndex >= centerLength && pages.length > centerLength + Math.ceil(centerLength / 2);
+    const centerPages = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);
     
-    if(isStartShown && !isEndShown){
-      pages = pages.filter(index => (index >= pages.length - centerLength - 1) && (index <= pageIndex + centerLength));
-    } else if (!isStartShown && isEndShown) {
-      pages = pages.filter(index => (index >= pageIndex - centerLength) && (index <= centerLength))
-    } else if (isStartShown && isEndShown) {
-      pages = pages.filter(index => (index >= pageIndex - Math.floor(centerLength / 2)) && (index <= pageIndex + Math.floor(centerLength / 2)))
-    }
-   
     if(enabled){
       return (
         <div className='ka-paging'>      
@@ -72,7 +61,7 @@ const Paging: React.FunctionComponent<IPagingExtendedProps> = ({
               </>
             }
             {
-              pages.map((value, index) => {
+              centerPages.map((value, index) => {
                 return (
                   <PageIndex dispatch={dispatch} pageIndex={value} activePageIndex={pageIndex} key={value}/>
                 );
@@ -84,7 +73,7 @@ const Paging: React.FunctionComponent<IPagingExtendedProps> = ({
                   key={-2}>
                     ...
                 </div>
-                <PageIndex dispatch={dispatch} pageIndex={lastIndex} activePageIndex={pageIndex} />
+                <PageIndex dispatch={dispatch} pageIndex={pages[pages.length-1]} activePageIndex={pageIndex} />
               </>
             }
           </div>

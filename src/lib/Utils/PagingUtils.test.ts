@@ -1,5 +1,5 @@
 import { IPagingProps } from '../Components/Paging/Paging';
-import { getPageData, getPagesCount } from './PagingUtils';
+import { getPageData, getPagesCount, getPagesForCenter } from './PagingUtils';
 
 describe('PagingUtils', () => {
   it('getPagesCount', () => {
@@ -90,5 +90,45 @@ describe('PagingUtils', () => {
     expect(result.length).toEqual(2);
     expect(result[0]).toEqual(20);
     expect(result[1]).toEqual(21);
+  });
+  it('getPagesForCenter isStartShown= false isEndShown= false ', () => {
+    const pages = new Array(6).fill(undefined).map((_, i) => i);
+    const isStartShown = false;
+    const isEndShown = false;
+    const pageIndex = 4;
+    const result = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);
+    expect(result.length).toEqual(6);
+    expect(result[0]).toEqual(0);
+    expect(result[5]).toEqual(5);
+  });
+  it('getPagesForCenter isStartShown= true isEndShown= false ', () => {
+    const pages = new Array(20).fill(undefined).map((_, i) => i);
+    const isStartShown = true;
+    const isEndShown = false;
+    const pageIndex = 17;
+    const result = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);
+    expect(result.length).toEqual(6);
+    expect(result[0]).toEqual(14);
+    expect(result[5]).toEqual(19);
+  });
+  it('getPagesForCenter isStartShown= false isEndShown= true ', () => {
+    const pages = new Array(20).fill(undefined).map((_, i) => i);
+    const isStartShown = false;
+    const isEndShown = true;
+    const pageIndex = 4;
+    const result = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);
+    expect(result.length).toEqual(6);
+    expect(result[0]).toEqual(0);
+    expect(result[5]).toEqual(5);
+  });
+  it('getPagesForCenter isStartShown= true isEndShown= true ', () => {
+    const pages = new Array(20).fill(undefined).map((_, i) => i);
+    const isStartShown = true;
+    const isEndShown = true;
+    const pageIndex = 9;
+    const result = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);
+    expect(result.length).toEqual(5);
+    expect(result[0]).toEqual(7);
+    expect(result[4]).toEqual(11);
   });
 });
