@@ -22,7 +22,7 @@ export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[]) 
         endHeight += itemHeight;
       }
     } else {
-      beginHeight = acc - itemHeight;
+      beginHeight = acc + itemHeight;
     }
     return acc + itemHeight;
   }, 0);
