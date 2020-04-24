@@ -1,4 +1,3 @@
-import { HeaderCellFuncPropsWithChildren } from '../../dist/types';
 
 export enum DataType {
   Boolean = 'boolean',
@@ -14,6 +13,7 @@ export enum EditingMode {
 }
 
 export enum ActionType {
+  AddRow = 'AddRow',
   CloseEditor = 'CloseEditor',
   DeleteRow = 'DeleteRow',
   DeselectAllRows = 'DeselectAllRows',
@@ -32,6 +32,7 @@ export enum ActionType {
   UpdateFilterRowOperator = 'UpdateFilterRowOperator',
   UpdateFilterRowValue = 'UpdateFilterRowValue',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',
+  UpdateNewRow = 'UpdateNewRow',
   UpdateSortDirection = 'UpdateSortDirection',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
 }

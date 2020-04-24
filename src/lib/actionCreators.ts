@@ -90,6 +90,17 @@ export const showLoading = (text?: string) => ({
   text,
   type: ActionType.ShowLoading,
 });
+
 export const hideLoading = () => ({
   type: ActionType.HideLoading,
+});
+
+export const updateNewRow = (newRowData: any) => ({
+  newRowData,
+  type: ActionType.UpdateNewRow,
+});
+
+export const addRow = (rowData: any) => ({
+  rowData,
+  type: ActionType.AddRow,
 });
