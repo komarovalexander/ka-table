@@ -40,7 +40,7 @@ Object {
 
 exports[`Virtualize getVirtualized scrollTop 100 1`] = `
 Object {
-  "beginHeight": 70,
+  "beginHeight": 90,
   "endHeight": 810,
   "virtualizedData": Array [
     9,
@@ -59,7 +59,7 @@ Object {
 
 exports[`Virtualize getVirtualized scrollTop 900 1`] = `
 Object {
-  "beginHeight": 870,
+  "beginHeight": 890,
   "endHeight": 10,
   "virtualizedData": Array [
     89,
