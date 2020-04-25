@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/static/css/main.12ed6838.chunk.css",
-    "main.js": "/static/js/main.79df5fb8.chunk.js",
-    "main.js.map": "/static/js/main.79df5fb8.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.5da2c60e.js",
-    "runtime-main.js.map": "/static/js/runtime-main.5da2c60e.js.map",
-    "static/css/2.226e677e.chunk.css": "/static/css/2.226e677e.chunk.css",
-    "static/js/2.4c1b6973.chunk.js": "/static/js/2.4c1b6973.chunk.js",
-    "static/js/2.4c1b6973.chunk.js.map": "/static/js/2.4c1b6973.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.cd292054832cf1d1c36b7e28c8365190.js": "/precache-manifest.cd292054832cf1d1c36b7e28c8365190.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/2.226e677e.chunk.css.map": "/static/css/2.226e677e.chunk.css.map",
-    "static/css/main.12ed6838.chunk.css.map": "/static/css/main.12ed6838.chunk.css.map",
-    "static/js/2.4c1b6973.chunk.js.LICENSE.txt": "/static/js/2.4c1b6973.chunk.js.LICENSE.txt"
+    "main.css": "/ka-table/static/css/main.fd965cfb.chunk.css",
+    "main.js": "/ka-table/static/js/main.ca6a08e0.chunk.js",
+    "main.js.map": "/ka-table/static/js/main.ca6a08e0.chunk.js.map",
+    "runtime-main.js": "/ka-table/static/js/runtime-main.4a4816c7.js",
+    "runtime-main.js.map": "/ka-table/static/js/runtime-main.4a4816c7.js.map",
+    "static/css/2.226e677e.chunk.css": "/ka-table/static/css/2.226e677e.chunk.css",
+    "static/js/2.d8683dee.chunk.js": "/ka-table/static/js/2.d8683dee.chunk.js",
+    "static/js/2.d8683dee.chunk.js.map": "/ka-table/static/js/2.d8683dee.chunk.js.map",
+    "index.html": "/ka-table/index.html",
+    "precache-manifest.4acdc78ac69e8e7dfd88bf158a636b22.js": "/ka-table/precache-manifest.4acdc78ac69e8e7dfd88bf158a636b22.js",
+    "service-worker.js": "/ka-table/service-worker.js",
+    "static/css/2.226e677e.chunk.css.map": "/ka-table/static/css/2.226e677e.chunk.css.map",
+    "static/css/main.fd965cfb.chunk.css.map": "/ka-table/static/css/main.fd965cfb.chunk.css.map",
+    "static/js/2.d8683dee.chunk.js.LICENSE.txt": "/ka-table/static/js/2.d8683dee.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.5da2c60e.js",
+    "static/js/runtime-main.4a4816c7.js",
     "static/css/2.226e677e.chunk.css",
-    "static/js/2.4c1b6973.chunk.js",
-    "static/css/main.12ed6838.chunk.css",
-    "static/js/main.79df5fb8.chunk.js"
+    "static/js/2.d8683dee.chunk.js",
+    "static/css/main.fd965cfb.chunk.css",
+    "static/js/main.ca6a08e0.chunk.js"
   ]
 }
