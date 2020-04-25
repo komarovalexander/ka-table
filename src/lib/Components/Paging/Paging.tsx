@@ -76,7 +76,7 @@ const Paging: React.FunctionComponent<IPagingExtendedProps> = ({
                   key={-2}>
                     ...
                 </div>
-                (<PageIndex dispatch={dispatch} pageIndex={pages[pages.length - 1]} activePageIndex={pageIndex} />);
+                <PageIndex dispatch={dispatch} pageIndex={pages[pages.length - 1]} activePageIndex={pageIndex} />
               </>
               )
             }
