@@ -20,14 +20,14 @@ interface IPageIndexProps extends IPagingProps {
   dispatch: DispatchFunc;
   pageIndex: number;
 }
-const PageIndex: React.FunctionComponent<IPageIndexProps> = ({ 
+const PageIndex: React.FunctionComponent<IPageIndexProps> = ({
   dispatch,
   activePageIndex,
   pageIndex
 }) => {
   return  (
-    <div 
-      onClick={() => dispatch(updatePageIndex(pageIndex)) } 
+    <div
+      onClick={() => dispatch(updatePageIndex(pageIndex))}
       className={`ka-paging-page-index ${activePageIndex === pageIndex ? 'ka-paging-page-index-active' : ''}`}
     >
       {pageIndex + 1}
@@ -35,30 +35,32 @@ const PageIndex: React.FunctionComponent<IPageIndexProps> = ({
   );
 };
 
-const Paging: React.FunctionComponent<IPagingExtendedProps> = ({ 
+const Paging: React.FunctionComponent<IPagingExtendedProps> = ({
     enabled,
     pagesCount,
     pageIndex = 1,
     dispatch,
   }) => {
-    let pages = new Array(pagesCount).fill(undefined).map((_, index) =>  index);
-    
+    const pages = new Array(pagesCount).fill(undefined).map((_, index) =>  index);
+
     const isEndShown = pageIndex < pages.length - centerLength && pages.length > centerLength + Math.ceil(centerLength / 2);
     const isStartShown = pageIndex >= centerLength && pages.length > centerLength + Math.ceil(centerLength / 2);
     const centerPages = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);
-    
-    if(enabled){
+
+    if (enabled){
       return (
-        <div className='ka-paging'>      
+        <div className='ka-paging'>
           <div className='ka-paging-pages'>
-            { isStartShown && 
+            { isStartShown &&
+              (
               <>
-                <PageIndex dispatch={dispatch} pageIndex={0} activePageIndex={pageIndex}/>    
-                <div className={`ka-paging-page-index`} 
+                <PageIndex dispatch={dispatch} pageIndex={0} activePageIndex={pageIndex}/>
+                <div className={`ka-paging-page-index`}
                   key={-1}>
                   ...
                 </div>
               </>
+              )
             }
             {
               centerPages.map((value, index) => {
@@ -67,20 +69,22 @@ const Paging: React.FunctionComponent<IPagingExtendedProps> = ({
                 );
               })
             }
-            { isEndShown && 
+            { isEndShown &&
+              (
               <>
-                <div className={`ka-paging-page-index`} 
+                <div className={`ka-paging-page-index`}
                   key={-2}>
                     ...
                 </div>
-                <PageIndex dispatch={dispatch} pageIndex={pages[pages.length-1]} activePageIndex={pageIndex} />
+                (<PageIndex dispatch={dispatch} pageIndex={pages[pages.length - 1]} activePageIndex={pageIndex} />);
               </>
+              )
             }
           </div>
         </div>
       )
     }
-    return (<></>);   
+    return (<></>);
 }
 
 export default Paging;

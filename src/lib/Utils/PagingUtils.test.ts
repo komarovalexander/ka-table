@@ -7,7 +7,7 @@ describe('PagingUtils', () => {
       enabled: true,
       pageSize: 2,
     };
-    const data = [1,2,3,4,5,6];
+    const data = [1, 2, 3, 4, 5, 6];
 
     const result = getPagesCount(data, paging);
     expect(result).toEqual(3);
@@ -18,7 +18,7 @@ describe('PagingUtils', () => {
       enabled: true,
       pageSize: 2,
     };
-    const data = [1,2,3,4,5,6,7];
+    const data = [1, 2, 3, 4, 5, 6, 7];
 
     const result = getPagesCount(data, paging);
     expect(result).toEqual(4);
@@ -29,7 +29,7 @@ describe('PagingUtils', () => {
       enabled: false,
       pageSize: 2,
     };
-    const data = [1,2,3,4,5,6];
+    const data = [1, 2, 3, 4, 5, 6];
 
     const result = getPagesCount(data, paging);
     expect(result).toEqual(1);
@@ -77,7 +77,7 @@ describe('PagingUtils', () => {
     expect(result[0]).toEqual(10);
     expect(result[4]).toEqual(14);
   });
-  
+
   it('getPageData return last with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
     const paging: IPagingProps = {
       enabled: true,
