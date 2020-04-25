@@ -24,6 +24,7 @@ export enum ActionType {
   SelectRow = 'SelectRow',
   SelectSingleRow = 'SelectSingleRow',
   ShowLoading = 'ShowLoading',
+  UpdatePageIndex = 'UpdatePageIndex',
   UpdateCellValue = 'UpdateCellValue',
   UpdateData = 'UpdateData',
   UpdateFilterRowOperator = 'UpdateFilterRowOperator',

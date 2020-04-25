@@ -3,9 +3,9 @@
 .ka{
   overflow: hidden;
   background-color: white;
+  font-size: 14px;
 }
 .ka-table{
-  font-size: 14px;
   width: 100%;
   display: block;
   border-collapse: collapse;
@@ -109,13 +109,13 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;	
+  width: 100%;
   height: 100%;
   background-color: #ffffff88;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
 }
 .ka-loading-active{
   position: relative;
@@ -140,15 +140,41 @@
     box-shadow: 20px 0px 0px 0px rgba(116,125,134,2),
                 40px 0px 0px 0px rgba(116,125,134,0.2);
   }
-  75%{ 
+  75%{
     background-color: rgba(116,125,134, 0.4);
     box-shadow: 20px 0px 0px 0px rgba(116,125,134,0.2),
                 40px 0px 0px 0px rgba(116,125,134,1);
   }
-  100%{    
+  100%{
     box-shadow: none;
-  }  
- }
- .ka-loading-text{
-    margin-top: 15px
- }
+  }
+}
+.ka-loading-text{
+  margin-top: 15px;
+}
+
+.ka-paging{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.ka-paging-pages{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.ka-paging-page-index{
+  cursor: pointer;
+  padding: 5px;
+  margin: 10px 5px;
+  min-width: 18px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.ka-paging-page-index-active{
+  background-color: #F1F5F7;
+  font-weight: bold;
+}

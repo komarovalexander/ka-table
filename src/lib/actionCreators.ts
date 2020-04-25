@@ -86,3 +86,7 @@ export const showLoading = (text?: string) => ({
 export const hideLoading = () => ({
   type: ActionType.HideLoading,
 });
+export const updatePageIndex = (pageIndex: number) => ({
+  pageIndex,
+  type: ActionType.UpdatePageIndex,
+});

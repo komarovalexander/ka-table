@@ -6,6 +6,7 @@ import { Column } from '../models';
 import { ChildAttributesItem } from '../types';
 import { filterData, searchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
+import { getPageData, getPagesCount } from './PagingUtils';
 import { sortData } from './SortUtils';
 import { convertToColumnTypes } from './TypeUtils';
 
@@ -61,6 +62,7 @@ export const prepareTableOptions = (props: ITableProps) => {
     extendedFilter,
     groups,
     groupsExpanded,
+    paging,
     search,
   } = props;
   let {
@@ -83,7 +85,9 @@ export const prepareTableOptions = (props: ITableProps) => {
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
 
-  const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
+  const groupedAllData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
+  const pagesCount = getPagesCount(groupedAllData, paging);
+  const groupedData = getPageData(groupedAllData, paging);
 
   return {
     columns,
@@ -91,5 +95,6 @@ export const prepareTableOptions = (props: ITableProps) => {
     groupColumnsCount,
     groupedColumns,
     groupedData,
+    pagesCount
   };
 };
