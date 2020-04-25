@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { closeRowEditor, openRowEditor, updateRow } from '../../lib/actionCreators';
-import { DataType, EditingMode } from '../../lib/enums';
+import { DataType } from '../../lib/enums';
 import {
   CellFuncPropsWithChildren, DispatchFunc, EditorFuncPropsWithChildren,
 } from '../../lib/types';
