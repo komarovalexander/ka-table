@@ -107,4 +107,26 @@ describe('kaReducer', () => {
     expect(newState.loading.enabled).toEqual(false);
     expect(newState.loading.text).toEqual('test');
   });
+  it('HideLoading', () => {
+    const intialState = {
+      loading: {
+        enabled: true,
+        text: 'test'
+      }
+    };
+    const newState = kaReducer(intialState, { type: ActionType.HideLoading });
+    expect(newState.loading.enabled).toEqual(false);
+    expect(newState.loading.text).toEqual('test');
+  });
+  it('UpdatePageIndex', () => {
+    const intialState = {
+      paging: {
+        enabled: true,
+        pageIndex: 2,
+      }
+    };
+    const newState = kaReducer(intialState, { type: ActionType.UpdatePageIndex, pageIndex: 5 });
+    expect(newState.paging.enabled).toEqual(true);
+    expect(newState.paging.pageIndex).toEqual(5);
+  });
 });

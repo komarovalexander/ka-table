@@ -150,5 +150,26 @@
   }  
  }
  .ka-loading-text{
-    margin-top: 15px
+    margin-top: 15px;
+ }
+ .ka-paging{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+ }
+ .ka-paging-pages{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+ }
+ .ka-paging-page-index{
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 50%; 
+  text-align: center;
+ }
+ .ka-paging-page-index-active{ 
+  background-color: #F1F5F7;
+  font-weight: bold;
  }
