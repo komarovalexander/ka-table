@@ -17,9 +17,10 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
+let maxValue = Math.max(...dataArray.map(i => i.id));
 const generateNewId = () => {
-  const maxValue = Math.max(...dataArray.map(i => i.id));
-  return maxValue + 1;
+  maxValue++;
+  return maxValue;
 };
 
 const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({

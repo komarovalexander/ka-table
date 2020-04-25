@@ -26,7 +26,7 @@ const NewRow: React.FunctionComponent<INewRowProps> = ({
   rowKeyField,
 }) => {
     const dispatchWrapper: DispatchFunc = (action) => {
-      if (action.type === ActionType.UpdateCellValue) {
+      if (action.type === ActionType.UpdateEditorValue) {
         const column = columns.find((c) => c.key === action.columnKey)!;
         const newRowData = replaceValue(rowData, column, action.value);
         dispatch(updateNewRow(newRowData))
