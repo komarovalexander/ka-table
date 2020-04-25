@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { updateEditorValue } from '../../actionCreators';
 import { ActionType, EditingMode } from '../../enums';
 import { Column } from '../../Models/Column';
 import { DispatchFunc, Field } from '../../types';
@@ -37,7 +38,9 @@ const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
   }
 
   const dispatchHandler: DispatchFunc = (action: any) => {
-    if (action.type !== ActionType.CloseEditor) {
+    if (action.type === ActionType.UpdateCellValue) {
+      dispatch(updateEditorValue(action.rowKeyValue, action.columnKey, action.value));
+    } else if (action.type !== ActionType.CloseEditor) {
       dispatch(action);
     }
   };

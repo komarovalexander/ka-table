@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType } from '../../lib/enums';
-import { DispatchFunc } from '../../lib/types';
+import { closeRowEditor, openRowEditor, updateRow } from '../../lib/actionCreators';
+import { DataType, EditingMode } from '../../lib/enums';
+import {
+  CellFuncPropsWithChildren, DispatchFunc, EditorFuncPropsWithChildren,
+} from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -12,6 +15,46 @@ const dataArray: any[] = [
   { id: 5, name: 'Marshall Bruce', score: 77, passed: true },
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9, 10) },
 ];
+
+const EditButton: React.FC<CellFuncPropsWithChildren> = ({
+  dispatch, rowKeyValue
+}) => {
+  return (
+   <img
+     src='static/icons/alert.svg'
+     className='alert-cell-button'
+     alt=''
+     onClick={() => dispatch(openRowEditor(rowKeyValue))}
+   />
+ );
+};
+
+const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
+  dispatch, rowData, rowKeyValue
+}) => {
+  return (
+    <div className={'buttons'}
+      style={{display: 'flex', justifyContent: 'space-between'}} >
+      <img
+        src='static/icons/alert.svg'
+        className='alert-cell-button'
+        alt=''
+        onClick={() => {
+          dispatch(updateRow(rowData, { saveEditorsValues: true }));
+          dispatch(closeRowEditor(rowKeyValue));
+          }}
+      />
+      <img
+        src='static/icons/alert.svg'
+        className='alert-cell-button'
+        alt=''
+        onClick={() => {
+          dispatch(closeRowEditor(rowKeyValue));
+          }}
+      />
+   </div >
+ );
+};
 
 const tablePropsInit: ITableProps = {
   columns: [
@@ -24,9 +67,14 @@ const tablePropsInit: ITableProps = {
       key: 'nextTry',
       title: 'Next Try',
     },
+    {
+      key: 'editColumn',
+      style: {width: 50},
+      cell: (props) => <EditButton {...props}/>,
+      editor: (props) => <SaveButton {...props}/>,
+    },
   ],
   data: dataArray,
-  // editingMode: EditingMode.Cell,
   editableCells: [{
     columnKey: 'name',
     rowKeyValue: 2,
@@ -40,7 +88,6 @@ const tablePropsInit: ITableProps = {
 const EditingDemoRow: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    console.log(action);
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 

@@ -104,3 +104,21 @@ export const addRow = (rowData: any) => ({
   rowData,
   type: ActionType.AddRow,
 });
+
+export const openRowEditor = (rowKeyValue: any) => ({
+  rowKeyValue,
+  type: ActionType.OpenRowEditor,
+});
+
+export const closeRowEditor = (rowKeyValue: any) => ({
+  rowKeyValue,
+  type: ActionType.CloseRowEditor,
+});
+
+export const updateRow = (rowData: any, settings?: { saveEditorsValues?: boolean }) => {
+  return {
+    type: ActionType.UpdateRow,
+    saveEditorsValues: settings && settings.saveEditorsValues,
+    rowData,
+  };
+};

@@ -15,11 +15,13 @@ export enum EditingMode {
 export enum ActionType {
   AddRow = 'AddRow',
   CloseEditor = 'CloseEditor',
+  CloseRowEditor = 'CloseRowEditor',
   DeleteRow = 'DeleteRow',
   DeselectAllRows = 'DeselectAllRows',
   DeselectRow = 'DeselectRow',
   HideLoading = 'HideLoading',
   OpenEditor = 'OpenEditor',
+  OpenRowEditor = 'OpenRowEditor',
   ScrollTable = 'ScrollTable',
   Search = 'Search',
   SelectAllRows = 'SelectAllRows',
@@ -33,6 +35,7 @@ export enum ActionType {
   UpdateFilterRowValue = 'UpdateFilterRowValue',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',
   UpdateNewRow = 'UpdateNewRow',
+  UpdateRow = 'UpdateRow',
   UpdateSortDirection = 'UpdateSortDirection',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
 }

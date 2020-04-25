@@ -72,7 +72,7 @@ const kaReducer: any = (state: ITableProps, action: any) => {
     }
     case ActionType.UpdateEditorValue: {
       const newEditableCells = [...editableCells];
-      const editableCellIndex = newEditableCells.findIndex((c) => c.columnKey === action.columnKey || c.rowKeyValue === action.rowKeyValue);
+      const editableCellIndex = newEditableCells.findIndex((c) => c.columnKey === action.columnKey && c.rowKeyValue === action.rowKeyValue);
       newEditableCells[editableCellIndex] = { ...newEditableCells[editableCellIndex], editorValue: action.value };
       return { ...state, editableCells: newEditableCells };
     }
@@ -138,6 +138,40 @@ const kaReducer: any = (state: ITableProps, action: any) => {
         action.groupKey,
       );
       return { ...state, groupsExpanded: newGroupsExpanded };
+    }
+    case ActionType.OpenRowEditor: {
+      const rowKeyValue = action.rowKeyValue;
+      const newEditableCells = [...editableCells];
+      columns.forEach(column => {
+        if (column.isEditable !== false
+            && !newEditableCells.some(e => e.columnKey === column.key && e.rowKeyValue === rowKeyValue)) {
+              newEditableCells.push({
+                columnKey: column.key,
+                rowKeyValue
+              });
+        }
+      });
+      return { ...state, editableCells: newEditableCells };
+    }
+    case ActionType.CloseRowEditor: {
+      const rowKeyValue = action.rowKeyValue;
+      const newEditableCells = editableCells.filter(e => e.rowKeyValue !== rowKeyValue);
+      return { ...state, editableCells: newEditableCells };
+    }
+    case ActionType.UpdateRow: {
+      let newRowData = {...action.rowData};
+      if (action.saveEditorsValues){
+        const rowKeyValue = action.rowData[rowKeyField];
+        const rowEditableCells = editableCells.filter(
+          editableCell => editableCell.rowKeyValue === rowKeyValue
+          && editableCell.hasOwnProperty('editorValue'));
+        rowEditableCells.forEach(cell => {
+          const column = columns.find((c) => c.key === cell.columnKey)!;
+          newRowData = replaceValue(newRowData, column, cell.editorValue);
+        });
+      }
+      const newData = getCopyOfArrayAndInsertOrReplaceItem(newRowData, rowKeyField, data);
+      return { ...state, data: newData };
     }
   }
   return state;
