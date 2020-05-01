@@ -21,6 +21,7 @@ import FilterRowCustomEditorDemo from './FilterRowCustomEditorDemo/FilterRowCust
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
 import { initializeGA, trackEvent } from './ga';
 import { withTracker } from './GAWrapper';
+import GetDataByPropsDemo from './GetDataByPropsDemo/GetDataByPropsDemo';
 import GroupingCustomCellDemo from './GroupingCustomCellDemo/GroupingCustomCellDemo';
 import GroupingCustomRowDemo from './GroupingCustomRowDemo/GroupingCustomRowDemo';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
@@ -57,6 +58,7 @@ const demos: Demo[] = [
   new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo', 'https://stackblitz.com/edit/table-filter-extended-js', 'https://stackblitz.com/edit/table-filter-extended-ts'),
   new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo', 'https://stackblitz.com/edit/table-filter-row-js', 'https://stackblitz.com/edit/table-filter-row-ts'),
   new Demo(FilterRowCustomEditorDemo, '/filter-row-custom-editor', 'Filter Row - Custom Editor', 'FilterRowCustomEditorDemo', 'https://stackblitz.com/edit/table-filter-row-custom-editor-js', 'https://stackblitz.com/edit/table-filter-row-custom-editor-ts'),
+  new Demo(GetDataByPropsDemo, '/get-data-by-props', 'Get Data By Props', 'ObtainTableDataDemo', 'https://stackblitz.com/edit/table-get-data-by-props-js', 'https://stackblitz.com/edit/table-get-data-by-props-ts'),
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo', 'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts', true),
   new Demo(GroupingCustomCellDemo, '/grouping-custom-cell', 'Grouping Custom Cell', 'GroupingCustomCellDemo', 'https://stackblitz.com/edit/table-grouping-custom-cell-js', 'https://stackblitz.com/edit/table-grouping-custom-cell-ts', true),
   new Demo(GroupingCustomRowDemo, '/grouping-custom-row', 'Grouping Custom Row', 'GroupingCustomRowDemo', 'https://stackblitz.com/edit/table-grouping-custom-row-js', 'https://stackblitz.com/edit/table-grouping-custom-row-ts', true),
