@@ -22,6 +22,7 @@ export interface ICellComponentProps {
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
+  validationMessage?: string;
 }
 
 const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { closeRowEditor, openRowEditor, updateRow } from '../../lib/actionCreators';
+import { closeRowEditors, openRowEditors, saveRowEditors } from '../../lib/actionCreators';
 import { DataType } from '../../lib/enums';
 import {
   CellFuncPropsWithChildren, DispatchFunc, EditorFuncPropsWithChildren,
@@ -24,7 +24,7 @@ const EditButton: React.FC<CellFuncPropsWithChildren> = ({
      src='static/icons/alert.svg'
      className='alert-cell-button'
      alt=''
-     onClick={() => dispatch(openRowEditor(rowKeyValue))}
+     onClick={() => dispatch(openRowEditors(rowKeyValue))}
    />
  );
 };
@@ -40,17 +40,19 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
         className='alert-cell-button'
         alt=''
         onClick={() => {
-          dispatch(updateRow(rowData, { saveEditorsValues: true }));
-          dispatch(closeRowEditor(rowKeyValue));
-          }}
+          dispatch(saveRowEditors(rowKeyValue, {
+            closeAfterSave: true,
+            validate: true,
+          }));
+        }}
       />
       <img
         src='static/icons/alert.svg'
         className='alert-cell-button'
         alt=''
         onClick={() => {
-          dispatch(closeRowEditor(rowKeyValue));
-          }}
+          dispatch(closeRowEditors(rowKeyValue));
+        }}
       />
    </div >
  );
@@ -58,7 +60,15 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '30%' } },
+    {
+      key: 'name',
+      title: 'Name',
+      dataType: DataType.String,
+      style: { width: '30%' },
+      validation: (value) => {
+        return value ? '' : 'value must be specified';
+      }
+    },
     { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '40px' } },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: { width: '10%' }},
     {
@@ -75,13 +85,6 @@ const tablePropsInit: ITableProps = {
     },
   ],
   data: dataArray,
-  editableCells: [{
-    columnKey: 'name',
-    rowKeyValue: 2,
-  }, {
-    columnKey: 'score',
-    rowKeyValue: 2,
-  }],
   rowKeyField: 'id',
 };
 

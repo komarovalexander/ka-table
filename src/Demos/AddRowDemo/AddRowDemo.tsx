@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { addRow, hideNewRow, showNewRow } from '../../lib/actionCreators';
-import { DataType } from '../../lib/enums';
+import { DataType, EditingMode } from '../../lib/enums';
 import {
   DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
 } from '../../lib/types';
@@ -56,7 +56,14 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    {
+      key: 'column1',
+      title: 'Column 1',
+      dataType: DataType.String,
+      validation: (value) => {
+        return value ? '' : 'value must be specified';
+      }
+    },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
@@ -67,7 +74,13 @@ const tablePropsInit: ITableProps = {
       newRowCellEditor: (props) => <SaveButton {...props}/>
     },
   ],
+  editingMode: EditingMode.Cell,
   data: dataArray,
+  paging: {
+    enabled: true,
+    pageIndex: 0,
+    pageSize: 4
+  },
   rowKeyField: 'id',
 };
 

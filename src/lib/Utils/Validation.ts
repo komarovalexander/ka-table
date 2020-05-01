@@ -5,4 +5,5 @@ export const getValidationValue = (value: any, rowData: any, column: Column) => 
   if (validation) {
     return validation(value, rowData);
   }
+  return undefined;
 };

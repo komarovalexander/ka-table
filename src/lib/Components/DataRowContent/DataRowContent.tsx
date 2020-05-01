@@ -35,6 +35,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
             isEditableCell={!!editableCell}
             isSelectedRow={isSelectedRow}
             editorValue={editableCell && editableCell.editorValue}
+            validationMessage={editableCell && editableCell.validationMessage}
             hasEditorValue={editableCell && editableCell.hasOwnProperty('editorValue')}
             key={column.key}
             rowData={rowData}

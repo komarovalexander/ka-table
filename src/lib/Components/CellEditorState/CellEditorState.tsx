@@ -7,8 +7,7 @@ import { getValueByColumn } from '../../Utils/DataUtils';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import { getValidationValue } from '../../Utils/Validation';
 import { ICellEditorProps } from '../CellEditor/CellEditor';
-import CellEditorDataType from '../CellEditorDataType/CellEditorDataType';
-import CellEditorValidationMessage from '../CellEditorValidationMessage/CellEditorValidationMessage';
+import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
 
 const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
@@ -19,9 +18,9 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     value,
   } = props;
 
-  const validationValue = getValidationValue(value, rowData, column);
+  const validationMessage = getValidationValue(value, rowData, column);
   const onValueStateChange = (action: any): void => {
-    dispatch(updateEditorValue(rowKeyValue, column.key, action.value));
+    dispatch(updateEditorValue(rowKeyValue, column.key, action.value, { validate: true }));
   };
 
   const close = useCallback(() => {
@@ -29,13 +28,13 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   }, [dispatch, column, rowKeyValue]);
 
   const closeHandler = useCallback(() => {
-    if (!validationValue) {
+    if (!validationMessage) {
       if (getValueByColumn(rowData, column) !== value) {
         dispatch(updateCellValue(rowKeyValue, column.key, value));
       }
       close();
     }
-  }, [validationValue, dispatch, close, column, rowData, rowKeyValue, value]);
+  }, [validationMessage, dispatch, close, column, rowData, rowKeyValue, value]);
 
   useEffect(() => {
     return addEscEnterKeyEffect(close, closeHandler);
@@ -51,17 +50,13 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     }
   };
 
-  const stateProps = { ...props, ...{
+  const stateProps: ICellEditorProps = { ...props, ...{
     dispatch: dispatchHandler,
+    validationMessage: validationMessage || undefined
   }};
 
   return (
-    <>
-      <div className={`ka-cell-editor ${validationValue ? 'ka-cell-editor-validation-error' : ''}`}>
-        <CellEditorDataType {...stateProps} />
-        {validationValue && <CellEditorValidationMessage message={validationValue} />}
-      </div>
-    </>
+    <CellEditorValidation {...stateProps} />
   );
 };
 

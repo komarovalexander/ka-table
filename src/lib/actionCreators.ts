@@ -12,10 +12,13 @@ export const updateFilterRowOperator = (columnKey: string, filterRowOperator: st
   type: ActionType.UpdateFilterRowOperator,
 });
 
-export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: any) => ({
+export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: any, settings?: {
+  validate: boolean
+}) => ({
   columnKey,
   rowKeyValue,
   type: ActionType.UpdateEditorValue,
+  validate: settings && settings.validate,
   value,
 });
 
@@ -113,14 +116,24 @@ export const addRow = (rowData: any) => ({
   type: ActionType.AddRow,
 });
 
-export const openRowEditor = (rowKeyValue: any) => ({
+export const openRowEditors = (rowKeyValue: any) => ({
   rowKeyValue,
-  type: ActionType.OpenRowEditor,
+  type: ActionType.OpenRowEditors,
 });
 
-export const closeRowEditor = (rowKeyValue: any) => ({
+export const closeRowEditors = (rowKeyValue: any) => ({
   rowKeyValue,
-  type: ActionType.CloseRowEditor,
+  type: ActionType.CloseRowEditors,
+});
+
+export const saveRowEditors = (rowKeyValue: any, settings?: {
+  closeAfterSave?: boolean,
+  validate?: boolean
+}) => ({
+  closeAfterSave: settings && settings.closeAfterSave,
+  rowKeyValue,
+  validate: settings && settings.validate,
+  type: ActionType.SaveRowEditors,
 });
 
 export const updateRow = (rowData: any, settings?: { saveEditorsValues?: boolean }) => {

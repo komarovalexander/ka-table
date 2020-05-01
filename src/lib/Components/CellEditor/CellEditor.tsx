@@ -4,8 +4,8 @@ import { updateEditorValue } from '../../actionCreators';
 import { ActionType, EditingMode } from '../../enums';
 import { Column } from '../../Models/Column';
 import { DispatchFunc, Field } from '../../types';
-import CellEditorDataType from '../CellEditorDataType/CellEditorDataType';
 import CellEditorState from '../CellEditorState/CellEditorState';
+import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
 
 export interface IFilterRowEditorProps {
   column: Column;
@@ -22,6 +22,7 @@ export interface ICellEditorProps extends IFilterRowEditorProps {
   rowKeyField: string;
   rowKeyValue: any;
   value: any;
+  validationMessage?: string;
 }
 
 const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
@@ -39,12 +40,12 @@ const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const dispatchHandler: DispatchFunc = (action: any) => {
     if (action.type === ActionType.UpdateCellValue) {
-      dispatch(updateEditorValue(action.rowKeyValue, action.columnKey, action.value));
+      dispatch(updateEditorValue(action.rowKeyValue, action.columnKey, action.value, { validate: true }));
     } else if (action.type !== ActionType.CloseEditor) {
       dispatch(action);
     }
   };
-  return <CellEditorDataType {...props} dispatch={dispatchHandler} />;
+  return <CellEditorValidation {...props} dispatch={dispatchHandler} />;
 };
 
 export default CellEditor;
