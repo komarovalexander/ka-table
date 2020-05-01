@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { addRow, updateNewRow } from '../../lib/actionCreators';
+import { addRow, hideNewRow, showNewRow } from '../../lib/actionCreators';
 import { DataType } from '../../lib/enums';
 import {
   DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
@@ -31,7 +31,7 @@ const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({
      src='static/icons/alert.svg'
      className='alert-cell-button'
      alt=''
-     onClick={() => dispatch(updateNewRow({}))}
+     onClick={() => dispatch(showNewRow())}
    />
  );
 };
@@ -42,7 +42,7 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
   const saveNewData = () => {
     const newData = {...rowData, id: generateNewId() };
     dispatch(addRow(newData));
-    dispatch(updateNewRow(undefined));
+    dispatch(hideNewRow());
   };
   return (
    <img
@@ -60,7 +60,12 @@ const tablePropsInit: ITableProps = {
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: 'addColumn', headCell: AddButton, style: {width: 30}, editor: (props) => <SaveButton {...props}/> },
+    {
+      key: 'addColumn',
+      headCell: AddButton,
+      style: {width: 30},
+      newRowCellEditor: (props) => <SaveButton {...props}/>
+    },
   ],
   data: dataArray,
   rowKeyField: 'id',

@@ -16,6 +16,7 @@ const kaReducer: any = (state: ITableProps, action: any) => {
     editableCells = [],
     groupsExpanded,
     loading,
+    newRowData,
     paging,
     rowKeyField,
     selectedRows = [],
@@ -84,14 +85,20 @@ const kaReducer: any = (state: ITableProps, action: any) => {
       const newData = [action.rowData, ...data];
       return { ...state, data: newData };
     }
+    case ActionType.ShowNewRow: {
+      return { ...state, newRowData: newRowData || {} };
+    }
+    case ActionType.HideNewRow: {
+      return { ...state, newRowData: undefined };
+    }
     case ActionType.UpdateNewRow: {
       return { ...state, newRowData: action.newRowData };
     }
     case ActionType.UpdateCellValue: {
       const row = data.find((d) => d[rowKeyField] === action.rowKeyValue);
       const column = columns.find((c) => c.key === action.columnKey)!;
-      const newRowData = replaceValue(row, column, action.value);
-      const newData = getCopyOfArrayAndInsertOrReplaceItem(newRowData, rowKeyField, data);
+      const updatedRowData = replaceValue(row, column, action.value);
+      const newData = getCopyOfArrayAndInsertOrReplaceItem(updatedRowData, rowKeyField, data);
       return { ...state, data: newData };
     }
     case ActionType.DeleteRow: {
@@ -163,7 +170,7 @@ const kaReducer: any = (state: ITableProps, action: any) => {
       return { ...state, editableCells: newEditableCells };
     }
     case ActionType.UpdateRow: {
-      let newRowData = {...action.rowData};
+      let updatedRowData = {...action.rowData};
       if (action.saveEditorsValues){
         const rowKeyValue = action.rowData[rowKeyField];
         const rowEditableCells = editableCells.filter(
@@ -171,10 +178,10 @@ const kaReducer: any = (state: ITableProps, action: any) => {
           && editableCell.hasOwnProperty('editorValue'));
         rowEditableCells.forEach(cell => {
           const column = columns.find((c) => c.key === cell.columnKey)!;
-          newRowData = replaceValue(newRowData, column, cell.editorValue);
+          updatedRowData = replaceValue(updatedRowData, column, cell.editorValue);
         });
       }
-      const newData = getCopyOfArrayAndInsertOrReplaceItem(newRowData, rowKeyField, data);
+      const newData = getCopyOfArrayAndInsertOrReplaceItem(updatedRowData, rowKeyField, data);
       return { ...state, data: newData };
     }
   }

@@ -7,8 +7,8 @@ import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
 import { getValueByColumn, replaceValue } from '../../Utils/DataUtils';
-import CellEditor from '../CellEditor/CellEditor';
 import EmptyCells from '../EmptyCells/EmptyCells';
+import NewRowCellEditor from '../NewRowCellEditor/NewRowCellEditor';
 
 export interface INewRowProps {
   columns: Column[];
@@ -39,7 +39,7 @@ const NewRow: React.FunctionComponent<INewRowProps> = ({
         <EmptyCells count={groupColumnsCount}/>
         {columns.map((column) => (
           <td className={defaultOptions.css.cell} key={column.key} style={column.style}>
-            <CellEditor
+            <NewRowCellEditor
               column={column}
               dispatch={dispatchWrapper}
               autoFocus={false}

@@ -95,6 +95,14 @@ export const hideLoading = () => ({
   type: ActionType.HideLoading,
 });
 
+export const showNewRow = () => ({
+  type: ActionType.ShowNewRow,
+});
+
+export const hideNewRow = () => ({
+  type: ActionType.HideNewRow,
+});
+
 export const updateNewRow = (newRowData: any) => ({
   newRowData,
   type: ActionType.UpdateNewRow,
