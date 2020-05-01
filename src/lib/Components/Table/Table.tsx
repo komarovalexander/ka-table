@@ -14,6 +14,7 @@ import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
 import Loading, { ILoadingProps } from '../Loading/Loading';
+import Paging, { IPagingProps } from '../Paging/Paging';
 import TableBody from '../TableBody/TableBody';
 
 /**
@@ -33,6 +34,7 @@ export interface ITableProps {
   loading?: ILoadingProps;
   newRowData?: any;
   noDataRow?: NoDataRowFunc;
+  paging?: IPagingProps;
   rowKeyField: string;
   search?: string;
   selectedRows?: any[];
@@ -57,6 +59,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     filteringMode,
     groups,
     loading,
+    paging,
     selectedRows = [],
     sortingMode = SortingMode.None,
   } = props;
@@ -115,6 +118,11 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
             selectedRows={selectedRows}
         />
       </table>
+      <Paging
+        {...paging}
+        dispatch={dispatch}
+        pagesCount={preparedOptions.pagesCount}
+      />
       <Loading
         {...loading}
       />

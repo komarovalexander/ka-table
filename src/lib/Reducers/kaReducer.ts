@@ -16,12 +16,16 @@ const kaReducer: any = (state: ITableProps, action: any) => {
     editableCells = [],
     groupsExpanded,
     loading,
+    paging,
     rowKeyField,
     selectedRows = [],
     virtualScrolling,
   } = state;
 
   switch (action.type) {
+    case ActionType.UpdatePageIndex: {
+      return { ...state, paging: {...paging, pageIndex: action.pageIndex } };
+    }
     case ActionType.HideLoading: {
       return { ...state, loading: {...loading, enabled: false } };
     }

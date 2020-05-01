@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getData get data by extendedFilter 1`] = `
+Array [
+  Object {
+    "column1": "column:1 row:1",
+    "column2": "column:2 row:1",
+    "column3": "column:3 row:1",
+    "column4": "column:4 row:1",
+    "id": 1,
+  },
+]
+`;
+
+exports[`getData get data by filter 1`] = `
+Array [
+  Object {
+    "column1": "column:1 row:2",
+    "column2": "column:2 row:2",
+    "column3": "column:3 row:2",
+    "column4": "column:4 row:2",
+    "id": 2,
+  },
+]
+`;
+
+exports[`getData get data by search 1`] = `
+Array [
+  Object {
+    "column1": "column:1 row:3",
+    "column2": "column:2 row:3",
+    "column3": "column:3 row:3",
+    "column4": "column:4 row:3",
+    "id": 3,
+  },
+]
+`;
+
+exports[`getData get grouped data 1`] = `
+Array [
+  Object {
+    "groupMark": Object {},
+    "key": Array [
+      "column:1 row:0",
+    ],
+    "value": "column:1 row:0",
+  },
+  Object {
+    "column1": "column:1 row:0",
+    "column2": "column:2 row:0",
+    "column3": "column:3 row:0",
+    "column4": "column:4 row:0",
+    "id": 0,
+  },
+  Object {
+    "groupMark": Object {},
+    "key": Array [
+      "column:1 row:1",
+    ],
+    "value": "column:1 row:1",
+  },
+  Object {
+    "column1": "column:1 row:1",
+    "column2": "column:2 row:1",
+    "column3": "column:3 row:1",
+    "column4": "column:4 row:1",
+    "id": 1,
+  },
+  Object {
+    "groupMark": Object {},
+    "key": Array [
+      "column:1 row:2",
+    ],
+    "value": "column:1 row:2",
+  },
+  Object {
+    "column1": "column:1 row:2",
+    "column2": "column:2 row:2",
+    "column3": "column:3 row:2",
+    "column4": "column:4 row:2",
+    "id": 2,
+  },
+  Object {
+    "groupMark": Object {},
+    "key": Array [
+      "column:1 row:3",
+    ],
+    "value": "column:1 row:3",
+  },
+  Object {
+    "column1": "column:1 row:3",
+    "column2": "column:2 row:3",
+    "column3": "column:3 row:3",
+    "column4": "column:4 row:3",
+    "id": 3,
+  },
+  Object {
+    "groupMark": Object {},
+    "key": Array [
+      "column:1 row:4",
+    ],
+    "value": "column:1 row:4",
+  },
+  Object {
+    "column1": "column:1 row:4",
+    "column2": "column:2 row:4",
+    "column3": "column:3 row:4",
+    "column4": "column:4 row:4",
+    "id": 4,
+  },
+]
+`;
+
+exports[`getData get paged data 1`] = `
+Array [
+  Object {
+    "column1": "column:1 row:2",
+    "column2": "column:2 row:2",
+    "column3": "column:3 row:2",
+    "column4": "column:4 row:2",
+    "id": 2,
+  },
+  Object {
+    "column1": "column:1 row:3",
+    "column2": "column:2 row:3",
+    "column3": "column:3 row:3",
+    "column4": "column:4 row:3",
+    "id": 3,
+  },
+]
+`;
+
+exports[`getData get sorted data 1`] = `
+Array [
+  Object {
+    "column1": "column:1 row:4",
+    "column2": "column:2 row:4",
+    "column3": "column:3 row:4",
+    "column4": "column:4 row:4",
+    "id": 4,
+  },
+  Object {
+    "column1": "column:1 row:3",
+    "column2": "column:2 row:3",
+    "column3": "column:3 row:3",
+    "column4": "column:4 row:3",
+    "id": 3,
+  },
+  Object {
+    "column1": "column:1 row:2",
+    "column2": "column:2 row:2",
+    "column3": "column:3 row:2",
+    "column4": "column:4 row:2",
+    "id": 2,
+  },
+  Object {
+    "column1": "column:1 row:1",
+    "column2": "column:2 row:1",
+    "column3": "column:3 row:1",
+    "column4": "column:4 row:1",
+    "id": 1,
+  },
+  Object {
+    "column1": "column:1 row:0",
+    "column2": "column:2 row:0",
+    "column3": "column:3 row:0",
+    "column4": "column:4 row:0",
+    "id": 0,
+  },
+]
+`;

@@ -6,6 +6,7 @@ import { Column } from '../models';
 import { ChildAttributesItem } from '../types';
 import { filterData, searchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
+import { getPageData, getPagesCount } from './PagingUtils';
 import { sortData } from './SortUtils';
 import { convertToColumnTypes } from './TypeUtils';
 
@@ -56,24 +57,43 @@ export const mergeProps = (
   return mergedResult;
 };
 
-export const prepareTableOptions = (props: ITableProps) => {
+export const getData = (props: ITableProps) => {
   const {
     extendedFilter,
+    columns,
     groups,
     groupsExpanded,
+    paging,
     search,
   } = props;
   let {
-    columns,
     data = [],
   } = props;
+  data = [...data];
   data = extendedFilter ? extendedFilter(data) : data;
   data = search ? searchData(columns, data, search) : data;
-
   data = convertToColumnTypes(data, columns);
-
   data = filterData(data, columns);
   data = sortData(columns, data);
+
+  const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
+  const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
+  data = getPageData(groupedData, paging);
+
+  return data;
+};
+
+export const prepareTableOptions = (props: ITableProps) => {
+  const {
+    data = [],
+    groups,
+    paging,
+  } = props;
+  let {
+    columns,
+  } = props;
+
+  const groupedData = getData(props);
 
   let groupColumnsCount = 0;
   let groupedColumns: Column[] = [];
@@ -82,14 +102,13 @@ export const prepareTableOptions = (props: ITableProps) => {
     groupedColumns = columns.filter((c) => groups.some((g) => g.columnKey === c.key));
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
-
-  const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
-
+  const pagesCount = getPagesCount(data, paging);
   return {
     columns,
-    data,
+    data: groupedData, // TODO: deprecate it in 4.0.0
     groupColumnsCount,
     groupedColumns,
     groupedData,
+    pagesCount
   };
 };

@@ -122,3 +122,8 @@ export const updateRow = (rowData: any, settings?: { saveEditorsValues?: boolean
     rowData,
   };
 };
+
+export const updatePageIndex = (pageIndex: number) => ({
+  pageIndex,
+  type: ActionType.UpdatePageIndex,
+});

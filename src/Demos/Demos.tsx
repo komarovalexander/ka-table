@@ -23,6 +23,7 @@ import FilterRowCustomEditorDemo from './FilterRowCustomEditorDemo/FilterRowCust
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
 import { initializeGA, trackEvent } from './ga';
 import { withTracker } from './GAWrapper';
+import GetDataByPropsDemo from './GetDataByPropsDemo/GetDataByPropsDemo';
 import GroupingCustomCellDemo from './GroupingCustomCellDemo/GroupingCustomCellDemo';
 import GroupingCustomRowDemo from './GroupingCustomRowDemo/GroupingCustomRowDemo';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
@@ -33,6 +34,7 @@ import ManyRowsDemo from './ManyRowsDemo/ManyRowsDemo';
 import ManyRowsGroupingDemo from './ManyRowsGroupingDemo/ManyRowsGroupingDemo';
 import NullableCellDataDemo from './NullableCellDataDemo/NullableCellDataDemo';
 import OverviewDemo from './OverviewDemo/OverviewDemo';
+import PagingDemo from './PagingDemo/PagingDemo';
 import ReduxDemo from './ReduxDemo/ReduxDemo';
 import RemoteDataDemo from './RemoteDataDemo/RemoteDataDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
@@ -60,6 +62,7 @@ const demos: Demo[] = [
   new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo', 'https://stackblitz.com/edit/table-filter-extended-js', 'https://stackblitz.com/edit/table-filter-extended-ts'),
   new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo', 'https://stackblitz.com/edit/table-filter-row-js', 'https://stackblitz.com/edit/table-filter-row-ts'),
   new Demo(FilterRowCustomEditorDemo, '/filter-row-custom-editor', 'Filter Row - Custom Editor', 'FilterRowCustomEditorDemo', 'https://stackblitz.com/edit/table-filter-row-custom-editor-js', 'https://stackblitz.com/edit/table-filter-row-custom-editor-ts'),
+  new Demo(GetDataByPropsDemo, '/get-data-by-props', 'Get Data By Props', 'GetDataByPropsDemo', 'https://stackblitz.com/edit/table-get-data-by-props-js', 'https://stackblitz.com/edit/table-get-data-by-props-ts'),
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo', 'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts', true),
   new Demo(GroupingCustomCellDemo, '/grouping-custom-cell', 'Grouping Custom Cell', 'GroupingCustomCellDemo', 'https://stackblitz.com/edit/table-grouping-custom-cell-js', 'https://stackblitz.com/edit/table-grouping-custom-cell-ts', true),
   new Demo(GroupingCustomRowDemo, '/grouping-custom-row', 'Grouping Custom Row', 'GroupingCustomRowDemo', 'https://stackblitz.com/edit/table-grouping-custom-row-js', 'https://stackblitz.com/edit/table-grouping-custom-row-ts', true),
@@ -69,6 +72,7 @@ const demos: Demo[] = [
   new Demo(ManyRowsDemo, '/many-rows', 'Many Rows (25k)', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts'),
   new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', 'Many Rows (10k Grouped)', 'ManyRowsGroupingDemo', 'https://stackblitz.com/edit/table-many-rows-grouping-js', 'https://stackblitz.com/edit/table-many-rows-grouping-ts', true),
   new Demo(NullableCellDataDemo, '/nullable-cell-data', 'Nullable Cell Data', 'NullableCellDataDemo', 'https://stackblitz.com/edit/table-nullable-cell-data-js', 'https://stackblitz.com/edit/table-nullable-cell-data-ts'),
+  new Demo(PagingDemo, '/paging', 'Paging', 'PagingDemo', 'https://stackblitz.com/edit/table-paging-js', 'https://stackblitz.com/edit/table-paging-ts'),
   new Demo(ReduxDemo, '/redux', 'Redux', 'ReduxDemo', 'https://stackblitz.com/edit/table-redux-js', 'https://stackblitz.com/edit/table-redux-ts'),
   new Demo(RemoteDataDemo, '/remote-data', 'Remote Data', 'RemoteDataDemo', 'https://stackblitz.com/edit/table-remote-data-js', 'https://stackblitz.com/edit/table-remote-data-ts'),
   new Demo(SearchDemo, '/search', 'Search', 'SearchDemo', 'https://stackblitz.com/edit/table-search-js', 'https://stackblitz.com/edit/table-search-ts'),
