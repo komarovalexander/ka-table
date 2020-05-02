@@ -24,7 +24,6 @@ export interface ITableBodyProps {
   groupedColumns: Column[];
   groups?: Group[];
   groupsExpanded?: any[][];
-  newRowData?: any;
   noDataRow?: NoDataRowFunc;
   onDataChange?: DataChangeFunc;
   rowKeyField: string;

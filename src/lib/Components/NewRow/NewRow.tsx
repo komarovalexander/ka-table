@@ -1,59 +1,44 @@
 import React from 'react';
 
-import { updateNewRow } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
-import { ActionType, EditingMode } from '../../enums';
+import { EditingMode } from '../../enums';
+import { ChildAttributes, EditableCell } from '../../models';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
-import { getField } from '../../Utils/ColumnUtils';
-import { getValueByColumn, replaceValue } from '../../Utils/DataUtils';
-import EmptyCells from '../EmptyCells/EmptyCells';
-import NewRowCellEditor from '../NewRowCellEditor/NewRowCellEditor';
+import DataRow from '../DataRow/DataRow';
+
+export const newRowId = {};
 
 export interface INewRowProps {
+  childAttributes: ChildAttributes;
   columns: Column[];
   dispatch: DispatchFunc;
+  editableCells: EditableCell[];
   groupColumnsCount: number;
-  rowData: any;
   rowKeyField: string;
 }
 
 const NewRow: React.FunctionComponent<INewRowProps> = ({
+  childAttributes,
   columns,
   dispatch,
+  editableCells,
   groupColumnsCount,
-  rowData,
   rowKeyField,
 }) => {
-    const dispatchWrapper: DispatchFunc = (action) => {
-      if (action.type === ActionType.UpdateEditorValue) {
-        const column = columns.find((c) => c.key === action.columnKey)!;
-        const newRowData = replaceValue(rowData, column, action.value);
-        dispatch(updateNewRow(newRowData))
-      } else {
-        dispatch(action);
-      }
-    };
     return (
-      <tr className='ka-tr ka-add-row'>
-        <EmptyCells count={groupColumnsCount}/>
-        {columns.map((column) => (
-          <td className={defaultOptions.css.cell} key={column.key} style={column.style}>
-            <NewRowCellEditor
-              column={column}
-              dispatch={dispatchWrapper}
-              autoFocus={false}
-              editingMode={EditingMode.None}
-              field={getField(column)}
-              isSelectedRow={false}
-              rowData={rowData}
-              rowKeyField={rowKeyField}
-              rowKeyValue={rowData[rowKeyField]}
-              value={getValueByColumn(rowData, column)}
-            />
-          </td>
-        ))}
-      </tr >
+      <DataRow
+        childAttributes={childAttributes}
+        columns={columns}
+        dispatch={dispatch}
+        editableCells={editableCells}
+        editingMode={EditingMode.None}
+        groupColumnsCount={groupColumnsCount}
+        isSelectedRow={false}
+        rowData={{}}
+        rowKeyField={rowKeyField}
+        rowKeyValue={newRowId}
+        selectedRows={[]}
+      />
     );
 };
 

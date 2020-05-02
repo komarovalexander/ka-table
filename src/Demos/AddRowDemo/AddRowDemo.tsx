@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { addRow, hideNewRow, showNewRow } from '../../lib/actionCreators';
+import { hideNewRow, saveNewRow, showNewRow } from '../../lib/actionCreators';
 import { DataType, EditingMode } from '../../lib/enums';
 import {
   DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
@@ -37,20 +37,30 @@ const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({
 };
 
 const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
-  dispatch, rowData
+  dispatch
 }) => {
   const saveNewData = () => {
-    const newData = {...rowData, id: generateNewId() };
-    dispatch(addRow(newData));
-    dispatch(hideNewRow());
+    const newRowId = generateNewId();
+    dispatch(saveNewRow(newRowId, {
+      closeAfterSave: true,
+      validate: true
+    }));
   };
   return (
-   <img
-     src='static/icons/alert.svg'
-     className='alert-cell-button'
-     alt=''
-     onClick={saveNewData}
-   />
+   <>
+    <img
+      src='static/icons/alert.svg'
+      className='alert-cell-button'
+      alt=''
+      onClick={saveNewData}
+    />
+    <img
+      src='static/icons/alert.svg'
+      className='alert-cell-button'
+      alt=''
+      onClick={() => dispatch(hideNewRow())}
+    />
+   </>
  );
 };
 
@@ -71,7 +81,7 @@ const tablePropsInit: ITableProps = {
       key: 'addColumn',
       headCell: AddButton,
       style: {width: 30},
-      newRowCellEditor: (props) => <SaveButton {...props}/>
+      editor: (props) => <SaveButton {...props}/>
     },
   ],
   editingMode: EditingMode.Cell,

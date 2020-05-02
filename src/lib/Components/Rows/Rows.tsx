@@ -3,7 +3,7 @@ import React, { RefObject, useEffect, useRef } from 'react';
 import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
 import DataRow from '../DataRow/DataRow';
 import GroupRow from '../GroupRow/GroupRow';
-import NewRow from '../NewRow/NewRow';
+import NewRow, { newRowId } from '../NewRow/NewRow';
 import { ITableBodyProps } from '../TableBody/TableBody';
 
 export interface IRowsProps extends ITableBodyProps {
@@ -15,12 +15,12 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     columns,
     data,
     dispatch,
+    editableCells,
     groupColumnsCount,
     groupRow,
     groupedColumns,
     groups = [],
     groupsExpanded = [],
-    newRowData,
     onFirstRowRendered,
     rowKeyField,
     selectedRows,
@@ -33,12 +33,14 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
   }, [firstRowRef, onFirstRowRendered]);
 
   let rowRefLink: any = firstRowRef;
+  const newRowEditableCells = editableCells && editableCells.filter(c => c.rowKeyValue === newRowId);
   return (
     <>
       {
-        newRowData && (
+        newRowEditableCells && !!newRowEditableCells.length && (
         <NewRow
-          rowData={newRowData}
+          childAttributes={props.childAttributes}
+          editableCells={newRowEditableCells}
           columns={columns}
           dispatch={dispatch}
           groupColumnsCount={groupColumnsCount}

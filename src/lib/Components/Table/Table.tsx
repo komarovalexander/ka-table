@@ -32,7 +32,6 @@ export interface ITableProps {
   groups?: Group[];
   groupsExpanded?: any[][];
   loading?: ILoadingProps;
-  newRowData?: any;
   noDataRow?: NoDataRowFunc;
   paging?: IPagingProps;
   rowKeyField: string;

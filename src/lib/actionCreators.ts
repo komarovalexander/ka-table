@@ -1,3 +1,4 @@
+import { newRowId } from './Components/NewRow/NewRow';
 import { ActionType } from './enums';
 
 export const updateFilterRowValue = (columnKey: string, filterRowValue: any) => ({
@@ -99,21 +100,24 @@ export const hideLoading = () => ({
 });
 
 export const showNewRow = () => ({
+  rowKeyValue: newRowId,
   type: ActionType.ShowNewRow,
 });
 
 export const hideNewRow = () => ({
+  rowKeyValue: newRowId,
   type: ActionType.HideNewRow,
 });
 
-export const updateNewRow = (newRowData: any) => ({
-  newRowData,
-  type: ActionType.UpdateNewRow,
-});
-
-export const addRow = (rowData: any) => ({
-  rowData,
-  type: ActionType.AddRow,
+export const saveNewRow = (rowId?: any, settings?: {
+  closeAfterSave?: boolean,
+  validate?: boolean
+}) => ({
+  rowId,
+  closeAfterSave: settings && settings.closeAfterSave,
+  rowKeyValue: newRowId,
+  validate: settings && settings.validate,
+  type: ActionType.SaveNewRow,
 });
 
 export const openRowEditors = (rowKeyValue: any) => ({

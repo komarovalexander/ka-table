@@ -9,7 +9,6 @@ import {
  */
 export class Column {
   public cell?: CellFunc;
-  public newRowCellEditor?: EditorFunc;
   public dataType?: DataType;
   public editor?: EditorFunc;
   public filterRowCell?: FilterRowFunc;

@@ -1,13 +1,27 @@
-
 import { ActionType } from '../enums';
 import { ITableProps } from '../index';
 import { Column } from '../models';
+import { EditableCell } from '../Models/EditableCell';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
 import { replaceValue } from '../Utils/DataUtils';
 import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getSortedColumns } from '../Utils/HeadRowUtils';
 import { prepareTableOptions } from '../Utils/PropsUtils';
+
+const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
+  const newEditableCells = [...editableCells];
+  columns.forEach(column => {
+    if (column.isEditable !== false
+        && !newEditableCells.some(e => e.columnKey === column.key && e.rowKeyValue === rowKeyValue)) {
+          newEditableCells.push({
+            columnKey: column.key,
+            rowKeyValue
+          });
+    }
+  });
+  return newEditableCells;
+}
 
 const kaReducer: any = (state: ITableProps, action: any) => {
   const {
@@ -16,7 +30,6 @@ const kaReducer: any = (state: ITableProps, action: any) => {
     editableCells = [],
     groupsExpanded,
     loading,
-    newRowData,
     paging,
     rowKeyField,
     selectedRows = [],
@@ -86,19 +99,6 @@ const kaReducer: any = (state: ITableProps, action: any) => {
       newEditableCells[editableCellIndex] = editableCell;
       return { ...state, editableCells: newEditableCells };
     }
-    case ActionType.AddRow: {
-      const newData = [action.rowData, ...data];
-      return { ...state, data: newData };
-    }
-    case ActionType.ShowNewRow: {
-      return { ...state, newRowData: newRowData || {} };
-    }
-    case ActionType.HideNewRow: {
-      return { ...state, newRowData: undefined };
-    }
-    case ActionType.UpdateNewRow: {
-      return { ...state, newRowData: action.newRowData };
-    }
     case ActionType.UpdateCellValue: {
       const row = data.find((d) => d[rowKeyField] === action.rowKeyValue);
       const column = columns.find((c) => c.key === action.columnKey)!;
@@ -155,31 +155,25 @@ const kaReducer: any = (state: ITableProps, action: any) => {
       );
       return { ...state, groupsExpanded: newGroupsExpanded };
     }
+    case ActionType.ShowNewRow:
     case ActionType.OpenRowEditors: {
       const rowKeyValue = action.rowKeyValue;
-      const newEditableCells = [...editableCells];
-      columns.forEach(column => {
-        if (column.isEditable !== false
-            && !newEditableCells.some(e => e.columnKey === column.key && e.rowKeyValue === rowKeyValue)) {
-              newEditableCells.push({
-                columnKey: column.key,
-                rowKeyValue
-              });
-        }
-      });
+      const newEditableCells = addColumnsToRowEditableCells(editableCells, columns, rowKeyValue);
       return { ...state, editableCells: newEditableCells };
     }
+    case ActionType.HideNewRow:
     case ActionType.CloseRowEditors: {
       const rowKeyValue = action.rowKeyValue;
       const newEditableCells = editableCells.filter(e => e.rowKeyValue !== rowKeyValue);
       return { ...state, editableCells: newEditableCells };
     }
-    case ActionType.SaveRowEditors: {
+    case ActionType.SaveRowEditors:
+    case ActionType.SaveNewRow: {
       const rowKeyValue = action.rowKeyValue;
       let updatedRowData = data.find((d) => d[rowKeyField] === rowKeyValue);
       const rowEditableCells = editableCells.filter(
         editableCell => editableCell.rowKeyValue === rowKeyValue
-        && editableCell.hasOwnProperty('editorValue'));
+        && (action.type === ActionType.SaveNewRow || editableCell.hasOwnProperty('editorValue')));
       if (action.validate) {
         let validationPassed = true;
         rowEditableCells.forEach(cell => {
@@ -199,7 +193,13 @@ const kaReducer: any = (state: ITableProps, action: any) => {
         const column = columns.find((c) => c.key === cell.columnKey)!;
         updatedRowData = replaceValue(updatedRowData, column, cell.editorValue);
       });
-      const newData = getCopyOfArrayAndInsertOrReplaceItem(updatedRowData, rowKeyField, data);
+      let newData;
+      if (action.rowId) {
+        updatedRowData[rowKeyField] = action.rowId;
+        newData = [updatedRowData, ...data];
+      } else {
+        newData = getCopyOfArrayAndInsertOrReplaceItem(updatedRowData, rowKeyField, data);
+      }
       return { ...state, data: newData, editableCells: newEditableCells };
     }
     case ActionType.UpdateRow: {
