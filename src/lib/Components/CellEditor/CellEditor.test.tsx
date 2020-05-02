@@ -1,19 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataType } from '../../enums';
+import { DataType, EditingMode } from '../../enums';
 import CellEditor, { ICellEditorProps } from './CellEditor';
 
 const props: ICellEditorProps = {
   column: {
     dataType: DataType.String,
-    key: 'columnField',
+    key: 'column',
     title: 'Field',
   },
   dispatch: () => {},
+  editingMode: EditingMode.None,
+  field: 'column',
   isSelectedRow: true,
-  rowData: [{ column: 1 }],
-  rowKeyField: '',
+  rowData: [{ column: 12, id: 1 }],
+  rowKeyField: 'id',
+  rowKeyValue: 1,
+  value: 12,
 };
 
 it('renders without crashing', () => {

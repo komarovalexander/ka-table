@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { hideNewRow, saveNewRow, showNewRow } from '../../lib/actionCreators';
-import { DataType, EditingMode } from '../../lib/enums';
+import { DataType } from '../../lib/enums';
 import {
   DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
 } from '../../lib/types';
 
-const dataArray = Array(500).fill(undefined).map(
+const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -84,7 +84,6 @@ const tablePropsInit: ITableProps = {
       editor: (props) => <SaveButton {...props}/>
     },
   ],
-  editingMode: EditingMode.Cell,
   data: dataArray,
   rowKeyField: 'id',
 };
