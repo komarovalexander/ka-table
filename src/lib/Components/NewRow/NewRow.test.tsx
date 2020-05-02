@@ -4,8 +4,12 @@ import ReactDOM from 'react-dom';
 import NewRow, { INewRowProps } from './NewRow';
 
 const props: INewRowProps = {
+  childAttributes: {},
   columns: [],
   groupColumnsCount: 0,
+  dispatch: () => {},
+  editableCells: [],
+  rowKeyField: ''
 };
 
 it('renders without crashing', () => {
