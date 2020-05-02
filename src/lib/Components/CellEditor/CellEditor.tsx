@@ -42,14 +42,8 @@ const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
       }
     };
     return <CellEditorState {...props} dispatch={dispatchHandler} autoFocus={true}/>;
-  } else {
-    const dispatchHandler: DispatchFunc = (action: any) => {
-      if (action.type !== ActionType.CloseEditor) {
-        dispatch(action);
-      }
-    };
-    return <CellEditorState {...props} dispatch={dispatchHandler} />;
   }
+  return <CellEditorState {...props} />;
 };
 
 export default CellEditor;

@@ -1,6 +1,8 @@
 import { EditingMode } from '../enums';
 import { EditableCell } from '../models';
-import { addItemToEditableCells, isEditableCell, removeItemFromEditableCells } from './CellUtils';
+import {
+  addItemToEditableCells, getEditableCell, isEditableCell, removeItemFromEditableCells,
+} from './CellUtils';
 
 describe('CellUtils', () => {
   it('isEditableCell equals true', () => {
@@ -17,6 +19,22 @@ describe('CellUtils', () => {
       rowKeyValue: 10,
     }]);
     expect(rowEditableCells).toBeFalsy();
+  });
+
+  it('isEditableCell equals false if column.isEditable is false', () => {
+    const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column', isEditable: false }, [{
+      columnKey: 'column',
+      rowKeyValue: 10,
+    }]);
+    expect(rowEditableCells).toBeFalsy();
+  });
+
+  it('getEditableCell return undefined if column.isEditable is false', () => {
+    const editableCell = getEditableCell({ key: 'column', isEditable: false }, [{
+      columnKey: 'column',
+      rowKeyValue: 10,
+    }]);
+    expect(editableCell).toBeUndefined();
   });
 
   describe('CellHandlers', () => {

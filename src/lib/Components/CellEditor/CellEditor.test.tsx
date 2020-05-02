@@ -12,7 +12,6 @@ const props: ICellEditorProps = {
   },
   dispatch: () => {},
   isSelectedRow: true,
-  onValueChange: () => {},
   rowData: [{ column: 1 }],
   rowKeyField: '',
 };

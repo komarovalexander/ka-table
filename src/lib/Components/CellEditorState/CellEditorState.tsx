@@ -23,8 +23,8 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   } = props;
   const [rowDataState, changeRowData] = useState(rowData);
   const [editorValueState, changeEditorValue] = useState(value);
-
-  validationMessage = editingMode === EditingMode.Cell || validationMessage
+  const isCellEditingMode = editingMode === EditingMode.Cell;
+  validationMessage = isCellEditingMode || validationMessage
     ? getValidationValue(editorValueState, rowDataState, column) || ''
     : validationMessage;
   const onValueStateChange = (action: any): void => {
@@ -38,13 +38,15 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   }, [dispatch, column, rowKeyValue]);
 
   const closeHandler = useCallback(() => {
-    if (editingMode !== EditingMode.Cell || !validationMessage) {
+    if (!isCellEditingMode || !validationMessage) {
       if (editorValueState !== value) {
         dispatch(updateEditorValue(rowKeyValue, column.key, editorValueState));
       }
-      close();
+      if (isCellEditingMode){
+        close();
+      }
     }
-  }, [validationMessage, dispatch, close, column, editorValueState, rowKeyValue, value, editingMode]);
+  }, [validationMessage, dispatch, close, column, editorValueState, rowKeyValue, value, isCellEditingMode]);
 
   useEffect(() => {
     return addEscEnterKeyEffect(close, closeHandler);
