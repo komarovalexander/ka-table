@@ -7,7 +7,7 @@ import {
   DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
 } from '../../lib/types';
 
-const dataArray = Array(10).fill(undefined).map(
+const dataArray = Array(5).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -28,8 +28,8 @@ const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({
 }) => {
  return (
    <img
-     src='static/icons/alert.svg'
-     className='alert-cell-button'
+     src='static/icons/plus.svg'
+     className='plus-cell-button'
      alt=''
      onClick={() => dispatch(showNewRow())}
    />
@@ -49,14 +49,14 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
   return (
    <>
     <img
-      src='static/icons/alert.svg'
-      className='alert-cell-button'
+      src='static/icons/save.svg'
+      className='save-cell-button'
       alt=''
       onClick={saveNewData}
     />
     <img
-      src='static/icons/alert.svg'
-      className='alert-cell-button'
+      src='static/icons/close.svg'
+      className='close-cell-button'
       alt=''
       onClick={() => dispatch(hideNewRow())}
     />
@@ -86,11 +86,6 @@ const tablePropsInit: ITableProps = {
   ],
   editingMode: EditingMode.Cell,
   data: dataArray,
-  paging: {
-    enabled: true,
-    pageIndex: 0,
-    pageSize: 4
-  },
   rowKeyField: 'id',
 };
 
