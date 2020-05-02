@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { updateCellValue } from '../../actionCreators';
-import { ActionType, EditingMode } from '../../enums';
+import { EditingMode } from '../../enums';
 import { Column } from '../../Models/Column';
 import { DispatchFunc, Field } from '../../types';
+import { getCellEditorDispatchHandler } from '../../Utils/CellUtils';
 import CellEditorState from '../CellEditorState/CellEditorState';
 
 export interface IFilterRowEditorProps {
@@ -34,13 +34,7 @@ const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
     return editor(props);
   }
   if (editingMode === EditingMode.Cell){
-    const dispatchHandler: DispatchFunc = (action: any) => {
-      if (action.type === ActionType.UpdateEditorValue) {
-        dispatch(updateCellValue(action.rowKeyValue, action.columnKey, action.value));
-      } else {
-        dispatch(action);
-      }
-    };
+    const dispatchHandler = getCellEditorDispatchHandler(dispatch);
     return <CellEditorState {...props} dispatch={dispatchHandler} autoFocus={true}/>;
   }
   return <CellEditorState {...props} />;

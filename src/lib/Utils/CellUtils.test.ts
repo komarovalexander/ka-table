@@ -1,7 +1,11 @@
-import { EditingMode } from '../enums';
+
+
+import { closeEditor, updateEditorValue } from '../actionCreators';
+import { ActionType, EditingMode } from '../enums';
 import { EditableCell } from '../models';
 import {
-  addItemToEditableCells, getEditableCell, isEditableCell, removeItemFromEditableCells,
+  addItemToEditableCells, getCellEditorDispatchHandler, getEditableCell, isEditableCell,
+  removeItemFromEditableCells,
 } from './CellUtils';
 
 describe('CellUtils', () => {
@@ -68,6 +72,27 @@ describe('CellUtils', () => {
       };
       const newEditableCells = removeItemFromEditableCells(item, editableCells);
       expect(newEditableCells).toMatchSnapshot();
+    });
+  });
+  describe('getCellEditorDispatchHandler', () => {
+    it('transform UpdateEditorValue to UpdateCellValue', () => {
+      const dispatch = jest.fn();
+      const dispathcHandler = getCellEditorDispatchHandler(dispatch);
+      dispathcHandler(updateEditorValue(1, 'column', 2));
+      expect(dispatch).toBeCalledWith({
+        columnKey: 'column',
+        rowKeyValue: 1,
+        type: ActionType.UpdateCellValue,
+        value: 2
+      });
+    });
+
+    it('pass action to dispatch', () => {
+      const dispatch = jest.fn();
+      const dispathcHandler = getCellEditorDispatchHandler(dispatch);
+      const action = closeEditor(1, 'column');
+      dispathcHandler(action);
+      expect(dispatch).toBeCalledWith(action);
     });
   });
 });

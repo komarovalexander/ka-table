@@ -1,5 +1,7 @@
-import { EditingMode } from '../enums';
+import { updateCellValue } from '../actionCreators';
+import { ActionType, EditingMode } from '../enums';
 import { Column, EditableCell } from '../models';
+import { DispatchFunc } from '../types';
 import { getCopyOfArrayAndAddItem } from './ArrayUtils';
 
 export const isEditableCell = (editingMode: EditingMode, column: Column, rowEditableCells: EditableCell[]): boolean => {
@@ -19,6 +21,16 @@ export const getEditableCell = (column: Column, rowEditableCells: EditableCell[]
 export const addItemToEditableCells = (
   item: EditableCell, editableCells: EditableCell[]): EditableCell[] => {
     return getCopyOfArrayAndAddItem(item, editableCells);
+};
+
+export const getCellEditorDispatchHandler = (dispatch: DispatchFunc) => {
+  return (action: any) => {
+    if (action.type === ActionType.UpdateEditorValue) {
+      dispatch(updateCellValue(action.rowKeyValue, action.columnKey, action.value));
+    } else {
+      dispatch(action);
+    }
+  }
 };
 
 export const removeItemFromEditableCells = (

@@ -1,3 +1,5 @@
+import './AddRowDemo.scss';
+
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
@@ -95,10 +97,12 @@ const AddRowDemo: React.FC = () => {
   };
 
   return (
-    <Table
-      {...tableProps}
-      dispatch={dispatch}
-    />
+    <div className='add-row-demo'>
+      <Table
+        {...tableProps}
+        dispatch={dispatch}
+      />
+    </div>
   );
 };
 

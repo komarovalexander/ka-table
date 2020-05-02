@@ -1,3 +1,5 @@
+import './EditingRowDemo.scss';
+
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
@@ -95,10 +97,12 @@ const EditingDemoRow: React.FC = () => {
   };
 
   return (
-    <Table
-      {...tableProps}
-      dispatch={dispatch}
-    />
+    <div className='editing-row-demo'>
+      <Table
+        {...tableProps}
+        dispatch={dispatch}
+      />
+    </div>
   );
 };
 
