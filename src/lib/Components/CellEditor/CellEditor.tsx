@@ -1,11 +1,10 @@
 import * as React from 'react';
 
-import { updateEditorValue } from '../../actionCreators';
+import { updateCellValue } from '../../actionCreators';
 import { ActionType, EditingMode } from '../../enums';
 import { Column } from '../../Models/Column';
 import { DispatchFunc, Field } from '../../types';
 import CellEditorState from '../CellEditorState/CellEditorState';
-import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
 
 export interface IFilterRowEditorProps {
   column: Column;
@@ -35,17 +34,22 @@ const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
     return editor(props);
   }
   if (editingMode === EditingMode.Cell){
-    return <CellEditorState {...props} autoFocus={true}/>;
+    const dispatchHandler: DispatchFunc = (action: any) => {
+      if (action.type === ActionType.UpdateEditorValue) {
+        dispatch(updateCellValue(action.rowKeyValue, action.columnKey, action.value));
+      } else {
+        dispatch(action);
+      }
+    };
+    return <CellEditorState {...props} dispatch={dispatchHandler} autoFocus={true}/>;
+  } else {
+    const dispatchHandler: DispatchFunc = (action: any) => {
+      if (action.type !== ActionType.CloseEditor) {
+        dispatch(action);
+      }
+    };
+    return <CellEditorState {...props} dispatch={dispatchHandler} />;
   }
-
-  const dispatchHandler: DispatchFunc = (action: any) => {
-    if (action.type === ActionType.UpdateCellValue) {
-      dispatch(updateEditorValue(action.rowKeyValue, action.columnKey, action.value, { validate: true }));
-    } else if (action.type !== ActionType.CloseEditor) {
-      dispatch(action);
-    }
-  };
-  return <CellEditorValidation {...props} dispatch={dispatchHandler} />;
 };
 
 export default CellEditor;

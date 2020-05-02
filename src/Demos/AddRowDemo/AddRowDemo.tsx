@@ -7,7 +7,7 @@ import {
   DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
 } from '../../lib/types';
 
-const dataArray = Array(5).fill(undefined).map(
+const dataArray = Array(500).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
