@@ -29,12 +29,13 @@ const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({
   dispatch,
 }) => {
  return (
-   <img
-     src='static/icons/plus.svg'
-     className='plus-cell-button'
-     alt=''
-     onClick={() => dispatch(showNewRow())}
-   />
+  <div className='plus-cell-button'>
+    <img
+      src='static/icons/plus.svg'
+      alt=''
+      onClick={() => dispatch(showNewRow())}
+    />
+  </div>
  );
 };
 
@@ -49,7 +50,7 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
     }));
   };
   return (
-   <>
+   <div className='buttons'>
     <img
       src='static/icons/save.svg'
       className='save-cell-button'
@@ -62,7 +63,7 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
       alt=''
       onClick={() => dispatch(hideNewRow())}
     />
-   </>
+   </div>
  );
 };
 
@@ -82,7 +83,7 @@ const tablePropsInit: ITableProps = {
     {
       key: 'addColumn',
       headCell: AddButton,
-      style: {width: 30},
+      style: {width: 53},
       editor: (props) => <SaveButton {...props}/>
     },
   ],

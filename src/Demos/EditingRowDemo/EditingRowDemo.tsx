@@ -22,20 +22,21 @@ const EditButton: React.FC<CellFuncPropsWithChildren> = ({
   dispatch, rowKeyValue
 }) => {
   return (
-   <img
-     src='static/icons/edit.svg'
-     className='edit-cell-button'
-     alt=''
-     onClick={() => dispatch(openRowEditors(rowKeyValue))}
-   />
- );
+   <div className='edit-cell-button'>
+     <img
+      src='static/icons/edit.svg'
+      alt=''
+      onClick={() => dispatch(openRowEditors(rowKeyValue))}
+    />
+   </div>
+  );
 };
 
 const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
   dispatch, rowKeyValue
 }) => {
   return (
-    <div className={'buttons'}
+    <div className='buttons'
       style={{display: 'flex', justifyContent: 'space-between'}} >
       <img
         src='static/icons/save.svg'
@@ -66,16 +67,16 @@ const tablePropsInit: ITableProps = {
       key: 'name',
       title: 'Name',
       dataType: DataType.String,
-      style: { width: '30%' },
+      style: {width: '30%' },
       validation: (value) => {
         return value ? '' : 'value must be specified';
       }
     },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '40px' } },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: { width: '10%' }},
+    {key: 'score', title: 'Score', dataType: DataType.Number, style: {width: '40px' } },
+    {key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: {width: '10%' }},
     {
       dataType: DataType.Date,
-      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
+      format: (value: Date) => value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' }),
       key: 'nextTry',
       title: 'Next Try',
     },
