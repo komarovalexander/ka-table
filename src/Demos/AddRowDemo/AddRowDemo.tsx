@@ -32,7 +32,8 @@ const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({
   <div className='plus-cell-button'>
     <img
       src='static/icons/plus.svg'
-      alt=''
+      alt='Add New Row'
+      title='Add New Row'
       onClick={() => dispatch(showNewRow())}
     />
   </div>
@@ -54,13 +55,15 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
     <img
       src='static/icons/save.svg'
       className='save-cell-button'
-      alt=''
+      alt='Save'
+      title='Save'
       onClick={saveNewData}
     />
     <img
       src='static/icons/close.svg'
       className='close-cell-button'
-      alt=''
+      alt='Cancel'
+      title='Cancel'
       onClick={() => dispatch(hideNewRow())}
     />
    </div>

@@ -25,7 +25,8 @@ const EditButton: React.FC<CellFuncPropsWithChildren> = ({
    <div className='edit-cell-button'>
      <img
       src='static/icons/edit.svg'
-      alt=''
+      alt='Edit Row'
+      title='Edit Row'
       onClick={() => dispatch(openRowEditors(rowKeyValue))}
     />
    </div>
@@ -41,7 +42,8 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
       <img
         src='static/icons/save.svg'
         className='save-cell-button'
-        alt=''
+        alt='Save'
+        title='Save'
         onClick={() => {
           dispatch(saveRowEditors(rowKeyValue, {
             closeAfterSave: true,
@@ -52,7 +54,8 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
       <img
         src='static/icons/close.svg'
         className='close-cell-button'
-        alt=''
+        alt='Cancel'
+        title='Cancel'
         onClick={() => {
           dispatch(closeRowEditors(rowKeyValue));
         }}
