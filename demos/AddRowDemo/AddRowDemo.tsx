@@ -1,13 +1,15 @@
+import './AddRowDemo.scss';
+
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { addRow, updateNewRow } from 'ka-table/actionCreators';
+import { hideNewRow, saveNewRow, showNewRow } from 'ka-table/actionCreators';
 import { DataType } from 'ka-table/enums';
 import {
   DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
 } from 'ka-table/types';
 
-const dataArray = Array(10).fill(undefined).map(
+const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -27,40 +29,66 @@ const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({
   dispatch,
 }) => {
  return (
-   <img
-     src='static/icons/alert.svg'
-     className='alert-cell-button'
-     alt=''
-     onClick={() => dispatch(updateNewRow({}))}
-   />
+  <div className='plus-cell-button'>
+    <img
+      src='static/icons/plus.svg'
+      alt='Add New Row'
+      title='Add New Row'
+      onClick={() => dispatch(showNewRow())}
+    />
+  </div>
  );
 };
 
 const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
-  dispatch, rowData
+  dispatch
 }) => {
   const saveNewData = () => {
-    const newData = {...rowData, id: generateNewId() };
-    dispatch(addRow(newData));
-    dispatch(updateNewRow(undefined));
+    const newRowId = generateNewId();
+    dispatch(saveNewRow(newRowId, {
+      closeAfterSave: true,
+      validate: true
+    }));
   };
   return (
-   <img
-     src='static/icons/alert.svg'
-     className='alert-cell-button'
-     alt=''
-     onClick={saveNewData}
-   />
+   <div className='buttons'>
+    <img
+      src='static/icons/save.svg'
+      className='save-cell-button'
+      alt='Save'
+      title='Save'
+      onClick={saveNewData}
+    />
+    <img
+      src='static/icons/close.svg'
+      className='close-cell-button'
+      alt='Cancel'
+      title='Cancel'
+      onClick={() => dispatch(hideNewRow())}
+    />
+   </div>
  );
 };
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    {
+      key: 'column1',
+      title: 'Column 1',
+      dataType: DataType.String,
+      validation: (value) => {
+        return value ? '' : 'value must be specified';
+      }
+    },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: 'addColumn', headCell: AddButton, style: {width: 30}, editor: (props) => <SaveButton {...props}/> },
+    {
+      key: 'addColumn',
+      headCell: AddButton,
+      style: {width: 53},
+      editor: (props) => <SaveButton {...props}/>
+    },
   ],
   data: dataArray,
   rowKeyField: 'id',
@@ -73,10 +101,12 @@ const AddRowDemo: React.FC = () => {
   };
 
   return (
-    <Table
-      {...tableProps}
-      dispatch={dispatch}
-    />
+    <div className='add-row-demo'>
+      <Table
+        {...tableProps}
+        dispatch={dispatch}
+      />
+    </div>
   );
 };
 

@@ -1,7 +1,9 @@
+import './EditingRowDemo.scss';
+
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { closeRowEditor, openRowEditor, updateRow } from 'ka-table/actionCreators';
+import { closeRowEditors, openRowEditors, saveRowEditors } from 'ka-table/actionCreators';
 import { DataType } from 'ka-table/enums';
 import {
   CellFuncPropsWithChildren, DispatchFunc, EditorFuncPropsWithChildren,
@@ -20,37 +22,43 @@ const EditButton: React.FC<CellFuncPropsWithChildren> = ({
   dispatch, rowKeyValue
 }) => {
   return (
-   <img
-     src='static/icons/alert.svg'
-     className='alert-cell-button'
-     alt=''
-     onClick={() => dispatch(openRowEditor(rowKeyValue))}
-   />
- );
+   <div className='edit-cell-button'>
+     <img
+      src='static/icons/edit.svg'
+      alt='Edit Row'
+      title='Edit Row'
+      onClick={() => dispatch(openRowEditors(rowKeyValue))}
+    />
+   </div>
+  );
 };
 
 const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
-  dispatch, rowData, rowKeyValue
+  dispatch, rowKeyValue
 }) => {
   return (
-    <div className={'buttons'}
+    <div className='buttons'
       style={{display: 'flex', justifyContent: 'space-between'}} >
       <img
-        src='static/icons/alert.svg'
-        className='alert-cell-button'
-        alt=''
+        src='static/icons/save.svg'
+        className='save-cell-button'
+        alt='Save'
+        title='Save'
         onClick={() => {
-          dispatch(updateRow(rowData, { saveEditorsValues: true }));
-          dispatch(closeRowEditor(rowKeyValue));
-          }}
+          dispatch(saveRowEditors(rowKeyValue, {
+            closeAfterSave: true,
+            validate: true,
+          }));
+        }}
       />
       <img
-        src='static/icons/alert.svg'
-        className='alert-cell-button'
-        alt=''
+        src='static/icons/close.svg'
+        className='close-cell-button'
+        alt='Cancel'
+        title='Cancel'
         onClick={() => {
-          dispatch(closeRowEditor(rowKeyValue));
-          }}
+          dispatch(closeRowEditors(rowKeyValue));
+        }}
       />
    </div >
  );
@@ -58,12 +66,19 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '30%' } },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '40px' } },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: { width: '10%' }},
+    {
+      key: 'name',
+      title: 'Name',
+      dataType: DataType.String,
+      validation: (value) => {
+        return value ? '' : 'value must be specified';
+      }
+    },
+    {key: 'score', title: 'Score', dataType: DataType.Number },
+    {key: 'passed', title: 'Passed', dataType: DataType.Boolean},
     {
       dataType: DataType.Date,
-      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
+      format: (value: Date) => value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' }),
       key: 'nextTry',
       title: 'Next Try',
     },
@@ -75,13 +90,6 @@ const tablePropsInit: ITableProps = {
     },
   ],
   data: dataArray,
-  editableCells: [{
-    columnKey: 'name',
-    rowKeyValue: 2,
-  }, {
-    columnKey: 'score',
-    rowKeyValue: 2,
-  }],
   rowKeyField: 'id',
 };
 
@@ -92,10 +100,12 @@ const EditingDemoRow: React.FC = () => {
   };
 
   return (
-    <Table
-      {...tableProps}
-      dispatch={dispatch}
-    />
+    <div className='editing-row-demo'>
+      <Table
+        {...tableProps}
+        dispatch={dispatch}
+      />
+    </div>
   );
 };
 
