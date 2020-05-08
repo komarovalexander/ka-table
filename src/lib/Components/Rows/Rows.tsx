@@ -1,9 +1,10 @@
 import React, { RefObject, useEffect, useRef } from 'react';
 
+import { newRowId } from '../../const';
 import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
 import DataRow from '../DataRow/DataRow';
 import GroupRow from '../GroupRow/GroupRow';
-import NewRow, { newRowId } from '../NewRow/NewRow';
+import NewRow from '../NewRow/NewRow';
 import { ITableBodyProps } from '../TableBody/TableBody';
 
 export interface IRowsProps extends ITableBodyProps {

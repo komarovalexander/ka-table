@@ -1,12 +1,11 @@
 import React from 'react';
 
+import { newRowId } from '../../const';
 import { EditingMode } from '../../enums';
 import { ChildAttributes, EditableCell } from '../../models';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
 import DataRow from '../DataRow/DataRow';
-
-export const newRowId = {};
 
 export interface INewRowProps {
   childAttributes: ChildAttributes;

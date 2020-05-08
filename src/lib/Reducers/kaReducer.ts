@@ -1,3 +1,4 @@
+import { newRowId } from '../const';
 import { ActionType } from '../enums';
 import { ITableProps } from '../index';
 import { Column } from '../models';
@@ -157,23 +158,24 @@ const kaReducer: any = (state: ITableProps, action: any) => {
     }
     case ActionType.ShowNewRow:
     case ActionType.OpenRowEditors: {
-      const rowKeyValue = action.rowKeyValue;
+      const rowKeyValue = action.type === ActionType.ShowNewRow ? newRowId : action.rowKeyValue;
       const newEditableCells = addColumnsToRowEditableCells(editableCells, columns, rowKeyValue);
       return { ...state, editableCells: newEditableCells };
     }
     case ActionType.HideNewRow:
     case ActionType.CloseRowEditors: {
-      const rowKeyValue = action.rowKeyValue;
+      const rowKeyValue = action.type === ActionType.HideNewRow ? newRowId : action.rowKeyValue;
       const newEditableCells = editableCells.filter(e => e.rowKeyValue !== rowKeyValue);
       return { ...state, editableCells: newEditableCells };
     }
     case ActionType.SaveRowEditors:
     case ActionType.SaveNewRow: {
-      const rowKeyValue = action.rowKeyValue;
-      let updatedRowData = data.find((d) => d[rowKeyField] === rowKeyValue);
+      const isNewRow = action.type === ActionType.SaveNewRow;
+      const rowEditorKeyValue = isNewRow ? newRowId : action.rowKeyValue;
+      let updatedRowData = data.find((d) => d[rowKeyField] === rowEditorKeyValue);
       const rowEditableCells = editableCells.filter(
-        editableCell => editableCell.rowKeyValue === rowKeyValue
-        && (action.type === ActionType.SaveNewRow || editableCell.hasOwnProperty('editorValue')));
+        editableCell => editableCell.rowKeyValue === rowEditorKeyValue
+        && (isNewRow || editableCell.hasOwnProperty('editorValue')));
       if (action.validate) {
         let validationPassed = true;
         rowEditableCells.forEach(cell => {
@@ -187,15 +189,15 @@ const kaReducer: any = (state: ITableProps, action: any) => {
       }
       let newEditableCells = editableCells;
       if (action.closeAfterSave) {
-        newEditableCells = editableCells.filter(e => e.rowKeyValue !== rowKeyValue);
+        newEditableCells = editableCells.filter(e => e.rowKeyValue !== rowEditorKeyValue);
       }
       rowEditableCells.forEach(cell => {
         const column = columns.find((c) => c.key === cell.columnKey)!;
         updatedRowData = replaceValue(updatedRowData, column, cell.editorValue);
       });
       let newData;
-      if (action.rowId) {
-        updatedRowData[rowKeyField] = action.rowId;
+      if (isNewRow) {
+        updatedRowData[rowKeyField] = action.rowKeyValue;
         newData = [updatedRowData, ...data];
       } else {
         newData = getCopyOfArrayAndInsertOrReplaceItem(updatedRowData, rowKeyField, data);
