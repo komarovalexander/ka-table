@@ -46,7 +46,6 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
         title='Save'
         onClick={() => {
           dispatch(saveRowEditors(rowKeyValue, {
-            closeAfterSave: true,
             validate: true,
           }));
         }}
