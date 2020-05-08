@@ -70,13 +70,12 @@ const tablePropsInit: ITableProps = {
       key: 'name',
       title: 'Name',
       dataType: DataType.String,
-      style: {width: '30%' },
       validation: (value) => {
         return value ? '' : 'value must be specified';
       }
     },
-    {key: 'score', title: 'Score', dataType: DataType.Number, style: {width: '40px' } },
-    {key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: {width: '10%' }},
+    {key: 'score', title: 'Score', dataType: DataType.Number },
+    {key: 'passed', title: 'Passed', dataType: DataType.Boolean},
     {
       dataType: DataType.Date,
       format: (value: Date) => value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' }),
