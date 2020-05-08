@@ -6,7 +6,7 @@ import { ITableProps, kaReducer, Table } from '../../lib';
 import { deselectAllRows, deselectRow, selectAllRows, selectRow } from '../../lib/actionCreators';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
 import {
-  DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
+  CellFuncPropsWithChildren, DispatchFunc, HeaderCellFuncPropsWithChildren,
 } from '../../lib/types';
 
 const dataArray: any[] = [
@@ -18,7 +18,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const SelectionCell: React.FC<EditorFuncPropsWithChildren> = ({
+const SelectionCell: React.FC<CellFuncPropsWithChildren> = ({
   rowKeyValue, dispatch, isSelectedRow,
 }) => {
   return (

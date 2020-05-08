@@ -1,6 +1,7 @@
 
 export * from './Models/AttributeTableData';
 export * from './Models/Cell';
+export * from './Models/EditableCell';
 export * from './Models/ChildAttributes';
 export * from './Models/Column';
 export * from './Models/CssClasses';

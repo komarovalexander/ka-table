@@ -15,34 +15,40 @@ export interface ICellComponentProps {
   column: Column;
   dispatch: DispatchFunc;
   editingMode: EditingMode;
+  editorValue?: any;
+  hasEditorValue?: any;
   isEditableCell: boolean;
   isSelectedRow: boolean;
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
+  validationMessage?: string;
 }
 
 const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
   const {
     column,
-    rowData,
     column: { style },
+    editorValue,
+    hasEditorValue,
     isEditableCell,
+    rowData,
   } = props;
 
+  const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
   return (
     <td style={style} className={defaultOptions.css.cell}>
       { isEditableCell ? (
           <CellEditor
             {...props}
-            value={getValueByColumn(rowData, column)}
+            value={value}
             field={getField(column)}
           />
         )
         : (
           <CellContent
             {...props}
-            value={getValueByColumn(rowData, column)}
+            value={value}
             field={getField(column)}
           />
         )

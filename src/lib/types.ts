@@ -36,4 +36,4 @@ export type HeaderCellFuncPropsWithChildren = PropsWithChildren<IHeadCellProps>;
 export type NoDataRowFunc = () => any;
 export type OptionChangeFunc = (value: any) => void;
 export type SearchFunc = (searchText?: string, rowData?: any, column?: Column) => boolean;
-export type ValidationFunc = (value: any, rowData: any) => string | void;
+export type ValidationFunc = (value: any, rowData?: any) => string | void;

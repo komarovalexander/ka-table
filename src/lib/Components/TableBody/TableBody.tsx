@@ -2,8 +2,7 @@ import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { ActionType, EditingMode } from '../../enums';
-import { ChildAttributes } from '../../models';
-import { Cell } from '../../Models/Cell';
+import { ChildAttributes, EditableCell } from '../../models';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
@@ -18,7 +17,7 @@ export interface ITableBodyProps {
   data: any[];
   dataRow?: DataRowFunc;
   dispatch: DispatchFunc;
-  editableCells: Cell[];
+  editableCells: EditableCell[];
   editingMode: EditingMode;
   groupColumnsCount: number;
   groupRow?: GroupRowFunc;

@@ -13,9 +13,11 @@ const props: IRowProps = {
   dispatch: () => {},
   editableCells: [],
   editingMode: EditingMode.None,
+  isSelectedRow: false,
   groupColumnsCount: 0,
   rowData: [{ column: 1, column2: 2 }],
   rowKeyField: 'column',
+  rowKeyValue: 1,
   selectedRows: [],
 };
 
