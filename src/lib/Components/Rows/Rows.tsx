@@ -1,8 +1,10 @@
 import React, { RefObject, useEffect, useRef } from 'react';
 
+import { newRowId } from '../../const';
 import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
 import DataRow from '../DataRow/DataRow';
 import GroupRow from '../GroupRow/GroupRow';
+import NewRow from '../NewRow/NewRow';
 import { ITableBodyProps } from '../TableBody/TableBody';
 
 export interface IRowsProps extends ITableBodyProps {
@@ -14,6 +16,8 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     columns,
     data,
     dispatch,
+    editableCells,
+    groupColumnsCount,
     groupRow,
     groupedColumns,
     groups = [],
@@ -30,8 +34,20 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
   }, [firstRowRef, onFirstRowRendered]);
 
   let rowRefLink: any = firstRowRef;
+  const newRowEditableCells = editableCells && editableCells.filter(c => c.rowKeyValue === newRowId);
   return (
     <>
+      {
+        newRowEditableCells && !!newRowEditableCells.length && (
+        <NewRow
+          childAttributes={props.childAttributes}
+          editableCells={newRowEditableCells}
+          columns={columns}
+          dispatch={dispatch}
+          groupColumnsCount={groupColumnsCount}
+          rowKeyField={rowKeyField}
+        />
+      )}
       {data.map((d) => {
       if (d.groupMark === groupMark) {
         const groupIndex = d.key.length - 1;

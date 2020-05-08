@@ -10,9 +10,11 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
   dispatch,
   rowKeyValue,
   value,
+  autoFocus
 }) => {
   return (
-    <input autoFocus={true}
+    <input
+      autoFocus={autoFocus}
       className={defaultOptions.css.checkbox}
       type='checkbox'
       ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}

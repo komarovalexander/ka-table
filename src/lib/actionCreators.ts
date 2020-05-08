@@ -12,6 +12,16 @@ export const updateFilterRowOperator = (columnKey: string, filterRowOperator: st
   type: ActionType.UpdateFilterRowOperator,
 });
 
+export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: any, settings?: {
+  validate: boolean
+}) => ({
+  columnKey,
+  rowKeyValue,
+  type: ActionType.UpdateEditorValue,
+  validate: settings && settings.validate,
+  value,
+});
+
 export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any) => ({
   columnKey,
   rowKeyValue,
@@ -83,9 +93,57 @@ export const showLoading = (text?: string) => ({
   text,
   type: ActionType.ShowLoading,
 });
+
 export const hideLoading = () => ({
   type: ActionType.HideLoading,
 });
+
+export const showNewRow = () => ({
+  type: ActionType.ShowNewRow,
+});
+
+export const hideNewRow = () => ({
+  type: ActionType.HideNewRow,
+});
+
+export const saveNewRow = (rowKeyValue?: any, settings?: {
+  closeAfterSave?: boolean,
+  validate?: boolean
+}) => ({
+  rowKeyValue,
+  closeAfterSave: settings && settings.closeAfterSave,
+  validate: settings && settings.validate,
+  type: ActionType.SaveNewRow,
+});
+
+export const openRowEditors = (rowKeyValue: any) => ({
+  rowKeyValue,
+  type: ActionType.OpenRowEditors,
+});
+
+export const closeRowEditors = (rowKeyValue: any) => ({
+  rowKeyValue,
+  type: ActionType.CloseRowEditors,
+});
+
+export const saveRowEditors = (rowKeyValue: any, settings?: {
+  closeAfterSave?: boolean,
+  validate?: boolean
+}) => ({
+  closeAfterSave: settings && settings.closeAfterSave,
+  rowKeyValue,
+  validate: settings && settings.validate,
+  type: ActionType.SaveRowEditors,
+});
+
+export const updateRow = (rowData: any, settings?: { saveEditorsValues?: boolean }) => {
+  return {
+    type: ActionType.UpdateRow,
+    saveEditorsValues: settings && settings.saveEditorsValues,
+    rowData,
+  };
+};
+
 export const updatePageIndex = (pageIndex: number) => ({
   pageIndex,
   type: ActionType.UpdatePageIndex,

@@ -1,3 +1,4 @@
+
 export enum DataType {
   Boolean = 'boolean',
   Date = 'date',
@@ -13,23 +14,31 @@ export enum EditingMode {
 
 export enum ActionType {
   CloseEditor = 'CloseEditor',
+  CloseRowEditors = 'CloseRowEditors',
   DeleteRow = 'DeleteRow',
   DeselectAllRows = 'DeselectAllRows',
   DeselectRow = 'DeselectRow',
   HideLoading = 'HideLoading',
+  HideNewRow = 'HideNewRow',
   OpenEditor = 'OpenEditor',
+  OpenRowEditors = 'OpenRowEditors',
+  SaveNewRow = 'SaveNewRow',
+  SaveRowEditors = 'SaveRowEditors',
   ScrollTable = 'ScrollTable',
   Search = 'Search',
   SelectAllRows = 'SelectAllRows',
   SelectRow = 'SelectRow',
   SelectSingleRow = 'SelectSingleRow',
   ShowLoading = 'ShowLoading',
+  ShowNewRow = 'ShowNewRow',
   UpdateCellValue = 'UpdateCellValue',
   UpdateData = 'UpdateData',
+  UpdateEditorValue = 'UpdateEditorValue',
   UpdateFilterRowOperator = 'UpdateFilterRowOperator',
   UpdateFilterRowValue = 'UpdateFilterRowValue',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',
   UpdatePageIndex = 'UpdatePageIndex',
+  UpdateRow = 'UpdateRow',
   UpdateSortDirection = 'UpdateSortDirection',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
 }

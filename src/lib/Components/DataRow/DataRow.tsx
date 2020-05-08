@@ -2,8 +2,7 @@ import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
-import { ChildAttributes } from '../../models';
-import { Cell } from '../../Models/Cell';
+import { ChildAttributes, EditableCell } from '../../models';
 import { Column } from '../../Models/Column';
 import { DataRowFunc, DispatchFunc } from '../../types';
 import { extendProps } from '../../Utils/PropsUtils';
@@ -14,7 +13,7 @@ export interface IRowCommonProps {
   childAttributes: ChildAttributes;
   columns: Column[];
   dispatch: DispatchFunc;
-  editableCells: Cell[];
+  editableCells: EditableCell[];
   editingMode: EditingMode;
   rowData: any;
   rowKeyField: string;

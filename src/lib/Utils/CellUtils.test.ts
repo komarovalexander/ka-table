@@ -1,6 +1,12 @@
-import { EditingMode } from '../enums';
-import { Cell } from '../Models/Cell';
-import { addItemToEditableCells, isEditableCell, removeItemFromEditableCells } from './CellUtils';
+
+
+import { closeEditor, updateEditorValue } from '../actionCreators';
+import { ActionType, EditingMode } from '../enums';
+import { EditableCell } from '../models';
+import {
+  addItemToEditableCells, getCellEditorDispatchHandler, getEditableCell, isEditableCell,
+  removeItemFromEditableCells,
+} from './CellUtils';
 
 describe('CellUtils', () => {
   it('isEditableCell equals true', () => {
@@ -19,21 +25,29 @@ describe('CellUtils', () => {
     expect(rowEditableCells).toBeFalsy();
   });
 
-  it('isEditableCell always equals false when EditingMode.None', () => {
-    const rowEditableCells = isEditableCell(EditingMode.None, { key: 'column' }, [{
+  it('isEditableCell equals false if column.isEditable is false', () => {
+    const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column', isEditable: false }, [{
       columnKey: 'column',
       rowKeyValue: 10,
     }]);
     expect(rowEditableCells).toBeFalsy();
   });
 
+  it('getEditableCell return undefined if column.isEditable is false', () => {
+    const editableCell = getEditableCell({ key: 'column', isEditable: false }, [{
+      columnKey: 'column',
+      rowKeyValue: 10,
+    }]);
+    expect(editableCell).toBeUndefined();
+  });
+
   describe('CellHandlers', () => {
     it('addItemToEditableCells', () => {
-      const editableCells: Cell[] = [{
+      const editableCells: EditableCell[] = [{
         columnKey: 'column',
         rowKeyValue: 1,
       }];
-      const item: Cell = {
+      const item: EditableCell = {
         columnKey: 'column2',
         rowKeyValue: 2,
       };
@@ -42,7 +56,7 @@ describe('CellUtils', () => {
     });
 
     it('removeItemFromEditableCells', () => {
-      const editableCells: Cell[] = [{
+      const editableCells: EditableCell[] = [{
         columnKey: 'column',
         rowKeyValue: 1,
       }, {
@@ -52,12 +66,33 @@ describe('CellUtils', () => {
         columnKey: 'column',
         rowKeyValue: 2,
       }];
-      const item: Cell = {
+      const item: EditableCell = {
         columnKey: 'column2',
         rowKeyValue: 2,
       };
       const newEditableCells = removeItemFromEditableCells(item, editableCells);
       expect(newEditableCells).toMatchSnapshot();
+    });
+  });
+  describe('getCellEditorDispatchHandler', () => {
+    it('transform UpdateEditorValue to UpdateCellValue', () => {
+      const dispatch = jest.fn();
+      const dispathcHandler = getCellEditorDispatchHandler(dispatch);
+      dispathcHandler(updateEditorValue(1, 'column', 2));
+      expect(dispatch).toBeCalledWith({
+        columnKey: 'column',
+        rowKeyValue: 1,
+        type: ActionType.UpdateCellValue,
+        value: 2
+      });
+    });
+
+    it('pass action to dispatch', () => {
+      const dispatch = jest.fn();
+      const dispathcHandler = getCellEditorDispatchHandler(dispatch);
+      const action = closeEditor(1, 'column');
+      dispathcHandler(action);
+      expect(dispatch).toBeCalledWith(action);
     });
   });
 });

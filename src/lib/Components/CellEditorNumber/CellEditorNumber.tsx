@@ -9,9 +9,11 @@ const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
   dispatch,
   value,
   rowKeyValue,
+  autoFocus
 }) => {
   return (
-    <input autoFocus={true}
+    <input
+      autoFocus={autoFocus}
       className={defaultOptions.css.numberInput}
       type='number'
       value={value === null || value === undefined ? '' : value}

@@ -10,11 +10,12 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   dispatch,
   rowKeyValue,
   value,
+  autoFocus
 }) => {
   const inputValue = value && getDateInputValue(value);
   return (
     <input
-      autoFocus={true}
+      autoFocus={autoFocus}
       className={defaultOptions.css.dateInput}
       type='date'
       value={inputValue || ''}

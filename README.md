@@ -27,6 +27,8 @@ yarn add ka-table
 
 
 ```js
+import "ka-table/style.css";
+
 import React, { useState } from 'react';
 
 import { ITableOption, kaReducer, Table } from 'ka-table';
