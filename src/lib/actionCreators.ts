@@ -103,6 +103,16 @@ export const hideNewRow = () => ({
   type: ActionType.HideNewRow,
 });
 
+export const showDetailsRow = (rowKeyValue: any) => ({
+  rowKeyValue,
+  type: ActionType.ShowDetailsRow,
+});
+
+export const hideDetailsRow = (rowKeyValue: any) => ({
+  rowKeyValue,
+  type: ActionType.HideDetailsRow,
+});
+
 export const saveNewRow = (rowKeyValue: any, settings?: {
   validate?: boolean
 }) => ({

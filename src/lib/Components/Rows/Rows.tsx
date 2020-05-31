@@ -2,7 +2,7 @@ import React, { RefObject, useEffect, useRef } from 'react';
 
 import { newRowId } from '../../const';
 import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
-import DataRow from '../DataRow/DataRow';
+import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
 import NewRow from '../NewRow/NewRow';
 import { ITableBodyProps } from '../TableBody/TableBody';
@@ -22,6 +22,8 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     groupedColumns,
     groups = [],
     groupsExpanded = [],
+    detailsRow,
+    detailsRows = [],
     onFirstRowRendered,
     rowKeyField,
     selectedRows,
@@ -69,8 +71,9 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
       } else {
         const rowKeyValue = d[rowKeyField];
         const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
+        const isDetailsRowShown = !!detailsRow && detailsRows.some((r) => r === rowKeyValue);
         const dataRow = (
-          <DataRow
+          <DataAndDetailsRows
             childAttributes={props.childAttributes}
             columns={props.columns}
             dataRow={props.dataRow}
@@ -78,6 +81,8 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             editableCells={props.editableCells}
             editingMode={props.editingMode}
             groupColumnsCount={props.groupColumnsCount}
+            detailsRow={detailsRow}
+            isDetailsRowShown={isDetailsRowShown}
             isSelectedRow={isSelectedRow}
             key={d[rowKeyField]}
             rowData={d}

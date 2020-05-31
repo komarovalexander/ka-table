@@ -19,6 +19,8 @@ export interface ITableBodyProps {
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
   editingMode: EditingMode;
+  detailsRow?: DataRowFunc;
+  detailsRows?: any[];
   groupColumnsCount: number;
   groupRow?: GroupRowFunc;
   groupedColumns: Column[];

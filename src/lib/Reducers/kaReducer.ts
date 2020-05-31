@@ -30,6 +30,7 @@ const kaReducer: any = (state: ITableProps, action: any) => {
     data = [],
     editableCells = [],
     groupsExpanded,
+    detailsRows = [],
     loading,
     paging,
     rowKeyField,
@@ -50,6 +51,15 @@ const kaReducer: any = (state: ITableProps, action: any) => {
         newLoading.text = action.text;
       }
       return { ...state, loading: newLoading };
+    }
+    case ActionType.ShowDetailsRow: {
+      const newDetailsRows = [...detailsRows];
+      newDetailsRows.push(action.rowKeyValue);
+      return { ...state, detailsRows: newDetailsRows };
+    }
+    case ActionType.HideDetailsRow: {
+      const newDetailsRows = detailsRows.filter(row => row !== action.rowKeyValue);
+      return { ...state, detailsRows: newDetailsRows };
     }
     case ActionType.OpenEditor: {
       const newEditableCells = addItemToEditableCells(

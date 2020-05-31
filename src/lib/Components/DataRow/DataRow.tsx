@@ -22,9 +22,11 @@ export interface IRowCommonProps {
 }
 
 export interface IRowProps extends IRowCommonProps {
-  groupColumnsCount: number;
-  isSelectedRow: boolean;
   dataRow?: DataRowFunc;
+  groupColumnsCount: number;
+  detailsRow?: DataRowFunc;
+  isDetailsRowShown: boolean;
+  isSelectedRow: boolean;
   trRef?: any;
 }
 

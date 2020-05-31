@@ -18,6 +18,7 @@ export interface ICellComponentProps {
   editorValue?: any;
   hasEditorValue?: any;
   isEditableCell: boolean;
+  isDetailsRowShown: boolean;
   isSelectedRow: boolean;
   rowData: any;
   rowKeyField: string;

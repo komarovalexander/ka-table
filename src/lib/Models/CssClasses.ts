@@ -6,6 +6,7 @@ export class CssClasses {
   public theadCell?: string = 'ka-thead-cell';
   public groupRow?: string = 'ka-tr ka-group-row';
   public row?: string = 'ka-tr ka-row';
+  public detailsRow?: string = 'ka-tr ka-details-row';
   public rowSelected?: string = 'ka-row-selected';
   public cell?: string = 'ka-cell';
 
