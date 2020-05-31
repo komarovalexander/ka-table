@@ -35,6 +35,17 @@ describe('PagingUtils', () => {
     expect(result).toEqual(1);
   });
 
+  it('getPagesCount should use pagesCount if it is set', () => {
+    const paging: IPagingProps = {
+      enabled: true,
+      pageSize: 2,
+      pagesCount: 6
+    };
+
+    const result = getPagesCount([], paging);
+    expect(result).toEqual(6);
+  });
+
   it('getPagesCount default pageSize is 10', () => {
     const paging: IPagingProps = {
       enabled: true,
@@ -52,7 +63,19 @@ describe('PagingUtils', () => {
     expect(result.length).toEqual(20);
   });
 
-  it('getPageData return first page with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
+  it('getPageData should skip pagination if pagesCount is set', () => {
+    const paging: IPagingProps = {
+      enabled: true,
+      pagesCount: 2,
+      pageSize: 10
+    };
+    const data = new Array(20);
+
+    const result = getPageData(data, paging);
+    expect(result.length).toEqual(20);
+  });
+
+  it('getPageData returns first page with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
     const paging: IPagingProps = {
       enabled: true,
     };
@@ -64,7 +87,7 @@ describe('PagingUtils', () => {
     expect(result[9]).toEqual(9);
   });
 
-  it('getPageData return last with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
+  it('getPageData returns last with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
     const paging: IPagingProps = {
       enabled: true,
       pageSize: 5,
@@ -78,7 +101,7 @@ describe('PagingUtils', () => {
     expect(result[4]).toEqual(14);
   });
 
-  it('getPageData return last with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
+  it('getPageData returns last with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
     const paging: IPagingProps = {
       enabled: true,
       pageSize: 5,
