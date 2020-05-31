@@ -17,9 +17,6 @@ import Loading, { ILoadingProps } from '../Loading/Loading';
 import Paging, { IPagingProps } from '../Paging/Paging';
 import TableBody from '../TableBody/TableBody';
 
-/**
- * Sets the options of the table which are related to its looks
- */
 export interface ITableProps {
   columns: Column[];
   data?: any[];
@@ -31,6 +28,8 @@ export interface ITableProps {
   groupRow?: GroupRowFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
+  detailsRow?: DataRowFunc;
+  detailsRows?: any[];
   loading?: ILoadingProps;
   noDataRow?: NoDataRowFunc;
   paging?: IPagingProps;

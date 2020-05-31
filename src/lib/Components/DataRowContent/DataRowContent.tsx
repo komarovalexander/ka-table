@@ -6,6 +6,7 @@ import CellComponent from '../CellComponent/CellComponent';
 import { IRowCommonProps } from '../DataRow/DataRow';
 
 export interface IDataRowProps extends IRowCommonProps {
+  isDetailsRowShown: boolean;
   isSelectedRow: boolean;
 }
 
@@ -15,6 +16,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   dispatch,
   editableCells,
   editingMode,
+  isDetailsRowShown,
   isSelectedRow,
   rowData,
   rowKeyField,
@@ -33,6 +35,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
             dispatch={dispatch}
             editingMode={editingMode}
             isEditableCell={!!editableCell}
+            isDetailsRowShown={isDetailsRowShown}
             isSelectedRow={isSelectedRow}
             editorValue={editableCell && editableCell.editorValue}
             validationMessage={editableCell && editableCell.validationMessage}

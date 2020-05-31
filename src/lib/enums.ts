@@ -18,6 +18,7 @@ export enum ActionType {
   DeleteRow = 'DeleteRow',
   DeselectAllRows = 'DeselectAllRows',
   DeselectRow = 'DeselectRow',
+  HideDetailsRow = 'HideDetailsRow',
   HideLoading = 'HideLoading',
   HideNewRow = 'HideNewRow',
   OpenEditor = 'OpenEditor',
@@ -29,6 +30,7 @@ export enum ActionType {
   SelectAllRows = 'SelectAllRows',
   SelectRow = 'SelectRow',
   SelectSingleRow = 'SelectSingleRow',
+  ShowDetailsRow = 'ShowDetailsRow',
   ShowLoading = 'ShowLoading',
   ShowNewRow = 'ShowNewRow',
   UpdateCellValue = 'UpdateCellValue',
@@ -38,7 +40,6 @@ export enum ActionType {
   UpdateFilterRowValue = 'UpdateFilterRowValue',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',
   UpdatePageIndex = 'UpdatePageIndex',
-  UpdateRow = 'UpdateRow',
   UpdateSortDirection = 'UpdateSortDirection',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
 }

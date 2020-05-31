@@ -16,6 +16,7 @@ export interface ICellEditorProps extends IFilterRowEditorProps {
   editingMode: EditingMode;
   editorValue?: any;
   field: Field;
+  isDetailsRowShown: boolean;
   isSelectedRow: boolean;
   rowData: any;
   rowKeyField: string;

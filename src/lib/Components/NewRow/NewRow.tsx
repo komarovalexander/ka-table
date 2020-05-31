@@ -33,6 +33,7 @@ const NewRow: React.FunctionComponent<INewRowProps> = ({
         editingMode={EditingMode.None}
         groupColumnsCount={groupColumnsCount}
         isSelectedRow={false}
+        isDetailsRowShown={false}
         rowData={{}}
         rowKeyField={rowKeyField}
         rowKeyValue={newRowId}

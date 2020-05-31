@@ -11,6 +11,7 @@ export interface ICellContentProps {
   dispatch: DispatchFunc;
   editingMode: EditingMode;
   field: Field;
+  isDetailsRowShown: boolean;
   isSelectedRow: boolean;
   rowData: any;
   rowKeyField: string;

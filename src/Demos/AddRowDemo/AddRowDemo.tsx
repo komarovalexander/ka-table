@@ -46,7 +46,6 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
   const saveNewData = () => {
     const rowKeyValue = generateNewId();
     dispatch(saveNewRow(rowKeyValue, {
-      closeAfterSave: true,
       validate: true
     }));
   };

@@ -7,4 +7,5 @@ export class ChildAttributes {
   public cell?: ChildAttributesItem<ICellContentProps>;
   public table?: ChildAttributesItem<ITableAllProps>;
   public dataRow?: ChildAttributesItem<IDataRowProps>;
+  public detailsRow?: ChildAttributesItem<IDataRowProps>;
 }
