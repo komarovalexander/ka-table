@@ -16,7 +16,7 @@ const get = (paging?: IPagingProps): Promise<any> => {
     setTimeout(() => {
       resolve({
         data: getPageData(dataArray, { ...paging, pagesCount: undefined }),
-        totalPages: getPagesCount(dataArray, { ...paging, pagesCount: undefined })
+        pagesCount: getPagesCount(dataArray, { ...paging, pagesCount: undefined })
       });
     }, 1000);
   });

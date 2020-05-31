@@ -51,7 +51,7 @@ const RemoteDataDemo: React.FC = () => {
     if (action.type === ActionType.DeleteRow) {
       dispatch(showLoading('Deleting Row..'));
       serverEmulator.delete(action.rowKeyValue, tableProps.paging).then((result) => {
-        dispatch(updatePagesCount(result.totalPages));
+        dispatch(updatePagesCount(result.pagesCount));
         dispatch(updateData(result.data));
         dispatch(hideLoading());
       });
@@ -59,14 +59,14 @@ const RemoteDataDemo: React.FC = () => {
       dispatch(showLoading('Updating Data..'));
       const column = tableProps.columns.find((c) => c.key === action.columnKey)!;
       serverEmulator.update(action.rowKeyValue, { [getField(column)]: action.value }, tableProps.paging).then((result) => {
-        dispatch(updatePagesCount(result.totalPages));
+        dispatch(updatePagesCount(result.pagesCount));
         dispatch(updateData(result.data));
         dispatch(hideLoading());
       });
     } else if (action.type === ActionType.UpdatePageIndex) {
       dispatch(showLoading('Loading Data..'));
       serverEmulator.get({ ...tableProps.paging, pageIndex: action.pageIndex }).then((result) => {
-        dispatch(updatePagesCount(result.totalPages));
+        dispatch(updatePagesCount(result.pagesCount));
         dispatch(updateData(result.data));
         dispatch(hideLoading());
       });
@@ -77,7 +77,7 @@ const RemoteDataDemo: React.FC = () => {
   if (!tableProps.data) {
     serverEmulator.get(tableProps.paging).then(
       (result) => {
-        dispatch(updatePagesCount(result.totalPages));
+        dispatch(updatePagesCount(result.pagesCount));
         dispatch(updateData(result.data));
         dispatch(hideLoading());
       },
