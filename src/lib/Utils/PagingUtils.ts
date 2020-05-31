@@ -3,11 +3,17 @@ import { IPagingProps } from '../Components/Paging/Paging';
 export const centerLength = 5;
 const DEFAULT_PAGE_SIZE = 10;
 export const getPagesCount = (data: any[], paging?: IPagingProps): number => {
-  return paging && paging.enabled ? Math.ceil(data.length / ((paging && paging.pageSize) || DEFAULT_PAGE_SIZE)) : 1;
+  if (!paging || !paging.enabled) {
+    return 1;
+  }
+  if (paging.pagesCount) {
+    return paging.pagesCount;
+  }
+  return Math.ceil(data.length / ((paging && paging.pageSize) || DEFAULT_PAGE_SIZE));
 };
 
 export const getPageData = (data: any[], paging?: IPagingProps): any[] => {
-  if (!paging || !paging.enabled) {
+  if (!paging || !paging.enabled || paging.pagesCount) {
     return data;
   }
   const pageSize = paging.pageSize || DEFAULT_PAGE_SIZE;

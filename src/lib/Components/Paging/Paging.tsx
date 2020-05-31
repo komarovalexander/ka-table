@@ -8,10 +8,10 @@ export interface IPagingProps {
   enabled?: boolean;
   pageIndex?: number;
   pageSize?: number;
+  pagesCount?: number;
 }
 
 interface IPagingExtendedProps extends IPagingProps {
-  pagesCount: number;
   dispatch: DispatchFunc;
 }
 

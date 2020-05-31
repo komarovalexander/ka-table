@@ -42,6 +42,9 @@ const kaReducer: any = (state: ITableProps, action: any) => {
     case ActionType.UpdatePageIndex: {
       return { ...state, paging: {...paging, pageIndex: action.pageIndex } };
     }
+    case ActionType.UpdatePagesCount: {
+      return { ...state, paging: {...paging, pagesCount: action.pagesCount }};
+    }
     case ActionType.HideLoading: {
       return { ...state, loading: {...loading, enabled: false } };
     }
