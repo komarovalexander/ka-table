@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { deleteRow, hideLoading, showLoading, updateData } from 'ka-table/actionCreators';
+import {
+  deleteRow, hideLoading, showLoading, updateData, updatePagesCount,
+} from 'ka-table/actionCreators';
 import { ActionType, DataType, EditingMode } from 'ka-table/enums';
 import { CellFuncPropsWithChildren, DispatchFunc } from 'ka-table/types';
 import { getField } from 'ka-table/Utils/ColumnUtils';
@@ -34,6 +36,11 @@ const tablePropsInit: ITableProps = {
     enabled: true,
     text: 'Loading Data..'
   },
+  paging: {
+    enabled: true,
+    pageIndex: 1,
+    pageSize: 10
+  },
   noDataRow: () => 'No data',
   rowKeyField: 'id',
 };
@@ -43,15 +50,24 @@ const RemoteDataDemo: React.FC = () => {
   const dispatch: DispatchFunc = (action) => {
     if (action.type === ActionType.DeleteRow) {
       dispatch(showLoading('Deleting Row..'));
-      serverEmulator.delete(action.rowKeyValue).then((data) => {
-        dispatch(updateData(data));
+      serverEmulator.delete(action.rowKeyValue, tableProps.paging).then((result) => {
+        dispatch(updatePagesCount(result.pagesCount));
+        dispatch(updateData(result.data));
         dispatch(hideLoading());
       });
     } else if (action.type === ActionType.UpdateCellValue) {
       dispatch(showLoading('Updating Data..'));
       const column = tableProps.columns.find((c) => c.key === action.columnKey)!;
-      serverEmulator.update(action.rowKeyValue, { [getField(column)]: action.value }).then((data) => {
-        dispatch(updateData(data));
+      serverEmulator.update(action.rowKeyValue, { [getField(column)]: action.value }, tableProps.paging).then((result) => {
+        dispatch(updatePagesCount(result.pagesCount));
+        dispatch(updateData(result.data));
+        dispatch(hideLoading());
+      });
+    } else if (action.type === ActionType.UpdatePageIndex) {
+      dispatch(showLoading('Loading Data..'));
+      serverEmulator.get({ ...tableProps.paging, pageIndex: action.pageIndex }).then((result) => {
+        dispatch(updatePagesCount(result.pagesCount));
+        dispatch(updateData(result.data));
         dispatch(hideLoading());
       });
     }
@@ -59,9 +75,10 @@ const RemoteDataDemo: React.FC = () => {
   };
 
   if (!tableProps.data) {
-    serverEmulator.get().then(
-      (data) => {
-        dispatch(updateData(data));
+    serverEmulator.get(tableProps.paging).then(
+      (result) => {
+        dispatch(updatePagesCount(result.pagesCount));
+        dispatch(updateData(result.data));
         dispatch(hideLoading());
       },
     );
