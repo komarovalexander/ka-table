@@ -207,6 +207,10 @@ const kaReducer: any = (state: ITableProps, action: any) => {
       }
       return { ...state, data: newData, editableCells: newEditableCells };
     }
+    case ActionType.UpdateRow: {
+      const newData = getCopyOfArrayAndInsertOrReplaceItem(action.rowData, rowKeyField, data);
+      return { ...state, data: newData };
+    }
   }
   return state;
 };

@@ -139,6 +139,13 @@ export const saveRowEditors = (rowKeyValue: any, settings?: {
   type: ActionType.SaveRowEditors,
 });
 
+export const updateRow = (rowData: any) => {
+  return {
+    type: ActionType.UpdateRow,
+    rowData,
+  };
+};
+
 export const updatePageIndex = (pageIndex: number) => ({
   pageIndex,
   type: ActionType.UpdatePageIndex,

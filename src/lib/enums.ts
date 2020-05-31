@@ -40,6 +40,7 @@ export enum ActionType {
   UpdateFilterRowValue = 'UpdateFilterRowValue',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',
   UpdatePageIndex = 'UpdatePageIndex',
+  UpdateRow = 'UpdateRow',
   UpdateSortDirection = 'UpdateSortDirection',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
 }
