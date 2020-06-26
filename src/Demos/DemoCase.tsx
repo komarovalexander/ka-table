@@ -3,4 +3,5 @@ export class DemoCase {
   public name!: string;
   public path!: string;
   public title!: string;
+  public group!: string;
 }
