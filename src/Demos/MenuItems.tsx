@@ -1,5 +1,4 @@
 import './Demos.scss';
-import 'react-simple-tree-menu/dist/main.css';
 
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';

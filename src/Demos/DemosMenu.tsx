@@ -1,5 +1,4 @@
 import './Demos.scss';
-import 'react-simple-tree-menu/dist/main.css';
 
 import React, { useState } from 'react';
 
@@ -44,7 +43,7 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
   menuItems.sort((a, b) => a.title[0] > b.title[0] ? 1 : -1);
   return (
     <ul className='menu'>
-      <input className='menu-search' type='search' placeholder='search by demos..' value={search} onChange={(e) => {
+      <input className='menu-search' type='search' placeholder='search by menu..' value={search} onChange={(e) => {
         const searchValue = e.currentTarget.value;
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {

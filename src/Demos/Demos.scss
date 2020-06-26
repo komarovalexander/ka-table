@@ -63,9 +63,9 @@ body {
       }
     }
 
-    .menu-search{
-      margin: 5px 0 5px 40px;
-      padding: 5px;
+    .menu-search {
+      margin: 0px 0 10px 40px;
+      padding: 10px;
       width: 210px;
     }
 
@@ -86,6 +86,7 @@ body {
         text-decoration: none;
         .menu-button{
           position: relative;
+          height: 20px;
           display: flex;
           .menu-icon {
             opacity: 0.6;
@@ -102,6 +103,7 @@ body {
         }
 
         &.active{
+          background-color: #ECF0F4;
           padding: 10px 0 10px 36px;
           border-left: 4px solid #353C44;
           color: #353C44;
