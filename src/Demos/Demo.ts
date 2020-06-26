@@ -7,6 +7,7 @@ export default class Demo {
     public fileName: string,
     public jsLink: string = '',
     public tsLink: string = '',
+    public group: string = '',
     public disableOnlineEditor: boolean = false) {
       this.jsLink = jsLink + '?file=Demo.js';
       this.tsLink = tsLink + '?file=Demo.tsx';
