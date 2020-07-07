@@ -20,6 +20,12 @@
   padding: 15px 20px;
   color: #747D86;
 }
+.ka-thead-cell-wrapper {
+  display: flex;
+}
+.ka-thead-cell-content {
+  width: 100%;
+}
 .ka-tbody{
   display: block;
   overflow-y: overlay;
@@ -127,6 +133,14 @@
   animation: typing 1s linear infinite alternate;
   position: relative;
   left: -20px;
+}
+.ka-thead-cell-resize{
+  user-select: none;
+  width: 2px;
+  cursor: col-resize;
+  background-color: white;
+  position: relative;
+  left: 22px;
 }
 
 @keyframes typing{

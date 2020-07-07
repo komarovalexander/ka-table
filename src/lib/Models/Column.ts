@@ -20,6 +20,7 @@ export class Column {
   public groupCell?: GroupCellFunc;
   public headCell?: HeaderCellFunc;
   public isEditable?: boolean;
+  public isResizable?: boolean;
   public key!: string;
   public search?: SearchFunc;
   public sortDirection?: SortDirection;
