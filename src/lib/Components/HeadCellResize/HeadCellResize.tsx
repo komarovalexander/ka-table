@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { isNumber } from 'util';
 
+import { resizeColumn } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { ActionType } from '../../enums';
 import { Column } from '../../Models/Column';
@@ -43,7 +44,7 @@ const HeadCellResize: React.FunctionComponent<{
         });
         const mouseUpStop = getEventListenerEffect('mouseup', (event: MouseEvent) => {
           const newWidth = getValidatedWidth(event.screenX - startX, minWidth);
-          dispatch({ type: ActionType.ResizeColumn, width: newWidth, columnKey: key, });
+          dispatch(resizeColumn(key, newWidth));
           dispatch({ type: HeadCellResizeStateAction, width: newWidth });
           mouseUpStop();
           mouseMoveStop();

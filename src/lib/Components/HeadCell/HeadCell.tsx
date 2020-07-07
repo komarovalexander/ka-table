@@ -14,6 +14,14 @@ export interface IHeadCellProps {
   sortingMode: SortingMode;
 }
 
+export const headCellDispatchWrapper: (setWidth: any, dispatch: DispatchFunc) => DispatchFunc = (setWidth, dispatch) => (action) => {
+  if (action.type === HeadCellResizeStateAction){
+    setWidth(action.width);
+  }else{
+    dispatch(action);
+  }
+};
+
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
     column: { style, isResizable },
@@ -21,6 +29,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   } = props;
   const [width, setWidth] = React.useState(style ? style.width : undefined);
   const stateStyle = {...style, width};
+  const headCellDispatch = headCellDispatchWrapper(setWidth, dispatch);
   return (
     <th scope='col' style={stateStyle} className={defaultOptions.css.theadCell}>
       <div className={defaultOptions.css.theadCellWrapper}>
@@ -28,13 +37,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
         {isResizable && (
           <HeadCellResize {...props}
             currentWidth={width}
-            dispatch={(action) => {
-            if (action.type === HeadCellResizeStateAction){
-              setWidth(action.width);
-            }else{
-              dispatch(action);
-            }
-          }}/>
+            dispatch={headCellDispatch}/>
         )}
       </div>
     </th>
