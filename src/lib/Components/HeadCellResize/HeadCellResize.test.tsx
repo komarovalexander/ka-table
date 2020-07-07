@@ -11,7 +11,7 @@ const props = {
 };
 
 it('renders without crashing', () => {
-  const element = document.createElement('tr');
+  const element = document.createElement('div');
   ReactDOM.render(<HeadCellResize {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });
