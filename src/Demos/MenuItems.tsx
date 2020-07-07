@@ -11,6 +11,8 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
+const newItems = ['ColumnResizingDemo'];
+
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 
   const [menuItems, changeItems] = useState(items);
@@ -42,6 +44,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
                 <span className='menu-button'>
                   <span className='menu-icon'><img src={`static/icons/${c.name}.svg`} alt=''/></span>
                   <span className='menu-button-inner'>{c.title}</span>
+                  {newItems.includes(c.name) && <span className='new-badge'>new</span>}
                 </span>
               </NavLink>
               )}

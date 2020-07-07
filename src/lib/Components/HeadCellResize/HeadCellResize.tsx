@@ -3,7 +3,6 @@ import { isNumber } from 'util';
 
 import { resizeColumn } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { ActionType } from '../../enums';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
 import { getEventListenerEffect } from '../../Utils/EffectUtils';

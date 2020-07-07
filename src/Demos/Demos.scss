@@ -92,13 +92,17 @@ body {
             opacity: 0.6;
             width: 40px;
           }
-          .menu-button-inner{
-            width: 200px;
-          }
           .group-icon {
             position: absolute;
             left: -35px;
             top: -5px;
+          }
+          .new-badge{
+            margin-left: 20px;
+            padding: 0 7px;
+            background: rgba(118,74,188, 0.8);
+            color: white;
+            border-radius: 12px;
           }
         }
 
