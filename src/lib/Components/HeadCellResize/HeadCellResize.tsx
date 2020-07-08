@@ -25,10 +25,8 @@ const HeadCellResize: React.FunctionComponent<{
       draggable='false'
       onMouseDown={(mouseDownEvent: any) => {
         const startX = mouseDownEvent.screenX - mouseDownEvent.currentTarget.parentElement.offsetWidth;
-        console.log(1);
         const mouseMoveStop = getEventListenerEffect('mousemove', getMouseMove(currentWidth, minWidth, startX, dispatch));
         const mouseUpStop = getEventListenerEffect('mouseup', (event: MouseEvent) => {
-          console.log(22222);
           const newWidth = getValidatedWidth(event.screenX - startX, minWidth);
           dispatch(resizeColumn(key, newWidth));
           dispatch({ type: HeadCellResizeStateAction, width: newWidth });
