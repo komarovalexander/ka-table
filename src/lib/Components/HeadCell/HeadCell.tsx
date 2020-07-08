@@ -4,8 +4,9 @@ import defaultOptions from '../../defaultOptions';
 import { SortingMode } from '../../enums';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
+import { headCellDispatchWrapper } from '../../Utils/CellResizeUtils';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
-import HeadCellResize, { HeadCellResizeStateAction } from '../HeadCellResize/HeadCellResize';
+import HeadCellResize from '../HeadCellResize/HeadCellResize';
 
 export interface IHeadCellProps {
   areAllRowsSelected: boolean;
@@ -13,14 +14,6 @@ export interface IHeadCellProps {
   dispatch: DispatchFunc;
   sortingMode: SortingMode;
 }
-
-export const headCellDispatchWrapper: (setWidth: any, dispatch: DispatchFunc) => DispatchFunc = (setWidth, dispatch) => (action) => {
-  if (action.type === HeadCellResizeStateAction){
-    setWidth(action.width);
-  }else{
-    dispatch(action);
-  }
-};
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {

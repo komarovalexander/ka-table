@@ -1,19 +1,14 @@
 import * as React from 'react';
-import { isNumber } from 'util';
 
 import { resizeColumn } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
+import {
+  getMinWidth, getValidatedWidth, HeadCellResizeStateAction,
+} from '../../Utils/CellResizeUtils';
 import { getEventListenerEffect } from '../../Utils/EffectUtils';
 
-export const HeadCellResizeStateAction = 'HeadCellResizeStateAction';
-const getValidatedWidth = (newWidth: number, minWidth: number) => {
-  if (newWidth < minWidth){
-    return minWidth;
-  }
-  return newWidth;
-};
 const HeadCellResize: React.FunctionComponent<{
   dispatch: DispatchFunc,
   column: Column,
@@ -24,11 +19,7 @@ const HeadCellResize: React.FunctionComponent<{
     dispatch,
     currentWidth,
   } = props;
-  let minWidth: number = 20;
-  const styleMinWidth = style && style.minWidth;
-  if (styleMinWidth && isNumber(styleMinWidth)){
-    minWidth = styleMinWidth;
-  }
+  const minWidth = getMinWidth(style);
   return (
     <div className={defaultOptions.css.theadCellResize}
       draggable='false'
