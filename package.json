@@ -9,9 +9,11 @@
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/react": "16.9.25",
     "@types/react-redux": "^7.1.7",
+    "@types/simulant": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-redux": "^7.2.0"
+    "react-redux": "^7.2.0",
+    "simulant": "^0.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
