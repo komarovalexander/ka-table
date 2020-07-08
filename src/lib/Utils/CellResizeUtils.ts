@@ -4,6 +4,18 @@ import { DispatchFunc } from '../types';
 
 export const HeadCellResizeStateAction = 'HeadCellResizeStateAction';
 
+export const getMouseMove = (
+  currentWidth: any,
+  minWidth: number,
+  startX: number,
+  dispatch: DispatchFunc) => (event: MouseEvent) => {
+  let newWidth = event.screenX - startX;
+  if (newWidth !== currentWidth){
+    newWidth = getValidatedWidth(newWidth, minWidth);
+    dispatch({ type: HeadCellResizeStateAction, width: newWidth });
+  }
+};
+
 export const getValidatedWidth = (newWidth: number, minWidth: number) => {
   if (newWidth < minWidth){
     return minWidth;

@@ -1,6 +1,6 @@
 
 import {
-  getMinWidth, getValidatedWidth, headCellDispatchWrapper, HeadCellResizeStateAction,
+  getMinWidth, getMouseMove, getValidatedWidth, headCellDispatchWrapper, HeadCellResizeStateAction,
 } from './CellResizeUtils';
 
 describe('CellUtils', () => {
@@ -39,6 +39,14 @@ describe('CellUtils', () => {
     });
     it('newWidth more than minWidth', () => {
       expect(getValidatedWidth(50, 40)).toBe(50);
+    });
+  });
+  describe('getMouseMove', () => {
+    it('default', () => {
+      const dispatch = jest.fn();
+      const mouseMoveEvent = getMouseMove(40, 50, 100, dispatch);
+      mouseMoveEvent({ screenX: 20 } as any);
+      expect(dispatch).toBeCalledWith({type: 'HeadCellResizeStateAction', width: 50});
     });
   });
 });
