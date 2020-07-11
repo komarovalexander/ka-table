@@ -6,7 +6,7 @@ import { HashRouter, Route } from 'react-router-dom';
 import AddRowDemo from './AddRowDemo/AddRowDemo';
 import AlertCellDemo from './AlertCellDemo/AlertCellDemo';
 import ClassComponentDemo from './ClassComponentDemo/ClassComponentDemo';
-import ColumnResizingDemo from './ColumnResizing/ColumnResizingDemo';
+import ColumnResizingDemo from './ColumnResizingDemo/ColumnResizingDemo';
 import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
 import CustomDataRowDemo from './CustomDataRowDemo/CustomDataRowDemo';
 import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
