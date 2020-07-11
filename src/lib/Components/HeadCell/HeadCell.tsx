@@ -26,7 +26,9 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   return (
     <th scope='col' style={stateStyle} className={defaultOptions.css.theadCell}>
       <div className={defaultOptions.css.theadCellWrapper}>
-        <HeadCellContent {...props}/>
+        <div className={defaultOptions.css.theadCellContentWrapper}>
+          <HeadCellContent {...props}/>
+        </div>
         {isResizable && (
           <HeadCellResize {...props}
             currentWidth={width}

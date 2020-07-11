@@ -23,6 +23,9 @@
 .ka-thead-cell-wrapper {
   display: flex;
 }
+.ka-thead-cell-content-wrapper{
+  width: 100%;
+}
 .ka-thead-cell-content {
   width: 100%;
 }
@@ -138,9 +141,9 @@
   user-select: none;
   width: 2px;
   cursor: col-resize;
-  background-color: white;
+  background-color: #747D8655;
   position: relative;
-  left: 22px;
+  left: 20px;
 }
 
 @keyframes typing{

@@ -4,9 +4,10 @@ export class CssClasses {
   public thead?: string = 'ka-thead';
   public theadRow?: string = 'ka-tr ka-thead-row';
   public theadCell?: string = 'ka-thead-cell';
+  public theadCellWrapper?: string = 'ka-thead-cell-wrapper';
   public theadCellResize?: string = 'ka-thead-cell-resize';
   public theadCellContent?: string = 'ka-thead-cell-content';
-  public theadCellWrapper?: string = 'ka-thead-cell-wrapper';
+  public theadCellContentWrapper?: string = 'ka-thead-cell-content-wrapper';
   public groupRow?: string = 'ka-tr ka-group-row';
   public row?: string = 'ka-tr ka-row';
   public detailsRow?: string = 'ka-tr ka-details-row';
