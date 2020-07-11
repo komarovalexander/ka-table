@@ -12,12 +12,12 @@ const initDataArray = [
   { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
 ];
 
-const defaultOption = {
+const defaultOption: ITableProps = {
   columns: [
-    { key: 'type', title: 'TYPE', dataType: DataType.String },
-    { key: 'name', title: 'NAME', dataType: DataType.String },
-    { key: 'country', title: 'COUNTRY', dataType: DataType.String },
-    { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' } },
+    { key: 'type', title: 'TYPE', dataType: DataType.String, isResizable: true },
+    { key: 'name', title: 'NAME', dataType: DataType.String, isResizable: true },
+    { key: 'country', title: 'COUNTRY', dataType: DataType.String, isResizable: true },
+    { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' }, isResizable: true },
   ],
   data: initDataArray,
   editingMode: EditingMode.Cell,
