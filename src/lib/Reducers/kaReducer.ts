@@ -39,6 +39,21 @@ const kaReducer: any = (state: ITableProps, action: any) => {
   } = state;
 
   switch (action.type) {
+    case ActionType.ResizeColumn: {
+      const { columnKey, width } = action;
+
+      const column = columns.find((c: Column) => c.key === columnKey)!;
+      const newColumn: Column = {
+        ...column,
+        style: { ...column.style, width },
+      };
+      const newColumns = getCopyOfArrayAndInsertOrReplaceItem(
+        newColumn,
+        'key',
+        columns,
+      );
+      return { ...state, columns: newColumns };
+    }
     case ActionType.UpdatePageIndex: {
       return { ...state, paging: {...paging, pageIndex: action.pageIndex } };
     }

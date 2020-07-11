@@ -155,3 +155,9 @@ export const updatePagesCount = (pagesCount: number) => ({
   pagesCount,
   type: ActionType.UpdatePagesCount,
 });
+
+export const resizeColumn = (columnKey: string, width: number) => ({
+  type: ActionType.ResizeColumn,
+  columnKey,
+  width,
+});

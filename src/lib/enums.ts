@@ -23,6 +23,7 @@ export enum ActionType {
   HideNewRow = 'HideNewRow',
   OpenEditor = 'OpenEditor',
   OpenRowEditors = 'OpenRowEditors',
+  ResizeColumn = 'ResizeColumn',
   SaveNewRow = 'SaveNewRow',
   SaveRowEditors = 'SaveRowEditors',
   ScrollTable = 'ScrollTable',
