@@ -39,10 +39,12 @@ const ColumnResizingDemo: React.FC = () => {
   };
 
   return (
-    <Table
-      {...tableProps}
-      dispatch={dispatch}
-    />
+    <div className='column-resizing-demo'>
+      <Table
+        {...tableProps}
+        dispatch={dispatch}
+      />
+    </div>
   );
 };
 
