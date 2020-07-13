@@ -14,10 +14,11 @@ T extends (e: infer E) => void ? (
 type WithExtraParameters<T, I> = {
   [P in keyof T ] : AddParameters<T[P], I>;
 };
+type ElementAttributes<T> = React.HTMLAttributes<HTMLElement>;
 
 export type CellFunc = (props: CellFuncPropsWithChildren) => any;
 export type CellFuncPropsWithChildren = PropsWithChildren<ICellContentProps>;
-export type ChildAttributesItem<T> = WithExtraParameters<React.HTMLAttributes<HTMLElement>, T>;
+export type ChildAttributesItem<T> = WithExtraParameters<ElementAttributes<T>, T>;
 export type DataChangeFunc = (data: any[]) => void;
 export type DataRowFunc = (props: DataRowFuncPropsWithChildren) => any;
 export type DataRowFuncPropsWithChildren = PropsWithChildren<IDataRowProps>;
@@ -28,12 +29,12 @@ export type EventFunc = (type: string, data: any) => void;
 export type Field = string;
 export type FilterRowFunc = (props: FilterRowFuncPropsWithChildren) => any;
 export type FilterRowFuncPropsWithChildren = PropsWithChildren<IFilterRowEditorProps>;
-export type FormatFunc = (value: any) => any;
 export type GroupCellFunc = (props: IGroupRowProps) => any;
 export type GroupRowFunc = (props: IGroupRowProps) => any;
 export type HeaderCellFunc = (props: HeaderCellFuncPropsWithChildren) => any;
 export type HeaderCellFuncPropsWithChildren = PropsWithChildren<IHeadCellProps>;
 export type NoDataRowFunc = () => any;
 export type OptionChangeFunc = (value: any) => void;
-export type SearchFunc = (searchText?: string, rowData?: any, column?: Column) => boolean;
-export type ValidationFunc = (value: any, rowData?: any) => string | void;
+export type FormatFunc = (props: { value: any, column: Column }) => any;
+export type SearchFunc = (props: { searchText: string, rowData: any, column: Column }) => boolean;
+export type ValidationFunc = (props: { value: any, rowData: any, column: Column }) => string | void;

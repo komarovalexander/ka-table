@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { deselectAllRows, selectSingleRow } from '../../lib/actionCreators';
 import { ActionType, DataType } from '../../lib/enums';
-import { ChildAttributes } from '../../lib/models';
+import { ChildComponents } from '../../lib/models';
 import { DispatchFunc } from '../../lib/types';
 import dataArray from './data';
 
@@ -29,7 +29,6 @@ const tablePropsInit: ITableProps = {
     {
       dataType: DataType.String,
       field: 'name',
-      fieldParents: ['company'],
       key: 'company.name',
       title: 'Company Name',
     },
@@ -38,11 +37,13 @@ const tablePropsInit: ITableProps = {
   rowKeyField: 'id',
 };
 
-const childAttributes: ChildAttributes = {
+const childAttributes: ChildComponents = {
   dataRow: {
-    onClick: (event, { dispatch, childProps }) => {
-      dispatch(selectSingleRow(childProps.rowKeyValue));
-    },
+    elementAttributes: {
+      onClick: (event, { dispatch, childProps }) => {
+        dispatch(selectSingleRow(childProps.rowKeyValue));
+      },
+    }
   },
 };
 
@@ -68,7 +69,7 @@ const SelectionSingleDemo: React.FC = () => {
       <Table
         {...tableProps}
         dispatch={dispatch}
-        childAttributes={childAttributes}
+        childComponents={childAttributes}
       />
       { selectedItem && (
         <div className='info'>

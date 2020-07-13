@@ -1,6 +1,6 @@
 import { Column } from '../Models/Column';
 import { Field } from '../types';
-import { getField } from './ColumnUtils';
+import { getField, getLastField, getLastFieldParents } from './ColumnUtils';
 
 export const getParentValue = (rowData: any, fieldParents: Field[], sameObj = false) => {
   const parentValue = fieldParents.reduce((previousValue, currentValue) => {
@@ -30,19 +30,17 @@ export const createObjByFields = (fieldParents: Field[], field: Field, value: an
 };
 
 export const getValueByColumn = (rowData: any, column: Column) => {
-  return getValueByField(rowData, getField(column), column.fieldParents);
-};
-
-export const getValueByField = (rowData: any, field: Field, fieldParents?: Field[]) => {
-  if (fieldParents && fieldParents.length) {
-    const parentValue = getParentValue(rowData, fieldParents);
-    if (parentValue) {
-      return parentValue[field];
-    }
-    return undefined;
-  } else {
-    return rowData[field];
+  let o = {...rowData};
+  const names =  getField(column).split('.');
+  for (let i = 0, n = names.length; i < n; ++i) {
+      const k = names[i];
+      if (k in o) {
+          o = o[k];
+      } else {
+          return;
+      }
   }
+  return o;
 };
 
 const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
@@ -61,5 +59,5 @@ const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldPa
 };
 
 export const replaceValue = (rowData: any, column: Column, newValue: any) => {
-  return replaceValueForField(rowData, getField(column), newValue, column.fieldParents);
+  return replaceValueForField(rowData, getLastField(column), newValue, getLastFieldParents(column));
 };

@@ -5,7 +5,7 @@ import { DataType, EditingMode } from '../../enums';
 import CellContent, { ICellContentProps } from './CellContent';
 
 const props: ICellContentProps = {
-  childAttributes: {},
+  childComponents: {},
   column: {
     dataType: DataType.String,
     key: 'columnField',

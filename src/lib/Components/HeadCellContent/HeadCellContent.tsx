@@ -7,10 +7,11 @@ import { IHeadCellProps } from '../HeadCell/HeadCell';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
-    column: { headCell },
+    childComponents: { headCell },
   } = props;
-  if (headCell) {
-    return headCell(props);
+  const headCellContent = headCell && headCell.content && headCell.content(props);
+  if (headCellContent) {
+    return headCellContent;
   }
 
   const {

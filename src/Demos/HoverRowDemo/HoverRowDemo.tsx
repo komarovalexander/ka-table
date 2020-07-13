@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
-import { ChildAttributes } from '../../lib/models';
+import { ChildComponents } from '../../lib/models';
 import { DispatchFunc } from '../../lib/types';
 import dataArray from './data';
 
@@ -31,7 +31,6 @@ const tablePropsInit: ITableProps = {
     {
       dataType: DataType.String,
       field: 'name',
-      fieldParents: ['company'],
       key: 'company.name',
       title: 'Company Name',
     },
@@ -40,19 +39,21 @@ const tablePropsInit: ITableProps = {
   rowKeyField: 'id',
 };
 
-const childAttributes: ChildAttributes = {
+const childAttributes: ChildComponents = {
   dataRow: {
-    onMouseEnter: (event, extendedEvent) => {
-      const {
-        childProps: {
-          rowKeyValue,
-        },
-        dispatch,
-      } = extendedEvent;
-      dispatch({ type: ROW_MOUSE_ENTER, rowKeyValue });
-    },
-    onMouseLeave: (event, { dispatch }) => {
-      dispatch({ type: ROW_MOUSE_LEAVE });
+    elementAttributes: {
+      onMouseEnter: (event, extendedEvent) => {
+        const {
+          childProps: {
+            rowKeyValue,
+          },
+          dispatch,
+        } = extendedEvent;
+        dispatch({ type: ROW_MOUSE_ENTER, rowKeyValue });
+      },
+      onMouseLeave: (event, { dispatch }) => {
+        dispatch({ type: ROW_MOUSE_LEAVE });
+      },
     },
   },
 };
@@ -71,7 +72,7 @@ const HoverRowDemo: React.FC = () => {
       <Table
         {...tableProps}
         dispatch={dispatch}
-        childAttributes={childAttributes}
+        childComponents={childAttributes}
       />
       { selectedItem && (
         <div className='info'>

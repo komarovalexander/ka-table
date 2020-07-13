@@ -24,7 +24,6 @@ const HeadCell: React.FC<HeaderCellFuncPropsWithChildren> = ({
 const tablePropsInit: ITableProps = {
   columns: [
     {
-      headCell: (props) => <HeadCell {...props}/>,
       key: 'column1',
       style: { textAlign: 'left' },
       title: 'Column 1',
@@ -47,6 +46,15 @@ const CustomHeaderCellDemo: React.FC = () => {
   return (
     <Table
       {...tableProps}
+      childComponents={{
+        headCell: {
+          content: (props) => {
+            if (props.column.key === 'column1'){
+              return <HeadCell {...props}/>;
+            }
+          }
+        }
+      }}
       dispatch={dispatch}
     />
   );

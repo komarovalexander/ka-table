@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
-import { ChildAttributes } from '../../lib/models';
+import { ChildComponents } from '../../lib/models';
 import { DispatchFunc } from '../../lib/types';
 import { EventsLog } from './EventsLog';
 
@@ -32,32 +32,51 @@ const tablePropsInit: ITableProps = {
   sortingMode: SortingMode.Single,
 };
 
-const childAttributes: ChildAttributes = {
+const childComponents: ChildComponents = {
   cell: {
-    className: 'my-cell-class',
-    onClick: (e, extendedEvent) => {
-      const { childProps: { dispatch } } = extendedEvent;
-      dispatch({ type: 'MY_CELL_onClick', ...{ extendedEvent }});
-    },
-    onContextMenu: (e, extendedEvent) => {
-      extendedEvent.dispatch({ type: 'MY_CELL_onContextMenu', ...{ extendedEvent }});
-    },
-    onDoubleClick: (e, extendedEvent) => {
-      const { dispatch, childElementAttributes } = extendedEvent;
-      dispatch({ type: 'MY_CELL_onDoubleClick', ...{ extendedEvent }});
-      childElementAttributes.onClick!(e);
-    },
+    elementAttributes: {
+      className: 'my-cell-class',
+      onClick: (e, extendedEvent) => {
+        const { childProps: { dispatch } } = extendedEvent;
+        dispatch({ type: 'MY_CELL_onClick', ...{ extendedEvent }});
+      },
+    }
+  },
+  cellText: {
+    elementAttributes: {
+      className: 'my-cell-text-class',
+      onClick: (e, extendedEvent) => {
+        const { childProps: { dispatch } } = extendedEvent;
+        dispatch({ type: 'MY_CELL_TEXT_onClick', ...{ extendedEvent }});
+      },
+      onContextMenu: (e, extendedEvent) => {
+        extendedEvent.dispatch({ type: 'MY_CELL_onContextMenu', ...{ extendedEvent }});
+      },
+      onDoubleClick: (e, extendedEvent) => {
+        const { dispatch, childElementAttributes } = extendedEvent;
+        dispatch({ type: 'MY_CELL_TEXT_onDoubleClick', ...{ extendedEvent }});
+        childElementAttributes.onClick!(e);
+      },
+    }
   },
   dataRow: {
-    onClick: (e, extendedEvent) => {
-      const { childProps: { dispatch } } = extendedEvent;
-      dispatch({ type: 'MY_ROW_onClick', ...{ extendedEvent }});
+    elementAttributes: {
+      onClick: (e, extendedEvent) => {
+        const { childProps: { dispatch } } = extendedEvent;
+        dispatch({ type: 'MY_ROW_onClick', ...{ extendedEvent }});
+      }
     },
   },
   table: {
-    onMouseEnter: (e, extendedEvent) => {
-      const { dispatch } = extendedEvent;
-      dispatch({ type: 'MY_TABLE_onMouseEnter', ...{ extendedEvent }});
+    elementAttributes: {
+      onMouseEnter: (e, extendedEvent) => {
+        const { dispatch } = extendedEvent;
+        dispatch({ type: 'MY_TABLE_onMouseEnter', ...{ extendedEvent }});
+      },
+      onMouseLeave: (e, extendedEvent) => {
+        const { dispatch } = extendedEvent;
+        dispatch({ type: 'MY_TABLE_onMouseLeave', ...{ extendedEvent }});
+      }
     },
   },
 };
@@ -74,13 +93,16 @@ const EventsDemo: React.FC = () => {
       <Table
         {...tableProps}
         dispatch={dispatch}
-        childAttributes={childAttributes}
+        childComponents={childComponents}
       />
-      <EventsLog events={events} showDataClick={(eventData: any) => {
-        const newEvents = [...events];
-        newEvents.find((e) => e.date === eventData.date).showData = true;
-        changeEvents(newEvents);
-      }}/>
+      <EventsLog
+        events={events}
+        showDataClick={(eventData: any) => {
+          const newEvents = [...events];
+          newEvents.find((e) => e.date === eventData.date).showData = true;
+          changeEvents(newEvents);
+        }}
+        clearLog={() => changeEvents([])}/>
     </div>
   );
 };

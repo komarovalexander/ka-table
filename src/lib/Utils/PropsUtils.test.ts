@@ -16,7 +16,7 @@ describe('PropsUtils', () => {
 
     const dispatch = () => {};
     const childProps: ICellContentProps = {
-      childAttributes: {},
+      childComponents: {},
       column: { key: 'column' },
       dispatch,
       editingMode: EditingMode.Cell,
@@ -62,7 +62,7 @@ describe('getData', () => {
     rowKeyField: 'id'
   }
   it('get data by search', () => {
-    const result = getData({ ...props , search: 'row:3' });
+    const result = getData({ ...props , searchText: 'row:3' });
     expect(result).toMatchSnapshot();
   });
   it('get data by filter', () => {

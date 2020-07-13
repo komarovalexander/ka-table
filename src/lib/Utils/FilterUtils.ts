@@ -1,8 +1,10 @@
+
 import defaultOptions from '../defaultOptions';
 import { DataType, FilterOperatorName } from '../enums';
 import { Column } from '../Models/Column';
 import { EditableCell } from '../Models/EditableCell';
 import { FilterOperator } from '../Models/FilterOperator';
+import { SearchFunc } from '../types';
 import { isEmpty } from './CommonUtils';
 import { getValueByColumn } from './DataUtils';
 
@@ -10,11 +12,12 @@ export const getRowEditableCells = (rowKeyValue: any, editableCells: EditableCel
   return editableCells.filter((c) => c.rowKeyValue === rowKeyValue);
 };
 
-export const searchData = (columns: Column[], data: any[], searchText: string): any[] => {
+export const searchData = (columns: Column[], data: any[], searchText: string, search?: SearchFunc): any[] => {
   return columns.reduce((initialData: any[], c: Column) => {
     const filterFunction = (item: any) => {
-      if (c.search) {
-        return c.search(searchText, item, c);
+      const searchContent = search && search({ column: c, searchText, rowData: item });
+      if (searchContent) {
+        return searchContent;
       }
       if (initialData.indexOf(item) >= 0) {
         return false;

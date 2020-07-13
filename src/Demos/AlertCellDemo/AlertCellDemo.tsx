@@ -31,7 +31,7 @@ const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'command1', cell: (props) => <AlertCell {...props}/>, style: { width: 40, textAlign: 'center' } },
+    { key: 'command1', style: { width: 40, textAlign: 'center' } },
     { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -52,6 +52,15 @@ const AlertCellDemo: React.FC = () => {
   return (
     <Table
       {...tableProps}
+      childComponents={{
+        cellText: {
+          content: (props) => {
+            switch (props.column.key){
+              case 'command1': return <AlertCell {...props}/>;
+            }
+          }
+        }
+      }}
       dispatch={dispatch}
     />
   );

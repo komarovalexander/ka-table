@@ -74,22 +74,22 @@ const tablePropsInit: ITableProps = {
     {
       key: 'column1',
       title: 'Column 1',
-      dataType: DataType.String,
-      validation: (value) => {
-        return value ? '' : 'value must be specified';
-      }
+      dataType: DataType.String
     },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
     {
       key: 'addColumn',
-      headCell: AddButton,
-      style: {width: 53},
-      editor: (props) => <SaveButton {...props}/>
+      style: {width: 53}
     },
   ],
   data: dataArray,
+  validation: ({ column, value }) => {
+    if (column.key === 'column1'){
+      return value ? '' : 'value must be specified';
+    }
+  },
   rowKeyField: 'id',
 };
 
@@ -103,6 +103,22 @@ const AddRowDemo: React.FC = () => {
     <div className='add-row-demo'>
       <Table
         {...tableProps}
+        childComponents={{
+          editor: {
+            content: (props) => {
+              if (props.column.key === 'addColumn'){
+                return <SaveButton {...props}/>;
+              }
+            }
+          },
+          headCell: {
+            content: (props) => {
+              if (props.column.key === 'addColumn'){
+                return <AddButton {...props}/>;
+              }
+            }
+          }
+        }}
         dispatch={dispatch}
       />
     </div>

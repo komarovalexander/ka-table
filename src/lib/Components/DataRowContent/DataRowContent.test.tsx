@@ -5,7 +5,7 @@ import { DataType, EditingMode } from '../../enums';
 import DataRowContent, { IDataRowProps } from './DataRowContent';
 
 const props: IDataRowProps = {
-  childAttributes: {},
+  childComponents: {},
   columns: [
     { key: 'column', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },

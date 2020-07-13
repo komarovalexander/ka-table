@@ -2,15 +2,15 @@ import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
-import { ChildAttributes, EditableCell } from '../../models';
+import { ChildComponents, EditableCell } from '../../models';
 import { Column } from '../../Models/Column';
-import { DataRowFunc, DispatchFunc } from '../../types';
+import { DataRowFunc, DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
 import { extendProps } from '../../Utils/PropsUtils';
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
 export interface IRowCommonProps {
-  childAttributes: ChildAttributes;
+  childComponents: ChildComponents;
   columns: Column[];
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
@@ -23,16 +23,21 @@ export interface IRowCommonProps {
 
 export interface IRowProps extends IRowCommonProps {
   dataRow?: DataRowFunc;
-  groupColumnsCount: number;
   detailsRow?: DataRowFunc;
+  format?: FormatFunc;
+  groupColumnsCount: number;
   isDetailsRowShown: boolean;
   isSelectedRow: boolean;
   trRef?: any;
+  validation?: ValidationFunc;
 }
 
-const DataRow: React.FunctionComponent<IRowProps> = (props) => {
+function propsAreEqual(prevProps: IRowProps, nextProps: IRowProps) {
+  return false;
+}
+const DataRow: React.FunctionComponent<IRowProps> = React.memo((props) => {
   const {
-    childAttributes,
+    childComponents,
     dataRow,
     groupColumnsCount,
     isSelectedRow,
@@ -45,7 +50,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
     className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`,
   };
 
-  const divProps = extendProps(componentProps, props, childAttributes.dataRow, props.dispatch);
+  const divProps = extendProps(componentProps, props, childComponents.dataRow);
 
   const dataRowContent = dataRow && dataRow(dataRowProps);
   return (
@@ -56,6 +61,6 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
         : <DataRowContent {...dataRowProps}/>}
     </tr>
   );
-};
+}, propsAreEqual);
 
 export default DataRow;

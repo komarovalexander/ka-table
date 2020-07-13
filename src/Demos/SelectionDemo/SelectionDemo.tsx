@@ -57,9 +57,7 @@ const SelectionHeader: React.FC<HeaderCellFuncPropsWithChildren> = ({
 const tablePropsInit: ITableProps = {
   columns: [
     {
-      cell: SelectionCell,
-      headCell: SelectionHeader,
-      key: '!selection-cell!',
+      key: 'selection-cell',
     },
     {
       dataType: DataType.String,
@@ -86,7 +84,22 @@ const SelectionDemo: React.FC = () => {
     <div className='selection-demo'>
       <Table
         {...tableProps}
-        data={dataArray}
+        childComponents={{
+          cellText: {
+            content: (props) => {
+              if (props.column.key === 'selection-cell'){
+                return <SelectionCell {...props} />
+              }
+            }
+          },
+          headCell: {
+            content: (props) => {
+              if (props.column.key === 'selection-cell'){
+                return <SelectionHeader {...props}/>;
+              }
+            }
+          }
+        }}
         dispatch={dispatch}
       />
     </div>

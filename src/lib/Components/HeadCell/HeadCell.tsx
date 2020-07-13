@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { SortingMode } from '../../enums';
+import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
 import { headCellDispatchWrapper } from '../../Utils/CellResizeUtils';
@@ -10,6 +11,7 @@ import HeadCellResize from '../HeadCellResize/HeadCellResize';
 
 export interface IHeadCellProps {
   areAllRowsSelected: boolean;
+  childComponents: ChildComponents;
   column: Column;
   dispatch: DispatchFunc;
   sortingMode: SortingMode;

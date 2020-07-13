@@ -13,20 +13,23 @@ export interface IRowsProps extends ITableBodyProps {
 
 const Rows: React.FunctionComponent<IRowsProps> = (props) => {
   const {
+    childComponents,
     columns,
     data,
+    detailsRow,
+    detailsRows = [],
     dispatch,
     editableCells,
+    format,
     groupColumnsCount,
     groupRow,
     groupedColumns,
     groups = [],
     groupsExpanded = [],
-    detailsRow,
-    detailsRows = [],
     onFirstRowRendered,
     rowKeyField,
     selectedRows,
+    validation,
   } = props;
   const groupMark = getGroupMark();
 
@@ -42,22 +45,25 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
       {
         newRowEditableCells && !!newRowEditableCells.length && (
         <NewRow
-          childAttributes={props.childAttributes}
-          editableCells={newRowEditableCells}
+          childComponents={props.childComponents}
           columns={columns}
           dispatch={dispatch}
+          editableCells={newRowEditableCells}
+          format={format}
           groupColumnsCount={groupColumnsCount}
           rowKeyField={rowKeyField}
+          validation={validation}
         />
       )}
       {data.map((d) => {
       if (d.groupMark === groupMark) {
         const groupIndex = d.key.length - 1;
         const group = groups && groups[groupIndex];
-        const column = group && groupedColumns.find((c) => c.key === group.columnKey);
+        const column = group && groupedColumns.find((c) => c.key === group.columnKey)!;
         return (
           <GroupRow
-            column={column!}
+            childComponents={childComponents}
+            column={column}
             contentColSpan={columns.length - groupIndex + groups.length}
             dispatch={dispatch}
             groupIndex={groupIndex}
@@ -74,14 +80,15 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
         const isDetailsRowShown = !!detailsRow && detailsRows.some((r) => r === rowKeyValue);
         const dataRow = (
           <DataAndDetailsRows
-            childAttributes={props.childAttributes}
+            childComponents={props.childComponents}
             columns={props.columns}
             dataRow={props.dataRow}
+            detailsRow={detailsRow}
             dispatch={props.dispatch}
             editableCells={props.editableCells}
             editingMode={props.editingMode}
+            format={format}
             groupColumnsCount={props.groupColumnsCount}
-            detailsRow={detailsRow}
             isDetailsRowShown={isDetailsRowShown}
             isSelectedRow={isSelectedRow}
             key={d[rowKeyField]}
@@ -90,6 +97,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             rowKeyValue={rowKeyValue}
             selectedRows={props.selectedRows}
             trRef={rowRefLink}
+            validation={validation}
           />
         );
         rowRefLink = undefined;

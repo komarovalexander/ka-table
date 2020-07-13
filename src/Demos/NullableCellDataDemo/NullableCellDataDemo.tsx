@@ -4,14 +4,14 @@ import { ITableProps, kaReducer, Table } from '../../lib';
 import { search, updateFilterRowValue } from '../../lib/actionCreators';
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
 import { DispatchFunc, FilterRowFuncPropsWithChildren } from '../../lib/types';
-import { dateUtils } from '../../lib/utils';
+import { kaDateUtils } from '../../lib/utils';
 import dataArray from './data';
 
 const CustomDateFilterEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
   column, dispatch,
 }) => {
   const fieldValue = column.filterRowValue;
-  const value = fieldValue && dateUtils.getDateInputValue(fieldValue);
+  const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
   return (
     <div>
       <>Less than: </>
@@ -32,23 +32,17 @@ const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
-      field: 'name',
-      fieldParents: ['representative'],
       key: 'representative.name',
       style: { width: '120px' },
       title: 'Representative',
     },
     {
       dataType: DataType.Boolean,
-      fieldParents: ['company'],
-      format: (value) => `Loyal program: ${ value == null ? 'Unspecified' : (value ? 'Yes' : 'No')}`,
-      key: 'hasLoyalProgram',
+      key: 'company.hasLoyalProgram',
       title: 'Loyal Program',
     },
     {
       dataType: DataType.String,
-      field: 'name',
-      fieldParents: ['product'],
       filterRowValue: 'e',
       key: 'product.name',
       style: {
@@ -58,11 +52,6 @@ const tablePropsInit: ITableProps = {
     },
     {
       dataType: DataType.Number,
-      field: 'price',
-      fieldParents: ['product'],
-      format: (value: number) => {
-        return value == null ? '-' : `$${value}`  ;
-      },
       key: 'product.price',
       sortDirection: SortDirection.Ascend,
       style: {
@@ -73,12 +62,9 @@ const tablePropsInit: ITableProps = {
     },
     {
       dataType: DataType.Date,
-      field: 'firstDealDate',
-      filterRowCell: CustomDateFilterEditor,
       filterRowOperator: '<',
       filterRowValue: new Date(2015, 1, 2),
-      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
-      key: 'firstDealDate1',
+      key: 'firstDealDate',
       style: {
         textAlign: 'center',
         width: '165px',
@@ -88,11 +74,22 @@ const tablePropsInit: ITableProps = {
   ],
   data: dataArray,
   editingMode: EditingMode.Cell,
+  format: ({ column, value }) => {
+    if (column.key === 'company.hasLoyalProgram'){
+      return `Loyal program: ${ value == null ? 'Unspecified' : (value ? 'Yes' : 'No')}`;
+    }
+    if (column.key === 'price'){
+      return value == null ? '-' : `$${value}`;
+    }
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
   filteringMode: FilteringMode.FilterRow,
-  groups: [{ columnKey: 'hasLoyalProgram' }],
+  groups: [{ columnKey: 'company.hasLoyalProgram' }],
   groupsExpanded: [[true]],
   rowKeyField: 'id',
-  search: 'i',
+  searchText: 'i',
   sortingMode: SortingMode.Single,
 };
 
@@ -103,11 +100,20 @@ const NullableCellDataDemo: React.FC = () => {
   };
   return (
     <>
-      <input type='search' defaultValue={tableProps.search} onChange={(event) => {
+      <input type='search' defaultValue={tableProps.searchText} onChange={(event) => {
         dispatch(search(event.currentTarget.value));
       }} className='top-element'/>
       <Table
         {...tableProps}
+        childComponents={{
+          filterRowCell: {
+            content: (props) => {
+              switch (props.column.key){
+                case 'firstDealDate': return <CustomDateFilterEditor {...props}/>;
+              }
+            }
+          }
+        }}
         dispatch={dispatch}
       />
     </>

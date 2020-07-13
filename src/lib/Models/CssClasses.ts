@@ -13,6 +13,7 @@ export class CssClasses {
   public detailsRow?: string = 'ka-tr ka-details-row';
   public rowSelected?: string = 'ka-row-selected';
   public cell?: string = 'ka-cell';
+  public cellText?: string = 'ka-cell-text';
 
   public iconGroupArrowCollapsed?: string = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-collapsed';
   public iconGroupArrowExpanded?: string = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-expanded';

@@ -65,31 +65,24 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tablePropsInit: ITableProps = {
   columns: [
-    {
-      key: 'name',
-      title: 'Name',
-      dataType: DataType.String,
-      validation: (value) => {
-        return value ? '' : 'value must be specified';
-      }
-    },
-    {key: 'score', title: 'Score', dataType: DataType.Number },
-    {key: 'passed', title: 'Passed', dataType: DataType.Boolean},
-    {
-      dataType: DataType.Date,
-      format: (value: Date) => value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' }),
-      key: 'nextTry',
-      title: 'Next Try',
-    },
-    {
-      key: 'editColumn',
-      style: {width: 50},
-      cell: (props) => <EditButton {...props}/>,
-      editor: (props) => <SaveButton {...props}/>,
-    },
+    { key: 'name', title: 'Name', dataType: DataType.String },
+    { key: 'score', title: 'Score', dataType: DataType.Number },
+    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
+    { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
+    { key: 'editColumn', style: { width: 50 } },
   ],
+  format: ({ column, value }) => {
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
   data: dataArray,
   rowKeyField: 'id',
+  validation: ({ column, value }) => {
+    if (column.key === 'name'){
+      return value ? '' : 'value must be specified';
+    }
+  }
 };
 
 const EditingDemoRow: React.FC = () => {
@@ -102,6 +95,22 @@ const EditingDemoRow: React.FC = () => {
     <div className='editing-row-demo'>
       <Table
         {...tableProps}
+        childComponents={{
+          cellText: {
+            content: (props) => {
+              if (props.column.key === 'editColumn'){
+                return <EditButton {...props}/>
+              }
+            }
+          },
+          editor: {
+            content: (props) => {
+              if (props.column.key === 'editColumn'){
+                return <SaveButton {...props}/>
+              }
+            }
+          }
+        }}
         dispatch={dispatch}
       />
     </div>

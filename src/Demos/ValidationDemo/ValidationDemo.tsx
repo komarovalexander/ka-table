@@ -19,26 +19,13 @@ const tablePropsInit: ITableProps = {
       dataType: DataType.String,
       key: 'name',
       style: { width: '40%' },
-      title: 'Name',
-      validation: (value: any, rowData: any) => {
-        if (!value) {
-          return `Value can't be empty`;
-        }
-      },
+      title: 'Name'
     },
     {
       dataType: DataType.Number,
       key: 'score',
       style: { width: '70px' },
-      title: 'Score',
-      validation: (value: any, rowData: any) => {
-        if (value > 100) {
-          return `Value can't be more than 100`;
-        }
-        if (!value) {
-          return `Value can't be empty`;
-        }
-      },
+      title: 'Score'
     },
     {
       dataType: DataType.Boolean,
@@ -46,6 +33,21 @@ const tablePropsInit: ITableProps = {
       title: 'Passed',
     },
   ],
+  validation: ({ column, value }) => {
+    if (column.key === 'name'){
+      if (!value) {
+        return `Value can't be empty`;
+      }
+    }
+    if (column.key === 'score'){
+      if (value > 100) {
+        return `Value can't be more than 100`;
+      }
+      if (!value) {
+        return `Value can't be empty`;
+      }
+    }
+  },
   data: dataArray,
   editableCells: [{
     columnKey: 'score',

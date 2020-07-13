@@ -9,7 +9,7 @@ import TableBody from './TableBody';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: any = {
-  childAttributes: {},
+  childComponents: {},
   columns: [
     { key: 'column', title: 'Column 1' },
     { key: 'column2', title: 'Column 2' },

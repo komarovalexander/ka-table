@@ -45,7 +45,7 @@ const DetailsRow: DataRowFunc = ({
 
 const tableOption: ITableProps = {
   columns: [
-    { key: 'show-hide-details-row', cell: DetailsButton },
+    { key: 'show-hide-details-row' },
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
@@ -67,10 +67,19 @@ const DetailsRowDemo: React.FC = () => {
     <Table
       {...option}
       dispatch={dispatch}
-      childAttributes={{
+      childComponents={{
+        cellText: {
+          content: (props) => {
+            switch (props.column.key){
+              case 'show-hide-details-row': return <DetailsButton {...props}/>;
+            }
+          }
+        },
         detailsRow: {
-          style: {
-            backgroundColor: '#eee'
+          elementAttributes: {
+            style: {
+              backgroundColor: '#eee'
+            }
           }
         }
       }}

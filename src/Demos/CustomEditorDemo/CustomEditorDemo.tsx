@@ -69,22 +69,25 @@ const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { dataType: DataType.String, key: 'name', title: 'Name', editor: CustomEditor, style: { width: '330px' } },
+    { dataType: DataType.String, key: 'name', title: 'Name', style: { width: '330px' } },
     { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '50px' } },
     {
       dataType: DataType.Boolean,
-      editor: CustomLookupEditor,
       key: 'passed',
       style: { width: '50px' },
       title: 'Passed',
     },
     {
       dataType: DataType.Date,
-      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
       key: 'nextTry',
       title: 'Next Try',
     },
   ],
+  format: ({ column, value }) => {
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
   data: dataArray,
   editableCells: [{ columnKey: 'name', rowKeyValue: 1 }],
   editingMode: EditingMode.Cell,
@@ -100,7 +103,21 @@ const CustomEditorDemo: React.FC = () => {
     <Table
       {...tableProps}
       dispatch={dispatch}
-      childAttributes={{table: {className: 'custom-editor-demo-table'} }}
+      childComponents={{
+        table: {
+          elementAttributes: {
+            className: 'custom-editor-demo-table'
+          }
+        },
+        editor: {
+          content: (props) => {
+            switch (props.column.key) {
+              case 'passed': return <CustomLookupEditor {...props}/>;
+              case 'name': return <CustomEditor {...props}/>;
+            }
+          }
+        }
+      }}
     />
   );
 };

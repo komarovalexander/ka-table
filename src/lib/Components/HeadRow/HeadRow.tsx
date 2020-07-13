@@ -2,6 +2,7 @@ import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { SortingMode } from '../../enums';
+import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
 import EmptyCells from '../EmptyCells/EmptyCells';
@@ -9,6 +10,7 @@ import HeadCell from '../HeadCell/HeadCell';
 
 export interface IHeadRowProps {
   areAllRowsSelected: boolean;
+  childComponents: ChildComponents;
   columns: Column[];
   dispatch: DispatchFunc;
   groupColumnsCount: number;
@@ -17,9 +19,10 @@ export interface IHeadRowProps {
 
 const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
   areAllRowsSelected,
+  childComponents,
   columns,
-  groupColumnsCount,
   dispatch,
+  groupColumnsCount,
   sortingMode,
 }) => {
   return (
@@ -29,6 +32,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
         return (
           <HeadCell
             areAllRowsSelected={areAllRowsSelected}
+            childComponents={childComponents}
             column={column}
             dispatch={dispatch}
             key={column.key}

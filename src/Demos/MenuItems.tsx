@@ -11,7 +11,7 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
-const newItems = ['ColumnResizingDemo'];
+const newItems = ['ColumnResizingDemo', 'PerformanceOptimizationDemo'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 
@@ -57,6 +57,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
                         <span className='menu-button'>
                           <span className='menu-icon'><img src={`static/icons/${i.name}.svg`} alt=''/></span>
                           <span className='menu-button-inner'>{i.title}</span>
+                          {newItems.includes(i.name) && <span className='new-badge'>new</span>}
                         </span>
                       </NavLink>
                     </li>

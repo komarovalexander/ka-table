@@ -1,16 +1,17 @@
 import * as React from 'react';
 
 import { EditingMode } from '../../enums';
-import { ChildAttributes, Column } from '../../models';
-import { DispatchFunc, Field } from '../../types';
+import { ChildComponents, Column } from '../../models';
+import { DispatchFunc, Field, FormatFunc } from '../../types';
 import CellText from '../CellText/CellText';
 
 export interface ICellContentProps {
-  childAttributes: ChildAttributes;
+  childComponents: ChildComponents;
   column: Column;
   dispatch: DispatchFunc;
   editingMode: EditingMode;
   field: Field;
+  format?: FormatFunc;
   isDetailsRowShown: boolean;
   isSelectedRow: boolean;
   rowData: any;
@@ -20,8 +21,9 @@ export interface ICellContentProps {
 }
 
 const CellContent: React.FunctionComponent<ICellContentProps> = (props) => {
-  const { column: { cell } } = props;
-  return cell ? cell(props) :  <CellText {...props}/>;
+  const { childComponents: { cellText } } = props;
+  const cellContent = cellText && cellText.content && cellText.content(props);
+  return cellContent || <CellText {...props}/>;
 };
 
 export default CellContent;

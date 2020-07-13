@@ -3,11 +3,13 @@ import * as React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 import { EditableCell } from '../../models';
-import { ChildAttributes } from '../../Models/ChildAttributes';
+import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import { DataRowFunc, DispatchFunc, GroupRowFunc, NoDataRowFunc } from '../../types';
+import {
+  DataRowFunc, DispatchFunc, FormatFunc, GroupRowFunc, NoDataRowFunc, SearchFunc, ValidationFunc,
+} from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
@@ -20,7 +22,12 @@ import TableBody from '../TableBody/TableBody';
 export interface ITableProps {
   columns: Column[];
   data?: any[];
+  format?: FormatFunc;
+  search?: SearchFunc;
+  validation?: ValidationFunc;
   dataRow?: DataRowFunc;
+  detailsRow?: DataRowFunc;
+  detailsRows?: any[];
   editableCells?: EditableCell[];
   editingMode?: EditingMode;
   extendedFilter?: (data: any[]) => any[];
@@ -28,29 +35,33 @@ export interface ITableProps {
   groupRow?: GroupRowFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
-  detailsRow?: DataRowFunc;
-  detailsRows?: any[];
   loading?: ILoadingProps;
   noDataRow?: NoDataRowFunc;
   paging?: IPagingProps;
   rowKeyField: string;
-  search?: string;
+  searchText?: string;
   selectedRows?: any[];
   sortingMode?: SortingMode;
   virtualScrolling?: VirtualScrolling;
+}
+export interface ITableOperations {
+  extendedFilter?: (data: any[]) => any[];
+  dataCellFormat?: FormatFunc;
+  dataCellSearch?: SearchFunc;
+  dataCellValidation?: ValidationFunc;
 }
 
 export interface ITableEvents {
   dispatch: DispatchFunc;
 }
 
-export interface ITableAllProps extends ITableEvents, ITableProps {
-  childAttributes?: ChildAttributes;
+export interface ITableAllProps extends ITableEvents, ITableProps, ITableOperations {
+  childComponents?: ChildComponents;
 }
 
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
-    childAttributes = {},
+    childComponents = {},
     data = [],
     editableCells = [],
     editingMode = EditingMode.None,
@@ -77,7 +88,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     className: defaultOptions.css.table,
   };
 
-  const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
+  const tableProps = extendProps(componentProps, props, childComponents.table);
   const areAllRowsSelected = data.length === selectedRows.length;
   const isLoadingActive = loading && loading.enabled;
   const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
@@ -88,14 +99,16 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         <thead className={defaultOptions.css.thead} ref={theadRef}>
           <HeadRow
             areAllRowsSelected={areAllRowsSelected}
-            groupColumnsCount={preparedOptions.groupColumnsCount}
+            childComponents={childComponents}
             columns={preparedOptions.columns}
             dispatch={dispatch}
+            groupColumnsCount={preparedOptions.groupColumnsCount}
             sortingMode={sortingMode}
           />
           {filteringMode === FilteringMode.FilterRow &&
             (
               <FilterRow
+                childComponents={childComponents}
                 columns={preparedOptions.columns}
                 dispatch={dispatch}
                 groupColumnsCount={preparedOptions.groupColumnsCount}
@@ -104,7 +117,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         </thead>
         <TableBody
             {...props}
-            childAttributes={childAttributes}
+            childComponents={childComponents}
             columns={preparedOptions.columns}
             data={preparedOptions.groupedData}
             dispatch={dispatch}

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import NewRow, { INewRowProps } from './NewRow';
 
 const props: INewRowProps = {
-  childAttributes: {},
+  childComponents: {},
   columns: [],
   groupColumnsCount: 0,
   dispatch: () => {},

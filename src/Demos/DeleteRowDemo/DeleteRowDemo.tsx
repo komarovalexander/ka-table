@@ -37,7 +37,7 @@ const tablePropsInit: ITableProps = {
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: ':delete', cell: (props) => <DeleteRow {...props} />, style: { width: 40, textAlign: 'center' } },
+    { key: ':delete', style: { width: 40, textAlign: 'center' } },
   ],
   data: dataArray,
   rowKeyField: 'id',
@@ -52,6 +52,15 @@ const DeleteRowDemo: React.FC = () => {
   return (
     <Table
       {...tableProps}
+      childComponents={{
+        cellText: {
+          content: (props) => {
+            switch (props.column.key){
+              case ':delete': return <DeleteRow {...props}/>;
+            }
+          }
+        }
+      }}
       dispatch={dispatch}
     />
   );

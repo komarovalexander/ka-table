@@ -5,12 +5,14 @@ import FilterRowDataType from '../FilterRowDataType/FilterRowDataType';
 
 const FilterCell: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
   const {
-    column: { style, filterRowCell },
+    childComponents: {filterRowCell},
+    column: { style },
   } = props;
+  const filterRowCellContent = filterRowCell && filterRowCell.content && filterRowCell.content(props);
   return (
     <td style={style} className='ka-thead-cell ka-filter-row-cell'>
       {
-        filterRowCell ? filterRowCell(props) :
+        filterRowCellContent ? filterRowCellContent :
         (
           <FilterRowDataType
             {...props}

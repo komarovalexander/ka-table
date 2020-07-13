@@ -2,25 +2,27 @@ import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { ActionType, EditingMode } from '../../enums';
-import { ChildAttributes, EditableCell } from '../../models';
+import { ChildComponents, EditableCell } from '../../models';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import {
-  DataChangeFunc, DataRowFunc, DispatchFunc, GroupRowFunc, NoDataRowFunc,
+  DataChangeFunc, DataRowFunc, DispatchFunc, FormatFunc, GroupRowFunc, NoDataRowFunc,
+  ValidationFunc,
 } from '../../types';
 import TableBodyContent from '../TableBodyContent/TableBodyContent';
 
 export interface ITableBodyProps {
-  childAttributes: ChildAttributes;
+  childComponents: ChildComponents;
   columns: Column[];
   data: any[];
   dataRow?: DataRowFunc;
+  detailsRow?: DataRowFunc;
+  detailsRows?: any[];
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
   editingMode: EditingMode;
-  detailsRow?: DataRowFunc;
-  detailsRows?: any[];
+  format?: FormatFunc;
   groupColumnsCount: number;
   groupRow?: GroupRowFunc;
   groupedColumns: Column[];
@@ -30,6 +32,7 @@ export interface ITableBodyProps {
   onDataChange?: DataChangeFunc;
   rowKeyField: string;
   selectedRows: any[];
+  validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
 }
 

@@ -3,7 +3,8 @@ import { isFunction } from 'util';
 
 import { ITableProps } from '../';
 import { Column } from '../models';
-import { ChildAttributesItem } from '../types';
+import { ChildComponent } from '../Models/ChildComponent';
+import { ChildAttributesItem, DispatchFunc } from '../types';
 import { filterData, searchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
@@ -13,10 +14,11 @@ import { convertToColumnTypes } from './TypeUtils';
 export const extendProps = (
   childElementAttributes: HTMLAttributes<HTMLElement>,
   childProps: any,
-  childCustomAttributes: ChildAttributesItem<any> | undefined,
-  dispatch: any): React.HTMLAttributes<HTMLElement> => {
+  childComponent?: ChildComponent<any>): React.HTMLAttributes<HTMLElement> => {
     let resultProps = childElementAttributes;
+    const childCustomAttributes = childComponent && childComponent.elementAttributes;
     if (childCustomAttributes) {
+      const dispatch: DispatchFunc = childProps.dispath;
       resultProps = mergeProps(childElementAttributes, childProps, childCustomAttributes, dispatch);
     }
     return resultProps;
@@ -27,7 +29,7 @@ export const mergeProps = (
   childElementAttributes: HTMLAttributes<HTMLElement>,
   childProps: any,
   childCustomAttributes: ChildAttributesItem<any>,
-  dispatch: any): React.HTMLAttributes<HTMLElement> => {
+  dispatch: DispatchFunc): React.HTMLAttributes<HTMLElement> => {
   const customPropsWithEvents: any = {};
   for (const prop in childCustomAttributes) {
     if (childCustomAttributes.hasOwnProperty(prop)) {
@@ -64,6 +66,7 @@ export const getData = (props: ITableProps) => {
     groups,
     groupsExpanded,
     paging,
+    searchText,
     search,
   } = props;
   let {
@@ -71,7 +74,7 @@ export const getData = (props: ITableProps) => {
   } = props;
   data = [...data];
   data = extendedFilter ? extendedFilter(data) : data;
-  data = search ? searchData(columns, data, search) : data;
+  data = searchText ? searchData(columns, data, searchText, search) : data;
   data = convertToColumnTypes(data, columns);
   data = filterData(data, columns);
   data = sortData(columns, data);
@@ -105,7 +108,6 @@ export const prepareTableOptions = (props: ITableProps) => {
   const pagesCount = getPagesCount(data, paging);
   return {
     columns,
-    data: groupedData, // TODO: deprecate it in 4.0.0
     groupColumnsCount,
     groupedColumns,
     groupedData,
