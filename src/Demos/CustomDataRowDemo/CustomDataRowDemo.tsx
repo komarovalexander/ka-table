@@ -33,7 +33,6 @@ const tablePropsInit: ITableProps = {
     { key: 'score', title: 'Score', dataType: DataType.Number },
   ],
   data: dataArray,
-  dataRow: (props) => <DataRow {...props}/>,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };
@@ -46,6 +45,11 @@ const CustomDataRowDemo: React.FC = () => {
   return (
     <Table
       {...tableProps}
+      childComponents={{
+        dataRow: {
+          content: (props) => <DataRow {...props}/>,
+        }
+      }}
       dispatch={dispatch}
     />
   );

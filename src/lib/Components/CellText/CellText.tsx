@@ -4,7 +4,7 @@ import { openEditor } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
 import { isEmpty } from '../../Utils/CommonUtils';
-import { extendProps } from '../../Utils/PropsUtils';
+import { getElementCustomization } from '../../Utils/CoponentUtils';
 import { ICellContentProps } from '../CellContent/CellContent';
 
 const CellText: React.FunctionComponent<ICellContentProps> = (props) => {
@@ -21,18 +21,17 @@ const CellText: React.FunctionComponent<ICellContentProps> = (props) => {
   let formatedValue = format && format({ column, value });
   formatedValue = formatedValue || (!isEmpty(value) && value.toString());
 
-  const componentProps: React.HTMLAttributes<HTMLDivElement> = {
+  const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.cellText,
     onClick: () => {
       if (editingMode === EditingMode.Cell) {
         dispatch(openEditor(rowKeyValue, column.key));
       }
     },
-  };
+  }, props, childComponents.cellText);
 
-  const divProps = extendProps(componentProps, props, childComponents.cellText);
   return (
-    <div {...divProps}>{formatedValue || <>&nbsp;</>}</div>
+    <div {...elementAttributes}>{content || formatedValue || <>&nbsp;</>}</div>
   );
 };
 

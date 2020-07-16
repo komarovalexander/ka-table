@@ -53,7 +53,6 @@ const tableOption: ITableProps = {
   ],
   data: dataArray,
   detailsRows: [1],
-  detailsRow: DetailsRow,
   rowKeyField: 'id',
 };
 
@@ -80,7 +79,8 @@ const DetailsRowDemo: React.FC = () => {
             style: {
               backgroundColor: '#eee'
             }
-          }
+          },
+          content: DetailsRow
         }
       }}
     />

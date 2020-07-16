@@ -9,8 +9,8 @@ const TableBodyContent: React.FunctionComponent<ITableBodyProps> = (props) => {
     data,
   } = props;
 
-  if (!data.length && props.noDataRow) {
-    return <NoDataRow {...props} noDataRow={props.noDataRow}/>;
+  if (!data.length) {
+    return <NoDataRow {...props}/>;
   }
   return (
       <VirtualizedRows

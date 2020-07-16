@@ -7,12 +7,11 @@ import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import {
-  DataRowFunc, DispatchFunc, FormatFunc, GroupRowFunc, NoDataRowFunc, SearchFunc, ValidationFunc,
-} from '../../types';
+import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
+import { getElementCustomization } from '../../Utils/CoponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
-import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
+import { prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
 import Loading, { ILoadingProps } from '../Loading/Loading';
@@ -25,18 +24,14 @@ export interface ITableProps {
   format?: FormatFunc;
   search?: SearchFunc;
   validation?: ValidationFunc;
-  dataRow?: DataRowFunc;
-  detailsRow?: DataRowFunc;
   detailsRows?: any[];
   editableCells?: EditableCell[];
   editingMode?: EditingMode;
   extendedFilter?: (data: any[]) => any[];
   filteringMode?: FilteringMode;
-  groupRow?: GroupRowFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
   loading?: ILoadingProps;
-  noDataRow?: NoDataRowFunc;
   paging?: IPagingProps;
   rowKeyField: string;
   searchText?: string;
@@ -84,51 +79,53 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const theadRef = React.useRef<HTMLTableSectionElement>(null);
   const dispatch = wrapDispatch({ ...props }, theadRef);
 
-  const componentProps: React.HTMLAttributes<HTMLTableElement> = {
-    className: defaultOptions.css.table,
-  };
-
-  const tableProps = extendProps(componentProps, props, childComponents.table);
   const areAllRowsSelected = data.length === selectedRows.length;
   const isLoadingActive = loading && loading.enabled;
   const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
+  const { elementAttributes, content } = getElementCustomization({
+    className: defaultOptions.css.table,
+  }, { ...props, dispatch }, childComponents.table);
   return (
     <div className={kaCss}>
-      <table {...tableProps}>
-        <thead className={defaultOptions.css.thead} ref={theadRef}>
-          <HeadRow
-            areAllRowsSelected={areAllRowsSelected}
-            childComponents={childComponents}
-            columns={preparedOptions.columns}
-            dispatch={dispatch}
-            groupColumnsCount={preparedOptions.groupColumnsCount}
-            sortingMode={sortingMode}
+      {content ||
+      (
+        <table {...elementAttributes}>
+          <thead className={defaultOptions.css.thead} ref={theadRef}>
+            <HeadRow
+              areAllRowsSelected={areAllRowsSelected}
+              childComponents={childComponents}
+              columns={preparedOptions.columns}
+              dispatch={dispatch}
+              groupColumnsCount={preparedOptions.groupColumnsCount}
+              sortingMode={sortingMode}
+            />
+            {filteringMode === FilteringMode.FilterRow &&
+              (
+                <FilterRow
+                  childComponents={childComponents}
+                  columns={preparedOptions.columns}
+                  dispatch={dispatch}
+                  groupColumnsCount={preparedOptions.groupColumnsCount}
+                />
+              )}
+          </thead>
+          <TableBody
+              {...props}
+              childComponents={childComponents}
+              columns={preparedOptions.columns}
+              data={preparedOptions.groupedData}
+              dispatch={dispatch}
+              editableCells={editableCells}
+              editingMode={editingMode}
+              groupColumnsCount={preparedOptions.groupColumnsCount}
+              groupedColumns={preparedOptions.groupedColumns}
+              groupsExpanded={groupsExpanded}
+              selectedRows={selectedRows}
           />
-          {filteringMode === FilteringMode.FilterRow &&
-            (
-              <FilterRow
-                childComponents={childComponents}
-                columns={preparedOptions.columns}
-                dispatch={dispatch}
-                groupColumnsCount={preparedOptions.groupColumnsCount}
-              />
-            )}
-        </thead>
-        <TableBody
-            {...props}
-            childComponents={childComponents}
-            columns={preparedOptions.columns}
-            data={preparedOptions.groupedData}
-            dispatch={dispatch}
-            editableCells={editableCells}
-            editingMode={editingMode}
-            groupColumnsCount={preparedOptions.groupColumnsCount}
-            groupedColumns={preparedOptions.groupedColumns}
-            groupsExpanded={groupsExpanded}
-            selectedRows={selectedRows}
-        />
-      </table>
+        </table>
+      )
+    }
       <Paging
         {...paging}
         dispatch={dispatch}

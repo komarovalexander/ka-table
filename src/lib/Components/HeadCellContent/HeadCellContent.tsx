@@ -3,43 +3,43 @@ import * as React from 'react';
 import { updateSortDirection } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { SortDirection, SortingMode } from '../../enums';
+import { getElementCustomization } from '../../Utils/CoponentUtils';
 import { IHeadCellProps } from '../HeadCell/HeadCell';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
-    childComponents: { headCell },
-  } = props;
-  const headCellContent = headCell && headCell.content && headCell.content(props);
-  if (headCellContent) {
-    return headCellContent;
-  }
-
-  const {
+    childComponents,
     column,
     dispatch,
     sortingMode,
   } = props;
+
   const isSortingEnabled = sortingMode === SortingMode.Single;
   const sortClick = isSortingEnabled ? () => {
     dispatch(updateSortDirection(column.key));
   } : undefined;
+
+  const { elementAttributes, content } = getElementCustomization({
+    className: `${defaultOptions.css.theadCellContent} ${isSortingEnabled ? 'ka-pointer' : ''}`,
+    onClick: sortClick
+  }, props, childComponents.headCell);
+
   return (
-    <div
-      className={`${defaultOptions.css.theadCellContent} ${isSortingEnabled ? 'ka-pointer' : ''}`}
-      onClick={sortClick}
-    >
-      <span>{column.title}</span>
-      {
-        column.sortDirection && isSortingEnabled && (
-          <span
-            className={
-              column.sortDirection === SortDirection.Ascend
-                ? defaultOptions.css.iconSortArrowUp
-                : defaultOptions.css.iconSortArrowDown
-            }
-          />
-        )
-      }
+    <div {...elementAttributes}>
+      {(content || (
+        <>
+          <span>{column.title}</span>
+          {column.sortDirection && isSortingEnabled && (
+            <span
+              className={
+                column.sortDirection === SortDirection.Ascend
+                  ? defaultOptions.css.iconSortArrowUp
+                  : defaultOptions.css.iconSortArrowDown
+              }
+            />
+          )}
+        </>
+      ))}
     </div>
   );
 };

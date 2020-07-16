@@ -6,8 +6,8 @@ import { ChildComponents } from '../../models';
 import { Column } from '../../Models/Column';
 import { DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
+import { getElementCustomization } from '../../Utils/CoponentUtils';
 import { getValueByColumn } from '../../Utils/DataUtils';
-import { extendProps } from '../../Utils/PropsUtils';
 import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
 
@@ -42,29 +42,32 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
 
   const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
 
-  const componentProps: React.HTMLAttributes<HTMLDivElement> = {
+  const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.cell,
     style
-  };
-
-  const divProps = extendProps(componentProps, props, childComponents.cell);
+  }, props, childComponents.cell);
 
   return (
-    <td {...divProps}>
-      { isEditableCell ? (
+    <td {...elementAttributes}>
+      { content ||
+      (
+        isEditableCell ?
+        (
           <CellEditor
             {...props}
             value={value}
             field={getField(column)}
           />
         )
-        : (
+        :
+        (
           <CellContent
             {...props}
             value={value}
             field={getField(column)}
           />
         )
+      )
       }
     </td>
   );

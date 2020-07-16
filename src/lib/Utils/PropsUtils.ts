@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { AllHTMLAttributes } from 'react';
 import { isFunction } from 'util';
 
 import { ITableProps } from '../';
@@ -12,13 +12,13 @@ import { sortData } from './SortUtils';
 import { convertToColumnTypes } from './TypeUtils';
 
 export const extendProps = (
-  childElementAttributes: HTMLAttributes<HTMLElement>,
+  childElementAttributes: AllHTMLAttributes<HTMLElement>,
   childProps: any,
-  childComponent?: ChildComponent<any>): React.HTMLAttributes<HTMLElement> => {
+  childComponent?: ChildComponent<any>): React.AllHTMLAttributes<HTMLElement> => {
     let resultProps = childElementAttributes;
     const childCustomAttributes = childComponent && childComponent.elementAttributes;
     if (childCustomAttributes) {
-      const dispatch: DispatchFunc = childProps.dispath;
+      const dispatch: DispatchFunc = childProps.dispatch;
       resultProps = mergeProps(childElementAttributes, childProps, childCustomAttributes, dispatch);
     }
     return resultProps;
@@ -26,10 +26,10 @@ export const extendProps = (
 
 const emptyFunc = () => {};
 export const mergeProps = (
-  childElementAttributes: HTMLAttributes<HTMLElement>,
+  childElementAttributes: AllHTMLAttributes<HTMLElement>,
   childProps: any,
   childCustomAttributes: ChildAttributesItem<any>,
-  dispatch: DispatchFunc): React.HTMLAttributes<HTMLElement> => {
+  dispatch: DispatchFunc): React.AllHTMLAttributes<HTMLElement> => {
   const customPropsWithEvents: any = {};
   for (const prop in childCustomAttributes) {
     if (childCustomAttributes.hasOwnProperty(prop)) {
@@ -48,7 +48,7 @@ export const mergeProps = (
       }
     }
   }
-  const mergedResult: React.HTMLAttributes<HTMLDivElement> = {
+  const mergedResult: React.AllHTMLAttributes<HTMLDivElement> = {
     ...childElementAttributes,
     ...childCustomAttributes,
     ...customPropsWithEvents,

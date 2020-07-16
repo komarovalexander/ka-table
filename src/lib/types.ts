@@ -14,7 +14,7 @@ T extends (e: infer E) => void ? (
 type WithExtraParameters<T, I> = {
   [P in keyof T ] : AddParameters<T[P], I>;
 };
-type ElementAttributes<T> = React.HTMLAttributes<HTMLElement>;
+type ElementAttributes<T> = React.AllHTMLAttributes<HTMLElement>;
 
 export type CellFunc = (props: CellFuncPropsWithChildren) => any;
 export type CellFuncPropsWithChildren = PropsWithChildren<ICellContentProps>;

@@ -12,9 +12,11 @@ export class ChildComponents {
   public editor?: ChildComponent<ICellEditorProps>;
   public filterRowCell?: ChildComponent<IFilterRowEditorProps>;
   public groupCell?: ChildComponent<IGroupRowProps>;
+  public groupRow?: ChildComponent<IGroupRowProps>;
   public headCell?: ChildComponent<IHeadCellProps>;
   public cellText?: ChildComponent<ICellContentProps>;
   public table?: ChildComponent<ITableProps>;
   public dataRow?: ChildComponent<IDataRowProps>;
   public detailsRow?: ChildComponent<IDataRowProps>;
+  public noDataRow?: ChildComponent<any>;
 }

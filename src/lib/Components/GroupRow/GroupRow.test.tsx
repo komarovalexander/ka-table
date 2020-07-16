@@ -29,7 +29,13 @@ describe('GroupRow', () => {
 
   it('Should render custom group cell', () => {
     const groupRow = () => <td className='custom-group-row'/>;
-    const wrapper = mount(<GroupRow {...props} groupRow={groupRow}/>, {
+    const wrapper = mount((
+      <GroupRow {...props} childComponents={{
+        groupRow: {
+          content: groupRow
+        }
+      }}/>
+    ), {
       attachTo: document.createElement('tbody'),
     });
     expect(wrapper.find('.custom-group-row').length).toBe(1);

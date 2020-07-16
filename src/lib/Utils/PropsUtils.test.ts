@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { AllHTMLAttributes } from 'react';
 
 import { ITableProps } from '../';
 import { ICellContentProps } from '../Components/CellContent/CellContent';
@@ -8,7 +8,7 @@ import { getData, mergeProps } from './PropsUtils';
 
 describe('PropsUtils', () => {
   it('mergeProps', () => {
-    const childElementAttributes: HTMLAttributes<HTMLElement> = {
+    const childElementAttributes: AllHTMLAttributes<HTMLElement> = {
       className: 'custom',
       onClick: () => {},
       onDoubleClick: () => {},

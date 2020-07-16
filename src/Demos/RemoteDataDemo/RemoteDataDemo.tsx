@@ -41,7 +41,6 @@ const tablePropsInit: ITableProps = {
     pageIndex: 1,
     pageSize: 10
   },
-  noDataRow: () => 'No data',
   rowKeyField: 'id',
 };
 
@@ -95,6 +94,9 @@ const RemoteDataDemo: React.FC = () => {
                 return <DeleteRow {...props} />
               }
             }
+          },
+          noDataRow: {
+            content: () => 'No data'
           }
         }}
         dispatch={dispatch}

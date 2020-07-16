@@ -5,6 +5,7 @@ import defaultOptions from '../../defaultOptions';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
+import { getElementCustomization } from '../../Utils/CoponentUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
 export interface IGroupRowProps {
@@ -20,7 +21,7 @@ export interface IGroupRowProps {
 
 const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
   const {
-    childComponents: { groupCell },
+    childComponents,
     contentColSpan,
     dispatch,
     groupIndex,
@@ -28,14 +29,17 @@ const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
     isExpanded,
     text,
   } = props;
-  const groupCellContent = groupCell && groupCell.content && groupCell.content(props);
+
+  const { elementAttributes, content } = getElementCustomization({
+    className: defaultOptions.css.groupCell,
+    colSpan: contentColSpan
+  }, props, childComponents.groupCell);
+
   return (
     <>
       <EmptyCells count={groupIndex}/>
-      <td
-        className='ka-group-column'
-        colSpan={contentColSpan}>
-          <div className='ka-group-column-content'>
+      <td {...elementAttributes}>
+          <div className='ka-group-cell-content'>
             <div
               onClick={() => {
                 dispatch(updateGroupsExpanded(groupKey));
@@ -44,7 +48,7 @@ const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
                 ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed}
             />
             {
-              groupCellContent || <div className='ka-group-text'>{text}</div>
+              content || <div className='ka-group-text'>{text}</div>
             }
           </div>
       </td>

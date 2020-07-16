@@ -6,29 +6,22 @@ import { ChildComponents, EditableCell } from '../../models';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import {
-  DataChangeFunc, DataRowFunc, DispatchFunc, FormatFunc, GroupRowFunc, NoDataRowFunc,
-  ValidationFunc,
-} from '../../types';
+import { DataChangeFunc, DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
 import TableBodyContent from '../TableBodyContent/TableBodyContent';
 
 export interface ITableBodyProps {
   childComponents: ChildComponents;
   columns: Column[];
   data: any[];
-  dataRow?: DataRowFunc;
-  detailsRow?: DataRowFunc;
   detailsRows?: any[];
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
   editingMode: EditingMode;
   format?: FormatFunc;
   groupColumnsCount: number;
-  groupRow?: GroupRowFunc;
   groupedColumns: Column[];
   groups?: Group[];
   groupsExpanded?: any[][];
-  noDataRow?: NoDataRowFunc;
   onDataChange?: DataChangeFunc;
   rowKeyField: string;
   selectedRows: any[];

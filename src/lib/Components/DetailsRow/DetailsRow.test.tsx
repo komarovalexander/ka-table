@@ -16,7 +16,6 @@ const props: IRowProps = {
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
   ],
   dispatch: () => {},
-  detailsRow: () => <>Details Row</>,
   editableCells: [],
   editingMode: EditingMode.None,
   isSelectedRow: false,
@@ -34,8 +33,15 @@ it('renders without crashing', () => {
 });
 
 it('Should add colSpan to details row', () => {
-  const wrapper = mount(<DetailsRow {...props} />, {
+  const wrapper = mount((
+    <DetailsRow {...props} childComponents={{
+      detailsRow: {
+        content: () => <>Details Row</>
+      }
+    }} />
+  ), {
     attachTo: document.createElement('tbody'),
   });
   expect(wrapper.find('td').props().colSpan).toBe(2);
+  expect(wrapper.find('td').text()).toBe('Details Row');
 });

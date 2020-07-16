@@ -16,13 +16,11 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     childComponents,
     columns,
     data,
-    detailsRow,
     detailsRows = [],
     dispatch,
     editableCells,
     format,
     groupColumnsCount,
-    groupRow,
     groupedColumns,
     groups = [],
     groupsExpanded = [],
@@ -45,7 +43,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
       {
         newRowEditableCells && !!newRowEditableCells.length && (
         <NewRow
-          childComponents={props.childComponents}
+          childComponents={childComponents}
           columns={columns}
           dispatch={dispatch}
           editableCells={newRowEditableCells}
@@ -68,7 +66,6 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             dispatch={dispatch}
             groupIndex={groupIndex}
             groupKey={d.key}
-            groupRow={groupRow}
             isExpanded={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(d.key))}
             text={getGroupText(d.value, column)}
             key={d.key}
@@ -77,14 +74,12 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
       } else {
         const rowKeyValue = d[rowKeyField];
         const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
-        const isDetailsRowShown = !!detailsRow && detailsRows.some((r) => r === rowKeyValue);
+        const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
         const dataRow = (
           <DataAndDetailsRows
             childComponents={props.childComponents}
             columns={props.columns}
-            dataRow={props.dataRow}
-            detailsRow={detailsRow}
-            dispatch={props.dispatch}
+            dispatch={dispatch}
             editableCells={props.editableCells}
             editingMode={props.editingMode}
             format={format}

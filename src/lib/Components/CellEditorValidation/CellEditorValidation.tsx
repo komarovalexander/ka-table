@@ -8,13 +8,10 @@ const CellEditorValidation: React.FunctionComponent<ICellEditorProps> = (props) 
   const {
     validationMessage,
   } = props;
-
   return (
     <>
-      <div className={`ka-cell-editor ${validationMessage ? 'ka-cell-editor-validation-error' : ''}`}>
-        <CellEditorDataType {...props} />
-        {validationMessage && <CellEditorValidationMessage message={validationMessage} />}
-      </div>
+      <CellEditorDataType {...props} />
+      {validationMessage && <CellEditorValidationMessage message={validationMessage} />}
     </>
   );
 };

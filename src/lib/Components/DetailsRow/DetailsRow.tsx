@@ -1,22 +1,21 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { extendProps } from '../../Utils/PropsUtils';
+import { getElementCustomization } from '../../Utils/CoponentUtils';
 import { IRowProps } from '../DataRow/DataRow';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
 const DetailsRow: React.FunctionComponent<IRowProps> = (props) => {
-  const { detailsRow, groupColumnsCount, childComponents, columns } = props;
+  const { groupColumnsCount, childComponents, columns } = props;
 
-  const componentProps: React.HTMLAttributes<HTMLTableRowElement> = {
+  const { elementAttributes, content } = getElementCustomization({
     className: `${defaultOptions.css.detailsRow}`,
-  };
-  const divProps = extendProps(componentProps, props, childComponents.detailsRow);
+  }, props, childComponents.detailsRow);
   return (
-    <tr {...divProps} >
+    <tr {...elementAttributes} >
       <EmptyCells count={groupColumnsCount}/>
-      {detailsRow
-        && <td className={defaultOptions.css.cell} colSpan={columns.length}>{detailsRow(props)}</td>}
+      {content
+        && <td className={defaultOptions.css.cell} colSpan={columns.length}>{content}</td>}
     </tr>
   );
 };

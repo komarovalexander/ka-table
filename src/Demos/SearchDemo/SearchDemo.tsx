@@ -21,7 +21,6 @@ const tablePropsInit: ITableProps = {
     { dataType: DataType.Boolean, key: 'passed', title: 'Passed' },
   ],
   data: dataArray,
-  noDataRow: () => 'No Data Found',
   search: ({ searchText, rowData, column }) => {
     if (column.key === 'passed'){
       return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
@@ -43,6 +42,11 @@ const SearchDemo: React.FC = () => {
       }} className='top-element'/>
       <Table
         {...tableProps}
+        childComponents={{
+          noDataRow: {
+            content: () => 'No Data Found'
+          }
+        }}
         dispatch={dispatch}
       />
     </>

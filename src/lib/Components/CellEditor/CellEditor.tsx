@@ -1,10 +1,12 @@
 import * as React from 'react';
 
+import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { DispatchFunc, Field, ValidationFunc } from '../../types';
 import { getCellEditorDispatchHandler } from '../../Utils/CellUtils';
+import { getElementCustomization } from '../../Utils/CoponentUtils';
 import CellEditorState from '../CellEditorState/CellEditorState';
 
 export interface IFilterRowEditorProps {
@@ -30,19 +32,25 @@ export interface ICellEditorProps extends IFilterRowEditorProps {
 
 const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
-    childComponents: {editor},
+    childComponents,
     dispatch,
-    editingMode
+    editingMode,
+    validationMessage
   } = props;
-  const editorContent = editor && editor.content && editor.content(props);
-  if (editorContent){
-    return editorContent;
-  }
-  if (editingMode === EditingMode.Cell){
-    const dispatchHandler = getCellEditorDispatchHandler(dispatch);
-    return <CellEditorState {...props} dispatch={dispatchHandler} autoFocus={true}/>;
-  }
-  return <CellEditorState {...props} />;
+
+  const { elementAttributes, content } = getElementCustomization({
+    className: `${defaultOptions.css.cellEditor} ${validationMessage ? defaultOptions.css.kaCellEditorValidationError : ''}`
+  }, props, childComponents.editor);
+
+  return (
+    <div {...elementAttributes}>
+      {content || (
+        editingMode === EditingMode.Cell
+        ? <CellEditorState {...props} dispatch={getCellEditorDispatchHandler(dispatch)} autoFocus={true}/>
+        : <CellEditorState {...props} />
+      )}
+    </div>
+  );
 };
 
 export default CellEditor;

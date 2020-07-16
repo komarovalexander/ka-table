@@ -1,18 +1,23 @@
 import * as React from 'react';
 
+import { getElementCustomization } from '../../Utils/CoponentUtils';
 import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
 import FilterRowDataType from '../FilterRowDataType/FilterRowDataType';
 
 const FilterCell: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
   const {
-    childComponents: {filterRowCell},
+    childComponents,
     column: { style },
   } = props;
-  const filterRowCellContent = filterRowCell && filterRowCell.content && filterRowCell.content(props);
+  const { elementAttributes, content } = getElementCustomization({
+    className: 'ka-thead-cell ka-filter-row-cell',
+    style
+  }, props, childComponents.filterRowCell);
+
   return (
-    <td style={style} className='ka-thead-cell ka-filter-row-cell'>
+    <td {...elementAttributes}>
       {
-        filterRowCellContent ? filterRowCellContent :
+        content ? content :
         (
           <FilterRowDataType
             {...props}
