@@ -10,6 +10,7 @@ import GroupRow from './GroupRow';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IGroupRowProps = {
+  childComponents: {},
   column: { key: '1', field: 'column', title: 'Column 1', dataType: DataType.String },
   contentColSpan: 2,
   dispatch: jest.fn(),

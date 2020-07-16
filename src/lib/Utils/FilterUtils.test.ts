@@ -1,5 +1,6 @@
 import { DataType, FilterOperatorName } from '../enums';
 import { Column } from '../Models/Column';
+import { SearchFunc } from '../types';
 import {
   filterData, getDefaultOperatorForType, getRowEditableCells, predefinedFilterOperators, searchData,
 } from './FilterUtils';
@@ -180,15 +181,16 @@ describe('FilterUtils', () => {
   });
 
   describe('searchData', () => {
+    const search: SearchFunc = ({ searchText, rowData, column }) => {
+      if (column.key === 'passed')
+        return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
+    };
     const columns: Column[] = [
       { key: 'name', title: 'Name', dataType: DataType.String },
       { key: 'score', title: 'Score', dataType: DataType.Number },
       {
         dataType: DataType.Boolean,
         key: 'passed',
-        search: (searchText?: string, rowData?: any) => {
-          return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
-        },
         title: 'Passed',
       },
     ];
@@ -201,7 +203,7 @@ describe('FilterUtils', () => {
       { id: 6, name: 'Sunny Fox', score: 33, passed: false },
     ];
     it('by string', () => {
-      const result = searchData(columns, data, 'Mike');
+      const result = searchData(columns, data, 'Mike', search);
       expect(result).toMatchSnapshot();
     });
 
@@ -218,12 +220,12 @@ describe('FilterUtils', () => {
     });
 
     it('should not find value by search handler', () => {
-      const result = searchData(columns, data, 'tru');
+      const result = searchData(columns, data, 'tru', search);
       expect(result).toMatchSnapshot();
     });
 
     it('should find value by search handler', () => {
-      const result = searchData(columns, data, 'true');
+      const result = searchData(columns, data, 'true', search);
       expect(result).toMatchSnapshot();
     });
   });

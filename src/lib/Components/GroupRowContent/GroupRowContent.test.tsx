@@ -4,11 +4,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ActionType } from '../../enums';
+import { ChildComponents } from '../../Models/ChildComponents';
+import { Column } from '../../Models/Column';
 import GroupRowContent, { IGroupRowProps } from './GroupRowContent';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IGroupRowProps = {
+  childComponents: {},
   column: { key: 'field' },
   contentColSpan: 0,
   dispatch: jest.fn(),
@@ -38,11 +41,15 @@ describe('GroupRowContent', () => {
   });
 
   it('Should render custom group cell', () => {
-    const column = {
-      groupCell: () => <div className='custom-group-cell'/>,
+    const column: Column = {
       key: 'field',
     };
-    const wrapper = mount(<GroupRowContent {...props} column={column}/>, {
+    const childComponents: ChildComponents = {
+      groupCell: {
+        content: () => <div className='custom-group-cell'/>,
+      }
+    };
+    const wrapper = mount(<GroupRowContent {...props} childComponents={childComponents} column={column}/>, {
       attachTo: document.createElement('tr'),
     });
     expect(wrapper.find('.custom-group-cell').length).toBe(1);

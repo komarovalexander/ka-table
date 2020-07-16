@@ -5,6 +5,7 @@ import { DataType, EditingMode } from '../../enums';
 import CellEditor, { ICellEditorProps } from './CellEditor';
 
 const props: ICellEditorProps = {
+  childComponents: {},
   column: {
     dataType: DataType.String,
     key: 'column',

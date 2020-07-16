@@ -1,10 +1,8 @@
 import { Column } from '../models';
-import {
-  createObjByFields, getParentValue, getValueByColumn, getValueByField, replaceValue,
-} from './DataUtils';
+import { createObjByFields, getParentValue, getValueByColumn, replaceValue } from './DataUtils';
 
 describe('DataUtils', () => {
-  describe('getValueByField', () => {
+  describe('getValueByColumn', () => {
     it('b.c', () => {
       const data = {
         b: {
@@ -12,7 +10,7 @@ describe('DataUtils', () => {
         },
       };
 
-      expect(getValueByField(data, 'c', ['b'])).toBe(1);
+      expect(getValueByColumn(data, { key: 'b.c' })).toBe(1);
     });
     it('b.c.x', () => {
       const data = {
@@ -23,12 +21,12 @@ describe('DataUtils', () => {
         },
       };
 
-      expect(getValueByField(data, 'x', ['b', 'c'])).toBe(1);
+      expect(getValueByColumn(data, { key: 'b.c.x' })).toBe(1);
     });
     it('data is empty', () => {
       const data = {  };
 
-      expect(getValueByField(data, 'c', ['b'])).toBeUndefined();
+      expect(getValueByColumn(data, { key: 'b.c' })).toBeUndefined();
     });
     it('patch is wrong', () => {
       const data = {
@@ -37,7 +35,7 @@ describe('DataUtils', () => {
         },
       };
 
-      expect(getValueByField(data, 'a', ['w'])).toBeUndefined();
+      expect(getValueByColumn(data, { key: 'w.a' })).toBeUndefined();
     });
     it('part path: b', () => {
       const data = {
@@ -46,7 +44,7 @@ describe('DataUtils', () => {
         },
       };
 
-      expect(getValueByField(data, 'b')).toBe(data.b);
+      expect(getValueByColumn(data, { key: 'b' })).toBe(data.b);
     });
     it('part path: children', () => {
       const data = {
@@ -55,24 +53,23 @@ describe('DataUtils', () => {
         },
       };
 
-      expect(getValueByField(data, 'c')).toBeUndefined();
+      expect(getValueByColumn(data, { key: 'c' })).toBeUndefined();
     });
     it('one item path', () => {
       const data = {
         b: 1,
       };
 
-      expect(getValueByField(data, 'b')).toBe(1);
+      expect(getValueByColumn(data, { key: 'b' })).toBe(1);
     });
     it('false as a value', () => {
       const data = {
         b: false,
       };
 
-      expect(getValueByField(data, 'b')).toBe(false);
+      expect(getValueByColumn(data, { key: 'b' })).toBe(false);
     });
-  });
-  describe('getValueByColumn', () => {
+
     it('value from key', () => {
       const data = {
         b: 3,
@@ -88,7 +85,7 @@ describe('DataUtils', () => {
         },
       };
 
-      expect(getValueByColumn(data, { key: 'b.c', field: 'd', fieldParents: ['b'] })).toBe(2);
+      expect(getValueByColumn(data, { key: 'b.c', field: 'b.d' })).toBe(2);
     });
   });
 
@@ -130,7 +127,7 @@ describe('DataUtils', () => {
           a: 11,
         },
       };
-      const column: Column = {key : 'a', fieldParents: ['b']};
+      const column: Column = {key : 'b.a'};
       expect(replaceValue(data, column, 1)).toEqual({
         b: {
           a: 1,
@@ -139,7 +136,7 @@ describe('DataUtils', () => {
     });
     it('parrent is b and it is undefined', () => {
       const data = { };
-      const column: Column = {key : 'a', fieldParents: ['b']};
+      const column: Column = {key : 'b.a'};
 
       expect(replaceValue(data, column, 1)).toEqual({
         b: {
@@ -155,7 +152,7 @@ describe('DataUtils', () => {
           },
         },
       };
-      const column: Column = {key : 'a', fieldParents: ['b', 'c']};
+      const column: Column = {key : 'b.c.a'};
 
       expect(replaceValue(data, column, 1)).toEqual({
         b: {
@@ -170,7 +167,7 @@ describe('DataUtils', () => {
         b: {
         },
       };
-      const column: Column = {key : 'a', fieldParents: ['b', 'c']};
+      const column: Column = {key : 'b.c.a'};
 
       expect(replaceValue(data, column, 1)).toEqual({
         b: {
@@ -183,7 +180,7 @@ describe('DataUtils', () => {
     it('parrent is b.c, b is undefined', () => {
       const data = {
       };
-      const column: Column = {key : 'a', fieldParents: ['b', 'c']};
+      const column: Column = {key : 'b.c.a'};
 
       expect(replaceValue(data, column, 1)).toEqual({
         b: {
@@ -203,7 +200,7 @@ describe('DataUtils', () => {
           },
         },
       };
-      const column: Column = {key : 'a', fieldParents: ['b', 'c', 'x']};
+      const column: Column = { key : 'b.c.x.a' };
 
       expect(replaceValue(data, column, 2)).toEqual({
         b: {

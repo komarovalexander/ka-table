@@ -16,7 +16,7 @@ export const searchData = (columns: Column[], data: any[], searchText: string, s
   return columns.reduce((initialData: any[], c: Column) => {
     const filterFunction = (item: any) => {
       const searchContent = search && search({ column: c, searchText, rowData: item });
-      if (searchContent) {
+      if (searchContent != null) {
         return searchContent;
       }
       if (initialData.indexOf(item) >= 0) {

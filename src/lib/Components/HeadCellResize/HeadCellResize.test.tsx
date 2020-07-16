@@ -22,7 +22,7 @@ it('renders without crashing', () => {
 });
 
 it('should handle onMouseDown correctly', () => {
-  const wrapper = mount(<HeadCellResize {...props} />, { attachTo: document.body });
+  const wrapper = mount(<HeadCellResize {...props} />);
   wrapper.simulate('mousedown');
   simulant.fire(document.body, 'mouseup');
   expect(props.dispatch).toBeCalledTimes(2)

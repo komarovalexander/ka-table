@@ -6,6 +6,7 @@ import HeaderCell, { IHeadCellProps } from './HeadCell';
 
 const props: IHeadCellProps = {
   column: new Column(),
+  childComponents: {},
 };
 
 it('renders without crashing', () => {
