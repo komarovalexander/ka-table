@@ -44,6 +44,7 @@ const NewRow: React.FunctionComponent<INewRowProps> = ({
         rowKeyValue={newRowId}
         validation={validation}
         selectedRows={[]}
+        rowEditableCells={[]}
       />
     );
 };

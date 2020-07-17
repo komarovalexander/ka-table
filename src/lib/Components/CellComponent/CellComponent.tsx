@@ -6,7 +6,7 @@ import { ChildComponents } from '../../models';
 import { Column } from '../../Models/Column';
 import { DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
-import { getElementCustomization, MemoizeComponent } from '../../Utils/ComponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
 
@@ -66,4 +66,4 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   );
 };
 
-export default MemoizeComponent(CellComponent, (props: ICellProps) => props.childComponents.cell);
+export default CellComponent;

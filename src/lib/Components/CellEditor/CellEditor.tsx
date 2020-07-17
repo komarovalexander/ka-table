@@ -6,7 +6,7 @@ import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { DispatchFunc, Field, ValidationFunc } from '../../types';
 import { getCellEditorDispatchHandler } from '../../Utils/CellUtils';
-import { getElementCustomization, MemoizeComponent } from '../../Utils/ComponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import CellEditorState from '../CellEditorState/CellEditorState';
 
 export interface IFilterRowEditorProps {
@@ -53,4 +53,4 @@ const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
   );
 };
 
-export default MemoizeComponent(CellEditor, (props: ICellEditorProps) => props.childComponents.editor);
+export default CellEditor;

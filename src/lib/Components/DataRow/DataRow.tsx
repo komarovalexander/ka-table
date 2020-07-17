@@ -5,7 +5,7 @@ import { EditingMode } from '../../enums';
 import { ChildComponents, EditableCell } from '../../models';
 import { Column } from '../../Models/Column';
 import { DataRowFunc, DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
-import { getElementCustomization, MemoizeComponent } from '../../Utils/ComponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
@@ -55,4 +55,4 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
 };
 
 
-export default MemoizeComponent(DataRow, (props: IRowProps) => props.childComponents.dataRow);
+export default DataRow;
