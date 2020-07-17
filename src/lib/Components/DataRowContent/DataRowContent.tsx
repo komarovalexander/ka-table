@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { EditableCell } from '../../Models/EditableCell';
 import { FormatFunc, ValidationFunc } from '../../types';
 import { getEditableCell } from '../../Utils/CellUtils';
-import { getRowEditableCells } from '../../Utils/FilterUtils';
+import { getValueByColumn } from '../../Utils/DataUtils';
 import CellComponent from '../CellComponent/CellComponent';
 import { IRowCommonProps } from '../DataRow/DataRow';
 
@@ -11,27 +12,30 @@ export interface IDataRowProps extends IRowCommonProps {
   validation?: ValidationFunc;
   isDetailsRowShown: boolean;
   isSelectedRow: boolean;
+  rowEditableCells: EditableCell[]
 }
 
 const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   childComponents,
   columns,
   dispatch,
-  editableCells,
   editingMode,
   format,
   isDetailsRowShown,
   isSelectedRow,
   rowData,
+  rowEditableCells,
   rowKeyField,
   rowKeyValue,
   validation,
 }) => {
-  const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
   return (
     <>
       {columns.map((column) => {
         const editableCell = getEditableCell(column, rowEditableCells);
+        const hasEditorValue = editableCell && editableCell.hasOwnProperty('editorValue');
+        const editorValue = editableCell && editableCell.editorValue;
+        const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
 
         return (
           <CellComponent
@@ -51,6 +55,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
             rowKeyValue={rowKeyValue}
             validation={validation}
             validationMessage={editableCell && editableCell.validationMessage}
+            value={value}
           />
         );
       })}

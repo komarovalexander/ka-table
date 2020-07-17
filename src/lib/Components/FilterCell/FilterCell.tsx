@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { getElementCustomization, MemoizeComponent } from '../../Utils/ComponentUtils';
 import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
 import FilterRowDataType from '../FilterRowDataType/FilterRowDataType';
 
@@ -28,4 +28,4 @@ const FilterCell: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
   );
 };
 
-export default FilterCell;
+export default MemoizeComponent(FilterCell, (props: IFilterRowEditorProps) => props.childComponents.filterRowCell);

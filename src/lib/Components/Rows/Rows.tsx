@@ -1,6 +1,7 @@
 import React, { RefObject, useEffect, useRef } from 'react';
 
 import { newRowId } from '../../const';
+import { getRowEditableCells } from '../../Utils/FilterUtils';
 import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
@@ -75,6 +76,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
         const rowKeyValue = d[rowKeyField];
         const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
         const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
+        const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
         const dataRow = (
           <DataAndDetailsRows
             childComponents={props.childComponents}
@@ -90,6 +92,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             rowData={d}
             rowKeyField={props.rowKeyField}
             rowKeyValue={rowKeyValue}
+            rowEditableCells={rowEditableCells}
             selectedRows={props.selectedRows}
             trRef={rowRefLink}
             validation={validation}

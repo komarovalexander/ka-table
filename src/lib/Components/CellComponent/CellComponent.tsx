@@ -6,8 +6,7 @@ import { ChildComponents } from '../../models';
 import { Column } from '../../Models/Column';
 import { DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { getValueByColumn } from '../../Utils/DataUtils';
+import { getElementCustomization, MemoizeComponent } from '../../Utils/ComponentUtils';
 import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
 
@@ -27,6 +26,7 @@ export interface ICellProps {
   rowKeyValue: any;
   validation?: ValidationFunc;
   validationMessage?: string;
+  value: any;
 }
 
 const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
@@ -34,13 +34,8 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
     childComponents,
     column,
     column: { style },
-    editorValue,
-    hasEditorValue,
     isEditableCell,
-    rowData,
   } = props;
-
-  const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.cell,
@@ -55,7 +50,6 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
         (
           <CellEditor
             {...props}
-            value={value}
             field={getField(column)}
           />
         )
@@ -63,7 +57,6 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
         (
           <CellContent
             {...props}
-            value={value}
             field={getField(column)}
           />
         )
@@ -73,4 +66,4 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   );
 };
 
-export default CellComponent;
+export default MemoizeComponent(CellComponent, (props: ICellProps) => props.childComponents.cell);

@@ -5,7 +5,7 @@ import defaultOptions from '../../defaultOptions';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { getElementCustomization, MemoizeComponent } from '../../Utils/ComponentUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
 export interface IGroupRowProps {
@@ -56,4 +56,4 @@ const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
   );
 };
 
-export default GroupRowContent;
+export default MemoizeComponent(GroupRowContent, (props: IGroupRowProps) => props.childComponents.groupCell);
