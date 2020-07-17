@@ -31,10 +31,7 @@ export interface IRowProps extends IRowCommonProps {
   validation?: ValidationFunc;
 }
 
-function propsAreEqual(prevProps: IRowProps, nextProps: IRowProps) {
-  return false;
-}
-const DataRow: React.FunctionComponent<IRowProps> = React.memo((props) => {
+const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   const {
     childComponents : { dataRow },
     groupColumnsCount,
@@ -54,6 +51,6 @@ const DataRow: React.FunctionComponent<IRowProps> = React.memo((props) => {
         : <DataRowContent {...props}/>}
     </tr>
   );
-}, propsAreEqual);
+};
 
 export default DataRow;
