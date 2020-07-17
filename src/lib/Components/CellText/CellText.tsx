@@ -4,7 +4,7 @@ import { openEditor } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
 import { isEmpty } from '../../Utils/CommonUtils';
-import { getElementCustomization } from '../../Utils/CoponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { ICellContentProps } from '../CellContent/CellContent';
 
 const CellText: React.FunctionComponent<ICellContentProps> = (props) => {

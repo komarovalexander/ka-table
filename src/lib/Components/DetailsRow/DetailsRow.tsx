@@ -1,7 +1,7 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { getElementCustomization } from '../../Utils/CoponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { IRowProps } from '../DataRow/DataRow';
 import EmptyCells from '../EmptyCells/EmptyCells';
 

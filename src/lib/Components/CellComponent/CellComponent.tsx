@@ -6,7 +6,7 @@ import { ChildComponents } from '../../models';
 import { Column } from '../../Models/Column';
 import { DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
-import { getElementCustomization } from '../../Utils/CoponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getValueByColumn } from '../../Utils/DataUtils';
 import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';

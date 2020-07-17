@@ -2,7 +2,7 @@ import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { GroupRowFunc } from '../../types';
-import { getElementCustomization } from '../../Utils/CoponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import GroupRowContent, { IGroupRowProps } from '../GroupRowContent/GroupRowContent';
 
 const GroupRow: React.FunctionComponent<IGroupRowProps & { groupRow?: GroupRowFunc }> = (props) => {

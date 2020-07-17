@@ -3,7 +3,7 @@ import * as React from 'react';
 import { updateSortDirection } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { SortDirection, SortingMode } from '../../enums';
-import { getElementCustomization } from '../../Utils/CoponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { IHeadCellProps } from '../HeadCell/HeadCell';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {

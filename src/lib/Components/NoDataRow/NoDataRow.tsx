@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
-import { getElementCustomization } from '../../Utils/CoponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 
 export interface INoDataRow {
   childComponents: ChildComponents,

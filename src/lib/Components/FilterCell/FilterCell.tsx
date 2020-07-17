@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { getElementCustomization } from '../../Utils/CoponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
 import FilterRowDataType from '../FilterRowDataType/FilterRowDataType';
 

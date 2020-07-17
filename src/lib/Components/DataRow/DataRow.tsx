@@ -5,7 +5,7 @@ import { EditingMode } from '../../enums';
 import { ChildComponents, EditableCell } from '../../models';
 import { Column } from '../../Models/Column';
 import { DataRowFunc, DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
-import { getElementCustomization } from '../../Utils/CoponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
 

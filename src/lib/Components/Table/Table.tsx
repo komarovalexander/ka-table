@@ -9,7 +9,7 @@ import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
-import { getElementCustomization } from '../../Utils/CoponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { prepareTableOptions } from '../../Utils/PropsUtils';
 import FilterRow from '../FilterRow/FilterRow';

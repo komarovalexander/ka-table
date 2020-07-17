@@ -5,7 +5,7 @@ import defaultOptions from '../../defaultOptions';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
-import { getElementCustomization } from '../../Utils/CoponentUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
 export interface IGroupRowProps {
