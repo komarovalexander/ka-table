@@ -10,6 +10,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
     childComponents,
     column,
+    column: { style },
     dispatch,
     sortingMode,
   } = props;
@@ -21,6 +22,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
 
   const { elementAttributes, content } = getElementCustomization({
     className: `${defaultOptions.css.theadCellContent} ${isSortingEnabled ? 'ka-pointer' : ''}`,
+    style,
     onClick: sortClick
   }, props, childComponents.headCell);
 

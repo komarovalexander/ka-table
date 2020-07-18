@@ -109,7 +109,7 @@ const CustomEditorDemo: React.FC = () => {
             className: 'custom-editor-demo-table'
           }
         },
-        editor: {
+        cellEditor: {
           content: (props) => {
             switch (props.column.key) {
               case 'passed': return <CustomLookupEditor {...props}/>;

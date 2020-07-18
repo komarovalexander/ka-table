@@ -14,6 +14,7 @@ const props: IDataRowProps = {
   editableCells: [],
   editingMode: EditingMode.None,
   isSelectedRow: false,
+  rowEditableCells: [],
   rowData: [{ column: 1, column2: 2 }],
   rowKeyField: 'column',
   selectedRows: [],

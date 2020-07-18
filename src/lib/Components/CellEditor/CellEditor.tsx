@@ -40,7 +40,7 @@ const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const { elementAttributes, content } = getElementCustomization({
     className: `${defaultOptions.css.cellEditor} ${validationMessage ? defaultOptions.css.kaCellEditorValidationError : ''}`
-  }, props, childComponents.editor);
+  }, props, childComponents.cellEditor);
 
   return (
     <div {...elementAttributes}>

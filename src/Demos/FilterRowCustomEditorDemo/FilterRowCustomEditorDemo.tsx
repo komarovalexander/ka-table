@@ -154,7 +154,7 @@ const FilterRowCustomEditorDemo: React.FC = () => {
     <Table
       {...tableProps}
       childComponents={{
-        editor: {
+        cellEditor: {
           content: (props) => {
             if (props.column.key === 'passed'){
               return <CustomLookupEditor {...props}/>

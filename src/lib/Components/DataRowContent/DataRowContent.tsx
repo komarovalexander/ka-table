@@ -36,14 +36,13 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
         const hasEditorValue = editableCell && editableCell.hasOwnProperty('editorValue');
         const editorValue = editableCell && editableCell.editorValue;
         const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
-
         return (
           <CellComponent
             childComponents={childComponents}
             column={column}
             dispatch={dispatch}
             editingMode={editingMode}
-            editorValue={editableCell && editableCell.editorValue}
+            editorValue={editorValue}
             format={format}
             hasEditorValue={editableCell && editableCell.hasOwnProperty('editorValue')}
             isDetailsRowShown={isDetailsRowShown}

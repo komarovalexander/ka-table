@@ -11,7 +11,7 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
-const newItems = ['ColumnResizingDemo', 'PerformanceOptimizationDemo'];
+const newItems = ['Theming'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 
@@ -37,6 +37,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
                     <span className={'group-icon ka-icon ka-icon-group-arrow ka-icon-group-arrow-' + (c.isActive ? 'expanded' : 'collapsed')}/>
                     <span className='menu-icon'><img src={`static/icons/groups/${c.name}.svg`} alt=''/></span>
                     <span className='menu-button-inner'>{c.title}</span>
+                    {newItems.includes(c.name) && <span className='new-badge'>new</span>}
                   </span>
                 </div>
               ) : (

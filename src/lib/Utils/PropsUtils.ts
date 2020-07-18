@@ -52,9 +52,9 @@ export const mergeProps = (
     ...childElementAttributes,
     ...childCustomAttributes,
     ...customPropsWithEvents,
-    ...{
-      className: `${childElementAttributes.className || ''} ${childCustomAttributes.className || ''}`,
-  }};
+    className: `${childElementAttributes.className || ''} ${childCustomAttributes.className || ''}`,
+    style: { ...childCustomAttributes.style, ...childElementAttributes.style }
+  };
 
   return mergedResult;
 };

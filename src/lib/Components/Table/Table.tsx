@@ -12,11 +12,10 @@ import { wrapDispatch } from '../../Utils/ActionUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { prepareTableOptions } from '../../Utils/PropsUtils';
-import FilterRow from '../FilterRow/FilterRow';
-import HeadRow from '../HeadRow/HeadRow';
 import Loading, { ILoadingProps } from '../Loading/Loading';
 import Paging, { IPagingProps } from '../Paging/Paging';
 import TableBody from '../TableBody/TableBody';
+import { TableHead } from '../TableHead/TableHead';
 
 export interface ITableProps {
   columns: Column[];
@@ -39,28 +38,22 @@ export interface ITableProps {
   sortingMode?: SortingMode;
   virtualScrolling?: VirtualScrolling;
 }
-export interface ITableOperations {
-  extendedFilter?: (data: any[]) => any[];
-  dataCellFormat?: FormatFunc;
-  dataCellSearch?: SearchFunc;
-  dataCellValidation?: ValidationFunc;
-}
 
 export interface ITableEvents {
   dispatch: DispatchFunc;
 }
 
-export interface ITableAllProps extends ITableEvents, ITableProps, ITableOperations {
+export interface ITableAllProps extends ITableEvents, ITableProps {
   childComponents?: ChildComponents;
 }
 
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
-    childComponents = {},
     data = [],
+    childComponents = {},
     editableCells = [],
     editingMode = EditingMode.None,
-    filteringMode,
+    filteringMode = FilteringMode.None,
     groups,
     loading,
     paging,
@@ -91,25 +84,16 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
       {content ||
       (
         <table {...elementAttributes}>
-          <thead className={defaultOptions.css.thead} ref={theadRef}>
-            <HeadRow
-              areAllRowsSelected={areAllRowsSelected}
-              childComponents={childComponents}
-              columns={preparedOptions.columns}
-              dispatch={dispatch}
-              groupColumnsCount={preparedOptions.groupColumnsCount}
-              sortingMode={sortingMode}
-            />
-            {filteringMode === FilteringMode.FilterRow &&
-              (
-                <FilterRow
-                  childComponents={childComponents}
-                  columns={preparedOptions.columns}
-                  dispatch={dispatch}
-                  groupColumnsCount={preparedOptions.groupColumnsCount}
-                />
-              )}
-          </thead>
+          <TableHead
+            areAllRowsSelected={areAllRowsSelected}
+            childComponents={childComponents}
+            columns={preparedOptions.columns}
+            dispatch={dispatch}
+            filteringMode={filteringMode}
+            groupColumnsCount={preparedOptions.groupColumnsCount}
+            sortingMode={sortingMode}
+            theadRef={theadRef}
+          />
           <TableBody
               {...props}
               childComponents={childComponents}

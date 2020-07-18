@@ -104,7 +104,7 @@ const AddRowDemo: React.FC = () => {
       <Table
         {...tableProps}
         childComponents={{
-          editor: {
+          cellEditor: {
             content: (props) => {
               if (props.column.key === 'addColumn'){
                 return <SaveButton {...props}/>;

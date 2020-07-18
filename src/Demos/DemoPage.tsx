@@ -6,11 +6,12 @@ import Demo from './Demo';
 import DemoText from './DemoText';
 import { trackEvent } from './ga';
 
+const kaStylesDisabled = ['BootstrapDemo'];
 const getDemoPage = (demo: Demo) => {
   return () => {
     return (
       <div>
-        <div className='simulator-content'>
+        <div className={`simulator-content ${kaStylesDisabled.includes(demo.fileName) ? '' : 'enable-ka-styles'}`}>
           <h1>{demo.title}</h1>
           <demo.component />
         </div>

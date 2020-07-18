@@ -103,7 +103,7 @@ const EditingDemoRow: React.FC = () => {
               }
             }
           },
-          editor: {
+          cellEditor: {
             content: (props) => {
               if (props.column.key === 'editColumn'){
                 return <SaveButton {...props}/>
