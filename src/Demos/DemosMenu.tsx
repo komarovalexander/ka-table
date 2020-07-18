@@ -40,7 +40,7 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
 
   menuItems = menuItems.map(mi => ({ ...mi, isActive: !!search || (mi.items && mi.items.some(i => window.location.hash.includes(i.path!)))}));
 
-  menuItems.sort((a, b) => a.title[0] > b.title[0] ? 1 : -1);
+  menuItems.sort((a, b) => a.title.localeCompare(b.title));
   return (
     <ul className='menu'>
       <input className='menu-search' type='search' placeholder='search by menu..' value={search} onChange={(e) => {
