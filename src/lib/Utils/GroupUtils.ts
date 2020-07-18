@@ -98,5 +98,5 @@ export const groupBy = (data: any[], keyGetter: any, isEmptyValue: boolean = fal
 export const getGroupMark = () => groupMark;
 
 export const getGroupText = (value: any, column: Column, format?: FormatFunc) => {
-  return format ? format({ column, value }) : `${column && column.title && (column.title + ': ')}${value}`;
+  return format ? format({ column, value }) : `${(column && column.title ? column.title + ': ' : '')}${value}`;
 };

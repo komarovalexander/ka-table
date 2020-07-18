@@ -156,6 +156,13 @@ describe('GroupUtils', () => {
       const result = getGroupText('Group Text', { key: 'column1', title: 'Column Title' });
       expect(result).toEqual('Column Title: Group Text');
     });
+    it('column.title is not set', () => {
+      const result = getGroupText(
+        'Group Text',
+        { key: 'column1'}
+      );
+      expect(result).toEqual('Group Text');
+    });
     it('format', () => {
       const result = getGroupText(
         'Group Text',
