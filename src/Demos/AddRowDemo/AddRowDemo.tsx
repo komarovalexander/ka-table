@@ -5,8 +5,9 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { hideNewRow, saveNewRow, showNewRow } from '../../lib/actionCreators';
 import { ICellEditorProps } from '../../lib/Components/CellEditor/CellEditor';
+import { IHeadCellProps } from '../../lib/Components/HeadCell/HeadCell';
 import { DataType } from '../../lib/enums';
-import { DispatchFunc, HeaderCellFuncPropsWithChildren } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -24,7 +25,7 @@ const generateNewId = () => {
   return maxValue;
 };
 
-const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({
+const AddButton: React.FC<IHeadCellProps> = ({
   dispatch,
 }) => {
  return (

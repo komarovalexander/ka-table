@@ -5,8 +5,9 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { deselectAllRows, deselectRow, selectAllRows, selectRow } from '../../lib/actionCreators';
 import { ICellTextProps } from '../../lib/Components/CellText/CellText';
+import { IHeadCellProps } from '../../lib/Components/HeadCell/HeadCell';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
-import { DispatchFunc, HeaderCellFuncPropsWithChildren } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -35,7 +36,7 @@ const SelectionCell: React.FC<ICellTextProps> = ({
   );
 };
 
-const SelectionHeader: React.FC<HeaderCellFuncPropsWithChildren> = ({
+const SelectionHeader: React.FC<IHeadCellProps> = ({
   dispatch, areAllRowsSelected,
 }) => {
   return (

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { DispatchFunc, HeaderCellFuncPropsWithChildren } from '../../lib/types';
+import { IHeadCellProps } from '../../lib/Components/HeadCell/HeadCell';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -11,7 +12,7 @@ const dataArray = Array(7).fill(undefined).map(
   }),
 );
 
-const HeadCell: React.FC<HeaderCellFuncPropsWithChildren> = ({
+const HeadCell: React.FC<IHeadCellProps> = ({
   column: { title },
 }) => {
   return (
