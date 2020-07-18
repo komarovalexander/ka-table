@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { closeRowEditors, openRowEditors, saveRowEditors } from '../../lib/actionCreators';
+import { ICellEditorProps } from '../../lib/Components/CellEditor/CellEditor';
+import { ICellTextProps } from '../../lib/Components/CellText/CellText';
 import { DataType } from '../../lib/enums';
-import {
-  CellFuncPropsWithChildren, DispatchFunc, EditorFuncPropsWithChildren,
-} from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -18,7 +18,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9, 10) },
 ];
 
-const EditButton: React.FC<CellFuncPropsWithChildren> = ({
+const EditButton: React.FC<ICellTextProps> = ({
   dispatch, rowKeyValue
 }) => {
   return (
@@ -33,7 +33,7 @@ const EditButton: React.FC<CellFuncPropsWithChildren> = ({
   );
 };
 
-const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
+const SaveButton: React.FC<ICellEditorProps> = ({
   dispatch, rowKeyValue
 }) => {
   return (

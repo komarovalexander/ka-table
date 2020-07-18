@@ -4,8 +4,9 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { deleteRow } from '../../lib/actionCreators';
+import { ICellTextProps } from '../../lib/Components/CellText/CellText';
 import { DataType } from '../../lib/enums';
-import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -17,7 +18,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
+const DeleteRow: React.FC<ICellTextProps> = ({
   dispatch, rowKeyValue,
 }) => {
  return (

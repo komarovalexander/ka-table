@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { hideDetailsRow, showDetailsRow } from '../../lib/actionCreators';
+import { ICellTextProps } from '../../lib/Components/CellText/CellText';
+import { IDataRowProps } from '../../lib/Components/DataRowContent/DataRowContent';
 import { DataType } from '../../lib/enums';
-import { CellFunc, DataRowFunc, DispatchFunc } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -15,7 +17,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const DetailsButton: CellFunc = ({
+const DetailsButton: React.FC<ICellTextProps> = ({
   dispatch,
   rowKeyValue,
   isDetailsRowShown,
@@ -29,7 +31,7 @@ const DetailsButton: CellFunc = ({
   );
 };
 
-const DetailsRow: DataRowFunc = ({
+const DetailsRow: React.FC<IDataRowProps> = ({
   rowData,
 }) => {
   return (

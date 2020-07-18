@@ -7,8 +7,8 @@ import { Column } from '../../Models/Column';
 import { DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
 import { getField } from '../../Utils/ColumnUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
-import CellContent from '../CellContent/CellContent';
 import CellEditor from '../CellEditor/CellEditor';
+import CellText from '../CellText/CellText';
 
 export interface ICellProps {
   childComponents: ChildComponents;
@@ -55,7 +55,7 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
         )
         :
         (
-          <CellContent
+          <CellText
             {...props}
             field={getField(column)}
           />

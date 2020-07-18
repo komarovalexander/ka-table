@@ -3,8 +3,9 @@ import './AlertCellDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
+import { ICellTextProps } from '../../lib/Components/CellText/CellText';
 import { DataType } from '../../lib/enums';
-import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -16,7 +17,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
+const AlertCell: React.FC<ICellTextProps> = ({
    rowData,
 }) => {
   return (

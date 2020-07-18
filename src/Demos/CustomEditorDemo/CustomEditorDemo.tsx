@@ -4,8 +4,9 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { closeEditor, updateCellValue } from '../../lib/actionCreators';
+import { ICellEditorProps } from '../../lib/Components/CellEditor/CellEditor';
 import { DataType, EditingMode } from '../../lib/enums';
-import { DispatchFunc, EditorFuncPropsWithChildren } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -16,7 +17,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2019, 10, 9, 10) },
 ];
 
-const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
+const CustomEditor: React.FC<ICellEditorProps> = ({
   column, rowKeyValue, dispatch, value,
 }) => {
   const close = () => {
@@ -40,7 +41,7 @@ const CustomEditor: React.FC<EditorFuncPropsWithChildren> = ({
   );
 };
 
-const CustomLookupEditor: React.FC<EditorFuncPropsWithChildren> = ({
+const CustomLookupEditor: React.FC<ICellEditorProps> = ({
   column, dispatch, rowKeyValue, value,
 }) => {
   const close = () => {

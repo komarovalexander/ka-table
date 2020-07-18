@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
+import { IFilterRowEditorProps } from '../../lib/Components/CellEditor/CellEditor';
 import { DataType, EditingMode, FilteringMode } from '../../lib/enums';
 import { Column } from '../../lib/models';
-import { DispatchFunc, FilterRowFuncPropsWithChildren } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 import { kaDateUtils } from '../../lib/utils';
 
 const dataArray: any[] = [
@@ -17,7 +18,7 @@ const dataArray: any[] = [
   { id: 7, name: 'Alex Brzowsky', score: 48, passed: false, nextTry: new Date(2021, 11, 11) },
 ];
 
-const CustomLookupEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   const toNullableBoolean = (value: any) => {
@@ -62,7 +63,7 @@ const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
   );
 };
 
-const NumberEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+const NumberEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   return (
@@ -81,7 +82,7 @@ const NumberEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
   );
 };
 
-const DateEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+const DateEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   const fieldValue = column.filterRowValue;

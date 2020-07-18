@@ -4,12 +4,13 @@ import { ITableProps, kaReducer, Table } from '../../lib';
 import {
   deleteRow, hideLoading, showLoading, updateData, updatePagesCount,
 } from '../../lib/actionCreators';
+import { ICellTextProps } from '../../lib/Components/CellText/CellText';
 import { ActionType, DataType, EditingMode } from '../../lib/enums';
-import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 import { getField } from '../../lib/Utils/ColumnUtils';
 import serverEmulator from './serverEmulator';
 
-const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
+const DeleteRow: React.FC<ICellTextProps> = ({
   dispatch, rowKeyValue,
 }) => {
  return (

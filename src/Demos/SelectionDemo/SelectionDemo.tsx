@@ -4,10 +4,9 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { deselectAllRows, deselectRow, selectAllRows, selectRow } from '../../lib/actionCreators';
+import { ICellTextProps } from '../../lib/Components/CellText/CellText';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
-import {
-  CellFuncPropsWithChildren, DispatchFunc, HeaderCellFuncPropsWithChildren,
-} from '../../lib/types';
+import { DispatchFunc, HeaderCellFuncPropsWithChildren } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -18,7 +17,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const SelectionCell: React.FC<CellFuncPropsWithChildren> = ({
+const SelectionCell: React.FC<ICellTextProps> = ({
   rowKeyValue, dispatch, isSelectedRow,
 }) => {
   return (

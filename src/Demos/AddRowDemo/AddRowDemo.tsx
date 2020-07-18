@@ -4,10 +4,9 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { hideNewRow, saveNewRow, showNewRow } from '../../lib/actionCreators';
+import { ICellEditorProps } from '../../lib/Components/CellEditor/CellEditor';
 import { DataType } from '../../lib/enums';
-import {
-  DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
-} from '../../lib/types';
+import { DispatchFunc, HeaderCellFuncPropsWithChildren } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -40,7 +39,7 @@ const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({
  );
 };
 
-const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
+const SaveButton: React.FC<ICellEditorProps> = ({
   dispatch
 }) => {
   const saveNewData = () => {

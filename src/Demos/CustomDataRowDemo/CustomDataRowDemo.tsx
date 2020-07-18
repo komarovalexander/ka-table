@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
+import { IDataRowProps } from '../../lib/Components/DataRowContent/DataRowContent';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
-import { DataRowFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -13,7 +14,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const DataRow: React.FC<DataRowFuncPropsWithChildren> = ({rowData}) => {
+const DataRow: React.FC<IDataRowProps> = ({rowData}) => {
   return (
     <div>
       {rowData.name}: {rowData.score} ({rowData.passed ? 'Passed' : 'Failed'})

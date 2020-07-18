@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { search, updateFilterRowValue } from '../../lib/actionCreators';
+import { IFilterRowEditorProps } from '../../lib/Components/CellEditor/CellEditor';
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
-import { DispatchFunc, FilterRowFuncPropsWithChildren } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 import { kaDateUtils } from '../../lib/utils';
 import dataArray from './data';
 
-const CustomDateFilterEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+const CustomDateFilterEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   const fieldValue = column.filterRowValue;

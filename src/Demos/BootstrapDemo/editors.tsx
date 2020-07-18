@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
+import { IFilterRowEditorProps } from '../../lib/Components/CellEditor/CellEditor';
 import { Column } from '../../lib/models';
-import { DispatchFunc, FilterRowFuncPropsWithChildren } from '../../lib/types';
+import { DispatchFunc } from '../../lib/types';
 import { kaDateUtils } from '../../lib/utils';
 
-export const CustomLookupEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   const toNullableBoolean = (value: any) => {
@@ -51,7 +52,7 @@ export const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc 
   );
 };
 
-export const NumberEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+export const NumberEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   return (
@@ -70,7 +71,7 @@ export const NumberEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
   );
 };
 
-export const DateEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+export const DateEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   const fieldValue = column.filterRowValue;
