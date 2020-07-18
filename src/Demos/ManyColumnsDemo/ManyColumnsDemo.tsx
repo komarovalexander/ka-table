@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { IDataRowProps } from '../../lib/Components/DataRowContent/DataRowContent';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { Column } from '../../lib/models';
 import { DispatchFunc } from '../../lib/types';
@@ -40,13 +39,6 @@ const ManyColumnsDemo: React.FC = () => {
     <>
       <Table
         {...tableProps}
-        childComponents={{
-          dataRow: {
-            propsAreEqual: (prevProps: IDataRowProps, nextProps: IDataRowProps) => {
-              return prevProps.rowEditableCells.length === nextProps.rowEditableCells.length;
-            }
-          }
-        }}
         dispatch={dispatch}
       />
     </>
