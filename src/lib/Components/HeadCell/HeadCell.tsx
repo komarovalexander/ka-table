@@ -29,7 +29,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     <th {...elementAttributes}>
       <div className={defaultOptions.css.theadCellWrapper}>
         <div className={defaultOptions.css.theadCellContentWrapper}>
-         {content || <HeadCellContent {...props} isSortingEnabled={isSortingEnabled}/>}
+         {content || <HeadCellContent {...props}/>}
         </div>
         {isResizable && (
           <HeadCellResize {...props}
