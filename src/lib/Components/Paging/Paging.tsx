@@ -1,23 +1,11 @@
 import * as React from 'react';
 
 import { updatePageIndex } from '../../actionCreators';
-import { DispatchFunc } from '../../types';
+import { IPagingProps } from '../../props';
 import { centerLength, getPagesForCenter } from '../../Utils/PagingUtils';
-
-export interface IPagingProps {
-  enabled?: boolean;
-  pageIndex?: number;
-  pageSize?: number;
-  pagesCount?: number;
-}
-
-interface IPagingExtendedProps extends IPagingProps {
-  dispatch: DispatchFunc;
-}
 
 interface IPageIndexProps extends IPagingProps {
   activePageIndex: number;
-  dispatch: DispatchFunc;
   pageIndex: number;
 }
 const PageIndex: React.FunctionComponent<IPageIndexProps> = ({
@@ -35,7 +23,7 @@ const PageIndex: React.FunctionComponent<IPageIndexProps> = ({
   );
 };
 
-const Paging: React.FunctionComponent<IPagingExtendedProps> = ({
+const Paging: React.FunctionComponent<IPagingProps> = ({
     enabled,
     pagesCount,
     pageIndex = 1,

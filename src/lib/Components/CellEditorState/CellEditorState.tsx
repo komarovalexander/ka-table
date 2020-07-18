@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { closeEditor, updateEditorValue } from '../../actionCreators';
 import { ActionType, EditingMode } from '../../enums';
+import { ICellEditorProps } from '../../props';
 import { DispatchFunc } from '../../types';
 import { replaceValue } from '../../Utils/DataUtils';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import { getValidationValue } from '../../Utils/Validation';
-import { ICellEditorProps } from '../CellEditor/CellEditor';
 import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
 
 const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {

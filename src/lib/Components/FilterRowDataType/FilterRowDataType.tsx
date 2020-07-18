@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { DataType } from '../../enums';
-import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
+import { IFilterRowEditorProps } from '../../props';
 import FilterRowBoolean from '../FilterRowBoolean/FilterRowBoolean';
 import FilterRowDate from '../FilterRowDate/FilterRowDate';
 import FilterRowNumber from '../FilterRowNumber/FilterRowNumber';

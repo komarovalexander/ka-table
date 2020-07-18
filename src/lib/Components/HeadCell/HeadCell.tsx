@@ -1,35 +1,35 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { SortingMode } from '../../enums';
-import { ChildComponents } from '../../Models/ChildComponents';
-import { Column } from '../../Models/Column';
-import { DispatchFunc } from '../../types';
+import { IHeadCellProps } from '../../props';
 import { headCellDispatchWrapper } from '../../Utils/CellResizeUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { isSortingEnabled } from '../../Utils/SortUtils';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
 import HeadCellResize from '../HeadCellResize/HeadCellResize';
 
-export interface IHeadCellProps {
-  areAllRowsSelected: boolean;
-  childComponents: ChildComponents;
-  column: Column;
-  dispatch: DispatchFunc;
-  sortingMode: SortingMode;
-}
-
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
+    childComponents,
     column: { style, isResizable },
-    dispatch
+    dispatch,
+    sortingMode
   } = props;
   const [width, setWidth] = React.useState(style ? style.width : undefined);
   const stateStyle = {...style, width};
   const headCellDispatch = headCellDispatchWrapper(setWidth, dispatch);
+
+  const { elementAttributes, content } = getElementCustomization({
+    className: `${defaultOptions.css.theadCell} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''}`,
+    style: stateStyle,
+    scope: 'col'
+  }, props, childComponents.headCell);
+
   return (
-    <th scope='col' style={stateStyle} className={defaultOptions.css.theadCell}>
+    <th {...elementAttributes}>
       <div className={defaultOptions.css.theadCellWrapper}>
         <div className={defaultOptions.css.theadCellContentWrapper}>
-          <HeadCellContent {...props}/>
+         {content || <HeadCellContent {...props} isSortingEnabled={isSortingEnabled}/>}
         </div>
         {isResizable && (
           <HeadCellResize {...props}

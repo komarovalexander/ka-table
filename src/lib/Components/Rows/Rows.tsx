@@ -1,12 +1,12 @@
 import React, { RefObject, useEffect, useRef } from 'react';
 
 import { newRowId } from '../../const';
+import { ITableBodyProps } from '../../props';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
 import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
 import NewRow from '../NewRow/NewRow';
-import { ITableBodyProps } from '../TableBody/TableBody';
 
 export interface IRowsProps extends ITableBodyProps {
   onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;

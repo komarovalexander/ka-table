@@ -1,33 +1,11 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode } from '../../enums';
-import { ChildComponents } from '../../models';
-import { Column } from '../../Models/Column';
-import { DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
+import { ICellProps } from '../../props';
 import { getField } from '../../Utils/ColumnUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import CellEditor from '../CellEditor/CellEditor';
 import CellText from '../CellText/CellText';
-
-export interface ICellProps {
-  childComponents: ChildComponents;
-  column: Column;
-  dispatch: DispatchFunc;
-  editingMode: EditingMode;
-  editorValue?: any;
-  format?: FormatFunc;
-  hasEditorValue?: any;
-  isDetailsRowShown: boolean;
-  isEditableCell: boolean;
-  isSelectedRow: boolean;
-  rowData: any;
-  rowKeyField: string;
-  rowKeyValue: any;
-  validation?: ValidationFunc;
-  validationMessage?: string;
-  value: any;
-}
 
 const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   const {

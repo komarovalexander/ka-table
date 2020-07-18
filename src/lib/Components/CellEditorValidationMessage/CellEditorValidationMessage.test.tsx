@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataType } from '../../enums';
 import CellEditorValidation, {
   ICellEditorValidationMessageProps,
 } from './CellEditorValidationMessage';

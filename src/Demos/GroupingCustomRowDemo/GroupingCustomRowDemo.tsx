@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { updateGroupsExpanded } from '../../lib/actionCreators';
 import EmptyCells from '../../lib/Components/EmptyCells/EmptyCells';
-import { IGroupRowProps } from '../../lib/Components/GroupRowContent/GroupRowContent';
 import { DataType } from '../../lib/enums';
+import { IGroupRowProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = [

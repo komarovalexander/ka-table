@@ -4,9 +4,8 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { closeRowEditors, openRowEditors, saveRowEditors } from '../../lib/actionCreators';
-import { ICellEditorProps } from '../../lib/Components/CellEditor/CellEditor';
-import { ICellTextProps } from '../../lib/Components/CellText/CellText';
 import { DataType } from '../../lib/enums';
+import { ICellEditorProps, ICellTextProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [

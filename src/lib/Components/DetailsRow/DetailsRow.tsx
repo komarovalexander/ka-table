@@ -1,8 +1,8 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
+import { IRowProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { IRowProps } from '../DataRow/DataRow';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
 const DetailsRow: React.FunctionComponent<IRowProps> = (props) => {

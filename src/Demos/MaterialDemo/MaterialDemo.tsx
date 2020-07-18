@@ -5,11 +5,9 @@ import { FormCheck, FormControl } from 'react-bootstrap';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { closeEditor, updateCellValue, updateFilterRowValue } from '../../lib/actionCreators';
-import {
-  ICellEditorProps, IFilterRowEditorProps,
-} from '../../lib/Components/CellEditor/CellEditor';
 import { ActionType, DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 import { ChildComponents } from '../../lib/models';
+import { ICellEditorProps, IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 import { useOuterClick } from './customHooks';
 

@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { openEditor } from '../../lib/actionCreators';
-import { ICellTextProps } from '../../lib/Components/CellText/CellText';
 import { DataType, EditingMode } from '../../lib/enums';
+import { ICellTextProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 import dataArray from './data';
 

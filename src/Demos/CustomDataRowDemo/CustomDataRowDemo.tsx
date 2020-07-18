@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { IDataRowProps } from '../../lib/Components/DataRowContent/DataRowContent';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
+import { IDataRowProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [

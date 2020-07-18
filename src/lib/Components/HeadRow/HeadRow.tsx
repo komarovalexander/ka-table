@@ -2,20 +2,9 @@ import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { SortingMode } from '../../enums';
-import { ChildComponents } from '../../Models/ChildComponents';
-import { Column } from '../../Models/Column';
-import { DispatchFunc } from '../../types';
+import { IHeadRowProps } from '../../props';
 import EmptyCells from '../EmptyCells/EmptyCells';
 import HeadCell from '../HeadCell/HeadCell';
-
-export interface IHeadRowProps {
-  areAllRowsSelected: boolean;
-  childComponents: ChildComponents;
-  columns: Column[];
-  dispatch: DispatchFunc;
-  groupColumnsCount: number;
-  sortingMode: SortingMode;
-}
 
 const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
   areAllRowsSelected,
@@ -37,6 +26,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
             dispatch={dispatch}
             key={column.key}
             sortingMode={sortingMode}
+            isSortingEnabled={sortingMode === SortingMode.Single}
           />
         );
       })}

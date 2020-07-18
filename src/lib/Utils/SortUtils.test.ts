@@ -1,6 +1,6 @@
-import { DataType, SortDirection } from '../enums';
+import { DataType, SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
-import { sortData } from './SortUtils';
+import { isSortingEnabled, sortData } from './SortUtils';
 
 const data: any[] = [
   { column: 1, id: 1 },
@@ -33,5 +33,13 @@ describe('sortData', () => {
     ];
     const newData = sortData(columns2, data);
     expect(newData).toMatchSnapshot();
+  });
+});
+
+
+describe('isSortingEnabled', () => {
+  it('default', () => {
+    expect(isSortingEnabled(SortingMode.None)).toBeFalsy();
+    expect(isSortingEnabled(SortingMode.Single)).toBeTruthy();
   });
 });

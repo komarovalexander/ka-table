@@ -1,4 +1,4 @@
-import { SortDirection } from '../enums';
+import { SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
 import { getValueByColumn } from './DataUtils';
 
@@ -40,3 +40,5 @@ export const descendSort = (sortedColumn: Column) => {
     return aValue > bValue ? -1 : 1;
   };
 };
+
+export const isSortingEnabled = (sortingMode: SortingMode) => sortingMode === SortingMode.Single;

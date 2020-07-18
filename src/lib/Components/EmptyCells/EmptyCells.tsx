@@ -1,9 +1,6 @@
 import * as React from 'react';
 
-export interface IEmptyCellsProps {
-  count: number;
-  shouldUseTh?: boolean;
-}
+import { IEmptyCellsProps } from '../../props';
 
 const EmptyCells: React.FunctionComponent<IEmptyCellsProps> = ({ count, shouldUseTh }) => {
   return (

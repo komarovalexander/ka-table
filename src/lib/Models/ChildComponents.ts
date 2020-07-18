@@ -1,12 +1,8 @@
 import { ITableProps } from '../';
-import { ICellProps } from '../Components/CellComponent/CellComponent';
-import { ICellEditorProps, IFilterRowEditorProps } from '../Components/CellEditor/CellEditor';
-import { ICellTextProps } from '../Components/CellText/CellText';
-import { IDataRowProps } from '../Components/DataRowContent/DataRowContent';
-import { IGroupRowProps } from '../Components/GroupRowContent/GroupRowContent';
-import { IHeadCellProps } from '../Components/HeadCell/HeadCell';
-import { INoDataRow as INoDataRowProps } from '../Components/NoDataRow/NoDataRow';
-import { ITableHeadProps } from '../Components/TableHead/TableHead';
+import {
+  ICellEditorProps, ICellProps, ICellTextProps, IDataRowProps, IFilterRowEditorProps,
+  IGroupRowProps, IHeadCellProps, INoDataRowProps, ITableHeadProps,
+} from '../props';
 import { ChildComponent } from './ChildComponent';
 
 export class ChildComponents {

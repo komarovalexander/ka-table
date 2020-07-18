@@ -2,8 +2,8 @@ import React from 'react';
 
 import { closeEditor, updateCellValue } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
+import { ICellEditorProps } from '../../props';
 import { isEmpty } from '../../Utils/CommonUtils';
-import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
   column,

@@ -2,8 +2,8 @@ import React from 'react';
 
 import { closeEditor, updateCellValue } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
+import { ICellEditorProps } from '../../props';
 import { getDateInputValue } from '../../Utils/DateUtils';
-import { ICellEditorProps } from '../CellEditor/CellEditor';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   column,

@@ -8,3 +8,4 @@ export * from './Models/FilterCondition';
 export * from './Models/Group';
 export * from './Models/GroupRowData';
 export * from './Models/VirtualScrolling';
+export * from './Models/Paging';

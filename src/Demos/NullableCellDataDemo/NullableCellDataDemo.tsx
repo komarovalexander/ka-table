@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { search, updateFilterRowValue } from '../../lib/actionCreators';
-import { IFilterRowEditorProps } from '../../lib/Components/CellEditor/CellEditor';
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
+import { IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 import { kaDateUtils } from '../../lib/utils';
 import dataArray from './data';
@@ -57,7 +57,7 @@ const tablePropsInit: ITableProps = {
       sortDirection: SortDirection.Ascend,
       style: {
         textAlign: 'right',
-        width: '95px',
+        width: '100px',
       },
       title: 'Product Price',
     },

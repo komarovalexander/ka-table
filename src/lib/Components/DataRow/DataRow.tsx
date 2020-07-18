@@ -1,35 +1,10 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode } from '../../enums';
-import { ChildComponents, EditableCell } from '../../models';
-import { Column } from '../../Models/Column';
-import { DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
+import { IRowProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
-
-export interface IRowCommonProps {
-  childComponents: ChildComponents;
-  columns: Column[];
-  dispatch: DispatchFunc;
-  editableCells: EditableCell[];
-  editingMode: EditingMode;
-  rowData: any;
-  rowKeyField: string;
-  rowKeyValue: any;
-  selectedRows: any[];
-}
-
-export interface IRowProps extends IRowCommonProps {
-  rowEditableCells: EditableCell[],
-  format?: FormatFunc;
-  groupColumnsCount: number;
-  isDetailsRowShown: boolean;
-  isSelectedRow: boolean;
-  trRef?: any;
-  validation?: ValidationFunc;
-}
 
 const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   const {

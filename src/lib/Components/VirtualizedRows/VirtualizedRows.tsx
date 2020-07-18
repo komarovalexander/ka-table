@@ -1,9 +1,9 @@
 import React, { RefObject } from 'react';
 
 import { ActionType } from '../../enums';
+import { ITableBodyProps } from '../../props';
 import { getVirtualized } from '../../Utils/Virtualize';
 import Rows from '../Rows/Rows';
-import { ITableBodyProps } from '../TableBody/TableBody';
 
 const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {

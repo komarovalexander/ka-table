@@ -2,22 +2,9 @@ import React from 'react';
 
 import { updateGroupsExpanded } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { ChildComponents } from '../../Models/ChildComponents';
-import { Column } from '../../Models/Column';
-import { DispatchFunc } from '../../types';
+import { IGroupRowProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
-
-export interface IGroupRowProps {
-  childComponents: ChildComponents;
-  column: Column;
-  contentColSpan: number;
-  dispatch: DispatchFunc;
-  groupIndex: number;
-  groupKey: any[];
-  isExpanded: boolean;
-  text: string;
-}
 
 const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
   const {

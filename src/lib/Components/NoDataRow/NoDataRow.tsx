@@ -1,15 +1,9 @@
 import React from 'react';
 
-import { ChildComponents } from '../../Models/ChildComponents';
-import { Column } from '../../Models/Column';
+import { INoDataRowProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-export interface INoDataRow {
-  childComponents: ChildComponents,
-  columns: Column[];
-  groupColumnsCount: number;
-}
-const NoDataRow: React.FunctionComponent<INoDataRow> = (props) => {
+const NoDataRow: React.FunctionComponent<INoDataRowProps> = (props) => {
   const {
     childComponents,
     columns,

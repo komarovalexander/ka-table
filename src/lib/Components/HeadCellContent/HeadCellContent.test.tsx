@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ActionType, SortDirection, SortingMode } from '../../enums';
-import { IHeadCellProps } from '../HeadCell/HeadCell';
+import { IHeadCellProps } from '../../props';
 import HeadCellContent from './HeadCellContent';
 
 Enzyme.configure({ adapter: new Adapter() });

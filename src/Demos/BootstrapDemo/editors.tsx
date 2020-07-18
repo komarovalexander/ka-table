@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
-import { IFilterRowEditorProps } from '../../lib/Components/CellEditor/CellEditor';
 import { Column } from '../../lib/models';
+import { IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 import { kaDateUtils } from '../../lib/utils';
 

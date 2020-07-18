@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
-import { IFilterRowEditorProps } from '../../lib/Components/CellEditor/CellEditor';
 import { DataType, EditingMode, FilteringMode } from '../../lib/enums';
 import { Column } from '../../lib/models';
+import { IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 import { kaDateUtils } from '../../lib/utils';
 

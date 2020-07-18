@@ -4,9 +4,8 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { hideNewRow, saveNewRow, showNewRow } from '../../lib/actionCreators';
-import { ICellEditorProps } from '../../lib/Components/CellEditor/CellEditor';
-import { IHeadCellProps } from '../../lib/Components/HeadCell/HeadCell';
 import { DataType } from '../../lib/enums';
+import { ICellEditorProps, IHeadCellProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(

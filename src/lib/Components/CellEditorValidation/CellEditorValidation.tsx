@@ -1,7 +1,7 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { ICellEditorProps } from '../CellEditor/CellEditor';
+import { ICellEditorProps } from '../../props';
 import CellEditorDataType from '../CellEditorDataType/CellEditorDataType';
 import CellEditorValidationMessage from '../CellEditorValidationMessage/CellEditorValidationMessage';
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { updateFilterRowValue } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
+import { IFilterRowEditorProps } from '../../props';
 
 const FilterRowString: React.FunctionComponent<IFilterRowEditorProps> = ({
   column,

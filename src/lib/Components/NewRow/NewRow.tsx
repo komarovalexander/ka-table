@@ -2,21 +2,8 @@ import React from 'react';
 
 import { newRowId } from '../../const';
 import { EditingMode } from '../../enums';
-import { ChildComponents, EditableCell } from '../../models';
-import { Column } from '../../Models/Column';
-import { DispatchFunc, FormatFunc, ValidationFunc } from '../../types';
+import { INewRowProps } from '../../props';
 import DataRow from '../DataRow/DataRow';
-
-export interface INewRowProps {
-  childComponents: ChildComponents;
-  columns: Column[];
-  dispatch: DispatchFunc;
-  editableCells: EditableCell[];
-  format?: FormatFunc;
-  groupColumnsCount: number;
-  rowKeyField: string;
-  validation?: ValidationFunc;
-}
 
 const NewRow: React.FunctionComponent<INewRowProps> = ({
   childComponents,
@@ -44,7 +31,7 @@ const NewRow: React.FunctionComponent<INewRowProps> = ({
         rowKeyValue={newRowId}
         validation={validation}
         selectedRows={[]}
-        rowEditableCells={[]}
+        rowEditableCells={editableCells}
       />
     );
 };

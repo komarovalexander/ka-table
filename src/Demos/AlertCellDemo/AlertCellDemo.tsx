@@ -3,8 +3,8 @@ import './AlertCellDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { ICellTextProps } from '../../lib/Components/CellText/CellText';
 import { DataType } from '../../lib/enums';
+import { ICellTextProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(

@@ -1,24 +1,11 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { FilteringMode, SortingMode } from '../../enums';
-import { ChildComponents } from '../../Models/ChildComponents';
-import { Column } from '../../Models/Column';
-import { DispatchFunc } from '../../types';
+import { FilteringMode } from '../../enums';
+import { ITableHeadProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import FilterRow from '../FilterRow/FilterRow';
 import HeadRow from '../HeadRow/HeadRow';
-
-export interface ITableHeadProps {
-  areAllRowsSelected: boolean;
-  childComponents: ChildComponents;
-  columns: Column[];
-  dispatch: DispatchFunc;
-  filteringMode: FilteringMode;
-  groupColumnsCount: number;
-  sortingMode: SortingMode;
-  theadRef: any;
-}
 
 export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
   const {

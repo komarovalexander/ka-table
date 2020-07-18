@@ -2,18 +2,19 @@ import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
-import { EditableCell } from '../../models';
+import { EditableCell, PagingOptions } from '../../models';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
+import { ILoadingProps } from '../../props';
 import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { prepareTableOptions } from '../../Utils/PropsUtils';
-import Loading, { ILoadingProps } from '../Loading/Loading';
-import Paging, { IPagingProps } from '../Paging/Paging';
+import Loading from '../Loading/Loading';
+import Paging from '../Paging/Paging';
 import TableBody from '../TableBody/TableBody';
 import { TableHead } from '../TableHead/TableHead';
 
@@ -31,7 +32,7 @@ export interface ITableProps {
   groups?: Group[];
   groupsExpanded?: any[][];
   loading?: ILoadingProps;
-  paging?: IPagingProps;
+  paging?: PagingOptions;
   rowKeyField: string;
   searchText?: string;
   selectedRows?: any[];

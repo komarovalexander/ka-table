@@ -1,19 +1,9 @@
 import React from 'react';
 
-import { EditableCell } from '../../Models/EditableCell';
-import { FormatFunc, ValidationFunc } from '../../types';
+import { IDataRowProps } from '../../props';
 import { getEditableCell } from '../../Utils/CellUtils';
 import { getValueByColumn } from '../../Utils/DataUtils';
 import CellComponent from '../CellComponent/CellComponent';
-import { IRowCommonProps } from '../DataRow/DataRow';
-
-export interface IDataRowProps extends IRowCommonProps {
-  format?: FormatFunc;
-  validation?: ValidationFunc;
-  isDetailsRowShown: boolean;
-  isSelectedRow: boolean;
-  rowEditableCells: EditableCell[]
-}
 
 const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   childComponents,

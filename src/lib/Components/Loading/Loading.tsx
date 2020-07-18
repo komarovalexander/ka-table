@@ -1,9 +1,6 @@
 import * as React from 'react';
 
-export interface ILoadingProps {
-  enabled?: boolean;
-  text?: string;
-}
+import { ILoadingProps } from '../../props';
 
 const Loading: React.FunctionComponent<ILoadingProps> = (props) => {
   const {
