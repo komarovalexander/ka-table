@@ -16,7 +16,7 @@ export const extendProps = (
   childProps: any,
   childComponent?: ChildComponent<any>): React.AllHTMLAttributes<HTMLElement> => {
     let resultProps = childElementAttributes;
-    const childCustomAttributes = childComponent && childComponent.elementAttributes;
+    const childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps);
     if (childCustomAttributes) {
       const dispatch: DispatchFunc = childProps.dispatch;
       resultProps = mergeProps(childElementAttributes, childProps, childCustomAttributes, dispatch);

@@ -34,16 +34,16 @@ const tablePropsInit: ITableProps = {
 
 const childComponents: ChildComponents = {
   cell: {
-    elementAttributes: {
+    elementAttributes: () => ({
       className: 'my-cell-class',
       onClick: (e, extendedEvent) => {
         const { childProps: { dispatch } } = extendedEvent;
         dispatch({ type: 'MY_CELL_onClick', ...{ extendedEvent }});
       },
-    }
+    })
   },
   cellText: {
-    elementAttributes: {
+    elementAttributes: () => ({
       className: 'my-cell-text-class',
       onClick: (e, extendedEvent) => {
         const { childProps: { dispatch } } = extendedEvent;
@@ -57,18 +57,18 @@ const childComponents: ChildComponents = {
         dispatch({ type: 'MY_CELL_TEXT_onDoubleClick', ...{ extendedEvent }});
         childElementAttributes.onClick!(e);
       },
-    }
+    })
   },
   dataRow: {
-    elementAttributes: {
+    elementAttributes: () => ({
       onClick: (e, extendedEvent) => {
         const { childProps: { dispatch } } = extendedEvent;
         dispatch({ type: 'MY_ROW_onClick', ...{ extendedEvent }});
       }
-    },
+    }),
   },
   table: {
-    elementAttributes: {
+    elementAttributes: () => ({
       onMouseEnter: (e, extendedEvent) => {
         const { dispatch } = extendedEvent;
         dispatch({ type: 'MY_TABLE_onMouseEnter', ...{ extendedEvent }});
@@ -77,7 +77,7 @@ const childComponents: ChildComponents = {
         const { dispatch } = extendedEvent;
         dispatch({ type: 'MY_TABLE_onMouseLeave', ...{ extendedEvent }});
       }
-    },
+    }),
   },
 };
 

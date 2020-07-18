@@ -41,7 +41,8 @@ const tablePropsInit: ITableProps = {
 
 const childAttributes: ChildComponents = {
   dataRow: {
-    elementAttributes: {
+    elementAttributes: (props) => ({
+      title: `${props.rowData.name} ${props.rowData.phoneNumber}`,
       onMouseEnter: (event, extendedEvent) => {
         const {
           childProps: {
@@ -54,7 +55,7 @@ const childAttributes: ChildComponents = {
       onMouseLeave: (event, { dispatch }) => {
         dispatch({ type: ROW_MOUSE_LEAVE });
       },
-    },
+    }),
   },
 };
 

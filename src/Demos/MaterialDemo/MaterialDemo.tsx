@@ -85,14 +85,14 @@ const TextInputComponent = (props: any) => {
 
 const bootstrapChildComponents: ChildComponents = {
   table: {
-    elementAttributes: {
+    elementAttributes: () => ({
       className: 'table table-striped table-hover'
-    }
+    })
   },
   tableHead: {
-    elementAttributes: {
+    elementAttributes: () => ({
       className: 'thead-dark'
-    }
+    })
   },
   noDataRow: {
     content: () => 'No Data Found'

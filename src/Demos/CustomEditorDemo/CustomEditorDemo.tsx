@@ -105,9 +105,9 @@ const CustomEditorDemo: React.FC = () => {
       dispatch={dispatch}
       childComponents={{
         table: {
-          elementAttributes: {
+          elementAttributes: () => ({
             className: 'custom-editor-demo-table'
-          }
+          })
         },
         cellEditor: {
           content: (props) => {

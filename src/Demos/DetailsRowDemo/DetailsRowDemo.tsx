@@ -75,11 +75,11 @@ const DetailsRowDemo: React.FC = () => {
           }
         },
         detailsRow: {
-          elementAttributes: {
+          elementAttributes: () => ({
             style: {
               backgroundColor: '#eee'
             }
-          },
+          }),
           content: DetailsRow
         }
       }}

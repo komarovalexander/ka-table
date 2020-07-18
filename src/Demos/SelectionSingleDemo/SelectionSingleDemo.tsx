@@ -39,11 +39,11 @@ const tablePropsInit: ITableProps = {
 
 const childAttributes: ChildComponents = {
   dataRow: {
-    elementAttributes: {
+    elementAttributes: () => ({
       onClick: (event, { dispatch, childProps }) => {
         dispatch(selectSingleRow(childProps.rowKeyValue));
       },
-    }
+    })
   },
 };
 
