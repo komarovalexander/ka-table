@@ -22,8 +22,8 @@ const dataArray: any[] = [
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, style: {minWidth: 230} },
-    { key: 'score', title: 'Score', dataType: DataType.Number, filterRowOperator: '>', style: {minWidth: 230} },
+    { key: 'name', title: 'Name', dataType: DataType.String, style: {width: 240} },
+    { key: 'score', title: 'Score', dataType: DataType.Number, filterRowOperator: '>', style: {width: 230} },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: {minWidth: 130} },
     { dataType: DataType.Date, key: 'tryDate', title: 'Date', filterRowOperator: '<', style: {minWidth: 100} },
   ],
