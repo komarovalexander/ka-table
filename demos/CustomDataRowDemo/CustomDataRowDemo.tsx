@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, SortDirection, SortingMode } from 'ka-table/enums';
-import { DataRowFuncPropsWithChildren, DispatchFunc } from 'ka-table/types';
+import { IDataRowProps } from 'ka-table/props';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -13,7 +14,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const DataRow: React.FC<DataRowFuncPropsWithChildren> = ({rowData}) => {
+const DataRow: React.FC<IDataRowProps> = ({rowData}) => {
   return (
     <div>
       {rowData.name}: {rowData.score} ({rowData.passed ? 'Passed' : 'Failed'})
@@ -33,7 +34,6 @@ const tablePropsInit: ITableProps = {
     { key: 'score', title: 'Score', dataType: DataType.Number },
   ],
   data: dataArray,
-  dataRow: (props) => <DataRow {...props}/>,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };
@@ -46,6 +46,11 @@ const CustomDataRowDemo: React.FC = () => {
   return (
     <Table
       {...tableProps}
+      childComponents={{
+        dataRow: {
+          content: (props) => <DataRow {...props}/>,
+        }
+      }}
       dispatch={dispatch}
     />
   );

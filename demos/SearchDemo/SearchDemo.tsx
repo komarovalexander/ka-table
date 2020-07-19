@@ -18,19 +18,16 @@ const tablePropsInit: ITableProps = {
   columns: [
     { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '40%' } },
     { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%' } },
-    {
-      dataType: DataType.Boolean,
-      key: 'passed',
-      search: (searchText, rowData) => {
-        return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
-      },
-      title: 'Passed',
-    },
+    { dataType: DataType.Boolean, key: 'passed', title: 'Passed' },
   ],
   data: dataArray,
-  noDataRow: () => 'No Data Found',
+  search: ({ searchText, rowData, column }) => {
+    if (column.key === 'passed'){
+      return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
+    }
+  },
   rowKeyField: 'id',
-  search: 'Billi Bob',
+  searchText: 'Billi Bob',
 };
 
 const SearchDemo: React.FC = () => {
@@ -40,11 +37,16 @@ const SearchDemo: React.FC = () => {
   };
   return (
     <>
-      <input type='search' defaultValue={tableProps.search} onChange={(event) => {
+      <input type='search' defaultValue={tableProps.searchText} onChange={(event) => {
         dispatch(search(event.currentTarget.value));
       }} className='top-element'/>
       <Table
         {...tableProps}
+        childComponents={{
+          noDataRow: {
+            content: () => 'No Data Found'
+          }
+        }}
         dispatch={dispatch}
       />
     </>

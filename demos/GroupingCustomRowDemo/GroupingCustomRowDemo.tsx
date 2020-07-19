@@ -4,6 +4,7 @@ import { ITableProps, kaReducer, Table } from 'ka-table';
 import { updateGroupsExpanded } from 'ka-table/actionCreators';
 import EmptyCells from 'ka-table/Components/EmptyCells/EmptyCells';
 import { DataType } from 'ka-table/enums';
+import { IGroupRowProps } from 'ka-table/props';
 import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = [
@@ -13,6 +14,25 @@ const dataArray = [
   { id: 4, type: 'Dog', name: 'Beethoven', country: 'Czech Republic', age: 3 },
   { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
 ];
+
+const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
+  contentColSpan,
+  groupIndex,
+  isExpanded,
+  dispatch,
+  text,
+  groupKey,
+}) => (
+  <>
+    <EmptyCells count={groupIndex}/>
+    <td className='ka-group-cell' colSpan={contentColSpan}>
+      <button
+        onClick={() => dispatch(updateGroupsExpanded(groupKey))}
+        style={{marginRight: 5}}>{isExpanded ? 'Hide Group Items' : 'Show Group Items'}</button>
+      {text}
+    </td>
+  </>
+);
 
 const tablePropsInit: ITableProps = {
   columns: [
@@ -39,24 +59,6 @@ const tablePropsInit: ITableProps = {
     },
   ],
   data: dataArray,
-  groupRow: ({
-    contentColSpan,
-    groupIndex,
-    isExpanded,
-    dispatch,
-    text,
-    groupKey,
-  }) => (
-    <>
-      <EmptyCells count={groupIndex}/>
-      <td className='ka-group-column' colSpan={contentColSpan}>
-        <button
-          onClick={() => dispatch(updateGroupsExpanded(groupKey))}
-          style={{marginRight: 5}}>{isExpanded ? 'Hide Group Items' : 'Show Group Items'}</button>
-        {text}
-      </td>
-    </>
-  ),
   groups: [{ columnKey: 'country' }, { columnKey: 'type' }],
   rowKeyField: 'id',
 };
@@ -69,6 +71,11 @@ const GroupingCustomRowDemo: React.FC = () => {
   return (
     <Table
       {...tableProps}
+      childComponents={{
+        groupRow: {
+          content: GroupRow
+        }
+      }}
       dispatch={dispatch}
     />
   );

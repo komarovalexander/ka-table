@@ -5,9 +5,8 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from 'ka-table';
 import { hideNewRow, saveNewRow, showNewRow } from 'ka-table/actionCreators';
 import { DataType } from 'ka-table/enums';
-import {
-  DispatchFunc, EditorFuncPropsWithChildren, HeaderCellFuncPropsWithChildren,
-} from 'ka-table/types';
+import { ICellEditorProps, IHeadCellProps } from 'ka-table/props';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -25,7 +24,7 @@ const generateNewId = () => {
   return maxValue;
 };
 
-const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({
+const AddButton: React.FC<IHeadCellProps> = ({
   dispatch,
 }) => {
  return (
@@ -40,7 +39,7 @@ const AddButton: React.FC<HeaderCellFuncPropsWithChildren> = ({
  );
 };
 
-const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
+const SaveButton: React.FC<ICellEditorProps> = ({
   dispatch
 }) => {
   const saveNewData = () => {
@@ -74,22 +73,22 @@ const tablePropsInit: ITableProps = {
     {
       key: 'column1',
       title: 'Column 1',
-      dataType: DataType.String,
-      validation: (value) => {
-        return value ? '' : 'value must be specified';
-      }
+      dataType: DataType.String
     },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
     {
       key: 'addColumn',
-      headCell: AddButton,
-      style: {width: 53},
-      editor: (props) => <SaveButton {...props}/>
+      style: {width: 53}
     },
   ],
   data: dataArray,
+  validation: ({ column, value }) => {
+    if (column.key === 'column1'){
+      return value ? '' : 'value must be specified';
+    }
+  },
   rowKeyField: 'id',
 };
 
@@ -103,6 +102,22 @@ const AddRowDemo: React.FC = () => {
     <div className='add-row-demo'>
       <Table
         {...tableProps}
+        childComponents={{
+          cellEditor: {
+            content: (props) => {
+              if (props.column.key === 'addColumn'){
+                return <SaveButton {...props}/>;
+              }
+            }
+          },
+          headCell: {
+            content: (props) => {
+              if (props.column.key === 'addColumn'){
+                return <AddButton {...props}/>;
+              }
+            }
+          }
+        }}
         dispatch={dispatch}
       />
     </div>

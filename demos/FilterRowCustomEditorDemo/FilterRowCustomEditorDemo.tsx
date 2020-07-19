@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from 'ka-table';
 import { updateFilterRowOperator, updateFilterRowValue } from 'ka-table/actionCreators';
 import { DataType, EditingMode, FilteringMode } from 'ka-table/enums';
-import { DispatchFunc, FilterRowFuncPropsWithChildren } from 'ka-table/types';
-import { dateUtils } from 'ka-table/utils';
+import { Column } from 'ka-table/models';
+import { IFilterRowEditorProps } from 'ka-table/props';
+import { DispatchFunc } from 'ka-table/types';
+import { kaDateUtils } from 'ka-table/utils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
@@ -16,7 +18,7 @@ const dataArray: any[] = [
   { id: 7, name: 'Alex Brzowsky', score: 48, passed: false, nextTry: new Date(2021, 11, 11) },
 ];
 
-const CustomLookupEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   const toNullableBoolean = (value: any) => {
@@ -42,7 +44,7 @@ const CustomLookupEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
   );
 };
 
-const FilterOperators: React.FC<FilterRowFuncPropsWithChildren> = ({
+const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
   column, dispatch,
 }) => {
   return (
@@ -61,7 +63,7 @@ const FilterOperators: React.FC<FilterRowFuncPropsWithChildren> = ({
   );
 };
 
-const NumberEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+const NumberEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   return (
@@ -80,11 +82,11 @@ const NumberEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
   );
 };
 
-const DateEditor: React.FC<FilterRowFuncPropsWithChildren> = ({
+const DateEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   const fieldValue = column.filterRowValue;
-  const value = fieldValue && dateUtils.getDateInputValue(fieldValue);
+  const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
   return (
     <div>
       <FilterOperators column={column} dispatch={dispatch}/>
@@ -105,8 +107,6 @@ const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.Boolean,
-      editor: CustomLookupEditor,
-      filterRowCell: CustomLookupEditor,
       filterRowValue: false,
       key: 'passed',
       style: {width: 90},
@@ -114,14 +114,12 @@ const tablePropsInit: ITableProps = {
     },
     {
       dataType: DataType.String,
-      filterRowCell: () => <></>,
       key: 'name',
       style: {width: 100},
       title: 'Name',
     },
     {
       dataType: DataType.Number,
-      filterRowCell: NumberEditor,
       filterRowOperator: '>=',
       filterRowValue: 45,
       key: 'score',
@@ -130,10 +128,8 @@ const tablePropsInit: ITableProps = {
     },
     {
       dataType: DataType.Date,
-      filterRowCell: DateEditor,
       filterRowOperator: '<=',
       filterRowValue: new Date(2021, 11, 11),
-      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
       key: 'nextTry',
       style: {width: 220},
       title: 'Next Try',
@@ -141,6 +137,11 @@ const tablePropsInit: ITableProps = {
   ],
   data: dataArray,
   editingMode: EditingMode.Cell,
+  format: ({ column, value }) => {
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
   filteringMode: FilteringMode.FilterRow,
   rowKeyField: 'id',
 };
@@ -153,6 +154,25 @@ const FilterRowCustomEditorDemo: React.FC = () => {
   return (
     <Table
       {...tableProps}
+      childComponents={{
+        cellEditor: {
+          content: (props) => {
+            if (props.column.key === 'passed'){
+              return <CustomLookupEditor {...props}/>
+            }
+          }
+        },
+        filterRowCell: {
+          content: (props) => {
+            switch (props.column.key){
+              case 'passed': return <CustomLookupEditor {...props}/>;
+              case 'name': return <></>;
+              case 'score': return <NumberEditor {...props}/>;
+              case 'nextTry': return <DateEditor {...props}/>;
+            }
+          }
+        }
+      }}
       dispatch={dispatch}
     />
   );

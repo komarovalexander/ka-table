@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from 'ka-table';
 import { hideDetailsRow, showDetailsRow } from 'ka-table/actionCreators';
 import { DataType } from 'ka-table/enums';
-import { CellFunc, DataRowFunc, DispatchFunc } from 'ka-table/types';
+import { ICellTextProps, IDataRowProps } from 'ka-table/props';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -15,7 +16,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const DetailsButton: CellFunc = ({
+const DetailsButton: React.FC<ICellTextProps> = ({
   dispatch,
   rowKeyValue,
   isDetailsRowShown,
@@ -29,7 +30,7 @@ const DetailsButton: CellFunc = ({
   );
 };
 
-const DetailsRow: DataRowFunc = ({
+const DetailsRow: React.FC<IDataRowProps> = ({
   rowData,
 }) => {
   return (
@@ -45,7 +46,7 @@ const DetailsRow: DataRowFunc = ({
 
 const tableOption: ITableProps = {
   columns: [
-    { key: 'show-hide-details-row', cell: DetailsButton },
+    { key: 'show-hide-details-row' },
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
@@ -53,7 +54,6 @@ const tableOption: ITableProps = {
   ],
   data: dataArray,
   detailsRows: [1],
-  detailsRow: DetailsRow,
   rowKeyField: 'id',
 };
 
@@ -67,11 +67,21 @@ const DetailsRowDemo: React.FC = () => {
     <Table
       {...option}
       dispatch={dispatch}
-      childAttributes={{
-        detailsRow: {
-          style: {
-            backgroundColor: '#eee'
+      childComponents={{
+        cellText: {
+          content: (props) => {
+            switch (props.column.key){
+              case 'show-hide-details-row': return <DetailsButton {...props}/>;
+            }
           }
+        },
+        detailsRow: {
+          elementAttributes: () => ({
+            style: {
+              backgroundColor: '#eee'
+            }
+          }),
+          content: DetailsRow
         }
       }}
     />
