@@ -53,7 +53,8 @@ const CustomAttributesDemo: React.FC = () => {
           elementAttributes: ({ rowData }) => ({
             style: {
               backgroundColor: rowData.passed ? 'rgba(0, 255, 0, 0.1)' : 'rgba(255, 0, 0, 0.1)'
-            }
+            },
+            title: `${rowData.name}: ${rowData.score}`
           })
         }
       }}
