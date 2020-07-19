@@ -39,7 +39,6 @@ const ManyRowsGroupingDemo: React.FC = () => {
     <>
       <Table
         {...tableProps}
-        data={dataArray}
         dispatch={dispatch}
       />
     </>
