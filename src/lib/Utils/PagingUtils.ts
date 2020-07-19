@@ -1,8 +1,8 @@
-import { IPagingProps } from '../Components/Paging/Paging';
+import { PagingOptions } from '../models';
 
 export const centerLength = 5;
 const DEFAULT_PAGE_SIZE = 10;
-export const getPagesCount = (data: any[], paging?: IPagingProps): number => {
+export const getPagesCount = (data: any[], paging?: PagingOptions): number => {
   if (!paging || !paging.enabled) {
     return 1;
   }
@@ -12,7 +12,7 @@ export const getPagesCount = (data: any[], paging?: IPagingProps): number => {
   return Math.ceil(data.length / ((paging && paging.pageSize) || DEFAULT_PAGE_SIZE));
 };
 
-export const getPageData = (data: any[], paging?: IPagingProps): any[] => {
+export const getPageData = (data: any[], paging?: PagingOptions): any[] => {
   if (!paging || !paging.enabled || paging.pagesCount) {
     return data;
   }

@@ -20,11 +20,15 @@ const tablePropsInit: ITableProps = {
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: { width: '10%' }},
     {
       dataType: DataType.Date,
-      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
       key: 'nextTry',
       title: 'Next Try',
     },
   ],
+  format: ({ column, value }) => {
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
   data: dataArray,
   editableCells: [{
     columnKey: 'name',

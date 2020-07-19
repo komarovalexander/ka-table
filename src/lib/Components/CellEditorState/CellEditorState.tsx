@@ -2,21 +2,22 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { closeEditor, updateEditorValue } from '../../actionCreators';
 import { ActionType, EditingMode } from '../../enums';
+import { ICellEditorProps } from '../../props';
 import { DispatchFunc } from '../../types';
 import { replaceValue } from '../../Utils/DataUtils';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import { getValidationValue } from '../../Utils/Validation';
-import { ICellEditorProps } from '../CellEditor/CellEditor';
 import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
 
 const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
     column,
+    dispatch,
+    editingMode,
     rowData,
     rowKeyValue,
-    dispatch,
+    validation,
     value,
-    editingMode,
   } = props;
   let {
     validationMessage
@@ -25,7 +26,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   const [editorValueState, changeEditorValue] = useState(value);
   const isCellEditingMode = editingMode === EditingMode.Cell;
   validationMessage = isCellEditingMode || validationMessage
-    ? getValidationValue(editorValueState, rowDataState, column) || ''
+    ? getValidationValue(editorValueState, rowDataState, column, validation) || ''
     : validationMessage;
   const onValueStateChange = (action: any): void => {
     const newRowValue = replaceValue(rowData, column, action.value);

@@ -10,7 +10,7 @@ import Rows, { IRowsProps } from './Rows';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IRowsProps = {
-  childAttributes: {},
+  childComponents: {},
   columns: [
     { key: 'column', title: 'Column 1' },
     { key: 'column2', title: 'Column 2' },

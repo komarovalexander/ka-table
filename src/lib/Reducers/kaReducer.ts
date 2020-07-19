@@ -28,13 +28,14 @@ const kaReducer: any = (state: ITableProps, action: any) => {
   const {
     columns,
     data = [],
+    detailsRows = [],
     editableCells = [],
     groupsExpanded,
-    detailsRows = [],
     loading,
     paging,
     rowKeyField,
     selectedRows = [],
+    validation,
     virtualScrolling,
   } = state;
 
@@ -141,7 +142,7 @@ const kaReducer: any = (state: ITableProps, action: any) => {
       return { ...state, selectedRows: newSelectedRows };
     }
     case ActionType.Search: {
-      return { ...state, search: action.search };
+      return { ...state, searchText: action.searchText };
     }
     case ActionType.SelectSingleRow: {
       const newSelectedRows = [action.rowKeyValue];
@@ -204,7 +205,11 @@ const kaReducer: any = (state: ITableProps, action: any) => {
         let validationPassed = true;
         rowEditableCells.forEach(cell => {
           const column = columns.find((c) => c.key === cell.columnKey)!;
-          cell.validationMessage = column.validation && column.validation(cell.editorValue);
+          cell.validationMessage = validation && validation({
+            column,
+            value: cell.editorValue,
+            rowData: updatedRowData
+          });
           validationPassed = validationPassed && !cell.validationMessage;
         });
         if (!validationPassed){

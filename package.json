@@ -1,6 +1,6 @@
 {
   "name": "ka-table",
-  "version": "3.8.1",
+  "version": "4.0.0",
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table/#/overview",
@@ -8,8 +8,12 @@
     "@types/enzyme": "^3.10.5",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/react": "16.9.25",
+    "@types/react-bootstrap": "^1.0.1",
+    "@types/react-bootstrap-date-picker": "^4.0.6",
     "@types/react-redux": "^7.1.7",
+    "bootstrap": "^4.5.0",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0"
   },

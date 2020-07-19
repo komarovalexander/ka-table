@@ -10,7 +10,7 @@ import TableBodyContent from './TableBodyContent';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: ITableBodyProps = {
-  childAttributes: {},
+  childComponents: {},
   columns: [
     { key: 'column', title: 'Column 1' },
     { key: 'column2', title: 'Column 2' },
@@ -37,7 +37,13 @@ describe('TableBodyContent', () => {
 
   it('should render noDataRow in case there are no data and noDataRow option is set', () => {
     const noDataText = 'no data';
-    const wrapper = mount(<TableBodyContent {...props} data={[]} noDataRow={() => noDataText}/>, {
+    const wrapper = mount((
+      <TableBodyContent {...props} data={[]} childComponents={{
+        noDataRow: {
+          content: () => noDataText
+        }
+      }}/>
+    ), {
       attachTo: document.createElement('tbody'),
     });
 

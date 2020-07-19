@@ -10,6 +10,7 @@ import GroupRow from './GroupRow';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IGroupRowProps = {
+  childComponents: {},
   column: { key: '1', field: 'column', title: 'Column 1', dataType: DataType.String },
   contentColSpan: 2,
   dispatch: jest.fn(),
@@ -28,7 +29,13 @@ describe('GroupRow', () => {
 
   it('Should render custom group cell', () => {
     const groupRow = () => <td className='custom-group-row'/>;
-    const wrapper = mount(<GroupRow {...props} groupRow={groupRow}/>, {
+    const wrapper = mount((
+      <GroupRow {...props} childComponents={{
+        groupRow: {
+          content: groupRow
+        }
+      }}/>
+    ), {
       attachTo: document.createElement('tbody'),
     });
     expect(wrapper.find('.custom-group-row').length).toBe(1);

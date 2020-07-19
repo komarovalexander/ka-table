@@ -16,10 +16,6 @@ const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.String,
-      groupCell: ({
-        groupIndex,
-        groupKey,
-      }) => <img height='30px' src={`static/icons/animals/${groupKey[groupIndex].toLowerCase()}.svg`} alt={groupKey[0]} />,
       key: 'type',
       title: 'TYPE',
     },
@@ -30,10 +26,6 @@ const tablePropsInit: ITableProps = {
     },
     {
       dataType: DataType.String,
-      groupCell: ({
-        groupIndex,
-        groupKey,
-      }) => <img height='30px' src={`static/icons/flags/${groupKey[groupIndex].toLowerCase().replace(' ', '_')}.svg`} alt={groupKey[0]} />,
       key: 'country',
       title: 'COUNTRY',
     },
@@ -57,6 +49,18 @@ const GroupingCustomCellDemo: React.FC = () => {
   return (
     <Table
       {...tableProps}
+      childComponents={{
+        groupCell: {
+          content: (props) => {
+            switch (props.column.key){
+              case 'type':
+              case 'country':
+                const folder = props.column.key === 'type' ? 'animals' : 'flags';
+                return <img height='30px' src={`static/icons/${folder}/${props.groupKey[props.groupIndex].toLowerCase().replace(' ', '_')}.svg`} alt={props.groupKey[0]} />;
+            }
+          }
+        }
+      }}
       dispatch={dispatch}
     />
   );

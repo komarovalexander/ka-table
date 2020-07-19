@@ -1,0 +1,62 @@
+.bootstrap-demo{
+  // Tables
+//
+// Customizes the `.table` component with basic values, each used across all table variations.
+
+  @import '../../../node_modules/bootstrap/scss/bootstrap';
+  @import '../../lib/static/icons.scss';
+  .ka-icon{
+    font-weight: 100;
+    font-size: 10px;
+    font-family: 'icons';
+  }
+  .ka-icon-sort{
+    margin-left: 3px;
+    position: absolute;
+  }
+  .ka-pointer{
+    cursor: pointer;
+  }
+
+  .table {
+    margin-bottom: 0;
+  }
+  tr {
+    line-height: 40px;
+    min-height: 40px;
+    height: 40px;
+  }
+  input:not([type="checkbox"]){
+    @extend .form-control;
+  }
+  .ka-filter-row {
+    select{
+      width: 70px;
+      margin-right: 5px;
+    }
+  }
+  .ka-no-data-row{
+    text-align: center;
+  }
+
+  .ka-paging-pages{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .ka-paging-page-index{
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 10px;
+    min-width: 18px;
+    border-radius: 50%;
+    text-align: center;
+  }
+
+  .ka-paging-page-index-active{
+    background-color: rgba(0, 0, 0, 0.075);
+    font-weight: bold;
+    color: #747D86;
+  }
+}

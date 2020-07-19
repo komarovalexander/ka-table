@@ -20,13 +20,17 @@ const tablePropsInit: ITableProps = {
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
     {
       dataType: DataType.Date,
-      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
       key: 'nextTry',
       title: 'Next Try',
     },
   ],
   data: dataArray,
   filteringMode: FilteringMode.FilterRow,
+  format: ({ column, value }) => {
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
   rowKeyField: 'id',
 };
 

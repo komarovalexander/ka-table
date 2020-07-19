@@ -2,43 +2,34 @@ import * as React from 'react';
 
 import { updateSortDirection } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { SortDirection, SortingMode } from '../../enums';
-import { IHeadCellProps } from '../HeadCell/HeadCell';
+import { SortDirection } from '../../enums';
+import { IHeadCellProps } from '../../props';
+import { isSortingEnabled } from '../../Utils/SortUtils';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
-    column: { headCell },
-  } = props;
-  if (headCell) {
-    return headCell(props);
-  }
-
-  const {
     column,
     dispatch,
-    sortingMode,
+    sortingMode
   } = props;
-  const isSortingEnabled = sortingMode === SortingMode.Single;
-  const sortClick = isSortingEnabled ? () => {
+  const sortingEnabled = isSortingEnabled(sortingMode);
+  const sortClick = sortingEnabled ? () => {
     dispatch(updateSortDirection(column.key));
   } : undefined;
   return (
     <div
-      className={`${defaultOptions.css.theadCellContent} ${isSortingEnabled ? 'ka-pointer' : ''}`}
-      onClick={sortClick}
-    >
+      className={`${defaultOptions.css.theadCellContent} ${sortingEnabled ? 'ka-pointer' : ''}`}
+      onClick={sortClick}>
       <span>{column.title}</span>
-      {
-        column.sortDirection && isSortingEnabled && (
-          <span
-            className={
-              column.sortDirection === SortDirection.Ascend
-                ? defaultOptions.css.iconSortArrowUp
-                : defaultOptions.css.iconSortArrowDown
-            }
-          />
-        )
-      }
+      {column.sortDirection && sortingEnabled && (
+        <span
+          className={
+            column.sortDirection === SortDirection.Ascend
+              ? defaultOptions.css.iconSortArrowUp
+              : defaultOptions.css.iconSortArrowDown
+          }
+        />
+      )}
     </div>
   );
 };

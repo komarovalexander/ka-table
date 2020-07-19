@@ -1,58 +1,44 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode } from '../../enums';
-import { ChildAttributes } from '../../models';
-import { Column } from '../../Models/Column';
-import { DispatchFunc } from '../../types';
+import { ICellProps } from '../../props';
 import { getField } from '../../Utils/ColumnUtils';
-import { getValueByColumn } from '../../Utils/DataUtils';
-import CellContent from '../CellContent/CellContent';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import CellEditor from '../CellEditor/CellEditor';
+import CellText from '../CellText/CellText';
 
-export interface ICellComponentProps {
-  childAttributes: ChildAttributes;
-  column: Column;
-  dispatch: DispatchFunc;
-  editingMode: EditingMode;
-  editorValue?: any;
-  hasEditorValue?: any;
-  isEditableCell: boolean;
-  isDetailsRowShown: boolean;
-  isSelectedRow: boolean;
-  rowData: any;
-  rowKeyField: string;
-  rowKeyValue: any;
-  validationMessage?: string;
-}
-
-const CellComponent: React.FunctionComponent<ICellComponentProps> = (props) => {
+const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   const {
+    childComponents,
     column,
     column: { style },
-    editorValue,
-    hasEditorValue,
     isEditableCell,
-    rowData,
   } = props;
 
-  const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
+  const { elementAttributes, content } = getElementCustomization({
+    className: defaultOptions.css.cell,
+    style
+  }, props, childComponents.cell);
+
   return (
-    <td style={style} className={defaultOptions.css.cell}>
-      { isEditableCell ? (
+    <td {...elementAttributes}>
+      { content ||
+      (
+        isEditableCell ?
+        (
           <CellEditor
             {...props}
-            value={value}
             field={getField(column)}
           />
         )
-        : (
-          <CellContent
+        :
+        (
+          <CellText
             {...props}
-            value={value}
             field={getField(column)}
           />
         )
+      )
       }
     </td>
   );

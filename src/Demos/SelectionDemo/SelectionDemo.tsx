@@ -5,9 +5,8 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { deselectAllRows, deselectRow, selectAllRows, selectRow } from '../../lib/actionCreators';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
-import {
-  CellFuncPropsWithChildren, DispatchFunc, HeaderCellFuncPropsWithChildren,
-} from '../../lib/types';
+import { ICellTextProps, IHeadCellProps } from '../../lib/props';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -18,7 +17,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const SelectionCell: React.FC<CellFuncPropsWithChildren> = ({
+const SelectionCell: React.FC<ICellTextProps> = ({
   rowKeyValue, dispatch, isSelectedRow,
 }) => {
   return (
@@ -36,7 +35,7 @@ const SelectionCell: React.FC<CellFuncPropsWithChildren> = ({
   );
 };
 
-const SelectionHeader: React.FC<HeaderCellFuncPropsWithChildren> = ({
+const SelectionHeader: React.FC<IHeadCellProps> = ({
   dispatch, areAllRowsSelected,
 }) => {
   return (
@@ -57,9 +56,7 @@ const SelectionHeader: React.FC<HeaderCellFuncPropsWithChildren> = ({
 const tablePropsInit: ITableProps = {
   columns: [
     {
-      cell: SelectionCell,
-      headCell: SelectionHeader,
-      key: '!selection-cell!',
+      key: 'selection-cell',
     },
     {
       dataType: DataType.String,
@@ -86,7 +83,22 @@ const SelectionDemo: React.FC = () => {
     <div className='selection-demo'>
       <Table
         {...tableProps}
-        data={dataArray}
+        childComponents={{
+          cellText: {
+            content: (props) => {
+              if (props.column.key === 'selection-cell'){
+                return <SelectionCell {...props} />
+              }
+            }
+          },
+          headCell: {
+            content: (props) => {
+              if (props.column.key === 'selection-cell'){
+                return <SelectionHeader {...props}/>;
+              }
+            }
+          }
+        }}
         dispatch={dispatch}
       />
     </div>

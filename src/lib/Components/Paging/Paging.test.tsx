@@ -3,7 +3,8 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Paging, { IPagingProps } from './Paging';
+import { IPagingProps } from '../../props';
+import Paging from './Paging';
 
 Enzyme.configure({ adapter: new Adapter() });
 

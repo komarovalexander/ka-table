@@ -2,39 +2,39 @@ import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
-import { EditableCell } from '../../models';
-import { ChildAttributes } from '../../Models/ChildAttributes';
+import { EditableCell, PagingOptions } from '../../models';
+import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import { DataRowFunc, DispatchFunc, GroupRowFunc, NoDataRowFunc } from '../../types';
+import { ILoadingProps } from '../../props';
+import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
 import { wrapDispatch } from '../../Utils/ActionUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
-import { extendProps, prepareTableOptions } from '../../Utils/PropsUtils';
-import FilterRow from '../FilterRow/FilterRow';
-import HeadRow from '../HeadRow/HeadRow';
-import Loading, { ILoadingProps } from '../Loading/Loading';
-import Paging, { IPagingProps } from '../Paging/Paging';
+import { prepareTableOptions } from '../../Utils/PropsUtils';
+import Loading from '../Loading/Loading';
+import Paging from '../Paging/Paging';
 import TableBody from '../TableBody/TableBody';
+import { TableHead } from '../TableHead/TableHead';
 
 export interface ITableProps {
   columns: Column[];
   data?: any[];
-  dataRow?: DataRowFunc;
+  format?: FormatFunc;
+  search?: SearchFunc;
+  validation?: ValidationFunc;
+  detailsRows?: any[];
   editableCells?: EditableCell[];
   editingMode?: EditingMode;
   extendedFilter?: (data: any[]) => any[];
   filteringMode?: FilteringMode;
-  groupRow?: GroupRowFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
-  detailsRow?: DataRowFunc;
-  detailsRows?: any[];
   loading?: ILoadingProps;
-  noDataRow?: NoDataRowFunc;
-  paging?: IPagingProps;
+  paging?: PagingOptions;
   rowKeyField: string;
-  search?: string;
+  searchText?: string;
   selectedRows?: any[];
   sortingMode?: SortingMode;
   virtualScrolling?: VirtualScrolling;
@@ -45,16 +45,16 @@ export interface ITableEvents {
 }
 
 export interface ITableAllProps extends ITableEvents, ITableProps {
-  childAttributes?: ChildAttributes;
+  childComponents?: ChildComponents;
 }
 
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
-    childAttributes = {},
     data = [],
+    childComponents = {},
     editableCells = [],
     editingMode = EditingMode.None,
-    filteringMode,
+    filteringMode = FilteringMode.None,
     groups,
     loading,
     paging,
@@ -73,49 +73,44 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const theadRef = React.useRef<HTMLTableSectionElement>(null);
   const dispatch = wrapDispatch({ ...props }, theadRef);
 
-  const componentProps: React.HTMLAttributes<HTMLTableElement> = {
-    className: defaultOptions.css.table,
-  };
-
-  const tableProps = extendProps(componentProps, props, childAttributes.table, dispatch);
   const areAllRowsSelected = data.length === selectedRows.length;
   const isLoadingActive = loading && loading.enabled;
   const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
+  const { elementAttributes, content } = getElementCustomization({
+    className: defaultOptions.css.table,
+  }, { ...props, dispatch }, childComponents.table);
   return (
     <div className={kaCss}>
-      <table {...tableProps}>
-        <thead className={defaultOptions.css.thead} ref={theadRef}>
-          <HeadRow
+      {content ||
+      (
+        <table {...elementAttributes}>
+          <TableHead
             areAllRowsSelected={areAllRowsSelected}
-            groupColumnsCount={preparedOptions.groupColumnsCount}
+            childComponents={childComponents}
             columns={preparedOptions.columns}
             dispatch={dispatch}
+            filteringMode={filteringMode}
+            groupColumnsCount={preparedOptions.groupColumnsCount}
             sortingMode={sortingMode}
+            theadRef={theadRef}
           />
-          {filteringMode === FilteringMode.FilterRow &&
-            (
-              <FilterRow
-                columns={preparedOptions.columns}
-                dispatch={dispatch}
-                groupColumnsCount={preparedOptions.groupColumnsCount}
-              />
-            )}
-        </thead>
-        <TableBody
-            {...props}
-            childAttributes={childAttributes}
-            columns={preparedOptions.columns}
-            data={preparedOptions.groupedData}
-            dispatch={dispatch}
-            editableCells={editableCells}
-            editingMode={editingMode}
-            groupColumnsCount={preparedOptions.groupColumnsCount}
-            groupedColumns={preparedOptions.groupedColumns}
-            groupsExpanded={groupsExpanded}
-            selectedRows={selectedRows}
-        />
-      </table>
+          <TableBody
+              {...props}
+              childComponents={childComponents}
+              columns={preparedOptions.columns}
+              data={preparedOptions.groupedData}
+              dispatch={dispatch}
+              editableCells={editableCells}
+              editingMode={editingMode}
+              groupColumnsCount={preparedOptions.groupColumnsCount}
+              groupedColumns={preparedOptions.groupedColumns}
+              groupsExpanded={groupsExpanded}
+              selectedRows={selectedRows}
+          />
+        </table>
+      )
+    }
       <Paging
         {...paging}
         dispatch={dispatch}

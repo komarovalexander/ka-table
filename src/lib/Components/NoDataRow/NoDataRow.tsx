@@ -1,25 +1,24 @@
 import React from 'react';
 
-import { Column } from '../../Models/Column';
-import { NoDataRowFunc } from '../../types';
+import { INoDataRowProps } from '../../props';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-export interface INoDataRow {
-  columns: Column[];
-  groupColumnsCount: number;
-  noDataRow: NoDataRowFunc;
-}
-const NoDataRow: React.FunctionComponent<INoDataRow> = ({
-  columns,
-  groupColumnsCount,
-  noDataRow,
-}) => {
-    return (
-      <tr className='ka-tr ka-no-data-row'>
-        <td className='ka-no-data-cell' colSpan={columns.length + groupColumnsCount}>
-          {noDataRow()}
-        </td>
-      </tr>
-    );
+const NoDataRow: React.FunctionComponent<INoDataRowProps> = (props) => {
+  const {
+    childComponents,
+    columns,
+    groupColumnsCount,
+  } = props;
+  const { elementAttributes, content } = getElementCustomization({
+    className: 'ka-tr ka-no-data-row'
+  }, props, childComponents.noDataRow);
+  return (
+    <tr {...elementAttributes}>
+      <td className='ka-no-data-cell' colSpan={columns.length + groupColumnsCount}>
+        {content}
+      </td>
+    </tr>
+  );
 };
 
 export default NoDataRow;

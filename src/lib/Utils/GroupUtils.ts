@@ -1,5 +1,7 @@
+
 import { Column } from '../models';
 import { Group } from '../Models/Group';
+import { FormatFunc } from '../types';
 import { getValueByColumn } from './DataUtils';
 
 const groupMark = {};
@@ -95,7 +97,6 @@ export const groupBy = (data: any[], keyGetter: any, isEmptyValue: boolean = fal
 
 export const getGroupMark = () => groupMark;
 
-export const getGroupText = (value: any, column?: Column) => {
-  const format = column && column.format;
-  return format ? format(value) : `${column && column.title && (column.title + ': ')}${value}`;
+export const getGroupText = (value: any, column: Column, format?: FormatFunc) => {
+  return format ? format({ column, value }) : `${(column && column.title ? column.title + ': ' : '')}${value}`;
 };

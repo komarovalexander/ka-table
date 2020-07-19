@@ -1,37 +1,9 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { ActionType, EditingMode } from '../../enums';
-import { ChildAttributes, EditableCell } from '../../models';
-import { Column } from '../../Models/Column';
-import { Group } from '../../Models/Group';
-import { VirtualScrolling } from '../../Models/VirtualScrolling';
-import {
-  DataChangeFunc, DataRowFunc, DispatchFunc, GroupRowFunc, NoDataRowFunc,
-} from '../../types';
+import { ActionType } from '../../enums';
+import { ITableBodyProps } from '../../props';
 import TableBodyContent from '../TableBodyContent/TableBodyContent';
-
-export interface ITableBodyProps {
-  childAttributes: ChildAttributes;
-  columns: Column[];
-  data: any[];
-  dataRow?: DataRowFunc;
-  dispatch: DispatchFunc;
-  editableCells: EditableCell[];
-  editingMode: EditingMode;
-  detailsRow?: DataRowFunc;
-  detailsRows?: any[];
-  groupColumnsCount: number;
-  groupRow?: GroupRowFunc;
-  groupedColumns: Column[];
-  groups?: Group[];
-  groupsExpanded?: any[][];
-  noDataRow?: NoDataRowFunc;
-  onDataChange?: DataChangeFunc;
-  rowKeyField: string;
-  selectedRows: any[];
-  virtualScrolling?: VirtualScrolling;
-}
 
 const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
   const { dispatch } = props;

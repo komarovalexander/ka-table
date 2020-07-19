@@ -1,8 +1,6 @@
 import React from 'react';
 
-export interface ICellEditorValidationMessageProps {
-  message: string;
-}
+import { ICellEditorValidationMessageProps } from '../../props';
 
 const CellEditorValidationMessage: React.FunctionComponent<ICellEditorValidationMessageProps> = (props) => {
   const { message } = props;

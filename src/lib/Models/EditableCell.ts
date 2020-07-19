@@ -1,6 +1,6 @@
-import { Cell } from './Cell';
-
-export class EditableCell extends Cell {
+export class EditableCell {
+  public columnKey!: string;
+  public rowKeyValue!: any;
   public editorValue?: any;
   public validationMessage?: any;
 }

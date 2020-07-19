@@ -5,9 +5,8 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { closeRowEditors, openRowEditors, saveRowEditors } from '../../lib/actionCreators';
 import { DataType } from '../../lib/enums';
-import {
-  CellFuncPropsWithChildren, DispatchFunc, EditorFuncPropsWithChildren,
-} from '../../lib/types';
+import { ICellEditorProps, ICellTextProps } from '../../lib/props';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -18,7 +17,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9, 10) },
 ];
 
-const EditButton: React.FC<CellFuncPropsWithChildren> = ({
+const EditButton: React.FC<ICellTextProps> = ({
   dispatch, rowKeyValue
 }) => {
   return (
@@ -33,7 +32,7 @@ const EditButton: React.FC<CellFuncPropsWithChildren> = ({
   );
 };
 
-const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
+const SaveButton: React.FC<ICellEditorProps> = ({
   dispatch, rowKeyValue
 }) => {
   return (
@@ -65,31 +64,24 @@ const SaveButton: React.FC<EditorFuncPropsWithChildren> = ({
 
 const tablePropsInit: ITableProps = {
   columns: [
-    {
-      key: 'name',
-      title: 'Name',
-      dataType: DataType.String,
-      validation: (value) => {
-        return value ? '' : 'value must be specified';
-      }
-    },
-    {key: 'score', title: 'Score', dataType: DataType.Number },
-    {key: 'passed', title: 'Passed', dataType: DataType.Boolean},
-    {
-      dataType: DataType.Date,
-      format: (value: Date) => value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' }),
-      key: 'nextTry',
-      title: 'Next Try',
-    },
-    {
-      key: 'editColumn',
-      style: {width: 50},
-      cell: (props) => <EditButton {...props}/>,
-      editor: (props) => <SaveButton {...props}/>,
-    },
+    { key: 'name', title: 'Name', dataType: DataType.String },
+    { key: 'score', title: 'Score', dataType: DataType.Number },
+    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
+    { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
+    { key: 'editColumn', style: { width: 50 } },
   ],
+  format: ({ column, value }) => {
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
   data: dataArray,
   rowKeyField: 'id',
+  validation: ({ column, value }) => {
+    if (column.key === 'name'){
+      return value ? '' : 'value must be specified';
+    }
+  }
 };
 
 const EditingDemoRow: React.FC = () => {
@@ -102,6 +94,22 @@ const EditingDemoRow: React.FC = () => {
     <div className='editing-row-demo'>
       <Table
         {...tableProps}
+        childComponents={{
+          cellText: {
+            content: (props) => {
+              if (props.column.key === 'editColumn'){
+                return <EditButton {...props}/>
+              }
+            }
+          },
+          cellEditor: {
+            content: (props) => {
+              if (props.column.key === 'editColumn'){
+                return <SaveButton {...props}/>
+              }
+            }
+          }
+        }}
         dispatch={dispatch}
       />
     </div>

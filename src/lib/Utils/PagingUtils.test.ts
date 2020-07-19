@@ -1,9 +1,9 @@
-import { IPagingProps } from '../Components/Paging/Paging';
+import { PagingOptions } from '../models';
 import { getPageData, getPagesCount, getPagesForCenter } from './PagingUtils';
 
 describe('PagingUtils', () => {
   it('getPagesCount', () => {
-    const paging: IPagingProps = {
+    const paging: PagingOptions = {
       enabled: true,
       pageSize: 2,
     };
@@ -14,7 +14,7 @@ describe('PagingUtils', () => {
   });
 
   it('getPagesCount - math ceil should be used', () => {
-    const paging: IPagingProps = {
+    const paging: PagingOptions = {
       enabled: true,
       pageSize: 2,
     };
@@ -25,7 +25,7 @@ describe('PagingUtils', () => {
   });
 
   it('getPagesCount if enabled = false', () => {
-    const paging: IPagingProps = {
+    const paging: PagingOptions = {
       enabled: false,
       pageSize: 2,
     };
@@ -36,7 +36,7 @@ describe('PagingUtils', () => {
   });
 
   it('getPagesCount should use pagesCount if it is set', () => {
-    const paging: IPagingProps = {
+    const paging: PagingOptions = {
       enabled: true,
       pageSize: 2,
       pagesCount: 6
@@ -47,7 +47,7 @@ describe('PagingUtils', () => {
   });
 
   it('getPagesCount default pageSize is 10', () => {
-    const paging: IPagingProps = {
+    const paging: PagingOptions = {
       enabled: true,
     };
     const data = new Array(20);
@@ -64,7 +64,7 @@ describe('PagingUtils', () => {
   });
 
   it('getPageData should skip pagination if pagesCount is set', () => {
-    const paging: IPagingProps = {
+    const paging: PagingOptions = {
       enabled: true,
       pagesCount: 2,
       pageSize: 10
@@ -76,7 +76,7 @@ describe('PagingUtils', () => {
   });
 
   it('getPageData returns first page with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
-    const paging: IPagingProps = {
+    const paging: PagingOptions = {
       enabled: true,
     };
     const data = new Array(20).fill(undefined).map((_, i) => i);
@@ -88,7 +88,7 @@ describe('PagingUtils', () => {
   });
 
   it('getPageData returns last with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
-    const paging: IPagingProps = {
+    const paging: PagingOptions = {
       enabled: true,
       pageSize: 5,
       pageIndex: 2
@@ -102,7 +102,7 @@ describe('PagingUtils', () => {
   });
 
   it('getPageData returns last with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
-    const paging: IPagingProps = {
+    const paging: PagingOptions = {
       enabled: true,
       pageSize: 5,
       pageIndex: 4

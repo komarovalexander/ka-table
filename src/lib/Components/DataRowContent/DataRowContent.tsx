@@ -1,49 +1,50 @@
 import React from 'react';
 
+import { IDataRowProps } from '../../props';
 import { getEditableCell } from '../../Utils/CellUtils';
-import { getRowEditableCells } from '../../Utils/FilterUtils';
+import { getValueByColumn } from '../../Utils/DataUtils';
 import CellComponent from '../CellComponent/CellComponent';
-import { IRowCommonProps } from '../DataRow/DataRow';
-
-export interface IDataRowProps extends IRowCommonProps {
-  isDetailsRowShown: boolean;
-  isSelectedRow: boolean;
-}
 
 const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
-  childAttributes,
+  childComponents,
   columns,
   dispatch,
-  editableCells,
   editingMode,
+  format,
   isDetailsRowShown,
   isSelectedRow,
   rowData,
+  rowEditableCells,
   rowKeyField,
   rowKeyValue,
+  validation,
 }) => {
-  const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
   return (
     <>
       {columns.map((column) => {
         const editableCell = getEditableCell(column, rowEditableCells);
-
+        const hasEditorValue = editableCell && editableCell.hasOwnProperty('editorValue');
+        const editorValue = editableCell && editableCell.editorValue;
+        const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
         return (
           <CellComponent
-            childAttributes={childAttributes}
+            childComponents={childComponents}
             column={column}
             dispatch={dispatch}
             editingMode={editingMode}
-            isEditableCell={!!editableCell}
-            isDetailsRowShown={isDetailsRowShown}
-            isSelectedRow={isSelectedRow}
-            editorValue={editableCell && editableCell.editorValue}
-            validationMessage={editableCell && editableCell.validationMessage}
+            editorValue={editorValue}
+            format={format}
             hasEditorValue={editableCell && editableCell.hasOwnProperty('editorValue')}
+            isDetailsRowShown={isDetailsRowShown}
+            isEditableCell={!!editableCell}
+            isSelectedRow={isSelectedRow}
             key={column.key}
             rowData={rowData}
             rowKeyField={rowKeyField}
             rowKeyValue={rowKeyValue}
+            validation={validation}
+            validationMessage={editableCell && editableCell.validationMessage}
+            value={value}
           />
         );
       })}

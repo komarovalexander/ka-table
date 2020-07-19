@@ -4,13 +4,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ActionType, SortDirection, SortingMode } from '../../enums';
-import { Column } from '../../Models/Column';
-import { IHeadCellProps } from '../HeadCell/HeadCell';
+import { IHeadCellProps } from '../../props';
 import HeadCellContent from './HeadCellContent';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IHeadCellProps = {
+  childComponents: {},
   column: {
     key: 'fieldTest',
   },

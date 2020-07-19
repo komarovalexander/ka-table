@@ -93,10 +93,10 @@
   border-bottom: 1px solid white;
   border-top: 1px solid white;
 }
-.ka-group-column{
+.ka-group-cell{
   padding: 8px 10px;
 }
-.ka-group-column-content{
+.ka-group-cell-content{
   display: flex;
   align-items: center;
 }
@@ -168,12 +168,6 @@
 }
 .ka-loading-text{
   margin-top: 15px;
-}
-
-.ka-paging{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
 }
 
 .ka-paging-pages{

@@ -5,7 +5,7 @@ import { DataType, EditingMode } from '../../enums';
 import DataRow, { IRowProps } from './DataRow';
 
 const props: IRowProps = {
-  childAttributes: {},
+  childComponents: {},
   columns: [
     { key: 'column', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -13,9 +13,10 @@ const props: IRowProps = {
   dispatch: () => {},
   editableCells: [],
   editingMode: EditingMode.None,
-  isSelectedRow: false,
   groupColumnsCount: 0,
+  isSelectedRow: false,
   rowData: [{ column: 1, column2: 2 }],
+  rowEditableCells: [],
   rowKeyField: 'column',
   rowKeyValue: 1,
   selectedRows: [],

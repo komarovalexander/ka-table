@@ -1,61 +1,32 @@
 import React from 'react';
 
 import defaultOptions from '../../defaultOptions';
-import { EditingMode } from '../../enums';
-import { ChildAttributes, EditableCell } from '../../models';
-import { Column } from '../../Models/Column';
-import { DataRowFunc, DispatchFunc } from '../../types';
-import { extendProps } from '../../Utils/PropsUtils';
+import { IRowProps } from '../../props';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
 
-export interface IRowCommonProps {
-  childAttributes: ChildAttributes;
-  columns: Column[];
-  dispatch: DispatchFunc;
-  editableCells: EditableCell[];
-  editingMode: EditingMode;
-  rowData: any;
-  rowKeyField: string;
-  rowKeyValue: any;
-  selectedRows: any[];
-}
-
-export interface IRowProps extends IRowCommonProps {
-  dataRow?: DataRowFunc;
-  groupColumnsCount: number;
-  detailsRow?: DataRowFunc;
-  isDetailsRowShown: boolean;
-  isSelectedRow: boolean;
-  trRef?: any;
-}
-
 const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   const {
-    childAttributes,
-    dataRow,
+    childComponents : { dataRow },
     groupColumnsCount,
     isSelectedRow,
-    rowKeyValue,
     trRef,
   } = props;
-  const dataRowProps = {...props, isSelectedRow, rowKeyValue };
 
-  const componentProps: React.HTMLAttributes<HTMLTableRowElement> = {
+  const { elementAttributes, content } = getElementCustomization({
     className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`,
-  };
+  }, props, dataRow);
 
-  const divProps = extendProps(componentProps, props, childAttributes.dataRow, props.dispatch);
-
-  const dataRowContent = dataRow && dataRow(dataRowProps);
   return (
-    <tr {...divProps} ref={trRef} >
+    <tr {...elementAttributes} ref={trRef} >
       <EmptyCells count={groupColumnsCount}/>
-      {dataRowContent
-        ? <td className={defaultOptions.css.cell}>{dataRowContent}</td>
-        : <DataRowContent {...dataRowProps}/>}
+      {content
+        ? <td className={defaultOptions.css.cell}>{content}</td>
+        : <DataRowContent {...props}/>}
     </tr>
   );
 };
+
 
 export default DataRow;

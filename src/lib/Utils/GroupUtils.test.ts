@@ -1,7 +1,7 @@
 import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import {
-  convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, groupBy,
+  convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, getGroupText, groupBy,
   updateExpandedGroups,
 } from './GroupUtils';
 
@@ -148,6 +148,28 @@ describe('GroupUtils', () => {
     it('groupedColumns are empty', () => {
       const result = getGroupedStructure(data, groups, [], 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
       expect(result).toBeUndefined();
+    });
+  });
+
+  describe('getGroupText', () => {
+    it('default', () => {
+      const result = getGroupText('Group Text', { key: 'column1', title: 'Column Title' });
+      expect(result).toEqual('Column Title: Group Text');
+    });
+    it('column.title is not set', () => {
+      const result = getGroupText(
+        'Group Text',
+        { key: 'column1'}
+      );
+      expect(result).toEqual('Group Text');
+    });
+    it('format', () => {
+      const result = getGroupText(
+        'Group Text',
+        { key: 'column1', title: 'Column Title' },
+        ({column, value}) => `Column: ${column.title}, Value: ${value}`
+      );
+      expect(result).toEqual('Column: Column Title, Value: Group Text');
     });
   });
 });

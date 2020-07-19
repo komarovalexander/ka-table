@@ -4,12 +4,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { DataType, EditingMode } from '../../enums';
-import CellComponent, { ICellComponentProps } from './CellComponent';
+import CellComponent, { ICellProps } from './CellComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const props: ICellComponentProps = {
-  childAttributes: {},
+const props: ICellProps = {
+  childComponents: {},
   column: {
     dataType: DataType.String,
     key: 'columnField',

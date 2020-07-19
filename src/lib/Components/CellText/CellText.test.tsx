@@ -10,7 +10,7 @@ import CellText from './CellText';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: ICellContentProps = {
-  childAttributes: {},
+  childComponents: {},
   column: {
     dataType: DataType.String,
     key: 'columnField',

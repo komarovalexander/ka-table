@@ -5,11 +5,12 @@ import {
   deleteRow, hideLoading, showLoading, updateData, updatePagesCount,
 } from '../../lib/actionCreators';
 import { ActionType, DataType, EditingMode } from '../../lib/enums';
-import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
+import { ICellTextProps } from '../../lib/props';
+import { DispatchFunc } from '../../lib/types';
 import { getField } from '../../lib/Utils/ColumnUtils';
 import serverEmulator from './serverEmulator';
 
-const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
+const DeleteRow: React.FC<ICellTextProps> = ({
   dispatch, rowKeyValue,
 }) => {
  return (
@@ -29,7 +30,7 @@ const tablePropsInit: ITableProps = {
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: ':delete', cell: (props) => <DeleteRow {...props} />, style: { width: 40, textAlign: 'center' } },
+    { key: ':delete', style: { width: 40, textAlign: 'center' } },
   ],
   editingMode: EditingMode.Cell,
   loading: {
@@ -41,7 +42,6 @@ const tablePropsInit: ITableProps = {
     pageIndex: 1,
     pageSize: 10
   },
-  noDataRow: () => 'No data',
   rowKeyField: 'id',
 };
 
@@ -88,6 +88,18 @@ const RemoteDataDemo: React.FC = () => {
     <div className='remote-data-demo'>
       <Table
         {...tableProps}
+        childComponents={{
+          cellText: {
+            content: (props) => {
+              if (props.column.key === ':delete'){
+                return <DeleteRow {...props} />
+              }
+            }
+          },
+          noDataRow: {
+            content: () => 'No data'
+          }
+        }}
         dispatch={dispatch}
       />
     </div>

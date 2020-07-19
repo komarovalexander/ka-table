@@ -6,7 +6,7 @@ import { ITableBodyProps } from '../TableBody/TableBody';
 import VirtualizedRows from './VirtualizedRows';
 
 const tableProps: ITableBodyProps = {
-  childAttributes: {},
+  childComponents: {},
   columns: [
     { key: 'column', title: 'Column 1' },
     { key: 'column2', title: 'Column 2' },

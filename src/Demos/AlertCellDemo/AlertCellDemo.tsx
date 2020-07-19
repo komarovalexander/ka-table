@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
-import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
+import { ICellTextProps } from '../../lib/props';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -16,7 +17,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
+const AlertCell: React.FC<ICellTextProps> = ({
    rowData,
 }) => {
   return (
@@ -31,7 +32,7 @@ const AlertCell: React.FC<CellFuncPropsWithChildren> = ({
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'command1', cell: (props) => <AlertCell {...props}/>, style: { width: 40, textAlign: 'center' } },
+    { key: 'command1', style: { width: 40, textAlign: 'center' } },
     { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -52,6 +53,15 @@ const AlertCellDemo: React.FC = () => {
   return (
     <Table
       {...tableProps}
+      childComponents={{
+        cellText: {
+          content: (props) => {
+            switch (props.column.key){
+              case 'command1': return <AlertCell {...props}/>;
+            }
+          }
+        }
+      }}
       dispatch={dispatch}
     />
   );

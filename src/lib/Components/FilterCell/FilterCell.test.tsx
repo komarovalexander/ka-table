@@ -2,19 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { DataType } from '../../enums';
-import FilterCell, { IFilterCellProps } from './FilterCell';
+import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
+import FilterCell from './FilterCell';
 
-const props: IFilterCellProps = {
-  close: () => {},
+const props: IFilterRowEditorProps = {
+  childComponents: {},
   column: {
     dataType: DataType.String,
-    field: 'columnField',
+    key: 'columnField',
     title: 'Field',
-  },
-  onValueChange: () => {},
-  rowData: {
-    column: 1,
-  },
+  }
 };
 
 it('renders without crashing', () => {

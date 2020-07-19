@@ -1,4 +1,5 @@
-import { IPagingProps } from '../../lib/Components/Paging/Paging';
+
+import { PagingOptions } from '../../lib/models';
 import { getPageData, getPagesCount } from '../../lib/Utils/PagingUtils';
 
 let dataArray = Array(100).fill(undefined).map(
@@ -11,7 +12,7 @@ let dataArray = Array(100).fill(undefined).map(
   }),
 );
 
-const get = (paging?: IPagingProps): Promise<any> => {
+const get = (paging?: PagingOptions): Promise<any> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -22,7 +23,7 @@ const get = (paging?: IPagingProps): Promise<any> => {
   });
 };
 
-const update = (id: any, data: any, paging?: IPagingProps): Promise<any> => {
+const update = (id: any, data: any, paging?: PagingOptions): Promise<any> => {
   for (let i = 0; i < dataArray.length; i++) {
     if (dataArray[i].id === id) {
       dataArray[i] = {...dataArray[i], ...data};
@@ -31,7 +32,7 @@ const update = (id: any, data: any, paging?: IPagingProps): Promise<any> => {
   return get(paging);
 };
 
-const deleteRow = (id: any, paging?: IPagingProps): Promise<any> => {
+const deleteRow = (id: any, paging?: PagingOptions): Promise<any> => {
   dataArray = dataArray.filter((d) => d.id !== id);
   return get(paging);
 };

@@ -5,7 +5,8 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { deleteRow } from '../../lib/actionCreators';
 import { DataType } from '../../lib/enums';
-import { CellFuncPropsWithChildren, DispatchFunc } from '../../lib/types';
+import { ICellTextProps } from '../../lib/props';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -17,7 +18,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const DeleteRow: React.FC<CellFuncPropsWithChildren> = ({
+const DeleteRow: React.FC<ICellTextProps> = ({
   dispatch, rowKeyValue,
 }) => {
  return (
@@ -37,7 +38,7 @@ const tablePropsInit: ITableProps = {
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: ':delete', cell: (props) => <DeleteRow {...props} />, style: { width: 40, textAlign: 'center' } },
+    { key: ':delete', style: { width: 40, textAlign: 'center' } },
   ],
   data: dataArray,
   rowKeyField: 'id',
@@ -52,6 +53,15 @@ const DeleteRowDemo: React.FC = () => {
   return (
     <Table
       {...tableProps}
+      childComponents={{
+        cellText: {
+          content: (props) => {
+            switch (props.column.key){
+              case ':delete': return <DeleteRow {...props}/>;
+            }
+          }
+        }
+      }}
       dispatch={dispatch}
     />
   );

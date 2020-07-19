@@ -57,8 +57,8 @@ export const openEditor = (rowKeyValue: any, columnKey: string) => ({
   type: ActionType.OpenEditor,
 });
 
-export const search = (searchValue: any) => ({
-  search: searchValue,
+export const search = (searchText: any) => ({
+  searchText,
   type: ActionType.Search,
 });
 

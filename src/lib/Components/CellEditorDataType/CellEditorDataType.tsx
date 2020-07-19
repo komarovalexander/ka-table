@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { DataType } from '../../enums';
-import { ICellEditorProps } from '../CellEditor/CellEditor';
+import { ICellEditorProps } from '../../props';
 import CellEditorBoolean from '../CellEditorBoolean/CellEditorBoolean';
 import CellEditorDate from '../CellEditorDate/CellEditorDate';
 import CellEditorNumber from '../CellEditorNumber/CellEditorNumber';

@@ -28,13 +28,17 @@ const tablePropsInit: ITableProps = {
     },
     {
       dataType: DataType.Date,
-      format: (value: Date) => value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' }),
       key: 'nextTry',
       title: 'Next Try',
     },
   ],
   data: dataArray,
   editingMode: EditingMode.Cell,
+  format: ({ column, value }) => {
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
   rowKeyField: 'id',
   filteringMode: FilteringMode.FilterRow,
   sortingMode: SortingMode.Single,
@@ -50,7 +54,7 @@ const GetDataByPropsDemo: React.FC = () => {
 
   return (
     <div className='obtain-table-data-demo'>
-      <input type='search' defaultValue={tableProps.search} onChange={(event) => {
+      <input type='search' defaultValue={tableProps.searchText} onChange={(event) => {
         dispatch(search(event.currentTarget.value));
       }} className='top-element'/>
       <Table
