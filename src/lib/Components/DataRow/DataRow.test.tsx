@@ -1,8 +1,13 @@
+import Enzyme, { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { DataType, EditingMode } from '../../enums';
-import DataRow, { IRowProps } from './DataRow';
+import { IRowProps } from '../../props';
+import DataRow from './DataRow';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const props: IRowProps = {
   childComponents: {},
@@ -22,8 +27,25 @@ const props: IRowProps = {
   selectedRows: [],
 };
 
-it('renders without crashing', () => {
-  const element = document.createElement('tbody');
-  ReactDOM.render(<DataRow {...props} />, element);
-  ReactDOM.unmountComponentAtNode(element);
+beforeEach(() => {
+  jest.clearAllMocks();
 });
+
+describe('CellEditorBoolean', () => {
+  it('renders without crashing', () => {
+    const element = document.createElement('tbody');
+    ReactDOM.render(<DataRow {...props} />, element);
+    ReactDOM.unmountComponentAtNode(element);
+  });
+
+  it('renders with draggable', () => {
+    const component = shallow(<DataRow {...props} rowReordering={true}/>);
+    expect(component.props().draggable).toBeTruthy();
+  });
+
+  it('renders without draggable', () => {
+    const component = shallow(<DataRow {...props}/>);
+    expect(component.props().draggable).toBeFalsy();
+  });
+});
+

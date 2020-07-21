@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ActionType, DataType } from '../../enums';
-import { ICellEditorProps } from '../CellEditor/CellEditor';
+import { ICellEditorProps } from '../../props';
 import CellEditorBoolean from './CellEditorBoolean';
 
 Enzyme.configure({ adapter: new Adapter() });
