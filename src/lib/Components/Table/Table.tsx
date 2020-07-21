@@ -34,6 +34,7 @@ export interface ITableProps {
   loading?: ILoadingProps;
   paging?: PagingOptions;
   rowKeyField: string;
+  rowReordering?: boolean;
   searchText?: string;
   selectedRows?: any[];
   sortingMode?: SortingMode;
@@ -55,6 +56,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     editableCells = [],
     editingMode = EditingMode.None,
     filteringMode = FilteringMode.None,
+    rowReordering = false,
     groups,
     loading,
     paging,
@@ -106,6 +108,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
               groupColumnsCount={preparedOptions.groupColumnsCount}
               groupedColumns={preparedOptions.groupedColumns}
               groupsExpanded={groupsExpanded}
+              rowReordering={rowReordering}
               selectedRows={selectedRows}
           />
         </table>

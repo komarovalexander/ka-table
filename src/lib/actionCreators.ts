@@ -161,3 +161,9 @@ export const resizeColumn = (columnKey: string, width: number) => ({
   columnKey,
   width,
 });
+
+export const reorderRows = (rowKeyValue: string, targetRowKeyValue: number) => ({
+  type: ActionType.ReorderRows,
+  rowKeyValue,
+  targetRowKeyValue,
+});

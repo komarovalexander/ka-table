@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { ICellProps } from '../../props';
-import { getField } from '../../Utils/ColumnUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import CellEditor from '../CellEditor/CellEditor';
 import CellText from '../CellText/CellText';
@@ -10,7 +9,6 @@ import CellText from '../CellText/CellText';
 const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   const {
     childComponents,
-    column,
     column: { style },
     isEditableCell,
   } = props;
@@ -28,14 +26,12 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
         (
           <CellEditor
             {...props}
-            field={getField(column)}
           />
         )
         :
         (
           <CellText
             {...props}
-            field={getField(column)}
           />
         )
       )

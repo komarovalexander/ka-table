@@ -2,6 +2,7 @@ import React from 'react';
 
 import { IDataRowProps } from '../../props';
 import { getEditableCell } from '../../Utils/CellUtils';
+import { getField } from '../../Utils/ColumnUtils';
 import { getValueByColumn } from '../../Utils/DataUtils';
 import CellComponent from '../CellComponent/CellComponent';
 
@@ -33,6 +34,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
             dispatch={dispatch}
             editingMode={editingMode}
             editorValue={editorValue}
+            field={getField(column)}
             format={format}
             hasEditorValue={editableCell && editableCell.hasOwnProperty('editorValue')}
             isDetailsRowShown={isDetailsRowShown}

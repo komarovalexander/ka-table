@@ -27,6 +27,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     groupsExpanded = [],
     onFirstRowRendered,
     rowKeyField,
+    rowReordering,
     selectedRows,
     validation,
   } = props;
@@ -90,9 +91,10 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             isSelectedRow={isSelectedRow}
             key={d[rowKeyField]}
             rowData={d}
+            rowEditableCells={rowEditableCells}
             rowKeyField={props.rowKeyField}
             rowKeyValue={rowKeyValue}
-            rowEditableCells={rowEditableCells}
+            rowReordering={rowReordering}
             selectedRows={props.selectedRows}
             trRef={rowRefLink}
             validation={validation}
