@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { ActionType, DataType, EditingMode } from '../../lib/enums';
+import { DataType, EditingMode } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
@@ -28,23 +28,10 @@ const tablePropsInit: ITableProps = {
   rowReordering: true,
 };
 
-const columnChooserReducer = (props: ITableProps, action: any): ITableProps => {
-  const { data = [] } = props;
-  switch (action.type){
-    case ActionType.ReorderRows:
-      const movedRow = data.find(d => d[props.rowKeyField] === action.rowKeyValue);
-      const newData = data.filter(d => d[props.rowKeyField] !== movedRow[props.rowKeyField]);
-      const targetRowIndex = data.findIndex(d => d[props.rowKeyField] === action.targetRowKeyValue);
-      newData.splice(targetRowIndex, 0, movedRow)
-      return {...props, data: newData};
-  }
-  return kaReducer(props, action);
-}
-
 const RowsReorderingDemo: React.FC = () => {
   const [columnChooserProps, changeColumnChooserProps] = useState<ITableProps>(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeColumnChooserProps((prevState: ITableProps) => columnChooserReducer(prevState, action));
+    changeColumnChooserProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <div className='rows-reordering-demo'>

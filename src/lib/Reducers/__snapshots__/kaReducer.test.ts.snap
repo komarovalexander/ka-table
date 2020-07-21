@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`kaReducer ReorderRows default 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "id": 2,
+    },
+    Object {
+      "id": 3,
+    },
+    Object {
+      "id": 1,
+    },
+    Object {
+      "id": 4,
+    },
+  ],
+  "rowKeyField": "id",
+}
+`;
+
+exports[`kaReducer ReorderRows inner keys 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "a": Object {
+        "id": 2,
+      },
+    },
+    Object {
+      "a": Object {
+        "id": 3,
+      },
+    },
+    Object {
+      "a": Object {
+        "id": 1,
+      },
+    },
+    Object {
+      "a": Object {
+        "id": 4,
+      },
+    },
+  ],
+  "rowKeyField": "a.id",
+}
+`;

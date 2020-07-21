@@ -30,8 +30,12 @@ export const createObjByFields = (fieldParents: Field[], field: Field, value: an
 };
 
 export const getValueByColumn = (rowData: any, column: Column) => {
+  return getValueByField(rowData, getField(column));
+};
+
+export const getValueByField = (rowData: any, field: Field) => {
   let o = {...rowData};
-  const names =  getField(column).split('.');
+  const names = field.split('.');
   for (let i = 0, n = names.length; i < n; ++i) {
       const k = names[i];
       if (k in o) {
@@ -43,7 +47,7 @@ export const getValueByColumn = (rowData: any, column: Column) => {
   return o;
 };
 
-const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
+const _replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
   let result = {...rowData};
   if (fieldParents && fieldParents.length) {
     const parentValue = getParentValue(result, fieldParents) || {};
@@ -51,7 +55,7 @@ const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldPa
 
     const parentsOfParent = [...fieldParents];
     const parentFieldName = parentsOfParent.pop() as string;
-    result = replaceValueForField(result, parentFieldName, parentValue, parentsOfParent);
+    result = _replaceValueForField(result, parentFieldName, parentValue, parentsOfParent);
   } else {
     result[field] = newValue;
   }
@@ -59,5 +63,9 @@ const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldPa
 };
 
 export const replaceValue = (rowData: any, column: Column, newValue: any) => {
-  return replaceValueForField(rowData, getLastField(column), newValue, getLastFieldParents(column));
+  return replaceValueForField(rowData, getField(column), newValue);
+};
+
+export const replaceValueForField = (rowData: any, field: Field, newValue: any) => {
+  return _replaceValueForField(rowData, getLastField(field), newValue, getLastFieldParents(field));
 };

@@ -1,5 +1,7 @@
 import { Column } from '../models';
-import { createObjByFields, getParentValue, getValueByColumn, replaceValue } from './DataUtils';
+import {
+  createObjByFields, getParentValue, getValueByColumn, getValueByField, replaceValue,
+} from './DataUtils';
 
 describe('DataUtils', () => {
   describe('getValueByColumn', () => {
@@ -11,63 +13,6 @@ describe('DataUtils', () => {
       };
 
       expect(getValueByColumn(data, { key: 'b.c' })).toBe(1);
-    });
-    it('b.c.x', () => {
-      const data = {
-        b: {
-          c: {
-            x: 1,
-          },
-        },
-      };
-
-      expect(getValueByColumn(data, { key: 'b.c.x' })).toBe(1);
-    });
-    it('data is empty', () => {
-      const data = {  };
-
-      expect(getValueByColumn(data, { key: 'b.c' })).toBeUndefined();
-    });
-    it('patch is wrong', () => {
-      const data = {
-        b: {
-          c: 1,
-        },
-      };
-
-      expect(getValueByColumn(data, { key: 'w.a' })).toBeUndefined();
-    });
-    it('part path: b', () => {
-      const data = {
-        b: {
-          c: 1,
-        },
-      };
-
-      expect(getValueByColumn(data, { key: 'b' })).toBe(data.b);
-    });
-    it('part path: children', () => {
-      const data = {
-        b: {
-          c: 1,
-        },
-      };
-
-      expect(getValueByColumn(data, { key: 'c' })).toBeUndefined();
-    });
-    it('one item path', () => {
-      const data = {
-        b: 1,
-      };
-
-      expect(getValueByColumn(data, { key: 'b' })).toBe(1);
-    });
-    it('false as a value', () => {
-      const data = {
-        b: false,
-      };
-
-      expect(getValueByColumn(data, { key: 'b' })).toBe(false);
     });
 
     it('value from key', () => {
@@ -88,6 +33,76 @@ describe('DataUtils', () => {
       expect(getValueByColumn(data, { key: 'b.c', field: 'b.d' })).toBe(2);
     });
   });
+
+  describe('getValueByField', () => {
+    it('b.c', () => {
+      const data = {
+        b: {
+          c: 1,
+        },
+      };
+
+      expect(getValueByField(data, 'b.c')).toBe(1);
+    });
+    it('b.c.x', () => {
+      const data = {
+        b: {
+          c: {
+            x: 1,
+          },
+        },
+      };
+
+      expect(getValueByField(data, 'b.c.x')).toBe(1);
+    });
+    it('data is empty', () => {
+      const data = {  };
+
+      expect(getValueByField(data, 'b.c')).toBeUndefined();
+    });
+    it('patch is wrong', () => {
+      const data = {
+        b: {
+          c: 1,
+        },
+      };
+
+      expect(getValueByField(data, 'w.a')).toBeUndefined();
+    });
+    it('part path: b', () => {
+      const data = {
+        b: {
+          c: 1,
+        },
+      };
+
+      expect(getValueByField(data, 'b')).toBe(data.b);
+    });
+    it('part path: children', () => {
+      const data = {
+        b: {
+          c: 1,
+        },
+      };
+
+      expect(getValueByField(data, 'c')).toBeUndefined();
+    });
+    it('one item path', () => {
+      const data = {
+        b: 1,
+      };
+
+      expect(getValueByField(data, 'b')).toBe(1);
+    });
+    it('false as a value', () => {
+      const data = {
+        b: false,
+      };
+
+      expect(getValueByField(data, 'b')).toBe(false);
+    });
+  });
+
 
   describe('getParentValue', () => {
     it('getParentValue', () => {
