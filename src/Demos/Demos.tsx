@@ -150,7 +150,6 @@ const Demos: React.FC = () => {
           </div>
         </nav>
         <main>
-          <Notify/>
           {
             cases.map((c) => (
               <Route key={c.name} path={c.path} component={withTracker(c.demoComponent)} />
