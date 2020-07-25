@@ -23,7 +23,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   } = props;
 
   if (rowReordering){
-    const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps(rowKeyValue, dispatch, reorderRows, 'ka-dragged-row', 'ka-drag-over-row');
+    const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps(rowKeyValue, dispatch, reorderRows, defaultOptions.css.draggedRow, defaultOptions.css.dragOverRow);
     dataRow = addElementAttributes(reorderedRowProps, props, dataRow);
   }
 

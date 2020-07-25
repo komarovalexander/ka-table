@@ -126,6 +126,7 @@ export const getDraggableProps = (
   return {
     draggable: true,
     onDragStart: (event) => {
+      count = 0;
       event.dataTransfer.setData('draggableKeyValue', JSON.stringify(key));
       event.currentTarget.classList.add(draggedClass);
       event.dataTransfer.effectAllowed = 'move';
