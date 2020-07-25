@@ -138,7 +138,7 @@ describe('getDraggableProps', () => {
   it('onDragStart', () => {
     const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
     result.onDragStart!(event, {} as any);
-    expect(event.dataTransfer.setData).toBeCalledWith('draggableKeyValue', '1');
+    expect(event.dataTransfer.setData).toBeCalledWith('ka-draggableKeyValue', '1');
     expect(event.currentTarget.classList.add).toBeCalledWith(draggedClass);
     expect(event.dataTransfer.effectAllowed).toEqual('move');
   });

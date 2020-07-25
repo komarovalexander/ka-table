@@ -127,7 +127,7 @@ export const getDraggableProps = (
     draggable: true,
     onDragStart: (event) => {
       count = 0;
-      event.dataTransfer.setData('draggableKeyValue', JSON.stringify(key));
+      event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
       event.currentTarget.classList.add(draggedClass);
       event.dataTransfer.effectAllowed = 'move';
     },
@@ -136,7 +136,7 @@ export const getDraggableProps = (
     },
     onDrop: (event) => {
       event.currentTarget.classList.remove(dragOverClass);
-      const draggableKeyValue = JSON.parse(event.dataTransfer.getData('draggableKeyValue'));
+      const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue'));
       dispatch(actionCreator(draggableKeyValue, key));
     },
     onDragEnter: (event) => {
