@@ -1,10 +1,38 @@
 import {
-    deleteRow, deselectAllRows, deselectRow, selectAllRows, selectSingleRow, updateData
+  deleteRow, deselectAllRows, deselectRow, reorderRows, selectAllRows, selectSingleRow, updateData,
 } from '../actionCreators';
 import { ActionType } from '../enums';
 import { kaReducer } from './kaReducer';
 
 describe('kaReducer', () => {
+  describe('ReorderRows', () => {
+    it('default', () => {
+      const intialState = {
+        data: [
+          { id: 1 },
+          { id: 2 },
+          { id: 3 },
+          { id: 4 },
+        ],
+        rowKeyField: 'id',
+      };
+      const result = kaReducer(intialState, reorderRows(1, 3));
+      expect(result).toMatchSnapshot();
+    });
+    it('inner keys', () => {
+      const intialState = {
+        data: [
+          { a: { id: 1 } },
+          { a: { id: 2 } },
+          { a: { id: 3 } },
+          { a: { id: 4 } },
+        ],
+        rowKeyField: 'a.id',
+      };
+      const result = kaReducer(intialState, reorderRows(1, 3));
+      expect(result).toMatchSnapshot();
+    });
+  });
   it('ScrollTable', () => {
     const scrollLeft = 10;
     const intialState = {

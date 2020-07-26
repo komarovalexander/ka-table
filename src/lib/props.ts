@@ -21,6 +21,7 @@ export interface ICellProps {
   dispatch: DispatchFunc;
   editingMode: EditingMode;
   editorValue?: any;
+  field: Field;
   format?: FormatFunc;
   hasEditorValue?: any;
   isDetailsRowShown: boolean;
@@ -128,6 +129,7 @@ export interface ITableBodyProps {
   groups?: Group[];
   groupsExpanded?: any[][];
   rowKeyField: string;
+  rowReordering: boolean;
   selectedRows: any[];
   validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
@@ -145,11 +147,12 @@ export interface INewRowProps {
 }
 
 export interface IRowProps extends IRowCommonProps {
-  rowEditableCells: EditableCell[],
   format?: FormatFunc;
   groupColumnsCount: number;
   isDetailsRowShown: boolean;
   isSelectedRow: boolean;
+  rowEditableCells: EditableCell[],
+  rowReordering: boolean;
   trRef?: any;
   validation?: ValidationFunc;
 }

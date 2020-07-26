@@ -1,6 +1,7 @@
 import React, { AllHTMLAttributes } from 'react';
 
 import { ChildComponent } from '../Models/ChildComponent';
+import { ChildAttributesItem } from '../types';
 import { extendProps } from './PropsUtils';
 
 class ElementCustomization {
@@ -20,3 +21,14 @@ export const getElementCustomization = (
     elementAttributes,
   }
 };
+
+export const addElementAttributes = (
+  elementAttributes: ChildAttributesItem<any>,
+  props: any,
+  childComponent?: ChildComponent<any>,
+): ChildComponent<any> => {
+  const updatedChildComponent: ChildComponent<any> = { ...childComponent };
+  const defaultElementAttributes = updatedChildComponent.elementAttributes && updatedChildComponent.elementAttributes(props);
+  updatedChildComponent.elementAttributes = () => ({...defaultElementAttributes, ...elementAttributes});
+  return updatedChildComponent
+}

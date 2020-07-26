@@ -2,6 +2,7 @@ import React, { RefObject, useEffect, useRef } from 'react';
 
 import { newRowId } from '../../const';
 import { ITableBodyProps } from '../../props';
+import { getValueByField } from '../../Utils/DataUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
 import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
@@ -27,6 +28,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     groupsExpanded = [],
     onFirstRowRendered,
     rowKeyField,
+    rowReordering,
     selectedRows,
     validation,
   } = props;
@@ -73,7 +75,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
           />
         );
       } else {
-        const rowKeyValue = d[rowKeyField];
+        const rowKeyValue = getValueByField(d, rowKeyField);
         const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
         const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
         const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
@@ -88,11 +90,12 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             groupColumnsCount={props.groupColumnsCount}
             isDetailsRowShown={isDetailsRowShown}
             isSelectedRow={isSelectedRow}
-            key={d[rowKeyField]}
+            key={rowKeyValue}
             rowData={d}
+            rowEditableCells={rowEditableCells}
             rowKeyField={props.rowKeyField}
             rowKeyValue={rowKeyValue}
-            rowEditableCells={rowEditableCells}
+            rowReordering={rowReordering}
             selectedRows={props.selectedRows}
             trRef={rowRefLink}
             validation={validation}

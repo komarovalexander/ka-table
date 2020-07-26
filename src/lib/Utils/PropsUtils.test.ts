@@ -1,10 +1,11 @@
 import { AllHTMLAttributes } from 'react';
 
 import { ITableProps } from '../';
-import { ICellContentProps } from '../Components/CellContent/CellContent';
+import defaultOptions from '../defaultOptions';
 import { DataType, EditingMode, SortDirection } from '../enums';
+import { ICellProps } from '../props';
 import { ChildAttributesItem } from '../types';
-import { getData, mergeProps } from './PropsUtils';
+import { getData, getDraggableProps, mergeProps } from './PropsUtils';
 
 describe('PropsUtils', () => {
   it('mergeProps', () => {
@@ -15,7 +16,7 @@ describe('PropsUtils', () => {
     };
 
     const dispatch = () => {};
-    const childProps: ICellContentProps = {
+    const childProps: ICellProps = {
       childComponents: {},
       column: { key: 'column' },
       dispatch,
@@ -100,6 +101,89 @@ describe('getData', () => {
   it('get grouped data', () => {
     const result = getData({ ...props , groups: [{ columnKey: 'column1' }] });
     expect(result).toMatchSnapshot();
+  });
+});
+
+describe('getDraggableProps', () => {
+  const key = 1;
+  const actionType = 'test_action';
+  const dispatch = jest.fn();
+  const actionCreator = jest.fn().mockReturnValue({ type: actionType });
+  const draggedClass = 'draggedClassTest';
+  const dragOverClass = 'dragOverClassTest';
+  let event: any;
+  beforeEach(() => {
+    dispatch.mockClear();
+    actionCreator.mockClear();
+    event = {
+      dataTransfer: {
+        setData: jest.fn(),
+        getData: jest.fn().mockReturnValue(2),
+        effectAllowed: ''
+      },
+      currentTarget: {
+        classList: {
+          add: jest.fn(),
+          contains: jest.fn(),
+          remove: jest.fn(),
+        }
+      },
+      preventDefault: jest.fn()
+    };
+  });
+  it('should be draggable', () => {
+    const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
+    expect(result.draggable).toBeTruthy();
+  });
+  it('onDragStart', () => {
+    const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
+    result.onDragStart!(event, {} as any);
+    expect(event.dataTransfer.setData).toBeCalledWith('ka-draggableKeyValue', '1');
+    expect(event.currentTarget.classList.add).toBeCalledWith(draggedClass);
+    expect(event.dataTransfer.effectAllowed).toEqual('move');
+  });
+  it('onDragEnd', () => {
+    const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
+    result.onDragEnd!(event, {} as any);
+    expect(event.currentTarget.classList.remove).toBeCalledWith(draggedClass);
+  });
+  it('onDrop', () => {
+    const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
+    result.onDrop!(event, {} as any);
+    expect(event.currentTarget.classList.remove).toBeCalledWith(dragOverClass);
+    expect(dispatch).toBeCalledWith({ type: actionType });
+    expect(actionCreator).toBeCalledWith(2, 1);
+  });
+  it('onDragEnter', () => {
+    const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
+    event.currentTarget.classList.contains.mockReturnValue(true);
+    result.onDragEnter!(event, {} as any);
+    expect(event.currentTarget.classList.add).toBeCalledTimes(0);
+    event.currentTarget.classList.contains.mockReturnValue(false);
+    result.onDragEnter!(event, {} as any);
+    expect(event.currentTarget.classList.add).toBeCalledTimes(1);
+    expect(event.currentTarget.classList.add).toBeCalledWith(dragOverClass);
+    expect(event.preventDefault).toBeCalledTimes(2);
+  });
+  it('onDragLeave', () => {
+    const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
+    result.onDragEnter!(event, {} as any);
+    result.onDragEnter!(event, {} as any);
+    result.onDragLeave!(event, {} as any);
+    expect(event.currentTarget.classList.remove).toBeCalledTimes(0);
+    result.onDragLeave!(event, {} as any);
+    expect(event.currentTarget.classList.remove).toBeCalledWith(dragOverClass);
+  });
+  it('onDragOver', () => {
+    const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
+    event.currentTarget.classList.contains.mockReturnValue(true);
+    result.onDragOver!(event, {} as any);
+    expect(event.currentTarget.classList.add).toBeCalledTimes(0);
+    event.currentTarget.classList.contains.mockReturnValue(false);
+    result.onDragOver!(event, {} as any);
+    expect(event.currentTarget.classList.add).toBeCalledTimes(1);
+    expect(event.currentTarget.classList.add).toBeCalledWith(dragOverClass);
+    expect(event.preventDefault).toBeCalledTimes(2);
   });
 });
 

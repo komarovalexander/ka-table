@@ -114,3 +114,49 @@ export const prepareTableOptions = (props: ITableProps) => {
     pagesCount
   };
 };
+
+export const getDraggableProps = (
+  key: any,
+  dispatch: DispatchFunc,
+  actionCreator: (draggableKeyValue: any, targetKeyValue: any) => any,
+  draggedClass: string,
+  dragOverClass: string,
+): ChildAttributesItem<any> => {
+  let count: number = 0;
+  return {
+    draggable: true,
+    onDragStart: (event) => {
+      count = 0;
+      event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
+      event.currentTarget.classList.add(draggedClass);
+      event.dataTransfer.effectAllowed = 'move';
+    },
+    onDragEnd: (event) => {
+      event.currentTarget.classList.remove(draggedClass);
+    },
+    onDrop: (event) => {
+      event.currentTarget.classList.remove(dragOverClass);
+      const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue'));
+      dispatch(actionCreator(draggableKeyValue, key));
+    },
+    onDragEnter: (event) => {
+      count++;
+      if (!event.currentTarget.classList.contains(dragOverClass)){
+        event.currentTarget.classList.add(dragOverClass);
+      }
+      event.preventDefault();
+    },
+    onDragLeave: (event) => {
+      count--;
+      if (count === 0){
+        event.currentTarget.classList.remove(dragOverClass);
+      }
+    },
+    onDragOver: (event) => {
+      if (!event.currentTarget.classList.contains(dragOverClass)){
+        event.currentTarget.classList.add(dragOverClass);
+      }
+      event.preventDefault();
+    }
+  };
+}
