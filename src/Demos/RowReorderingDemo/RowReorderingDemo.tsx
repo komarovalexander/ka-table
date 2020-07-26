@@ -28,7 +28,7 @@ const tablePropsInit: ITableProps = {
   rowReordering: true,
 };
 
-const RowsReorderingDemo: React.FC = () => {
+const RowReorderingDemo: React.FC = () => {
   const [columnChooserProps, changeColumnChooserProps] = useState<ITableProps>(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
     changeColumnChooserProps((prevState: ITableProps) => kaReducer(prevState, action));
@@ -52,4 +52,4 @@ const RowsReorderingDemo: React.FC = () => {
   );
 };
 
-export default RowsReorderingDemo;
+export default RowReorderingDemo;
