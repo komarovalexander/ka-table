@@ -16,6 +16,7 @@ export class ChildComponents {
   public groupRow?: ChildComponent<IGroupRowProps>;
   public headCell?: ChildComponent<IHeadCellProps>;
   public noDataRow?: ChildComponent<INoDataRowProps>;
+  public rootDiv?: ChildComponent<ITableProps>;
   public table?: ChildComponent<ITableProps>;
   public tableHead?: ChildComponent<ITableHeadProps>;
 }

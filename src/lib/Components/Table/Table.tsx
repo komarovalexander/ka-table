@@ -79,12 +79,16 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const isLoadingActive = loading && loading.enabled;
   const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
+  const { elementAttributes: rootDivElementAttributes, content: rootDivContent } = getElementCustomization({
+    className:  kaCss,
+  }, { ...props, dispatch }, childComponents.rootDiv);
+
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.table,
   }, { ...props, dispatch }, childComponents.table);
   return (
-    <div className={kaCss}>
-      {content ||
+    <div {...rootDivElementAttributes}>
+      { rootDivContent || content ||
       (
         <table {...elementAttributes}>
           <TableHead
