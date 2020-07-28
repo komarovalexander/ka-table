@@ -1,6 +1,7 @@
 import { AllHTMLAttributes } from 'react';
 
 import { ITableProps } from '../';
+import defaultOptions from '../defaultOptions';
 import { DataType, EditingMode, SortDirection } from '../enums';
 import { ICellProps } from '../props';
 import { ChildAttributesItem } from '../types';

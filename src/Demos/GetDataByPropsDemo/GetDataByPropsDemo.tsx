@@ -2,10 +2,11 @@ import './GetDataByPropsDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableProps, kaReducer, kaUtils, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { search } from '../../lib/actionCreators';
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
+import { kaPropsUtils } from '../../lib/utils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -49,7 +50,7 @@ const GetDataByPropsDemo: React.FC = () => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
-  const data = kaUtils.props.getData(tableProps);
+  const data = kaPropsUtils.getData(tableProps);
 
   return (
     <div className='obtain-table-data-demo'>

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { kaDefaultOptions } from '../../';
 import { closeEditor, updateCellValue } from '../../actionCreators';
+import defaultOptions from '../../defaultOptions';
 import { ICellEditorProps } from '../../props';
 
 const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
@@ -15,7 +15,7 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = ({
     <input
       autoFocus={autoFocus}
       type='text'
-      className={kaDefaultOptions.css.textInput}
+      className={defaultOptions.css.textInput}
       value={value || ''}
       onChange={(event) => {
         dispatch(updateCellValue(rowKeyValue, column.key, event.currentTarget.value));

@@ -1,3 +1,5 @@
+import { isNumber } from 'util';
+
 import { DispatchFunc } from '../types';
 
 export const HeadCellResizeStateAction = 'HeadCellResizeStateAction';
@@ -24,7 +26,7 @@ export const getValidatedWidth = (newWidth: number, minWidth: number) => {
 export const getMinWidth = (style: any): number => {
   let minWidth: number = 20;
   const styleMinWidth = style && style.minWidth;
-  if (styleMinWidth && typeof styleMinWidth === 'number'){
+  if (styleMinWidth && isNumber(styleMinWidth)){
     minWidth = styleMinWidth;
   }
   return minWidth;

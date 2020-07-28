@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 
-import { ITableProps, kaReducer, kaUtils, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { search, updateFilterRowValue } from '../../lib/actionCreators';
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
 import { IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
+import { kaDateUtils } from '../../lib/utils';
 import dataArray from './data';
 
 const CustomDateFilterEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   const fieldValue = column.filterRowValue;
-  const value = fieldValue && kaUtils.date.getDateInputValue(fieldValue);
+  const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
   return (
     <div>
       <>Less than: </>

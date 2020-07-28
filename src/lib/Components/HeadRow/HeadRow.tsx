@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { kaDefaultOptions } from '../../';
+import defaultOptions from '../../defaultOptions';
 import { IHeadRowProps } from '../../props';
 import EmptyCells from '../EmptyCells/EmptyCells';
 import HeadCell from '../HeadCell/HeadCell';
@@ -14,7 +14,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
   sortingMode,
 }) => {
   return (
-    <tr className={kaDefaultOptions.css.theadRow}>
+    <tr className={defaultOptions.css.theadRow}>
       <EmptyCells count={groupColumnsCount}/>
       {columns.map((column) => {
         return (

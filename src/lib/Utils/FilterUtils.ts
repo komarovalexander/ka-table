@@ -1,5 +1,5 @@
 
-import { kaDefaultOptions } from '../';
+import defaultOptions from '../defaultOptions';
 import { DataType, FilterOperatorName } from '../enums';
 import { Column } from '../Models/Column';
 import { EditableCell } from '../Models/EditableCell';
@@ -42,7 +42,7 @@ export const filterData = (data: any[], columns: Column[]): any[] => {
       return initialData;
     }
     const filterRowOperator = column.filterRowOperator
-      || getDefaultOperatorForType(column.dataType  || kaDefaultOptions.columnDataType);
+      || getDefaultOperatorForType(column.dataType  || defaultOptions.columnDataType);
     const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
     if (!filterOperator) {
       throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);

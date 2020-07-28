@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { kaDefaultOptions } from '../../';
 import { updateFilterRowValue } from '../../actionCreators';
+import defaultOptions from '../../defaultOptions';
 import { IFilterRowEditorProps } from '../../props';
 import { isEmpty } from '../../Utils/CommonUtils';
 
@@ -12,7 +12,7 @@ const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = ({
   const value = column.filterRowValue;
   return (
     <input
-      className={kaDefaultOptions.css.checkbox}
+      className={defaultOptions.css.checkbox}
       type='checkbox'
       ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}
       checked={value || false}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { kaDefaultOptions } from '../../';
+import defaultOptions from '../../defaultOptions';
 import { ICellProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import CellEditor from '../CellEditor/CellEditor';
@@ -14,7 +14,7 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   } = props;
 
   const { elementAttributes, content } = getElementCustomization({
-    className: kaDefaultOptions.css.cell,
+    className: defaultOptions.css.cell,
     style
   }, props, childComponents.cell);
 

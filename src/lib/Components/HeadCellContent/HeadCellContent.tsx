@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { kaDefaultOptions } from '../../';
 import { updateSortDirection } from '../../actionCreators';
+import defaultOptions from '../../defaultOptions';
 import { SortDirection } from '../../enums';
 import { IHeadCellProps } from '../../props';
 import { isSortingEnabled } from '../../Utils/SortUtils';
@@ -18,15 +18,15 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   } : undefined;
   return (
     <div
-      className={`${kaDefaultOptions.css.theadCellContent} ${sortingEnabled ? 'ka-pointer' : ''}`}
+      className={`${defaultOptions.css.theadCellContent} ${sortingEnabled ? 'ka-pointer' : ''}`}
       onClick={sortClick}>
       <span>{column.title}</span>
       {column.sortDirection && sortingEnabled && (
         <span
           className={
             column.sortDirection === SortDirection.Ascend
-              ? kaDefaultOptions.css.iconSortArrowUp
-              : kaDefaultOptions.css.iconSortArrowDown
+              ? defaultOptions.css.iconSortArrowUp
+              : defaultOptions.css.iconSortArrowDown
           }
         />
       )}

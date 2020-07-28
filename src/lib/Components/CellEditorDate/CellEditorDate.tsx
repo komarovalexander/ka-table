@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { kaDefaultOptions } from '../../';
 import { closeEditor, updateCellValue } from '../../actionCreators';
+import defaultOptions from '../../defaultOptions';
 import { ICellEditorProps } from '../../props';
 import { getDateInputValue } from '../../Utils/DateUtils';
 
@@ -16,7 +16,7 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = ({
   return (
     <input
       autoFocus={autoFocus}
-      className={kaDefaultOptions.css.dateInput}
+      className={defaultOptions.css.dateInput}
       type='date'
       value={inputValue || ''}
       onChange={(event) => {

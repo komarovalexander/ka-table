@@ -1,4 +1,4 @@
-import { kaDefaultOptions } from '../';
+import defaultOptions from '../defaultOptions';
 import { SortDirection } from '../enums';
 import { Column } from '../Models/Column';
 
@@ -32,7 +32,7 @@ const getNextSortDirection = (previousSortdirection?: SortDirection) => {
     nextSortDirection = previousSortdirection === SortDirection.Ascend
       ? SortDirection.Descend : SortDirection.Ascend;
   } else {
-    nextSortDirection = kaDefaultOptions.columnSortDirection;
+    nextSortDirection = defaultOptions.columnSortDirection;
   }
   return nextSortDirection;
 };
