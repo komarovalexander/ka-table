@@ -1,6 +1,6 @@
 {
   "name": "ka-table",
-  "version": "4.2.0",
+  "version": "4.1.1",
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table/#/overview",
@@ -70,7 +70,7 @@
     "simulant": "^0.2.2",
     "tslint": "^6.1.0",
     "tslint-react": "^4.2.0",
-    "typescript": "3.8.3"
+    "typescript": "~3.7.2"
   },
   "jest": {
     "collectCoverageFrom": [

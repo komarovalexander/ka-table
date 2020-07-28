@@ -3,6 +3,7 @@ import { ActionType } from '../enums';
 import { ITableProps } from '../index';
 import { Column } from '../models';
 import { EditableCell } from '../Models/EditableCell';
+import { ILoadingProps } from '../props';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
 import { getValueByField, replaceValue } from '../Utils/DataUtils';
@@ -72,7 +73,7 @@ const kaReducer: any = (props: ITableProps, action: any) => {
       return { ...props, loading: {...loading, enabled: false } };
     }
     case ActionType.ShowLoading: {
-      const newLoading = {...loading, enabled: true };
+      const newLoading: ILoadingProps = {...loading, enabled: true };
       if (action.text !== undefined) {
         newLoading.text = action.text;
       }
