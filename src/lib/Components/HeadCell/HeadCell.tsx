@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import defaultOptions from '../../defaultOptions';
+import { kaDefaultOptions } from '../../';
 import { IHeadCellProps } from '../../props';
 import { headCellDispatchWrapper } from '../../Utils/CellResizeUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
@@ -20,15 +20,15 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   const headCellDispatch = headCellDispatchWrapper(setWidth, dispatch);
 
   const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.theadCell} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''}`,
+    className: `${kaDefaultOptions.css.theadCell} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''}`,
     style: stateStyle,
     scope: 'col'
   }, props, childComponents.headCell);
 
   return (
     <th {...elementAttributes}>
-      <div className={defaultOptions.css.theadCellWrapper}>
-        <div className={defaultOptions.css.theadCellContentWrapper}>
+      <div className={kaDefaultOptions.css.theadCellWrapper}>
+        <div className={kaDefaultOptions.css.theadCellContentWrapper}>
          {content || <HeadCellContent {...props}/>}
         </div>
         {isResizable && (

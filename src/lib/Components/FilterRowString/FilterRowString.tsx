@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { kaDefaultOptions } from '../../';
 import { updateFilterRowValue } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { IFilterRowEditorProps } from '../../props';
 
 const FilterRowString: React.FunctionComponent<IFilterRowEditorProps> = ({
@@ -11,7 +11,7 @@ const FilterRowString: React.FunctionComponent<IFilterRowEditorProps> = ({
   return (
     <input
       type='text'
-      className={defaultOptions.css.textInput}
+      className={kaDefaultOptions.css.textInput}
       value={column.filterRowValue || ''}
       onChange={(event) => {
         dispatch(updateFilterRowValue(column.key, event.currentTarget.value));

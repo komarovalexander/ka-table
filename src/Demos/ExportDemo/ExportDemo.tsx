@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { CSVLink } from 'react-csv';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
+import { ITableProps, kaReducer, kaUtils, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
-import { kaPropsUtils } from '../../lib/utils';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -40,7 +39,7 @@ const ExportDemo: React.FC = () => {
         marginLeft: 20
       }}>
         <CSVLink
-          data={kaPropsUtils.getData(tableProps)}
+          data={kaUtils.props.getData(tableProps)}
           headers={tableProps.columns.map(c => ({ label: c.title!, key: c.key! }))}
           filename='ka-table.data.csv'>
           Download .csv

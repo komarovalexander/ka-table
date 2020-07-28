@@ -1,5 +1,4 @@
 import { AllHTMLAttributes } from 'react';
-import { isFunction } from 'util';
 
 import { ITableProps } from '../';
 import { Column } from '../models';
@@ -36,7 +35,7 @@ export const mergeProps = (
       const propName = prop as string;
       const propValue: any = (childCustomAttributes as any)[propName];
       const baseFunc = (childElementAttributes as any)[propName] || emptyFunc;
-      if (isFunction(propValue)) {
+      if (typeof propValue === 'function') {
         customPropsWithEvents[prop] = (e: any) => {
           propValue(e, {
             baseFunc,

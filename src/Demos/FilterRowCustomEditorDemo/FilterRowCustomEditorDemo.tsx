@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
+import { ITableProps, kaReducer, kaUtils, Table } from '../../lib';
 import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
 import { DataType, EditingMode, FilteringMode } from '../../lib/enums';
 import { Column } from '../../lib/models';
 import { IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
-import { kaDateUtils } from '../../lib/utils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
@@ -86,7 +85,7 @@ const DateEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   const fieldValue = column.filterRowValue;
-  const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
+  const value = fieldValue && kaUtils.date.getDateInputValue(fieldValue);
   return (
     <div>
       <FilterOperators column={column} dispatch={dispatch}/>

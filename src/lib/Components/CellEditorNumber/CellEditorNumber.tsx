@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { kaDefaultOptions } from '../../';
 import { closeEditor, updateCellValue } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { ICellEditorProps } from '../../props';
 
 const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
@@ -14,7 +14,7 @@ const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = ({
   return (
     <input
       autoFocus={autoFocus}
-      className={defaultOptions.css.numberInput}
+      className={kaDefaultOptions.css.numberInput}
       type='number'
       value={value === null || value === undefined ? '' : value}
       onChange={(event) => {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import defaultOptions from '../../defaultOptions';
+import { kaDefaultOptions } from '../../';
 import { FilteringMode } from '../../enums';
 import { ITableHeadProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
@@ -20,7 +20,7 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
   } = props;
 
   const { elementAttributes, content } = getElementCustomization({
-    className: defaultOptions.css.thead,
+    className: kaDefaultOptions.css.thead,
   }, { ...props, dispatch }, childComponents.tableHead);
   return (
     <thead {...elementAttributes} ref={theadRef}>

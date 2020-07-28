@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { kaDefaultOptions } from '../../';
 import { closeEditor, updateCellValue } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { ICellEditorProps } from '../../props';
 import { isEmpty } from '../../Utils/CommonUtils';
 
@@ -15,7 +15,7 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
   return (
     <input
       autoFocus={autoFocus}
-      className={defaultOptions.css.checkbox}
+      className={kaDefaultOptions.css.checkbox}
       type='checkbox'
       ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}
       checked={value || false}

@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { kaDefaultOptions } from '../../';
 import { reorderRows } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { IRowProps } from '../../props';
 import { ChildAttributesItem } from '../../types';
 import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
@@ -23,19 +23,19 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   } = props;
 
   if (rowReordering){
-    const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps(rowKeyValue, dispatch, reorderRows, defaultOptions.css.draggedRow, defaultOptions.css.dragOverRow);
+    const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps(rowKeyValue, dispatch, reorderRows, kaDefaultOptions.css.draggedRow, kaDefaultOptions.css.dragOverRow);
     dataRow = addElementAttributes(reorderedRowProps, props, dataRow);
   }
 
   const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`
+    className: `${kaDefaultOptions.css.row} ${isSelectedRow ? kaDefaultOptions.css.rowSelected : ''}`
   }, props, dataRow);
 
   return (
     <tr {...elementAttributes} ref={trRef} >
       <EmptyCells count={groupColumnsCount}/>
       {content
-        ? <td className={defaultOptions.css.cell}>{content}</td>
+        ? <td className={kaDefaultOptions.css.cell}>{content}</td>
         : <DataRowContent {...props}/>}
     </tr>
   );

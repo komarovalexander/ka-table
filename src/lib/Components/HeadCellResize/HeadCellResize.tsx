@@ -1,7 +1,7 @@
 import * as React from 'react';
 
+import { kaDefaultOptions } from '../../';
 import { resizeColumn } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { Column } from '../../Models/Column';
 import { DispatchFunc } from '../../types';
 import {
@@ -21,7 +21,7 @@ const HeadCellResize: React.FunctionComponent<{
   } = props;
   const minWidth = getMinWidth(style);
   return (
-    <div className={defaultOptions.css.theadCellResize}
+    <div className={kaDefaultOptions.css.theadCellResize}
       draggable='false'
       onMouseDown={(mouseDownEvent: any) => {
         const startX = mouseDownEvent.screenX - mouseDownEvent.currentTarget.parentElement.offsetWidth;

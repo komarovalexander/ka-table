@@ -1,10 +1,10 @@
 import React from 'react';
 
+import { kaUtils } from '../../lib';
 import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
 import { Column } from '../../lib/models';
 import { IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
-import { kaDateUtils } from '../../lib/utils';
 
 export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
@@ -75,7 +75,7 @@ export const DateEditor: React.FC<IFilterRowEditorProps> = ({
   column, dispatch,
 }) => {
   const fieldValue = column.filterRowValue;
-  const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
+  const value = fieldValue && kaUtils.date.getDateInputValue(fieldValue);
   return (
     <>
       <FilterOperators column={column} dispatch={dispatch}/>

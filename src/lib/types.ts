@@ -9,7 +9,8 @@ type WithExtraParameters<T, I> = {
 };
 type ElementAttributes<T> = React.AllHTMLAttributes<HTMLElement>;
 
-export type ChildAttributesItem<T> = WithExtraParameters<ElementAttributes<T>, T>;
+export declare interface ChildAttributesItem<T> extends WithExtraParameters<ElementAttributes<T>, T> {}
+
 export type DispatchFunc = (action: any) => void;
 export type Field = string;
 export type FormatFunc = (props: { value: any, column: Column }) => any;

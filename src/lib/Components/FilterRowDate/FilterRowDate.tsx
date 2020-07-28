@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { kaDefaultOptions } from '../../';
 import { updateFilterRowValue } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { IFilterRowEditorProps } from '../../props';
 import { getDateInputValue } from '../../Utils/DateUtils';
 
@@ -13,7 +13,7 @@ const FilterRowDate: React.FunctionComponent<IFilterRowEditorProps> = ({
   const value = fieldValue && getDateInputValue(fieldValue);
   return (
     <input
-      className={defaultOptions.css.dateInput}
+      className={kaDefaultOptions.css.dateInput}
       type='date'
       value={value || ''}
       onChange={(event) => {

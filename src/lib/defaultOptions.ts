@@ -1,13 +1,6 @@
+import { kaDefaultOptions } from './';
 
-import { DataType, SortDirection } from './enums';
-import { CssClasses } from './Models/CssClasses';
+// tslint:disable-next-line:no-console
+console.warn('[Deprecated] ka-table: ka-table/utils is deprecated and will be removed in next major version, use { kaDefaultOptions } from "ka-table" instead');
 
-class DefaultOptions {
-  public columnDataType = DataType.String;
-  public columnSortDirection: SortDirection = SortDirection.Ascend;
-  public css: CssClasses = new CssClasses();
-}
-
-const defaultOptions = new DefaultOptions();
-
-export default defaultOptions;
+export default kaDefaultOptions;

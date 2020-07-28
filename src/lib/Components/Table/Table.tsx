@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import defaultOptions from '../../defaultOptions';
+import { kaDefaultOptions } from '../../';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 import { EditableCell, PagingOptions } from '../../models';
 import { ChildComponents } from '../../Models/ChildComponents';
@@ -84,7 +84,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   }, { ...props, dispatch }, childComponents.rootDiv);
 
   const { elementAttributes, content } = getElementCustomization({
-    className: defaultOptions.css.table,
+    className: kaDefaultOptions.css.table,
   }, { ...props, dispatch }, childComponents.table);
   return (
     <div {...rootDivElementAttributes}>

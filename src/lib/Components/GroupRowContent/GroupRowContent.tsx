@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { kaDefaultOptions } from '../../';
 import { updateGroupsExpanded } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { IGroupRowProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
@@ -18,7 +18,7 @@ const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
   } = props;
 
   const { elementAttributes, content } = getElementCustomization({
-    className: defaultOptions.css.groupCell,
+    className: kaDefaultOptions.css.groupCell,
     colSpan: contentColSpan
   }, props, childComponents.groupCell);
 
@@ -32,7 +32,7 @@ const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
                 dispatch(updateGroupsExpanded(groupKey));
               }}
               className={isExpanded
-                ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed}
+                ? kaDefaultOptions.css.iconGroupArrowExpanded : kaDefaultOptions.css.iconGroupArrowCollapsed}
             />
             {
               content || <div className='ka-group-text'>{text}</div>
