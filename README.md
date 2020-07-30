@@ -31,7 +31,7 @@ import "ka-table/style.css";
 
 import React, { useState } from 'react';
 
-import { ITableOption, kaReducer, Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 
@@ -45,7 +45,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const tablePropsInit: ITableOption = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
