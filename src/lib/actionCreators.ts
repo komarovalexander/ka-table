@@ -76,6 +76,12 @@ export const selectRow = (rowKeyValue: any) => ({
   type: ActionType.SelectRow,
 });
 
+export const selectRowsRange = (rowKeyValue: any, lastSelectedRowKeyValue: any) => ({
+  rowKeyValue,
+  lastSelectedRowKeyValue,
+  type: ActionType.SelectRowsRange,
+});
+
 export const updateGroupsExpanded = (groupKey: any[]) => ({
   groupKey,
   type: ActionType.UpdateGroupsExpanded,

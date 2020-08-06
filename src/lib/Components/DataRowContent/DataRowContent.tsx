@@ -18,6 +18,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   rowEditableCells,
   rowKeyField,
   rowKeyValue,
+  selectedRows,
   validation,
 }) => {
   return (
@@ -44,6 +45,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
             rowData={rowData}
             rowKeyField={rowKeyField}
             rowKeyValue={rowKeyValue}
+            selectedRows={selectedRows}
             validation={validation}
             validationMessage={editableCell && editableCell.validationMessage}
             value={value}

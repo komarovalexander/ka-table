@@ -47,3 +47,41 @@ Object {
   "rowKeyField": "a.id",
 }
 `;
+
+exports[`kaReducer SelectRowsRange default 1`] = `
+Array [
+  2,
+  3,
+  4,
+]
+`;
+
+exports[`kaReducer SelectRowsRange lastSelectedRowKeyValue is not specified 1`] = `
+Array [
+  2,
+]
+`;
+
+exports[`kaReducer SelectRowsRange revert set 1`] = `
+Array [
+  2,
+  3,
+  4,
+]
+`;
+
+exports[`kaReducer SelectRowsRange skip if lastSelectedRowKeyValue is not found 1`] = `
+Array [
+  undefined,
+  1,
+  2,
+]
+`;
+
+exports[`kaReducer SelectRowsRange skip if rowKeyValue is not found 1`] = `
+Array [
+  undefined,
+  1,
+  2,
+]
+`;

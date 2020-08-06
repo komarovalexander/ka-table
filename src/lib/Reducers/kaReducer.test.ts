@@ -1,10 +1,44 @@
+import { ITableProps } from '../';
 import {
-  deleteRow, deselectAllRows, deselectRow, reorderRows, selectAllRows, selectSingleRow, updateData,
+  deleteRow, deselectAllRows, deselectRow, reorderRows, selectAllRows, selectRowsRange,
+  selectSingleRow, updateData,
 } from '../actionCreators';
 import { ActionType } from '../enums';
 import { kaReducer } from './kaReducer';
 
 describe('kaReducer', () => {
+  describe('SelectRowsRange', () => {
+    const intialState = {
+      data: [
+        { key: 1 },
+        { key: 2 },
+        { key: 3 },
+        { key: 4 },
+      ],
+      columns: [{ key: 'key' }],
+      rowKeyField: 'key',
+    };
+    it('default', () => {
+      const result: ITableProps = kaReducer(intialState, selectRowsRange(2, 4));
+      expect(result.selectedRows).toMatchSnapshot();
+    });
+    it('revert set', () => {
+      const result: ITableProps = kaReducer(intialState, selectRowsRange(4, 2));
+      expect(result.selectedRows).toMatchSnapshot();
+    });
+    it('lastSelectedRowKeyValue is not specified', () => {
+      const result: ITableProps = kaReducer(intialState, selectRowsRange(2, null));
+      expect(result.selectedRows).toMatchSnapshot();
+    });
+    it('skip if lastSelectedRowKeyValue is not found', () => {
+      const result: ITableProps = kaReducer(intialState, selectRowsRange(2, 7));
+      expect(result.selectedRows).toMatchSnapshot();
+    });
+    it('skip if rowKeyValue is not found', () => {
+      const result: ITableProps = kaReducer(intialState, selectRowsRange(7, 2));
+      expect(result.selectedRows).toMatchSnapshot();
+    });
+  });
   describe('ReorderRows', () => {
     it('default', () => {
       const intialState = {

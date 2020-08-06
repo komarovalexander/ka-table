@@ -3,7 +3,9 @@ import './SelectionDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { deselectAllRows, deselectRow, selectAllRows, selectRow } from '../../lib/actionCreators';
+import {
+  deselectAllRows, deselectRow, selectAllRows, selectRow, selectRowsRange,
+} from '../../lib/actionCreators';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
 import { ICellTextProps, IHeadCellProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
@@ -18,14 +20,16 @@ const dataArray: any[] = [
 ];
 
 const SelectionCell: React.FC<ICellTextProps> = ({
-  rowKeyValue, dispatch, isSelectedRow,
+  rowKeyValue, dispatch, isSelectedRow, selectedRows
 }) => {
   return (
     <input
       type='checkbox'
       checked={isSelectedRow}
-      onChange={(event) => {
-        if (event.currentTarget.checked) {
+      onChange={(event: any) => {
+        if (event.nativeEvent.shiftKey){
+          dispatch(selectRowsRange(rowKeyValue, [...selectedRows].pop()));
+        } else if (event.currentTarget.checked) {
           dispatch(selectRow(rowKeyValue));
         } else {
           dispatch(deselectRow(rowKeyValue));
