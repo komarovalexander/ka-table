@@ -31,6 +31,7 @@ export enum ActionType {
   Search = 'Search',
   SelectAllRows = 'SelectAllRows',
   SelectRow = 'SelectRow',
+  SelectRowsRange = 'SelectRowsRange',
   SelectSingleRow = 'SelectSingleRow',
   ShowDetailsRow = 'ShowDetailsRow',
   ShowLoading = 'ShowLoading',

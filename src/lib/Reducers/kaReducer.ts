@@ -4,6 +4,7 @@ import { ITableProps } from '../index';
 import { Column } from '../models';
 import { EditableCell } from '../Models/EditableCell';
 import { ILoadingProps } from '../props';
+import { kaPropsUtils } from '../utils';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
 import { getValueByField, replaceValue } from '../Utils/DataUtils';
@@ -160,6 +161,26 @@ const kaReducer: any = (props: ITableProps, action: any) => {
       return { ...props, selectedRows: [] };
     case ActionType.SelectRow:
         return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
+    case ActionType.SelectRowsRange: {
+      const rowKeyValueTo = action.rowKeyValueTo;
+      if (rowKeyValueTo) {
+        const shownData = kaPropsUtils.getData(props);
+        const rowKeyValueToIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === rowKeyValueTo);
+        const rowKeyValueFromIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === action.rowKeyValueFrom);
+        if (rowKeyValueToIndex != null && rowKeyValueFromIndex != null){
+          const [start, end] = rowKeyValueToIndex > rowKeyValueFromIndex ? [rowKeyValueFromIndex, rowKeyValueToIndex] : [rowKeyValueToIndex, rowKeyValueFromIndex];
+          const rowsToSelect = [];
+          for (let i = start; i <= end; i++){
+            const value = getValueByField(shownData[i], rowKeyField);
+            if (!selectedRows.includes(value)){
+              rowsToSelect.push(value);
+            }
+          }
+          return { ...props, selectedRows: [...selectedRows, ...rowsToSelect] };
+        }
+      }
+      return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValueFrom]] };
+    }
     case ActionType.DeselectRow: {
       const newSelectedRows = [...selectedRows].filter((s) => s !== action.rowKeyValue);
       return { ...props, selectedRows: newSelectedRows };

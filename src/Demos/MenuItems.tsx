@@ -11,7 +11,7 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
-const newItems = ['ExportDemo', 'RowsReorderingDemo'];
+const newItems = ['ExportDemo', 'RowReorderingDemo'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 

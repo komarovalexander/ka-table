@@ -13,7 +13,10 @@ let timeoutId: any = null;
 
 const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
   const [search, changeSearch] = useState('');
-  const filteredCases = search ? cases.filter((c) => c.title.toLowerCase().includes(search.toLowerCase())) : cases;
+  const filteredCases = search ? cases.filter((c) =>
+    c.title.toLowerCase().includes(search.toLowerCase())
+    || c.group.toLowerCase().includes(search.toLowerCase())
+  ) : cases;
 
   let menuItems: MenuItem[] = [];
   filteredCases.forEach(c => {

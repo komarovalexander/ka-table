@@ -30,6 +30,7 @@ export interface ICellProps {
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
+  selectedRows: any[];
   validation?: ValidationFunc;
   validationMessage?: string;
   value: any;
@@ -52,6 +53,7 @@ export interface ICellEditorProps extends IFilterRowEditorProps {
   rowKeyField: string;
   rowKeyValue: any;
   value: any;
+  selectedRows: any[];
   validationMessage?: string;
   validation?: ValidationFunc;
 }
@@ -68,6 +70,7 @@ export interface ICellTextProps {
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
+  selectedRows: any[];
   value: any;
 }
 
