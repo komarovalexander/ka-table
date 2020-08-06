@@ -76,9 +76,9 @@ export const selectRow = (rowKeyValue: any) => ({
   type: ActionType.SelectRow,
 });
 
-export const selectRowsRange = (rowKeyValue: any, lastSelectedRowKeyValue: any) => ({
-  rowKeyValue,
-  lastSelectedRowKeyValue,
+export const selectRowsRange = (rowKeyValueFrom: any, rowKeyValueTo: any) => ({
+  rowKeyValueFrom,
+  rowKeyValueTo,
   type: ActionType.SelectRowsRange,
 });
 

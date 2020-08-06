@@ -162,13 +162,13 @@ const kaReducer: any = (props: ITableProps, action: any) => {
     case ActionType.SelectRow:
         return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
     case ActionType.SelectRowsRange: {
-      const lastSelectedRowKeyValue = action.lastSelectedRowKeyValue;
-      if (lastSelectedRowKeyValue) {
+      const rowKeyValueTo = action.rowKeyValueTo;
+      if (rowKeyValueTo) {
         const shownData = kaPropsUtils.getData(props);
-        const lastSelectedItemIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === lastSelectedRowKeyValue);
-        const currentSelectedItemIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === action.rowKeyValue);
-        if (lastSelectedItemIndex != null && currentSelectedItemIndex != null){
-          const [start, end] = lastSelectedItemIndex > currentSelectedItemIndex ? [currentSelectedItemIndex, lastSelectedItemIndex] : [lastSelectedItemIndex, currentSelectedItemIndex];
+        const rowKeyValueToIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === rowKeyValueTo);
+        const rowKeyValueFromIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === action.rowKeyValueFrom);
+        if (rowKeyValueToIndex != null && rowKeyValueFromIndex != null){
+          const [start, end] = rowKeyValueToIndex > rowKeyValueFromIndex ? [rowKeyValueFromIndex, rowKeyValueToIndex] : [rowKeyValueToIndex, rowKeyValueFromIndex];
           const rowsToSelect = [];
           for (let i = start; i <= end; i++){
             const value = getValueByField(shownData[i], rowKeyField);
@@ -179,7 +179,7 @@ const kaReducer: any = (props: ITableProps, action: any) => {
           return { ...props, selectedRows: [...selectedRows, ...rowsToSelect] };
         }
       }
-      return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
+      return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValueFrom]] };
     }
     case ActionType.DeselectRow: {
       const newSelectedRows = [...selectedRows].filter((s) => s !== action.rowKeyValue);

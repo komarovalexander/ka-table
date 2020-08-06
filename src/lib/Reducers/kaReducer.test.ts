@@ -26,11 +26,11 @@ describe('kaReducer', () => {
       const result: ITableProps = kaReducer(intialState, selectRowsRange(4, 2));
       expect(result.selectedRows).toMatchSnapshot();
     });
-    it('lastSelectedRowKeyValue is not specified', () => {
+    it('rowKeyValueTo is not specified', () => {
       const result: ITableProps = kaReducer(intialState, selectRowsRange(2, null));
       expect(result.selectedRows).toMatchSnapshot();
     });
-    it('skip if lastSelectedRowKeyValue is not found', () => {
+    it('skip if rowKeyValueTo is not found', () => {
       const result: ITableProps = kaReducer(intialState, selectRowsRange(2, 7));
       expect(result.selectedRows).toMatchSnapshot();
     });

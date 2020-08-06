@@ -56,7 +56,7 @@ Array [
 ]
 `;
 
-exports[`kaReducer SelectRowsRange lastSelectedRowKeyValue is not specified 1`] = `
+exports[`kaReducer SelectRowsRange rowKeyValueTo is not specified 1`] = `
 Array [
   2,
 ]
@@ -70,7 +70,7 @@ Array [
 ]
 `;
 
-exports[`kaReducer SelectRowsRange skip if lastSelectedRowKeyValue is not found 1`] = `
+exports[`kaReducer SelectRowsRange skip if rowKeyValueTo is not found 1`] = `
 Array [
   undefined,
   1,
