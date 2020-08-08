@@ -121,6 +121,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
       <Paging
         {...paging}
         dispatch={dispatch}
+        childComponents={childComponents}
         pagesCount={preparedOptions.pagesCount}
       />
       <Loading

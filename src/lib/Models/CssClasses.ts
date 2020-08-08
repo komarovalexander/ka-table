@@ -20,6 +20,10 @@ export class CssClasses {
   public draggedRow = 'ka-dragged-row';
   public dragOverRow = 'ka-drag-over-row';
 
+  public paging = 'ka-paging';
+  public pagingPages = 'ka-paging-pages';
+  public pagingPageIndex = 'ka-paging-page-index';
+
   public iconClose = 'ka-icon ka-icon-close';
   public iconGroupArrowCollapsed = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-collapsed';
   public iconGroupArrowExpanded = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-expanded';
