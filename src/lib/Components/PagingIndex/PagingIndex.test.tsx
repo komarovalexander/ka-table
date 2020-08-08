@@ -8,6 +8,7 @@ import PagingIndex, { IPagingIndexProps } from './PagingIndex';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IPagingIndexProps = {
+  childComponents: {},
 };
 
 it('renders without crashing', () => {

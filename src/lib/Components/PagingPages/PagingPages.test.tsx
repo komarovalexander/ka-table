@@ -3,15 +3,17 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { IPagingProps } from '../../props';
+import { IPagingPagesProps } from '../../props';
 import PagingPages from './PagingPages';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const props: IPagingProps = {
+const props: IPagingPagesProps = {
+    childComponents: {},
     enabled: true,
     pageIndex: 2,
     pageSize: 2,
+    pages: [1, 2, 3]
 };
 
 it('renders without crashing', () => {

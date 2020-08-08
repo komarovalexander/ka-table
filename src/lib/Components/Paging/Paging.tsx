@@ -9,9 +9,8 @@ const Paging: React.FunctionComponent<IPagingProps> = (props) => {
       enabled,
       pagesCount,
     } = props;
-    const pages = new Array(pagesCount).fill(undefined).map((_, index) =>  index);
-
     if (enabled){
+      const pages = new Array(pagesCount).fill(undefined).map((_, index) =>  index);
       return (
         <div className={defaultOptions.css.paging}>
           <PagingPages {...props} pages={pages}/>

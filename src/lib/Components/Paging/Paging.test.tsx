@@ -9,9 +9,11 @@ import Paging from './Paging';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IPagingProps = {
+    childComponents: {},
     enabled: true,
     pageIndex: 2,
     pageSize: 2,
+    pagesCount: 2
 };
 
 it('renders without crashing', () => {
