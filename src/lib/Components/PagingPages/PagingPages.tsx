@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { updatePageIndex } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { IPagingPagesProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
@@ -9,9 +10,17 @@ import PagingIndex from '../PagingIndex/PagingIndex';
 const PagingPages: React.FunctionComponent<IPagingPagesProps> = (props) => {
     const {
       childComponents,
-      pageIndex = 1,
       pages,
+      dispatch,
     } = props;
+    const {
+      pageIndex = 0,
+    } = props;
+
+    if (pageIndex !== 0 && pageIndex >= pages.length){
+      dispatch(updatePageIndex(0));
+    }
+
     const isEndShown = pageIndex < pages.length - centerLength && pages.length > centerLength + Math.ceil(centerLength / 2);
     const isStartShown = pageIndex >= centerLength && pages.length > centerLength + Math.ceil(centerLength / 2);
     const centerPages = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);

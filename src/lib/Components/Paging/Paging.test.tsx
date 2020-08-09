@@ -11,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() });
 const props: IPagingProps = {
     childComponents: {},
     enabled: true,
-    pageIndex: 2,
+    pageIndex: 1,
     pageSize: 2,
     pagesCount: 2
 };
