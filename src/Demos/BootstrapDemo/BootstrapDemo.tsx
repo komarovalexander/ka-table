@@ -8,7 +8,7 @@ import { ChildComponents } from '../../lib/models';
 import { DispatchFunc } from '../../lib/types';
 import { CustomLookupEditor, DateEditor, NumberEditor } from './editors';
 
-const dataArray = Array(180).fill(undefined).map(
+const dataArray = Array(119).fill(undefined).map(
   (_, index) => ({
     column1: index % 2 === 0,
     column2: `column:2 row:${index}`,
