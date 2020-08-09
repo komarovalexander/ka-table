@@ -1,7 +1,4 @@
 .bootstrap-demo{
-  // Tables
-  //
-  // Customizes the `.table` component with basic values, each used across all table variations.
   @import '../../../node_modules/bootstrap/scss/functions.scss';
   @import '../../../node_modules/bootstrap/scss/variables.scss';
   $pagination-active-bg: $table-dark-bg;

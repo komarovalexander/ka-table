@@ -1,11 +1,10 @@
 import { AllHTMLAttributes } from 'react';
 
 import { ITableProps } from '../';
-import defaultOptions from '../defaultOptions';
 import { DataType, EditingMode, SortDirection } from '../enums';
 import { ICellProps } from '../props';
 import { ChildAttributesItem } from '../types';
-import { getData, getDraggableProps, mergeProps } from './PropsUtils';
+import { getData, getDraggableProps, mergeProps, prepareTableOptions } from './PropsUtils';
 
 describe('PropsUtils', () => {
   it('mergeProps', () => {
@@ -184,6 +183,33 @@ describe('getDraggableProps', () => {
     expect(event.currentTarget.classList.add).toBeCalledTimes(1);
     expect(event.currentTarget.classList.add).toBeCalledWith(dragOverClass);
     expect(event.preventDefault).toBeCalledTimes(2);
+  });
+});
+
+
+describe('getDraggableProps', () => {
+  const tableProps = {
+    columns: [{ key: 'column' }],
+    rowKeyField: 'id',
+    data: Array(30).fill(undefined).map(
+      (_, index) => ({
+        id: index,
+        column: index % 5
+      }),
+    ),
+    paging: {
+      enabled: true,
+      pageSize: 3
+    },
+    searchText: '3'
+  };
+  it('pages count should depends on filters', () => {
+    const result = prepareTableOptions(tableProps);
+    expect(result.pagesCount).toEqual(2);
+  });
+  it('pages count is 1 by default', () => {
+    const result = prepareTableOptions({ ...tableProps, paging: undefined });
+    expect(result.pagesCount).toEqual(1);
   });
 });
 

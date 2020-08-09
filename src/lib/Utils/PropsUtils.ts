@@ -59,13 +59,10 @@ export const mergeProps = (
   return mergedResult;
 };
 
-export const getData = (props: ITableProps) => {
+const _filterData = (props: ITableProps) => {
   const {
     extendedFilter,
     columns,
-    groups,
-    groupsExpanded,
-    paging,
     searchText,
     search,
   } = props;
@@ -77,6 +74,22 @@ export const getData = (props: ITableProps) => {
   data = searchText ? searchData(columns, data, searchText, search) : data;
   data = convertToColumnTypes(data, columns);
   data = filterData(data, columns);
+
+  return data;
+};
+
+export const getData = (props: ITableProps) => {
+  const {
+    columns,
+    groups,
+    groupsExpanded,
+    paging,
+  } = props;
+  let {
+    data = [],
+  } = props;
+  data = [...data];
+  data = _filterData(props);
   data = sortData(columns, data);
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
@@ -88,16 +101,13 @@ export const getData = (props: ITableProps) => {
 
 export const prepareTableOptions = (props: ITableProps) => {
   const {
-    data = [],
     groups,
     paging,
   } = props;
   let {
     columns,
   } = props;
-
   const groupedData = getData(props);
-
   let groupColumnsCount = 0;
   let groupedColumns: Column[] = [];
   if (groups) {
@@ -105,7 +115,10 @@ export const prepareTableOptions = (props: ITableProps) => {
     groupedColumns = columns.filter((c) => groups.some((g) => g.columnKey === c.key));
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
-  const pagesCount = getPagesCount(data, paging);
+  let pagesCount = 1;
+  if (paging && paging.enabled) {
+    pagesCount = getPagesCount(_filterData(props), paging);
+  }
   return {
     columns,
     groupColumnsCount,
