@@ -1,7 +1,8 @@
 import { ITableProps } from '../';
 import {
   ICellEditorProps, ICellProps, ICellTextProps, IDataRowProps, IFilterRowEditorProps,
-  IGroupRowProps, IHeadCellProps, INoDataRowProps, ITableHeadProps,
+  IGroupRowProps, IHeadCellProps, INoDataRowProps, IPagingIndexProps, IPagingPagesProps,
+  ITableHeadProps,
 } from '../props';
 import { ChildComponent } from './ChildComponent';
 
@@ -12,6 +13,8 @@ export class ChildComponents {
   public dataRow?: ChildComponent<IDataRowProps>;
   public detailsRow?: ChildComponent<IDataRowProps>;
   public filterRowCell?: ChildComponent<IFilterRowEditorProps>;
+  public pagingIndex?: ChildComponent<IPagingIndexProps>;
+  public pagingPages?: ChildComponent<IPagingPagesProps>;
   public groupCell?: ChildComponent<IGroupRowProps>;
   public groupRow?: ChildComponent<IGroupRowProps>;
   public headCell?: ChildComponent<IHeadCellProps>;

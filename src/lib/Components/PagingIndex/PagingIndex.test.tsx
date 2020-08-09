@@ -3,21 +3,16 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { IPagingProps } from '../../props';
-import Paging from './Paging';
+import PagingIndex, { IPagingIndexProps } from './PagingIndex';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const props: IPagingProps = {
-    childComponents: {},
-    enabled: true,
-    pageIndex: 1,
-    pageSize: 2,
-    pagesCount: 2
+const props: IPagingIndexProps = {
+  childComponents: {},
 };
 
 it('renders without crashing', () => {
   const element = document.createElement('div');
-  ReactDOM.render(<Paging {...props} />, element);
+  ReactDOM.render(<PagingIndex {...props} />, element);
   ReactDOM.unmountComponentAtNode(element);
 });

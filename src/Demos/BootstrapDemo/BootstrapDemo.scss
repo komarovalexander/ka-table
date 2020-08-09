@@ -1,8 +1,9 @@
 .bootstrap-demo{
-  // Tables
-//
-// Customizes the `.table` component with basic values, each used across all table variations.
-
+  @import '../../../node_modules/bootstrap/scss/functions.scss';
+  @import '../../../node_modules/bootstrap/scss/variables.scss';
+  $pagination-active-bg: $table-dark-bg;
+  $pagination-color: $table-color;
+  $pagination-active-border-color: $table-dark-bg;
   @import '../../../node_modules/bootstrap/scss/bootstrap';
   @import '../../lib/static/icons.scss';
   .ka-icon{
@@ -38,25 +39,11 @@
   .ka-no-data-row{
     text-align: center;
   }
-
-  .ka-paging-pages{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+  .ka-paging{
+    padding: 15px;
   }
-
   .ka-paging-page-index{
     cursor: pointer;
-    padding: 5px 10px;
-    margin: 10px;
-    min-width: 18px;
-    border-radius: 50%;
-    text-align: center;
   }
 
-  .ka-paging-page-index-active{
-    background-color: rgba(0, 0, 0, 0.075);
-    font-weight: bold;
-    color: #747D86;
-  }
 }

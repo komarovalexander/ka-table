@@ -195,5 +195,15 @@ export interface IPagingProps {
   pageIndex?: number;
   pageSize?: number;
   pagesCount?: number;
+  childComponents: ChildComponents;
   dispatch: DispatchFunc;
+}
+
+export interface IPagingIndexProps extends IPagingProps {
+  isActive: boolean;
+  pageIndex: number;
+  text: any;
+}
+export interface IPagingPagesProps extends IPagingProps {
+  pages: number[];
 }
