@@ -8,24 +8,22 @@ import { ChildComponents } from 'ka-table/models';
 import { DispatchFunc } from 'ka-table/types';
 import { CustomLookupEditor, DateEditor, NumberEditor } from './editors';
 
-const dataArray: any[] = [
-  { id: 1, name: 'Mike Wazowski', score: 80, passed: true, tryDate: new Date(2021, 10, 9) },
-  { id: 2, name: 'Billi Bob', score: 55, passed: false, tryDate: new Date(2021, 10, 8) },
-  { id: 3, name: 'Tom Williams', score: 45, passed: false, tryDate: new Date(2019, 11, 8) },
-  { id: 4, name: 'Kurt Cobain', score: 75, passed: true, tryDate: new Date(2021, 12, 9) },
-  { id: 5, name: 'Marshall Bruce', score: 77, passed: true, tryDate: new Date(2019, 11, 12) },
-  { id: 6, name: 'Sunny Fox', score: 33, passed: false, tryDate: new Date(2020, 10, 9) },
-  { id: 7, name: 'Dick Lee', score: 13, passed: false, tryDate: new Date(2017, 10, 9) },
-  { id: 8, name: 'Papa Ricko', score: 73, passed: true, tryDate: new Date(2026, 10, 9) },
-  { id: 9, name: 'Treme Watson', score: 61, passed: true, tryDate: new Date(2022, 10, 9) },
-];
+const dataArray = Array(119).fill(undefined).map(
+  (_, index) => ({
+    column1: index % 2 === 0,
+    column2: `column:2 row:${index}`,
+    column3: index % 5,
+    column4: new Date(2022, 11, index),
+    id: index,
+  }),
+);
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, style: {width: 240} },
-    { key: 'score', title: 'Score', dataType: DataType.Number, filterRowOperator: '>', style: {width: 230} },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: {minWidth: 130} },
-    { dataType: DataType.Date, key: 'tryDate', title: 'Date', filterRowOperator: '<', style: {minWidth: 100} },
+    { key: 'column1', title: 'Column 1', dataType: DataType.Boolean, style: {minWidth: 130}   },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String, style: {width: 240} },
+    { key: 'column3', title: 'Column 3', dataType: DataType.Number, filterRowOperator: '>', style: {width: 230}  },
+    { key: 'column4', title: 'Column 4', dataType: DataType.Date, filterRowOperator: '<', style: {minWidth: 100} },
   ],
   format: ({ column, value }) => {
     if (column.dataType === DataType.Date){
@@ -62,16 +60,27 @@ const bootstrapChildComponents: ChildComponents = {
     content: (props) => {
       const getEditor = () => {
         switch (props.column.key){
-          case 'passed': return <CustomLookupEditor {...props}/>;
-          case 'name': return <></>;
-          case 'score': return <NumberEditor {...props}/>;
-          case 'tryDate': return <DateEditor {...props}/>;
+          case 'column1': return <CustomLookupEditor {...props}/>;
+          case 'column2': return <></>;
+          case 'column3': return <NumberEditor {...props}/>;
+          case 'column4': return <DateEditor {...props}/>;
         }
       }
       return (
         <div className='d-flex'>{getEditor()}</div>
       )
     }
+  },
+  pagingIndex: {
+    elementAttributes: ({ isActive }) => ({
+      className: `page-item ${(isActive ? 'active' : '')}`
+    }),
+    content: ({ text }) => <div className='page-link'>{text}</div>
+  },
+  pagingPages: {
+    elementAttributes: () => ({
+      className: 'pagination'
+    }),
   }
 };
 
