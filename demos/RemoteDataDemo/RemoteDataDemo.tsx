@@ -39,7 +39,7 @@ const tablePropsInit: ITableProps = {
   },
   paging: {
     enabled: true,
-    pageIndex: 1,
+    pageIndex: 0,
     pageSize: 10
   },
   rowKeyField: 'id',
