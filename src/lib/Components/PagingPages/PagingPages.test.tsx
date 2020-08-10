@@ -1,6 +1,6 @@
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import { ActionType } from '../../enums';
@@ -43,4 +43,21 @@ it('dont set page index as 0 in case it inside of the pages lenght', () => {
 it('dont set page index as 0 in case it equals 0 and pages is empty', () => {
   mount(<PagingPages {...props} pages={[]} pageIndex={0} />);
   expect(props.dispatch).toHaveBeenCalledTimes(0);
+});
+
+it('should not throw the warning', () => {
+  const error = jest.spyOn(global.console, 'error');
+  const ParentComponent = () => {
+    const [state, change] = useState(100);
+    return (
+      <PagingPages {...props} dispatch={(action) => {
+        change(action.pageIndex);
+      }} pages={[]} pageIndex={state} />
+    );
+  }
+  mount(<ParentComponent />);
+  expect(error).not.toHaveBeenCalled();
+  // Cleanup
+  error.mockReset();
+  error.mockRestore();
 });

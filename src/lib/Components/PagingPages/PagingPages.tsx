@@ -17,9 +17,12 @@ const PagingPages: React.FunctionComponent<IPagingPagesProps> = (props) => {
       pageIndex = 0,
     } = props;
 
-    if (pageIndex !== 0 && pageIndex >= pages.length){
-      dispatch(updatePageIndex(0));
-    }
+    React.useEffect(() => {
+      if (pageIndex !== 0 && pageIndex >= pages.length){
+        dispatch(updatePageIndex(0));
+      }
+    }, [dispatch, pageIndex, pages]);
+
 
     const isEndShown = pageIndex < pages.length - centerLength && pages.length > centerLength + Math.ceil(centerLength / 2);
     const isStartShown = pageIndex >= centerLength && pages.length > centerLength + Math.ceil(centerLength / 2);
