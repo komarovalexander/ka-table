@@ -1,12 +1,8 @@
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ActionType, EditingMode } from '../../enums';
+import { EditingMode } from '../../enums';
 import TableBody from './TableBody';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const props: any = {
   childComponents: {},
@@ -35,19 +31,4 @@ describe('TableBody', () => {
     ReactDOM.render(<TableBody {...props} />, element);
     ReactDOM.unmountComponentAtNode(element);
   });
-
-  it('should dispatch ScrollTable on scroll', () => {
-    const wrapper = mount(<TableBody {...props} />, {
-      attachTo: document.createElement('table'),
-    });
-    const scrollTop = 11;
-    const scrollLeft = 13;
-
-    wrapper.find('tbody').prop('onScroll')!({ currentTarget: {scrollTop, scrollLeft} } as any);
-    expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith(
-      { type: ActionType.ScrollTable, scrollTop, scrollLeft },
-    );
-  });
-
 });
