@@ -1,4 +1,5 @@
 export class CssClasses {
+  public root = 'ka';
   public cell = 'ka-cell';
   public cellEditor: string = 'ka-cell-editor';
   public cellText = 'ka-cell-text';
@@ -8,9 +9,11 @@ export class CssClasses {
   public kaCellEditorValidationError = 'ka-cell-editor-validation-error';
   public row = 'ka-tr ka-row';
   public rowSelected = 'ka-row-selected';
+  public tableWrapper = 'ka-table-wrapper';
   public table = 'ka-table';
   public tbody = 'ka-tbody';
   public thead = 'ka-thead';
+  public theadBackground = 'ka-thead-background';
   public theadCell = 'ka-thead-cell';
   public theadCellContent = 'ka-thead-cell-content';
   public theadCellContentWrapper = 'ka-thead-cell-content-wrapper';

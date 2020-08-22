@@ -164,7 +164,8 @@ export interface IRowProps extends IRowCommonProps {
 
 export interface IEmptyCellsProps {
   count: number;
-  shouldUseTh?: boolean;
+  isTh?: boolean;
+  className?: string;
 }
 
 export interface ICellEditorValidationMessageProps {

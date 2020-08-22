@@ -16,7 +16,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
 }) => {
   return (
     <tr className={defaultOptions.css.theadRow}>
-      <EmptyCells count={groupColumnsCount}/>
+      <EmptyCells count={groupColumnsCount} isTh={true}/>
       {columns.map((column) => {
         return (
           <HeadCell
