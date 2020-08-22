@@ -173,3 +173,9 @@ export const reorderRows = (rowKeyValue: any, targetRowKeyValue: any) => ({
   rowKeyValue,
   targetRowKeyValue,
 });
+
+export const reorderColumns = (columnKey: string, targetColumnKey: string) => ({
+  type: ActionType.ReorderColumns,
+  columnKey,
+  targetColumnKey,
+});

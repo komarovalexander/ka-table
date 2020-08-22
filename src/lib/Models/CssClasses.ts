@@ -19,6 +19,8 @@ export class CssClasses {
   public theadRow = 'ka-tr ka-thead-row';
   public draggedRow = 'ka-dragged-row';
   public dragOverRow = 'ka-drag-over-row';
+  public draggedColumn = 'ka-dragged-column';
+  public dragOverColumn = 'ka-drag-over-column';
 
   public paging = 'ka-paging';
   public pagingPages = 'ka-paging-pages';

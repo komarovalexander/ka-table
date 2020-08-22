@@ -102,7 +102,7 @@ $ka-paging-index-active-background-color: #F1F5F7;
   border-bottom: 1px solid $ka-border-color;
   border-top: 1px solid $ka-border-color;
 }
-.ka-dragged-row{
+.ka-dragged-row, .ka-dragged-column{
   opacity: 0.5;
 }
 .ka-drag-over-row {
@@ -110,6 +110,12 @@ $ka-paging-index-active-background-color: #F1F5F7;
 }
 .ka-dragged-row ~ .ka-drag-over-row{
   box-shadow: inset 0 -7px 0px -4px $ka-selected-border-color;
+}
+.ka-drag-over-column {
+  box-shadow: inset 7px 0 0px -4px $ka-selected-border-color;
+}
+.ka-dragged-column ~ .ka-drag-over-column{
+  box-shadow: inset -7px 0 0px -4px $ka-selected-border-color;
 }
 .ka-row-selected {
   background-color: $ka-selecter-background-color;

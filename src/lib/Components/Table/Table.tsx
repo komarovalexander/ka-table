@@ -19,6 +19,7 @@ import TableBody from '../TableBody/TableBody';
 import { TableHead } from '../TableHead/TableHead';
 
 export interface ITableProps {
+  columnReordering?: boolean;
   columns: Column[];
   data?: any[];
   format?: FormatFunc;
@@ -52,6 +53,7 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     data = [],
+    columnReordering,
     childComponents = {},
     editableCells = [],
     editingMode = EditingMode.None,
@@ -94,6 +96,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
           <TableHead
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
+            columnReordering={columnReordering}
             columns={preparedOptions.columns}
             dispatch={dispatch}
             filteringMode={filteringMode}
