@@ -1,8 +1,6 @@
 the best contribution is to use ka-table and write feedback about it to this email: sanrkom@gmail.com
 or create an issue on github in any form
 
-
-
 ## How to add a new feature / fix a bug
 <a  name="develop"></a>
 1) Fork <code>ka-table</code> repo
@@ -27,4 +25,4 @@ See more about versioning on [Semantic versioning](https://semver.org/) page.
 
 6) once you fixed a bug (or added a new feature) and wrote a test for this scenario, you can create PR for it
 
-7) I will review it, and once everything is be ok I will merge it and publish new feature to npm
+7) I will review it, and once everything is ok I will merge it and publish new feature to npm
