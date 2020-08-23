@@ -88,7 +88,7 @@ const demos: Demo[] = [
   new Demo(PagingDemo, '/paging', 'Paging', 'PagingDemo', 'https://stackblitz.com/edit/table-paging-js', 'https://stackblitz.com/edit/table-paging-ts', 'Miscellaneous'),
   new Demo(ReduxDemo, '/redux', 'Redux', 'ReduxDemo', 'https://stackblitz.com/edit/table-redux-js', 'https://stackblitz.com/edit/table-redux-ts', ''),
   new Demo(RemoteDataDemo, '/remote-data', 'Remote Data', 'RemoteDataDemo', 'https://stackblitz.com/edit/table-remote-data-js', 'https://stackblitz.com/edit/table-remote-data-ts', ''),
-  new Demo(RowReorderingDemo, '/row-reordering', 'Row Reordering', 'RowReorderingDemo', 'https://stackblitz.com/edit/table-rows-reordering-js', 'https://stackblitz.com/edit/table-rows-reordering-ts', ''),
+  new Demo(RowReorderingDemo, '/row-reordering', 'Row Reordering', 'RowReorderingDemo', 'https://stackblitz.com/edit/table-row-reordering-js', 'https://stackblitz.com/edit/table-row-reordering-ts', ''),
   new Demo(SearchDemo, '/search', 'Search', 'SearchDemo', 'https://stackblitz.com/edit/table-search-js', 'https://stackblitz.com/edit/table-search-ts', 'Miscellaneous'),
   new Demo(SelectionDemo, '/selection', 'Selection - Multiple', 'SelectionDemo', 'https://stackblitz.com/edit/table-selection-js', 'https://stackblitz.com/edit/table-selection-ts', 'Selection'),
   new Demo(SelectionSingleDemo, '/selection-single', 'Selection - Single', 'SelectionSingleDemo', 'https://stackblitz.com/edit/table-selection-single-js', 'https://stackblitz.com/edit/table-selection-single-ts', 'Selection'),
