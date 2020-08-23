@@ -8,6 +8,7 @@ import HeadCell from '../HeadCell/HeadCell';
 const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
   areAllRowsSelected,
   childComponents,
+  columnReordering,
   columns,
   dispatch,
   groupColumnsCount,
@@ -15,12 +16,13 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
 }) => {
   return (
     <tr className={defaultOptions.css.theadRow}>
-      <EmptyCells count={groupColumnsCount}/>
+      <EmptyCells count={groupColumnsCount} isTh={true}/>
       {columns.map((column) => {
         return (
           <HeadCell
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
+            columnReordering={columnReordering}
             column={column}
             dispatch={dispatch}
             key={column.key}

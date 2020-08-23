@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import defaultOptions from '../../defaultOptions';
 import { IFilterRowEditorProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import FilterRowDataType from '../FilterRowDataType/FilterRowDataType';
@@ -10,7 +11,7 @@ const FilterCell: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
     column: { style },
   } = props;
   const { elementAttributes, content } = getElementCustomization({
-    className: 'ka-thead-cell ka-filter-row-cell',
+    className: `${defaultOptions.css.theadCell} ka-filter-row-cell ${defaultOptions.css.theadBackground}`,
     style
   }, props, childComponents.filterRowCell);
 

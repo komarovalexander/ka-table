@@ -1,5 +1,6 @@
 import React, { RefObject } from 'react';
 
+import defaultOptions from '../../defaultOptions';
 import { ActionType } from '../../enums';
 import { ITableBodyProps } from '../../props';
 import { getVirtualized } from '../../Utils/Virtualize';
@@ -19,8 +20,9 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
       && (!virtualScrolling.itemHeight
       || !virtualScrolling.tbodyHeight))) {
         const itemHeight = firstRowRef.current.offsetHeight || 40;
+        const rootElement: any = firstRowRef.current.closest(`.${defaultOptions.css.root}`);
         const tbodyHeight =
-          (firstRowRef.current.parentElement && firstRowRef.current.parentElement.offsetHeight)
+          (rootElement && rootElement.offsetHeight)
           || 600;
         const newVirtualScrolling = {
           itemHeight,

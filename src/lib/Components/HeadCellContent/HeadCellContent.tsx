@@ -4,23 +4,29 @@ import { updateSortDirection } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { SortDirection } from '../../enums';
 import { IHeadCellProps } from '../../props';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
     column,
     dispatch,
-    sortingMode
+    sortingMode,
+    childComponents: { headCellContent }
   } = props;
   const sortingEnabled = isSortingEnabled(sortingMode);
-  const sortClick = sortingEnabled ? () => {
+  const onClick = sortingEnabled ? () => {
     dispatch(updateSortDirection(column.key));
   } : undefined;
+
+  const { elementAttributes, content } = getElementCustomization({
+    className: `${defaultOptions.css.theadCellContent} ${sortingEnabled ? 'ka-pointer' : ''}`,
+    onClick
+  }, props, headCellContent);
+
   return (
-    <div
-      className={`${defaultOptions.css.theadCellContent} ${sortingEnabled ? 'ka-pointer' : ''}`}
-      onClick={sortClick}>
-      <span>{column.title}</span>
+    <div {...elementAttributes}>
+      {content || <span>{column.title}</span>}
       {column.sortDirection && sortingEnabled && (
         <span
           className={

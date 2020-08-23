@@ -11,24 +11,25 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
   const {
     areAllRowsSelected,
     childComponents,
+    columnReordering,
     columns,
     dispatch,
     filteringMode,
     groupColumnsCount,
     sortingMode,
-    theadRef,
   } = props;
 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.thead,
   }, { ...props, dispatch }, childComponents.tableHead);
   return (
-    <thead {...elementAttributes} ref={theadRef}>
+    <thead {...elementAttributes}>
       {content || (
         <>
           <HeadRow
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
+            columnReordering={columnReordering}
             columns={columns}
             dispatch={dispatch}
             groupColumnsCount={groupColumnsCount}

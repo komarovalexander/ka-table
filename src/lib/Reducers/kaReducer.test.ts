@@ -1,7 +1,7 @@
 import { ITableProps } from '../';
 import {
-  deleteRow, deselectAllRows, deselectRow, reorderRows, selectAllRows, selectRowsRange,
-  selectSingleRow, updateData,
+  deleteRow, deselectAllRows, deselectRow, reorderColumns, reorderRows, selectAllRows,
+  selectRowsRange, selectSingleRow, updateData,
 } from '../actionCreators';
 import { ActionType } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -37,6 +37,21 @@ describe('kaReducer', () => {
     it('skip if rowKeyValue is not found', () => {
       const result: ITableProps = kaReducer(intialState, selectRowsRange(7, 2));
       expect(result.selectedRows).toMatchSnapshot();
+    });
+  });
+  describe('ReorderColumns', () => {
+    it('default', () => {
+      const intialState = {
+        columns: [
+          { key: '1' },
+          { key: '2' },
+          { key: '3' },
+          { key: '4' },
+        ],
+        rowKeyField: 'id',
+      };
+      const result = kaReducer(intialState, reorderColumns('1', '3'));
+      expect(result).toMatchSnapshot();
     });
   });
   describe('ReorderRows', () => {

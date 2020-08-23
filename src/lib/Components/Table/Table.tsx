@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import defaultOptions from '../../defaultOptions';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 import { EditableCell, PagingOptions } from '../../models';
 import { ChildComponents } from '../../Models/ChildComponents';
@@ -9,36 +8,37 @@ import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
 import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
-import { wrapDispatch } from '../../Utils/ActionUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { prepareTableOptions } from '../../Utils/PropsUtils';
 import Loading from '../Loading/Loading';
 import Paging from '../Paging/Paging';
-import TableBody from '../TableBody/TableBody';
-import { TableHead } from '../TableHead/TableHead';
+import { TableWrapper } from '../TableWrapper/TableWrapper';
 
 export interface ITableProps {
+  columnReordering?: boolean;
   columns: Column[];
   data?: any[];
-  format?: FormatFunc;
-  search?: SearchFunc;
-  validation?: ValidationFunc;
   detailsRows?: any[];
   editableCells?: EditableCell[];
   editingMode?: EditingMode;
   extendedFilter?: (data: any[]) => any[];
   filteringMode?: FilteringMode;
+  format?: FormatFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
+  height?: number | string;
   loading?: ILoadingProps;
   paging?: PagingOptions;
   rowKeyField: string;
   rowReordering?: boolean;
+  search?: SearchFunc;
   searchText?: string;
   selectedRows?: any[];
   sortingMode?: SortingMode;
+  validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
+  width?: number | string;
 }
 
 export interface ITableEvents {
@@ -51,17 +51,13 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
 
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
-    data = [],
     childComponents = {},
-    editableCells = [],
-    editingMode = EditingMode.None,
-    filteringMode = FilteringMode.None,
-    rowReordering = false,
+    dispatch,
     groups,
+    height,
     loading,
     paging,
-    selectedRows = [],
-    sortingMode = SortingMode.None,
+    width
   } = props;
   let {
     groupsExpanded,
@@ -72,52 +68,17 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     groupsExpanded = getExpandedGroups(preparedOptions.groupedData);
   }
 
-  const theadRef = React.useRef<HTMLTableSectionElement>(null);
-  const dispatch = wrapDispatch({ ...props }, theadRef);
-
-  const areAllRowsSelected = data.length === selectedRows.length;
   const isLoadingActive = loading && loading.enabled;
   const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
-  const { elementAttributes: rootDivElementAttributes, content: rootDivContent } = getElementCustomization({
-    className:  kaCss,
+  const { elementAttributes, content: rootDivContent } = getElementCustomization({
+    className:  kaCss
   }, { ...props, dispatch }, childComponents.rootDiv);
+  elementAttributes.style = {...elementAttributes.style, width, height}
 
-  const { elementAttributes, content } = getElementCustomization({
-    className: defaultOptions.css.table,
-  }, { ...props, dispatch }, childComponents.table);
   return (
-    <div {...rootDivElementAttributes}>
-      { rootDivContent || content ||
-      (
-        <table {...elementAttributes}>
-          <TableHead
-            areAllRowsSelected={areAllRowsSelected}
-            childComponents={childComponents}
-            columns={preparedOptions.columns}
-            dispatch={dispatch}
-            filteringMode={filteringMode}
-            groupColumnsCount={preparedOptions.groupColumnsCount}
-            sortingMode={sortingMode}
-            theadRef={theadRef}
-          />
-          <TableBody
-              {...props}
-              childComponents={childComponents}
-              columns={preparedOptions.columns}
-              data={preparedOptions.groupedData}
-              dispatch={dispatch}
-              editableCells={editableCells}
-              editingMode={editingMode}
-              groupColumnsCount={preparedOptions.groupColumnsCount}
-              groupedColumns={preparedOptions.groupedColumns}
-              groupsExpanded={groupsExpanded}
-              rowReordering={rowReordering}
-              selectedRows={selectedRows}
-          />
-        </table>
-      )
-    }
+    <div {...elementAttributes}>
+      {rootDivContent || <TableWrapper {...props} />}
       <Paging
         {...paging}
         dispatch={dispatch}
@@ -127,6 +88,6 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
       <Loading
         {...loading}
       />
-    </div >
+    </div>
   );
 };

@@ -1,7 +1,12 @@
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { ActionType } from '../../enums';
 import { Table } from './Table';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const tableProps: any = {
   columns: [
@@ -12,6 +17,7 @@ const tableProps: any = {
     { column: 1, column2: 2, id: 1 },
     { column: 12, column2: 22, id: 2 },
   ],
+  dispatch: jest.fn(),
   rowKeyField: 'id',
 };
 

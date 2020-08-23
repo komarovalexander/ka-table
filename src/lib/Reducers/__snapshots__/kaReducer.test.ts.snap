@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`kaReducer ReorderColumns default 1`] = `
+Object {
+  "columns": Array [
+    Object {
+      "key": "2",
+    },
+    Object {
+      "key": "3",
+    },
+    Object {
+      "key": "1",
+    },
+    Object {
+      "key": "4",
+    },
+  ],
+  "rowKeyField": "id",
+}
+`;
+
 exports[`kaReducer ReorderRows default 1`] = `
 Object {
   "data": Array [
@@ -56,12 +76,6 @@ Array [
 ]
 `;
 
-exports[`kaReducer SelectRowsRange rowKeyValueTo is not specified 1`] = `
-Array [
-  2,
-]
-`;
-
 exports[`kaReducer SelectRowsRange revert set 1`] = `
 Array [
   2,
@@ -70,7 +84,13 @@ Array [
 ]
 `;
 
-exports[`kaReducer SelectRowsRange skip if rowKeyValueTo is not found 1`] = `
+exports[`kaReducer SelectRowsRange rowKeyValueTo is not specified 1`] = `
+Array [
+  2,
+]
+`;
+
+exports[`kaReducer SelectRowsRange skip if rowKeyValue is not found 1`] = `
 Array [
   undefined,
   1,
@@ -78,7 +98,7 @@ Array [
 ]
 `;
 
-exports[`kaReducer SelectRowsRange skip if rowKeyValue is not found 1`] = `
+exports[`kaReducer SelectRowsRange skip if rowKeyValueTo is not found 1`] = `
 Array [
   undefined,
   1,

@@ -1,13 +1,14 @@
 import * as React from 'react';
 
+import defaultOptions from '../../defaultOptions';
 import { IEmptyCellsProps } from '../../props';
 
-const EmptyCells: React.FunctionComponent<IEmptyCellsProps> = ({ count, shouldUseTh }) => {
+const EmptyCells: React.FunctionComponent<IEmptyCellsProps> = ({ count, isTh }) => {
   return (
     <>
       {[...Array(count)].map((item, index) =>
-        shouldUseTh ?
-          <th key={index} className='ka-empty-cell'/> :
+        isTh ?
+          <th key={index} className={`ka-empty-cell ${defaultOptions.css.theadBackground}`}/> :
           <td key={index} className='ka-empty-cell'/>)}
     </>
   );

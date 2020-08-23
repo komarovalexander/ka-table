@@ -69,3 +69,11 @@ export const replaceValue = (rowData: any, column: Column, newValue: any) => {
 export const replaceValueForField = (rowData: any, field: Field, newValue: any) => {
   return _replaceValueForField(rowData, getLastField(field), newValue, getLastFieldParents(field));
 };
+
+export const reorderData = (data: any[], getKey: (d: any) => any, keyValue: any, targetKeyValue: any) => {
+  const moved = data.find(d => getKey(d) === keyValue);
+  const newData = data.filter(d => getKey(d) !== keyValue);
+  const targetIndex = data.findIndex(d => getKey(d) === targetKeyValue);
+  newData.splice(targetIndex, 0, moved);
+  return newData;
+};

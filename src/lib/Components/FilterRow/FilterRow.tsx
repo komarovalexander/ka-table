@@ -12,7 +12,7 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
 }) => {
   return (
     <tr className='ka-filter-row ka-tr'>
-      <EmptyCells count={groupColumnsCount}/>
+      <EmptyCells count={groupColumnsCount} isTh={true}/>
       {columns.map((column) => {
         return (
           <FilterCell

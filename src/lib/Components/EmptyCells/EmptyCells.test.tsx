@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import EmptyCells, { IEmptyCellsProps } from './EmptyCells';
+import { IEmptyCellsProps } from '../../props';
+import EmptyCells from './EmptyCells';
 
 const props: IEmptyCellsProps = {
   count: 1,
@@ -13,8 +14,8 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(element);
 });
 
-it('renders without crashing with shouldUseTh', () => {
+it('renders without crashing with isTh', () => {
   const element = document.createElement('tr');
-  ReactDOM.render(<EmptyCells {...props} shouldUseTh={true}/>, element);
+  ReactDOM.render(<EmptyCells {...props} isTh={true}/>, element);
   ReactDOM.unmountComponentAtNode(element);
 });

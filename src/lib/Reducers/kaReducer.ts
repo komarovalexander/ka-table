@@ -7,7 +7,7 @@ import { ILoadingProps } from '../props';
 import { kaPropsUtils } from '../utils';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
-import { getValueByField, replaceValue } from '../Utils/DataUtils';
+import { getValueByField, reorderData, replaceValue } from '../Utils/DataUtils';
 import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getSortedColumns } from '../Utils/HeadRowUtils';
 import { prepareTableOptions } from '../Utils/PropsUtils';
@@ -43,11 +43,12 @@ const kaReducer: any = (props: ITableProps, action: any) => {
 
   switch (action.type) {
     case ActionType.ReorderRows: {
-      const movedRow = data.find(d => getValueByField(d, rowKeyField) === action.rowKeyValue);
-      const newData = data.filter(d => getValueByField(d, rowKeyField) !== getValueByField(movedRow, rowKeyField));
-      const targetRowIndex = data.findIndex(d => getValueByField(d, rowKeyField) === action.targetRowKeyValue);
-      newData.splice(targetRowIndex, 0, movedRow)
+      const newData = reorderData(data, (d) => getValueByField(d, rowKeyField), action.rowKeyValue, action.targetRowKeyValue);
       return {...props, data: newData};
+    }
+    case ActionType.ReorderColumns: {
+      const newData = reorderData(columns, (d) => d.key, action.columnKey, action.targetColumnKey);
+      return {...props, columns: newData};
     }
     case ActionType.ResizeColumn: {
       const { columnKey, width } = action;

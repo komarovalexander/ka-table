@@ -96,6 +96,7 @@ export interface IGroupRowProps {
 export interface IHeadCellProps {
   areAllRowsSelected: boolean;
   childComponents: ChildComponents;
+  columnReordering?: boolean;
   column: Column;
   dispatch: DispatchFunc;
   sortingMode: SortingMode;
@@ -108,6 +109,7 @@ export interface INoDataRowProps {
 }
 
 export interface ITableHeadProps {
+  columnReordering?: boolean;
   areAllRowsSelected: boolean;
   childComponents: ChildComponents;
   columns: Column[];
@@ -115,7 +117,6 @@ export interface ITableHeadProps {
   filteringMode: FilteringMode;
   groupColumnsCount: number;
   sortingMode: SortingMode;
-  theadRef: any;
 }
 
 export interface ITableBodyProps {
@@ -162,7 +163,8 @@ export interface IRowProps extends IRowCommonProps {
 
 export interface IEmptyCellsProps {
   count: number;
-  shouldUseTh?: boolean;
+  isTh?: boolean;
+  className?: string;
 }
 
 export interface ICellEditorValidationMessageProps {
@@ -179,6 +181,7 @@ export interface IFilterRowProps {
 export interface IHeadRowProps {
   areAllRowsSelected: boolean;
   childComponents: ChildComponents;
+  columnReordering?: boolean;
   columns: Column[];
   dispatch: DispatchFunc;
   groupColumnsCount: number;
