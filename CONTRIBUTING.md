@@ -27,4 +27,4 @@ See more about versioning on [Semantic versioning](https://semver.org/) page.
 
 6) once you fixed a bug (or added a new feature) and wrote a test for this scenario, you can create PR for it
 
-7) I will review it, and once everything is ok I will merge it and publish new feature to npm
+7) I will review it, and once everything is be ok I will merge it and publish new feature to npm
