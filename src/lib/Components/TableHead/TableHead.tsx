@@ -17,14 +17,13 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
     filteringMode,
     groupColumnsCount,
     sortingMode,
-    theadRef,
   } = props;
 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.thead,
   }, { ...props, dispatch }, childComponents.tableHead);
   return (
-    <thead {...elementAttributes} ref={theadRef}>
+    <thead {...elementAttributes}>
       {content || (
         <>
           <HeadRow

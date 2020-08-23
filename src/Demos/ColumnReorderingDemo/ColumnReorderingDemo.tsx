@@ -25,7 +25,7 @@ const tablePropsInit: ITableProps = {
   columnReordering: true,
   columns,
   data: dataArray,
-  rowKeyField: 'id',
+  rowKeyField: 'id'
 };
 
 const ColumnReorderingDemo: React.FC = () => {

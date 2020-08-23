@@ -23,4 +23,5 @@ export class ChildComponents {
   public rootDiv?: ChildComponent<ITableProps>;
   public table?: ChildComponent<ITableProps>;
   public tableHead?: ChildComponent<ITableHeadProps>;
+  public tableWrapper?: ChildComponent<ITableProps>;
 }

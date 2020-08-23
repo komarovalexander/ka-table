@@ -117,7 +117,6 @@ export interface ITableHeadProps {
   filteringMode: FilteringMode;
   groupColumnsCount: number;
   sortingMode: SortingMode;
-  theadRef: any;
 }
 
 export interface ITableBodyProps {

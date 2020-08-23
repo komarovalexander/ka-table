@@ -18,8 +18,11 @@ $ka-paging-index-active-color: #747D86;
 $ka-paging-index-active-background-color: #F1F5F7;
 
 .ka{
+  overflow: hidden;
   background-color: $ka-background-color;
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
 }
 .ka-table-wrapper{
   height: 100%;
@@ -30,7 +33,6 @@ $ka-paging-index-active-background-color: #F1F5F7;
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-  height: 100%;
 }
 .ka-thead-background{
   background-color: $ka-thead-background-color;
@@ -98,8 +100,8 @@ $ka-paging-index-active-background-color: #F1F5F7;
 }
 .ka-row{
   box-sizing: border-box;
-  border-bottom: 1px solid $ka-border-color;
-  border-top: 1px solid $ka-border-color;
+  border-bottom: 2px solid $ka-border-color;
+  border-top: 2px solid $ka-border-color;
 }
 .ka-dragged-row{
   opacity: 0.5;
