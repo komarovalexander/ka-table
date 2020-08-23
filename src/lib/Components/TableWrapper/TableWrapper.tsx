@@ -19,12 +19,10 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
     editingMode = EditingMode.None,
     filteringMode = FilteringMode.None,
     groups,
-    height,
     rowReordering = false,
     selectedRows = [],
     sortingMode = SortingMode.None,
-    virtualScrolling,
-    width
+    virtualScrolling
   } = props;
   let {
     groupsExpanded,
