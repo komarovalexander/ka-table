@@ -28,6 +28,7 @@ const tablePropsInit: ITableProps = {
   data: dataArray,
   editingMode: EditingMode.Cell,
   filteringMode: FilteringMode.FilterRow,
+  height: 300,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
 };
