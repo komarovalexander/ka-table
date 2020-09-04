@@ -2,7 +2,7 @@ import { ITableProps } from '../';
 import {
   ICellEditorProps, ICellProps, ICellTextProps, IDataRowProps, IFilterRowEditorProps,
   IGroupRowProps, IHeadCellProps, INoDataRowProps, IPagingIndexProps, IPagingPagesProps,
-  ITableHeadProps,
+  ITableBodyProps, ITableHeadProps,
 } from '../props';
 import { ChildComponent } from './ChildComponent';
 
@@ -22,6 +22,7 @@ export class ChildComponents {
   public noDataRow?: ChildComponent<INoDataRowProps>;
   public rootDiv?: ChildComponent<ITableProps>;
   public table?: ChildComponent<ITableProps>;
+  public tableBody?: ChildComponent<ITableBodyProps>;
   public tableHead?: ChildComponent<ITableHeadProps>;
   public tableWrapper?: ChildComponent<ITableProps>;
 }
