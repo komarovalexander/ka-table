@@ -4,7 +4,7 @@ import { ITableProps } from '../';
 import { DataType, EditingMode, SortDirection } from '../enums';
 import { ICellProps } from '../props';
 import { ChildAttributesItem } from '../types';
-import { getData, getDraggableProps, mergeProps, prepareTableOptions } from './PropsUtils';
+import { getData, getDraggableProps, getPagesCountByProps, mergeProps } from './PropsUtils';
 
 describe('PropsUtils', () => {
   it('mergeProps', () => {
@@ -204,12 +204,12 @@ describe('getDraggableProps', () => {
     searchText: '3'
   };
   it('pages count should depends on filters', () => {
-    const result = prepareTableOptions(tableProps);
-    expect(result.pagesCount).toEqual(2);
+    const pagesCount = getPagesCountByProps(tableProps);
+    expect(pagesCount).toEqual(2);
   });
   it('pages count is 1 by default', () => {
-    const result = prepareTableOptions({ ...tableProps, paging: undefined });
-    expect(result.pagesCount).toEqual(1);
+    const pagesCount = getPagesCountByProps({ ...tableProps, paging: undefined });
+    expect(pagesCount).toEqual(1);
   });
 });
 

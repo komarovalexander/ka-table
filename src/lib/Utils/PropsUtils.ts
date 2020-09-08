@@ -99,10 +99,20 @@ export const getData = (props: ITableProps) => {
   return data;
 };
 
+export const getPagesCountByProps = (props: ITableProps) => {
+  const {
+    paging,
+  } = props;
+  let pagesCount = 1;
+  if (paging && paging.enabled) {
+    pagesCount = getPagesCount(_filterData(props), paging);
+  }
+  return pagesCount;
+};
+
 export const prepareTableOptions = (props: ITableProps) => {
   const {
     groups,
-    paging,
   } = props;
   let {
     columns,
@@ -115,16 +125,11 @@ export const prepareTableOptions = (props: ITableProps) => {
     groupedColumns = columns.filter((c) => groups.some((g) => g.columnKey === c.key));
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
-  let pagesCount = 1;
-  if (paging && paging.enabled) {
-    pagesCount = getPagesCount(_filterData(props), paging);
-  }
   return {
     columns,
     groupColumnsCount,
     groupedColumns,
-    groupedData,
-    pagesCount
+    groupedData
   };
 };
 
