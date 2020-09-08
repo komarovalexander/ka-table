@@ -9,7 +9,7 @@ import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
 import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { getPagingPagesCount } from '../../Utils/PropsUtils';
+import { getPagesCountByProps } from '../../Utils/PropsUtils';
 import Loading from '../Loading/Loading';
 import Paging from '../Paging/Paging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
@@ -73,7 +73,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
         {...paging}
         dispatch={dispatch}
         childComponents={childComponents}
-        pagesCount={getPagingPagesCount(props)}
+        pagesCount={getPagesCountByProps(props)}
       />
       <Loading
         {...loading}

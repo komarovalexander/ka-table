@@ -99,7 +99,7 @@ export const getData = (props: ITableProps) => {
   return data;
 };
 
-export const getPagingPagesCount = (props: ITableProps) => {
+export const getPagesCountByProps = (props: ITableProps) => {
   const {
     paging,
   } = props;
