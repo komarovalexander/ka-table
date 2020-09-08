@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ka-table/static/css/main.53b03a4a.chunk.css",
-    "main.js": "/ka-table/static/js/main.52def040.chunk.js",
-    "main.js.map": "/ka-table/static/js/main.52def040.chunk.js.map",
+    "main.js": "/ka-table/static/js/main.f5249236.chunk.js",
+    "main.js.map": "/ka-table/static/js/main.f5249236.chunk.js.map",
     "runtime-main.js": "/ka-table/static/js/runtime-main.1d5b7495.js",
     "runtime-main.js.map": "/ka-table/static/js/runtime-main.1d5b7495.js.map",
     "static/css/2.226e677e.chunk.css": "/ka-table/static/css/2.226e677e.chunk.css",
     "static/js/2.b2a8acf0.chunk.js": "/ka-table/static/js/2.b2a8acf0.chunk.js",
     "static/js/2.b2a8acf0.chunk.js.map": "/ka-table/static/js/2.b2a8acf0.chunk.js.map",
     "index.html": "/ka-table/index.html",
-    "precache-manifest.d5934655b86f1e2ee32052826f882119.js": "/ka-table/precache-manifest.d5934655b86f1e2ee32052826f882119.js",
+    "precache-manifest.67d7ad359733a5b17f884166ea1eaf8b.js": "/ka-table/precache-manifest.67d7ad359733a5b17f884166ea1eaf8b.js",
     "service-worker.js": "/ka-table/service-worker.js",
     "static/css/2.226e677e.chunk.css.map": "/ka-table/static/css/2.226e677e.chunk.css.map",
     "static/css/main.53b03a4a.chunk.css.map": "/ka-table/static/css/main.53b03a4a.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.226e677e.chunk.css",
     "static/js/2.b2a8acf0.chunk.js",
     "static/css/main.53b03a4a.chunk.css",
-    "static/js/main.52def040.chunk.js"
+    "static/js/main.f5249236.chunk.js"
   ]
 }
