@@ -1,36 +1,41 @@
 import './MaterialDemo.scss';
 
-import React, { useState } from 'react';
-import { FormCheck, FormControl } from 'react-bootstrap';
+import M from 'materialize-css';
+import React, { useEffect, useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { closeEditor, updateCellValue, updateFilterRowValue } from 'ka-table/actionCreators';
-import { ActionType, DataType, EditingMode, FilteringMode, SortingMode } from 'ka-table/enums';
+import { updateFilterRowValue } from 'ka-table/actionCreators';
+import FilterRowBoolean from 'ka-table/Components/FilterRowBoolean/FilterRowBoolean';
+import { DataType, EditingMode, FilteringMode, SortingMode } from 'ka-table/enums';
 import { ChildComponents } from 'ka-table/models';
-import { ICellEditorProps, IFilterRowEditorProps } from 'ka-table/props';
 import { DispatchFunc } from 'ka-table/types';
-import { useOuterClick } from './customHooks';
 
-const dataArray: any[] = [
-  { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
-  { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2021, 10, 8) },
-  { id: 3, name: 'Tom Williams', score: 45, passed: false, nextTry: new Date(2021, 11, 8) },
-  { id: 4, name: 'Kurt Cobain', score: 75, passed: true, nextTry: new Date(2021, 12, 9) },
-  { id: 5, name: 'Marshall Bruce', score: 77, passed: true, nextTry: new Date(2021, 11, 12) },
-  { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9) },
-];
+const dataArray = Array(119).fill(undefined).map(
+  (_, index) => ({
+    column1: index % 2 === 0,
+    column2: `column:2 row:${index}`,
+    column3: index % 5,
+    column4: new Date(2022, 11, index),
+    id: index,
+  }),
+);
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: 100 } },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
-    { dataType: DataType.Date, key: 'nextTry', title: 'Next Try' },
+    { key: 'column1', title: 'Column 1', dataType: DataType.Boolean, style: {minWidth: 130}, filterRowValue: true },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String, style: {width: 240} },
+    { key: 'column3', title: 'Column 3', dataType: DataType.Number, style: {width: 230}  },
+    { key: 'column4', title: 'Column 4', dataType: DataType.Date, style: {minWidth: 100} },
   ],
   format: ({ column, value }) => {
     if (column.dataType === DataType.Date){
       return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
     }
+  },
+  paging: {
+    enabled: true,
+    pageSize: 7,
+    pageIndex: 0
   },
   data: dataArray,
   editingMode: EditingMode.Cell,
@@ -39,87 +44,36 @@ const tablePropsInit: ITableProps = {
   filteringMode: FilteringMode.FilterRow
 };
 
-const CheckboxComponent = (props: any) => {
-  const innerRef = useOuterClick(() => {
-    props.dispatch(closeEditor(props.rowKeyValue, props.column.key));
-  })
-  return (
-    <FormCheck ref={innerRef}
-      checked={props.value}
-      onClick={(e: any) => props.dispatch(updateCellValue(props.rowKeyValue, props.column.key, e.currentTarget.checked))} />
-  )
-}
-
-const NumberInputComponent = (props: any) => {
-  const innerRef = useOuterClick(() => {
-    props.dispatch(closeEditor(props.rowKeyValue, props.column.key));
-  })
-  return (
-    <FormControl ref={innerRef}
-      placeholder={props.column.title}
-      value={props.value}
-      type={'number'}
-      onChange={(event: any)  => {
-        const newValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
-        props.dispatch(updateCellValue(props.rowKeyValue, props.column.key, newValue))
-      }}
-    />
-  )
-}
-
-
-const TextInputComponent = (props: any) => {
-  const innerRef = useOuterClick(() => {
-    props.dispatch(closeEditor(props.rowKeyValue, props.column.key));
-  })
-  return (
-    <FormControl ref={innerRef}
-      placeholder={props.column.title}
-      value={props.value}
-      onChange={(event) => props.dispatch(updateCellValue(props.rowKeyValue, props.column.key, event.currentTarget.value))}
-    />
-  )
-}
-
 const bootstrapChildComponents: ChildComponents = {
-  table: {
-    elementAttributes: () => ({
-      className: 'table table-striped table-hover'
-    })
-  },
-  tableHead: {
-    elementAttributes: () => ({
-      className: 'thead-dark'
-    })
-  },
   noDataRow: {
     content: () => 'No Data Found'
   },
   filterRowCell: {
-    content: (props: IFilterRowEditorProps) => {
-      const dispatch: DispatchFunc = (action) => {
-        switch (action.type){
-          case ActionType.UpdateCellValue: props.dispatch(updateFilterRowValue(action.columnKey, action.value)); break;
-          default: props.dispatch(action);
-        }
-      };
-      switch (props.column.dataType){
-        case DataType.Boolean: return; // use default component
-        case DataType.Number: return <NumberInputComponent {...props} dispatch={dispatch} value={props.column.filterRowValue} />;
-        case DataType.Date: return; // use default component
-        default: return <TextInputComponent {...props} dispatch={dispatch} value={props.column.filterRowValue} />;
+    content: (props) => {
+      switch (props.column.key){
+        case 'column1': return (
+          <>
+            <FilterRowBoolean {...props}/>
+            <span
+              onClick={(event) => {
+                let filterRowValue: any = props.column.filterRowValue;
+                filterRowValue = filterRowValue === false ? filterRowValue = undefined : !filterRowValue;
+                props.dispatch(updateFilterRowValue(props.column.key, filterRowValue));
+              }}/>
+          </>
+        );
       }
     }
   },
-  cellEditor: {
-    content: (props: ICellEditorProps) => {
-      switch (props.column.dataType){
-        case DataType.Boolean: return <CheckboxComponent  {...props} />;
-        case DataType.Number: return <NumberInputComponent  {...props} />;
-        case DataType.Date: return; // use default component
-        default: return <TextInputComponent {...props}/>;
-      }
-    }
+  pagingIndex: {
+    elementAttributes: ({isActive}) => ({
+      className: `page-item waves-effect ${(isActive ? 'active' : '')}`
+    })
+  },
+  pagingPages: {
+    elementAttributes: () => ({
+      className: 'pagination'
+    }),
   }
 };
 
@@ -129,9 +83,9 @@ const MaterialDemo: React.FC = () => {
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
-
+  useEffect(() => M.AutoInit());
   return (
-    <div className='bootstrap-demo'>
+    <div className='material-demo'>
       <Table
         {...tableProps}
         childComponents={bootstrapChildComponents}
