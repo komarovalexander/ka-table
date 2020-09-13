@@ -18,10 +18,10 @@ const PagingIndex: React.FunctionComponent<IPagingIndexProps> = (props) => {
     onClick: () => dispatch(updatePageIndex(pageIndex))
   }, props, childComponents.pagingIndex);
   return  (
-    <div
+    <li
       {...elementAttributes}>
         {content || text}
-    </div>
+    </li>
   );
 };
 

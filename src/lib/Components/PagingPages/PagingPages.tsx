@@ -33,7 +33,7 @@ const PagingPages: React.FunctionComponent<IPagingPagesProps> = (props) => {
     }, props, childComponents.pagingPages);
 
     return (
-      <div {...elementAttributes}>
+      <ul {...elementAttributes}>
         { content || (
           <>
             { isStartShown &&
@@ -61,7 +61,7 @@ const PagingPages: React.FunctionComponent<IPagingPagesProps> = (props) => {
             }
           </>
         )}
-      </div>
+      </ul>
     )
 }
 
