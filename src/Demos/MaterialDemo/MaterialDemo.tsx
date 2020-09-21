@@ -22,7 +22,7 @@ const dataArray = Array(119).fill(undefined).map(
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.Boolean, style: {minWidth: 130}, filterRowValue: true },
+    { key: 'column1', title: 'Column 1', dataType: DataType.Boolean, style: {minWidth: 130}, filterRowValue: true, isEditable: false },
     { key: 'column2', title: 'Column 2', dataType: DataType.String, style: {width: 240} },
     { key: 'column3', title: 'Column 3', dataType: DataType.Number, style: {width: 230}  },
     { key: 'column4', title: 'Column 4', dataType: DataType.Date, style: {minWidth: 100} },
