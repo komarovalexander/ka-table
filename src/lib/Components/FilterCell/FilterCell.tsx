@@ -3,6 +3,7 @@ import * as React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { IFilterRowEditorProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { updateElementTop } from '../../Utils/DomUtils';
 import FilterRowDataType from '../FilterRowDataType/FilterRowDataType';
 
 const FilterCell: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
@@ -15,8 +16,12 @@ const FilterCell: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
     style
   }, props, childComponents.filterRowCell);
 
+  const elementRef = React.useRef<any>(null);
+  React.useEffect(() => {
+    updateElementTop(elementRef);
+  }, [elementRef]);
   return (
-    <td {...elementAttributes}>
+    <td {...elementAttributes} ref={elementRef}>
       {
         content ? content :
         (
