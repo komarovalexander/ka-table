@@ -8,6 +8,7 @@ import { kaPropsUtils } from '../utils';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
 import { getValueByField, reorderData, replaceValue } from '../Utils/DataUtils';
+import { filterAndSearchData } from '../Utils/FilterUtils';
 import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getSortedColumns } from '../Utils/HeadRowUtils';
 import { prepareTableOptions } from '../Utils/PropsUtils';
@@ -151,6 +152,14 @@ const kaReducer: any = (props: ITableProps, action: any) => {
       const newSelectedRows = data.map((d) => getValueByField(d, rowKeyField));
       return { ...props, selectedRows: newSelectedRows };
     }
+    case ActionType.SelectAllFilteredRows: {
+      const newData = filterAndSearchData(props);
+      let newSelectedRows = selectedRows.filter((rowKeyValue: any) =>
+        !newData.some(d => getValueByField(d, rowKeyField) === rowKeyValue)
+      );
+      newSelectedRows = [...newSelectedRows, ...newData.map((d) => getValueByField(d, rowKeyField))];
+      return { ...props, selectedRows: newSelectedRows };
+    }
     case ActionType.Search: {
       return { ...props, searchText: action.searchText };
     }
@@ -160,6 +169,13 @@ const kaReducer: any = (props: ITableProps, action: any) => {
     }
     case ActionType.DeselectAllRows:
       return { ...props, selectedRows: [] };
+    case ActionType.DeselectAllFilteredRows: {
+      const newData = filterAndSearchData(props);
+      const newSelectedRows = selectedRows.filter((rowKeyValue: any) =>
+        !newData.some(d => getValueByField(d, rowKeyField) === rowKeyValue)
+      );
+      return { ...props, selectedRows: newSelectedRows };
+    }
     case ActionType.SelectRow:
         return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
     case ActionType.SelectRowsRange: {

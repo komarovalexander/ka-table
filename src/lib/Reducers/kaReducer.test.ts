@@ -1,9 +1,9 @@
 import { ITableProps } from '../';
 import {
-  deleteRow, deselectAllRows, deselectRow, reorderColumns, reorderRows, selectAllRows,
-  selectRowsRange, selectSingleRow, updateData,
+  deleteRow, deselectAllFilteredRows, deselectAllRows, deselectRow, reorderColumns, reorderRows,
+  selectAllFilteredRows, selectAllRows, selectRowsRange, selectSingleRow, updateData,
 } from '../actionCreators';
-import { ActionType } from '../enums';
+import { ActionType, FilterOperatorName } from '../enums';
 import { kaReducer } from './kaReducer';
 
 describe('kaReducer', () => {
@@ -100,6 +100,51 @@ describe('kaReducer', () => {
     };
     const newState = kaReducer(intialState, selectAllRows());
     expect(newState).toEqual({ ...intialState, selectedRows: [1, 2] });
+  });
+  describe('SelectAllFilteredRows', () => {
+    it('filter only', () => {
+      const intialState: ITableProps = {
+        columns: [{ key: 'id', filterRowValue: 2, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+        data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+        rowKeyField: 'id',
+      };
+      const newState = kaReducer(intialState, selectAllFilteredRows());
+      expect(newState).toEqual({ ...intialState, selectedRows: [1, 2] });
+    });
+    it('search', () => {
+      const intialState: ITableProps = {
+        columns: [{ key: 'id' }],
+        data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+        rowKeyField: 'id',
+        searchText: '1',
+      };
+      const newState = kaReducer(intialState, selectAllFilteredRows());
+      expect(newState).toEqual({ ...intialState, selectedRows: [1] });
+    });
+  });
+
+  describe('DeselectAllFilteredRows', () => {
+    it('filter only', () => {
+      const intialState: ITableProps = {
+        columns: [{ key: 'id', filterRowValue: 2, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+        data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+        selectedRows: [1, 2, 3],
+        rowKeyField: 'id',
+      };
+      const newState = kaReducer(intialState, deselectAllFilteredRows());
+      expect(newState).toEqual({ ...intialState, selectedRows: [3] });
+    });
+    it('search', () => {
+      const intialState: ITableProps = {
+        columns: [{ key: 'id' }],
+        data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+        rowKeyField: 'id',
+        selectedRows: [1, 2, 3],
+        searchText: '1',
+      };
+      const newState = kaReducer(intialState, deselectAllFilteredRows());
+      expect(newState).toEqual({ ...intialState, selectedRows: [2, 3] });
+    });
   });
   it('SelectSingleRow', () => {
     const intialState = {

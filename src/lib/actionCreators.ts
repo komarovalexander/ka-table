@@ -46,6 +46,10 @@ export const deselectAllRows = () => ({
   type: ActionType.DeselectAllRows,
 });
 
+export const deselectAllFilteredRows = () => ({
+  type: ActionType.DeselectAllFilteredRows,
+});
+
 export const deselectRow = (rowKeyValue: any) => ({
   rowKeyValue,
   type: ActionType.DeselectRow,
@@ -64,6 +68,10 @@ export const search = (searchText: any) => ({
 
 export const selectAllRows = () => ({
   type: ActionType.SelectAllRows,
+});
+
+export const selectAllFilteredRows = () => ({
+  type: ActionType.SelectAllFilteredRows,
 });
 
 export const selectSingleRow = (rowKeyValue: any) => ({
