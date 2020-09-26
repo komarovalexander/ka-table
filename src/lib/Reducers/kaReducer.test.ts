@@ -1,7 +1,8 @@
 import { ITableProps } from '../';
 import {
-  deleteRow, deselectAllFilteredRows, deselectAllRows, deselectRow, reorderColumns, reorderRows,
-  selectAllFilteredRows, selectAllRows, selectRowsRange, selectSingleRow, updateData,
+  deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows, deselectRow,
+  reorderColumns, reorderRows, selectAllFilteredRows, selectAllRows, selectAllVisibleRows,
+  selectRowsRange, selectSingleRow, updateData,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -120,6 +121,38 @@ describe('kaReducer', () => {
       };
       const newState = kaReducer(intialState, selectAllFilteredRows());
       expect(newState).toEqual({ ...intialState, selectedRows: [1] });
+    });
+  });
+
+  describe('SelectAllVisibleRows', () => {
+    it('default', () => {
+      const intialState: ITableProps = {
+        columns: [{ key: 'id', filterRowValue: 3, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+        data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
+        rowKeyField: 'id',
+        paging: {
+          enabled: true,
+          pageSize: 2
+        }
+      };
+      const newState = kaReducer(intialState, selectAllVisibleRows());
+      expect(newState).toEqual({ ...intialState, selectedRows: [1, 2] });
+    });
+  });
+  describe('DeselectAllVisibleRows', () => {
+    it('default', () => {
+      const intialState: ITableProps = {
+        columns: [{ key: 'id', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+        data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
+        selectedRows: [1, 2, 3, 5],
+        rowKeyField: 'id',
+        paging: {
+          enabled: true,
+          pageSize: 2
+        }
+      };
+      const newState = kaReducer(intialState, deselectAllVisibleRows());
+      expect(newState).toEqual({ ...intialState, selectedRows: [3, 5] });
     });
   });
 

@@ -58,6 +58,16 @@ export const mergeProps = (
   return mergedResult;
 };
 
+export const areAllFilteredRowsSelected = (props: ITableProps) => {
+  const { selectedRows = [] } = props;
+  return filterAndSearchData(props).every(d => selectedRows.includes(d.id))
+}
+
+export const areAllVisibleRowsSelected = (props: ITableProps) => {
+  const { selectedRows = [] } = props;
+  return getData(props).every(d => selectedRows.includes(d.id))
+}
+
 export const getData = (props: ITableProps) => {
   const {
     columns,

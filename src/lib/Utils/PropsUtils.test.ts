@@ -1,10 +1,13 @@
 import { AllHTMLAttributes } from 'react';
 
 import { ITableProps } from '../';
-import { DataType, EditingMode, SortDirection } from '../enums';
+import { DataType, EditingMode, FilterOperatorName, SortDirection } from '../enums';
 import { ICellProps } from '../props';
 import { ChildAttributesItem } from '../types';
-import { getData, getDraggableProps, getPagesCountByProps, mergeProps } from './PropsUtils';
+import {
+  areAllFilteredRowsSelected, areAllVisibleRowsSelected, getData, getDraggableProps,
+  getPagesCountByProps, mergeProps,
+} from './PropsUtils';
 
 describe('PropsUtils', () => {
   it('mergeProps', () => {
@@ -210,6 +213,68 @@ describe('getDraggableProps', () => {
   it('pages count is 1 by default', () => {
     const pagesCount = getPagesCountByProps({ ...tableProps, paging: undefined });
     expect(pagesCount).toEqual(1);
+  });
+});
+
+describe('areAllVisibleRowsSelected', () => {
+  it('true', () => {
+    const tableProps: ITableProps = {
+      columns: [{ key: 'id', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+      data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
+      selectedRows: [1, 2, 3, 5],
+      rowKeyField: 'id',
+      paging: {
+        enabled: true,
+        pageSize: 2
+      }
+    };
+    const allFilteredRowsSelected = areAllVisibleRowsSelected(tableProps);
+    expect(allFilteredRowsSelected).toBeTruthy();
+  });
+  it('false', () => {
+    const tableProps: ITableProps = {
+      columns: [{ key: 'id', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+      data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
+      selectedRows: [1, 3, 5],
+      rowKeyField: 'id',
+      paging: {
+        enabled: true,
+        pageSize: 2
+      }
+    };
+    const allFilteredRowsSelected = areAllVisibleRowsSelected(tableProps);
+    expect(allFilteredRowsSelected).toBeFalsy();
+  });
+});
+
+describe('areAllFilteredRowsSelected', () => {
+  it('true', () => {
+    const tableProps: ITableProps = {
+      columns: [{ key: 'id', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+      data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
+      selectedRows: [1, 2, 3, 4],
+      rowKeyField: 'id',
+      paging: {
+        enabled: true,
+        pageSize: 2
+      }
+    };
+    const allFilteredRowsSelected = areAllFilteredRowsSelected(tableProps);
+    expect(allFilteredRowsSelected).toBeTruthy();
+  });
+  it('false', () => {
+    const tableProps: ITableProps = {
+      columns: [{ key: 'id', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+      data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
+      selectedRows: [1, 3, 5],
+      rowKeyField: 'id',
+      paging: {
+        enabled: true,
+        pageSize: 2
+      }
+    };
+    const allFilteredRowsSelected = areAllFilteredRowsSelected(tableProps);
+    expect(allFilteredRowsSelected).toBeFalsy();
   });
 });
 

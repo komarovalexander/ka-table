@@ -9,7 +9,7 @@ import {
 import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
 import { ICellTextProps, IHeadCellProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
-import { filterData } from '../../lib/Utils/FilterUtils';
+import { kaPropsUtils } from '../../lib/utils';
 
 const dataArray = Array(64).fill(undefined).map(
   (_, index) => ({
@@ -50,9 +50,9 @@ const SelectionHeader: React.FC<IHeadCellProps> = ({
       checked={areAllRowsSelected}
       onChange={(event) => {
         if (event.currentTarget.checked) {
-          dispatch(selectAllFilteredRows());
+          dispatch(selectAllFilteredRows()); // also available: selectAllVisibleRows(), selectAllRows()
         } else {
-          dispatch(deselectAllFilteredRows());
+          dispatch(deselectAllFilteredRows()); // also available: deselectAllVisibleRows(), deselectAllRows()
         }
       }}
     />
@@ -113,8 +113,9 @@ const SelectionDemo: React.FC = () => {
               if (props.column.key === 'selection-cell'){
                 return (
                   <SelectionHeader {...props}
-                    areAllRowsSelected={filterData(tableProps.data!, tableProps.columns)
-                      .every(d => tableProps.selectedRows?.includes(d.id))}/>
+                    areAllRowsSelected={kaPropsUtils.areAllFilteredRowsSelected(tableProps)}
+                    // areAllRowsSelected={kaPropsUtils.areAllVisibleRowsSelected(tableProps)}
+                  />
                 );
               }
             }

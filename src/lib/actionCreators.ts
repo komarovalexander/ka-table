@@ -50,6 +50,10 @@ export const deselectAllFilteredRows = () => ({
   type: ActionType.DeselectAllFilteredRows,
 });
 
+export const deselectAllVisibleRows = () => ({
+  type: ActionType.DeselectAllVisibleRows,
+});
+
 export const deselectRow = (rowKeyValue: any) => ({
   rowKeyValue,
   type: ActionType.DeselectRow,
@@ -72,6 +76,10 @@ export const selectAllRows = () => ({
 
 export const selectAllFilteredRows = () => ({
   type: ActionType.SelectAllFilteredRows,
+});
+
+export const selectAllVisibleRows = () => ({
+  type: ActionType.SelectAllVisibleRows,
 });
 
 export const selectSingleRow = (rowKeyValue: any) => ({
