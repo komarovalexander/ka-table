@@ -79,15 +79,10 @@ const tablePropsInit: ITableProps = {
   filteringMode: FilteringMode.FilterRow,
 };
 
-const customReducer = (prevState: any, action: any) => {
-  return kaReducer(prevState, action);
-};
-
-
 const SelectionDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => customReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <div className='selection-demo'>
