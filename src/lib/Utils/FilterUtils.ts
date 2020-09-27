@@ -1,4 +1,5 @@
 
+import { ITableProps } from '../';
 import defaultOptions from '../defaultOptions';
 import { DataType, FilterOperatorName } from '../enums';
 import { Column } from '../Models/Column';
@@ -7,6 +8,7 @@ import { FilterOperator } from '../Models/FilterOperator';
 import { SearchFunc } from '../types';
 import { isEmpty } from './CommonUtils';
 import { getValueByColumn } from './DataUtils';
+import { convertToColumnTypes } from './TypeUtils';
 
 export const getRowEditableCells = (rowKeyValue: any, editableCells: EditableCell[]): EditableCell[] => {
   return editableCells.filter((c) => c.rowKeyValue === rowKeyValue);
@@ -30,6 +32,25 @@ export const searchData = (columns: Column[], data: any[], searchText: string, s
     };
     return initialData.concat(data.filter(filterFunction));
   }, []);
+};
+
+export const filterAndSearchData = (props: ITableProps) => {
+  const {
+    extendedFilter,
+    columns,
+    searchText,
+    search,
+  } = props;
+  let {
+    data = [],
+  } = props;
+  data = [...data];
+  data = extendedFilter ? extendedFilter(data) : data;
+  data = searchText ? searchData(columns, data, searchText, search) : data;
+  data = convertToColumnTypes(data, columns);
+  data = filterData(data, columns);
+
+  return data;
 };
 
 export const filterData = (data: any[], columns: Column[]): any[] => {

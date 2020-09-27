@@ -4,20 +4,22 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import {
-  deselectAllRows, deselectRow, selectAllRows, selectRow, selectRowsRange,
+  deselectAllFilteredRows, deselectRow, selectAllFilteredRows, selectRow, selectRowsRange,
 } from '../../lib/actionCreators';
-import { DataType, SortDirection, SortingMode } from '../../lib/enums';
+import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
 import { ICellTextProps, IHeadCellProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
+import { kaPropsUtils } from '../../lib/utils';
 
-const dataArray: any[] = [
-  { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
-  { id: 2, name: 'Billi Bob', score: 55, passed: false },
-  { id: 3, name: 'Tom Williams', score: 45, passed: false },
-  { id: 4, name: 'Kurt Cobain', score: 75, passed: true },
-  { id: 5, name: 'Marshall Bruce', score: 77, passed: true },
-  { id: 6, name: 'Sunny Fox', score: 33, passed: false },
-];
+const dataArray = Array(64).fill(undefined).map(
+  (_, index) => ({
+    column1: `column:1 row:${index}`,
+    column2: `column:2 row:${index}`,
+    column3: `column:3 row:${index}`,
+    column4: `column:4 row:${index}`,
+    id: index,
+  }),
+);
 
 const SelectionCell: React.FC<ICellTextProps> = ({
   rowKeyValue, dispatch, isSelectedRow, selectedRows
@@ -48,9 +50,9 @@ const SelectionHeader: React.FC<IHeadCellProps> = ({
       checked={areAllRowsSelected}
       onChange={(event) => {
         if (event.currentTarget.checked) {
-          dispatch(selectAllRows());
+          dispatch(selectAllFilteredRows()); // also available: selectAllVisibleRows(), selectAllRows()
         } else {
-          dispatch(deselectAllRows());
+          dispatch(deselectAllFilteredRows()); // also available: deselectAllVisibleRows(), deselectAllRows()
         }
       }}
     />
@@ -62,20 +64,19 @@ const tablePropsInit: ITableProps = {
     {
       key: 'selection-cell',
     },
-    {
-      dataType: DataType.String,
-      key: 'name',
-      sortDirection: SortDirection.Descend,
-      style: { width: '33%' },
-      title: 'Name',
-    },
-    { key: 'score', title: 'Score', style: { width: '10%' }, dataType: DataType.Number },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
+    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
+  paging: {
+    enabled: true,
+  },
   data: dataArray,
   rowKeyField: 'id',
   selectedRows: [3, 5],
   sortingMode: SortingMode.Single,
+  filteringMode: FilteringMode.FilterRow,
 };
 
 const SelectionDemo: React.FC = () => {
@@ -95,10 +96,22 @@ const SelectionDemo: React.FC = () => {
               }
             }
           },
+          filterRowCell: {
+            content: (props) => {
+              if (props.column.key === 'selection-cell'){
+                return <></>;
+              }
+            }
+          },
           headCell: {
             content: (props) => {
               if (props.column.key === 'selection-cell'){
-                return <SelectionHeader {...props}/>;
+                return (
+                  <SelectionHeader {...props}
+                    areAllRowsSelected={kaPropsUtils.areAllFilteredRowsSelected(tableProps)}
+                    // areAllRowsSelected={kaPropsUtils.areAllVisibleRowsSelected(tableProps)}
+                  />
+                );
               }
             }
           }

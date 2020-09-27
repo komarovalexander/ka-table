@@ -8,9 +8,10 @@ import { kaPropsUtils } from '../utils';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
 import { getValueByField, reorderData, replaceValue } from '../Utils/DataUtils';
+import { filterAndSearchData } from '../Utils/FilterUtils';
 import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getSortedColumns } from '../Utils/HeadRowUtils';
-import { prepareTableOptions } from '../Utils/PropsUtils';
+import { getData, prepareTableOptions } from '../Utils/PropsUtils';
 
 const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
   const newEditableCells = [...editableCells];
@@ -24,6 +25,12 @@ const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Co
     }
   });
   return newEditableCells;
+}
+
+const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKeyField: string) => {
+  const newSelectedRows = selectedRows.filter((rowKeyValue: any) =>
+    !data.some(d => getValueByField(d, rowKeyField) === rowKeyValue));
+  return newSelectedRows;
 }
 
 const kaReducer: any = (props: ITableProps, action: any) => {
@@ -151,6 +158,18 @@ const kaReducer: any = (props: ITableProps, action: any) => {
       const newSelectedRows = data.map((d) => getValueByField(d, rowKeyField));
       return { ...props, selectedRows: newSelectedRows };
     }
+    case ActionType.SelectAllFilteredRows: {
+      const newData = filterAndSearchData(props);
+      let newSelectedRows = removeDataKeysFromSelectedRows(selectedRows, newData, rowKeyField);
+      newSelectedRows = [...newSelectedRows, ...newData.map((d) => getValueByField(d, rowKeyField))];
+      return { ...props, selectedRows: newSelectedRows };
+    }
+    case ActionType.SelectAllVisibleRows: {
+      const newData = getData(props);
+      let newSelectedRows = removeDataKeysFromSelectedRows(selectedRows, newData, rowKeyField);
+      newSelectedRows = [...newSelectedRows, ...newData.map((d) => getValueByField(d, rowKeyField))];
+      return { ...props, selectedRows: newSelectedRows };
+    }
     case ActionType.Search: {
       return { ...props, searchText: action.searchText };
     }
@@ -160,6 +179,16 @@ const kaReducer: any = (props: ITableProps, action: any) => {
     }
     case ActionType.DeselectAllRows:
       return { ...props, selectedRows: [] };
+    case ActionType.DeselectAllFilteredRows: {
+      const newData = filterAndSearchData(props);
+      const newSelectedRows = removeDataKeysFromSelectedRows(selectedRows, newData, rowKeyField);
+      return { ...props, selectedRows: newSelectedRows };
+    }
+    case ActionType.DeselectAllVisibleRows: {
+      const newData = getData(props);
+      const newSelectedRows = removeDataKeysFromSelectedRows(selectedRows, newData, rowKeyField);
+      return { ...props, selectedRows: newSelectedRows };
+    }
     case ActionType.SelectRow:
         return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
     case ActionType.SelectRowsRange: {

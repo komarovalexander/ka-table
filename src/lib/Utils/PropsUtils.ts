@@ -5,11 +5,10 @@ import { ITableProps } from '../';
 import { Column } from '../models';
 import { ChildComponent } from '../Models/ChildComponent';
 import { ChildAttributesItem, DispatchFunc } from '../types';
-import { filterData, searchData } from './FilterUtils';
+import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { sortData } from './SortUtils';
-import { convertToColumnTypes } from './TypeUtils';
 
 export const extendProps = (
   childElementAttributes: AllHTMLAttributes<HTMLElement>,
@@ -59,24 +58,15 @@ export const mergeProps = (
   return mergedResult;
 };
 
-const _filterData = (props: ITableProps) => {
-  const {
-    extendedFilter,
-    columns,
-    searchText,
-    search,
-  } = props;
-  let {
-    data = [],
-  } = props;
-  data = [...data];
-  data = extendedFilter ? extendedFilter(data) : data;
-  data = searchText ? searchData(columns, data, searchText, search) : data;
-  data = convertToColumnTypes(data, columns);
-  data = filterData(data, columns);
+export const areAllFilteredRowsSelected = (props: ITableProps) => {
+  const { selectedRows = [] } = props;
+  return filterAndSearchData(props).every(d => selectedRows.includes(d.id))
+}
 
-  return data;
-};
+export const areAllVisibleRowsSelected = (props: ITableProps) => {
+  const { selectedRows = [] } = props;
+  return getData(props).every(d => selectedRows.includes(d.id))
+}
 
 export const getData = (props: ITableProps) => {
   const {
@@ -89,7 +79,7 @@ export const getData = (props: ITableProps) => {
     data = [],
   } = props;
   data = [...data];
-  data = _filterData(props);
+  data = filterAndSearchData(props);
   data = sortData(columns, data);
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
@@ -105,7 +95,7 @@ export const getPagesCountByProps = (props: ITableProps) => {
   } = props;
   let pagesCount = 1;
   if (paging && paging.enabled) {
-    pagesCount = getPagesCount(_filterData(props), paging);
+    pagesCount = getPagesCount(filterAndSearchData(props), paging);
   }
   return pagesCount;
 };
