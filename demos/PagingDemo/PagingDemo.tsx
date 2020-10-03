@@ -37,12 +37,10 @@ const PagingDemo: React.FC = () => {
   };
 
   return (
-    <>
-      <Table
-        {...option}
-        dispatch={dispatch}
-      />
-    </>
+    <Table
+      {...option}
+      dispatch={dispatch}
+    />
   );
 };
 
