@@ -11,7 +11,8 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
-const newItems: string[] = [];
+const newItems: string[] = ['FixedColumnDemo'];
+const updateItems: string[] = ['Columns'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 
@@ -38,6 +39,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
                     <span className='menu-icon'><img src={`static/icons/groups/${c.name}.svg`} alt=''/></span>
                     <span className='menu-button-inner'>{c.title}</span>
                     {newItems.includes(c.name) && <span className='new-badge'>new</span>}
+                    {updateItems.includes(c.name) && <span className='upd-badge'>upd</span>}
                   </span>
                 </div>
               ) : (
