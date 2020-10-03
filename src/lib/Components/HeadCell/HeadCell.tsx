@@ -13,9 +13,11 @@ import HeadCellResize from '../HeadCellResize/HeadCellResize';
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
-    columnReordering,
+    colSpan,
     column: { style, isResizable, key },
+    columnReordering,
     dispatch,
+    rowSpan,
     sortingMode
   } = props;
   let {
@@ -32,8 +34,10 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
 
   const { elementAttributes, content } = getElementCustomization({
     className: `${defaultOptions.css.theadCell} ${defaultOptions.css.theadBackground} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''}`,
-    style: stateStyle,
-    scope: 'col'
+    colSpan,
+    rowSpan,
+    scope: 'col',
+    style: stateStyle
   }, props, headCell);
 
   return (

@@ -1,6 +1,6 @@
-
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
+import { GroupedColumn } from './Models/GroupedColumn';
 import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 
 interface IRowCommonProps {
@@ -100,6 +100,8 @@ export interface IHeadCellProps {
   column: Column;
   dispatch: DispatchFunc;
   sortingMode: SortingMode;
+  colSpan?: number;
+  rowSpan?: number;
 }
 
 export interface INoDataRowProps {
@@ -110,6 +112,7 @@ export interface INoDataRowProps {
 
 export interface ITableHeadProps {
   columnReordering?: boolean;
+  groupedColumns?: GroupedColumn[];
   areAllRowsSelected: boolean;
   childComponents: ChildComponents;
   columns: Column[];
@@ -185,6 +188,7 @@ export interface IHeadRowProps {
   columns: Column[];
   dispatch: DispatchFunc;
   groupColumnsCount: number;
+  groupedColumns?: GroupedColumn[];
   sortingMode: SortingMode;
 }
 

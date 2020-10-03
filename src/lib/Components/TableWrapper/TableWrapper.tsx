@@ -12,7 +12,6 @@ import { TableHead } from '../TableHead/TableHead';
 export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     childComponents = {},
-    columnReordering,
     data = [],
     dispatch,
     editableCells = [],
@@ -53,9 +52,9 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
       {content || tableWrapper.content || (
         <table {...elementAttributes}>
           <TableHead
+            {...props}
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
-            columnReordering={columnReordering}
             columns={preparedOptions.columns}
             dispatch={dispatch}
             filteringMode={filteringMode}

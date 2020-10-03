@@ -5,18 +5,14 @@ import { FilteringMode } from '../../enums';
 import { ITableHeadProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import FilterRow from '../FilterRow/FilterRow';
+import { GroupedColumnsRow } from '../GroupedColumnsRow/GroupedColumnsRow';
 import HeadRow from '../HeadRow/HeadRow';
 
 export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
   const {
-    areAllRowsSelected,
     childComponents,
-    columnReordering,
-    columns,
     dispatch,
     filteringMode,
-    groupColumnsCount,
-    sortingMode,
   } = props;
 
   const { elementAttributes, content } = getElementCustomization({
@@ -26,22 +22,16 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
     <thead {...elementAttributes}>
       {content || (
         <>
+          <GroupedColumnsRow {...props} />
           <HeadRow
-            areAllRowsSelected={areAllRowsSelected}
-            childComponents={childComponents}
-            columnReordering={columnReordering}
-            columns={columns}
+            {...props}
             dispatch={dispatch}
-            groupColumnsCount={groupColumnsCount}
-            sortingMode={sortingMode}
           />
           {filteringMode === FilteringMode.FilterRow &&
             (
               <FilterRow
-                childComponents={childComponents}
-                columns={columns}
+                {...props}
                 dispatch={dispatch}
-                groupColumnsCount={groupColumnsCount}
               />
             )}
         </>

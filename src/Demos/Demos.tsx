@@ -39,6 +39,7 @@ import ManyColumnsDemo from './ManyColumnsDemo/ManyColumnsDemo';
 import ManyRowsDemo from './ManyRowsDemo/ManyRowsDemo';
 import ManyRowsGroupingDemo from './ManyRowsGroupingDemo/ManyRowsGroupingDemo';
 import MaterialDemo from './MaterialDemo/MaterialDemo';
+import MultiColumnHeaderDemo from './MultiColumnHeaderDemo/MultiColumnHeaderDemo';
 import NullableCellDataDemo from './NullableCellDataDemo/NullableCellDataDemo';
 import OverviewDemo from './OverviewDemo/OverviewDemo';
 import PagingDemo from './PagingDemo/PagingDemo';
@@ -86,6 +87,7 @@ const demos: Demo[] = [
   new Demo(ManyColumnsDemo, '/many-columns', 'Many Columns', 'ManyColumnsDemo', 'https://stackblitz.com/edit/table-many-columns-js', 'https://stackblitz.com/edit/table-many-columns-ts', 'Columns'),
   new Demo(ManyRowsDemo, '/many-rows', 'Many Rows (25k)', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts', 'Virtual Scrolling'),
   new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', 'Many Rows (10k Grouped)', 'ManyRowsGroupingDemo', 'https://stackblitz.com/edit/table-many-rows-grouping-js', 'https://stackblitz.com/edit/table-many-rows-grouping-ts', 'Virtual Scrolling', true),
+  new Demo(MultiColumnHeaderDemo, '/multi-column-header', 'Multi-Column Header', 'MultiColumnHeaderDemo', 'https://stackblitz.com/edit/table-multi-column-header-js', 'https://stackblitz.com/edit/table-multi-column-header-ts', ''),
   new Demo(NullableCellDataDemo, '/nullable-cell-data', 'Nullable Cell Data', 'NullableCellDataDemo', 'https://stackblitz.com/edit/table-nullable-cell-data-js', 'https://stackblitz.com/edit/table-nullable-cell-data-ts', 'Miscellaneous', true),
   new Demo(PagingDemo, '/paging', 'Paging', 'PagingDemo', 'https://stackblitz.com/edit/table-paging-js', 'https://stackblitz.com/edit/table-paging-ts', 'Miscellaneous'),
   new Demo(ReduxDemo, '/redux', 'Redux', 'ReduxDemo', 'https://stackblitz.com/edit/table-redux-js', 'https://stackblitz.com/edit/table-redux-ts', ''),

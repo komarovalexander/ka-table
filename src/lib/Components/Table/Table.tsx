@@ -5,6 +5,7 @@ import { EditableCell, PagingOptions } from '../../models';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { Group } from '../../Models/Group';
+import { GroupedColumn } from '../../Models/GroupedColumn';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
 import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
@@ -17,6 +18,7 @@ import { TableWrapper } from '../TableWrapper/TableWrapper';
 export interface ITableProps {
   columnReordering?: boolean;
   columns: Column[];
+  groupedColumns?: GroupedColumn[];
   data?: any[];
   detailsRows?: any[];
   editableCells?: EditableCell[];
