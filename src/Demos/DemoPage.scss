@@ -16,7 +16,7 @@
   cursor: pointer;
 }
 
-.enable-ka-styles{
+.enable-ka-styles, .print-content{
   @import '../../src/lib/style.scss';
   .ka{
     border-radius: 12px;

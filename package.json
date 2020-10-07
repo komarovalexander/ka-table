@@ -16,7 +16,8 @@
     "react": "^16.13.1",
     "react-csv": "^2.0.3",
     "react-dom": "^16.13.1",
-    "react-redux": "^7.2.0"
+    "react-redux": "^7.2.0",
+    "react-to-print": "^2.10.0"
   },
   "scripts": {
     "start": "react-scripts start",

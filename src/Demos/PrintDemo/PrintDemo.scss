@@ -1,0 +1,18 @@
+.print-demo {
+  button{
+    margin-bottom: 20px;
+  }
+}
+@media print {
+  .print-content {
+    .ka-table-wrapper {
+      max-height: none;
+    }
+    .ka{
+      box-shadow: none;
+    }
+    button{
+      margin-bottom: 10px;
+    }
+  }
+}
