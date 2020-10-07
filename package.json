@@ -29,7 +29,8 @@
     "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "dist": "tsc --declaration --jsx react --esModuleInterop true --outDir dist src/lib/index.ts && gulp build",
-    "pack": "gulp build && cd dist && npm pack && cd .."
+    "pack": "gulp build && cd dist && npm pack && cd ..",
+    "compile": "tsc src/lib/index.ts --jsx react --esModuleInterop true --outDir dist --declaration true --target es5"
   },
   "eslintConfig": {
     "extends": "react-app"
