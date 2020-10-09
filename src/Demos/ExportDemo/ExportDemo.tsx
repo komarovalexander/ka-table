@@ -42,7 +42,9 @@ const ExportDemo: React.FC = () => {
         <CSVLink
           data={kaPropsUtils.getData(tableProps)}
           headers={tableProps.columns.map(c => ({ label: c.title!, key: c.key! }))}
-          filename='ka-table.data.csv'>
+          filename='ka-table.data.csv'
+          enclosingCharacter={''}
+          separator={';'}>
           Download .csv
         </CSVLink>
       </div>

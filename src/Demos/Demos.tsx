@@ -27,6 +27,7 @@ import ExportDemo from './ExportDemo/ExportDemo';
 import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
 import FilterRowCustomEditorDemo from './FilterRowCustomEditorDemo/FilterRowCustomEditorDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
+import FixedColumnDemo from './FixedColumnDemo/FixedColumnDemo';
 import { initializeGA, trackEvent } from './ga';
 import { withTracker } from './GAWrapper';
 import GetDataByPropsDemo from './GetDataByPropsDemo/GetDataByPropsDemo';
@@ -42,6 +43,7 @@ import MaterialDemo from './MaterialDemo/MaterialDemo';
 import NullableCellDataDemo from './NullableCellDataDemo/NullableCellDataDemo';
 import OverviewDemo from './OverviewDemo/OverviewDemo';
 import PagingDemo from './PagingDemo/PagingDemo';
+import PrintDemo from './PrintDemo/PrintDemo';
 import ReduxDemo from './ReduxDemo/ReduxDemo';
 import RemoteDataDemo from './RemoteDataDemo/RemoteDataDemo';
 import RowReorderingDemo from './RowReorderingDemo/RowReorderingDemo';
@@ -69,32 +71,34 @@ const demos: Demo[] = [
   new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo', 'https://stackblitz.com/edit/table-custom-editor-js', 'https://stackblitz.com/edit/table-custom-editor-ts', 'Data Editing'),
   new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo', 'https://stackblitz.com/edit/table-custom-header-cell-js', 'https://stackblitz.com/edit/table-custom-header-cell-ts', 'Customization'),
   new Demo(DeleteRowDemo, '/delete-row', 'Delete Row', 'DeleteRowDemo', 'https://stackblitz.com/edit/table-delete-row-js', 'https://stackblitz.com/edit/table-delete-row-ts', 'Data Editing'),
-  new Demo(DetailsRowDemo, '/details-row', 'Details Row', 'DetailsRowDemo', 'https://stackblitz.com/edit/table-details-row-js', 'https://stackblitz.com/edit/table-details-row-ts', 'Miscellaneous'),
+  new Demo(DetailsRowDemo, '/details-row', 'Details Row', 'DetailsRowDemo', 'https://stackblitz.com/edit/table-details-row-js', 'https://stackblitz.com/edit/table-details-row-ts', 'Rows'),
   new Demo(EditingDemo, '/editing', 'Editing', 'EditingDemo', 'https://stackblitz.com/edit/table-editing-js', 'https://stackblitz.com/edit/table-editing-ts', 'Data Editing'),
   new Demo(EditingRowDemo, '/editing-row', 'Editing - Row', 'EditingRowDemo', 'https://stackblitz.com/edit/table-editing-row-js', 'https://stackblitz.com/edit/table-editing-row-ts', 'Data Editing'),
   new Demo(EventsDemo, '/events', 'Events', 'EventsDemo', 'https://stackblitz.com/edit/table-events-js', 'https://stackblitz.com/edit/table-events-ts', 'Miscellaneous'),
-  new Demo(ExportDemo, '/export', 'Export', 'ExportDemo', 'https://stackblitz.com/edit/table-export-js', 'https://stackblitz.com/edit/table-export-ts', ''),
+  new Demo(ExportDemo, '/export', 'Export', 'ExportDemo', 'https://stackblitz.com/edit/table-export-js', 'https://stackblitz.com/edit/table-export-ts', 'Miscellaneous'),
   new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo', 'https://stackblitz.com/edit/table-filter-extended-js', 'https://stackblitz.com/edit/table-filter-extended-ts', 'Filtering'),
   new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo', 'https://stackblitz.com/edit/table-filter-row-js', 'https://stackblitz.com/edit/table-filter-row-ts', 'Filtering'),
   new Demo(FilterRowCustomEditorDemo, '/filter-row-custom-editor', 'Filter Row - Custom Editor', 'FilterRowCustomEditorDemo', 'https://stackblitz.com/edit/table-filter-row-custom-editor-js', 'https://stackblitz.com/edit/table-filter-row-custom-editor-ts', 'Filtering'),
+  new Demo(FixedColumnDemo, '/fixed-column', 'Fixed Colum', 'FixedColumnDemo', 'https://stackblitz.com/edit/table-fixed-column-js', 'https://stackblitz.com/edit/table-fixed-column-ts', 'Columns'),
   new Demo(GetDataByPropsDemo, '/get-data-by-props', 'Get Data By Props', 'GetDataByPropsDemo', 'https://stackblitz.com/edit/table-get-data-by-props-js', 'https://stackblitz.com/edit/table-get-data-by-props-ts', 'Miscellaneous'),
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo', 'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts', 'Grouping', true),
   new Demo(GroupingCustomCellDemo, '/grouping-custom-cell', 'Grouping Custom Cell', 'GroupingCustomCellDemo', 'https://stackblitz.com/edit/table-grouping-custom-cell-js', 'https://stackblitz.com/edit/table-grouping-custom-cell-ts', 'Grouping', true),
   new Demo(GroupingCustomRowDemo, '/grouping-custom-row', 'Grouping Custom Row', 'GroupingCustomRowDemo', 'https://stackblitz.com/edit/table-grouping-custom-row-js', 'https://stackblitz.com/edit/table-grouping-custom-row-ts', 'Grouping', true),
-  new Demo(HoverRowDemo, '/hover-row', 'Hover Row', 'HoverRowDemo', 'https://stackblitz.com/edit/table-hover-row-js', 'https://stackblitz.com/edit/table-hover-row-ts', 'Miscellaneous'),
+  new Demo(HoverRowDemo, '/hover-row', 'Hover Row', 'HoverRowDemo', 'https://stackblitz.com/edit/table-hover-row-js', 'https://stackblitz.com/edit/table-hover-row-ts', 'Rows'),
   new Demo(LoadingDemo, '/loading', 'Loading', 'LoadingDemo', 'https://stackblitz.com/edit/table-loading-js', 'https://stackblitz.com/edit/table-loading-ts', 'Miscellaneous'),
   new Demo(ManyColumnsDemo, '/many-columns', 'Many Columns', 'ManyColumnsDemo', 'https://stackblitz.com/edit/table-many-columns-js', 'https://stackblitz.com/edit/table-many-columns-ts', 'Columns'),
   new Demo(ManyRowsDemo, '/many-rows', 'Many Rows (25k)', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts', 'Virtual Scrolling'),
   new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', 'Many Rows (10k Grouped)', 'ManyRowsGroupingDemo', 'https://stackblitz.com/edit/table-many-rows-grouping-js', 'https://stackblitz.com/edit/table-many-rows-grouping-ts', 'Virtual Scrolling', true),
   new Demo(NullableCellDataDemo, '/nullable-cell-data', 'Nullable Cell Data', 'NullableCellDataDemo', 'https://stackblitz.com/edit/table-nullable-cell-data-js', 'https://stackblitz.com/edit/table-nullable-cell-data-ts', 'Miscellaneous', true),
   new Demo(PagingDemo, '/paging', 'Paging', 'PagingDemo', 'https://stackblitz.com/edit/table-paging-js', 'https://stackblitz.com/edit/table-paging-ts', 'Miscellaneous'),
+  new Demo(PrintDemo, '/print', 'Print', 'PrintDemo', 'https://stackblitz.com/edit/table-print-js', 'https://stackblitz.com/edit/table-print-ts', 'Miscellaneous'),
   new Demo(ReduxDemo, '/redux', 'Redux', 'ReduxDemo', 'https://stackblitz.com/edit/table-redux-js', 'https://stackblitz.com/edit/table-redux-ts', ''),
   new Demo(RemoteDataDemo, '/remote-data', 'Remote Data', 'RemoteDataDemo', 'https://stackblitz.com/edit/table-remote-data-js', 'https://stackblitz.com/edit/table-remote-data-ts', ''),
-  new Demo(RowReorderingDemo, '/row-reordering', 'Row Reordering', 'RowReorderingDemo', 'https://stackblitz.com/edit/table-row-reordering-js', 'https://stackblitz.com/edit/table-row-reordering-ts', ''),
-  new Demo(SearchDemo, '/search', 'Search', 'SearchDemo', 'https://stackblitz.com/edit/table-search-js', 'https://stackblitz.com/edit/table-search-ts', 'Miscellaneous'),
+  new Demo(RowReorderingDemo, '/row-reordering', 'Row Reordering', 'RowReorderingDemo', 'https://stackblitz.com/edit/table-row-reordering-js', 'https://stackblitz.com/edit/table-row-reordering-ts', 'Rows'),
+  new Demo(SearchDemo, '/search', 'Search', 'SearchDemo', 'https://stackblitz.com/edit/table-search-js', 'https://stackblitz.com/edit/table-search-ts', 'Filtering'),
   new Demo(SelectionDemo, '/selection', 'Selection - Multiple', 'SelectionDemo', 'https://stackblitz.com/edit/table-selection-js', 'https://stackblitz.com/edit/table-selection-ts', 'Selection'),
   new Demo(SelectionSingleDemo, '/selection-single', 'Selection - Single', 'SelectionSingleDemo', 'https://stackblitz.com/edit/table-selection-single-js', 'https://stackblitz.com/edit/table-selection-single-ts', 'Selection'),
-  new Demo(SortingDemo, '/sorting', 'Sorting', 'SortingDemo', 'https://stackblitz.com/edit/table-sorting-js', 'https://stackblitz.com/edit/table-sorting-ts', ''),
+  new Demo(SortingDemo, '/sorting', 'Sorting', 'SortingDemo', 'https://stackblitz.com/edit/table-sorting-js', 'https://stackblitz.com/edit/table-sorting-ts', 'Rows'),
   new Demo(StateStoringDemo, '/state-storing', 'State Storing', 'StateStoringDemo', 'https://stackblitz.com/edit/table-state-storing-js', '', 'Miscellaneous', true),
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts', 'Data Editing'),
 ];

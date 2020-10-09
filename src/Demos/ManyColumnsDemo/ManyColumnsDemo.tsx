@@ -36,12 +36,10 @@ const ManyColumnsDemo: React.FC = () => {
   };
 
   return (
-    <>
-      <Table
-        {...tableProps}
-        dispatch={dispatch}
-      />
-    </>
+    <Table
+      {...tableProps}
+      dispatch={dispatch}
+    />
   );
 };
 

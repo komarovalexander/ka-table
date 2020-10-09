@@ -97,12 +97,15 @@ body {
             left: -35px;
             top: -5px;
           }
-          .new-badge{
+          .new-badge, .upd-badge{
             margin-left: 20px;
             padding: 0 7px;
             background: rgba(118,74,188, 0.64);
             color: white;
             border-radius: 12px;
+          }
+          .upd-badge{
+            background: #61DAFB99;
           }
         }
 

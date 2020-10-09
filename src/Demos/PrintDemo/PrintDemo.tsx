@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import './PrintDemo.scss';
+
+import React, { useRef, useState } from 'react';
+import ReactToPrint from 'react-to-print';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
@@ -22,26 +25,30 @@ const tableOption: ITableProps = {
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
   data: dataArray,
-  paging: {
-    enabled: true,
-    pageIndex: 0,
-    pageSize: 10,
-  },
   rowKeyField: 'id',
 };
 
-const PagingDemo: React.FC = () => {
+const PrintDemo: React.FC = () => {
   const [option, changeOptions] = useState(tableOption);
   const dispatch: DispatchFunc = (action) => {
     changeOptions((prevState: ITableProps) => kaReducer(prevState, action));
   };
+  const componentRef = useRef<any>();
 
   return (
-    <Table
-      {...option}
-      dispatch={dispatch}
-    />
+    <div className='print-demo'>
+      <ReactToPrint
+        trigger={() => <button>Click to Print</button>}
+        content={() => componentRef.current}
+      />
+      <div ref={componentRef} className='print-content'>
+        <Table
+          {...option}
+          dispatch={dispatch}
+        />
+      </div>
+    </div>
   );
 };
 
-export default PagingDemo;
+export default PrintDemo;
