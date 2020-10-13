@@ -29,7 +29,7 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
       });
     } else {
       menuItems.push({
-        name: (c.group && c.group.replace(' ', '')) || c.name,
+        name: (c.group && c.group.replace(' ', '').replace('/ ', '')) || c.name,
         path: c.group ? '' : c.path,
         title: c.group || c.title,
         items: c.group ? [{
