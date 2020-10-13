@@ -8,8 +8,6 @@ import { DataType } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 import { getValueByColumn } from '../../lib/Utils/DataUtils';
 
-const doc: any = new jsPDF();
-
 const dataArray = Array(2000).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
@@ -38,7 +36,8 @@ const ExportToPdfDemo: React.FC = () => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
-  const saveClick = () => {
+  const exportClick = (orientation?: any) => {
+    const doc: any = new jsPDF(orientation);
     const head = [tableProps.columns.map(c => c.title)];
     const body = tableProps.data!.map(d => tableProps.columns.map(c => getValueByColumn(d, c)));
     doc.autoTable({
@@ -58,7 +57,8 @@ const ExportToPdfDemo: React.FC = () => {
         marginBottom: 20,
         marginLeft: 20
       }}>
-        <button onClick={saveClick}>Export to PDF</button>
+        <button onClick={() => exportClick()}>Export to PDF</button>
+        <button style={{marginLeft: 40}} onClick={() => exportClick('landscape')}>Export to PDF (Landscape)</button>
       </div>
       <Table
         {...tableProps}
@@ -71,7 +71,7 @@ const ExportToPdfDemo: React.FC = () => {
           }
         }}
       />
-    </div>
+    </div >
   );
 };
 
