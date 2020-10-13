@@ -38,7 +38,7 @@ const ExportToPdfDemo: React.FC = () => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
-  const saveClick = () => {
+  const exportClick = () => {
     const head = [tableProps.columns.map(c => c.title)];
     const body = tableProps.data!.map(d => tableProps.columns.map(c => getValueByColumn(d, c)));
     doc.autoTable({
@@ -58,7 +58,7 @@ const ExportToPdfDemo: React.FC = () => {
         marginBottom: 20,
         marginLeft: 20
       }}>
-        <button onClick={saveClick}>Export to PDF</button>
+        <button onClick={exportClick}>Export to PDF</button>
       </div>
       <Table
         {...tableProps}
