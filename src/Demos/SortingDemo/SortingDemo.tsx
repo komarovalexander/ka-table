@@ -22,12 +22,12 @@ const tablePropsInit: ITableProps = {
       style: { width: '33%' },
       title: 'Name',
     },
-    { key: 'score', title: 'Score', style: { width: '10%' }, dataType: DataType.Number },
+    { key: 'score', title: 'Score', style: { width: '10%' }, dataType: DataType.Number, sortDirection: SortDirection.Ascend },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
   data: dataArray,
   rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
+  sortingMode: SortingMode.SingleRemote,
 };
 
 const SortingDemo: React.FC = () => {
@@ -36,10 +36,20 @@ const SortingDemo: React.FC = () => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
-    <Table
-      {...tableProps}
-      dispatch={dispatch}
-    />
+    <>
+      sortingMode:
+      <select
+        value={tableProps.sortingMode}
+        onChange={(e) => changeTableProps({ ...tableProps, sortingMode: e.target.value as any })}
+        style={{marginBottom: 20}}>
+        <option value={SortingMode.Single}>Single</option>
+        <option value={SortingMode.SingleRemote}>SingleRemote</option>
+      </select>
+      <Table
+        {...tableProps}
+        dispatch={dispatch}
+      />
+    </>
   );
 };
 

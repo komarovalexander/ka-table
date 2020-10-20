@@ -2,6 +2,7 @@ import { AllHTMLAttributes } from 'react';
 import { isFunction } from 'util';
 
 import { ITableProps } from '../';
+import { SortingMode } from '../enums';
 import { Column } from '../models';
 import { ChildComponent } from '../Models/ChildComponent';
 import { ChildAttributesItem, DispatchFunc } from '../types';
@@ -74,13 +75,16 @@ export const getData = (props: ITableProps) => {
     groups,
     groupsExpanded,
     paging,
+    sortingMode,
   } = props;
   let {
     data = [],
   } = props;
   data = [...data];
   data = filterAndSearchData(props);
-  data = sortData(columns, data);
+  if (sortingMode !== SortingMode.SingleRemote){
+    data = sortData(columns, data);
+  }
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
   const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;

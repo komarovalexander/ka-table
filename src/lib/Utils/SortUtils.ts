@@ -41,4 +41,5 @@ export const descendSort = (sortedColumn: Column) => {
   };
 };
 
-export const isSortingEnabled = (sortingMode: SortingMode) => sortingMode === SortingMode.Single;
+export const isSortingEnabled = (sortingMode: SortingMode) =>
+  sortingMode === SortingMode.Single || sortingMode === SortingMode.SingleRemote;

@@ -41,5 +41,6 @@ describe('isSortingEnabled', () => {
   it('default', () => {
     expect(isSortingEnabled(SortingMode.None)).toBeFalsy();
     expect(isSortingEnabled(SortingMode.Single)).toBeTruthy();
+    expect(isSortingEnabled(SortingMode.SingleRemote)).toBeTruthy();
   });
 });
