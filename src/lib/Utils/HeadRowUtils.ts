@@ -22,14 +22,7 @@ export const getSortedColumns = (
   return newColumns;
 };
 
-export const getColumnWithUpdatedSortDirection = (
-  column: Column): Column => {
-  const newColumn = {...column};
-  newColumn.sortDirection = getNextSortDirection(newColumn.sortDirection);
-  return newColumn;
-};
-
-const getNextSortDirection = (
+export const getNextSortDirection = (
   previousSortdirection?: SortDirection): SortDirection => {
   let nextSortDirection;
   if (previousSortdirection) {
