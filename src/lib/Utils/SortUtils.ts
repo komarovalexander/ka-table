@@ -41,11 +41,16 @@ export const descendSort = (sortedColumn: Column) => {
   };
 };
 
+export const canBeEmptySorting = (sortingMode: SortingMode) =>
+  isMultipleSorting(sortingMode)
+  || sortingMode === SortingMode.SingleWithEmpty
+  || sortingMode === SortingMode.SingleWithEmptyRemote;
+
 export const isMultipleSorting = (sortingMode: SortingMode) =>
   sortingMode === SortingMode.MultipleRemote;
 
 export const isRemoteSorting =  (sortingMode: SortingMode) =>
-  sortingMode === SortingMode.SingleRemote || sortingMode === SortingMode.MultipleRemote;
+  sortingMode === SortingMode.SingleRemote || sortingMode === SortingMode.MultipleRemote || sortingMode === SortingMode.SingleWithEmptyRemote;
 
 export const isSortingEnabled = (sortingMode: SortingMode) =>
-  sortingMode === SortingMode.Single || isRemoteSorting(sortingMode);
+  sortingMode !== SortingMode.None;

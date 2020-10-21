@@ -1,6 +1,8 @@
 import { DataType, SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
-import { isMultipleSorting, isRemoteSorting, isSortingEnabled, sortData } from './SortUtils';
+import {
+  canBeEmptySorting, isMultipleSorting, isRemoteSorting, isSortingEnabled, sortData,
+} from './SortUtils';
 
 const data: any[] = [
   { column: 1, id: 1 },
@@ -36,24 +38,38 @@ describe('sortData', () => {
   });
 });
 
-it('isMultipleSorting', () => {
-    expect(isMultipleSorting(SortingMode.None)).toBeFalsy();
-    expect(isMultipleSorting(SortingMode.Single)).toBeFalsy();
-    expect(isMultipleSorting(SortingMode.SingleRemote)).toBeFalsy();
-    expect(isMultipleSorting(SortingMode.MultipleRemote)).toBeTruthy();
+it('canBeEmptySorting', () => {
+  expect(canBeEmptySorting(SortingMode.None)).toBeFalsy();
+  expect(canBeEmptySorting(SortingMode.Single)).toBeFalsy();
+  expect(canBeEmptySorting(SortingMode.SingleWithEmpty)).toBeTruthy();
+  expect(canBeEmptySorting(SortingMode.SingleRemote)).toBeFalsy();
+  expect(canBeEmptySorting(SortingMode.SingleWithEmptyRemote)).toBeTruthy();
+  expect(canBeEmptySorting(SortingMode.MultipleRemote)).toBeTruthy();
 });
 
+it('isMultipleSorting', () => {
+  expect(isMultipleSorting(SortingMode.None)).toBeFalsy();
+  expect(isMultipleSorting(SortingMode.Single)).toBeFalsy();
+  expect(isMultipleSorting(SortingMode.SingleWithEmpty)).toBeFalsy();
+  expect(isMultipleSorting(SortingMode.SingleRemote)).toBeFalsy();
+  expect(isMultipleSorting(SortingMode.SingleWithEmptyRemote)).toBeFalsy();
+  expect(isMultipleSorting(SortingMode.MultipleRemote)).toBeTruthy();
+});
 
 it('isRemoteSorting', () => {
   expect(isRemoteSorting(SortingMode.None)).toBeFalsy();
   expect(isRemoteSorting(SortingMode.Single)).toBeFalsy();
+  expect(isRemoteSorting(SortingMode.SingleWithEmpty)).toBeFalsy();
   expect(isRemoteSorting(SortingMode.SingleRemote)).toBeTruthy();
+  expect(isRemoteSorting(SortingMode.SingleWithEmptyRemote)).toBeTruthy();
   expect(isRemoteSorting(SortingMode.MultipleRemote)).toBeTruthy();
 });
 
 it('isSortingEnabled', () => {
   expect(isSortingEnabled(SortingMode.None)).toBeFalsy();
   expect(isSortingEnabled(SortingMode.Single)).toBeTruthy();
+  expect(isSortingEnabled(SortingMode.SingleWithEmpty)).toBeTruthy();
   expect(isSortingEnabled(SortingMode.SingleRemote)).toBeTruthy();
+  expect(isSortingEnabled(SortingMode.SingleWithEmptyRemote)).toBeTruthy();
   expect(isSortingEnabled(SortingMode.MultipleRemote)).toBeTruthy();
 });

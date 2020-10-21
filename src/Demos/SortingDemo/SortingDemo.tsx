@@ -43,7 +43,9 @@ const SortingDemo: React.FC = () => {
         onChange={(e) => changeTableProps({ ...tableProps, sortingMode: e.target.value as any })}
         style={{marginBottom: 20}}>
         <option value={SortingMode.Single}>Single</option>
+        <option value={SortingMode.SingleWithEmpty}>SingleWithEmpty</option>
         <option value={SortingMode.SingleRemote}>SingleRemote</option>
+        <option value={SortingMode.SingleWithEmptyRemote}>SingleWithEmptyRemote</option>
         <option value={SortingMode.MultipleRemote}>MultipleRemote</option>
       </select>
       <Table
@@ -54,7 +56,7 @@ const SortingDemo: React.FC = () => {
         <span style={{fontSize: 12}}>sorted columns:</span> {tableProps.columns.filter(c => c.sortDirection).map(c => `${c.key}: ${c.sortDirection}; `)}
       </div>
       <div style={{fontSize: 12}}>
-        *only 'Single' sorting mode changes the sorting of columns locally. The rest modes should do it outside of the grid
+        *only <b>not '*Remote' sorting</b> mode changes the sorting of columns locally. The rest modes should do it outside of the grid
       </div>
     </>
   );

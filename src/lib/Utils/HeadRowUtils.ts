@@ -1,7 +1,7 @@
 import defaultOptions from '../defaultOptions';
 import { SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
-import { isMultipleSorting } from './SortUtils';
+import { canBeEmptySorting, isMultipleSorting } from './SortUtils';
 
 export const getSortedColumns = (
   columns: Column[],
@@ -12,10 +12,13 @@ export const getSortedColumns = (
   const curentColumn = newColumns.find((c) => c.key === columnKey);
   if (curentColumn){
     let nextSortDirection = getNextSortDirection(curentColumn.sortDirection);
+    if (canBeEmptySorting(sortingMode)
+      && curentColumn.sortDirection
+      && nextSortDirection === defaultOptions.columnSortDirection) {
+      nextSortDirection = undefined as any;
+    }
     if (!isMultipleSorting(sortingMode)) {
       newColumns.forEach(c => c.sortDirection = undefined);
-    } else if (curentColumn.sortDirection &&  nextSortDirection === defaultOptions.columnSortDirection) {
-      nextSortDirection = undefined as any;
     }
     curentColumn.sortDirection = nextSortDirection;
   }
