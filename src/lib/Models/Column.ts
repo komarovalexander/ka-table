@@ -10,6 +10,7 @@ export class Column {
   public isResizable?: boolean;
   public key!: string;
   public sortDirection?: SortDirection;
+  public sortIndex?: number;
   public style?: React.CSSProperties;
   public title?: string;
 }

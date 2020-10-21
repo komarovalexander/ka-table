@@ -9,7 +9,7 @@ import { ChildAttributesItem, DispatchFunc } from '../types';
 import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
-import { sortData } from './SortUtils';
+import { isRemoteSorting, sortData } from './SortUtils';
 
 export const extendProps = (
   childElementAttributes: AllHTMLAttributes<HTMLElement>,
@@ -75,14 +75,14 @@ export const getData = (props: ITableProps) => {
     groups,
     groupsExpanded,
     paging,
-    sortingMode,
+    sortingMode = SortingMode.None,
   } = props;
   let {
     data = [],
   } = props;
   data = [...data];
   data = filterAndSearchData(props);
-  if (sortingMode !== SortingMode.SingleRemote){
+  if (!isRemoteSorting(sortingMode)){
     data = sortData(columns, data);
   }
 

@@ -68,6 +68,7 @@ export enum SortingMode {
   None = 'none',
   Single = 'single',
   SingleRemote = 'singleRemote',
+  MultipleRemote = 'multipleRemote',
 }
 
 export enum FilteringMode {

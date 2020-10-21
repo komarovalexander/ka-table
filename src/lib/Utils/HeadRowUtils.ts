@@ -1,32 +1,36 @@
 import defaultOptions from '../defaultOptions';
-import { SortDirection } from '../enums';
+import { SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
+import { isMultipleSorting } from './SortUtils';
 
 export const getSortedColumns = (
   columns: Column[],
   columnKey: string,
+  sortingMode: SortingMode,
 ) => {
-  const index = columns.findIndex((c) => c.key === columnKey);
-  const newColumns = [...columns];
-
-  newColumns.forEach((c, newColumnIndex) => {
-    if (index === newColumnIndex) {
-      newColumns[index] = getColumnWithUpdatedSortDirection(newColumns[index]);
-    } else if (c.sortDirection) {
-      newColumns[newColumnIndex] = {...c};
-      newColumns[newColumnIndex].sortDirection = undefined;
+  const newColumns = columns.map(c => ({...c}));
+  const curentColumn = newColumns.find((c) => c.key === columnKey);
+  if (curentColumn){
+    let nextSortDirection = getNextSortDirection(curentColumn.sortDirection);
+    if (!isMultipleSorting(sortingMode)) {
+      newColumns.forEach(c => c.sortDirection = undefined);
+    } else if (curentColumn.sortDirection &&  nextSortDirection === defaultOptions.columnSortDirection) {
+      nextSortDirection = undefined as any;
     }
-  });
+    curentColumn.sortDirection = nextSortDirection;
+  }
   return newColumns;
 };
 
-export const getColumnWithUpdatedSortDirection = (column: Column): Column => {
+export const getColumnWithUpdatedSortDirection = (
+  column: Column): Column => {
   const newColumn = {...column};
   newColumn.sortDirection = getNextSortDirection(newColumn.sortDirection);
   return newColumn;
 };
 
-const getNextSortDirection = (previousSortdirection?: SortDirection) => {
+const getNextSortDirection = (
+  previousSortdirection?: SortDirection): SortDirection => {
   let nextSortDirection;
   if (previousSortdirection) {
     nextSortDirection = previousSortdirection === SortDirection.Ascend

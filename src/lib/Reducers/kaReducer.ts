@@ -1,5 +1,5 @@
 import { newRowId } from '../const';
-import { ActionType } from '../enums';
+import { ActionType, SortingMode } from '../enums';
 import { ITableProps } from '../index';
 import { Column } from '../models';
 import { EditableCell } from '../Models/EditableCell';
@@ -45,6 +45,7 @@ const kaReducer: any = (props: ITableProps, action: any) => {
     rowKeyField,
     selectedRows = [],
     validation,
+    sortingMode = SortingMode.None,
     virtualScrolling,
   } = props;
 
@@ -216,7 +217,7 @@ const kaReducer: any = (props: ITableProps, action: any) => {
       return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.UpdateSortDirection:
-      const sortedColumns = getSortedColumns(columns, action.columnKey);
+      const sortedColumns = getSortedColumns(columns, action.columnKey, sortingMode);
       return { ...props, columns: sortedColumns };
     case ActionType.UpdateVirtualScrolling:
       return { ...props, virtualScrolling: action.virtualScrolling };
