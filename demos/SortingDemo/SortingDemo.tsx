@@ -56,7 +56,8 @@ const SortingDemo: React.FC = () => {
         <span style={{fontSize: 12}}>sorted columns:</span> {getSortedColumns(tableProps).map(c => `${c.key}: ${c.sortDirection}; `)}
       </div>
       <div style={{fontSize: 12}}>
-        *only <b>not '*Remote' sorting</b> mode changes the sorting of columns locally. The rest modes should do it outside of the grid
+        <b>'*Remote' sorting</b> modes changes do not sort data, it should be done outside of the grid,
+          see <a href='#/remote-data'>remote data demo</a> for details
       </div>
     </>
   );
