@@ -89,6 +89,10 @@ it('sortColumns', () => {
     key: '2',
     sortDirection: SortDirection.Descend,
     sortIndex: 2
+  },  {
+    key: '9',
+    sortDirection: SortDirection.Descend,
+    sortIndex: 9
   }, {
     key: '3',
     sortDirection: SortDirection.Descend,

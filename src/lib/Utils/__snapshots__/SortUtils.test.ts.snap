@@ -25,6 +25,11 @@ Array [
     "sortDirection": "descend",
     "sortIndex": 3,
   },
+  Object {
+    "key": "9",
+    "sortDirection": "descend",
+    "sortIndex": 9,
+  },
 ]
 `;
 
