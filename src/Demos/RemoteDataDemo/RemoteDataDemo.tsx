@@ -8,7 +8,6 @@ import { ActionType, DataType, EditingMode, SortingMode } from '../../lib/enums'
 import { ICellTextProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 import { getField } from '../../lib/Utils/ColumnUtils';
-import { sortColumns } from '../../lib/Utils/SortUtils';
 import serverEmulator from './serverEmulator';
 
 const DeleteRow: React.FC<ICellTextProps> = ({
