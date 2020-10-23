@@ -67,6 +67,11 @@ export enum SortDirection {
 export enum SortingMode {
   None = 'none',
   Single = 'single',
+  SingleTripleState = 'singleTripleState',
+  SingleRemote = 'singleRemote',
+  SingleTripleStateRemote = 'singleTripleStateRemote',
+  MultipleRemote = 'multipleRemote',
+  MultipleTripleStateRemote = 'multipleTripleStateRemote',
 }
 
 export enum FilteringMode {

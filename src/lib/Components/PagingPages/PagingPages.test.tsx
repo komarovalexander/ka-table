@@ -45,19 +45,3 @@ it('dont set page index as 0 in case it equals 0 and pages is empty', () => {
   expect(props.dispatch).toHaveBeenCalledTimes(0);
 });
 
-it('should not throw the warning', () => {
-  const error = jest.spyOn(global.console, 'error');
-  const ParentComponent = () => {
-    const [state, change] = useState(100);
-    return (
-      <PagingPages {...props} dispatch={(action) => {
-        change(action.pageIndex);
-      }} pages={[]} pageIndex={state} />
-    );
-  }
-  mount(<ParentComponent />);
-  expect(error).not.toHaveBeenCalled();
-  // Cleanup
-  error.mockReset();
-  error.mockRestore();
-});

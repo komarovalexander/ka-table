@@ -2,6 +2,24 @@ import { SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
 import { getValueByColumn } from './DataUtils';
 
+export const sortColumns = (columns: Column[]) => {
+  return columns.filter(c => c.sortDirection).sort((a, b) => {
+    if (a.sortIndex === b.sortIndex){
+      return 0;
+    }
+    if (!a.sortIndex){
+      return -1;
+    }
+    if (!b.sortIndex){
+      return 1;
+    }
+    if (a.sortIndex < b.sortIndex){
+      return -1;
+    }
+    return 1;
+  });
+}
+
 export const sortData = (columns: Column[], data: any): any[] => {
   const sortedColumn = columns.find((column) => column.sortDirection);
   if (!sortedColumn) { return data; }
@@ -41,4 +59,20 @@ export const descendSort = (sortedColumn: Column) => {
   };
 };
 
-export const isSortingEnabled = (sortingMode: SortingMode) => sortingMode === SortingMode.Single;
+export const isTripleStateSorting = (sortingMode: SortingMode) =>
+  sortingMode === SortingMode.MultipleTripleStateRemote
+  || sortingMode === SortingMode.SingleTripleState
+  || sortingMode === SortingMode.SingleTripleStateRemote;
+
+export const isMultipleSorting = (sortingMode: SortingMode) =>
+  sortingMode === SortingMode.MultipleTripleStateRemote
+  || sortingMode === SortingMode.MultipleRemote;
+
+export const isRemoteSorting =  (sortingMode: SortingMode) =>
+  sortingMode === SortingMode.SingleRemote
+  || sortingMode === SortingMode.MultipleTripleStateRemote
+  || sortingMode === SortingMode.SingleTripleStateRemote
+  || sortingMode === SortingMode.MultipleRemote;
+
+export const isSortingEnabled = (sortingMode: SortingMode) =>
+  sortingMode !== SortingMode.None;

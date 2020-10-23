@@ -1,7 +1,7 @@
 import { AllHTMLAttributes } from 'react';
 
 import { ITableProps } from '../';
-import { DataType, EditingMode, FilterOperatorName, SortDirection } from '../enums';
+import { DataType, EditingMode, FilterOperatorName, SortDirection, SortingMode } from '../enums';
 import { ICellProps } from '../props';
 import { ChildAttributesItem } from '../types';
 import {
@@ -87,6 +87,16 @@ describe('getData', () => {
 
   it('get sorted data', () => {
     const result = getData({ ...props , columns: [{
+      key: 'column1',
+      title: 'Column 1',
+      dataType: DataType.String,
+      sortDirection: SortDirection.Descend
+    }]});
+    expect(result).toMatchSnapshot();
+  });
+
+  it('skips sorting in case of singleRemote', () => {
+    const result = getData({ ...props, sortingMode: SortingMode.SingleRemote, columns: [{
       key: 'column1',
       title: 'Column 1',
       dataType: DataType.String,

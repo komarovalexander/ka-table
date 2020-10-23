@@ -11,8 +11,8 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
-const newItems: string[] = ['FixedColumnDemo', 'PrintDemo'];
-const updateItems: string[] = ['Columns', 'Miscellaneous'];
+const newItems: string[] = ['FixedColumnDemo', 'PrintDemo', 'ExportToPdfDemo'];
+const updateItems: string[] = ['Columns', 'ExportPrint', 'SortingDemo', 'RemoteDataDemo'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 
@@ -48,6 +48,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
                   <span className='menu-icon'><img src={`static/icons/${c.name}.svg`} alt=''/></span>
                   <span className='menu-button-inner'>{c.title}</span>
                   {newItems.includes(c.name) && <span className='new-badge'>new</span>}
+                  {updateItems.includes(c.name) && <span className='upd-badge'>upd</span>}
                 </span>
               </NavLink>
               )}
@@ -61,6 +62,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
                           <span className='menu-icon'><img src={`static/icons/${i.name}.svg`} alt=''/></span>
                           <span className='menu-button-inner'>{i.title}</span>
                           {newItems.includes(i.name) && <span className='new-badge'>new</span>}
+                          {updateItems.includes(i.name) && <span className='upd-badge'>upd</span>}
                         </span>
                       </NavLink>
                     </li>
