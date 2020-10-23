@@ -43,10 +43,11 @@ const SortingDemo: React.FC = () => {
         onChange={(e) => changeTableProps({ ...tablePropsInit, sortingMode: e.target.value as any })}
         style={{marginBottom: 20}}>
         <option value={SortingMode.Single}>Single</option>
-        <option value={SortingMode.SingleWithEmpty}>SingleWithEmpty</option>
+        <option value={SortingMode.SingleTripleState}>SingleTripleState</option>
         <option value={SortingMode.SingleRemote}>SingleRemote</option>
-        <option value={SortingMode.SingleWithEmptyRemote}>SingleWithEmptyRemote</option>
+        <option value={SortingMode.SingleTripleStateRemote}>SingleTripleStateRemote</option>
         <option value={SortingMode.MultipleRemote}>MultipleRemote</option>
+        <option value={SortingMode.MultipleTripleStateRemote}>MultipleTripleStateRemote</option>
       </select>
       <Table
         {...tableProps}
