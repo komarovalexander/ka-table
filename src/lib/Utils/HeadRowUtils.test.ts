@@ -32,21 +32,21 @@ describe('sortUtilsClickHandler', () => {
   });
 
   it('should not clear sortDirection in case of multiple', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[2].key, SortingMode.MultipleRemote);
+    const sortedColumns = getUpdatedSortedColumns(columns, columns[2].key, SortingMode.MultipleTripleStateRemote);
     expect(sortedColumns[0].sortDirection).toBe(SortDirection.Descend);
     expect(sortedColumns[1].sortDirection).toBe(SortDirection.Ascend);
     expect(sortedColumns[2].sortDirection).toBe(SortDirection.Ascend);
   });
 
   it('should set undefined sortDirection in case of multiple', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[0].key, SortingMode.MultipleRemote);
+    const sortedColumns = getUpdatedSortedColumns(columns, columns[0].key, SortingMode.MultipleTripleStateRemote);
     expect(sortedColumns[0].sortDirection).toBeUndefined();
     expect(sortedColumns[1].sortDirection).toBe(SortDirection.Ascend);
     expect(sortedColumns[2].sortDirection).toBeUndefined();
   });
 
-  it('should set undefined sortDirection in case of Single3State', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[0].key, SortingMode.Single3State);
+  it('should set undefined sortDirection in case of SingleTripleState', () => {
+    const sortedColumns = getUpdatedSortedColumns(columns, columns[0].key, SortingMode.SingleTripleState);
     expect(sortedColumns[0].sortDirection).toBeUndefined();
     expect(sortedColumns[1].sortDirection).toBeUndefined();
     expect(sortedColumns[2].sortDirection).toBeUndefined();
@@ -58,13 +58,13 @@ describe('sortUtilsClickHandler', () => {
   });
 
   it('should set sortingIndexes in case of multiple', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[2].key, SortingMode.MultipleRemote);
+    const sortedColumns = getUpdatedSortedColumns(columns, columns[2].key, SortingMode.MultipleTripleStateRemote);
     expect(sortedColumns).toMatchSnapshot();
   });
 
   it('should set sortingIndexes in case of multiple and all columns have sort index', () => {
     const copyColumns = columns.map((c, i) => ({ ...c, sortIndex: i + 1 }));
-    const sortedColumns = getUpdatedSortedColumns(copyColumns, copyColumns[2].key, SortingMode.MultipleRemote);
+    const sortedColumns = getUpdatedSortedColumns(copyColumns, copyColumns[2].key, SortingMode.MultipleTripleStateRemote);
     expect(sortedColumns).toMatchSnapshot();
   });
 

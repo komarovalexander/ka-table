@@ -1,7 +1,7 @@
 import { DataType, SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
 import {
-  canBeEmptySorting, isMultipleSorting, isRemoteSorting, isSortingEnabled, sortColumns, sortData,
+  isMultipleSorting, isRemoteSorting, isSortingEnabled, isTripleStateSorting, sortColumns, sortData,
 } from './SortUtils';
 
 const data: any[] = [
@@ -38,40 +38,40 @@ describe('sortData', () => {
   });
 });
 
-it('canBeEmptySorting', () => {
-  expect(canBeEmptySorting(SortingMode.None)).toBeFalsy();
-  expect(canBeEmptySorting(SortingMode.Single)).toBeFalsy();
-  expect(canBeEmptySorting(SortingMode.Single3State)).toBeTruthy();
-  expect(canBeEmptySorting(SortingMode.SingleRemote)).toBeFalsy();
-  expect(canBeEmptySorting(SortingMode.Single3StateRemote)).toBeTruthy();
-  expect(canBeEmptySorting(SortingMode.MultipleRemote)).toBeTruthy();
+it('isTripleStateSorting', () => {
+  expect(isTripleStateSorting(SortingMode.None)).toBeFalsy();
+  expect(isTripleStateSorting(SortingMode.Single)).toBeFalsy();
+  expect(isTripleStateSorting(SortingMode.SingleTripleState)).toBeTruthy();
+  expect(isTripleStateSorting(SortingMode.SingleRemote)).toBeFalsy();
+  expect(isTripleStateSorting(SortingMode.SingleTripleStateRemote)).toBeTruthy();
+  expect(isTripleStateSorting(SortingMode.MultipleTripleStateRemote)).toBeTruthy();
 });
 
 it('isMultipleSorting', () => {
   expect(isMultipleSorting(SortingMode.None)).toBeFalsy();
   expect(isMultipleSorting(SortingMode.Single)).toBeFalsy();
-  expect(isMultipleSorting(SortingMode.Single3State)).toBeFalsy();
+  expect(isMultipleSorting(SortingMode.SingleTripleState)).toBeFalsy();
   expect(isMultipleSorting(SortingMode.SingleRemote)).toBeFalsy();
-  expect(isMultipleSorting(SortingMode.Single3StateRemote)).toBeFalsy();
-  expect(isMultipleSorting(SortingMode.MultipleRemote)).toBeTruthy();
+  expect(isMultipleSorting(SortingMode.SingleTripleStateRemote)).toBeFalsy();
+  expect(isMultipleSorting(SortingMode.MultipleTripleStateRemote)).toBeTruthy();
 });
 
 it('isRemoteSorting', () => {
   expect(isRemoteSorting(SortingMode.None)).toBeFalsy();
   expect(isRemoteSorting(SortingMode.Single)).toBeFalsy();
-  expect(isRemoteSorting(SortingMode.Single3State)).toBeFalsy();
+  expect(isRemoteSorting(SortingMode.SingleTripleState)).toBeFalsy();
   expect(isRemoteSorting(SortingMode.SingleRemote)).toBeTruthy();
-  expect(isRemoteSorting(SortingMode.Single3StateRemote)).toBeTruthy();
-  expect(isRemoteSorting(SortingMode.MultipleRemote)).toBeTruthy();
+  expect(isRemoteSorting(SortingMode.SingleTripleStateRemote)).toBeTruthy();
+  expect(isRemoteSorting(SortingMode.MultipleTripleStateRemote)).toBeTruthy();
 });
 
 it('isSortingEnabled', () => {
   expect(isSortingEnabled(SortingMode.None)).toBeFalsy();
   expect(isSortingEnabled(SortingMode.Single)).toBeTruthy();
-  expect(isSortingEnabled(SortingMode.Single3State)).toBeTruthy();
+  expect(isSortingEnabled(SortingMode.SingleTripleState)).toBeTruthy();
   expect(isSortingEnabled(SortingMode.SingleRemote)).toBeTruthy();
-  expect(isSortingEnabled(SortingMode.Single3StateRemote)).toBeTruthy();
-  expect(isSortingEnabled(SortingMode.MultipleRemote)).toBeTruthy();
+  expect(isSortingEnabled(SortingMode.SingleTripleStateRemote)).toBeTruthy();
+  expect(isSortingEnabled(SortingMode.MultipleTripleStateRemote)).toBeTruthy();
 });
 
 it('sortColumns', () => {

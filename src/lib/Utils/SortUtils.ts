@@ -59,16 +59,20 @@ export const descendSort = (sortedColumn: Column) => {
   };
 };
 
-export const canBeEmptySorting = (sortingMode: SortingMode) =>
-  isMultipleSorting(sortingMode)
-  || sortingMode === SortingMode.Single3State
-  || sortingMode === SortingMode.Single3StateRemote;
+export const isTripleStateSorting = (sortingMode: SortingMode) =>
+  sortingMode === SortingMode.MultipleTripleStateRemote
+  || sortingMode === SortingMode.SingleTripleState
+  || sortingMode === SortingMode.SingleTripleStateRemote;
 
 export const isMultipleSorting = (sortingMode: SortingMode) =>
-  sortingMode === SortingMode.MultipleRemote;
+  sortingMode === SortingMode.MultipleTripleStateRemote
+  || sortingMode === SortingMode.MultipleRemote;
 
 export const isRemoteSorting =  (sortingMode: SortingMode) =>
-  sortingMode === SortingMode.SingleRemote || sortingMode === SortingMode.MultipleRemote || sortingMode === SortingMode.Single3StateRemote;
+  sortingMode === SortingMode.SingleRemote
+  || sortingMode === SortingMode.MultipleTripleStateRemote
+  || sortingMode === SortingMode.SingleTripleStateRemote
+  || sortingMode === SortingMode.MultipleRemote;
 
 export const isSortingEnabled = (sortingMode: SortingMode) =>
   sortingMode !== SortingMode.None;
