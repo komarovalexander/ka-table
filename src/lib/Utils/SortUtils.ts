@@ -61,14 +61,14 @@ export const descendSort = (sortedColumn: Column) => {
 
 export const canBeEmptySorting = (sortingMode: SortingMode) =>
   isMultipleSorting(sortingMode)
-  || sortingMode === SortingMode.SingleWithEmpty
-  || sortingMode === SortingMode.SingleWithEmptyRemote;
+  || sortingMode === SortingMode.Single3State
+  || sortingMode === SortingMode.Single3StateRemote;
 
 export const isMultipleSorting = (sortingMode: SortingMode) =>
   sortingMode === SortingMode.MultipleRemote;
 
 export const isRemoteSorting =  (sortingMode: SortingMode) =>
-  sortingMode === SortingMode.SingleRemote || sortingMode === SortingMode.MultipleRemote || sortingMode === SortingMode.SingleWithEmptyRemote;
+  sortingMode === SortingMode.SingleRemote || sortingMode === SortingMode.MultipleRemote || sortingMode === SortingMode.Single3StateRemote;
 
 export const isSortingEnabled = (sortingMode: SortingMode) =>
   sortingMode !== SortingMode.None;

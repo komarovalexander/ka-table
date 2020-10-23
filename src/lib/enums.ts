@@ -67,9 +67,9 @@ export enum SortDirection {
 export enum SortingMode {
   None = 'none',
   Single = 'single',
-  SingleWithEmpty = 'singleWithEmpty',
+  Single3State = 'single3State',
   SingleRemote = 'singleRemote',
-  SingleWithEmptyRemote = 'singleWithEmptyRemote',
+  Single3StateRemote = 'single3StateRemote',
   MultipleRemote = 'multipleRemote',
 }
 

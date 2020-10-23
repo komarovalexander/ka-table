@@ -45,8 +45,8 @@ describe('sortUtilsClickHandler', () => {
     expect(sortedColumns[2].sortDirection).toBeUndefined();
   });
 
-  it('should set undefined sortDirection in case of SingleWithEmpty', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[0].key, SortingMode.SingleWithEmpty);
+  it('should set undefined sortDirection in case of Single3State', () => {
+    const sortedColumns = getUpdatedSortedColumns(columns, columns[0].key, SortingMode.Single3State);
     expect(sortedColumns[0].sortDirection).toBeUndefined();
     expect(sortedColumns[1].sortDirection).toBeUndefined();
     expect(sortedColumns[2].sortDirection).toBeUndefined();
