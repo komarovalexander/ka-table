@@ -1,9 +1,9 @@
 import defaultOptions from '../defaultOptions';
 import { SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
-import { canBeEmptySorting, isMultipleSorting } from './SortUtils';
+import { canBeEmptySorting, isMultipleSorting, sortColumns } from './SortUtils';
 
-export const getSortedColumns = (
+export const getUpdatedSortedColumns = (
   columns: Column[],
   columnKey: string,
   sortingMode: SortingMode,
@@ -18,9 +18,30 @@ export const getSortedColumns = (
       nextSortDirection = undefined as any;
     }
     if (!isMultipleSorting(sortingMode)) {
-      newColumns.forEach(c => c.sortDirection = undefined);
+      newColumns.forEach(c => {
+        delete c.sortDirection;
+        delete c.sortIndex;
+      });
     }
-    curentColumn.sortDirection = nextSortDirection;
+
+    if (nextSortDirection){
+      curentColumn.sortDirection = nextSortDirection;
+
+      if (isMultipleSorting(sortingMode) && !curentColumn.sortIndex) {
+        const sortedColumns = newColumns.filter(c => c.sortDirection);
+        curentColumn.sortIndex = sortedColumns.length + 1;
+      }
+    } else {
+      delete curentColumn.sortDirection;
+      delete curentColumn.sortIndex;
+    }
+
+    if (isMultipleSorting(sortingMode)) {
+      const sortedColumns = sortColumns(newColumns);
+      sortedColumns.forEach((c, i) => {
+        c.sortIndex = i + 1;
+      });
+    }
   }
   return newColumns;
 };

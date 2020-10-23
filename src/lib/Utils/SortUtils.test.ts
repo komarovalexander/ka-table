@@ -1,7 +1,7 @@
 import { DataType, SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
 import {
-  canBeEmptySorting, isMultipleSorting, isRemoteSorting, isSortingEnabled, sortData,
+  canBeEmptySorting, isMultipleSorting, isRemoteSorting, isSortingEnabled, sortColumns, sortData,
 } from './SortUtils';
 
 const data: any[] = [
@@ -72,4 +72,31 @@ it('isSortingEnabled', () => {
   expect(isSortingEnabled(SortingMode.SingleRemote)).toBeTruthy();
   expect(isSortingEnabled(SortingMode.SingleWithEmptyRemote)).toBeTruthy();
   expect(isSortingEnabled(SortingMode.MultipleRemote)).toBeTruthy();
+});
+
+it('sortColumns', () => {
+  const newData = sortColumns([{
+    key: '1',
+    sortDirection: SortDirection.Ascend,
+    sortIndex: 1
+  }, {
+    key: '4',
+    sortDirection: SortDirection.Descend,
+  }, {
+    key: '7',
+    sortDirection: SortDirection.Descend,
+  },  {
+    key: '2',
+    sortDirection: SortDirection.Descend,
+    sortIndex: 2
+  }, {
+    key: '3',
+    sortDirection: SortDirection.Descend,
+    sortIndex: 3
+  }, {
+    key: '6',
+  }, {
+    key: '5',
+  }]);
+  expect(newData).toMatchSnapshot();
 });

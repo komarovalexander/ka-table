@@ -2,6 +2,24 @@ import { SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
 import { getValueByColumn } from './DataUtils';
 
+export const sortColumns = (columns: Column[]) => {
+  return columns.filter(c => c.sortDirection).sort((a, b) => {
+    if (a.sortIndex === b.sortIndex){
+      return 0;
+    }
+    if (!a.sortIndex){
+      return -1;
+    }
+    if (!b.sortIndex){
+      return 1;
+    }
+    if (a.sortIndex < b.sortIndex){
+      return -1;
+    }
+    return 1;
+  });
+}
+
 export const sortData = (columns: Column[], data: any): any[] => {
   const sortedColumn = columns.find((column) => column.sortDirection);
   if (!sortedColumn) { return data; }

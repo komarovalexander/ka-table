@@ -10,7 +10,7 @@ import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/Ce
 import { getValueByField, reorderData, replaceValue } from '../Utils/DataUtils';
 import { filterAndSearchData } from '../Utils/FilterUtils';
 import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
-import { getSortedColumns } from '../Utils/HeadRowUtils';
+import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
 import { getData, prepareTableOptions } from '../Utils/PropsUtils';
 
 const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
@@ -217,7 +217,7 @@ const kaReducer: any = (props: ITableProps, action: any) => {
       return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.UpdateSortDirection:
-      const sortedColumns = getSortedColumns(columns, action.columnKey, sortingMode);
+      const sortedColumns = getUpdatedSortedColumns(columns, action.columnKey, sortingMode);
       return { ...props, columns: sortedColumns };
     case ActionType.UpdateVirtualScrolling:
       return { ...props, virtualScrolling: action.virtualScrolling };

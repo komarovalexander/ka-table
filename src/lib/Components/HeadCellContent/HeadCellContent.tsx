@@ -34,7 +34,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
               ? defaultOptions.css.iconSortArrowUp
               : defaultOptions.css.iconSortArrowDown
           }
-        />
+        >{column.sortIndex}</span>
       )}
     </div>
   );
