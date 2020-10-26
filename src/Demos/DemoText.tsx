@@ -10,7 +10,7 @@ interface IDemoTextProps {
 const DemoText: React.FunctionComponent<IDemoTextProps> = ({ demoFileName }) => {
   const [text, changeText]: [string, any] = useState('');
   useEffect(() => {
-    fetch(`demos/${demoFileName}/${demoFileName}.tsx?c=2`)
+    fetch(`demos/${demoFileName}/${demoFileName}.tsx?c=3`)
       .then((res) => res.text())
       .then((fileText) => changeText(fileText));
   }, [demoFileName]);

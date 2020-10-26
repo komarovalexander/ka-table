@@ -64,8 +64,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const { elementAttributes, content: rootDivContent } = getElementCustomization({
     className:  kaCss
   }, { ...props, dispatch }, childComponents.rootDiv);
-  elementAttributes.style = {...elementAttributes.style, width, height}
-
+  elementAttributes.style = {width, height, ...elementAttributes.style}
   return (
     <div {...elementAttributes}>
       {rootDivContent || <TableWrapper {...props} />}

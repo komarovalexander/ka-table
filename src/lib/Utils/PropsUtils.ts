@@ -1,5 +1,4 @@
 import { AllHTMLAttributes } from 'react';
-import { isFunction } from 'util';
 
 import { ITableProps } from '../';
 import { SortingMode } from '../enums';
@@ -36,7 +35,7 @@ export const mergeProps = (
       const propName = prop as string;
       const propValue: any = (childCustomAttributes as any)[propName];
       const baseFunc = (childElementAttributes as any)[propName] || emptyFunc;
-      if (isFunction(propValue)) {
+      if (typeof propValue === 'function') {
         customPropsWithEvents[prop] = (e: any) => {
           propValue(e, {
             baseFunc,
@@ -48,6 +47,7 @@ export const mergeProps = (
       }
     }
   }
+
   const mergedResult: React.AllHTMLAttributes<HTMLDivElement> = {
     ...childElementAttributes,
     ...childCustomAttributes,
@@ -123,6 +123,7 @@ export const prepareTableOptions = (props: ITableProps) => {
     groupedColumns = columns.filter((c) => groups.some((g) => g.columnKey === c.key));
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
+  columns = columns.filter((c) => c.visible !== false);
   return {
     columns,
     groupColumnsCount,

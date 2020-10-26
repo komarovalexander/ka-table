@@ -50,6 +50,18 @@ const kaReducer: any = (props: ITableProps, action: any) => {
   } = props;
 
   switch (action.type) {
+    case ActionType.ShowColumn: {
+      const newColumns = [...columns];
+      const columnIndex = newColumns.findIndex(c => c.key === action.columnKey);
+      newColumns[columnIndex] = {...newColumns[columnIndex], visible: true};
+      return {...props, columns: newColumns};
+    }
+    case ActionType.HideColumn: {
+      const newColumns = [...columns];
+      const columnIndex = newColumns.findIndex(c => c.key === action.columnKey);
+      newColumns[columnIndex] = {...newColumns[columnIndex], visible: false};
+      return {...props, columns: newColumns};
+    }
     case ActionType.ReorderRows: {
       const newData = reorderData(data, (d) => getValueByField(d, rowKeyField), action.rowKeyValue, action.targetRowKeyValue);
       return {...props, data: newData};

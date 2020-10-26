@@ -13,11 +13,15 @@ let dataArray = Array(100).fill(undefined).map(
   }),
 );
 
-const get = (paging?: PagingOptions, columns?: Column[]): Promise<any> => {
+const get = (paging?: PagingOptions, columns?: Column[], pageIndexNew?: number): Promise<any> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const sortedData = columns ? sortData(columns, dataArray) : dataArray;
-      const data = getPageData(sortedData, { ...paging, pagesCount: undefined });
+      const data = getPageData(sortedData, {
+        ...paging,
+        pagesCount: undefined,
+        pageIndex: pageIndexNew != null ? pageIndexNew : paging?.pageIndex
+      });
       resolve({
         data,
         pagesCount: getPagesCount(dataArray, { ...paging, pagesCount: undefined })
