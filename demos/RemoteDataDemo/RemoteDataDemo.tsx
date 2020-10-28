@@ -45,45 +45,43 @@ const tablePropsInit: ITableProps = {
   rowKeyField: 'id',
 };
 
+const initGetData = (props: ITableProps, dispatch: DispatchFunc) => {
+  return (action?: any) => {
+    serverEmulator.get(props.paging, props.columns, action?.pageIndex).then((result) => {
+      dispatch(updatePagesCount(result.pagesCount));
+      dispatch(updateData(result.data));
+      dispatch(hideLoading());
+    });
+  }
+};
+
 const RemoteDataDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    const getData = (props: ITableProps) => {
-      serverEmulator.get({ ...props.paging, pageIndex: action.pageIndex }, props.columns).then((result) => {
-        dispatch(updatePagesCount(result.pagesCount));
-        dispatch(updateData(result.data));
-        dispatch(hideLoading());
-      });
-    };
     if (action.type === ActionType.DeleteRow) {
       dispatch(showLoading('Deleting Row..'));
       serverEmulator.delete(action.rowKeyValue).then((result) => {
-        getData(tableProps);
+        getData(action);
       });
     } else if (action.type === ActionType.UpdateCellValue) {
       dispatch(showLoading('Updating Data..'));
       const column = tableProps.columns.find((c) => c.key === action.columnKey)!;
       serverEmulator.update(action.rowKeyValue, { [getField(column)]: action.value }).then(() => {
-        getData(tableProps);
+        getData(action);
       });
     } else if (action.type === ActionType.UpdatePageIndex) {
       dispatch(showLoading('Loading Data..'));
-      getData(tableProps);
+      getData(action);
     } else if (action.type === ActionType.UpdateSortDirection) {
       dispatch(showLoading('Loading Data..'));
-      getData(kaReducer(tableProps, action));
+      initGetData(kaReducer(tableProps, action), dispatch)(action);
     }
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
+  const getData = initGetData(tableProps, dispatch);
 
   if (!tableProps.data) {
-    serverEmulator.get(tableProps.paging).then(
-      (result) => {
-        dispatch(updatePagesCount(result.pagesCount));
-        dispatch(updateData(result.data));
-        dispatch(hideLoading());
-      },
-    );
+    getData();
   }
 
   return (

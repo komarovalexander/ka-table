@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import { ITableProps, kaReducer, Table } from 'ka-table';
+import { ITableAllProps, ITableProps, kaReducer, Table } from 'ka-table';
+import { hideColumn, showColumn } from 'ka-table/actionCreators';
 import CellEditorBoolean from 'ka-table/Components/CellEditorBoolean/CellEditorBoolean';
-import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
+import { ActionType, DataType, EditingMode, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(10).fill(undefined).map(
@@ -21,10 +22,10 @@ const tablePropsInit: ITableProps = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String, visible: false },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: 'column5', title: 'Column 3', dataType: DataType.String },
-    { key: 'column6', title: 'Column 4', dataType: DataType.String },
+    { key: 'column5', title: 'Column 5', dataType: DataType.String },
+    { key: 'column6', title: 'Column 6', dataType: DataType.String },
   ],
   data: dataArray,
   editingMode: EditingMode.Cell,
@@ -32,64 +33,57 @@ const tablePropsInit: ITableProps = {
   sortingMode: SortingMode.Single,
 };
 
-const columnsSettingsPropsInit: ITableProps = {
-  data: tablePropsInit.columns.map(c => ({...c, visible: true })),
-  rowKeyField: 'key',
-  columns: [{
-    key: 'drag',
-    style: { width: 15 },
-    isEditable: false,
-    title: ''
-  }, {
-    key: 'key',
-    isEditable: false,
-    title: 'Field'
-  }, {
-    key: 'visible',
-    title: 'Show',
-    style: { width: 45 },
-    dataType: DataType.Boolean
-  }],
-  rowReordering: true,
-  editingMode: EditingMode.Cell,
+const ColumnSettings: React.FC<ITableAllProps> = (tableProps: ITableAllProps) => {
+  const columnsSettingsProps: ITableProps = {
+    data: tableProps.columns.map(c => ({...c, visible: c.visible !== false })),
+    rowKeyField: 'key',
+    columns: [{
+      key: 'title',
+      isEditable: false,
+      title: 'Field',
+      dataType: DataType.String
+    }, {
+      key: 'visible',
+      title: 'Visible',
+      isEditable: false,
+      style: { width: 45 },
+      dataType: DataType.Boolean
+    }],
+    editingMode: EditingMode.None,
+  }
+  const dispatchSettings: DispatchFunc = (action) => {
+    if (action.type === ActionType.UpdateCellValue){
+      tableProps.dispatch(action.value ? showColumn(action.rowKeyValue) : hideColumn(action.rowKeyValue));
+    }
+  };
+  return (
+    <Table
+      {...columnsSettingsProps}
+      childComponents={{
+        rootDiv: { elementAttributes: () => ({style: {width: 400, marginBottom: 20}})},
+        cell: {
+          content: (props) => {
+            switch (props.column.key){
+              case 'visible': return <CellEditorBoolean {...props}/>;
+            }
+          }
+        }
+      }}
+      dispatch={dispatchSettings}
+    />
+  );
 }
 
-const DraggableIcon: React.FC = () => {
-  return (
-    <img style={{cursor: 'move'}} src='static/icons/draggable.svg' alt='draggable' />
-  );
-};
-
 const ColumnSettingsDemo: React.FC = () => {
-  const [columnsSettingsProps, changeColumnChooserProps] = useState<ITableProps>(columnsSettingsPropsInit);
   const [tableProps, changeTableProps] = useState<ITableProps>(tablePropsInit);
-  const dispatchSettings: DispatchFunc = (action) => {
-    changeColumnChooserProps((prevState: ITableProps) => {
-      const newSettingsProps = kaReducer(prevState, action);
-      const newTableProps = { ...tableProps, columns: newSettingsProps.data.filter((d: any) => d.visible) };
-      changeTableProps(newTableProps);
-      return newSettingsProps;
-    });
-  };
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
     <div className='column-settings-demo'>
-      <Table
-        {...columnsSettingsProps}
-        childComponents={{
-          rootDiv: { elementAttributes: () => ({style: {width: 400, marginBottom: 20}})},
-          cell: {
-            content: (props) => {
-              switch (props.column.key){
-                case 'drag': return <DraggableIcon/>;
-                case 'visible': return <CellEditorBoolean {...props}/>;
-              }
-            }
-          }
-        }}
-        dispatch={dispatchSettings}
+      <ColumnSettings
+        {...tableProps}
+        dispatch={dispatch}
       />
       <Table
         {...tableProps}
