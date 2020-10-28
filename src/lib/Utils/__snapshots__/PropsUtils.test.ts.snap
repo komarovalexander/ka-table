@@ -209,3 +209,15 @@ Array [
   },
 ]
 `;
+
+exports[`prepareTableOptions prepareTableOptions 1`] = `
+Array [
+  Object {
+    "key": "column2",
+    "visible": true,
+  },
+  Object {
+    "key": "column3",
+  },
+]
+`;
