@@ -6,6 +6,7 @@ import { ICellEditorProps } from '../../props';
 import { getCellEditorDispatchHandler } from '../../Utils/CellUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import CellEditorState from '../CellEditorState/CellEditorState';
+import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
 
 const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
@@ -22,9 +23,11 @@ const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
     <div {...elementAttributes}>
       {content || (
         editingMode === EditingMode.Cell
-        ? <CellEditorState {...props} dispatch={getCellEditorDispatchHandler(dispatch)} autoFocus={true}/>
-        : <CellEditorState {...props} />
-      )}
+          && <CellEditorState {...props} dispatch={getCellEditorDispatchHandler(dispatch)} autoFocus={true}/>
+      ) || (
+        editingMode === EditingMode.CellUpdateOnChange
+          && <CellEditorValidation {...props} autoFocus={true}/>
+      ) || <CellEditorState {...props} />}
     </div>
   );
 };

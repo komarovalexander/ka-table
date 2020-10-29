@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import { openEditor } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { EditingMode } from '../../enums';
 import { ICellTextProps } from '../../props';
 import { isEmpty } from '../../Utils/CommonUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { isCellEditingMode } from '../../Utils/EditingUtils';
 
 const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
   const {
@@ -24,7 +24,7 @@ const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.cellText,
     onClick: () => {
-      if (editingMode === EditingMode.Cell) {
+      if (isCellEditingMode(editingMode)) {
         dispatch(openEditor(rowKeyValue, column.key));
       }
     },

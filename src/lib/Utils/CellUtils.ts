@@ -1,15 +1,8 @@
 import { updateCellValue } from '../actionCreators';
-import { ActionType, EditingMode } from '../enums';
+import { ActionType } from '../enums';
 import { Column, EditableCell } from '../models';
 import { DispatchFunc } from '../types';
 import { getCopyOfArrayAndAddItem } from './ArrayUtils';
-
-export const isEditableCell = (editingMode: EditingMode, column: Column, rowEditableCells: EditableCell[]): boolean => {
-  if (column.isEditable !== undefined) {
-    return column.isEditable;
-  }
-  return !!rowEditableCells.find((c) => c.columnKey === column.key);
-};
 
 export const getEditableCell = (column: Column, rowEditableCells: EditableCell[]): EditableCell | undefined => {
   if (column.isEditable === false) {

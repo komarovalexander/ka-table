@@ -1,4 +1,4 @@
-import { DataType, SortDirection } from '../enums';
+import { DataType, EditingMode, SortDirection } from '../enums';
 import { Field } from '../types';
 
 export class Column {

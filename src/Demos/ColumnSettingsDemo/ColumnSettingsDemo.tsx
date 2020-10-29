@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableAllProps, ITableProps, kaReducer, Table } from '../../lib';
 import { hideColumn, showColumn } from '../../lib/actionCreators';
-import CellEditorBoolean from '../../lib/Components/CellEditorBoolean/CellEditorBoolean';
-import { ActionType, DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { DataType, EditingMode } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
@@ -28,14 +27,16 @@ const tablePropsInit: ITableProps = {
     { key: 'column6', title: 'Column 6', dataType: DataType.String },
   ],
   data: dataArray,
-  editingMode: EditingMode.Cell,
-  rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
+  rowKeyField: 'id'
 };
 
 const ColumnSettings: React.FC<ITableAllProps> = (tableProps: ITableAllProps) => {
+  const {
+    columns = [],
+    dispatch
+  } = tableProps;
   const columnsSettingsProps: ITableProps = {
-    data: tableProps.columns.map(c => ({...c, visible: c.visible !== false })),
+    data: columns.map(c => ({...c, visible: c.visible !== false })),
     rowKeyField: 'key',
     columns: [{
       key: 'title',
@@ -45,29 +46,20 @@ const ColumnSettings: React.FC<ITableAllProps> = (tableProps: ITableAllProps) =>
     }, {
       key: 'visible',
       title: 'Visible',
-      isEditable: false,
       style: { width: 45 },
       dataType: DataType.Boolean
     }],
-    editingMode: EditingMode.None,
+    editingMode: EditingMode.CellUpdateOnChange,
+    editableCells: columns.map(c => ({ rowKeyValue: c.key, columnKey: 'visible' })),
   }
   const dispatchSettings: DispatchFunc = (action) => {
-    if (action.type === ActionType.UpdateCellValue){
-      tableProps.dispatch(action.value ? showColumn(action.rowKeyValue) : hideColumn(action.rowKeyValue));
-    }
+    dispatch(action.value ? showColumn(action.rowKeyValue) : hideColumn(action.rowKeyValue));
   };
   return (
     <Table
       {...columnsSettingsProps}
       childComponents={{
-        rootDiv: { elementAttributes: () => ({style: {width: 400, marginBottom: 20}})},
-        cell: {
-          content: (props) => {
-            switch (props.column.key){
-              case 'visible': return <CellEditorBoolean {...props}/>;
-            }
-          }
-        }
+        rootDiv: { elementAttributes: () => ({style: {width: 400, marginBottom: 20}})}
       }}
       dispatch={dispatchSettings}
     />

@@ -87,6 +87,7 @@ const tablePropsInit: ITableProps = {
 const EditingDemoRow: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
+    console.log(action);
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 

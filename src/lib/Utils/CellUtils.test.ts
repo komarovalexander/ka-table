@@ -4,35 +4,11 @@ import { closeEditor, updateEditorValue } from '../actionCreators';
 import { ActionType, EditingMode } from '../enums';
 import { EditableCell } from '../models';
 import {
-  addItemToEditableCells, getCellEditorDispatchHandler, getEditableCell, isEditableCell,
+  addItemToEditableCells, getCellEditorDispatchHandler, getEditableCell,
   removeItemFromEditableCells,
 } from './CellUtils';
 
 describe('CellUtils', () => {
-  it('isEditableCell equals true', () => {
-    const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column' }, [{
-      columnKey: 'column',
-      rowKeyValue: 10,
-    }]);
-    expect(rowEditableCells).toBeTruthy();
-  });
-
-  it('isEditableCell equals false', () => {
-    const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column2' }, [{
-      columnKey: 'column',
-      rowKeyValue: 10,
-    }]);
-    expect(rowEditableCells).toBeFalsy();
-  });
-
-  it('isEditableCell equals false if column.isEditable is false', () => {
-    const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column', isEditable: false }, [{
-      columnKey: 'column',
-      rowKeyValue: 10,
-    }]);
-    expect(rowEditableCells).toBeFalsy();
-  });
-
   it('getEditableCell return undefined if column.isEditable is false', () => {
     const editableCell = getEditableCell({ key: 'column', isEditable: false }, [{
       columnKey: 'column',

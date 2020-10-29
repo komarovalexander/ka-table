@@ -10,6 +10,9 @@ export enum DataType {
 export enum EditingMode {
   None = 'none',
   Cell = 'cell',
+  CellUpdateOnChange = 'cellUpdateOnChange',
+  Editor = 'editor',
+  EditorUpdateOnChange = 'editorUpdateOnChange',
 }
 
 export enum ActionType {
