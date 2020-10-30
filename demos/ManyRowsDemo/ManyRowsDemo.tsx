@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
+import { EditingMode, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 
-const dataArray = Array(25000).fill(undefined).map(
+const dataArray = Array(100000).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -16,10 +16,10 @@ const dataArray = Array(25000).fill(undefined).map(
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'column4', title: 'Column 4', dataType: DataType.String },
+    { key: 'column1', title: 'Column 1' },
+    { key: 'column2', title: 'Column 2' },
+    { key: 'column3', title: 'Column 3' },
+    { key: 'column4', title: 'Column 4' },
   ],
   data: dataArray,
   editingMode: EditingMode.Cell,
