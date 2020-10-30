@@ -1,5 +1,5 @@
 import { VirtualScrolling } from '../Models/VirtualScrolling';
-import { getVirtualized } from './Virtualize';
+import { getVirtualized, isVirtualScrollingEnabled } from './Virtualize';
 
 describe('Virtualize', () => {
   const data: any[] = new Array(100).fill(0).map((_, index) => index);
@@ -47,5 +47,11 @@ describe('Virtualize', () => {
 
       expect(result).toMatchSnapshot();
     });
+  });
+
+  it('isVirtualScrollingEnabled', () => {
+    expect(isVirtualScrollingEnabled({})).toBeTruthy();
+    expect(isVirtualScrollingEnabled({ enabled: true })).toBeTruthy();
+    expect(isVirtualScrollingEnabled({ enabled: false })).toBeFalsy();
   });
 });

@@ -25,7 +25,9 @@ const tablePropsInit: ITableProps = {
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
   ],
-  virtualScrolling: {},
+  virtualScrolling: {
+    enabled: true
+  },
   data: dataArray,
   rowKeyField: 'id',
 };
