@@ -5,6 +5,7 @@ import { SortingMode } from '../enums';
 import { Column } from '../models';
 import { ChildComponent } from '../Models/ChildComponent';
 import { ChildAttributesItem, DispatchFunc } from '../types';
+import { calculateDataTypeForColumns } from './ColumnUtils';
 import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
@@ -111,10 +112,12 @@ export const getPagesCountByProps = (props: ITableProps) => {
 export const prepareTableOptions = (props: ITableProps) => {
   const {
     groups,
+    data = [],
   } = props;
   let {
     columns,
   } = props;
+  columns = calculateDataTypeForColumns(columns, data);
   const groupedData = getData(props);
   let groupColumnsCount = 0;
   let groupedColumns: Column[] = [];

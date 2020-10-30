@@ -1,6 +1,7 @@
+import defaultOptions from '../defaultOptions';
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
-import { convertToColumnTypes, isFunction } from './TypeUtils';
+import { convertToColumnTypes, getColumnDataType } from './TypeUtils';
 
 interface ITestOptions {
   sameObject?: boolean;
@@ -88,10 +89,14 @@ describe('TypeUtils', () => {
     });
   });
 
-  it('isFunction', () => {
-    expect(isFunction(() => {})).toBeTruthy();
-    expect(isFunction(1)).toBeFalsy();
-    expect(isFunction({})).toBeFalsy();
-    expect(isFunction([])).toBeFalsy();
+  it('should return correct dataType for column', () => {
+    const column = { key: 'column' };
+    expect(getColumnDataType(column, [{}])).toEqual(defaultOptions.columnDataType);
+    expect(getColumnDataType(column, [{}, { column: 1 }])).toEqual(DataType.Number);
+    expect(getColumnDataType(column, [{ column: 1 }])).toEqual(DataType.Number);
+    expect(getColumnDataType(column, [{ column: '1' }])).toEqual(DataType.String);
+    expect(getColumnDataType(column, [{ column: false }])).toEqual(DataType.Boolean);
+    expect(getColumnDataType(column, [{ column: {} }])).toEqual(DataType.Object);
+    expect(getColumnDataType(column, [{ column: new Date() }])).toEqual(DataType.Date);
   });
 });

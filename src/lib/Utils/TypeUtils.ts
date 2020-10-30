@@ -1,49 +1,64 @@
+import defaultOptions from '../defaultOptions';
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
 import { getValueByColumn, replaceValue } from './DataUtils';
 
+const dataTypeMap = {
+  [String as any]: DataType.String,
+  [Number as any]: DataType.Number,
+  [Date as any]: DataType.Date,
+  [Boolean as any]: DataType.Boolean,
+  [Object as any]: DataType.Object,
+} as any;
+
+export const getColumnDataType = (column: Column, data: any[]) => {
+  for (const item of data){
+    const value = getValueByColumn(item, column);
+    if (value != null) {
+      return dataTypeMap[value.constructor] || defaultOptions.columnDataType;
+    }
+  }
+  return defaultOptions.columnDataType;
+};
+
 export const convertToColumnTypes = (data: any[], columns: Column[]) => {
-  let columnsToReplace = [...columns];
-  const newData: any[] = data.map((d) => {
-    let nd = {...d};
-    columnsToReplace.forEach((c) => {
-      const value = getValueByColumn(nd, c);
+  const columnsToReplace = [...columns];
+  const dataCopy = [...data];
+  columnsToReplace.forEach((c) => {
+    for (let i = 0; i < dataCopy.length; i++){
+      const value = getValueByColumn(dataCopy[i], c);
       if (value != null) {
         switch (c.dataType) {
           case DataType.String:
             if (value.constructor !== String) {
-              nd = replaceValue(nd, c, value.toString());
-            } else {
-              columnsToReplace = columnsToReplace.filter(col => col !== c);
+              dataCopy[i] = replaceValue(dataCopy[i], c, value.toString());
+              continue;
             }
             break;
           case DataType.Number:
             if (value.constructor !== Number) {
-              nd = replaceValue(nd, c, Number(value));
-            } else {
-              columnsToReplace = columnsToReplace.filter(col => col !== c);
+              dataCopy[i] = replaceValue(dataCopy[i], c, Number(value));
+              continue;
             }
             break;
           case DataType.Date:
             if (value.constructor !== Date) {
-              nd = replaceValue(nd, c, new Date(value));
-            } else {
-              columnsToReplace = columnsToReplace.filter(col => col !== c);
+              dataCopy[i] = replaceValue(dataCopy[i], c, new Date(value));
+              continue;
             }
             break;
           case DataType.Boolean:
             if (value.constructor !== Boolean) {
-              nd = replaceValue(nd, c, toBoolean(value));
-            } else {
-              columnsToReplace = columnsToReplace.filter(col => col !== c);
+              dataCopy[i] = replaceValue(dataCopy[i], c, toBoolean(value));
+              continue;
             }
             break;
         }
+        break;
       }
-    });
-    return nd;
+    }
   });
-  return newData;
+  return dataCopy;
 };
 
 export const toBoolean = (value: any) => {
@@ -55,10 +70,3 @@ export const toBoolean = (value: any) => {
   }
   return Boolean(value);
 };
-
-export function isFunction(variableToCheck: any) {
-  if (variableToCheck instanceof Function) {
-      return true;
-  }
-  return false;
-}
