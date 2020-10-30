@@ -4,7 +4,7 @@ import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 
-const dataArray = Array(25000).fill(undefined).map(
+const dataArray = Array(100000).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,

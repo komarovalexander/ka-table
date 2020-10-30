@@ -1,6 +1,7 @@
 import defaultOptions from '../defaultOptions';
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
+import { EditableCell } from '../Models/EditableCell';
 import { convertToColumnTypes, getColumnDataType } from './TypeUtils';
 
 interface ITestOptions {
@@ -98,5 +99,6 @@ describe('TypeUtils', () => {
     expect(getColumnDataType(column, [{ column: false }])).toEqual(DataType.Boolean);
     expect(getColumnDataType(column, [{ column: {} }])).toEqual(DataType.Object);
     expect(getColumnDataType(column, [{ column: new Date() }])).toEqual(DataType.Date);
+    expect(getColumnDataType(column, [{ column: new EditableCell() }])).toEqual(defaultOptions.columnDataType);
   });
 });
