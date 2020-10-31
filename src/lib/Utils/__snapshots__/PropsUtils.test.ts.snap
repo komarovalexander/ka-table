@@ -221,12 +221,10 @@ Array [
 exports[`prepareTableOptions prepareTableOptions 1`] = `
 Array [
   Object {
-    "dataType": "string",
     "key": "column2",
     "visible": true,
   },
   Object {
-    "dataType": "string",
     "key": "column3",
   },
 ]
