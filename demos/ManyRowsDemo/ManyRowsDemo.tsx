@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { EditingMode, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(100000).fill(undefined).map(
@@ -22,10 +21,10 @@ const tablePropsInit: ITableProps = {
     { key: 'column4', title: 'Column 4' },
   ],
   data: dataArray,
-  editingMode: EditingMode.Cell,
   rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
-  virtualScrolling: { },
+  virtualScrolling: {
+    enabled: true
+  },
 };
 
 const ManyRowsDemo: React.FC = () => {

@@ -26,6 +26,7 @@ const tablePropsInit: ITableProps = {
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
   virtualScrolling: {
+    enabled: true
   },
 };
 
