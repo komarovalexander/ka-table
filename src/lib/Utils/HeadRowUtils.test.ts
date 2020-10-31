@@ -1,85 +1,157 @@
-import { SortDirection, SortingMode } from '../enums';
-import { Column } from '../Models/Column';
-import { getNextSortDirection, getUpdatedSortedColumns } from './HeadRowUtils';
+import { PagingOptions } from '../models';
+import { getPageData, getPagesCount, getPagesForCenter } from './PagingUtils';
 
-const columns: Column[] = [
-  { key: 'id', title: 'Id', sortDirection: SortDirection.Descend },
-  { key: 'column', title: 'Column 1', sortDirection: SortDirection.Ascend },
-  { key: 'column2', title: 'Column 2' },
-];
+describe('PagingUtils', () => {
+  it('getPagesCount', () => {
+    const paging: PagingOptions = {
+      enabled: true,
+      pageSize: 2,
+    };
+    const data = [1, 2, 3, 4, 5, 6];
 
-describe('sortUtilsClickHandler', () => {
-  it('should not change original data', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[0].key, SortingMode.None);
-    expect(columns[0].sortDirection).toBe(SortDirection.Descend);
-    expect(sortedColumns).not.toBe(columns);
-    expect(sortedColumns[0]).not.toBe(columns[0]);
+    const result = getPagesCount(data, paging);
+    expect(result).toEqual(3);
   });
 
-  it('should change sortDirection to Ascend', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[0].key, SortingMode.None);
-    expect(sortedColumns[0].sortDirection).toBe(SortDirection.Ascend);
+  it('getPagesCount - math ceil should be used', () => {
+    const paging: PagingOptions = {
+      enabled: true,
+      pageSize: 2,
+    };
+    const data = [1, 2, 3, 4, 5, 6, 7];
+
+    const result = getPagesCount(data, paging);
+    expect(result).toEqual(4);
   });
 
-  it('should change sortDirection to Descend', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[1].key, SortingMode.None);
-    expect(sortedColumns[1].sortDirection).toBe(SortDirection.Descend);
+  it('getPagesCount if enabled = false', () => {
+    const paging: PagingOptions = {
+      enabled: false,
+      pageSize: 2,
+    };
+    const data = [1, 2, 3, 4, 5, 6];
+
+    const result = getPagesCount(data, paging);
+    expect(result).toEqual(1);
   });
 
-  it('should change default sortDirection to Ascend', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[2].key, SortingMode.None);
-    expect(sortedColumns[2].sortDirection).toBe(SortDirection.Ascend);
+  it('getPagesCount should use pagesCount if it is set', () => {
+    const paging: PagingOptions = {
+      enabled: true,
+      pageSize: 2,
+      pagesCount: 6
+    };
+
+    const result = getPagesCount([], paging);
+    expect(result).toEqual(6);
   });
 
-  it('should not clear sortDirection in case of multiple', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[2].key, SortingMode.MultipleTripleStateRemote);
-    expect(sortedColumns[0].sortDirection).toBe(SortDirection.Descend);
-    expect(sortedColumns[1].sortDirection).toBe(SortDirection.Ascend);
-    expect(sortedColumns[2].sortDirection).toBe(SortDirection.Ascend);
+  it('getPagesCount default pageSize is 10', () => {
+    const paging: PagingOptions = {
+      enabled: true,
+    };
+    const data = new Array(20);
+
+    const result = getPagesCount(data, paging);
+    expect(result).toEqual(2);
   });
 
-  it('should set undefined sortDirection in case of multiple', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[0].key, SortingMode.MultipleTripleStateRemote);
-    expect(sortedColumns[0].sortDirection).toBeUndefined();
-    expect(sortedColumns[1].sortDirection).toBe(SortDirection.Ascend);
-    expect(sortedColumns[2].sortDirection).toBeUndefined();
+  it('getPageData when paging is undefined return data', () => {
+    const data = new Array(20);
+
+    const result = getPageData(data);
+    expect(result.length).toEqual(20);
   });
 
-  it('should set undefined sortDirection in case of SingleTripleState', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[0].key, SortingMode.SingleTripleState);
-    expect(sortedColumns[0].sortDirection).toBeUndefined();
-    expect(sortedColumns[1].sortDirection).toBeUndefined();
-    expect(sortedColumns[2].sortDirection).toBeUndefined();
+  it('getPageData should skip pagination if pagesCount is set', () => {
+    const paging: PagingOptions = {
+      enabled: true,
+      pagesCount: 2,
+      pageSize: 10
+    };
+    const data = new Array(20);
+
+    const result = getPageData(data, paging);
+    expect(result.length).toEqual(20);
   });
 
-  it('should delete previous in case of single', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[2].key, SortingMode.Single);
-    expect(sortedColumns).toMatchSnapshot();
+  it('getPageData returns first page with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
+    const paging: PagingOptions = {
+      enabled: true,
+    };
+    const data = new Array(20).fill(undefined).map((_, i) => i);
+
+    const result = getPageData(data, paging);
+    expect(result.length).toEqual(10);
+    expect(result[0]).toEqual(0);
+    expect(result[9]).toEqual(9);
   });
 
-  it('should set sortingIndexes in case of multiple', () => {
-    const sortedColumns = getUpdatedSortedColumns(columns, columns[2].key, SortingMode.MultipleTripleStateRemote);
-    expect(sortedColumns).toMatchSnapshot();
+  it('getPageData returns last with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
+    const paging: PagingOptions = {
+      enabled: true,
+      pageSize: 5,
+      pageIndex: 2
+    };
+    const data = new Array(20).fill(undefined).map((_, i) => i);
+
+    const result = getPageData(data, paging);
+    expect(result.length).toEqual(5);
+    expect(result[0]).toEqual(10);
+    expect(result[4]).toEqual(14);
   });
 
-  it('should set sortingIndexes in case of multiple and all columns have sort index', () => {
-    const copyColumns = columns.map((c, i) => ({ ...c, sortIndex: i + 1 }));
-    const sortedColumns = getUpdatedSortedColumns(copyColumns, copyColumns[2].key, SortingMode.MultipleTripleStateRemote);
-    expect(sortedColumns).toMatchSnapshot();
-  });
+  it('getPageData returns last with 10 elements when pageIndex is undefined and pageSize is undefined', () => {
+    const paging: PagingOptions = {
+      enabled: true,
+      pageSize: 5,
+      pageIndex: 4
+    };
+    const data = new Array(22).fill(undefined).map((_, i) => i);
 
-  describe('getColumnWithUpdatedSortDirection', () => {
-    it('Descend -> Ascend', () => {
-      const sortDirection = getNextSortDirection(SortDirection.Descend);
-      expect(sortDirection).toBe(SortDirection.Ascend);
-    });
-    it('Ascend -> Descend', () => {
-      const sortDirection = getNextSortDirection(SortDirection.Ascend);
-      expect(sortDirection).toBe(SortDirection.Descend);
-    });
-    it('? -> Ascend', () => {
-      const sortDirection = getNextSortDirection();
-      expect(sortDirection).toBe(SortDirection.Ascend);
-    });
+    const result = getPageData(data, paging);
+    expect(result.length).toEqual(2);
+    expect(result[0]).toEqual(20);
+    expect(result[1]).toEqual(21);
+  });
+  it('getPagesForCenter isStartShown= false isEndShown= false ', () => {
+    const pages = new Array(6).fill(undefined).map((_, i) => i);
+    const isStartShown = false;
+    const isEndShown = false;
+    const pageIndex = 4;
+    const result = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);
+    expect(result.length).toEqual(6);
+    expect(result[0]).toEqual(0);
+    expect(result[5]).toEqual(5);
+  });
+  it('getPagesForCenter isStartShown= true isEndShown= false ', () => {
+    const pages = new Array(20).fill(undefined).map((_, i) => i);
+    const isStartShown = true;
+    const isEndShown = false;
+    const pageIndex = 17;
+    const result = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);
+    expect(result.length).toEqual(6);
+    expect(result[0]).toEqual(14);
+    expect(result[5]).toEqual(19);
+  });
+  it('getPagesForCenter isStartShown= false isEndShown= true ', () => {
+    const pages = new Array(20).fill(undefined).map((_, i) => i);
+    const isStartShown = false;
+    const isEndShown = true;
+    const pageIndex = 4;
+    const result = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);
+    expect(result.length).toEqual(6);
+    expect(result[0]).toEqual(0);
+    expect(result[5]).toEqual(5);
+  });
+  it('getPagesForCenter isStartShown= true isEndShown= true ', () => {
+    const pages = new Array(20).fill(undefined).map((_, i) => i);
+    const isStartShown = true;
+    const isEndShown = true;
+    const pageIndex = 9;
+    const result = getPagesForCenter(pages, isStartShown, isEndShown, pageIndex);
+    expect(result.length).toEqual(5);
+    expect(result[0]).toEqual(7);
+    expect(result[4]).toEqual(11);
   });
 });

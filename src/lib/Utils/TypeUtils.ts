@@ -1,28 +1,6 @@
-import defaultOptions from '../defaultOptions';
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
 import { getValueByColumn, replaceValue } from './DataUtils';
-
-const dataTypeMap = {
-  [String as any]: DataType.String,
-  [Number as any]: DataType.Number,
-  [Date as any]: DataType.Date,
-  [Boolean as any]: DataType.Boolean,
-  [Object as any]: DataType.Object,
-} as any;
-
-export const getColumnDataTypeByData = (column: Column, data: any[]) => {
-  if (column.dataType){
-    return column.dataType;
-  }
-  for (const item of data){
-    const value = getValueByColumn(item, column);
-    if (value != null) {
-      return dataTypeMap[value.constructor] || defaultOptions.columnDataType;
-    }
-  }
-  return defaultOptions.columnDataType;
-};
 
 export const convertToColumnTypes = (data: any[], columns: Column[]) => {
   const columnsToReplace = [...columns];

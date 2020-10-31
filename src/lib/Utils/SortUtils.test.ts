@@ -1,4 +1,4 @@
-import { SortDirection, SortingMode } from '../enums';
+import { DataType, SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
 import {
   isMultipleSorting, isRemoteSorting, isSortingEnabled, isTripleStateSorting, sortColumns, sortData,
@@ -14,8 +14,8 @@ const data: any[] = [
 ];
 
 const columns: Column[] = [
-  { key: 'id', title: 'Id' },
-  { key: 'column', title: 'Column 1', sortDirection: SortDirection.Descend },
+  { key: 'id', title: 'Id', dataType: DataType.String },
+  { key: 'column', title: 'Column 1', sortDirection: SortDirection.Descend, dataType: DataType.String },
 ];
 
 describe('sortData', () => {
@@ -31,7 +31,7 @@ describe('sortData', () => {
 
   it('should be sorted by Ascend', () => {
     const columns2 = [
-      { key: 'column', title: 'Column 1', sortDirection: SortDirection.Ascend },
+      { key: 'column', title: 'Column 1', sortDirection: SortDirection.Ascend, dataType: DataType.String },
     ];
     const newData = sortData(columns2, data);
     expect(newData).toMatchSnapshot();

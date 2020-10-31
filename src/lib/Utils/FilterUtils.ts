@@ -1,5 +1,6 @@
 
 import { ITableProps } from '../';
+import defaultOptions from '../defaultOptions';
 import { DataType, FilterOperatorName } from '../enums';
 import { Column } from '../Models/Column';
 import { EditableCell } from '../Models/EditableCell';
@@ -7,7 +8,7 @@ import { FilterOperator } from '../Models/FilterOperator';
 import { SearchFunc } from '../types';
 import { isEmpty } from './CommonUtils';
 import { getValueByColumn } from './DataUtils';
-import { convertToColumnTypes, getColumnDataTypeByData } from './TypeUtils';
+import { convertToColumnTypes } from './TypeUtils';
 
 export const getRowEditableCells = (rowKeyValue: any, editableCells: EditableCell[]): EditableCell[] => {
   return editableCells.filter((c) => c.rowKeyValue === rowKeyValue);
@@ -54,7 +55,6 @@ export const filterAndSearchData = (props: ITableProps) => {
 
 export const filterData = (data: any[], columns: Column[]): any[] => {
   return columns.reduce((initialData, column) => {
-    const columnDataType = getColumnDataTypeByData(column, data);
     if (
       isEmpty(column.filterRowValue)
       && column.filterRowOperator !== FilterOperatorName.IsEmpty
@@ -63,7 +63,7 @@ export const filterData = (data: any[], columns: Column[]): any[] => {
       return initialData;
     }
     const filterRowOperator = column.filterRowOperator
-      || getDefaultOperatorForType(columnDataType);
+      || getDefaultOperatorForType(column.dataType  || defaultOptions.columnDataType);
     const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
     if (!filterOperator) {
       throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
@@ -72,7 +72,7 @@ export const filterData = (data: any[], columns: Column[]): any[] => {
     return initialData.filter((d: any) => {
       let fieldValue = getValueByColumn(d, column);
       let conditionValue = column.filterRowValue;
-      if (columnDataType === DataType.Date) {
+      if (column.dataType === DataType.Date) {
         fieldValue = fieldValue == null ? fieldValue : new Date(fieldValue).setHours(0, 0, 0, 0);
         conditionValue = conditionValue == null ? conditionValue : new Date(conditionValue).setHours(0, 0, 0, 0);
       }

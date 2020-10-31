@@ -2,7 +2,7 @@
 import { AllHTMLAttributes } from 'react';
 
 import { ITableProps } from '../';
-import { EditingMode, FilterOperatorName, SortDirection, SortingMode } from '../enums';
+import { DataType, EditingMode, FilterOperatorName, SortDirection, SortingMode } from '../enums';
 import { Column } from '../models';
 import { ICellProps } from '../props';
 import { ChildAttributesItem } from '../types';
@@ -59,10 +59,10 @@ describe('getData', () => {
   const props: ITableProps = {
     data: dataArray,
     columns: [
-      { key: 'column1', title: 'Column 1' },
-      { key: 'column2', title: 'Column 2' },
-      { key: 'column3', title: 'Column 3' },
-      { key: 'column4', title: 'Column 4' },
+      { key: 'column1', title: 'Column 1', dataType: DataType.String },
+      { key: 'column2', title: 'Column 2', dataType: DataType.String },
+      { key: 'column3', title: 'Column 3', dataType: DataType.String },
+      { key: 'column4', title: 'Column 4', dataType: DataType.String },
     ],
     rowKeyField: 'id'
   }
@@ -75,6 +75,7 @@ describe('getData', () => {
       {
         key: 'column1',
         title: 'Column 1',
+        dataType: DataType.String,
         filterRowValue: 'column:1 row:2'
       }
     ] });
@@ -104,6 +105,7 @@ describe('getData', () => {
     const result = getData({ ...props , columns: [{
       key: 'column1',
       title: 'Column 1',
+      dataType: DataType.String,
       sortDirection: SortDirection.Descend
     }]});
     expect(result).toMatchSnapshot();
@@ -113,6 +115,7 @@ describe('getData', () => {
     const result = getData({ ...props, sortingMode: SortingMode.SingleRemote, columns: [{
       key: 'column1',
       title: 'Column 1',
+      dataType: DataType.String,
       sortDirection: SortDirection.Descend
     }]});
     expect(result).toMatchSnapshot();

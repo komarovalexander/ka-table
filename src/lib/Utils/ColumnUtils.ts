@@ -1,20 +1,6 @@
 import defaultOptions from '../defaultOptions';
 import { Column } from '../models';
 import { Field } from '../types';
-import { getColumnDataTypeByData } from './TypeUtils';
-
-export const calculateDataTypeForColumns = (columns: Column[], data: any[]) => {
-  return columns.map(c => {
-    if (c.dataType){
-      return c;
-    }
-    const dataType = getColumnDataTypeByData(c, data);
-    return {
-      ...c,
-      dataType
-    };
-  });
-};
 
 export const getField = (column: Column): Field => {
   return column.field || column.key;
