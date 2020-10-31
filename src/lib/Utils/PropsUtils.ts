@@ -118,7 +118,7 @@ export const prepareTableOptions = (props: ITableProps) => {
     columns,
   } = props;
   columns = calculateDataTypeForColumns(columns, data);
-  const groupedData = getData(props);
+  const groupedData = getData({ ...props, columns });
   let groupColumnsCount = 0;
   let groupedColumns: Column[] = [];
   if (groups) {

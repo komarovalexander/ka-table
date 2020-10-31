@@ -223,3 +223,11 @@ Array [
   },
 ]
 `;
+
+exports[`prepareTableOptions should filter number correctly 1`] = `
+Array [
+  Object {
+    "column1": 1,
+  },
+]
+`;

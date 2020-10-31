@@ -212,6 +212,14 @@ describe('prepareTableOptions', () => {
     const result = prepareTableOptions({ columns, rowKeyField: 'column1' });
     expect(result.columns).toMatchSnapshot();
   });
+  it('should filter number correctly', () => {
+    const columns: Column[] = [
+      { key: 'column1', filterRowValue: 1 },
+    ];
+    const data = [{ column1: 1 }, { column1: 11 }]
+    const result = prepareTableOptions({ columns, rowKeyField: 'column1', data });
+    expect(result.groupedData).toMatchSnapshot();
+  });
 });
 
 describe('areAllFilteredRowsSelected', () => {
