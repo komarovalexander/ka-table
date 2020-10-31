@@ -12,7 +12,7 @@ export class MenuItem {
 }
 
 const newItems: string[] = ['ColumnSettingsDemo'];
-const updateItems: string[] = ['Columns'];
+const updateItems: string[] = ['Columns', 'VirtualScrolling', 'ManyRowsDemo'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 
