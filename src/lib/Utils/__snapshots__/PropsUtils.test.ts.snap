@@ -12,6 +12,14 @@ Array [
 ]
 `;
 
+exports[`getData get data by filter (number) 1`] = `
+Array [
+  Object {
+    "column1": 1,
+  },
+]
+`;
+
 exports[`getData get data by filter 1`] = `
 Array [
   Object {
@@ -218,6 +226,14 @@ Array [
   },
   Object {
     "key": "column3",
+  },
+]
+`;
+
+exports[`prepareTableOptions should filter number correctly 1`] = `
+Array [
+  Object {
+    "column1": 1,
   },
 ]
 `;

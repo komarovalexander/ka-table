@@ -15,7 +15,7 @@ const data: any[] = [
 
 const columns: Column[] = [
   { key: 'id', title: 'Id', dataType: DataType.String },
-  { key: 'column', title: 'Column 1', dataType: DataType.String, sortDirection: SortDirection.Descend },
+  { key: 'column', title: 'Column 1', sortDirection: SortDirection.Descend, dataType: DataType.String },
 ];
 
 describe('sortData', () => {

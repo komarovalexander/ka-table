@@ -37,8 +37,8 @@ export const searchData = (columns: Column[], data: any[], searchText: string, s
 export const filterAndSearchData = (props: ITableProps) => {
   const {
     extendedFilter,
-    columns,
     searchText,
+    columns,
     search,
   } = props;
   let {

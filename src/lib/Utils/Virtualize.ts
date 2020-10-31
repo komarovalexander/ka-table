@@ -1,5 +1,9 @@
 import { VirtualScrolling } from '../Models/VirtualScrolling';
 
+export const isVirtualScrollingEnabled = (virtualScrolling: VirtualScrolling) => {
+  return virtualScrolling && virtualScrolling.enabled !== false;
+}
+
 export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[]) => {
   const virtualizedData: any[] = [];
   const { scrollTop = 0 } = virtualScrolling;
