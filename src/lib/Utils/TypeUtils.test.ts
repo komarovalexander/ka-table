@@ -2,7 +2,7 @@ import defaultOptions from '../defaultOptions';
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
 import { EditableCell } from '../Models/EditableCell';
-import { convertToColumnTypes, getColumnDataType } from './TypeUtils';
+import { convertToColumnTypes, getColumnDataTypeByData } from './TypeUtils';
 
 interface ITestOptions {
   sameObject?: boolean;
@@ -92,13 +92,13 @@ describe('TypeUtils', () => {
 
   it('should return correct dataType for column', () => {
     const column = { key: 'column' };
-    expect(getColumnDataType(column, [{}])).toEqual(defaultOptions.columnDataType);
-    expect(getColumnDataType(column, [{}, { column: 1 }])).toEqual(DataType.Number);
-    expect(getColumnDataType(column, [{ column: 1 }])).toEqual(DataType.Number);
-    expect(getColumnDataType(column, [{ column: '1' }])).toEqual(DataType.String);
-    expect(getColumnDataType(column, [{ column: false }])).toEqual(DataType.Boolean);
-    expect(getColumnDataType(column, [{ column: {} }])).toEqual(DataType.Object);
-    expect(getColumnDataType(column, [{ column: new Date() }])).toEqual(DataType.Date);
-    expect(getColumnDataType(column, [{ column: new EditableCell() }])).toEqual(defaultOptions.columnDataType);
+    expect(getColumnDataTypeByData(column, [{}])).toEqual(defaultOptions.columnDataType);
+    expect(getColumnDataTypeByData(column, [{}, { column: 1 }])).toEqual(DataType.Number);
+    expect(getColumnDataTypeByData(column, [{ column: 1 }])).toEqual(DataType.Number);
+    expect(getColumnDataTypeByData(column, [{ column: '1' }])).toEqual(DataType.String);
+    expect(getColumnDataTypeByData(column, [{ column: false }])).toEqual(DataType.Boolean);
+    expect(getColumnDataTypeByData(column, [{ column: {} }])).toEqual(DataType.Object);
+    expect(getColumnDataTypeByData(column, [{ column: new Date() }])).toEqual(DataType.Date);
+    expect(getColumnDataTypeByData(column, [{ column: new EditableCell() }])).toEqual(defaultOptions.columnDataType);
   });
 });

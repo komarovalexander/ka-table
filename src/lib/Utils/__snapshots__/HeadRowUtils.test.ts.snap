@@ -3,17 +3,14 @@
 exports[`sortUtilsClickHandler should delete previous in case of single 1`] = `
 Array [
   Object {
-    "dataType": "string",
     "key": "id",
     "title": "Id",
   },
   Object {
-    "dataType": "string",
     "key": "column",
     "title": "Column 1",
   },
   Object {
-    "dataType": "string",
     "key": "column2",
     "sortDirection": "ascend",
     "title": "Column 2",
@@ -24,21 +21,18 @@ Array [
 exports[`sortUtilsClickHandler should set sortingIndexes in case of multiple 1`] = `
 Array [
   Object {
-    "dataType": "string",
     "key": "id",
     "sortDirection": "descend",
     "sortIndex": 1,
     "title": "Id",
   },
   Object {
-    "dataType": "string",
     "key": "column",
     "sortDirection": "ascend",
     "sortIndex": 2,
     "title": "Column 1",
   },
   Object {
-    "dataType": "string",
     "key": "column2",
     "sortDirection": "ascend",
     "sortIndex": 3,
@@ -50,21 +44,18 @@ Array [
 exports[`sortUtilsClickHandler should set sortingIndexes in case of multiple and all columns have sort index 1`] = `
 Array [
   Object {
-    "dataType": "string",
     "key": "id",
     "sortDirection": "descend",
     "sortIndex": 1,
     "title": "Id",
   },
   Object {
-    "dataType": "string",
     "key": "column",
     "sortDirection": "ascend",
     "sortIndex": 2,
     "title": "Column 1",
   },
   Object {
-    "dataType": "string",
     "key": "column2",
     "sortDirection": "ascend",
     "sortIndex": 3,

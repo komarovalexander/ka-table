@@ -1,11 +1,11 @@
-import { DataType, SortDirection, SortingMode } from '../enums';
+import { SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
 import { getNextSortDirection, getUpdatedSortedColumns } from './HeadRowUtils';
 
 const columns: Column[] = [
-  { key: 'id', title: 'Id', dataType: DataType.String, sortDirection: SortDirection.Descend },
-  { key: 'column', title: 'Column 1', dataType: DataType.String, sortDirection: SortDirection.Ascend },
-  { key: 'column2', dataType: DataType.String, title: 'Column 2' },
+  { key: 'id', title: 'Id', sortDirection: SortDirection.Descend },
+  { key: 'column', title: 'Column 1', sortDirection: SortDirection.Ascend },
+  { key: 'column2', title: 'Column 2' },
 ];
 
 describe('sortUtilsClickHandler', () => {

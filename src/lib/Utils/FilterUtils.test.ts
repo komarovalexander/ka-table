@@ -44,7 +44,6 @@ describe('FilterUtils', () => {
     it('by date', () => {
       const columnsDate: Column[] = [
         {
-          dataType: DataType.Date,
           filterRowValue: new Date(Date.UTC(2021, 11, 20, 19, 18, 12)),
           key: 'date',
         },
@@ -56,7 +55,6 @@ describe('FilterUtils', () => {
     it('IsEmpty for date', () => {
       const columnsDate: Column[] = [
         {
-          dataType: DataType.Date,
           filterRowOperator: FilterOperatorName.IsEmpty,
           key: 'date',
         },
@@ -68,7 +66,6 @@ describe('FilterUtils', () => {
     it('IsNotEmpty for date', () => {
       const columnsDate: Column[] = [
         {
-          dataType: DataType.Date,
           filterRowOperator: FilterOperatorName.IsNotEmpty,
           key: 'date',
         },
@@ -82,7 +79,6 @@ describe('FilterUtils', () => {
         filterRowValue: 'Billi Bob',
         key: 'name',
       }, {
-        dataType: DataType.Number,
         filterRowValue: 45,
         key: 'score',
       }];
@@ -186,10 +182,9 @@ describe('FilterUtils', () => {
         return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
     };
     const columns: Column[] = [
-      { key: 'name', title: 'Name', dataType: DataType.String },
-      { key: 'score', title: 'Score', dataType: DataType.Number },
+      { key: 'name', title: 'Name' },
+      { key: 'score', title: 'Score' },
       {
-        dataType: DataType.Boolean,
         key: 'passed',
         title: 'Passed',
       },
@@ -210,7 +205,6 @@ describe('FilterUtils', () => {
     it('by boolean', () => {
       const columnsBoolean: Column[] = [
         {
-          dataType: DataType.Boolean,
           key: 'passed',
           title: 'Passed',
         },
