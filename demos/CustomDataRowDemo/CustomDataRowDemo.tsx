@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
+import defaultOptions from 'ka-table/defaultOptions';
 import { DataType, SortDirection, SortingMode } from 'ka-table/enums';
 import { IDataRowProps } from 'ka-table/props';
 import { DispatchFunc } from 'ka-table/types';
@@ -14,11 +15,13 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const DataRow: React.FC<IDataRowProps> = ({rowData}) => {
+const DataRow: React.FC<IDataRowProps> = ({rowData, columns}) => {
   return (
-    <div>
-      {rowData.name}: {rowData.score} ({rowData.passed ? 'Passed' : 'Failed'})
-    </div>
+    <td className={defaultOptions.css.cell} colSpan={columns.length}>
+      <div>
+        {rowData.name}: {rowData.score} ({rowData.passed ? 'Passed' : 'Failed'})
+      </div>
+    </td>
   );
 };
 

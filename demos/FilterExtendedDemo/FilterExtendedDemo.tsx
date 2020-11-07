@@ -28,7 +28,7 @@ const tablePropsInit: ITableProps = {
   rowKeyField: 'id',
 };
 
-export const fields = [{
+const fields = [{
   caption: 'Name',
   name: 'name',
   operators: [{
@@ -56,14 +56,14 @@ export const fields = [{
   }],
 }];
 
-export const groups = [{
+const groups = [{
   caption: 'And',
   name: 'and',
 }, {
   caption: 'Or',
   name: 'or',
 }];
-export const filter: IFilterControlFilterValue = {
+const filter: IFilterControlFilterValue = {
   groupName: 'and',
   items: [
     {
