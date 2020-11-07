@@ -29,7 +29,7 @@ export const sortData = (columns: Column[], data: any): any[] => {
   return newData;
 };
 
-export const ascendSort = (sortedColumn: Column) => {
+const ascendSort = (sortedColumn: Column) => {
   return (a: any, b: any) => {
     const aValue = getValueByColumn(a, sortedColumn);
     const bValue = getValueByColumn(b, sortedColumn);
@@ -44,7 +44,7 @@ export const ascendSort = (sortedColumn: Column) => {
   };
 };
 
-export const descendSort = (sortedColumn: Column) => {
+const descendSort = (sortedColumn: Column) => {
   return (a: any, b: any) => {
     const aValue = getValueByColumn(a, sortedColumn);
     const bValue = getValueByColumn(b, sortedColumn);

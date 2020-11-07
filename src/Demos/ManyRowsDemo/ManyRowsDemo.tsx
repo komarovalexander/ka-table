@@ -38,6 +38,11 @@ const ManyRowsDemo: React.FC = () => {
     <Table
       {...tableProps}
       dispatch={dispatch}
+      childComponents={{
+        tableWrapper: {
+          elementAttributes: () => ({ style: { maxHeight: 600 }})
+        }
+      }}
     />
   );
 };

@@ -6,11 +6,12 @@ import {
 
 const data: any[] = [
   { column: 1, id: 1 },
+  { column: null, id: 6 },
   { column: 3, id: 2 },
   { column: 2, id: 3 },
   { column: 3, id: 4 },
   { column: 3, id: 5 },
-  { column: null, id: 5 },
+  { column: null, id: 7 },
 ];
 
 const columns: Column[] = [

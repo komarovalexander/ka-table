@@ -33,7 +33,7 @@ export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
   );
 };
 
-export const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
+const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
   column, dispatch,
 }) => {
   return (

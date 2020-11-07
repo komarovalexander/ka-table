@@ -37,7 +37,11 @@ exports[`sortData should be sorted by Ascend 1`] = `
 Array [
   Object {
     "column": null,
-    "id": 5,
+    "id": 6,
+  },
+  Object {
+    "column": null,
+    "id": 7,
   },
   Object {
     "column": 1,
@@ -86,7 +90,11 @@ Array [
   },
   Object {
     "column": null,
-    "id": 5,
+    "id": 6,
+  },
+  Object {
+    "column": null,
+    "id": 7,
   },
 ]
 `;
