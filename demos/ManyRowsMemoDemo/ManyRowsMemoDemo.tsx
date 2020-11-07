@@ -53,9 +53,10 @@ const ManyRowsMemoDemo: React.FC = () => {
           elementAttributes: () => ({ style: {lineHeight: '25px'} }),
         },
         dataRow: {
-          content: (props: IDataRowProps) => {
-            return <DataRowContentMemo {...props}/>
-          }
+          content: (props: IDataRowProps) => <DataRowContentMemo {...props}/>
+        },
+        tableWrapper: {
+          elementAttributes: () => ({ style: { maxHeight: 600 }})
         }
       }}
     />
