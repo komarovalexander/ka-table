@@ -2,7 +2,7 @@ import { Column } from '../Models/Column';
 import { Field } from '../types';
 import { getField, getFieldParts, getLastField, getLastFieldParents } from './ColumnUtils';
 
-export const getParentValue = (rowData: any, fieldParents: Field[], sameObj = false) => {
+export const getParentValue = (rowData: any, fieldParents: Field[]) => {
   const parentValue = fieldParents.reduce((previousValue, currentValue) => {
     const result = (previousValue && previousValue[currentValue]);
     return result !== undefined ? result : undefined;
@@ -47,7 +47,7 @@ export const getValueByField = (rowData: any, field: Field) => {
   return o;
 };
 
-const _replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
+const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
   let result = {...rowData};
   if (fieldParents && fieldParents.length) {
     const parentValue = getParentValue(result, fieldParents) || {};
@@ -55,7 +55,7 @@ const _replaceValueForField = (rowData: any, field: Field, newValue: any, fieldP
 
     const parentsOfParent = [...fieldParents];
     const parentFieldName = parentsOfParent.pop() as string;
-    result = _replaceValueForField(result, parentFieldName, parentValue, parentsOfParent);
+    result = replaceValueForField(result, parentFieldName, parentValue, parentsOfParent);
   } else {
     result[field] = newValue;
   }
@@ -63,11 +63,8 @@ const _replaceValueForField = (rowData: any, field: Field, newValue: any, fieldP
 };
 
 export const replaceValue = (rowData: any, column: Column, newValue: any) => {
-  return replaceValueForField(rowData, getField(column), newValue);
-};
-
-export const replaceValueForField = (rowData: any, field: Field, newValue: any) => {
-  return _replaceValueForField(rowData, getLastField(field), newValue, getLastFieldParents(field));
+  const field = getField(column);
+  return replaceValueForField(rowData, getLastField(field), newValue, getLastFieldParents(field));
 };
 
 export const reorderData = (data: any[], getKey: (d: any) => any, keyValue: any, targetKeyValue: any) => {

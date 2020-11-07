@@ -1,5 +1,3 @@
-export const isEmpty = (value: any) => (value == null || value.length === 0);
-
 const contains = (data: any[], item: any) => {
   if (!item.value) { return true; }
   return data[item.field].toLowerCase().includes(item.value.toLowerCase());
@@ -18,7 +16,7 @@ const isNotEqual = (data: any[], item: any) => {
 };
 const more = (data: any[], item: any) => data[item.field] > item.value;
 const less = (data: any[], item: any) => data[item.field] < item.value;
-export const filterItem = (data: any[], filter: any) => {
+const filterItem = (data: any[], filter: any) => {
   switch (filter.operator) {
     case 'contains': return contains(data, filter);
     case 'doesNotContain': return doesNotContain(data, filter);
@@ -30,7 +28,7 @@ export const filterItem = (data: any[], filter: any) => {
   }
 };
 
-export const filterGroup = (data: any[], groupName: string, items: any[]): any[] =>
+const filterGroup = (data: any[], groupName: string, items: any[]): any[] =>
   (groupName.toLowerCase() === 'or' ? filterGroupOr(data, items) : filterGroupAnd(data, items));
 
 export const filterGroupOr = (data: any[], items: any[]): any[]  => {
