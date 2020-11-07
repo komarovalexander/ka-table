@@ -12,7 +12,6 @@ import EmptyCells from '../EmptyCells/EmptyCells';
 const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   const {
     dispatch,
-    columns,
     groupColumnsCount,
     isSelectedRow,
     rowKeyValue,
@@ -33,11 +32,16 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   }, props, dataRow);
 
   return (
-    <tr {...elementAttributes} ref={trRef} >
-      <EmptyCells count={groupColumnsCount}/>
+    <tr {...elementAttributes} ref={trRef}>
       {content
-        ? <td className={defaultOptions.css.cell} colSpan={columns.length - groupColumnsCount}>{content}</td>
-        : <DataRowContent {...props}/>}
+        ? <>{content}</>
+        : (
+        <>
+          <EmptyCells count={groupColumnsCount}/>
+          <DataRowContent {...props}/>
+        </>
+        )
+      }
     </tr>
   );
 };
