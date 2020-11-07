@@ -54,6 +54,9 @@ const ManyRowsMemoDemo: React.FC = () => {
         },
         dataRow: {
           content: (props: IDataRowProps) => <DataRowContentMemo {...props}/>
+        },
+        tableWrapper: {
+          elementAttributes: () => ({ style: { maxHeight: 600 }})
         }
       }}
     />
