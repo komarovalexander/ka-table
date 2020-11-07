@@ -11,6 +11,7 @@ const data: any[] = [
   { column: 3, id: 4 },
   { column: 3, id: 5 },
   { column: null, id: 5 },
+  { column: null, id: 6 },
 ];
 
 const columns: Column[] = [
