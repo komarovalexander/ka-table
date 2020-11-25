@@ -65,13 +65,6 @@ const ExportToPdfDemo: React.FC = () => {
       <Table
         {...tableProps}
         dispatch={dispatch}
-        childComponents={{
-          table: {
-            elementAttributes: () => ({
-              id: 'table-to-xls'
-            })
-          }
-        }}
       />
     </div >
   );
