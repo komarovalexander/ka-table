@@ -201,6 +201,7 @@ describe('FilterUtils', () => {
       { id: 4, name: 'Kurt Cobain', score: 75, passed: true },
       { id: 5, name: 'Marshall Bruce', score: 77, passed: true },
       { id: 6, name: 'Sunny Fox', score: 33, passed: false },
+      { id: 7, name: 'Falsey False', score: 33, passed: false },
     ];
     it('by string', () => {
       const result = searchData(columns, data, 'Mike', search);
@@ -216,6 +217,11 @@ describe('FilterUtils', () => {
         },
       ];
       const result = searchData(columnsBoolean, data, 'tru');
+      expect(result).toMatchSnapshot();
+    });
+
+    it('should add item only once', () => {
+      const result = searchData(columns, data, 'false', search);
       expect(result).toMatchSnapshot();
     });
 
