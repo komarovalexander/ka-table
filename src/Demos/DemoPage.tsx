@@ -6,7 +6,7 @@ import Demo from './Demo';
 import DemoText from './DemoText';
 import { trackEvent } from './ga';
 
-const kaStylesDisabled = ['BootstrapDemo', 'MaterialDemo'];
+const kaStylesDisabled = ['BootstrapDemo', 'MaterialDemo', 'CustomThemeDemo'];
 const getDemoPage = (demo: Demo) => {
   return () => {
     return (

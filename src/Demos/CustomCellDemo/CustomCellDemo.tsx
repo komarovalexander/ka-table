@@ -24,24 +24,8 @@ const CustomCell: React.FC<ICellTextProps> = ({
   );
 };
 
-const CustomImageCell: React.FC<ICellTextProps> = ({
-  value,
-}) => {
-  return (
-    <div>
-      <img className='custom-cell-image' src={value} alt=''/>
-    </div>
-  );
-};
-
 const tablePropsInit: ITableProps = {
   columns: [
-    {
-      dataType: DataType.String,
-      key: 'representative.image',
-      style: { width: '40px' },
-      title: 'Image',
-    },
     {
       dataType: DataType.String,
       key: 'representative.name',
@@ -100,7 +84,6 @@ const CustomCellDemo: React.FC = () => {
         cellText: {
           content: (props) => {
             switch (props.column.key){
-              case 'representative.image': return <CustomImageCell {...props}/>;
               case 'company.hasLoyalProgram': return <CustomCell {...props}/>;
             }
           }

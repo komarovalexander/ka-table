@@ -4,6 +4,7 @@
   td, th{
     padding-left: 20px;
     padding-right: 20px;
+    padding: 0px 20px;
   }
   .ka-icon{
     font-weight: 100;
@@ -22,9 +23,7 @@
     margin-bottom: 0;
   }
   tr {
-    line-height: 40px;
-    min-height: 40px;
-    height: 40px;
+    height: 65px;
   }
   .ka-filter-row {
     .select-dropdown{

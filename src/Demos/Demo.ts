@@ -7,8 +7,9 @@ export default class Demo {
     public fileName: string,
     public jsLink: string = '',
     public tsLink: string = '',
-    public group: string = '') {
-      this.jsLink = jsLink + '?file=Demo.js';
-      this.tsLink = tsLink + '?file=Demo.tsx';
+    public group: string = '',
+    public linkfile: string = '') {
+      this.jsLink = jsLink + '?file=' + (this.linkfile || 'Demo.js');
+      this.tsLink = tsLink + '?file=' + (this.linkfile || 'Demo.tsx');
   }
 }
