@@ -1,43 +1,6 @@
 @import './static/icons.scss';
+@import './static/themes/default.scss';
 
-$ka-color-base: #353C44 !default;
-
-$ka-background-color: white !default;
-$ka-thead-background-color: #F1F5F7 !default;
-$ka-thead-color: #747D86 !default;
-$ka-cell-color: $ka-color-base !default;
-$ka-input-validation-background-color: #FFE7E7 !default;
-$ka-validation-background-color: #FF0C0C !default;
-$ka-validation-color: white !default;
-$ka-border-color: #F9FBFC !default;
-$ka-selecter-background-color: #F7FcFd !default;
-$ka-group-row-background-color: #F9FBFC !default;
-$ka-group-row-border-color: white !default;
-$ka-selected-border-color: darken($ka-border-color, 7) !default;
-$ka-column-resize-border-color: darken($ka-border-color, 10) !default;
-$ka-paging-index-active-color: #747D86 !default;
-$ka-paging-index-active-background-color: #F1F5F7 !default;
-$ka-loading-background-color-base: rgb(116,125,134) !default;
-$ka-loading-backdrop-color: #ffffff88 !default;
-
-$ka-font-size: 14px !default;
-
-$ka-thead-cell-padding: 15px 20px !default;
-
-$ka-cell-padding: 8px 20px !default;
-$ka-cell-line-height: 29px !default;
-
-$ka-icon-font-size: 10px !default;
-
-$ka-validation-message-font-size: 12px !default;
-$ka-validation-message-padding: 0 10px !default;
-
-$ka-row-border-size: 2px !default;
-
-$ka-group-row-border-size: 1px !default;
-$ka-group-cell-padding: 8px 10px !default;
-
-$ka-filter-row-cell-padding: 0 20px 15px 20px;
 
 .ka{
   overflow: hidden;
@@ -85,6 +48,9 @@ $ka-filter-row-cell-padding: 0 20px 15px 20px;
   line-height: $ka-cell-line-height;
   color: $ka-cell-color;
 }
+.ka-cell:hover{
+  background-color: $ka-cell-hover-background-color;
+}
 .ka-icon{
   font-weight: 100;
   font-size: $ka-icon-font-size;
@@ -92,6 +58,9 @@ $ka-filter-row-cell-padding: 0 20px 15px 20px;
 }
 .ka-input{
   max-width: 100%;
+  background-color: $ka-input-background-color;
+  border: 1px solid $ka-input-border-color;
+  color: $ka-input-color;
 }
 .ka-cell-editor-validation-error {
   .ka-input{
@@ -124,6 +93,9 @@ $ka-filter-row-cell-padding: 0 20px 15px 20px;
   box-sizing: border-box;
   border-bottom: $ka-row-border-size solid $ka-border-color;
   border-top: $ka-row-border-size solid $ka-border-color;
+}
+.ka-row:hover{
+  background-color: $ka-row-hover-background-color;
 }
 .ka-dragged-row{
   opacity: 0.5;
@@ -232,6 +204,7 @@ $ka-filter-row-cell-padding: 0 20px 15px 20px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  padding: $ka-paging-pages-padding;
 }
 
 .ka-paging-page-index{
@@ -241,6 +214,8 @@ $ka-filter-row-cell-padding: 0 20px 15px 20px;
   min-width: 18px;
   border-radius: 50%;
   text-align: center;
+  color: $ka-paging-index-color;
+  user-select: none;
 }
 
 .ka-paging-page-index-active{
