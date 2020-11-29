@@ -1,8 +1,14 @@
 
+import { ITableProps } from './';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
 import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 
+export interface IUncontrollableTableProps extends ITableProps {
+  childComponents?: ChildComponents;
+  dispatch?: DispatchFunc;
+  state?: { get:  () => ITableProps };
+}
 interface IRowCommonProps {
   childComponents: ChildComponents;
   columns: Column[];
