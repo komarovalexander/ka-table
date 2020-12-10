@@ -11,7 +11,7 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
-const newItems: string[] = ['CustomThemeDemo', 'Themes'];
+const newItems: string[] = ['TabIndexDemo'];
 const updateItems: string[] = [];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {

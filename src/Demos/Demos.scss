@@ -82,7 +82,8 @@ body {
         cursor: pointer;
         color: #53585B;
         display: block;
-        padding: 8px 0 8px 40px;
+        font-size: 15px;
+        padding: 6px 0 6px 40px;
         text-decoration: none;
         .menu-button{
           position: relative;
@@ -138,7 +139,7 @@ body {
   }
 
   main{
-    width: calc(100% - 350px);
+    width: calc(100% - 320px);
     box-sizing: border-box;
 
     .simulator-content{
