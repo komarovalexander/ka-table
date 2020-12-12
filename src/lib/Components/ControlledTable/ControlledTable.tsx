@@ -7,7 +7,7 @@ import Loading from '../Loading/Loading';
 import Paging from '../Paging/Paging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
 
-export const ControllableTable: React.FunctionComponent<ITableAllProps> = (props) => {
+export const ControlledTable: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     childComponents = {},
     dispatch = () => {},

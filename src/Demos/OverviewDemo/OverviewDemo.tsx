@@ -13,24 +13,17 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const OverviewDemo: React.FC = () => {
-  const state = { get: () => ({}as any) };
-  return (
-    <>
-      <button onClick={() => { console.log(state.get()); }}>Get Table State</button>
-      <Table
-        columns={[
-          { key: 'column1', title: 'Column 1', dataType: DataType.String },
-          { key: 'column2', title: 'Column 2', dataType: DataType.String },
-          { key: 'column3', title: 'Column 3', dataType: DataType.String },
-          { key: 'column4', title: 'Column 4', dataType: DataType.String },
-        ]}
-        data={dataArray}
-        rowKeyField={'id'}
-        sortingMode={SortingMode.Single}
-        state={state}/>
-      </>
-  );
-};
+const OverviewDemo: React.FC = () => (
+  <Table
+    columns={[
+      { key: 'column1', title: 'Column 1', dataType: DataType.String },
+      { key: 'column2', title: 'Column 2', dataType: DataType.String },
+      { key: 'column3', title: 'Column 3', dataType: DataType.String },
+      { key: 'column4', title: 'Column 4', dataType: DataType.String },
+    ]}
+    data={dataArray}
+    rowKeyField='id'
+    sortingMode={SortingMode.Single} />
+);
 
 export default OverviewDemo;

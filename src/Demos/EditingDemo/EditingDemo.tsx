@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
+import { Table } from '../../lib';
 import { DataType, EditingMode } from '../../lib/enums';
-import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -13,43 +12,27 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9, 10) },
 ];
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '30%' } },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '40px' } },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: { width: '10%' }},
-    {
-      dataType: DataType.Date,
-      key: 'nextTry',
-      title: 'Next Try',
-    },
-  ],
-  format: ({ column, value }) => {
-    if (column.dataType === DataType.Date){
-      return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
-    }
-  },
-  data: dataArray,
-  editableCells: [{
-    columnKey: 'name',
-    rowKeyValue: 2,
-  }],
-  editingMode: EditingMode.Cell,
-  rowKeyField: 'id',
-};
-
-const EditingDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
-
-  return (
-    <Table
-      {...tableProps}
-      dispatch={dispatch}
-    />
-  );
-};
+const EditingDemo: React.FC = () => (
+  <Table
+    columns={[
+      { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '30%' } },
+      { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '40px' } },
+      { key: 'passed', title: 'Passed', dataType: DataType.Boolean, style: { width: '10%' }},
+      { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
+    ]}
+    format={({ column, value }) => {
+      if (column.dataType === DataType.Date){
+        return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+      }
+    }}
+    editableCells={[{
+      columnKey: 'name',
+      rowKeyValue: 2,
+    }]}
+    editingMode={EditingMode.Cell}
+    data={dataArray}
+    rowKeyField='id'
+  />
+);
 
 export default EditingDemo;

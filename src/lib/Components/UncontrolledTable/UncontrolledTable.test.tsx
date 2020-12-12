@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ControllableTable } from './ControllableTable';
+import { UncontrolledTable } from './UncontrolledTable';
 
 const tableProps: any = {
   columns: [
@@ -18,6 +18,6 @@ const tableProps: any = {
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<ControllableTable {...tableProps} />, div);
+  ReactDOM.render(<UncontrolledTable {...tableProps} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

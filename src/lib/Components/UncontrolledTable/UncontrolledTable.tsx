@@ -3,9 +3,9 @@ import * as React from 'react';
 import { ITableProps, kaReducer } from '../..';
 import { IUncontrollableTableProps } from '../../props';
 import { DispatchFunc } from '../../types';
-import { ControllableTable } from '../ControllableTable/ControllableTable';
+import { ControlledTable } from '../ControlledTable/ControlledTable';
 
-export const UncontrollableTable: React.FunctionComponent<IUncontrollableTableProps> = (props) => {
+export const UncontrolledTable: React.FunctionComponent<IUncontrollableTableProps> = (props) => {
   const [tableProps, changeTableProps] = React.useState(props);
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
@@ -13,10 +13,12 @@ export const UncontrollableTable: React.FunctionComponent<IUncontrollableTablePr
   React.useEffect(() => {
     changeTableProps(props);
   }, [props]);
-  props.state!.get = () => tableProps;
+  if (props.state){
+    props.state.get = () => tableProps;
+  }
 
   return (
-    <ControllableTable
+    <ControlledTable
       {...tableProps}
       dispatch={dispatch}
     />

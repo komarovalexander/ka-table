@@ -8,8 +8,8 @@ import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps, IUncontrollableTableProps } from '../../props';
 import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
-import { ControllableTable } from '../ControllableTable/ControllableTable';
-import { UncontrollableTable } from '../UncontrollableTable/UncontrollableTable';
+import { ControlledTable } from '../ControlledTable/ControlledTable';
+import { UncontrolledTable } from '../UncontrolledTable/UncontrolledTable';
 
 export interface ITableProps {
   columnReordering?: boolean;
@@ -46,11 +46,11 @@ export interface ITableAllProps extends ITableProps {
 export const Table: React.FunctionComponent<IUncontrollableTableProps> = (props) => {
   if (props.dispatch){
     return (
-      <ControllableTable {...props} dispatch={props.dispatch} />
+      <ControlledTable {...props} dispatch={props.dispatch} />
     );
   } else {
     return (
-      <UncontrollableTable {...props} />
+      <UncontrolledTable {...props} />
     );
   }
 };

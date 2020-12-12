@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
+import { Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 
 const dataArray = Array(20).fill(undefined).map(
@@ -13,39 +13,21 @@ const dataArray = Array(20).fill(undefined).map(
   }),
 );
 
-const tableProps: ITableProps = {
-  columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'column4', title: 'Column 4', dataType: DataType.String },
-  ],
-  data: dataArray,
-  editingMode: EditingMode.Cell,
-  rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
-};
-
-class ClassComponentDemo extends React.Component<any, { tableProps: ITableProps }> {
-  constructor(props: any) {
-    super(props);
-    this.state = { tableProps };
-    this.dispatch = this.dispatch.bind(this);
-  }
-
+class ClassComponentDemo extends React.Component {
   public render() {
     return (
       <Table
-      {...this.state.tableProps}
-      dispatch={this.dispatch} />
+        columns={[
+          { key: 'column1', title: 'Column 1', dataType: DataType.String },
+          { key: 'column2', title: 'Column 2', dataType: DataType.String },
+          { key: 'column3', title: 'Column 3', dataType: DataType.String },
+          { key: 'column4', title: 'Column 4', dataType: DataType.String },
+        ]}
+        data={dataArray}
+        editingMode={EditingMode.Cell}
+        rowKeyField='id'
+        sortingMode={SortingMode.Single} />
     );
-  }
-
-  private dispatch(action: any) {
-    this.setState((prevState) => ({
-      ...prevState,
-      ...{tableProps: kaReducer(prevState.tableProps, action)}
-    }));
   }
 }
 
