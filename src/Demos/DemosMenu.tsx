@@ -27,6 +27,7 @@ const synonyms: { [value: string]: any[] } = {
   'RowReorderingDemo': ['Drag'],
   'SearchDemo': ['No Data'],
   'FixedColumnDemo': ['Sticky'],
+  'TabIndexDemo': ['keyboard navigation'],
   'SelectionDemo': ['Checkbox']
 };
 
