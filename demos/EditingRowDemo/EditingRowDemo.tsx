@@ -1,12 +1,11 @@
 import './EditingRowDemo.scss';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from 'ka-table';
+import { Table } from 'ka-table';
 import { closeRowEditors, openRowEditors, saveRowEditors } from 'ka-table/actionCreators';
 import { DataType } from 'ka-table/enums';
 import { ICellEditorProps, ICellTextProps } from 'ka-table/props';
-import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -19,101 +18,73 @@ const dataArray: any[] = [
 
 const EditButton: React.FC<ICellTextProps> = ({
   dispatch, rowKeyValue
-}) => {
-  return (
-   <div className='edit-cell-button'>
-     <img
-      src='static/icons/edit.svg'
-      alt='Edit Row'
-      title='Edit Row'
+}) => (
+  <div className='edit-cell-button'>
+    <img src='static/icons/edit.svg' alt='Edit Row' title='Edit Row'
       onClick={() => dispatch(openRowEditors(rowKeyValue))}
     />
-   </div>
-  );
-};
+  </div>
+);
 
 const SaveButton: React.FC<ICellEditorProps> = ({
   dispatch, rowKeyValue
-}) => {
-  return (
-    <div className='buttons'
-      style={{display: 'flex', justifyContent: 'space-between'}} >
-      <img
-        src='static/icons/save.svg'
-        className='save-cell-button'
-        alt='Save'
-        title='Save'
-        onClick={() => {
-          dispatch(saveRowEditors(rowKeyValue, {
-            validate: true,
-          }));
-        }}
-      />
-      <img
-        src='static/icons/close.svg'
-        className='close-cell-button'
-        alt='Cancel'
-        title='Cancel'
-        onClick={() => {
-          dispatch(closeRowEditors(rowKeyValue));
-        }}
-      />
-   </div >
- );
-};
+}) => (
+  <div className='buttons' style={{display: 'flex', justifyContent: 'space-between'}} >
+    <img src='static/icons/save.svg' className='save-cell-button' alt='Save' title='Save'
+      onClick={() => {
+        dispatch(saveRowEditors(rowKeyValue, {
+          validate: true,
+        }));
+      }}
+    />
+    <img src='static/icons/close.svg' className='close-cell-button' alt='Cancel' title='Cancel'
+      onClick={() => {
+        dispatch(closeRowEditors(rowKeyValue));
+      }}
+    />
+  </div >
+);
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String },
-    { key: 'score', title: 'Score', dataType: DataType.Number },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
-    { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
-    { key: 'editColumn', style: { width: 50 } },
-  ],
-  format: ({ column, value }) => {
-    if (column.dataType === DataType.Date){
-      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
-    }
-  },
-  data: dataArray,
-  rowKeyField: 'id',
-  validation: ({ column, value }) => {
-    if (column.key === 'name'){
-      return value ? '' : 'value must be specified';
-    }
-  }
-};
-
-const EditingDemoRow: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
-
-  return (
-    <div className='editing-row-demo'>
-      <Table
-        {...tableProps}
-        childComponents={{
-          cellText: {
-            content: (props) => {
-              if (props.column.key === 'editColumn'){
-                return <EditButton {...props}/>
-              }
-            }
-          },
-          cellEditor: {
-            content: (props) => {
-              if (props.column.key === 'editColumn'){
-                return <SaveButton {...props}/>
-              }
+const EditingDemoRow: React.FC = () => (
+  <div className='editing-row-demo'>
+    <Table
+      columns={[
+        { key: 'name', title: 'Name', dataType: DataType.String },
+        { key: 'score', title: 'Score', dataType: DataType.Number },
+        { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
+        { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
+        { key: 'editColumn', style: { width: 50 } },
+      ]}
+      data={dataArray}
+      rowKeyField='id'
+      validation={({ column, value }) => {
+        if (column.key === 'name'){
+          return value ? '' : 'value must be specified';
+        }
+      }}
+      format={({ column, value }) => {
+        if (column.dataType === DataType.Date){
+          return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+        }
+      }}
+      childComponents={{
+        cellText: {
+          content: (props) => {
+            if (props.column.key === 'editColumn'){
+              return <EditButton {...props}/>
             }
           }
-        }}
-        dispatch={dispatch}
-      />
-    </div>
-  );
-};
+        },
+        cellEditor: {
+          content: (props) => {
+            if (props.column.key === 'editColumn'){
+              return <SaveButton {...props}/>
+            }
+          }
+        }
+      }}
+    />
+  </div>
+);
 
 export default EditingDemoRow;
