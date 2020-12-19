@@ -109,7 +109,7 @@ const demos: Demo[] = [
   new Demo(SelectionSingleDemo, '/selection-single', 'Selection - Single', 'SelectionSingleDemo', 'https://stackblitz.com/edit/table-selection-single-js', 'https://stackblitz.com/edit/table-selection-single-ts', 'Selection'),
   new Demo(SortingDemo, '/sorting', 'Sorting', 'SortingDemo', 'https://stackblitz.com/edit/table-sorting-js', 'https://stackblitz.com/edit/table-sorting-ts', ''),
   new Demo(StateStoringDemo, '/state-storing', 'State Storing', 'StateStoringDemo', 'https://stackblitz.com/edit/table-state-storing-js', 'https://stackblitz.com/edit/table-state-storing-ts', ''),
-  new Demo(TabIndexDemo, '/tab-index', 'Focus & Keyboard navigation', 'TabIndexDemo', 'https://stackblitz.com/edit/table-tab-index-js', 'https://stackblitz.com/edit/table-tab-index-ts', ''),
+  new Demo(TabIndexDemo, '/tab-index', 'Focus', 'TabIndexDemo', 'https://stackblitz.com/edit/table-tab-index-js', 'https://stackblitz.com/edit/table-tab-index-ts', ''),
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts', 'Editing'),
 ];
 
