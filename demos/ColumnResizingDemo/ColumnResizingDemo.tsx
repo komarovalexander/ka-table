@@ -1,10 +1,11 @@
 import './ColumnResizingDemo.scss';
 
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Table } from 'ka-table';
-import { DataType } from 'ka-table/enums';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
 import { Column } from 'ka-table/models';
+import { DispatchFunc } from 'ka-table/types';
 
 const columns: Column[] = Array(15).fill(undefined).map(
   (_, index) => ({
@@ -23,14 +24,28 @@ const dataArray = Array(30).fill(undefined).map(
   }, { id: index }),
 );
 
-const ColumnResizingDemo: React.FC = () => (
-  <div className='column-resizing-demo'>
-    <Table
-      columns={columns}
-      data={dataArray}
-      rowKeyField='id'
-    />
-  </div>
-);
+const tablePropsInit: ITableProps = {
+  columns,
+  data: dataArray,
+  editingMode: EditingMode.Cell,
+  rowKeyField: 'id',
+  sortingMode: SortingMode.Single,
+};
+
+const ColumnResizingDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
+
+  return (
+    <div className='column-resizing-demo'>
+      <Table
+        {...tableProps}
+        dispatch={dispatch}
+      />
+    </div>
+  );
+};
 
 export default ColumnResizingDemo;

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { IHeadCellProps } from 'ka-table/props';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -13,30 +14,51 @@ const dataArray = Array(7).fill(undefined).map(
 
 const HeadCell: React.FC<IHeadCellProps> = ({
   column: { title },
-}) => (
-  <div style={{color: 'red'}}>
-    {title} - (Custom)
-  </div>
-);
+}) => {
+  return (
+    <div style={{color: 'red'}}>
+      {title} - (Custom)
+    </div>
+  );
+};
 
-const CustomHeaderCellDemo: React.FC = () => (
-<Table
-  columns={[
-    { key: 'column1', title: 'Column 1' },
-    { key: 'column2', title: 'Column 2' }
-  ]}
-  data={dataArray}
-  rowKeyField='id'
-    childComponents={{
-      headCell: {
-        content: (props) => {
-          if (props.column.key === 'column1'){
-            return <HeadCell {...props}/>;
+const tablePropsInit: ITableProps = {
+  columns: [
+    {
+      key: 'column1',
+      style: { textAlign: 'left' },
+      title: 'Column 1',
+    },
+    {
+      key: 'column2',
+      title: 'Column 2',
+    },
+  ],
+  data: dataArray,
+  rowKeyField: 'id',
+};
+
+const CustomHeaderCellDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
+
+  return (
+    <Table
+      {...tableProps}
+      childComponents={{
+        headCell: {
+          content: (props) => {
+            if (props.column.key === 'column1'){
+              return <HeadCell {...props}/>;
+            }
           }
         }
-      }
-    }}
-  />
-);
+      }}
+      dispatch={dispatch}
+    />
+  );
+};
 
 export default CustomHeaderCellDemo;

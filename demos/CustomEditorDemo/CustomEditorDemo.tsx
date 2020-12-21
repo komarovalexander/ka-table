@@ -2,10 +2,11 @@ import './CustomEditorDemo.scss';
 
 import React, { useState } from 'react';
 
-import { Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { closeEditor, updateCellValue } from 'ka-table/actionCreators';
 import { DataType, EditingMode } from 'ka-table/enums';
 import { ICellEditorProps } from 'ka-table/props';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -25,7 +26,10 @@ const CustomEditor: React.FC<ICellEditorProps> = ({
   const [editorValue, setValue] = useState(value);
   return (
     <div className='custom-editor'>
-      <input className='form-control' type='text' value={editorValue}
+      <input
+        className='form-control'
+        type='text'
+        value={editorValue}
         onChange={(event) => setValue(event.currentTarget.value)}/>
       <button className='custom-editor-button custom-editor-button-save'
         onClick={() => {
@@ -40,6 +44,9 @@ const CustomEditor: React.FC<ICellEditorProps> = ({
 const CustomLookupEditor: React.FC<ICellEditorProps> = ({
   column, dispatch, rowKeyValue, value,
 }) => {
+  const close = () => {
+    dispatch(closeEditor(rowKeyValue, column.key));
+  };
   const [editorValue, setValue] = useState(value);
   return (
     <div>
@@ -49,7 +56,7 @@ const CustomLookupEditor: React.FC<ICellEditorProps> = ({
         defaultValue={editorValue}
         onBlur={() => {
           dispatch(updateCellValue(rowKeyValue, column.key, editorValue));
-          dispatch(closeEditor(rowKeyValue, column.key));
+          close();
         }}
         onChange={(event) => {
           setValue(event.currentTarget.value === 'true');
@@ -61,39 +68,59 @@ const CustomLookupEditor: React.FC<ICellEditorProps> = ({
   );
 };
 
-const CustomEditorDemo: React.FC = () => (
-  <Table
-    columns={[
-      { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '330px' }, },
-      { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '50px' } },
-      { key: 'passed', style: { width: '50px' }, dataType: DataType.Boolean, title: 'Passed' },
-      { key: 'nextTry', dataType: DataType.Date, title: 'Next Try' },
-    ]}
-    format={({ column, value }) => {
-      if (column.dataType === DataType.Date){
-        return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
-      }
-    }}
-    editableCells={[{ columnKey: 'name', rowKeyValue: 1 }]}
-    editingMode={EditingMode.Cell}
-    data={dataArray}
-    rowKeyField='id'
-    childComponents={{
-      table: {
-        elementAttributes: () => ({
-          className: 'custom-editor-demo-table'
-        })
-      },
-      cellEditor: {
-        content: (props) => {
-          switch (props.column.key) {
-            case 'passed': return <CustomLookupEditor {...props}/>;
-            case 'name': return <CustomEditor {...props}/>;
+const tablePropsInit: ITableProps = {
+  columns: [
+    { dataType: DataType.String, key: 'name', title: 'Name', style: { width: '330px' } },
+    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '50px' } },
+    {
+      dataType: DataType.Boolean,
+      key: 'passed',
+      style: { width: '50px' },
+      title: 'Passed',
+    },
+    {
+      dataType: DataType.Date,
+      key: 'nextTry',
+      title: 'Next Try',
+    },
+  ],
+  format: ({ column, value }) => {
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
+  data: dataArray,
+  editableCells: [{ columnKey: 'name', rowKeyValue: 1 }],
+  editingMode: EditingMode.Cell,
+  rowKeyField: 'id',
+};
+
+const CustomEditorDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
+  return (
+    <Table
+      {...tableProps}
+      dispatch={dispatch}
+      childComponents={{
+        table: {
+          elementAttributes: () => ({
+            className: 'custom-editor-demo-table'
+          })
+        },
+        cellEditor: {
+          content: (props) => {
+            switch (props.column.key) {
+              case 'passed': return <CustomLookupEditor {...props}/>;
+              case 'name': return <CustomEditor {...props}/>;
+            }
           }
         }
-      }
-    }}
-  />
-);
+      }}
+    />
+  );
+};
 
 export default CustomEditorDemo;

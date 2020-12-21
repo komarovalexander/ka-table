@@ -1,11 +1,12 @@
 import './CustomCellDemo.scss';
 
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { openEditor } from 'ka-table/actionCreators';
-import { DataType } from 'ka-table/enums';
+import { DataType, EditingMode } from 'ka-table/enums';
 import { ICellTextProps } from 'ka-table/props';
+import { DispatchFunc } from 'ka-table/types';
 import dataArray from './data';
 
 const CustomCell: React.FC<ICellTextProps> = ({
@@ -23,53 +24,62 @@ const CustomCell: React.FC<ICellTextProps> = ({
   );
 };
 
+const tablePropsInit: ITableProps = {
+  columns: [
+    {
+      dataType: DataType.String,
+      key: 'representative.name',
+      style: { width: '200px' },
+      title: 'Representative',
+    },
+    {
+      dataType: DataType.Boolean,
+      key: 'company.hasLoyalProgram',
+      style: { width: '170px', textAlign: 'center' },
+      title: 'Loyal Program',
+    },
+    {
+      dataType: DataType.String,
+      key: 'product.name',
+      style: {
+        width: '80px',
+      },
+      title: 'Product',
+    },
+    {
+      dataType: DataType.Number,
+      key: 'product.price',
+      style: { width: '100px', textAlign: 'right' },
+      title: 'Price',
+    },
+    {
+      dataType: DataType.Date,
+      key: 'firstDealDate',
+      style: { width: '150px' },
+      title: 'First Deal Date',
+    },
+  ],
+  format: ({ column, value }) => {
+    if (column.key === 'product.price'){
+      return `$${value}`;
+    }
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
+  data: dataArray,
+  editingMode: EditingMode.Cell,
+  rowKeyField: 'id',
+};
+
 const CustomCellDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const onDispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
   return (
     <Table
-      columns={[
-        {
-          dataType: DataType.String,
-          key: 'representative.name',
-          style: { width: '200px' },
-          title: 'Representative',
-        },
-        {
-          dataType: DataType.Boolean,
-          key: 'company.hasLoyalProgram',
-          style: { width: '170px', textAlign: 'center' },
-          title: 'Loyal Program',
-        },
-        {
-          dataType: DataType.String,
-          key: 'product.name',
-          style: {
-            width: '80px',
-          },
-          title: 'Product',
-        },
-        {
-          dataType: DataType.Number,
-          key: 'product.price',
-          style: { width: '100px', textAlign: 'right' },
-          title: 'Price',
-        },
-        {
-          dataType: DataType.Date,
-          key: 'firstDealDate',
-          style: { width: '150px' },
-          title: 'First Deal Date',
-        },
-      ]}
-      data={dataArray}
-      rowKeyField='id'
-      format={({ column, value }) => {
-        if (column.key === 'product.price'){
-          return `$${value}`;
-        }
-        if (column.dataType === DataType.Date){
-          return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
-        }
-      }}
+      {...tableProps}
       childComponents={{
         cellText: {
           content: (props) => {
@@ -79,6 +89,7 @@ const CustomCellDemo: React.FC = () => {
           }
         }
       }}
+      dispatch={onDispatch}
     />
   );
 };

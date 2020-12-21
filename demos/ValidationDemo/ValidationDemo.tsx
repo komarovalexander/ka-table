@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, EditingMode } from 'ka-table/enums';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -12,36 +13,64 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const ValidationDemo: React.FC = () => (
-  <Table
-    columns={[
-      { dataType: DataType.String, key: 'name', style: { width: '40%' }, title: 'Name' },
-      { dataType: DataType.Number, key: 'score', style: { width: '70px' }, title: 'Score' },
-      { dataType: DataType.Boolean, key: 'passed', title: 'Passed' },
-    ]}
-    validation={({ column, value }) => {
-      if (column.key === 'name'){
-        if (!value) {
-          return `Value can't be empty`;
-        }
+const tablePropsInit: ITableProps = {
+  columns: [
+    {
+      dataType: DataType.String,
+      key: 'name',
+      style: { width: '40%' },
+      title: 'Name'
+    },
+    {
+      dataType: DataType.Number,
+      key: 'score',
+      style: { width: '70px' },
+      title: 'Score'
+    },
+    {
+      dataType: DataType.Boolean,
+      key: 'passed',
+      title: 'Passed',
+    },
+  ],
+  validation: ({ column, value }) => {
+    if (column.key === 'name'){
+      if (!value) {
+        return `Value can't be empty`;
       }
-      if (column.key === 'score'){
-        if (value > 100) {
-          return `Value can't be more than 100`;
-        }
-        if (!value) {
-          return `Value can't be empty`;
-        }
+    }
+    if (column.key === 'score'){
+      if (value > 100) {
+        return `Value can't be more than 100`;
       }
-    }}
-    editableCells={[{
-      columnKey: 'score',
-      rowKeyValue: 2,
-    }]}
-    editingMode={EditingMode.Cell}
-    data={dataArray}
-    rowKeyField='id'
-  />
-);
+      if (!value) {
+        return `Value can't be empty`;
+      }
+    }
+  },
+  data: dataArray,
+  editableCells: [{
+    columnKey: 'score',
+    rowKeyValue: 2,
+  }],
+  editingMode: EditingMode.Cell,
+  rowKeyField: 'id',
+};
+
+const ValidationDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
+
+  return (
+    <>
+      <Table
+        {...tableProps}
+        dispatch={dispatch}
+      />
+    </>
+  );
+};
 
 export default ValidationDemo;

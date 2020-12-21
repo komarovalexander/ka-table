@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Table } from 'ka-table';
-import { DataType } from 'ka-table/enums';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { DataType, SortingMode } from 'ka-table/enums';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, tryDate: new Date(2021, 10, 9) },
@@ -15,32 +16,51 @@ const dataArray: any[] = [
   { id: 9, name: 'Treme Watson', score: 61, passed: true, tryDate: new Date(2022, 10, 9) },
 ];
 
-const CustomAttributesDemo: React.FC = () => (
-  <Table
-    columns={[
-      { key: 'name', title: 'Name', dataType: DataType.String },
-      { key: 'score', title: 'Score', dataType: DataType.Number, filterRowOperator: '>' },
-      { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
-      { dataType: DataType.Date, key: 'tryDate', title: 'Date', filterRowOperator: '<' },
-    ]}
-    data={dataArray}
-    rowKeyField='id'
-    format={({ column, value }) => {
-      if (column.dataType === DataType.Date){
-        return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
-      }
-    }}
-    childComponents={{
-      dataRow: {
-        elementAttributes: ({ rowData }) => ({
-          style: {
-            backgroundColor: rowData.passed ? 'rgba(0, 255, 0, 0.1)' : 'rgba(255, 0, 0, 0.1)'
-          },
-          title: `${rowData.name}: ${rowData.score}`
-        })
-      }
-    }}
-  />
-);
+const tablePropsInit: ITableProps = {
+  columns: [
+    { key: 'name', title: 'Name', dataType: DataType.String },
+    { key: 'score', title: 'Score', dataType: DataType.Number, filterRowOperator: '>' },
+    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
+    { dataType: DataType.Date, key: 'tryDate', title: 'Date', filterRowOperator: '<' },
+  ],
+  format: ({ column, value }) => {
+    if (column.dataType === DataType.Date){
+      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
+  paging: {
+    enabled: true,
+    pageSize: 7,
+    pageIndex: 0
+  },
+  data: dataArray,
+  rowKeyField: 'id',
+  sortingMode: SortingMode.Single,
+};
+
+const CustomAttributesDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
+
+  return (
+    <Table
+      {...tableProps}
+      childComponents={{
+        dataRow: {
+          elementAttributes: ({ rowData }) => ({
+            style: {
+              backgroundColor: rowData.passed ? 'rgba(0, 255, 0, 0.1)' : 'rgba(255, 0, 0, 0.1)'
+            },
+            title: `${rowData.name}: ${rowData.score}`
+          })
+        }
+      }}
+      dispatch={dispatch}
+    />
+  );
+};
 
 export default CustomAttributesDemo;
