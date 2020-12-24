@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { ITableProps, kaReducer, Table } from 'ka-table';
+import { ITableProps, Table } from 'ka-table';
 import {
   deleteRow, hideLoading, showLoading, updateData, updatePagesCount,
 } from 'ka-table/actionCreators';
 import { ActionType, DataType, EditingMode, SortingMode } from 'ka-table/enums';
 import { ICellTextProps } from 'ka-table/props';
 import { DispatchFunc } from 'ka-table/types';
-import { getField } from 'ka-table/Utils/ColumnUtils';
 import serverEmulator from './serverEmulator';
+import {
+  clearLoadActions, IRemoteTableProps, LOAD_DATA, loadData, remoteReducer,
+} from './tableRemote';
 
 const DeleteRow: React.FC<ICellTextProps> = ({
   dispatch, rowKeyValue,
@@ -23,9 +25,9 @@ const DeleteRow: React.FC<ICellTextProps> = ({
  );
 };
 
-const tablePropsInit: ITableProps = {
+const tablePropsInit: IRemoteTableProps = {
   columns: [
-    { key: 'column1', field: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
@@ -33,9 +35,9 @@ const tablePropsInit: ITableProps = {
   ],
   editingMode: EditingMode.Cell,
   loading: {
-    enabled: true,
-    text: 'Loading Data..'
+    enabled: true
   },
+  loadActions: ['LOAD_DATA'],
   paging: {
     enabled: true,
     pageIndex: 0,
@@ -45,44 +47,45 @@ const tablePropsInit: ITableProps = {
   rowKeyField: 'id',
 };
 
-const initGetData = (props: ITableProps, dispatch: DispatchFunc) => {
-  return (action?: any) => {
-    serverEmulator.get(props.paging, props.columns, action?.pageIndex).then((result) => {
-      dispatch(updatePagesCount(result.pagesCount));
-      dispatch(updateData(result.data));
-      dispatch(hideLoading());
-    });
-  }
+const remoteDataDispatch = (baseDispath: DispatchFunc, tableProps: ITableProps) => {
+  const dispatch: DispatchFunc = (action) => {
+    if (action.type === ActionType.DeleteRow) {
+      dispatch(showLoading());
+      serverEmulator.delete(action.rowKeyValue).then((result) => {
+        dispatch(loadData());
+      });
+    } else if (action.type === ActionType.UpdateCellValue) {
+      dispatch(showLoading());
+      serverEmulator.update(action.rowKeyValue, { [action.columnKey]: action.value }).then(() => {
+        dispatch(loadData());
+      });
+    } else if (action.type === ActionType.UpdateSortDirection || action.type === ActionType.UpdatePageIndex) {
+      dispatch(loadData());
+    } else if (action.type === LOAD_DATA) {
+      dispatch(showLoading());
+      serverEmulator.get(tableProps.paging, tableProps.columns, action?.pageIndex).then((result) => {
+        dispatch(updatePagesCount(result.pagesCount));
+        dispatch(updateData(result.data));
+        dispatch(hideLoading());
+      });
+    }
+    baseDispath(action);
+  };
+  return dispatch;
 };
 
 const RemoteDataDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    if (action.type === ActionType.DeleteRow) {
-      dispatch(showLoading('Deleting Row..'));
-      serverEmulator.delete(action.rowKeyValue).then((result) => {
-        getData(action);
-      });
-    } else if (action.type === ActionType.UpdateCellValue) {
-      dispatch(showLoading('Updating Data..'));
-      const column = tableProps.columns.find((c) => c.key === action.columnKey)!;
-      serverEmulator.update(action.rowKeyValue, { [getField(column)]: action.value }).then(() => {
-        getData(action);
-      });
-    } else if (action.type === ActionType.UpdatePageIndex) {
-      dispatch(showLoading('Loading Data..'));
-      getData(action);
-    } else if (action.type === ActionType.UpdateSortDirection) {
-      dispatch(showLoading('Loading Data..'));
-      initGetData(kaReducer(tableProps, action), dispatch)(action);
-    }
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
-  const getData = initGetData(tableProps, dispatch);
+  const dispatch: DispatchFunc = remoteDataDispatch((action) => {
+    changeTableProps((prevState: ITableProps) => remoteReducer(prevState, action));
+  }, tableProps);
 
-  if (!tableProps.data) {
-    getData();
-  }
+  useEffect(() => {
+    if (tableProps.loadActions){
+      dispatch(loadData());
+      dispatch(clearLoadActions());
+    }
+  });
 
   return (
     <div className='remote-data-demo'>
