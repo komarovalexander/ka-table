@@ -103,9 +103,6 @@ const RemoteDataDemo: React.FC = () => {
                 return <DeleteRow {...props} />
               }
             }
-          },
-          noDataRow: {
-            content: () => 'No data'
           }
         }}
         dispatch={dispatch}
