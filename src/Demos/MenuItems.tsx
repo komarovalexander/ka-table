@@ -11,8 +11,8 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
-const newItems: string[] = ['TabIndexDemo'];
-const updateItems: string[] = [];
+const newItems: string[] = [];
+const updateItems: string[] = ['RemoteDataDemo'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 

@@ -19,7 +19,7 @@ const synonyms: { [value: string]: any[] } = {
   'CustomEditorDemo': ['cellEditor'],
   'CustomThemeDemo': ['Color', 'Dark', 'styles'],
   'EditingRowDemo': ['Image', 'Button', 'Btn'],
-  'EventsDemo': ['Action'],
+  'EventsDemo': ['Action', 'Click'],
   'FilterRowCustomEditorDemo': ['filterRowCell'],
   'ManyColumnsDemo': ['horizontal'],
   'NullableCellDataDemo': ['groupsExpanded'],
