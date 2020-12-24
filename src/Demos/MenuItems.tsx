@@ -36,6 +36,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
                 <div className={(c.isActive ? 'active-group' : '') + ' group'} onClick={() => clickByGroup(c)}>
                   <span className='menu-button'>
                     <span className={'group-icon ka-icon ka-icon-group-arrow ka-icon-group-arrow-' + (c.isActive ? 'expanded' : 'collapsed')}/>
+                    <span className='menu-icon'><img src={`static/icons/groups/${c.name}.svg`} alt=''/></span>
                     <span className='menu-button-inner'>{c.title}</span>
                     {newItems.includes(c.name) && <span className='new-badge'>new</span>}
                     {updateItems.includes(c.name) && <span className='upd-badge'>upd</span>}
@@ -44,6 +45,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
               ) : (
               <NavLink to={c.path!} activeClassName='active'>
                 <span className='menu-button'>
+                  <span className='menu-icon'><img src={`static/icons/${c.name}.svg`} alt=''/></span>
                   <span className='menu-button-inner'>{c.title}</span>
                   {newItems.includes(c.name) && <span className='new-badge'>new</span>}
                   {updateItems.includes(c.name) && <span className='upd-badge'>upd</span>}
@@ -57,6 +59,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
                     <li key={i.name}>
                       <NavLink to={i.path!} activeClassName='active'>
                         <span className='menu-button'>
+                          <span className='menu-icon'><img src={`static/icons/${i.name}.svg`} alt=''/></span>
                           <span className='menu-button-inner'>{i.title}</span>
                           {newItems.includes(i.name) && <span className='new-badge'>new</span>}
                           {updateItems.includes(i.name) && <span className='upd-badge'>upd</span>}

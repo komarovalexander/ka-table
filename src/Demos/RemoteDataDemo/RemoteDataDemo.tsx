@@ -50,21 +50,12 @@ const remoteReducer = (props: ITableProps, action: any) => {
   return kaReducer(props, action);
 }
 
-const combineDispatch = (baseDispath: DispatchFunc, remoteDispatch: DispatchFunc) => {
-  const dispatch: DispatchFunc = (action) => {
-    remoteDispatch(action);
-    baseDispath(action);
-  };
-  return dispatch;
-};
-
 const RemoteDataDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
 
-  const baseDispatch: DispatchFunc = (action) => {
+  const dispatch: DispatchFunc = async (action) => {
     changeTableProps((prevState: ITableProps) => remoteReducer(prevState, action));
-  };
-  const remoteDispatch: DispatchFunc = async (action) => {
+
     if (action.type === ActionType.DeleteRow) {
       dispatch(showLoading());
       await serverEmulator.delete(action.rowKeyValue);
@@ -83,7 +74,6 @@ const RemoteDataDemo: React.FC = () => {
       dispatch(hideLoading());
     }
   };
-  const dispatch: DispatchFunc = combineDispatch(baseDispatch, remoteDispatch);
 
   useEffect(() => {
     if (tableProps.loadActions){
