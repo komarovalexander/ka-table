@@ -12,7 +12,12 @@ const getDemoPage = (demo: Demo) => {
     return (
       <div>
         <div className={`simulator-content ${kaStylesDisabled.includes(demo.fileName) ? '' : 'enable-ka-styles'}`}>
-          <h1>{demo.title}</h1>
+          <h1>{demo.group && (
+            <span className='group-header'>
+              {demo.group}
+              <span className='group-header-icon ka-icon ka-icon-group-arrow ka-icon-group-arrow-collapsed'/>
+            </span>
+          )} {demo.title}</h1>
           <demo.component />
         </div>
         <div className='code'>

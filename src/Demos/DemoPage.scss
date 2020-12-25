@@ -20,6 +20,18 @@
   @import '../../src/lib/style.scss';
 }
 
+.group-header{
+  font-size: 18px;
+  color: #53585B99;
+  .group-header-icon{
+    position: relative;
+    top: -2px;
+    font-weight: bold;
+    padding: 10px;
+    margin-right: 0;
+  }
+}
+
 .editor-links {
   text-align: right;
   font-size: 14px;

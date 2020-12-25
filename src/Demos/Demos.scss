@@ -82,8 +82,8 @@ body {
         cursor: pointer;
         color: #53585B;
         display: block;
-        font-size: 15px;
-        padding: 6px 0 6px 40px;
+        font-size: 16px;
+        padding: 7px 0 7px 40px;
         text-decoration: none;
         .menu-button{
           position: relative;
@@ -92,6 +92,10 @@ body {
           .menu-icon {
             opacity: 0.6;
             width: 40px;
+            img{
+              width: 18px;
+              padding: 2px;
+            }
           }
           .group-icon {
             position: absolute;

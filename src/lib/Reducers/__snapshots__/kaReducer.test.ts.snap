@@ -105,3 +105,9 @@ Array [
   2,
 ]
 `;
+
+exports[`kaReducer SetSingleAction 1`] = `
+Object {
+  "type": "LoadData",
+}
+`;
