@@ -15,7 +15,7 @@ const synonyms: { [value: string]: any[] } = {
   'AlertCellDemo': ['Image', 'Button', 'Btn'],
   'ColumnReorderingDemo': ['Drag'],
   'ColumnSettingsDemo': ['Hide', 'Show', 'Action Creator'],
-  'CustomCellDemo': ['Center', 'Width', 'openEditor'],
+  'CustomCellDemo': ['Center', 'Width', 'openEditor', 'Format', 'Number', 'Money', 'Dollar'],
   'CustomEditorDemo': ['cellEditor'],
   'CustomThemeDemo': ['Color', 'Dark', 'styles'],
   'EditingRowDemo': ['Image', 'Button', 'Btn'],

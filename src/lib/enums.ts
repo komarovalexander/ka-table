@@ -13,6 +13,7 @@ export enum EditingMode {
 }
 
 export enum ActionType {
+  ClearSingleAction = 'ClearSingleAction',
   CloseEditor = 'CloseEditor',
   CloseRowEditors = 'CloseRowEditors',
   DeleteRow = 'DeleteRow',
@@ -24,6 +25,7 @@ export enum ActionType {
   HideDetailsRow = 'HideDetailsRow',
   HideLoading = 'HideLoading',
   HideNewRow = 'HideNewRow',
+  LoadData = 'LoadData',
   OpenEditor = 'OpenEditor',
   OpenRowEditors = 'OpenRowEditors',
   ReorderColumns = 'ReorderColumns',
@@ -39,6 +41,7 @@ export enum ActionType {
   SelectRow = 'SelectRow',
   SelectRowsRange = 'SelectRowsRange',
   SelectSingleRow = 'SelectSingleRow',
+  SetSingleAction = 'SetSingleAction',
   ShowColumn = 'ShowColumn',
   ShowDetailsRow = 'ShowDetailsRow',
   ShowLoading = 'ShowLoading',

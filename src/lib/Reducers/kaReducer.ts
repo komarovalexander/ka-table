@@ -33,7 +33,7 @@ const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKey
   return newSelectedRows;
 }
 
-const kaReducer: any = (props: ITableProps, action: any) => {
+const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   const {
     columns,
     data = [],
@@ -50,6 +50,12 @@ const kaReducer: any = (props: ITableProps, action: any) => {
   } = props;
 
   switch (action.type) {
+    case ActionType.ClearSingleAction: {
+      return {...props, singleAction: undefined };
+    }
+    case ActionType.SetSingleAction: {
+      return {...props, singleAction: action.singleAction };
+    }
     case ActionType.ShowColumn: {
       const newColumns = [...columns];
       const columnIndex = newColumns.findIndex(c => c.key === action.columnKey);
