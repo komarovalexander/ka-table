@@ -21,11 +21,14 @@
 }
 
 .group-header{
+  font-size: 18px;
   color: #53585B99;
   .group-header-icon{
     position: relative;
-    top: -3px;
+    top: -2px;
     font-weight: bold;
+    padding: 10px;
+    margin-right: 0;
   }
 }
 
