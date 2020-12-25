@@ -20,6 +20,15 @@
   @import '../../src/lib/style.scss';
 }
 
+.group-header{
+  color: #53585B99;
+  .group-header-icon{
+    position: relative;
+    top: -3px;
+    font-weight: bold;
+  }
+}
+
 .editor-links {
   text-align: right;
   font-size: 14px;
