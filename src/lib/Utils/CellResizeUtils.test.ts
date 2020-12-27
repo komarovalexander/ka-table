@@ -48,5 +48,11 @@ describe('CellUtils', () => {
       mouseMoveEvent({ screenX: 20 } as any);
       expect(dispatch).toBeCalledWith({type: 'HeadCellResizeStateAction', width: 50});
     });
+    it('skip', () => {
+      const dispatch = jest.fn();
+      const mouseMoveEvent = getMouseMove(40, 40, 0, dispatch);
+      mouseMoveEvent({ screenX: 40 } as any);
+      expect(dispatch).toHaveBeenCalledTimes(0);
+    });
   });
 });
