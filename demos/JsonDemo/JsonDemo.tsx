@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
 import { loadData, updateData } from 'ka-table/actionCreators';
-import { ActionType, DataType, SortDirection } from 'ka-table/enums';
+import { ActionType, DataType, SortDirection, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 
 const tablePropsInit: ITableProps = {
@@ -12,6 +12,7 @@ const tablePropsInit: ITableProps = {
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
   singleAction: loadData(),
+  sortingMode: SortingMode.Single,
   rowKeyField: 'id',
 };
 
