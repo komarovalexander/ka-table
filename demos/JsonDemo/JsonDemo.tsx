@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { hideLoading, loadData, showLoading, updateData } from 'ka-table/actionCreators';
+import { loadData, updateData } from 'ka-table/actionCreators';
 import { ActionType, DataType, SortDirection } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 
@@ -11,9 +11,6 @@ const tablePropsInit: ITableProps = {
     { key: 'score', title: 'Score', dataType: DataType.Number, sortDirection: SortDirection.Ascend },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
-  loading: {
-    enabled: true
-  },
   singleAction: loadData(),
   rowKeyField: 'id',
 };
@@ -25,11 +22,9 @@ const JsonDemo: React.FC = () => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
 
     if (action.type === ActionType.LoadData) {
-      dispatch(showLoading());
       const response = await fetch('https://komarovalexander.github.io/ka-table/data/employees.json');
       const data = await response.json();
       dispatch(updateData(data));
-      dispatch(hideLoading());
     }
   };
 
