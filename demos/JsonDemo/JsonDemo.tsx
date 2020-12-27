@@ -26,7 +26,7 @@ const JsonDemo: React.FC = () => {
 
     if (action.type === ActionType.LoadData) {
       dispatch(showLoading());
-      const response = await fetch('data/employees.json');
+      const response = await fetch('https://komarovalexander.github.io/ka-table/data/employees.json');
       const data = await response.json();
       dispatch(updateData(data));
       dispatch(hideLoading());
