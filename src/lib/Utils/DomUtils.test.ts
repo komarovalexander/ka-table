@@ -1,22 +1,31 @@
-import { updateElementTop } from './DomUtils';
+import { updateChildrenTop } from './DomUtils';
 
 describe('DomUtils', () => {
   describe('getEventListenerEffect', () => {
     it('default', () => {
       const elementRef = {
         current: {
-          parentElement: {
-            previousSibling: {
-              getBoundingClientRect: () => ({ height: 20 })
-            }
+          previousSibling: {
+            getBoundingClientRect: () => ({ height: 20 })
           },
           style: {
             top: 0
-          }
+          },
+          childNodes: [{
+            style: {
+              top: 0
+            }
+          }, {
+            style: {
+              top: 0
+            }
+          }]
         }
       };
-      updateElementTop(elementRef);
+      updateChildrenTop(elementRef);
       expect(elementRef.current.style.top).toBe('20px');
+      expect(elementRef.current.childNodes[0].style.top).toBe('20px');
+      expect(elementRef.current.childNodes[1].style.top).toBe('20px');
     });
     it('getBoundingClientRect returns null', () => {
       const elementRef = {
@@ -28,20 +37,29 @@ describe('DomUtils', () => {
           },
           style: {
             top: 0
-          }
+          },
+          childNodes: [{
+            style: {
+              top: 0
+            }
+          }, {
+            style: {
+              top: 0
+            }
+          }]
         }
       };
-      updateElementTop(elementRef);
+      updateChildrenTop(elementRef);
       expect(elementRef.current.style.top).toBe(0);
+      expect(elementRef.current.childNodes[0].style.top).toBe(0);
+      expect(elementRef.current.childNodes[1].style.top).toBe(0);
     });
     it('height is already set', () => {
       const optionSet = jest.fn();
       const elementRef = {
         current: {
-          parentElement: {
-            previousSibling: {
-              getBoundingClientRect: () => ({ height: 20 })
-            }
+          previousSibling: {
+            getBoundingClientRect: () => ({ height: 20 })
           },
           style: {
             get top() {
@@ -50,11 +68,17 @@ describe('DomUtils', () => {
             set top(value) {
               optionSet();
             }
-          }
+          },
+          childNodes: [{
+            style: {
+              top: undefined
+            }
+          }]
         }
       };
-      updateElementTop(elementRef);
+      updateChildrenTop(elementRef);
       expect(optionSet).toBeCalledTimes(0);
+      expect(elementRef.current.childNodes[0].style.top).toBeUndefined();
     });
   });
 });
