@@ -3,13 +3,15 @@ import { Field } from '../types';
 
 export class Column {
   public dataType?: DataType;
-  public filterRowValue?: any;
-  public filterRowOperator?: any;
   public field?: Field;
+  public filterRowOperator?: any;
+  public filterRowValue?: any;
   public isEditable?: boolean;
   public isResizable?: boolean;
   public key!: string;
   public sortDirection?: SortDirection;
+  public sortIndex?: number;
   public style?: React.CSSProperties;
   public title?: string;
+  public visible?: boolean;
 }

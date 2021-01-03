@@ -26,6 +26,7 @@ const tablePropsInit: ITableProps = {
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
   virtualScrolling: {
+    enabled: true
   },
 };
 
@@ -36,12 +37,15 @@ const ManyRowsGroupingDemo: React.FC = () => {
   };
 
   return (
-    <>
-      <Table
-        {...tableProps}
-        dispatch={dispatch}
-      />
-    </>
+    <Table
+      {...tableProps}
+      dispatch={dispatch}
+      childComponents={{
+        tableWrapper: {
+          elementAttributes: () => ({ style: { maxHeight: 600 }})
+        }
+      }}
+    />
   );
 };
 

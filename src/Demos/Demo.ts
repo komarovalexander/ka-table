@@ -8,8 +8,8 @@ export default class Demo {
     public jsLink: string = '',
     public tsLink: string = '',
     public group: string = '',
-    public disableOnlineEditor: boolean = false) {
-      this.jsLink = jsLink + '?file=Demo.js';
-      this.tsLink = tsLink + '?file=Demo.tsx';
+    public linkfile: string = '') {
+      this.jsLink = jsLink + '?file=' + (this.linkfile || 'Demo.js');
+      this.tsLink = tsLink + '?file=' + (this.linkfile || 'Demo.tsx');
   }
 }

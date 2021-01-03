@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { clearSingleAction } from '../../actionCreators';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 import { EditableCell, PagingOptions } from '../../models';
 import { ChildComponents } from '../../Models/ChildComponents';
@@ -36,6 +37,7 @@ export interface ITableProps {
   search?: SearchFunc;
   searchText?: string;
   selectedRows?: any[];
+  singleAction?: any;
   sortingMode?: SortingMode;
   validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
@@ -57,17 +59,23 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     height,
     loading,
     paging,
-    width
+    width,
+    singleAction
   } = props;
-
   const isLoadingActive = loading && loading.enabled;
   const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
   const { elementAttributes, content: rootDivContent } = getElementCustomization({
     className:  kaCss
   }, { ...props, dispatch }, childComponents.rootDiv);
-  elementAttributes.style = {...elementAttributes.style, width, height}
+  elementAttributes.style = {width, height, ...elementAttributes.style}
 
+  React.useEffect(() => {
+    if (singleAction){
+      dispatch(singleAction);
+      dispatch(clearSingleAction());
+    }
+  });
   return (
     <div {...elementAttributes}>
       {rootDivContent || <TableWrapper {...props} />}

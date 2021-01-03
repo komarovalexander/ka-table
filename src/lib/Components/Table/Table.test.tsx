@@ -1,8 +1,9 @@
-import Enzyme, { mount } from 'enzyme';
+import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { loadData } from '../../actionCreators';
 import { ActionType } from '../../enums';
 import { Table } from './Table';
 
@@ -25,4 +26,34 @@ it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(<Table {...tableProps} />, div);
   ReactDOM.unmountComponentAtNode(div);
+});
+
+it('should dispatch single action and clear it', () => {
+  const dispatch = jest.fn();
+  const props = {
+    ...tableProps,
+    singleAction: loadData(),
+    dispatch
+  };
+  const div = document.createElement('div');
+  ReactDOM.render(<Table {...props} />, div);
+  ReactDOM.unmountComponentAtNode(div);
+  expect(dispatch).toHaveBeenCalledTimes(2);
+  expect(dispatch.mock.calls).toEqual([
+    [{type: ActionType.LoadData}],
+    [{type: ActionType.ClearSingleAction}]
+  ]);
+});
+
+it('should not dispatch in case of single action is undefined', () => {
+  const dispatch = jest.fn();
+  const props = {
+    ...tableProps,
+    singleAction: undefined,
+    dispatch
+  };
+  const div = document.createElement('div');
+  ReactDOM.render(<Table {...props} />, div);
+  ReactDOM.unmountComponentAtNode(div);
+  expect(dispatch).toHaveBeenCalledTimes(0);
 });

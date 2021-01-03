@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
+import { getSortedColumns } from '../../lib/Utils/PropsUtils';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -18,11 +19,10 @@ const tablePropsInit: ITableProps = {
     {
       dataType: DataType.String,
       key: 'name',
-      sortDirection: SortDirection.Descend,
       style: { width: '33%' },
       title: 'Name',
     },
-    { key: 'score', title: 'Score', style: { width: '10%' }, dataType: DataType.Number },
+    { key: 'score', title: 'Score', style: { width: '10%' }, dataType: DataType.Number, sortDirection: SortDirection.Ascend },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
   data: dataArray,
@@ -36,10 +36,31 @@ const SortingDemo: React.FC = () => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
-    <Table
-      {...tableProps}
-      dispatch={dispatch}
-    />
+    <>
+      sortingMode:
+      <select
+        value={tableProps.sortingMode}
+        onChange={(e) => changeTableProps({ ...tablePropsInit, sortingMode: e.target.value as any })}
+        style={{marginBottom: 20}}>
+        <option value={SortingMode.Single}>Single</option>
+        <option value={SortingMode.SingleTripleState}>SingleTripleState</option>
+        <option value={SortingMode.SingleRemote}>SingleRemote</option>
+        <option value={SortingMode.SingleTripleStateRemote}>SingleTripleStateRemote</option>
+        <option value={SortingMode.MultipleRemote}>MultipleRemote</option>
+        <option value={SortingMode.MultipleTripleStateRemote}>MultipleTripleStateRemote</option>
+      </select>
+      <Table
+        {...tableProps}
+        dispatch={dispatch}
+      />
+      <div style={{marginTop: 20}}>
+        <span style={{fontSize: 12}}>sorted columns:</span> {getSortedColumns(tableProps).map(c => `${c.key}: ${c.sortDirection}; `)}
+      </div>
+      <div style={{fontSize: 12}}>
+        <b>'*Remote' sorting</b> modes changes do not sort data, it should be done outside of the grid,
+          see <a href='#/remote-data'>remote data demo</a> for details
+      </div>
+    </>
   );
 };
 

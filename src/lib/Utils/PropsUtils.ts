@@ -1,14 +1,14 @@
 import { AllHTMLAttributes } from 'react';
-import { isFunction } from 'util';
 
 import { ITableProps } from '../';
+import { SortingMode } from '../enums';
 import { Column } from '../models';
 import { ChildComponent } from '../Models/ChildComponent';
 import { ChildAttributesItem, DispatchFunc } from '../types';
 import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
-import { sortData } from './SortUtils';
+import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 
 export const extendProps = (
   childElementAttributes: AllHTMLAttributes<HTMLElement>,
@@ -35,7 +35,7 @@ export const mergeProps = (
       const propName = prop as string;
       const propValue: any = (childCustomAttributes as any)[propName];
       const baseFunc = (childElementAttributes as any)[propName] || emptyFunc;
-      if (isFunction(propValue)) {
+      if (typeof propValue === 'function') {
         customPropsWithEvents[prop] = (e: any) => {
           propValue(e, {
             baseFunc,
@@ -47,6 +47,7 @@ export const mergeProps = (
       }
     }
   }
+
   const mergedResult: React.AllHTMLAttributes<HTMLDivElement> = {
     ...childElementAttributes,
     ...childCustomAttributes,
@@ -74,19 +75,26 @@ export const getData = (props: ITableProps) => {
     groups,
     groupsExpanded,
     paging,
+    sortingMode = SortingMode.None,
   } = props;
   let {
     data = [],
   } = props;
   data = [...data];
   data = filterAndSearchData(props);
-  data = sortData(columns, data);
+  if (!isRemoteSorting(sortingMode)){
+    data = sortData(columns, data);
+  }
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
   const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
   data = getPageData(groupedData, paging);
 
   return data;
+};
+
+export const getSortedColumns = (props: ITableProps): Column[] => {
+  return sortColumns(props.columns);
 };
 
 export const getPagesCountByProps = (props: ITableProps) => {
@@ -115,6 +123,7 @@ export const prepareTableOptions = (props: ITableProps) => {
     groupedColumns = columns.filter((c) => groups.some((g) => g.columnKey === c.key));
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
+  columns = columns.filter((c) => c.visible !== false);
   return {
     columns,
     groupColumnsCount,

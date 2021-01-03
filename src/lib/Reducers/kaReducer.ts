@@ -1,5 +1,5 @@
 import { newRowId } from '../const';
-import { ActionType } from '../enums';
+import { ActionType, SortingMode } from '../enums';
 import { ITableProps } from '../index';
 import { Column } from '../models';
 import { EditableCell } from '../Models/EditableCell';
@@ -10,7 +10,7 @@ import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/Ce
 import { getValueByField, reorderData, replaceValue } from '../Utils/DataUtils';
 import { filterAndSearchData } from '../Utils/FilterUtils';
 import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
-import { getSortedColumns } from '../Utils/HeadRowUtils';
+import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
 import { getData, prepareTableOptions } from '../Utils/PropsUtils';
 
 const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
@@ -33,7 +33,7 @@ const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKey
   return newSelectedRows;
 }
 
-const kaReducer: any = (props: ITableProps, action: any) => {
+const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   const {
     columns,
     data = [],
@@ -45,10 +45,29 @@ const kaReducer: any = (props: ITableProps, action: any) => {
     rowKeyField,
     selectedRows = [],
     validation,
+    sortingMode = SortingMode.None,
     virtualScrolling,
   } = props;
 
   switch (action.type) {
+    case ActionType.ClearSingleAction: {
+      return {...props, singleAction: undefined };
+    }
+    case ActionType.SetSingleAction: {
+      return {...props, singleAction: action.singleAction };
+    }
+    case ActionType.ShowColumn: {
+      const newColumns = [...columns];
+      const columnIndex = newColumns.findIndex(c => c.key === action.columnKey);
+      newColumns[columnIndex] = {...newColumns[columnIndex], visible: true};
+      return {...props, columns: newColumns};
+    }
+    case ActionType.HideColumn: {
+      const newColumns = [...columns];
+      const columnIndex = newColumns.findIndex(c => c.key === action.columnKey);
+      newColumns[columnIndex] = {...newColumns[columnIndex], visible: false};
+      return {...props, columns: newColumns};
+    }
     case ActionType.ReorderRows: {
       const newData = reorderData(data, (d) => getValueByField(d, rowKeyField), action.rowKeyValue, action.targetRowKeyValue);
       return {...props, data: newData};
@@ -216,7 +235,7 @@ const kaReducer: any = (props: ITableProps, action: any) => {
       return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.UpdateSortDirection:
-      const sortedColumns = getSortedColumns(columns, action.columnKey);
+      const sortedColumns = getUpdatedSortedColumns(columns, action.columnKey, sortingMode);
       return { ...props, columns: sortedColumns };
     case ActionType.UpdateVirtualScrolling:
       return { ...props, virtualScrolling: action.virtualScrolling };

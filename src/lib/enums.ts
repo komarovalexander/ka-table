@@ -13,16 +13,19 @@ export enum EditingMode {
 }
 
 export enum ActionType {
+  ClearSingleAction = 'ClearSingleAction',
   CloseEditor = 'CloseEditor',
   CloseRowEditors = 'CloseRowEditors',
   DeleteRow = 'DeleteRow',
-  DeselectAllRows = 'DeselectAllRows',
   DeselectAllFilteredRows = 'DeselectAllFilteredRows',
+  DeselectAllRows = 'DeselectAllRows',
   DeselectAllVisibleRows = 'DeselectAllVisibleRows',
   DeselectRow = 'DeselectRow',
+  HideColumn = 'HideColumn',
   HideDetailsRow = 'HideDetailsRow',
   HideLoading = 'HideLoading',
   HideNewRow = 'HideNewRow',
+  LoadData = 'LoadData',
   OpenEditor = 'OpenEditor',
   OpenRowEditors = 'OpenRowEditors',
   ReorderColumns = 'ReorderColumns',
@@ -32,12 +35,14 @@ export enum ActionType {
   SaveRowEditors = 'SaveRowEditors',
   ScrollTable = 'ScrollTable',
   Search = 'Search',
-  SelectAllRows = 'SelectAllRows',
   SelectAllFilteredRows = 'SelectAllFilteredRows',
+  SelectAllRows = 'SelectAllRows',
   SelectAllVisibleRows = 'SelectAllVisibleRows',
   SelectRow = 'SelectRow',
   SelectRowsRange = 'SelectRowsRange',
   SelectSingleRow = 'SelectSingleRow',
+  SetSingleAction = 'SetSingleAction',
+  ShowColumn = 'ShowColumn',
   ShowDetailsRow = 'ShowDetailsRow',
   ShowLoading = 'ShowLoading',
   ShowNewRow = 'ShowNewRow',
@@ -67,6 +72,11 @@ export enum SortDirection {
 export enum SortingMode {
   None = 'none',
   Single = 'single',
+  SingleTripleState = 'singleTripleState',
+  SingleRemote = 'singleRemote',
+  SingleTripleStateRemote = 'singleTripleStateRemote',
+  MultipleRemote = 'multipleRemote',
+  MultipleTripleStateRemote = 'multipleTripleStateRemote',
 }
 
 export enum FilteringMode {

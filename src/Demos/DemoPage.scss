@@ -16,10 +16,19 @@
   cursor: pointer;
 }
 
-.enable-ka-styles{
+.enable-ka-styles, .print-content{
   @import '../../src/lib/style.scss';
-  .ka{
-    border-radius: 12px;
+}
+
+.group-header{
+  font-size: 18px;
+  color: #53585B99;
+  .group-header-icon{
+    position: relative;
+    top: -2px;
+    font-weight: bold;
+    padding: 10px;
+    margin-right: 0;
   }
 }
 

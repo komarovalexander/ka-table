@@ -195,3 +195,26 @@ export const reorderColumns = (columnKey: string, targetColumnKey: string) => ({
   columnKey,
   targetColumnKey,
 });
+
+export const showColumn = (columnKey: any) => ({
+  columnKey,
+  type: ActionType.ShowColumn,
+});
+
+export const hideColumn = (columnKey: any) => ({
+  columnKey,
+  type: ActionType.HideColumn,
+});
+
+export const loadData = () => ({
+  type: ActionType.LoadData
+});
+
+export const clearSingleAction = () => ({
+  type: ActionType.ClearSingleAction
+});
+
+export const setSingleAction = (singleAction: any) => ({
+  singleAction,
+  type: ActionType.SetSingleAction
+});

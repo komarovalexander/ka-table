@@ -1,6 +1,6 @@
 {
   "name": "ka-table",
-  "version": "5.2.0",
+  "version": "6.2.1",
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table/#/overview",
@@ -12,11 +12,14 @@
     "@types/react-csv": "^1.1.1",
     "@types/react-redux": "^7.1.7",
     "bootstrap": "^4.5.0",
+    "jspdf": "^2.1.1",
+    "jspdf-autotable": "^3.5.13",
     "materialize-css": "^1.0.0",
     "react": "^16.13.1",
     "react-csv": "^2.0.3",
     "react-dom": "^16.13.1",
-    "react-redux": "^7.2.0"
+    "react-redux": "^7.2.0",
+    "react-to-print": "^2.10.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,7 +32,8 @@
     "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "dist": "tsc --declaration --jsx react --esModuleInterop true --outDir dist src/lib/index.ts && gulp build",
-    "pack": "gulp build && cd dist && npm pack && cd .."
+    "pack": "gulp build && cd dist && npm pack && cd ..",
+    "compile": "tsc src/lib/index.ts --jsx react --esModuleInterop true --outDir dist --declaration true --target es5 && gulp compile"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -61,7 +65,6 @@
     "gulp-gh-pages": "^0.5.4",
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.2",
-    "gulp-typescript": "^5.0.1",
     "jsonfile": "^6.0.1",
     "node-sass": "^4.13.1",
     "react-filter-control": "^2.1.0",
@@ -82,6 +85,12 @@
   },
   "keywords": [
     "datagrid",
+    "ts",
+    "js",
+    "javascript",
+    "typescript",
+    "datatable",
+    "ui-component",
     "react",
     "table",
     "component",

@@ -15,14 +15,14 @@ export const getRowEditableCells = (rowKeyValue: any, editableCells: EditableCel
 };
 
 export const searchData = (columns: Column[], data: any[], searchText: string, search?: SearchFunc): any[] => {
-  return columns.reduce((initialData: any[], c: Column) => {
+  const searched = columns.reduce((initialData: any[], c: Column) => {
     const filterFunction = (item: any) => {
+      if (initialData.indexOf(item) >= 0) {
+        return false;
+      }
       const searchContent = search && search({ column: c, searchText, rowData: item });
       if (searchContent != null) {
         return searchContent;
-      }
-      if (initialData.indexOf(item) >= 0) {
-        return false;
       }
       const columnValue = getValueByColumn(item, c);
       if (columnValue == null) {
@@ -32,13 +32,14 @@ export const searchData = (columns: Column[], data: any[], searchText: string, s
     };
     return initialData.concat(data.filter(filterFunction));
   }, []);
+  return data.filter(d => searched.indexOf(d) >= 0);
 };
 
 export const filterAndSearchData = (props: ITableProps) => {
   const {
     extendedFilter,
-    columns,
     searchText,
+    columns,
     search,
   } = props;
   let {

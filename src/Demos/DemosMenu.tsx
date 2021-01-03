@@ -11,12 +11,33 @@ interface IDemosMenuProps {
 }
 let timeoutId: any = null;
 
+const synonyms: { [value: string]: any[] } = {
+  'AlertCellDemo': ['Image', 'Button', 'Btn'],
+  'ColumnReorderingDemo': ['Drag'],
+  'ColumnSettingsDemo': ['Hide', 'Show', 'Action Creator'],
+  'CustomCellDemo': ['Center', 'Width', 'openEditor', 'Format', 'Number', 'Money', 'Dollar'],
+  'CustomEditorDemo': ['cellEditor'],
+  'CustomThemeDemo': ['Color', 'Dark', 'styles'],
+  'EditingRowDemo': ['Image', 'Button', 'Btn'],
+  'EventsDemo': ['Action', 'Click'],
+  'FilterRowCustomEditorDemo': ['filterRowCell'],
+  'ManyColumnsDemo': ['horizontal'],
+  'NullableCellDataDemo': ['groupsExpanded'],
+  'PagingDemo': ['pageSize'],
+  'RowReorderingDemo': ['Drag'],
+  'SearchDemo': ['No Data'],
+  'FixedColumnDemo': ['Sticky'],
+  'TabIndexDemo': ['keyboard navigation'],
+  'SelectionDemo': ['Checkbox']
+};
+
 const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
   const [search, changeSearch] = useState('');
-  const filteredCases = search ? cases.filter((c) =>
-    c.title.toLowerCase().includes(search.toLowerCase())
-    || c.group.toLowerCase().includes(search.toLowerCase())
-  ) : cases;
+  const filteredCases = search ? cases.filter((c) => {
+    return c.title.toLowerCase().includes(search.toLowerCase())
+      || c.group.toLowerCase().includes(search.toLowerCase())
+      || (synonyms[c.name] && synonyms[c.name].some(t => t.toLowerCase().includes(search.toLowerCase())))
+  }) : cases;
 
   let menuItems: MenuItem[] = [];
   filteredCases.forEach(c => {
@@ -29,7 +50,7 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
       });
     } else {
       menuItems.push({
-        name: (c.group && c.group.replace(' ', '')) || c.name,
+        name: (c.group && c.group.replace(' ', '').replace('/ ', '')) || c.name,
         path: c.group ? '' : c.path,
         title: c.group || c.title,
         items: c.group ? [{
@@ -53,7 +74,7 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
           if (searchValue) {
             trackEvent('type', 'search:', searchValue);
           }
-        }, 300);
+        }, 600);
         changeSearch(searchValue);
       }} />
       <MenuItems items={menuItems}/>

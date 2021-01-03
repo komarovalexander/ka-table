@@ -1,10 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`sortColumns 1`] = `
+Array [
+  Object {
+    "key": "4",
+    "sortDirection": "descend",
+  },
+  Object {
+    "key": "7",
+    "sortDirection": "descend",
+  },
+  Object {
+    "key": "1",
+    "sortDirection": "ascend",
+    "sortIndex": 1,
+  },
+  Object {
+    "key": "2",
+    "sortDirection": "descend",
+    "sortIndex": 2,
+  },
+  Object {
+    "key": "3",
+    "sortDirection": "descend",
+    "sortIndex": 3,
+  },
+  Object {
+    "key": "9",
+    "sortDirection": "descend",
+    "sortIndex": 9,
+  },
+]
+`;
+
 exports[`sortData should be sorted by Ascend 1`] = `
 Array [
   Object {
     "column": null,
-    "id": 5,
+    "id": 6,
+  },
+  Object {
+    "column": null,
+    "id": 7,
   },
   Object {
     "column": 1,
@@ -53,7 +90,11 @@ Array [
   },
   Object {
     "column": null,
-    "id": 5,
+    "id": 6,
+  },
+  Object {
+    "column": null,
+    "id": 7,
   },
 ]
 `;

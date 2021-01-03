@@ -128,6 +128,35 @@ Array [
 ]
 `;
 
+exports[`FilterUtils searchData should add item only once 1`] = `
+Array [
+  Object {
+    "id": 2,
+    "name": "Billi Bob",
+    "passed": false,
+    "score": 55,
+  },
+  Object {
+    "id": 3,
+    "name": "Tom Williams",
+    "passed": false,
+    "score": 45,
+  },
+  Object {
+    "id": 6,
+    "name": "Sunny Fox",
+    "passed": false,
+    "score": 33,
+  },
+  Object {
+    "id": 7,
+    "name": "Falsey False",
+    "passed": false,
+    "score": 33,
+  },
+]
+`;
+
 exports[`FilterUtils searchData should find value by search handler 1`] = `
 Array [
   Object {

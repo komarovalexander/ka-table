@@ -1,6 +1,8 @@
+import defaultOptions from '../defaultOptions';
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
-import { convertToColumnTypes, isFunction } from './TypeUtils';
+import { EditableCell } from '../Models/EditableCell';
+import { convertToColumnTypes } from './TypeUtils';
 
 interface ITestOptions {
   sameObject?: boolean;
@@ -86,12 +88,5 @@ describe('TypeUtils', () => {
         });
       });
     });
-  });
-
-  it('isFunction', () => {
-    expect(isFunction(() => {})).toBeTruthy();
-    expect(isFunction(1)).toBeFalsy();
-    expect(isFunction({})).toBeFalsy();
-    expect(isFunction([])).toBeFalsy();
   });
 });

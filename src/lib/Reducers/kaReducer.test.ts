@@ -1,8 +1,8 @@
 import { ITableProps } from '../';
 import {
-  deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows, deselectRow,
-  reorderColumns, reorderRows, selectAllFilteredRows, selectAllRows, selectAllVisibleRows,
-  selectRowsRange, selectSingleRow, updateData,
+  clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
+  deselectRow, loadData, reorderColumns, reorderRows, selectAllFilteredRows, selectAllRows,
+  selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction, updateData,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -283,5 +283,17 @@ describe('kaReducer', () => {
     const newState = kaReducer(intialState, { type: ActionType.UpdatePageIndex, pageIndex: 5 });
     expect(newState.paging.enabled).toEqual(true);
     expect(newState.paging.pageIndex).toEqual(5);
+  });
+  it('SetSingleAction', () => {
+    const intialState = { };
+    const newState = kaReducer(intialState, setSingleAction(loadData()));
+    expect(newState.singleAction).toMatchSnapshot();
+  });
+  it('ClearSingleAction', () => {
+    const intialState = {
+      singleAction: loadData(),
+    };
+    const newState = kaReducer(intialState, clearSingleAction());
+    expect(newState.singleAction).toBeUndefined();
   });
 });
