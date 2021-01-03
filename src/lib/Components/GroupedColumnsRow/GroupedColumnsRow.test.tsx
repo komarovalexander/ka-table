@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { TableHead } from './GroupedColumnsRow';
+import { GroupedColumnsRow } from './GroupedColumnsRow';
 
 const tableProps: any = {
   childComponents: {},
@@ -18,6 +18,6 @@ const tableProps: any = {
 
 it('renders without crashing', () => {
   const div = document.createElement('table');
-  ReactDOM.render(<TableHead {...tableProps} />, div);
+  ReactDOM.render(<GroupedColumnsRow {...tableProps} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

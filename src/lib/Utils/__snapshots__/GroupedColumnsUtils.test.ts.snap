@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addColumnToRows default 1`] = `
+Array [
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "key": "1",
+      },
+      "columnChainLength": 1,
+    },
+  ],
+]
+`;
+
+exports[`addColumnToRows group 1 column 1`] = `
+Array [
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "columnsKeys": Array [
+          "1",
+        ],
+        "key": "group1",
+      },
+      "columnChainLength": 2,
+    },
+  ],
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "key": "1",
+      },
+      "columnChainLength": 2,
+    },
+  ],
+]
+`;
+
+exports[`addColumnToRows group 1 column and 1 column 1`] = `
+Array [
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "key": "2",
+      },
+      "columnChainLength": 1,
+    },
+  ],
+]
+`;
+
+exports[`getChain group 1 column 1`] = `
+Array [
+  Object {
+    "columnsKeys": Array [
+      "1",
+    ],
+    "key": "group1",
+  },
+  Object {
+    "key": "1",
+  },
+]
+`;
+
+exports[`getRowsWithGroupedColumns default 1`] = `
+Array [
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "key": "1",
+      },
+      "columnChainLength": 1,
+      "rowSpan": 1,
+    },
+  ],
+]
+`;
+
+exports[`getRowsWithGroupedColumns group 1 column 1`] = `
+Array [
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "columnsKeys": Array [
+          "1",
+        ],
+        "key": "group1",
+      },
+      "columnChainLength": 2,
+      "rowSpan": 1,
+    },
+  ],
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "key": "1",
+      },
+      "columnChainLength": 2,
+      "rowSpan": 1,
+    },
+  ],
+]
+`;
+
+exports[`getRowsWithGroupedColumns group 1 column and 1 column 1`] = `
+Array [
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "columnsKeys": Array [
+          "1",
+        ],
+        "key": "group1",
+      },
+      "columnChainLength": 2,
+      "rowSpan": 1,
+    },
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "key": "2",
+      },
+      "columnChainLength": 1,
+      "rowSpan": 2,
+    },
+  ],
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "key": "1",
+      },
+      "columnChainLength": 2,
+      "rowSpan": 1,
+    },
+  ],
+]
+`;

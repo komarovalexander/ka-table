@@ -23,10 +23,6 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
       {content || (
         <>
           <GroupedColumnsRow {...props} />
-          <HeadRow
-            {...props}
-            dispatch={dispatch}
-          />
           {filteringMode === FilteringMode.FilterRow &&
             (
               <FilterRow

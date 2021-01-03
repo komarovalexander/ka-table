@@ -102,6 +102,7 @@ export interface IHeadCellProps {
   sortingMode: SortingMode;
   colSpan?: number;
   rowSpan?: number;
+  headers?: any;
 }
 
 export interface INoDataRowProps {

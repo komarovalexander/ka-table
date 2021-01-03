@@ -18,7 +18,8 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     columnReordering,
     dispatch,
     rowSpan,
-    sortingMode
+    sortingMode,
+    headers
   } = props;
   let {
     childComponents: { headCell }
@@ -37,7 +38,9 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     colSpan,
     rowSpan,
     scope: 'col',
-    style: stateStyle
+    style: stateStyle,
+    id: key,
+    headers: key === 'column1' || key === 'column2' ? headers : '',
   }, props, headCell);
 
   return (
