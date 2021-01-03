@@ -74,7 +74,7 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
           if (searchValue) {
             trackEvent('type', 'search:', searchValue);
           }
-        }, 300);
+        }, 600);
         changeSearch(searchValue);
       }} />
       <MenuItems items={menuItems}/>

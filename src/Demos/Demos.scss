@@ -1,26 +1,40 @@
 
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
+@font-face {
+  font-family: 'Nunito Sans ExtraBold';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local('Nunito Sans ExtraBold'), local('NunitoSans-ExtraBold'), url(https://fonts.gstatic.com/s/nunitosans/v5/pe03MImSLYBIv1o4X1M8cc8aBc5tU1E.woff2) format('woff2');
+}
+#root{
+  position: relative;
+}
 body {
   margin: 0;
   padding: 0;
   min-width: 1350px;
 }
+.demos-search-back {
+  z-index: -1;
+  background-image: url(https://komarovalexander.github.io/ka-table/static/images/background.svg);
+  background-position: center bottom;
+  height: 680px;
+  position: absolute;
+  width: 100%;
+  background-repeat: no-repeat;
+}
 .demos{
-  font-family: 'Roboto',  'Helvetica Neue Light', 'Open Sans', Helvetica;
-  display: flex;
   color: #353C44;
-
-  nav{
-    width: 320px;
-    min-height: 2000px;
-    box-sizing: border-box;
-    border-right: 1px solid #CBDCE4;
-
-    .logo-container {
+  font-family: 'Roboto',  'Helvetica Neue Light', 'Open Sans', Helvetica;
+  .header{
+    background-color: #EDF2FD;
+    justify-content: space-between;
+    display: flex;
+    .logo-container, .links {
       padding: 20px 40px;
       height: 28px;
-      border-bottom: 1px solid #CBDCE4;
       display: flex;
       a{
         line-height: 27px;
@@ -28,118 +42,147 @@ body {
         display: flex;
         &.logo{
           width: 140px;
+          position: relative;
+          top: -4px;
         }
       }
       b, a{
         margin-right: 10px;
       }
-
-      .docs-link{
-        text-decoration: none;
+    }
+    .links{
+      a{
         font-size: 18px;
-        color: #53585b;
+        line-height: 123.8%;
+        letter-spacing: 0.05em;
+        color: #455880;
         margin-right: 60px;
-        position: relative;
-        top: 4px;
-        left: 18px;
-        &:hover{
+        display: block;
+        outline: none;
+        text-decoration: none;
+        font-family: 'Nunito Sans ExtraBold', sans-serif, 'Nunito Sans', 'Helvetica Neue Light', 'Open Sans', Helvetica;
+        &.active{
           text-decoration: underline;
         }
       }
     }
+  }
+  .body{
+    display: flex;
 
-    .resources-icons {
-      padding: 40px 0 0 40px;
-      height: 28px;
-      border-top: 1px solid #CBDCE4;
-      display: flex;
-      a{
-        line-height: 27px;
-        vertical-align: middle;
-        display: flex;
-      }
-      b, a{
-        margin-right: 10px;
-      }
-    }
-
-    .menu-search {
-      margin: 0px 0 10px 40px;
-      padding: 10px;
-      width: 210px;
-    }
-
-    ul{
-      list-style-type: none;
-      padding: 0;
+    nav.demo-menu{
+      width: 320px;
       box-sizing: border-box;
 
-      .inner-menu{
-        margin-left: 30px;
+      .menu{
+        padding: 0;
+        margin: 0;
+        background: #fffB;
       }
 
-      a, .group {
-        cursor: pointer;
-        color: #53585B;
-        display: block;
-        font-size: 16px;
-        padding: 7px 0 7px 40px;
-        text-decoration: none;
-        .menu-button{
-          position: relative;
-          height: 20px;
+      .resources-icons {
+        padding: 40px 0 0 40px;
+        height: 28px;
+        display: flex;
+        a{
+          line-height: 27px;
+          vertical-align: middle;
           display: flex;
-          .menu-icon {
-            opacity: 0.6;
-            width: 40px;
-            img{
-              width: 18px;
-              padding: 2px;
-            }
-          }
-          .group-icon {
-            position: absolute;
-            left: -35px;
-            top: -5px;
-          }
-          .new-badge, .upd-badge{
-            margin-left: 20px;
-            padding: 0 7px;
-            background: rgba(118,74,188, 0.64);
-            color: white;
-            border-radius: 12px;
-          }
-          .upd-badge{
-            background: #61DAFB99;
-          }
+        }
+        b, a{
+          margin-right: 10px;
+        }
+      }
+
+      .menu-search {
+        padding: 15px 40px;
+        width: 100%;
+        background: #EDF2FD77;
+        border: none;
+        outline-color: #455880;
+      }
+      .menu-search:focus {
+        background: white;
+      }
+
+      ul{
+        list-style-type: none;
+        padding: 0;
+        box-sizing: border-box;
+
+        .inner-menu{
+          margin-left: 30px;
         }
 
-        &.active{
-          background-color: #ECF0F4;
-          padding-left: 36px;
-          border-left: 4px solid #353C44;
-          color: #353C44;
+        a, .group {
+          cursor: pointer;
+          color: #53585B;
+          display: block;
+          font-size: 16px;
+          padding: 7px 0 7px 40px;
+          text-decoration: none;
           .menu-button{
             position: relative;
+            height: 20px;
+            display: flex;
             .menu-icon {
-              opacity: 1;
+              opacity: 0.6;
+              width: 40px;
+              img{
+                width: 18px;
+                padding: 2px;
+              }
+            }
+            .group-icon {
+              position: absolute;
+              left: -35px;
+              top: -5px;
+            }
+            .new-badge, .upd-badge{
+              margin-left: 20px;
+              padding: 0 7px;
+              background: rgba(118,74,188, 0.64);
+              color: white;
+              border-radius: 12px;
+            }
+            .upd-badge{
+              background: #61DAFB99;
+            }
+          }
+
+          &.active{
+            background-color: #ECF0F4;
+            padding-left: 36px;
+            border-left: 4px solid #353C44;
+            color: #353C44;
+            .menu-button{
+              position: relative;
+              .menu-icon {
+                opacity: 1;
+              }
             }
           }
         }
       }
-    }
-    .developers-links {
-      margin: 20px 0 0 40px;
-      font-size: 12px;
-      line-height: 25px;
-      img{
-        height: 12px;
-        margin-right: 10px;
+      .developers-links {
+        margin: 20px 0 0 40px;
+        font-size: 12px;
+        line-height: 25px;
+        img{
+          height: 12px;
+          margin-right: 10px;
+        }
+        a, a:visited{
+          color: #868A8F;
+        }
       }
-      a, a:visited{
-        color: #868A8F;
-      }
     }
+  }
+
+  footer{
+    margin-top: 40px;
+    background-color: #EDF2FD;
+    padding: 20px 40px;
   }
 
   main{
@@ -147,16 +190,32 @@ body {
     box-sizing: border-box;
 
     .simulator-content{
-      background: #ECF0F4;
-      padding: 28px 80px 60px;
+      background: transparent;
+      padding: 6px 80px 50px;
+      min-height: 350px;
 
       h1{
-        margin: 0 0 30px 20px;
+        margin: 0 0 15px 20px;
         font-size: 22px;
       }
     }
+    .code-content{
+      border: 1px solid #53585B22;
+      min-height: 600px;
+      pre{
+        margin: 0;
+        padding: 20px;
+      }
+    }
+    .editor-links{
+      text-align: right;
+      font-size: 14px;
+      color: #868A8F;
+      background-color: #EDF2FD;
+      padding: 20px;
+    }
     .code{
-      padding: 60px 80px;
+      padding: 20px 80px;
     }
   }
 }
@@ -167,20 +226,20 @@ body {
 @media (max-width: 1500px){
 
   .demos{
-    nav{
+    nav.demo-menu{
       width: 280px;
     }
     main{
       width: calc(100% - 280px);
       .simulator-content{
-        padding: 28px 40px 60px;
+        padding: 6px 40px 50px;
 
         h1{
           margin: 0 0 15px 20px;
         }
       }
       .code{
-        padding: 60px 40px;
+        padding: 20px 40px;
       }
     }
   }

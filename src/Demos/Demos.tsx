@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import './Demos.scss';
 
 import React from 'react';
@@ -130,53 +131,67 @@ const cases: DemoCase[] = demos.map((d: Demo) => {
 const Demos: React.FC = () => {
   return (
     <HashRouter>
+      <div className='demos-search-back'/>
       <div className='demos'>
-        <nav>
+        <div className='header'>
           <div className='nav-container'>
             <div className='logo-container'>
-              <a href='/ka-table/#/overview' className='logo'><img src='static/logo.svg' alt='ka-table'/></a>
-              <a href='http://ka-table.com/docs_props.html' className='docs-link'>Docs</a>
-            </div>
-            <DemosMenu cases={cases} />
-          </div>
-          <div className='resources-icons'>
-            <a href='https://github.com/komarovalexander/ka-table'
-              onMouseDown={() => { trackEvent('click', 'github_logo'); }}>
-              <img src='static/icons/github_logo.svg' alt=''/>
-            </a>
-            <a href='https://www.npmjs.com/package/ka-table'
-              onMouseDown={() => { trackEvent('click', 'npm_logo'); }}>
-              <img src='static/icons/npm_logo.svg' alt=''/>
-            </a>
-          </div>
-          <div className='developers-links'>
-            <div>
-              <a href='https://github.com/komarovalexander'
-                rel='noopener noreferrer'
-                target='_blank'
-                onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex'); }}>
-                  <img src='static/icons/link.svg' alt=''/>
-                  Developed by Alexander Komarov
-              </a>
-            </div>
-            <div>
-              <a href='https://www.behance.net/daryakomarova'
-                rel='noopener noreferrer'
-                target='_blank'
-                onMouseDown={() => { trackEvent('click', 'developed_by', 'Daria'); }}>
-                  <img src='static/icons/link.svg' alt=''/>
-                  UI Design by Daria Komarova
-              </a>
+              <a href='http://ka-table.com/' className='logo'><img src='static/logo.svg' alt='ka-table'/></a>
             </div>
           </div>
-        </nav>
-        <main>
-          {
-            cases.map((c) => (
-              <Route key={c.name} path={c.path} component={withTracker(c.demoComponent)} />
-            ))
-          }
-        </main>
+          <div className='links'>
+            <a href='http://ka-table.com/docs_props.html' className='docs-link'>Docs</a>
+            <a href='#' className='docs-link active'>Demos</a>
+            <a href='https://github.com/komarovalexander/ka-table' className='docs-link'>GitHub</a>
+            <a href='https://www.npmjs.com/package/ka-table' className='docs-link'>npm</a>
+          </div>
+        </div>
+
+        <div className='body'>
+          <nav className='demo-menu'>
+            <div className='nav-container'>
+              <DemosMenu cases={cases} />
+            </div>
+            <div className='developers-links'>
+              <div>
+                <a href='https://github.com/komarovalexander'
+                  rel='noopener noreferrer'
+                  target='_blank'
+                  onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex'); }}>
+                    <img src='static/icons/link.svg' alt=''/>
+                    Developed by Alexander Komarov
+                </a>
+              </div>
+              <div>
+                <a href='https://www.behance.net/daryakomarova'
+                  rel='noopener noreferrer'
+                  target='_blank'
+                  onMouseDown={() => { trackEvent('click', 'developed_by', 'Daria'); }}>
+                    <img src='static/icons/link.svg' alt=''/>
+                    UI Design by Daria Komarova
+                </a>
+              </div>
+            </div>
+          </nav>
+          <main>
+            {
+              cases.map((c) => (
+                <Route key={c.name} path={c.path} component={withTracker(c.demoComponent)} />
+              ))
+            }
+          </main>
+        </div>
+        <footer>
+          <h3>Provide your feedback</h3>
+          <div>
+            if you like it - click the star in this repo: <a href='https://github.com/komarovalexander/ka-table'>https://github.com/komarovalexander/ka-table</a><br/>
+            if you found any issue or have any idea what to add/improve - feel free to create an issue: <a href='https://github.com/komarovalexander/ka-table/issues'>https://github.com/komarovalexander/ka-table/issues</a><br/>
+            <br/>
+            you also can reach the <a href='https://github.com/komarovalexander' onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex (bottom)'); }}>developer</a> by this email: sanrkom@gmail.com
+            <br/>
+            Thanks for collaboration!
+          </div>
+        </footer>
       </div>
     </HashRouter>
   );

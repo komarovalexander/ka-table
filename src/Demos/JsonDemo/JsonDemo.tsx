@@ -7,7 +7,7 @@ import { DispatchFunc } from '../../lib/types';
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { dataType: DataType.String, key: 'name', title: 'Name' },
+    { key: 'name', title: 'Name', dataType: DataType.String },
     { key: 'score', title: 'Score', dataType: DataType.Number, sortDirection: SortDirection.Ascend },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],

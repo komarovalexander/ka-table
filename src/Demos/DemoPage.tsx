@@ -21,25 +21,27 @@ const getDemoPage = (demo: Demo) => {
           <demo.component />
         </div>
         <div className='code'>
-          <div className='editor-links'>
-            <span>Open in Online Editor: </span>
-            <a className='editor-link editor-link-ts'
-              href={demo.tsLink}
-              onMouseDown={() => { trackEvent('click', 'ts_example', demo.path); }}
-              rel='noopener noreferrer'
-              target='_blank'>
-                TS Example
-            </a>
-            <span>|</span>
-            <a className='editor-link editor-link-js'
-              href={demo.jsLink}
-              onMouseDown={() => { trackEvent('click', 'js_example', demo.path); }}
-              rel='noopener noreferrer'
-              target='_blank'>
-                JS Example
-            </a>
+          <div className='code-content'>
+            <div className='editor-links'>
+              <span>Open in Online Editor: </span>
+              <a className='editor-link editor-link-ts'
+                href={demo.tsLink}
+                onMouseDown={() => { trackEvent('click', 'ts_example', demo.path); }}
+                rel='noopener noreferrer'
+                target='_blank'>
+                  TS Example
+              </a>
+              <span>|</span>
+              <a className='editor-link editor-link-js'
+                href={demo.jsLink}
+                onMouseDown={() => { trackEvent('click', 'js_example', demo.path); }}
+                rel='noopener noreferrer'
+                target='_blank'>
+                  JS Example
+              </a>
+            </div>
+            <DemoText demoFileName={demo.fileName}/>
           </div>
-          <DemoText demoFileName={demo.fileName}/>
         </div>
       </div>
     );
