@@ -25,7 +25,7 @@ const synonyms: { [value: string]: any[] } = {
   'NullableCellDataDemo': ['groupsExpanded'],
   'PagingDemo': ['pageSize'],
   'RowReorderingDemo': ['Drag'],
-  'SearchDemo': ['No Data'],
+  'SearchDemo': ['No Data', 'Empty'],
   'FixedColumnDemo': ['Sticky'],
   'TabIndexDemo': ['keyboard navigation'],
   'SelectionDemo': ['Checkbox']
