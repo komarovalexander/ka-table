@@ -381,6 +381,14 @@ describe('getSelectedData', () => {
     }
     expect(getSelectedData(props).length).toEqual(0);
   });
+  it('data is undefined', () => {
+    const props: ITableProps = {
+      ...propsInit,
+      data: undefined,
+      selectedRows: [1]
+    }
+    expect(getSelectedData(props).length).toEqual(0);
+  });
   it('selectedRows are not found', () => {
     const props: ITableProps = {
       ...propsInit,
