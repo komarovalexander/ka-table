@@ -218,6 +218,28 @@ Array [
 ]
 `;
 
+exports[`getSelectedData one item 1`] = `
+Array [
+  Object {
+    "field": "11",
+    "id": 1,
+  },
+]
+`;
+
+exports[`getSelectedData two items 1`] = `
+Array [
+  Object {
+    "field": "11",
+    "id": 1,
+  },
+  Object {
+    "field": "22",
+    "id": 2,
+  },
+]
+`;
+
 exports[`prepareTableOptions prepareTableOptions 1`] = `
 Array [
   Object {

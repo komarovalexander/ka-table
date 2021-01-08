@@ -5,6 +5,7 @@ import { SortingMode } from '../enums';
 import { Column } from '../models';
 import { ChildComponent } from '../Models/ChildComponent';
 import { ChildAttributesItem, DispatchFunc } from '../types';
+import { getValueByField } from './DataUtils';
 import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
@@ -92,6 +93,13 @@ export const getData = (props: ITableProps) => {
 
   return data;
 };
+
+export const getSelectedData = ({ data, selectedRows, rowKeyField }: ITableProps) => {
+  return data ? data.filter(d => {
+    const value = getValueByField(d, rowKeyField);
+    return selectedRows?.some(v => v === value);
+  }) : [];
+}
 
 export const getSortedColumns = (props: ITableProps): Column[] => {
   return sortColumns(props.columns);
