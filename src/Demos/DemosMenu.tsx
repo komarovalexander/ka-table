@@ -25,7 +25,7 @@ const synonyms: { [value: string]: any[] } = {
   'NullableCellDataDemo': ['groupsExpanded'],
   'PagingDemo': ['pageSize'],
   'RowReorderingDemo': ['Drag'],
-  'SearchDemo': ['No Data'],
+  'SearchDemo': ['No Data', 'Empty'],
   'FixedColumnDemo': ['Sticky'],
   'TabIndexDemo': ['keyboard navigation'],
   'SelectionDemo': ['Checkbox']
@@ -66,7 +66,7 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
 
   menuItems.sort((a, b) => a.title.localeCompare(b.title));
   return (
-    <ul className='menu'>
+    <div className='menu'>
       <input className='menu-search' type='search' placeholder='search by menu..' value={search} onChange={(e) => {
         const searchValue = e.currentTarget.value;
         clearTimeout(timeoutId);
@@ -77,8 +77,10 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
         }, 600);
         changeSearch(searchValue);
       }} />
-      <MenuItems items={menuItems}/>
-    </ul>
+      <ul className='menu-ul'>
+        <MenuItems items={menuItems}/>
+      </ul>
+    </div>
   );
 };
 

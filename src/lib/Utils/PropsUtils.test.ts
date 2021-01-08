@@ -8,7 +8,7 @@ import { ICellProps } from '../props';
 import { ChildAttributesItem } from '../types';
 import {
   areAllFilteredRowsSelected, areAllVisibleRowsSelected, getData, getDraggableProps,
-  getPagesCountByProps, mergeProps, prepareTableOptions,
+  getPagesCountByProps, getSelectedData, mergeProps, prepareTableOptions,
 } from './PropsUtils';
 
 describe('PropsUtils', () => {
@@ -348,5 +348,52 @@ describe('areAllVisibleRowsSelected', () => {
     };
     const allFilteredRowsSelected = areAllVisibleRowsSelected(tableProps);
     expect(allFilteredRowsSelected).toBeFalsy();
+  });
+});
+
+describe('getSelectedData', () => {
+  const propsInit: ITableProps = {
+    data: [
+      { id: 1, field: '11' },
+      { id: 2, field: '22' },
+      { id: 3, field: '33' },
+    ],
+    rowKeyField: 'id',
+    columns: []
+  }
+  it('one item', () => {
+    const props: ITableProps = {
+      ...propsInit,
+      selectedRows: [1]
+    }
+    expect(getSelectedData(props)).toMatchSnapshot();
+  });
+  it('two items', () => {
+    const props: ITableProps = {
+      ...propsInit,
+      selectedRows: [1, 2]
+    }
+    expect(getSelectedData(props)).toMatchSnapshot();
+  });
+  it('selectedRows is empty', () => {
+    const props: ITableProps = {
+      ...propsInit
+    }
+    expect(getSelectedData(props).length).toEqual(0);
+  });
+  it('data is undefined', () => {
+    const props: ITableProps = {
+      ...propsInit,
+      data: undefined,
+      selectedRows: [1]
+    }
+    expect(getSelectedData(props).length).toEqual(0);
+  });
+  it('selectedRows are not found', () => {
+    const props: ITableProps = {
+      ...propsInit,
+      selectedRows: [45]
+    }
+    expect(getSelectedData(props).length).toEqual(0);
   });
 });
