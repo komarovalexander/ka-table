@@ -381,4 +381,11 @@ describe('getSelectedData', () => {
     }
     expect(getSelectedData(props).length).toEqual(0);
   });
+  it('selectedRows are not found', () => {
+    const props: ITableProps = {
+      ...propsInit,
+      selectedRows: [45]
+    }
+    expect(getSelectedData(props).length).toEqual(0);
+  });
 });

@@ -6,7 +6,7 @@ import { ITableProps, kaReducer, Table } from '../../lib';
 import { deselectAllRows, selectSingleRow } from '../../lib/actionCreators';
 import { DataType } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
-import { getSelectedData } from '../../lib/Utils/PropsUtils';
+import { kaPropsUtils } from '../../lib/utils';
 import dataArray from './data';
 
 const tablePropsInit: ITableProps = {
@@ -43,7 +43,7 @@ const SelectionSingleDemo: React.FC = () => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
-  const selectedData = getSelectedData(tableProps).pop();
+  const selectedData = kaPropsUtils.getSelectedData(tableProps).pop();
   return (
     <div className='selection-single-demo'>
       <Table
