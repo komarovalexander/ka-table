@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
 import { deselectAllRows, selectSingleRow } from 'ka-table/actionCreators';
-import { ActionType, DataType } from 'ka-table/enums';
-import { ChildComponents } from 'ka-table/models';
+import { DataType } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
+import { kaPropsUtils } from 'ka-table/utils';
 import dataArray from './data';
 
 const tablePropsInit: ITableProps = {
@@ -37,44 +37,32 @@ const tablePropsInit: ITableProps = {
   rowKeyField: 'id',
 };
 
-const childAttributes: ChildComponents = {
-  dataRow: {
-    elementAttributes: () => ({
-      onClick: (event, { dispatch, childProps }) => {
-        dispatch(selectSingleRow(childProps.rowKeyValue));
-      },
-    })
-  },
-};
-
-const selectedItemReducer = (state: any, action: any) => {
-  switch (action.type) {
-    case ActionType.SelectSingleRow: return dataArray.find((i) => i.id === action.rowKeyValue);
-    case ActionType.DeselectAllRows: return null;
-    default: return state;
-  }
-};
-
 const SelectionSingleDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const [selectedItem, changeSelectedItem] = useState<any>();
-
   const dispatch: DispatchFunc = (action) => {
-    changeSelectedItem((prevState: any) => selectedItemReducer(prevState, action));
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
+  const selectedData = kaPropsUtils.getSelectedData(tableProps).pop();
   return (
     <div className='selection-single-demo'>
       <Table
         {...tableProps}
         dispatch={dispatch}
-        childComponents={childAttributes}
+        childComponents={{
+          dataRow: {
+            elementAttributes: () => ({
+              onClick: (event, extendedEvent) => {
+                extendedEvent.dispatch(selectSingleRow(extendedEvent.childProps.rowKeyValue));
+              },
+            })
+          },
+        }}
       />
-      { selectedItem && (
+      { selectedData && (
         <div className='info'>
           <div>
-            Selected: {selectedItem.name} ({selectedItem.company.name})
+            Selected: {selectedData.name} ({selectedData.company.name})
             <button onClick={() => {
               dispatch(deselectAllRows());
             }}>Deselect</button>
