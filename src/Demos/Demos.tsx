@@ -53,6 +53,7 @@ import PrintDemo from './PrintDemo/PrintDemo';
 import ReduxDemo from './ReduxDemo/ReduxDemo';
 import RemoteDataDemo from './RemoteDataDemo/RemoteDataDemo';
 import RemoteDataEditingDemo from './RemoteDataEditingDemo/RemoteDataEditingDemo';
+import ResponsiveDemo from './ResponsiveDemo/ResponsiveDemo';
 import RowReorderingDemo from './RowReorderingDemo/RowReorderingDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
 import SelectionDemo from './SelectionDemo/SelectionDemo';
@@ -108,6 +109,7 @@ const demos: Demo[] = [
   new Demo(ReduxDemo, '/redux', 'Redux', 'ReduxDemo', 'https://stackblitz.com/edit/table-redux-js', 'https://stackblitz.com/edit/table-redux-ts', ''),
   new Demo(RemoteDataDemo, '/remote-data', 'Load', 'RemoteDataDemo', 'https://stackblitz.com/edit/table-remote-data-js', 'https://stackblitz.com/edit/table-remote-data-ts', 'Remote Data'),
   new Demo(RemoteDataEditingDemo, '/remote-data-editing', 'Editing', 'RemoteDataEditingDemo', 'https://stackblitz.com/edit/table-remote-data-editing-js', 'https://stackblitz.com/edit/table-remote-data-editing-ts', 'Remote Data'),
+  new Demo(ResponsiveDemo, '/responsive', 'Responsive', 'ResponsiveDemo', 'https://stackblitz.com/edit/table-responsive-js', 'https://stackblitz.com/edit/table-responsive-ts', 'Miscellaneous'),
   new Demo(RowReorderingDemo, '/row-reordering', 'Row Reordering', 'RowReorderingDemo', 'https://stackblitz.com/edit/table-row-reordering-js', 'https://stackblitz.com/edit/table-row-reordering-ts', 'Rows'),
   new Demo(SearchDemo, '/search', 'Search', 'SearchDemo', 'https://stackblitz.com/edit/table-search-js', 'https://stackblitz.com/edit/table-search-ts', 'Filtering'),
   new Demo(SelectionDemo, '/selection', 'Selection - Multiple', 'SelectionDemo', 'https://stackblitz.com/edit/table-selection-js', 'https://stackblitz.com/edit/table-selection-ts', 'Selection'),
