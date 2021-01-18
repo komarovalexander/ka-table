@@ -111,7 +111,7 @@ const KeyboardNavigationDemo: React.FC = () => {
 
   return (
     <>
-      <p style={{fontSize: 12, color: 'red'}}>This demo just a prototype to show how ka-table can be customized using custom reducer. There will be refactoring soon.</p>
+      <p style={{fontSize: 12}}>Use arrow keys to navigate by data cells</p>
       <Table
         {...tableProps}
         childComponents={{
