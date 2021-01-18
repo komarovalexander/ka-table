@@ -18,6 +18,7 @@ const dataArray = Array(10).fill(undefined).map(
 );
 
 const KEYBOARD_NAVIGATION = 'KEYBOARD_NAVIGATION';
+const FOCUS_CELL = 'FOCUS_CELL';
 
 interface IFocusedProps extends ITableProps {
   focusedCell?: {
@@ -99,6 +100,9 @@ const keyboardReducer = (props: IFocusedProps, action: any) => {
       return { ...props, focusedCell: { columnKey: action.columnKey, rowKeyValue } };
     }
   }
+  if (action.type === FOCUS_CELL){
+    return { ...props, focusedCell: { columnKey: action.columnKey, rowKeyValue: action.rowKeyValue } };
+  }
   return kaReducer(props, action);
 }
 
@@ -111,7 +115,7 @@ const KeyboardNavigationDemo: React.FC = () => {
 
   return (
     <>
-      <p style={{fontSize: 12}}>Use arrow keys to navigate by data cells</p>
+      <p style={{fontSize: 12, color: 'red'}}>This demo just a prototype to show how ka-table can be customized using custom reducer. There will be refactoring soon.</p>
       <Table
         {...tableProps}
         childComponents={{
@@ -131,14 +135,16 @@ const KeyboardNavigationDemo: React.FC = () => {
                   })
                   e.stopPropagation();
                   e.preventDefault();
+                },
+                onClick: () => {
+                  props.dispatch({
+                    type: FOCUS_CELL,
+                    columnKey: props.column.key,
+                    rowKeyValue: props.rowKeyValue
+                  });
                 }
               }
-            }
-          },
-          cellEditor: {
-            content: (props) => (
-              <CellEditorString {...props} autoFocus={true}/>
-            )
+            },
           }
         }}
         dispatch={dispatch}
