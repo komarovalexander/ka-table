@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "304f9c22e6a0f998b4d437028cfc996d",
+    "revision": "beb843d0aa5e88a1e06b7114e026a900",
     "url": "/ka-table/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ka-table/static/css/3.226e677e.chunk.css"
   },
   {
-    "revision": "977de574bb1eb576003b",
+    "revision": "dc1ed50f39f2212e7f0f",
     "url": "/ka-table/static/css/main.d73a6181.chunk.css"
   },
   {
@@ -44,8 +44,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ka-table/static/js/5.02297d06.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "977de574bb1eb576003b",
-    "url": "/ka-table/static/js/main.3c97a9b5.chunk.js"
+    "revision": "dc1ed50f39f2212e7f0f",
+    "url": "/ka-table/static/js/main.4517bc59.chunk.js"
   },
   {
     "revision": "c2289251dce4a7db4cb5",

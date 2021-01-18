@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import CellEditorString from 'ka-table/Components/CellEditorString/CellEditorString';
 import { DataType, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 import { getValueByField } from 'ka-table/Utils/DataUtils';
@@ -115,7 +114,7 @@ const KeyboardNavigationDemo: React.FC = () => {
 
   return (
     <>
-      <p style={{fontSize: 12, color: 'red'}}>This demo just a prototype to show how ka-table can be customized using custom reducer. There will be refactoring soon.</p>
+      <p style={{fontSize: 12}}>Use keyboard to navigate by data cells</p>
       <Table
         {...tableProps}
         childComponents={{
