@@ -40,6 +40,7 @@ import GroupingCustomRowDemo from './GroupingCustomRowDemo/GroupingCustomRowDemo
 import GroupingDemo from './GroupingDemo/GroupingDemo';
 import HoverRowDemo from './HoverRowDemo/HoverRowDemo';
 import JsonDemo from './JsonDemo/JsonDemo';
+import KeyboardNavigationDemo from './KeyboardNavigationDemo/KeyboardNavigationDemo';
 import LoadingDemo from './LoadingDemo/LoadingDemo';
 import ManyColumnsDemo from './ManyColumnsDemo/ManyColumnsDemo';
 import ManyRowsDemo from './ManyRowsDemo/ManyRowsDemo';
@@ -97,6 +98,7 @@ const demos: Demo[] = [
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo', 'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts', 'Grouping'),
   new Demo(HoverRowDemo, '/hover-row', 'Hover Row', 'HoverRowDemo', 'https://stackblitz.com/edit/table-hover-row-js', 'https://stackblitz.com/edit/table-hover-row-ts', 'Rows'),
   new Demo(JsonDemo, '/json', 'Json', 'JsonDemo', 'https://stackblitz.com/edit/table-json-js', 'https://stackblitz.com/edit/table-json-ts', 'Remote Data'),
+  new Demo(KeyboardNavigationDemo, '/keyboard-navigation', 'Keyboard Navigation', 'KeyboardNavigationDemo', 'https://stackblitz.com/edit/table-keyboard-navigation-js', 'https://stackblitz.com/edit/table-keyboard-navigation-ts', 'Miscellaneous'),
   new Demo(LoadingDemo, '/loading', 'Loading', 'LoadingDemo', 'https://stackblitz.com/edit/table-loading-js', 'https://stackblitz.com/edit/table-loading-ts', 'Miscellaneous'),
   new Demo(ManyColumnsDemo, '/many-columns', 'Many Columns', 'ManyColumnsDemo', 'https://stackblitz.com/edit/table-many-columns-js', 'https://stackblitz.com/edit/table-many-columns-ts', 'Columns'),
   new Demo(ManyRowsDemo, '/many-rows', '100K Rows', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts', 'Virtual Scrolling'),
