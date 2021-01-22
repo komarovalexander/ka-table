@@ -6,14 +6,15 @@
     ]
   },
   "rules": {
-    "max-line-length": false,
-    "no-submodule-imports": false,
-    "quotemark": [true, "single", "jsx-single"],
-    "jsx-no-multiline-js": false,
-    "no-empty": [true, "allow-empty-functions"],
+    "eofline": true,
     "jsx-alignment": false,
     "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
+    "max-line-length": false,
+    "no-empty": [true, "allow-empty-functions"],
     "no-implicit-dependencies": false,
-    "no-object-literal-type-assertion": [true, { "allow-arguments": true }]
+    "no-object-literal-type-assertion": [true, { "allow-arguments": true }],
+    "no-submodule-imports": false,
+    "quotemark": [true, "single", "jsx-single"]
   }
 }
