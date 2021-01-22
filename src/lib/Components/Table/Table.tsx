@@ -5,6 +5,7 @@ import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 import { EditableCell, PagingOptions } from '../../models';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
+import { Focused } from '../../Models/Focused';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
@@ -24,6 +25,7 @@ export interface ITableProps {
   editingMode?: EditingMode;
   extendedFilter?: (data: any[]) => any[];
   filteringMode?: FilteringMode;
+  focused?: Focused;
   format?: FormatFunc;
   groups?: Group[];
   groupsExpanded?: any[][];

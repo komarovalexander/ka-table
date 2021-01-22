@@ -11,10 +11,10 @@ import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 
-export const extendProps = (
-  childElementAttributes: AllHTMLAttributes<HTMLElement>,
+export function extendProps<T = HTMLElement>(
+  childElementAttributes: AllHTMLAttributes<T>,
   childProps: any,
-  childComponent?: ChildComponent<any>): React.AllHTMLAttributes<HTMLElement> => {
+  childComponent?: ChildComponent<any>): React.AllHTMLAttributes<T> {
     let resultProps = childElementAttributes;
     const childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps);
     if (childCustomAttributes) {
@@ -25,11 +25,11 @@ export const extendProps = (
 };
 
 const emptyFunc = () => {};
-export const mergeProps = (
-  childElementAttributes: AllHTMLAttributes<HTMLElement>,
+export function mergeProps<T = HTMLElement>(
+  childElementAttributes: AllHTMLAttributes<T>,
   childProps: any,
   childCustomAttributes: ChildAttributesItem<any>,
-  dispatch: DispatchFunc): React.AllHTMLAttributes<HTMLElement> => {
+  dispatch: DispatchFunc): React.AllHTMLAttributes<T> {
   const customPropsWithEvents: any = {};
   for (const prop in childCustomAttributes) {
     if (childCustomAttributes.hasOwnProperty(prop)) {
@@ -49,7 +49,7 @@ export const mergeProps = (
     }
   }
 
-  const mergedResult: React.AllHTMLAttributes<HTMLDivElement> = {
+  const mergedResult: React.AllHTMLAttributes<T> = {
     ...childElementAttributes,
     ...childCustomAttributes,
     ...customPropsWithEvents,
