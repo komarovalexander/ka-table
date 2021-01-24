@@ -139,7 +139,8 @@ body {
               top: -5px;
             }
             .new-badge, .upd-badge{
-              margin-left: 20px;
+              position: relative;
+              left: 20px;
               padding: 0 7px;
               background: rgba(118,74,188, 0.64);
               color: white;

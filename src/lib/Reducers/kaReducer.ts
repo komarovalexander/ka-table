@@ -11,6 +11,7 @@ import { getValueByField, reorderData, replaceValue } from '../Utils/DataUtils';
 import { filterAndSearchData } from '../Utils/FilterUtils';
 import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
+import { getDownCell, getLeftCell, getRightCell, getUpCell } from '../Utils/NavigationUtils';
 import { getData, prepareTableOptions } from '../Utils/PropsUtils';
 
 const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
@@ -33,6 +34,12 @@ const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKey
   return newSelectedRows;
 }
 
+const getUpdatedFocused = (props: ITableProps, action: any, funcToUpdate: any) => {
+  if (!props?.focused?.cell) return props;
+  const newFocused = { cell: funcToUpdate(props.focused.cell, props, action.settings)};
+  return { ...props, focused: newFocused };
+}
+
 const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   const {
     columns,
@@ -50,6 +57,24 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   } = props;
 
   switch (action.type) {
+    case ActionType.MoveFocusedRight: {
+      return getUpdatedFocused(props, action, getRightCell);
+    }
+    case ActionType.MoveFocusedLeft: {
+      return getUpdatedFocused(props, action, getLeftCell);
+    }
+    case ActionType.MoveFocusedUp: {
+      return getUpdatedFocused(props, action, getUpCell);
+    }
+    case ActionType.MoveFocusedDown: {
+      return getUpdatedFocused(props, action, getDownCell);
+    }
+    case ActionType.SetFocused: {
+      return { ...props, focused: action.focused };
+    }
+    case ActionType.ClearFocused : {
+      return { ...props, focused: undefined };
+    }
     case ActionType.ClearSingleAction: {
       return {...props, singleAction: undefined };
     }

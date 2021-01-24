@@ -21,14 +21,15 @@ const synonyms: { [value: string]: any[] } = {
   'EditingRowDemo': ['Image', 'Button', 'Btn'],
   'EventsDemo': ['Action', 'Click'],
   'FilterRowCustomEditorDemo': ['filterRowCell'],
+  'FixedColumnDemo': ['Sticky'],
   'ManyColumnsDemo': ['horizontal'],
   'NullableCellDataDemo': ['groupsExpanded'],
   'PagingDemo': ['pageSize'],
+  'ResponsiveDemo': ['Adaptive', 'Mobile'],
   'RowReorderingDemo': ['Drag'],
   'SearchDemo': ['No Data', 'Empty'],
-  'FixedColumnDemo': ['Sticky'],
-  'TabIndexDemo': ['keyboard navigation'],
-  'SelectionDemo': ['Checkbox']
+  'SelectionDemo': ['Checkbox'],
+  'TabIndexDemo': ['keyboard navigation']
 };
 
 const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {

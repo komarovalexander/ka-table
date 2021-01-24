@@ -24,15 +24,11 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
       (
         isEditableCell ?
         (
-          <CellEditor
-            {...props}
-          />
+          <CellEditor {...props} />
         )
         :
         (
-          <CellText
-            {...props}
-          />
+          <CellText {...props} />
         )
       )
       }

@@ -40,6 +40,7 @@ import GroupingCustomRowDemo from './GroupingCustomRowDemo/GroupingCustomRowDemo
 import GroupingDemo from './GroupingDemo/GroupingDemo';
 import HoverRowDemo from './HoverRowDemo/HoverRowDemo';
 import JsonDemo from './JsonDemo/JsonDemo';
+import KeyboardNavigationDemo from './KeyboardNavigationDemo/KeyboardNavigationDemo';
 import LoadingDemo from './LoadingDemo/LoadingDemo';
 import ManyColumnsDemo from './ManyColumnsDemo/ManyColumnsDemo';
 import ManyRowsDemo from './ManyRowsDemo/ManyRowsDemo';
@@ -53,6 +54,7 @@ import PrintDemo from './PrintDemo/PrintDemo';
 import ReduxDemo from './ReduxDemo/ReduxDemo';
 import RemoteDataDemo from './RemoteDataDemo/RemoteDataDemo';
 import RemoteDataEditingDemo from './RemoteDataEditingDemo/RemoteDataEditingDemo';
+import ResponsiveDemo from './ResponsiveDemo/ResponsiveDemo';
 import RowReorderingDemo from './RowReorderingDemo/RowReorderingDemo';
 import SearchDemo from './SearchDemo/SearchDemo';
 import SelectionDemo from './SelectionDemo/SelectionDemo';
@@ -96,6 +98,7 @@ const demos: Demo[] = [
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo', 'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts', 'Grouping'),
   new Demo(HoverRowDemo, '/hover-row', 'Hover Row', 'HoverRowDemo', 'https://stackblitz.com/edit/table-hover-row-js', 'https://stackblitz.com/edit/table-hover-row-ts', 'Rows'),
   new Demo(JsonDemo, '/json', 'Json', 'JsonDemo', 'https://stackblitz.com/edit/table-json-js', 'https://stackblitz.com/edit/table-json-ts', 'Remote Data'),
+  new Demo(KeyboardNavigationDemo, '/keyboard-navigation', 'Keyboard Navigation', 'KeyboardNavigationDemo', 'https://stackblitz.com/edit/table-keyboard-navigation-js', 'https://stackblitz.com/edit/table-keyboard-navigation-ts', 'Miscellaneous'),
   new Demo(LoadingDemo, '/loading', 'Loading', 'LoadingDemo', 'https://stackblitz.com/edit/table-loading-js', 'https://stackblitz.com/edit/table-loading-ts', 'Miscellaneous'),
   new Demo(ManyColumnsDemo, '/many-columns', 'Many Columns', 'ManyColumnsDemo', 'https://stackblitz.com/edit/table-many-columns-js', 'https://stackblitz.com/edit/table-many-columns-ts', 'Columns'),
   new Demo(ManyRowsDemo, '/many-rows', '100K Rows', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts', 'Virtual Scrolling'),
@@ -108,6 +111,7 @@ const demos: Demo[] = [
   new Demo(ReduxDemo, '/redux', 'Redux', 'ReduxDemo', 'https://stackblitz.com/edit/table-redux-js', 'https://stackblitz.com/edit/table-redux-ts', ''),
   new Demo(RemoteDataDemo, '/remote-data', 'Load', 'RemoteDataDemo', 'https://stackblitz.com/edit/table-remote-data-js', 'https://stackblitz.com/edit/table-remote-data-ts', 'Remote Data'),
   new Demo(RemoteDataEditingDemo, '/remote-data-editing', 'Editing', 'RemoteDataEditingDemo', 'https://stackblitz.com/edit/table-remote-data-editing-js', 'https://stackblitz.com/edit/table-remote-data-editing-ts', 'Remote Data'),
+  new Demo(ResponsiveDemo, '/responsive', 'Responsive', 'ResponsiveDemo', 'https://stackblitz.com/edit/table-responsive-js', 'https://stackblitz.com/edit/table-responsive-ts', 'Miscellaneous'),
   new Demo(RowReorderingDemo, '/row-reordering', 'Row Reordering', 'RowReorderingDemo', 'https://stackblitz.com/edit/table-row-reordering-js', 'https://stackblitz.com/edit/table-row-reordering-ts', 'Rows'),
   new Demo(SearchDemo, '/search', 'Search', 'SearchDemo', 'https://stackblitz.com/edit/table-search-js', 'https://stackblitz.com/edit/table-search-ts', 'Filtering'),
   new Demo(SelectionDemo, '/selection', 'Selection - Multiple', 'SelectionDemo', 'https://stackblitz.com/edit/table-selection-js', 'https://stackblitz.com/edit/table-selection-ts', 'Selection'),

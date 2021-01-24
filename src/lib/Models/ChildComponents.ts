@@ -9,6 +9,7 @@ import { ChildComponent } from './ChildComponent';
 export class ChildComponents {
   public cell?: ChildComponent<ICellProps>;
   public cellEditor?: ChildComponent<ICellEditorProps>;
+  public cellEditorInput?: ChildComponent<ICellEditorProps>;
   public cellText?: ChildComponent<ICellTextProps>;
   public dataRow?: ChildComponent<IDataRowProps>;
   public detailsRow?: ChildComponent<IDataRowProps>;

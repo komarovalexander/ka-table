@@ -4,28 +4,33 @@ import { closeEditor, updateCellValue } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { ICellEditorProps } from '../../props';
 import { isEmpty } from '../../Utils/CommonUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = ({
-  column,
-  dispatch,
-  rowKeyValue,
-  value,
-  autoFocus
-}) => {
+const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = (props) => {
+  const {
+    column,
+    dispatch,
+    value,
+    rowKeyValue,
+    autoFocus,
+    childComponents
+  } = props;
+  const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
+    className: `${defaultOptions.css.checkbox}`,
+    autoFocus,
+    type: 'checkbox',
+    checked: value || false,
+    onChange: (event) => dispatch(updateCellValue(rowKeyValue, column.key, event.currentTarget.checked)),
+    onBlur: () => dispatch(closeEditor(rowKeyValue, column.key))
+  }, props, childComponents?.cellEditorInput);
   return (
-    <input
-      autoFocus={autoFocus}
-      className={defaultOptions.css.checkbox}
-      type='checkbox'
-      ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}
-      checked={value || false}
-      onChange={(event) =>
-        dispatch(updateCellValue(rowKeyValue, column.key, event.currentTarget.checked))
-      }
-      onBlur={() => {
-        dispatch(closeEditor(rowKeyValue, column.key));
-      }}
-    />
+    content ||
+    (
+      <input
+        ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}
+        {...elementAttributes}
+      />
+    )
   );
 };
 

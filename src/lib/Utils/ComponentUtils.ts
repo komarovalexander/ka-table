@@ -4,16 +4,16 @@ import { ChildComponent } from '../Models/ChildComponent';
 import { ChildAttributesItem } from '../types';
 import { extendProps } from './PropsUtils';
 
-class ElementCustomization {
+class ElementCustomization<T = HTMLElement> {
   content?: any;
-  elementAttributes!: React.AllHTMLAttributes<HTMLElement>;
+  elementAttributes!: React.AllHTMLAttributes<T>;
 }
-export const getElementCustomization = (
-  childElementAttributes: AllHTMLAttributes<HTMLElement>,
+export function getElementCustomization<T = HTMLElement>(
+  childElementAttributes: AllHTMLAttributes<T>,
   props: any,
   childComponent?: ChildComponent<any>,
-) : ElementCustomization => {
-  const elementAttributes = extendProps(childElementAttributes, props, childComponent);
+) : ElementCustomization<T> {
+  const elementAttributes = extendProps<T>(childElementAttributes, props, childComponent);
   const content = childComponent && childComponent.content && childComponent.content(props);
 
   return {
