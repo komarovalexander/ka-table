@@ -5,12 +5,10 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from '../../lib';
 import {
   clearFocused, moveFocusedDown, moveFocusedLeft, moveFocusedRight, moveFocusedUp, openEditor,
-  setFocused,
+  setFocused, updatePageIndex, updateSortDirection,
 } from '../../lib/actionCreators';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
-import { getValueByField } from '../../lib/Utils/DataUtils';
-import { getData } from '../../lib/Utils/PropsUtils';
 
 const dataArray = Array(100).fill(undefined).map(
   (_, index) => ({
@@ -51,13 +49,6 @@ const KeyboardNavigationDemo: React.FC = () => {
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
-
-  const tabIndex = tableProps.focused || {
-    cell: {
-      columnKey: tableProps.columns[0].key,
-      rowKeyValue: getValueByField(getData(tableProps)[0], tableProps.rowKeyField)
-    }
-  }
   return (
     <>
       <p style={{fontSize: 12}}>Use arrow keys to navigate by data cells</p>
@@ -70,10 +61,8 @@ const KeyboardNavigationDemo: React.FC = () => {
 
               const isFocused = column.key === tableProps.focused?.cell?.columnKey
                 && rowKeyValue === tableProps.focused?.cell?.rowKeyValue;
-              const hasTabIndex = column.key === tabIndex?.cell?.columnKey
-                && rowKeyValue === tabIndex?.cell?.rowKeyValue;
               return {
-                tabIndex: hasTabIndex ? 0 : undefined,
+                tabIndex: 0,
                 ref: (ref: any) => isFocused && ref?.focus(),
                 onKeyUp: (e) => {
                   const cell = { columnKey: column.key, rowKeyValue }
@@ -88,24 +77,9 @@ const KeyboardNavigationDemo: React.FC = () => {
                       break;
                   }
                 },
-                onFocus: () => {
-                  if (!tableProps.focused){
-                    dispatch(setFocused({
-                      cell: {
-                        columnKey: column.key,
-                        rowKeyValue
-                      }
-                    }));
-                  }
-                },
-                onKeyDown: (e) => {
-                  if (e.keyCode !== 9) {
-                    e.preventDefault();
-                  }
-                },
-                onBlur: () => {
-                  dispatch(clearFocused())
-                }
+                onFocus: () => !isFocused &&  dispatch(setFocused({ cell: { columnKey: column.key, rowKeyValue } })),
+                onKeyDown: (e) => e.keyCode !== 9 && e.preventDefault(),
+                onBlur: () => isFocused && dispatch(clearFocused())
               }
             },
           },
@@ -115,18 +89,25 @@ const KeyboardNavigationDemo: React.FC = () => {
                 && rowKeyValue === tableProps.focused?.cellEditorInput?.rowKeyValue;
               return {
                 ref: (ref: any) => isFocused && ref?.focus(),
-                onKeyUp: (e) => {
-                  if (e.keyCode === 13){
-                    const cell = { columnKey: column.key, rowKeyValue }
-                    dispatch(setFocused({ cell }));
-                  }
-                },
+                onKeyUp: (e) => e.keyCode === 13 && dispatch(setFocused({ cell: { columnKey: column.key, rowKeyValue } })),
                 onBlur: (e, {baseFunc}) => {
                   baseFunc();
                   dispatch(clearFocused())
                 },
               }
             },
+          },
+          pagingIndex: {
+            elementAttributes: (props) => ({
+              tabIndex: 0,
+              onKeyUp: (e) => e.keyCode === 13 && dispatch(updatePageIndex(props.pageIndex))
+            }),
+          },
+          headCell: {
+            elementAttributes: (props) => ({
+              tabIndex: 0,
+              onKeyUp: (e) => e.keyCode === 13 && dispatch(updateSortDirection(props.column.key))
+            }),
           },
         }}
         dispatch={dispatch}
