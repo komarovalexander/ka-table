@@ -1,12 +1,16 @@
+import './KeyboardNavigation.scss';
+
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { DataType, SortingMode } from 'ka-table/enums';
+import {
+  clearFocused, moveFocusedDown, moveFocusedLeft, moveFocusedRight, moveFocusedUp, openEditor,
+  setFocused, updatePageIndex, updateSortDirection,
+} from 'ka-table/actionCreators';
+import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
-import { getValueByField } from 'ka-table/Utils/DataUtils';
-import { getData } from 'ka-table/Utils/PropsUtils';
 
-const dataArray = Array(10).fill(undefined).map(
+const dataArray = Array(100).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
@@ -16,17 +20,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const KEYBOARD_NAVIGATION = 'KEYBOARD_NAVIGATION';
-const FOCUS_CELL = 'FOCUS_CELL';
-
-interface IFocusedProps extends ITableProps {
-  focusedCell?: {
-    columnKey: string,
-    rowKeyValue: any
-  }
-}
-
-const tablePropsInit: IFocusedProps = {
+const tablePropsInit: ITableProps = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -36,82 +30,25 @@ const tablePropsInit: IFocusedProps = {
   data: dataArray,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,
-  focusedCell: {
-    columnKey: 'column4',
-    rowKeyValue: 2
+  editingMode: EditingMode.Cell,
+  paging: {
+    enabled: true,
+    pageIndex: 0,
+    pageSize: 10,
+  },
+  focused: {
+    cell: {
+      columnKey: 'column4',
+      rowKeyValue: 2
+    }
   }
 };
-
-const keyboardReducer = (props: IFocusedProps, action: any) => {
-  if (action.type === KEYBOARD_NAVIGATION){
-    if (action.key === 'ArrowRight') {
-      const columnIndex = props.columns.findIndex(c => c.key === action.columnKey);
-      const hasNextColumn = columnIndex < props.columns.length - 1;
-      const nextColumn = hasNextColumn ? props.columns[columnIndex + 1] : props.columns[0];
-      let rowKeyValue = action.rowKeyValue;
-      if (!hasNextColumn){
-        const visibleData = getData(props);
-        const rowIndex = visibleData?.findIndex(d => getValueByField(d, props.rowKeyField) === action.rowKeyValue);
-        if (rowIndex < visibleData.length - 1){
-          const nextRow = visibleData[rowIndex + 1];
-          rowKeyValue = getValueByField(nextRow, props.rowKeyField);
-        } else {
-          return props;
-        }
-      }
-      return { ...props, focusedCell: { columnKey: nextColumn.key, rowKeyValue } };
-    }
-    if (action.key === 'ArrowLeft') {
-      const columnIndex = props.columns.findIndex(c => c.key === action.columnKey);
-      const hasNextColumn = 0 < columnIndex;
-      const nextColumn = hasNextColumn ? props.columns[columnIndex - 1] : props.columns[props.columns.length - 1];
-      let rowKeyValue = action.rowKeyValue;
-      if (!hasNextColumn){
-        const visibleData = getData(props);
-        const rowIndex = visibleData?.findIndex(d => getValueByField(d, props.rowKeyField) === action.rowKeyValue);
-        if (rowIndex > 0){
-          const nextRow = visibleData[rowIndex - 1];
-          rowKeyValue = getValueByField(nextRow, props.rowKeyField);
-        } else {
-          return props;
-        }
-      }
-      return { ...props, focusedCell: { columnKey: nextColumn.key, rowKeyValue } };
-    }
-    if (action.key === 'ArrowUp') {
-      let rowKeyValue = action.rowKeyValue;
-      const visibleData = getData(props);
-      const rowIndex = visibleData?.findIndex(d => getValueByField(d, props.rowKeyField) === action.rowKeyValue);
-      if (rowIndex > 0){
-        const nextRow = visibleData[rowIndex - 1];
-        rowKeyValue = getValueByField(nextRow, props.rowKeyField);
-      }
-      return { ...props, focusedCell: { columnKey: action.columnKey, rowKeyValue } };
-    }
-    if (action.key === 'ArrowDown') {
-      let rowKeyValue = action.rowKeyValue;
-      const visibleData = getData(props);
-      const rowIndex = visibleData?.findIndex(d => getValueByField(d, props.rowKeyField) === action.rowKeyValue);
-      if (rowIndex < visibleData.length - 1){
-        const nextRow = visibleData[rowIndex + 1];
-        rowKeyValue = getValueByField(nextRow, props.rowKeyField);
-      }
-      return { ...props, focusedCell: { columnKey: action.columnKey, rowKeyValue } };
-    }
-  }
-  if (action.type === FOCUS_CELL){
-    return { ...props, focusedCell: { columnKey: action.columnKey, rowKeyValue: action.rowKeyValue } };
-  }
-  return kaReducer(props, action);
-}
-
 
 const KeyboardNavigationDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => keyboardReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
-
   return (
     <>
       <p style={{fontSize: 12}}>Use arrow keys to navigate by data cells</p>
@@ -119,32 +56,61 @@ const KeyboardNavigationDemo: React.FC = () => {
         {...tableProps}
         childComponents={{
           cell: {
-            elementAttributes: (props) => {
-              const isFocused = props.column.key === tableProps.focusedCell?.columnKey
-                && props.rowKeyValue === tableProps?.focusedCell?.rowKeyValue;
+            elementAttributes: ({column, rowKeyValue, isEditableCell}) => {
+              if (isEditableCell) return undefined;
+
+              const cell = { columnKey: column.key, rowKeyValue }
+              const isFocused = cell.columnKey === tableProps.focused?.cell?.columnKey
+                && cell.rowKeyValue === tableProps.focused?.cell?.rowKeyValue;
               return {
-                tabIndex: isFocused ? 0 : undefined,
+                tabIndex: 0,
                 ref: (ref: any) => isFocused && ref?.focus(),
-                onKeyDown: (e) => {
-                  props.dispatch({
-                    type: KEYBOARD_NAVIGATION,
-                    key: e.key,
-                    columnKey: props.column.key,
-                    rowKeyValue: props.rowKeyValue
-                  })
-                  e.stopPropagation();
-                  e.preventDefault();
+                onKeyUp: (e) => {
+                  switch (e.keyCode){
+                    case 39: dispatch(moveFocusedRight({ end: e.ctrlKey })); break;
+                    case 37: dispatch(moveFocusedLeft({ end: e.ctrlKey })); break;
+                    case 38: dispatch(moveFocusedUp({ end: e.ctrlKey })); break;
+                    case 40: dispatch(moveFocusedDown({ end: e.ctrlKey })); break;
+                    case 13:
+                      dispatch(openEditor(cell.rowKeyValue, cell.columnKey));
+                      dispatch(setFocused({ cellEditorInput: cell }));
+                      break;
+                  }
                 },
-                onClick: () => {
-                  props.dispatch({
-                    type: FOCUS_CELL,
-                    columnKey: props.column.key,
-                    rowKeyValue: props.rowKeyValue
-                  });
-                }
+                onFocus: () => !isFocused &&  dispatch(setFocused({ cell: { columnKey: column.key, rowKeyValue } })),
+                onKeyDown: (e) => e.keyCode !== 9 && e.preventDefault(),
+                onBlur: () => isFocused && dispatch(clearFocused())
               }
             },
-          }
+          },
+          cellEditorInput: {
+            elementAttributes: ({column, rowKeyValue}) => {
+              const isFocused = column.key === tableProps.focused?.cellEditorInput?.columnKey
+                && rowKeyValue === tableProps.focused?.cellEditorInput?.rowKeyValue;
+              const cell = { columnKey: column.key, rowKeyValue };
+              return {
+                ref: (ref: any) => isFocused && ref?.focus(),
+                onKeyUp: (e) => e.keyCode === 13 && dispatch(setFocused({ cell })),
+                onBlur: (e, {baseFunc}) => {
+                  baseFunc();
+                  dispatch(clearFocused())
+                },
+                onFocus: () => !isFocused && dispatch(setFocused({ cell: { columnKey: column.key, rowKeyValue } })),
+              }
+            },
+          },
+          pagingIndex: {
+            elementAttributes: (props) => ({
+              tabIndex: 0,
+              onKeyUp: (e) => e.keyCode === 13 && dispatch(updatePageIndex(props.pageIndex))
+            }),
+          },
+          headCell: {
+            elementAttributes: (props) => ({
+              tabIndex: 0,
+              onKeyUp: (e) => e.keyCode === 13 && dispatch(updateSortDirection(props.column.key))
+            }),
+          },
         }}
         dispatch={dispatch}
       />
