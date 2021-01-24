@@ -30,16 +30,6 @@ describe('NavigationUtils', () => {
       const result = getRightCell(cell, props);
       expect(result).toEqual({ columnKey: 'column3', rowKeyValue: 3 });
     });
-    it('move to the first cell and new row', () => {
-      const cell: Cell = { columnKey: 'column3', rowKeyValue: 3 }
-      const result = getRightCell(cell, props, { nextRow: true });
-      expect(result).toEqual({ columnKey: 'column1', rowKeyValue: 4 });
-    });
-    it('don\'t move to the new row in case it is last row', () => {
-      const cell: Cell = { columnKey: 'column3', rowKeyValue: 5 }
-      const result = getRightCell(cell, props, { nextRow: true });
-      expect(result).toEqual({ columnKey: 'column3', rowKeyValue: 5 });
-    });
   });
   describe('getLeftCell', () => {
     it('move one cell left', () => {
@@ -56,16 +46,6 @@ describe('NavigationUtils', () => {
       const cell: Cell = { columnKey: 'column1', rowKeyValue: 3 }
       const result = getLeftCell(cell, props);
       expect(result).toEqual({ columnKey: 'column1', rowKeyValue: 3 });
-    });
-    it('move to the left cell and new row', () => {
-      const cell: Cell = { columnKey: 'column1', rowKeyValue: 3 }
-      const result = getLeftCell(cell, props, { nextRow: true });
-      expect(result).toEqual({ columnKey: 'column3', rowKeyValue: 2 });
-    });
-    it('don\'t move to the new row in case it is last row', () => {
-      const cell: Cell = { columnKey: 'column1', rowKeyValue: 1 }
-      const result = getLeftCell(cell, props, { nextRow: true });
-      expect(result).toEqual({ columnKey: 'column1', rowKeyValue: 1 });
     });
   });
   describe('getUpCell', () => {

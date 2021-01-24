@@ -95,7 +95,7 @@ const KeyboardNavigationDemo: React.FC = () => {
                   baseFunc();
                   dispatch(clearFocused())
                 },
-                onFocus: () => !isFocused &&  dispatch(setFocused({ cell: { columnKey: column.key, rowKeyValue } })),
+                onFocus: () => !isFocused && dispatch(setFocused({ cell: { columnKey: column.key, rowKeyValue } })),
               }
             },
           },

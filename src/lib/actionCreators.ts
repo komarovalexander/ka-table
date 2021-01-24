@@ -1,6 +1,6 @@
 import { ActionType } from './enums';
 import { Focused } from './Models/Focused';
-import { IMoveFocusedSettings, IMoveFocusedSettingsBase } from './Utils/NavigationUtils';
+import { IMoveFocusedSettings } from './Utils/NavigationUtils';
 
 export const updateFilterRowValue = (columnKey: string, filterRowValue: any) => ({
   columnKey,
@@ -240,12 +240,12 @@ export const moveFocusedLeft = (settings?: IMoveFocusedSettings) => ({
   type: ActionType.MoveFocusedLeft
 });
 
-export const moveFocusedUp = (settings?: IMoveFocusedSettingsBase) => ({
+export const moveFocusedUp = (settings?: IMoveFocusedSettings) => ({
   settings,
   type: ActionType.MoveFocusedUp
 });
 
-export const moveFocusedDown = (settings?: IMoveFocusedSettingsBase) => ({
+export const moveFocusedDown = (settings?: IMoveFocusedSettings) => ({
   settings,
   type: ActionType.MoveFocusedDown
 });

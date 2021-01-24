@@ -3,11 +3,8 @@ import { Cell } from '../Models/Cell';
 import { getValueByField } from './DataUtils';
 import { getData } from './PropsUtils';
 
-export interface IMoveFocusedSettingsBase {
+export interface IMoveFocusedSettings {
   end?: boolean
-}
-export interface IMoveFocusedSettings extends IMoveFocusedSettingsBase {
-  nextRow?: boolean,
 }
 
 export const getRightCell = (currentCell: Cell, props: ITableProps, settings?: IMoveFocusedSettings): Cell => {
@@ -21,23 +18,10 @@ export const getRightCell = (currentCell: Cell, props: ITableProps, settings?: I
     hasNextColumn = columnIndex < props.columns.length - 1;
     nextColumnKey = hasNextColumn
       ? props.columns[columnIndex + 1].key
-      : settings?.nextRow
-        ? props.columns[0].key
-        : currentCell.columnKey;
+      : currentCell.columnKey;
   }
 
-  let rowKeyValue = currentCell.rowKeyValue;
-  if (settings?.nextRow && !hasNextColumn){
-    const visibleData = getData(props);
-    const rowIndex = visibleData?.findIndex(d => getValueByField(d, props.rowKeyField) === currentCell.rowKeyValue);
-    if (rowIndex < visibleData.length - 1){
-      const nextRow = visibleData[rowIndex + 1];
-      rowKeyValue = getValueByField(nextRow, props.rowKeyField);
-    } else {
-      return currentCell;
-    }
-  }
-  return { columnKey: nextColumnKey, rowKeyValue };
+  return { columnKey: nextColumnKey, rowKeyValue: currentCell.rowKeyValue };
 }
 
 export const getLeftCell = (currentCell: Cell, props: ITableProps, settings?: IMoveFocusedSettings): Cell => {
@@ -51,25 +35,12 @@ export const getLeftCell = (currentCell: Cell, props: ITableProps, settings?: IM
     hasNextColumn = 0 < columnIndex;
     nextColumnKey = hasNextColumn
       ? props.columns[columnIndex - 1].key
-      : settings?.nextRow
-        ? props.columns[props.columns.length - 1].key
-        : currentCell.columnKey;
+      : currentCell.columnKey;
   }
-  let rowKeyValue = currentCell.rowKeyValue;
-  if (settings?.nextRow && !hasNextColumn){
-    const visibleData = getData(props);
-    const rowIndex = visibleData?.findIndex(d => getValueByField(d, props.rowKeyField) === currentCell.rowKeyValue);
-    if (rowIndex > 0){
-      const nextRow = visibleData[rowIndex - 1];
-      rowKeyValue = getValueByField(nextRow, props.rowKeyField);
-    } else {
-      return currentCell;
-    }
-  }
-  return { columnKey: nextColumnKey, rowKeyValue };
+  return { columnKey: nextColumnKey, rowKeyValue: currentCell.rowKeyValue };
 }
 
-export const getUpCell = (currentCell: Cell, props: ITableProps, settings?: IMoveFocusedSettingsBase): Cell => {
+export const getUpCell = (currentCell: Cell, props: ITableProps, settings?: IMoveFocusedSettings): Cell => {
   let rowKeyValue = currentCell.rowKeyValue;
   const visibleData = getData(props);
   if (settings?.end) {
@@ -85,7 +56,7 @@ export const getUpCell = (currentCell: Cell, props: ITableProps, settings?: IMov
   return { columnKey: currentCell.columnKey, rowKeyValue };
 }
 
-export const getDownCell = (currentCell: Cell, props: ITableProps, settings?: IMoveFocusedSettingsBase): Cell => {
+export const getDownCell = (currentCell: Cell, props: ITableProps, settings?: IMoveFocusedSettings): Cell => {
   let rowKeyValue = currentCell.rowKeyValue;
   const visibleData = getData(props);
   if (settings?.end) {
