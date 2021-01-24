@@ -51,7 +51,6 @@ const KeyboardNavigationDemo: React.FC = () => {
   };
   return (
     <>
-      <p style={{fontSize: 12}}>Use arrow keys to navigate by data cells</p>
       <Table
         {...tableProps}
         childComponents={{
