@@ -59,16 +59,16 @@ const KeyboardNavigationDemo: React.FC = () => {
             elementAttributes: ({column, rowKeyValue, isEditableCell}) => {
               if (isEditableCell) return undefined;
 
-              const isFocused = column.key === tableProps.focused?.cell?.columnKey
-                && rowKeyValue === tableProps.focused?.cell?.rowKeyValue;
+              const cell = { columnKey: column.key, rowKeyValue }
+              const isFocused = cell.columnKey === tableProps.focused?.cell?.columnKey
+                && cell.rowKeyValue === tableProps.focused?.cell?.rowKeyValue;
               return {
                 tabIndex: 0,
                 ref: (ref: any) => isFocused && ref?.focus(),
                 onKeyUp: (e) => {
-                  const cell = { columnKey: column.key, rowKeyValue }
                   switch (e.keyCode){
-                    case 39: dispatch(moveFocusedRight({ end: e.ctrlKey, nextRow: true })); break;
-                    case 37: dispatch(moveFocusedLeft({ end: e.ctrlKey, nextRow: true })); break;
+                    case 39: dispatch(moveFocusedRight({ end: e.ctrlKey })); break;
+                    case 37: dispatch(moveFocusedLeft({ end: e.ctrlKey })); break;
                     case 38: dispatch(moveFocusedUp({ end: e.ctrlKey })); break;
                     case 40: dispatch(moveFocusedDown({ end: e.ctrlKey })); break;
                     case 13:
@@ -87,13 +87,15 @@ const KeyboardNavigationDemo: React.FC = () => {
             elementAttributes: ({column, rowKeyValue}) => {
               const isFocused = column.key === tableProps.focused?.cellEditorInput?.columnKey
                 && rowKeyValue === tableProps.focused?.cellEditorInput?.rowKeyValue;
+              const cell = { columnKey: column.key, rowKeyValue };
               return {
                 ref: (ref: any) => isFocused && ref?.focus(),
-                onKeyUp: (e) => e.keyCode === 13 && dispatch(setFocused({ cell: { columnKey: column.key, rowKeyValue } })),
+                onKeyUp: (e) => e.keyCode === 13 && dispatch(setFocused({ cell })),
                 onBlur: (e, {baseFunc}) => {
                   baseFunc();
                   dispatch(clearFocused())
                 },
+                onFocus: () => !isFocused &&  dispatch(setFocused({ cell: { columnKey: column.key, rowKeyValue } })),
               }
             },
           },
