@@ -50,7 +50,7 @@ const KeyboardNavigationDemo: React.FC = () => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
-    <>
+    <div className='keyboard-navigation-demo'>
       <Table
         {...tableProps}
         childComponents={{
@@ -113,7 +113,7 @@ const KeyboardNavigationDemo: React.FC = () => {
         }}
         dispatch={dispatch}
       />
-    </>
+    </div>
   );
 };
 

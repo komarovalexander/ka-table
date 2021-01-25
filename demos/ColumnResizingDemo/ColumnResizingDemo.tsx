@@ -13,7 +13,6 @@ const columns: Column[] = Array(15).fill(undefined).map(
     style: { width: 150 },
     title: 'Column ' + index,
     type: DataType.String,
-    isResizable: true,
   }),
 );
 
@@ -25,11 +24,12 @@ const dataArray = Array(30).fill(undefined).map(
 );
 
 const tablePropsInit: ITableProps = {
-  columns,
-  data: dataArray,
-  editingMode: EditingMode.Cell,
-  rowKeyField: 'id',
   sortingMode: SortingMode.Single,
+  rowKeyField: 'id',
+  editingMode: EditingMode.Cell,
+  data: dataArray,
+  columns,
+  columnResizing: true,
 };
 
 const ColumnResizingDemo: React.FC = () => {
