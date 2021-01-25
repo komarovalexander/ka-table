@@ -13,6 +13,7 @@ const props = {
   column: new Column(),
   dispatch: jest.fn(),
   currentWidth: 100,
+  childComponents: {}
 };
 
 it('renders without crashing', () => {

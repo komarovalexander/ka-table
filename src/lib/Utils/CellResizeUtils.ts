@@ -2,6 +2,8 @@ import { DispatchFunc } from '../types';
 
 export const HeadCellResizeStateAction = 'HeadCellResizeStateAction';
 
+export const isCellResizeShown = (isResizable?: boolean, columnResizing?: boolean): boolean => !!((isResizable !== false) && (columnResizing || isResizable));
+
 export const getMouseMove = (
   currentWidth: any,
   minWidth: number,

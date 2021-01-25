@@ -18,6 +18,7 @@ import { TableWrapper } from '../TableWrapper/TableWrapper';
 
 export interface ITableProps {
   columnReordering?: boolean;
+  columnResizing?: boolean;
   columns: Column[];
   data?: any[];
   detailsRows?: any[];
@@ -67,7 +68,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
 
   const { elementAttributes, content: rootDivContent } = getElementCustomization({
     className:  kaCss
-  }, { ...props, dispatch }, childComponents.rootDiv);
+  }, props, childComponents.rootDiv);
   elementAttributes.style = {width, height, ...elementAttributes.style}
 
   React.useEffect(() => {
