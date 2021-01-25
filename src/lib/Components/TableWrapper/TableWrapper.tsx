@@ -44,11 +44,11 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
         type: ActionType.ScrollTable,
       });
     } : undefined,
-  }, { ...props, dispatch }, childComponents.tableWrapper);
+  }, props, childComponents.tableWrapper);
 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.table,
-  }, { ...props, dispatch }, childComponents.table);
+  }, props, childComponents.table);
   return (
     <div {...tableWrapper.elementAttributes}>
       {content || tableWrapper.content || (

@@ -68,7 +68,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
 
   const { elementAttributes, content: rootDivContent } = getElementCustomization({
     className:  kaCss
-  }, { ...props, dispatch }, childComponents.rootDiv);
+  }, props, childComponents.rootDiv);
   elementAttributes.style = {width, height, ...elementAttributes.style}
 
   React.useEffect(() => {

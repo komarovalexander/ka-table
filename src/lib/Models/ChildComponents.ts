@@ -1,8 +1,8 @@
 import { ITableProps } from '../';
 import {
   ICellEditorProps, ICellProps, ICellTextProps, IDataRowProps, IFilterRowEditorProps,
-  IGroupRowProps, IHeadCellProps, INoDataRowProps, IPagingIndexProps, IPagingPagesProps,
-  ITableBodyProps, ITableHeadProps,
+  IGroupRowProps, IHeadCellProps, IHeadCellResizeProps, INoDataRowProps, IPagingIndexProps,
+  IPagingPagesProps, ITableBodyProps, ITableHeadProps,
 } from '../props';
 import { ChildComponent } from './ChildComponent';
 
@@ -26,4 +26,5 @@ export class ChildComponents {
   public tableBody?: ChildComponent<ITableBodyProps>;
   public tableHead?: ChildComponent<ITableHeadProps>;
   public tableWrapper?: ChildComponent<ITableProps>;
+  public headCellResize?: ChildComponent<IHeadCellResizeProps>;
 }

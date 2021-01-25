@@ -93,6 +93,12 @@ export interface IGroupRowProps {
   text: string;
 }
 
+export interface IHeadCellResizeProps {
+  dispatch: DispatchFunc;
+  column: Column;
+  currentWidth: any;
+  childComponents: ChildComponents;
+}
 export interface IHeadCellProps {
   areAllRowsSelected: boolean;
   childComponents: ChildComponents;

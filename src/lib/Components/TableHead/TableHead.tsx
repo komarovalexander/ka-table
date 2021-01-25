@@ -9,42 +9,20 @@ import HeadRow from '../HeadRow/HeadRow';
 
 export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
   const {
-    areAllRowsSelected,
     childComponents,
-    columnReordering,
-    columnResizing,
-    columns,
-    dispatch,
     filteringMode,
-    groupColumnsCount,
-    sortingMode,
   } = props;
-
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.thead,
-  }, { ...props, dispatch }, childComponents.tableHead);
+  }, props, childComponents.tableHead);
   return (
     <thead {...elementAttributes}>
       {content || (
         <>
-          <HeadRow
-            areAllRowsSelected={areAllRowsSelected}
-            childComponents={childComponents}
-            columnReordering={columnReordering}
-            columnResizing={columnResizing}
-            columns={columns}
-            dispatch={dispatch}
-            groupColumnsCount={groupColumnsCount}
-            sortingMode={sortingMode}
-          />
+          <HeadRow {...props} />
           {filteringMode === FilteringMode.FilterRow &&
             (
-              <FilterRow
-                childComponents={childComponents}
-                columns={columns}
-                dispatch={dispatch}
-                groupColumnsCount={groupColumnsCount}
-              />
+              <FilterRow {...props} />
             )}
         </>
       )}
