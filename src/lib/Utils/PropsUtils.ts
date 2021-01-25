@@ -61,13 +61,13 @@ export function mergeProps<T = HTMLElement>(
 };
 
 export const areAllFilteredRowsSelected = (props: ITableProps) => {
-  const { selectedRows = [] } = props;
-  return filterAndSearchData(props).every(d => selectedRows.includes(d.id))
+  const { selectedRows = [], rowKeyField } = props;
+  return filterAndSearchData(props).every(d => selectedRows.includes(getValueByField(d, rowKeyField)))
 }
 
 export const areAllVisibleRowsSelected = (props: ITableProps) => {
-  const { selectedRows = [] } = props;
-  return getData(props).every(d => selectedRows.includes(d.id))
+  const { selectedRows = [], rowKeyField } = props;
+  return getData(props).every(d => selectedRows.includes(getValueByField(d, rowKeyField)))
 }
 
 export const getData = (props: ITableProps) => {

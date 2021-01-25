@@ -50,8 +50,7 @@ const KeyboardNavigationDemo: React.FC = () => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
   return (
-    <>
-      <p style={{fontSize: 12}}>Use arrow keys to navigate by data cells</p>
+    <div className='keyboard-navigation-demo'>
       <Table
         {...tableProps}
         childComponents={{
@@ -114,7 +113,7 @@ const KeyboardNavigationDemo: React.FC = () => {
         }}
         dispatch={dispatch}
       />
-    </>
+    </div>
   );
 };
 

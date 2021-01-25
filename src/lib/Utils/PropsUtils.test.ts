@@ -240,10 +240,10 @@ describe('prepareTableOptions', () => {
 describe('areAllFilteredRowsSelected', () => {
   it('true', () => {
     const tableProps: ITableProps = {
-      columns: [{ key: 'id', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+      columns: [{ key: 'test', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
       data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
       selectedRows: [1, 2, 3, 4],
-      rowKeyField: 'id',
+      rowKeyField: 'test',
       paging: {
         enabled: true,
         pageSize: 2
@@ -310,10 +310,10 @@ describe('getDraggableProps', () => {
 describe('areAllVisibleRowsSelected', () => {
   it('true', () => {
     const tableProps: ITableProps = {
-      columns: [{ key: 'id', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+      columns: [{ key: 'test', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
       data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
       selectedRows: [1, 2, 3, 5],
-      rowKeyField: 'id',
+      rowKeyField: 'test',
       paging: {
         enabled: true,
         pageSize: 2
