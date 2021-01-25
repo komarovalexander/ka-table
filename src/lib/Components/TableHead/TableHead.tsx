@@ -12,6 +12,7 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
     areAllRowsSelected,
     childComponents,
     columnReordering,
+    columnResizing,
     columns,
     dispatch,
     filteringMode,
@@ -30,6 +31,7 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
             columnReordering={columnReordering}
+            columnResizing={columnResizing}
             columns={columns}
             dispatch={dispatch}
             groupColumnsCount={groupColumnsCount}

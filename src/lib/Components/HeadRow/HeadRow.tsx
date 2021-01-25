@@ -9,6 +9,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
   areAllRowsSelected,
   childComponents,
   columnReordering,
+  columnResizing,
   columns,
   dispatch,
   groupColumnsCount,
@@ -23,6 +24,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = ({
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
             columnReordering={columnReordering}
+            columnResizing={columnResizing}
             column={column}
             dispatch={dispatch}
             key={column.key}

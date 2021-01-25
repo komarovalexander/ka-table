@@ -18,6 +18,7 @@ import { TableWrapper } from '../TableWrapper/TableWrapper';
 
 export interface ITableProps {
   columnReordering?: boolean;
+  columnResizing?: boolean;
   columns: Column[];
   data?: any[];
   detailsRows?: any[];

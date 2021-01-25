@@ -1,6 +1,7 @@
 
 import {
   getMinWidth, getMouseMove, getValidatedWidth, headCellDispatchWrapper, HeadCellResizeStateAction,
+  isCellResizeShown,
 } from './CellResizeUtils';
 
 describe('CellUtils', () => {
@@ -54,5 +55,17 @@ describe('CellUtils', () => {
       mouseMoveEvent({ screenX: 40 } as any);
       expect(dispatch).toHaveBeenCalledTimes(0);
     });
+  });
+
+  it('isCellResizeShown', () => {
+    expect(isCellResizeShown(false, false)).toBeFalsy();
+    expect(isCellResizeShown(false, true)).toBeFalsy();
+    expect(isCellResizeShown(false, undefined)).toBeFalsy();
+    expect(isCellResizeShown(true, false)).toBeTruthy();
+    expect(isCellResizeShown(true, false)).toBeTruthy();
+    expect(isCellResizeShown(true, undefined)).toBeTruthy();
+    expect(isCellResizeShown(undefined, true)).toBeTruthy();
+    expect(isCellResizeShown(undefined, false)).toBeFalsy();
+    expect(isCellResizeShown(undefined, undefined)).toBeFalsy();
   });
 });
