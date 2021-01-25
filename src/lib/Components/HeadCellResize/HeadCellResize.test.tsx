@@ -23,7 +23,9 @@ it('renders without crashing', () => {
 
 it('should handle onMouseDown correctly', () => {
   const wrapper = mount(<HeadCellResize {...props} />);
-  wrapper.simulate('mousedown');
+  const preventDefault = jest.fn();
+  wrapper.simulate('mousedown', { preventDefault });
+  expect(preventDefault).toBeCalledTimes(1);
   simulant.fire(document.body, 'mouseup');
-  expect(props.dispatch).toBeCalledTimes(2)
+  expect(props.dispatch).toBeCalledTimes(2);
 });
