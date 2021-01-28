@@ -28,3 +28,29 @@ describe('getElementCustomization', () => {
     expect(elementAttributes.tabIndex).toEqual(0);
   });
 });
+
+describe('addElementAttributes', () => {
+  it('should merge attributes', () => {
+    const props = { propName: 'propNameValue' };
+    const childComponent = addElementAttributes({
+      className: 'customClass'
+    }, props, {
+      elementAttributes: (p: any) => ({tabIndex: 2, propNameAttribute: p.propName })
+    });
+    expect(childComponent.elementAttributes?.(props)).toEqual({
+      className: 'customClass',
+      tabIndex: 2,
+      propNameAttribute: 'propNameValue'
+    });
+  });
+  it('should skip attributes', () => {
+    const props = { propName: 'propNameValue' };
+    const childComponent = addElementAttributes({
+      className: 'customClass'
+    }, props, {
+    });
+    expect(childComponent.elementAttributes?.(props)).toEqual({
+      className: 'customClass',
+    });
+  });
+});
