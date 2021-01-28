@@ -15,9 +15,11 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
     columnReordering,
     columnResizing,
+    column,
     column: { style, isResizable, key },
     dispatch,
-    sortingMode
+    sortingMode,
+    childComponents
   } = props;
   let {
     childComponents: { headCell }
@@ -44,9 +46,11 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
          {content || <HeadCellContent {...props}/>}
         </div>
         {isCellResizeShown(isResizable, columnResizing) && (
-          <HeadCellResize {...props}
+          <HeadCellResize
+            column={column}
             currentWidth={width}
-            dispatch={headCellDispatch}/>
+            dispatch={headCellDispatch}
+            childComponents={childComponents}/>
         )}
       </div>
     </th>

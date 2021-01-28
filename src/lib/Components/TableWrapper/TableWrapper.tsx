@@ -69,7 +69,6 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
               childComponents={childComponents}
               columns={preparedOptions.columns}
               data={preparedOptions.groupedData}
-              dispatch={dispatch}
               editableCells={editableCells}
               editingMode={editingMode}
               groupColumnsCount={preparedOptions.groupColumnsCount}
