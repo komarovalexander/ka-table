@@ -14,7 +14,7 @@ const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
     className: defaultOptions.css.tbody,
   }, props, childComponents.tableBody);
   return (
-    <tbody {...elementAttributes} className={defaultOptions.css.tbody}>
+    <tbody {...elementAttributes}>
       {content || <TableBodyContent {...props} />}
     </tbody>
   );
