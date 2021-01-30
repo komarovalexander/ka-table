@@ -1,8 +1,12 @@
+import Enzyme, { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { EditingMode } from '../../enums';
 import TableBody from './TableBody';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const props: any = {
   childComponents: {},
@@ -30,5 +34,22 @@ describe('TableBody', () => {
     const element = document.createElement('table');
     ReactDOM.render(<TableBody {...props} />, element);
     ReactDOM.unmountComponentAtNode(element);
+  });
+  it('add custom className', () => {
+    const wrapper = mount((
+      <TableBody {...props} childComponents={{
+        tableBody: {
+          elementAttributes: () => ({
+            className: 'customClass'
+          })
+        }
+      }} />
+    ), {
+      attachTo: document.createElement('table'),
+    });
+
+    const tbody = wrapper.find('tbody');
+    expect(tbody.hasClass('customClass')).toBeTruthy();
+    expect(tbody.hasClass('ka-tbody')).toBeTruthy();
   });
 });
