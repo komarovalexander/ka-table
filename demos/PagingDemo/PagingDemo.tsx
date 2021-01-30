@@ -26,6 +26,7 @@ const tableOption: ITableProps = {
     enabled: true,
     pageIndex: 0,
     pageSize: 10,
+    pageSizes: [5, 10, 15]
   },
   rowKeyField: 'id',
 };
