@@ -4,17 +4,16 @@ import { updatePageIndex } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { IPagingPagesProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { centerLength, getPagesForCenter } from '../../Utils/PagingUtils';
+import { centerLength, getPagesArrayBySize, getPagesForCenter } from '../../Utils/PagingUtils';
 import PagingIndex from '../PagingIndex/PagingIndex';
 
 const PagingPages: React.FunctionComponent<IPagingPagesProps> = (props) => {
     const {
       childComponents,
-      pages,
       dispatch,
-    } = props;
-    const {
+      pagesCount,
       pageIndex = 0,
+      pages = getPagesArrayBySize(pagesCount), // TODO: deprecate
     } = props;
 
     React.useEffect(() => {

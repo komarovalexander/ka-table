@@ -119,6 +119,9 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     case ActionType.UpdatePageIndex: {
       return { ...props, paging: {...paging, pageIndex: action.pageIndex } };
     }
+    case ActionType.UpdatePageSize: {
+      return { ...props, paging: {...paging, pageSize: action.pageSize } };
+    }
     case ActionType.UpdatePagesCount: {
       return { ...props, paging: {...paging, pagesCount: action.pagesCount }};
     }

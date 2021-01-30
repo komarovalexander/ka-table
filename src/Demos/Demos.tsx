@@ -16,6 +16,7 @@ import CustomCellDemo from './CustomCellDemo/CustomCellDemo';
 import CustomDataRowDemo from './CustomDataRowDemo/CustomDataRowDemo';
 import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
 import CustomHeaderCellDemo from './CustomHeaderCellDemo/CustomHeaderCellDemo';
+import CustomPagingDemo from './CustomPagingDemo/CustomPagingDemo';
 import CustomThemeDemo from './CustomThemeDemo/CustomThemeDemo';
 import DeleteRowDemo from './DeleteRowDemo/DeleteRowDemo';
 import Demo from './Demo';
@@ -80,6 +81,7 @@ const demos: Demo[] = [
   new Demo(CustomDataRowDemo, '/custom-data-row', 'Custom Row', 'CustomDataRowDemo', 'https://stackblitz.com/edit/table-custom-data-row-js', 'https://stackblitz.com/edit/table-custom-data-row-ts', 'Customization'),
   new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo', 'https://stackblitz.com/edit/table-custom-editor-js', 'https://stackblitz.com/edit/table-custom-editor-ts', 'Editing'),
   new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo', 'https://stackblitz.com/edit/table-custom-header-cell-js', 'https://stackblitz.com/edit/table-custom-header-cell-ts', 'Customization'),
+  new Demo(CustomPagingDemo, '/custom-paging', 'Custom Paging', 'CustomPagingDemo', 'https://stackblitz.com/edit/table-custom-paging-js', 'https://stackblitz.com/edit/table-custom-paging-ts', 'Customization'),
   new Demo(CustomThemeDemo, '/custom-theme', 'Custom Theme', 'CustomThemeDemo', 'https://stackblitz.com/edit/table-custom-theme-js', 'https://stackblitz.com/edit/table-custom-theme-ts', 'Themes', 'dark.scss'),
   new Demo(DeleteRowDemo, '/delete-row', 'Delete Row', 'DeleteRowDemo', 'https://stackblitz.com/edit/table-delete-row-js', 'https://stackblitz.com/edit/table-delete-row-ts', 'Editing'),
   new Demo(DetailsRowDemo, '/details-row', 'Details Row', 'DetailsRowDemo', 'https://stackblitz.com/edit/table-details-row-js', 'https://stackblitz.com/edit/table-details-row-ts', 'Rows'),

@@ -203,12 +203,13 @@ export interface ILoadingProps {
 }
 
 export interface IPagingProps {
+  childComponents: ChildComponents;
+  dispatch: DispatchFunc;
   enabled?: boolean;
   pageIndex?: number;
   pageSize?: number;
+  pageSizes?: number[];
   pagesCount?: number;
-  childComponents: ChildComponents;
-  dispatch: DispatchFunc;
 }
 
 export interface IPagingIndexProps extends IPagingProps {
@@ -217,5 +218,5 @@ export interface IPagingIndexProps extends IPagingProps {
   text: any;
 }
 export interface IPagingPagesProps extends IPagingProps {
-  pages: number[];
+  pages?: number[];
 }
