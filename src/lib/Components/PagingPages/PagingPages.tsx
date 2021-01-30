@@ -13,7 +13,7 @@ const PagingPages: React.FunctionComponent<IPagingPagesProps> = (props) => {
       dispatch,
       pagesCount,
       pageIndex = 0,
-      pages = getPagesArrayBySize(pagesCount), // TODO: deprecate
+      pages = getPagesArrayBySize(pagesCount),
     } = props;
 
     React.useEffect(() => {

@@ -211,12 +211,17 @@ export interface IPagingProps {
   pageSizes?: number[];
   pagesCount?: number;
 }
+export interface IPagingSizeProps extends IPagingProps {
+  value: number;
+}
 
 export interface IPagingIndexProps extends IPagingProps {
   isActive: boolean;
   pageIndex: number;
   text: any;
 }
+
 export interface IPagingPagesProps extends IPagingProps {
-  pages?: number[];
+  pages?: number[]; // TODO: will be deprecated next major release
 }
+

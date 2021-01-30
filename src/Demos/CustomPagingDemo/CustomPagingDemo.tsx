@@ -1,3 +1,5 @@
+import './CustomPagingDemo.scss';
+
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
@@ -34,7 +36,7 @@ const tableOption: ITableProps = {
 };
 
 const PageSizeSelector: React.FC<IPagingProps> = ({ pageSize, pageSizes, dispatch }) =>  (
-  <div>
+  <div className='ka-paging-sizes'>
     Page Size:
     <select
       className='form-control'
@@ -72,22 +74,24 @@ const CustomPagingDemo: React.FC = () => {
   };
 
   return (
-    <Table
-      {...option}
-      dispatch={dispatch}
-      childComponents={{
-        paging: {
-          content: (props) => {
-            return (
-              <>
-                <PageSizeSelector {...props}/>
-                <PagesSelector {...props}/>
-              </>
-            );
+    <div className='custom-paging-demo'>
+      <Table
+        {...option}
+        dispatch={dispatch}
+        childComponents={{
+          paging: {
+            content: (props) => {
+              return (
+                <>
+                  <PageSizeSelector {...props}/>
+                  <PagesSelector {...props}/>
+                </>
+              );
+            }
           }
-        }
-      }}
-    />
+        }}
+      />
+    </div>
   );
 };
 
