@@ -36,7 +36,7 @@ const tableOption: ITableProps = {
 };
 
 const PageSizeSelector: React.FC<IPagingProps> = ({ pageSize, pageSizes, dispatch }) =>  (
-  <div className='ka-paging-sizes'>
+  <>
     Page Size:
     <select
       className='form-control'
@@ -48,11 +48,11 @@ const PageSizeSelector: React.FC<IPagingProps> = ({ pageSize, pageSizes, dispatc
         pageSizes?.map((value) => (<option key={value} value={value}>{value}</option>))
       }
     </select>
-  </div>
+  </>
 )
 
-const PagesSelector: React.FC<IPagingPagesProps> = ({ pageIndex, pageSize, dispatch }) =>  (
-  <div className='ka-paging-pages'>
+const PagesSelector: React.FC<IPagingPagesProps> = ({ pageIndex, pagesCount, dispatch }) =>  (
+  <>
     Page Number:
     <select
       className='form-control'
@@ -61,10 +61,10 @@ const PagesSelector: React.FC<IPagingPagesProps> = ({ pageIndex, pageSize, dispa
         dispatch(updatePageIndex(Number(event.currentTarget.value)));
       }}>
       {
-        [...Array(pageSize)].map((_, index) => (<option key={index} value={index}>{index + 1}</option>))
+        [...Array(pagesCount)].map((_, index) => (<option key={index} value={index}>{index + 1}</option>))
       }
     </select>
-  </div>
+  </>
 )
 
 const CustomPagingDemo: React.FC = () => {
@@ -79,15 +79,11 @@ const CustomPagingDemo: React.FC = () => {
         {...option}
         dispatch={dispatch}
         childComponents={{
-          paging: {
-            content: (props) => {
-              return (
-                <>
-                  <PageSizeSelector {...props}/>
-                  <PagesSelector {...props}/>
-                </>
-              );
-            }
+          pagingSizes: {
+            content: (props) => <PageSizeSelector {...props}/>
+          },
+          pagingPages: {
+            content: (props) => <PagesSelector {...props}/>
           }
         }}
       />
