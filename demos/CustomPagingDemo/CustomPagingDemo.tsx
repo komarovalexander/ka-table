@@ -51,7 +51,7 @@ const PageSizeSelector: React.FC<IPagingProps> = ({ pageSize, pageSizes, dispatc
   </>
 )
 
-const PagesSelector: React.FC<IPagingPagesProps> = ({ pageIndex, pageSize, dispatch }) =>  (
+const PagesSelector: React.FC<IPagingPagesProps> = ({ pageIndex, pagesCount, dispatch }) =>  (
   <>
     Page Number:
     <select
@@ -61,7 +61,7 @@ const PagesSelector: React.FC<IPagingPagesProps> = ({ pageIndex, pageSize, dispa
         dispatch(updatePageIndex(Number(event.currentTarget.value)));
       }}>
       {
-        [...Array(pageSize)].map((_, index) => (<option key={index} value={index}>{index + 1}</option>))
+        [...Array(pagesCount)].map((_, index) => (<option key={index} value={index}>{index + 1}</option>))
       }
     </select>
   </>
