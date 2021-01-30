@@ -28,3 +28,8 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(element);
   expect(props.dispatch).toHaveBeenCalledTimes(0);
 });
+it('should be rendered without PagingSizes', () => {
+  const wrapper = mount(<PagingSizes {...props} childComponents={{ pagingSizes: { content: () => (<>Custom Paging Sizes</>) }}} />);
+  expect(wrapper.find('.ka-paging-sizes').text()).toEqual('Custom Paging Sizes');
+});
+

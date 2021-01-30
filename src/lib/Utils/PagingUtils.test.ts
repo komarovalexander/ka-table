@@ -1,5 +1,5 @@
 import { PagingOptions } from '../models';
-import { getPageData, getPagesCount, getPagesForCenter } from './PagingUtils';
+import { getPageData, getPagesArrayBySize, getPagesCount, getPagesForCenter } from './PagingUtils';
 
 describe('PagingUtils', () => {
   it('getPagesCount', () => {
@@ -153,5 +153,9 @@ describe('PagingUtils', () => {
     expect(result.length).toEqual(5);
     expect(result[0]).toEqual(7);
     expect(result[4]).toEqual(11);
+  });
+  it('getPagesArrayBySize', () => {
+    const result = getPagesArrayBySize(3);
+    expect(result).toEqual([0, 1, 2]);
   });
 });
