@@ -36,29 +36,35 @@ const tableOption: ITableProps = {
 };
 
 const PageSizeSelector: React.FC<IPagingProps> = ({ pageSize, pageSizes, dispatch }) =>  (
-  <select
-    className='form-control'
-    defaultValue={pageSize}
-    onChange={(event) => {
-      dispatch(updatePageSize(Number(event.currentTarget.value)));
-    }}>
-    {
-      pageSizes?.map((value) => (<option key={value} value={value}>{value}</option>))
-    }
-  </select>
+  <>
+    Page Size:
+    <select
+      className='form-control'
+      defaultValue={pageSize}
+      onChange={(event) => {
+        dispatch(updatePageSize(Number(event.currentTarget.value)));
+      }}>
+      {
+        pageSizes?.map((value) => (<option key={value} value={value}>{value}</option>))
+      }
+    </select>
+  </>
 )
 
 const PagesSelector: React.FC<IPagingPagesProps> = ({ pageIndex, pageSize, dispatch }) =>  (
-  <select
-    className='form-control'
-    defaultValue={pageIndex}
-    onChange={(event) => {
-      dispatch(updatePageIndex(Number(event.currentTarget.value)));
-    }}>
-    {
-      [...Array(pageSize)].map((_, index) => (<option key={index} value={index}>{index + 1}</option>))
-    }
-  </select>
+  <>
+    Page Number:
+    <select
+      className='form-control'
+      defaultValue={pageIndex}
+      onChange={(event) => {
+        dispatch(updatePageIndex(Number(event.currentTarget.value)));
+      }}>
+      {
+        [...Array(pageSize)].map((_, index) => (<option key={index} value={index}>{index + 1}</option>))
+      }
+    </select>
+  </>
 )
 
 const CustomPagingDemo: React.FC = () => {
@@ -74,10 +80,10 @@ const CustomPagingDemo: React.FC = () => {
         dispatch={dispatch}
         childComponents={{
           pagingSizes: {
-            content: (props) => <>Page Size: <PageSizeSelector {...props}/></>
+            content: (props) => <PageSizeSelector {...props}/>
           },
           pagingPages: {
-            content: (props) => <>Page Number: <PagesSelector {...props}/></>
+            content: (props) => <PagesSelector {...props}/>
           }
         }}
       />
