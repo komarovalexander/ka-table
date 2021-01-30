@@ -2,18 +2,29 @@ import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { IPagingProps } from '../../props';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import PagingPages from '../PagingPages/PagingPages';
+import PagingSizes from '../PagingSizes/PagingSizes';
 
 const Paging: React.FunctionComponent<IPagingProps> = (props) => {
     const {
       enabled,
-      pagesCount,
+      childComponents,
+      pageSizes
     } = props;
     if (enabled){
-      const pages = new Array(pagesCount).fill(undefined).map((_, index) =>  index);
+      const { elementAttributes, content } = getElementCustomization({
+        className: `${defaultOptions.css.paging} ${pageSizes ? 'ka-paging-sizes-active' : ''}`,
+      }, props, childComponents.paging);
       return (
-        <div className={defaultOptions.css.paging}>
-          <PagingPages {...props} pages={pages}/>
+        <div {...elementAttributes}>
+          {content ||
+          (
+            <>
+              {pageSizes && <PagingSizes {...props}/>}
+              <PagingPages {...props}/>
+            </>
+          )}
         </div>
       )
     }

@@ -32,3 +32,5 @@ export const getPagesForCenter = (pages: number[], isStartShown: boolean, isEndS
   }
   return pages;
 };
+
+export const getPagesArrayBySize = (pagesCount?: number) => new Array(pagesCount).fill(undefined).map((_, index) =>  index);

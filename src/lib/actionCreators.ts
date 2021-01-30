@@ -175,6 +175,11 @@ export const updatePageIndex = (pageIndex: number) => ({
   type: ActionType.UpdatePageIndex,
 });
 
+export const updatePageSize = (pageSize: number) => ({
+  pageSize,
+  type: ActionType.UpdatePageSize,
+});
+
 export const updatePagesCount = (pagesCount: number) => ({
   pagesCount,
   type: ActionType.UpdatePagesCount,

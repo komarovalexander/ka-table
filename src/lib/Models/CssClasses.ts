@@ -28,6 +28,8 @@ export class CssClasses {
   public paging = 'ka-paging';
   public pagingPages = 'ka-paging-pages';
   public pagingPageIndex = 'ka-paging-page-index';
+  public pagingSize = 'ka-paging-size';
+  public pagingSizes = 'ka-paging-sizes';
 
   public iconClose = 'ka-icon ka-icon-close';
   public iconGroupArrowCollapsed = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-collapsed';

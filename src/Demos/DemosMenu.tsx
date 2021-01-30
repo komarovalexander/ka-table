@@ -39,6 +39,7 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
       || c.group.toLowerCase().includes(search.toLowerCase())
       || (synonyms[c.name] && synonyms[c.name].some(t => t.toLowerCase().includes(search.toLowerCase())))
   }) : cases;
+  filteredCases.sort((a, b) => a.title.localeCompare(b.title));
 
   let menuItems: MenuItem[] = [];
   filteredCases.forEach(c => {

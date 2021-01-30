@@ -199,16 +199,24 @@
   color: $ka-color-base;
 }
 
-.ka-paging-pages{
+.ka-paging-sizes-active {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ka-paging-pages, .ka-paging-sizes {
   list-style: none;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
   padding: $ka-paging-pages-padding;
   margin: $ka-paging-pages-margin;
 }
 
-.ka-paging-page-index{
+.ka-paging-pages {
+  justify-content: flex-end;
+}
+
+.ka-paging-page-index, .ka-paging-size{
   cursor: pointer;
   padding: 5px;
   margin: 10px 5px;
@@ -219,7 +227,7 @@
   user-select: none;
 }
 
-.ka-paging-page-index-active{
+.ka-paging-page-index-active, .ka-paging-size-active {
   background-color: $ka-paging-index-active-background-color;
   font-weight: bold;
   color: $ka-paging-index-active-color;
