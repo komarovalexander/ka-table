@@ -79,16 +79,20 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   });
   return (
     <div {...elementAttributes}>
-      {rootDivContent || <TableWrapper {...props} />}
-      <Paging
-        {...paging}
-        dispatch={dispatch}
-        childComponents={childComponents}
-        pagesCount={getPagesCountByProps(props)}
-      />
-      <Loading
-        {...loading}
-      />
+      {rootDivContent || (
+        <>
+          <TableWrapper {...props} />
+          <Paging
+            {...paging}
+            dispatch={dispatch}
+            childComponents={childComponents}
+            pagesCount={getPagesCountByProps(props)}
+          />
+          <Loading
+            {...loading}
+          />
+        </>
+      )}
     </div>
   );
 };
