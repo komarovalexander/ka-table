@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { updatePageIndex, updatePageSize } from '../../lib/actionCreators';
-import { DataType } from '../../lib/enums';
+import { DataType, PagingPosition } from '../../lib/enums';
 import { IPagingPagesProps, IPagingProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 
@@ -40,7 +40,7 @@ const PageSizeSelector: React.FC<IPagingProps> = ({ pageSize, pageSizes, dispatc
     Page Size:
     <select
       className='form-control'
-      defaultValue={pageSize}
+      value={pageSize}
       onChange={(event) => {
         dispatch(updatePageSize(Number(event.currentTarget.value)));
       }}>
@@ -56,7 +56,7 @@ const PagesSelector: React.FC<IPagingPagesProps> = ({ pageIndex, pagesCount, dis
     Page Number:
     <select
       className='form-control'
-      defaultValue={pageIndex}
+      value={pageIndex}
       onChange={(event) => {
         dispatch(updatePageIndex(Number(event.currentTarget.value)));
       }}>
