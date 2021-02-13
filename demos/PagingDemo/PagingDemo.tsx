@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { DataType } from 'ka-table/enums';
+import { DataType, EditingMode, PagingPosition, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(180).fill(undefined).map(
@@ -14,8 +14,9 @@ const dataArray = Array(180).fill(undefined).map(
   }),
 );
 
-const tableOption: ITableProps = {
+const tablePropsInit: ITableProps = {
   columns: [
+    { key: 'id', title: 'Id', dataType: DataType.Number, isEditable: false },
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
@@ -28,20 +29,32 @@ const tableOption: ITableProps = {
     pageSize: 10,
     pageSizes: [5, 10, 15]
   },
+  sortingMode: SortingMode.Single,
+  editingMode: EditingMode.Cell,
   rowKeyField: 'id',
 };
 
 const PagingDemo: React.FC = () => {
-  const [option, changeOptions] = useState(tableOption);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
-    changeOptions((prevState: ITableProps) => kaReducer(prevState, action));
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
   return (
-    <Table
-      {...option}
-      dispatch={dispatch}
-    />
+    <>
+      Paging position: <select
+        value={tableProps.paging?.position}
+        onChange={(e) => changeTableProps({ ...tableProps, paging: { ...tableProps.paging, position: e.target.value as any }})}
+        style={{marginBottom: 20}}>
+        <option value={PagingPosition.Bottom}>Bottom</option>
+        <option value={PagingPosition.Top}>Top</option>
+        <option value={PagingPosition.TopAndBottom}>TopAndBottom</option>
+      </select>
+      <Table
+        {...tableProps}
+        dispatch={dispatch}
+      />
+    </>
   );
 };
 
