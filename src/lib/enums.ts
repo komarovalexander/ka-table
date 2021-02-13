@@ -1,4 +1,10 @@
 
+export enum PagingPosition {
+  Bottom = 'bottom',
+  Top = 'top',
+  TopAndBottom = 'topAndBottom',
+}
+
 export enum DataType {
   Boolean = 'boolean',
   Date = 'date',

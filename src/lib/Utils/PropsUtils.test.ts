@@ -2,10 +2,13 @@
 import { AllHTMLAttributes } from 'react';
 
 import { ITableProps } from '../';
-import { DataType, EditingMode, FilterOperatorName, SortDirection, SortingMode } from '../enums';
+import {
+  DataType, EditingMode, FilterOperatorName, PagingPosition, SortDirection, SortingMode,
+} from '../enums';
 import { Column } from '../models';
 import { ICellProps } from '../props';
 import { ChildAttributesItem } from '../types';
+import { isPagingShown } from './PagingUtils';
 import {
   areAllFilteredRowsSelected, areAllVisibleRowsSelected, getData, getDraggableProps,
   getPagesCountByProps, getSelectedData, mergeProps, prepareTableOptions,
@@ -397,3 +400,18 @@ describe('getSelectedData', () => {
     expect(getSelectedData(props).length).toEqual(0);
   });
 });
+
+
+describe('isPagingShown', () => {
+  it('default', () => {
+    expect(isPagingShown(PagingPosition.Bottom, { enabled: true })).toBeTruthy();
+    expect(isPagingShown(PagingPosition.Top, { enabled: true })).toBeFalsy();
+    expect(isPagingShown(PagingPosition.Top, { enabled: true, position: PagingPosition.Top })).toBeTruthy();
+    expect(isPagingShown(PagingPosition.Bottom, { enabled: true, position: PagingPosition.Top })).toBeFalsy();
+    expect(isPagingShown(PagingPosition.Top, { enabled: true, position: PagingPosition.Bottom })).toBeFalsy();
+    expect(isPagingShown(PagingPosition.Bottom, { enabled: true, position: PagingPosition.Bottom })).toBeTruthy();
+    expect(isPagingShown(PagingPosition.Top, { enabled: true, position: PagingPosition.TopAndBottom })).toBeTruthy();
+    expect(isPagingShown(PagingPosition.Bottom, { enabled: true, position: PagingPosition.TopAndBottom })).toBeTruthy();
+  });
+});
+
