@@ -27,7 +27,8 @@ const tablePropsInit: ITableProps = {
     enabled: true,
     pageIndex: 0,
     pageSize: 10,
-    pageSizes: [5, 10, 15]
+    pageSizes: [5, 10, 15],
+    position: PagingPosition.Bottom
   },
   sortingMode: SortingMode.Single,
   editingMode: EditingMode.Cell,
