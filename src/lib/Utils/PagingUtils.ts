@@ -1,3 +1,4 @@
+import { PagingPosition } from '../enums';
 import { PagingOptions } from '../models';
 
 export const centerLength = 5;
@@ -34,3 +35,12 @@ export const getPagesForCenter = (pages: number[], isStartShown: boolean, isEndS
 };
 
 export const getPagesArrayBySize = (pagesCount?: number) => new Array(pagesCount).fill(undefined).map((_, index) =>  index);
+
+export const isPagingShown = (position: PagingPosition, paging?: PagingOptions): boolean => !!(
+  paging?.enabled
+  && (
+    paging.position
+      ? position === paging.position || paging.position === PagingPosition.TopAndBottom
+      : position === PagingPosition.Bottom
+  )
+);

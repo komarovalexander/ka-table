@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { clearSingleAction } from '../../actionCreators';
-import { EditingMode, FilteringMode, SortingMode } from '../../enums';
+import { EditingMode, FilteringMode, PagingPosition, SortingMode } from '../../enums';
 import { EditableCell, PagingOptions } from '../../models';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
@@ -11,9 +11,9 @@ import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
 import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { getPagesCountByProps } from '../../Utils/PropsUtils';
+import { isPagingShown } from '../../Utils/PagingUtils';
 import Loading from '../Loading/Loading';
-import Paging from '../Paging/Paging';
+import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
 
 export interface ITableProps {
@@ -55,12 +55,12 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
 
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
-    childComponents = {},
+    childComponents,
     dispatch,
     height,
     loading,
-    paging,
     width,
+    paging,
     singleAction
   } = props;
   const isLoadingActive = loading && loading.enabled;
@@ -68,7 +68,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
 
   const { elementAttributes, content: rootDivContent } = getElementCustomization({
     className:  kaCss
-  }, props, childComponents.rootDiv);
+  }, props, childComponents?.rootDiv);
   elementAttributes.style = {width, height, ...elementAttributes.style}
 
   React.useEffect(() => {
@@ -81,16 +81,10 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     <div {...elementAttributes}>
       {rootDivContent || (
         <>
+          {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props}/>}
           <TableWrapper {...props} />
-          <Paging
-            {...paging}
-            dispatch={dispatch}
-            childComponents={childComponents}
-            pagesCount={getPagesCountByProps(props)}
-          />
-          <Loading
-            {...loading}
-          />
+          {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props}/>}
+          <Loading {...loading} />
         </>
       )}
     </div>
