@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { updatePageIndex, updatePageSize } from '../../lib/actionCreators';
-import { DataType, PagingPosition } from '../../lib/enums';
+import { DataType } from '../../lib/enums';
 import { IPagingPagesProps, IPagingProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 
