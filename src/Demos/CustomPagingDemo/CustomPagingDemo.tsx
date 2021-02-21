@@ -40,7 +40,7 @@ const PageSizeSelector: React.FC<IPagingProps> = ({ pageSize, pageSizes, dispatc
     Page Size:
     <select
       className='form-control'
-      defaultValue={pageSize}
+      value={pageSize}
       onChange={(event) => {
         dispatch(updatePageSize(Number(event.currentTarget.value)));
       }}>
@@ -56,7 +56,7 @@ const PagesSelector: React.FC<IPagingPagesProps> = ({ pageIndex, pagesCount, dis
     Page Number:
     <select
       className='form-control'
-      defaultValue={pageIndex}
+      value={pageIndex}
       onChange={(event) => {
         dispatch(updatePageIndex(Number(event.currentTarget.value)));
       }}>

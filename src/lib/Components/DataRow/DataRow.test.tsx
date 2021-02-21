@@ -1,4 +1,4 @@
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -46,6 +46,14 @@ describe('CellEditorBoolean', () => {
   it('renders without draggable', () => {
     const component = shallow(<DataRow {...props}/>);
     expect(component.props().draggable).toBeFalsy();
+  });
+
+  it('overrides default ref', () => {
+    const ref = jest.fn();
+    mount(<DataRow {...props} childComponents={{ dataRow: { elementAttributes: () => ({ ref })}}}/>, {
+      attachTo: document.createElement('tbody'),
+    });
+    expect(ref).toBeCalled();
   });
 });
 

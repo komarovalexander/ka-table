@@ -45,6 +45,7 @@ import KeyboardNavigationDemo from './KeyboardNavigationDemo/KeyboardNavigationD
 import LoadingDemo from './LoadingDemo/LoadingDemo';
 import ManyColumnsDemo from './ManyColumnsDemo/ManyColumnsDemo';
 import ManyRowsDemo from './ManyRowsDemo/ManyRowsDemo';
+import ManyRowsDynamicDemo from './ManyRowsDynamicDemo/ManyRowsDynamicDemo';
 import ManyRowsGroupingDemo from './ManyRowsGroupingDemo/ManyRowsGroupingDemo';
 import ManyRowsMemoDemo from './ManyRowsMemoDemo/ManyRowsMemoDemo';
 import MaterialDemo from './MaterialDemo/MaterialDemo';
@@ -104,6 +105,7 @@ const demos: Demo[] = [
   new Demo(LoadingDemo, '/loading', 'Loading', 'LoadingDemo', 'https://stackblitz.com/edit/table-loading-js', 'https://stackblitz.com/edit/table-loading-ts', 'Miscellaneous'),
   new Demo(ManyColumnsDemo, '/many-columns', 'Many Columns', 'ManyColumnsDemo', 'https://stackblitz.com/edit/table-many-columns-js', 'https://stackblitz.com/edit/table-many-columns-ts', 'Columns'),
   new Demo(ManyRowsDemo, '/many-rows', '100K Rows', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts', 'Virtual Scrolling'),
+  new Demo(ManyRowsDynamicDemo, '/many-rows-dynamic', '10K Rows Dynamic', 'ManyRowsDynamicDemo', 'https://stackblitz.com/edit/table-many-rows-dynamic-js', 'https://stackblitz.com/edit/table-many-rows-dynamic-ts', 'Virtual Scrolling'),
   new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', '10k Grouped', 'ManyRowsGroupingDemo', 'https://stackblitz.com/edit/table-many-rows-grouping-js', 'https://stackblitz.com/edit/table-many-rows-grouping-ts', 'Virtual Scrolling'),
   new Demo(ManyRowsMemoDemo, '/many-rows-memo', '300K Rows & memo', 'ManyRowsMemoDemo', 'https://stackblitz.com/edit/table-many-rows-memo-js', 'https://stackblitz.com/edit/table-many-rows-memo-ts', 'Virtual Scrolling'),
   new Demo(MaterialDemo, '/material', 'Material', 'MaterialDemo', 'https://stackblitz.com/edit/table-material-js', 'https://stackblitz.com/edit/table-material-ts', 'Themes'),
