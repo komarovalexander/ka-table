@@ -22,8 +22,6 @@ const dataArray = Array(10000).fill(undefined).map(
   }),
 );
 
-const renderedRowSizes: any = {};
-
 const tablePropsInit: ITableProps = {
   columns: [
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
@@ -38,16 +36,32 @@ const tablePropsInit: ITableProps = {
   },
 };
 
-let estimatedItemSize = 40;
+const initDynamicRowsOptions = () => {
+  const renderedRowSizes: any = {};
+  let estimatedItemSize = 40;
+  const addRowHeight = (rowData: any, height?: number) => { if (height) { renderedRowSizes[rowData.id] = height; } };
+  return () => {
+    const totalHeight = Object.keys(renderedRowSizes).reduce((sum, key) => sum + parseFloat(renderedRowSizes[key] || 0), 0);
+    estimatedItemSize = estimatedItemSize === 40 && Object.keys(renderedRowSizes).length
+      ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length)
+      : estimatedItemSize;
+    return {
+      addRowHeight,
+      itemHeight: (rowData: any) => renderedRowSizes[rowData.id] || estimatedItemSize
+    }
+  }
+}
+
+const dynamicRowsOptions = initDynamicRowsOptions();
 
 const ManyRowsDynamicDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
 
-  const totalHeight = Object.keys(renderedRowSizes).reduce((sum, key) => sum + parseFloat(renderedRowSizes[key] || 0), 0);
-  estimatedItemSize = estimatedItemSize === 40 && Object.keys(renderedRowSizes).length ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length) : estimatedItemSize;
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
+
+  const { itemHeight, addRowHeight } = dynamicRowsOptions();
 
   return (
     <Table
@@ -55,16 +69,12 @@ const ManyRowsDynamicDemo: React.FC = () => {
       dispatch={dispatch}
       virtualScrolling={{
         ...tableProps.virtualScrolling,
-        itemHeight: (rowData) => renderedRowSizes[rowData.id] || estimatedItemSize
+        itemHeight,
       }}
       childComponents={{
         dataRow: {
           elementAttributes: ({ rowData }) => ({
-            ref: (ref: any) => {
-              if (ref?.offsetHeight){
-                renderedRowSizes[rowData.id] = ref.offsetHeight;
-              }
-            }
+            ref: (ref: any) => addRowHeight(rowData, ref?.offsetHeight)
           }),
         },
         tableWrapper: {
