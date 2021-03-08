@@ -1,14 +1,14 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "983cc947a3f75c77e70e6e1288ae5024",
+    "revision": "3ffc97515f782c02e2b90f993f6b8640",
     "url": "/ka-table/index.html"
   },
   {
-    "revision": "8760472fe5bc7f8f4f38",
+    "revision": "0d98476d548a5935c504",
     "url": "/ka-table/static/css/3.226e677e.chunk.css"
   },
   {
-    "revision": "42c93c8e20319cca10b7",
+    "revision": "f9421e300b6036a7a357",
     "url": "/ka-table/static/css/main.2b6b7b2b.chunk.css"
   },
   {
@@ -20,12 +20,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ka-table/static/js/2.aed03e28.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8760472fe5bc7f8f4f38",
-    "url": "/ka-table/static/js/3.27dce99e.chunk.js"
+    "revision": "0d98476d548a5935c504",
+    "url": "/ka-table/static/js/3.338cc09e.chunk.js"
   },
   {
     "revision": "c43e3b2edb688024973fcef1da3c0f0c",
-    "url": "/ka-table/static/js/3.27dce99e.chunk.js.LICENSE.txt"
+    "url": "/ka-table/static/js/3.338cc09e.chunk.js.LICENSE.txt"
   },
   {
     "revision": "d8b8b5893dfa4b4baeb8",
@@ -44,8 +44,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ka-table/static/js/5.b68fcdd9.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "42c93c8e20319cca10b7",
-    "url": "/ka-table/static/js/main.6be9cf26.chunk.js"
+    "revision": "f9421e300b6036a7a357",
+    "url": "/ka-table/static/js/main.8319b9d3.chunk.js"
   },
   {
     "revision": "8c23629657eed0576381",

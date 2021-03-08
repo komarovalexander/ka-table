@@ -1,34 +1,34 @@
 {
   "files": {
     "main.css": "/ka-table/static/css/main.2b6b7b2b.chunk.css",
-    "main.js": "/ka-table/static/js/main.6be9cf26.chunk.js",
-    "main.js.map": "/ka-table/static/js/main.6be9cf26.chunk.js.map",
+    "main.js": "/ka-table/static/js/main.8319b9d3.chunk.js",
+    "main.js.map": "/ka-table/static/js/main.8319b9d3.chunk.js.map",
     "runtime-main.js": "/ka-table/static/js/runtime-main.ebf03157.js",
     "runtime-main.js.map": "/ka-table/static/js/runtime-main.ebf03157.js.map",
     "static/js/2.aed03e28.chunk.js": "/ka-table/static/js/2.aed03e28.chunk.js",
     "static/js/2.aed03e28.chunk.js.map": "/ka-table/static/js/2.aed03e28.chunk.js.map",
     "static/css/3.226e677e.chunk.css": "/ka-table/static/css/3.226e677e.chunk.css",
-    "static/js/3.27dce99e.chunk.js": "/ka-table/static/js/3.27dce99e.chunk.js",
-    "static/js/3.27dce99e.chunk.js.map": "/ka-table/static/js/3.27dce99e.chunk.js.map",
+    "static/js/3.338cc09e.chunk.js": "/ka-table/static/js/3.338cc09e.chunk.js",
+    "static/js/3.338cc09e.chunk.js.map": "/ka-table/static/js/3.338cc09e.chunk.js.map",
     "static/js/4.96cb5174.chunk.js": "/ka-table/static/js/4.96cb5174.chunk.js",
     "static/js/4.96cb5174.chunk.js.map": "/ka-table/static/js/4.96cb5174.chunk.js.map",
     "static/js/5.b68fcdd9.chunk.js": "/ka-table/static/js/5.b68fcdd9.chunk.js",
     "static/js/5.b68fcdd9.chunk.js.map": "/ka-table/static/js/5.b68fcdd9.chunk.js.map",
     "index.html": "/ka-table/index.html",
-    "precache-manifest.7010b8331e2fb126a57e1ebb6db9ed75.js": "/ka-table/precache-manifest.7010b8331e2fb126a57e1ebb6db9ed75.js",
+    "precache-manifest.8dfdae38aef7f4f76a312aa42cc1331b.js": "/ka-table/precache-manifest.8dfdae38aef7f4f76a312aa42cc1331b.js",
     "service-worker.js": "/ka-table/service-worker.js",
     "static/css/3.226e677e.chunk.css.map": "/ka-table/static/css/3.226e677e.chunk.css.map",
     "static/css/main.2b6b7b2b.chunk.css.map": "/ka-table/static/css/main.2b6b7b2b.chunk.css.map",
     "static/js/2.aed03e28.chunk.js.LICENSE.txt": "/ka-table/static/js/2.aed03e28.chunk.js.LICENSE.txt",
-    "static/js/3.27dce99e.chunk.js.LICENSE.txt": "/ka-table/static/js/3.27dce99e.chunk.js.LICENSE.txt",
+    "static/js/3.338cc09e.chunk.js.LICENSE.txt": "/ka-table/static/js/3.338cc09e.chunk.js.LICENSE.txt",
     "static/js/4.96cb5174.chunk.js.LICENSE.txt": "/ka-table/static/js/4.96cb5174.chunk.js.LICENSE.txt",
     "static/js/5.b68fcdd9.chunk.js.LICENSE.txt": "/ka-table/static/js/5.b68fcdd9.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.ebf03157.js",
     "static/css/3.226e677e.chunk.css",
-    "static/js/3.27dce99e.chunk.js",
+    "static/js/3.338cc09e.chunk.js",
     "static/css/main.2b6b7b2b.chunk.css",
-    "static/js/main.6be9cf26.chunk.js"
+    "static/js/main.8319b9d3.chunk.js"
   ]
 }
