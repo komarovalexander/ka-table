@@ -3,6 +3,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { newRowId } from '../../const';
 import { EditingMode } from '../../enums';
 import { ITableBodyProps } from '../TableBody/TableBody';
 import TableBodyContent from './TableBodyContent';
@@ -48,5 +49,16 @@ describe('TableBodyContent', () => {
     });
 
     expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
+    expect(wrapper.find('.ka-tr').length).toBe(1);
+  });
+
+  it('should render noDataRow & NewRow', () => {
+    const wrapper = mount((
+      <TableBodyContent {...props} editableCells={[{ rowKeyValue: newRowId, columnKey: 'column'}]} data={[]}/>
+    ), {
+      attachTo: document.createElement('tbody'),
+    });
+
+    expect(wrapper.find('.ka-tr').length).toBe(2);
   });
 });

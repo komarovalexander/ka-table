@@ -1,13 +1,11 @@
 import React, { RefObject, useEffect, useRef } from 'react';
 
-import { newRowId } from '../../const';
 import { ITableBodyProps } from '../../props';
 import { getValueByField } from '../../Utils/DataUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
 import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
-import NewRow from '../NewRow/NewRow';
 
 export interface IRowsProps extends ITableBodyProps {
   onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;
@@ -22,7 +20,6 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     dispatch,
     editableCells,
     format,
-    groupColumnsCount,
     groupedColumns,
     groups = [],
     groupsExpanded = [],
@@ -40,22 +37,8 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
   }, [firstRowRef, onFirstRowRendered]);
 
   let rowRefLink: any = firstRowRef;
-  const newRowEditableCells = editableCells && editableCells.filter(c => c.rowKeyValue === newRowId);
   return (
     <>
-      {
-        newRowEditableCells && !!newRowEditableCells.length && (
-        <NewRow
-          childComponents={childComponents}
-          columns={columns}
-          dispatch={dispatch}
-          editableCells={newRowEditableCells}
-          format={format}
-          groupColumnsCount={groupColumnsCount}
-          rowKeyField={rowKeyField}
-          validation={validation}
-        />
-      )}
       {data.map((d) => {
       if (d.groupMark === groupMark) {
         const groupIndex = d.key.length - 1;
