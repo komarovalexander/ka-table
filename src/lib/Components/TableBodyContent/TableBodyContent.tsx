@@ -7,9 +7,10 @@ import VirtualizedRows from '../VirtualizedRows/VirtualizedRows';
 const TableBodyContent: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {
     data,
+    editableCells,
   } = props;
 
-  if (!data.length) {
+  if (!data.length && !editableCells.length) {
     return <NoDataRow {...props}/>;
   }
   return (
