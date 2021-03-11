@@ -54,7 +54,7 @@ export function mergeProps<T = HTMLElement>(
     ...childCustomAttributes,
     ...customPropsWithEvents,
     className: `${childElementAttributes.className || ''} ${childCustomAttributes.className || ''}`,
-    style: { ...childCustomAttributes.style, ...childElementAttributes.style }
+    style: { ...childElementAttributes.style, ...childCustomAttributes.style }
   };
 
   return mergedResult;
