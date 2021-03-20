@@ -1,4 +1,3 @@
-import defaultOptions from '../defaultOptions';
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
 import { convertToColumnTypes } from './TypeUtils';
@@ -10,7 +9,7 @@ interface ITestOptions {
 type TestCase = (string | undefined | boolean | number | Date | ITestOptions)[];
 class TestSettings {
   public cases!: TestCase[];
-  public dataType!: DataType;
+  public dataType?: DataType;
 }
 
 describe('TypeUtils', () => {
@@ -59,6 +58,19 @@ describe('TypeUtils', () => {
   }, {
     cases: [
       ['empty', undefined, undefined],
+      ['fromBoolean', true, true],
+      ['fromDate', Date.UTC(2019, 10, 8),  Date.UTC(2019, 10, 8)],
+      ['fromNumber', 12, 12],
+      ['fromObject', {}, {}, {
+        sameObject: true,
+        sameType: true,
+      }],
+      ['fromString', 'str', 'str'],
+    ],
+    dataType: undefined,
+  }, {
+    cases: [
+      ['empty', undefined, undefined],
       ['fromBoolean', true, 'true'],
       ['fromDate', Date.UTC(2019, 10, 8), '1573171200000'],
       ['fromNumber', 12, '12'],
@@ -70,7 +82,7 @@ describe('TypeUtils', () => {
     dataType: DataType.String,
   }];
   settings.forEach((test) => {
-    describe(test.dataType, () => {
+    describe(test.dataType || 'undefined', () => {
       const columns: Column[] = [
         { key: 'columnField', title: 'Column Title', dataType: test.dataType },
       ];
