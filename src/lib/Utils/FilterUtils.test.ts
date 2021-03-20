@@ -90,6 +90,20 @@ describe('FilterUtils', () => {
       expect(result).toMatchSnapshot();
     });
 
+    it('custom filter', () => {
+      const columns = [{
+        dataType: DataType.Number,
+        filterRowValue: 45,
+        key: 'score',
+      }];
+      const result = filterData(data, columns, ({ column }) => {
+        if (column.key === 'score'){
+          return (filterValue, value) => filterValue !== value;
+        }
+      });
+      expect(result).toMatchSnapshot();
+    });
+
     it('should throw an error in case of unknown filterOperator', () => {
       const columns = [{
         filterRowOperator: 'unknownOperator',

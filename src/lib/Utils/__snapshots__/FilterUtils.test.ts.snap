@@ -71,6 +71,46 @@ Array [
 ]
 `;
 
+exports[`FilterUtils filterData custom filter 1`] = `
+Array [
+  Object {
+    "date": 2021-12-20T09:00:00.000Z,
+    "id": 1,
+    "name": "Mike Wazowski",
+    "passed": true,
+    "score": 80,
+  },
+  Object {
+    "date": 2021-12-20T13:00:00.000Z,
+    "id": 2,
+    "name": "Billi Bob",
+    "passed": false,
+    "score": 55,
+  },
+  Object {
+    "date": 2021-12-19T13:00:00.000Z,
+    "id": 4,
+    "name": "Kurt Cobain",
+    "passed": true,
+    "score": 75,
+  },
+  Object {
+    "date": null,
+    "id": 5,
+    "name": "Marshall Bruce",
+    "passed": true,
+    "score": 77,
+  },
+  Object {
+    "date": 2021-12-17T13:00:00.000Z,
+    "id": 6,
+    "name": "Sunny Fox",
+    "passed": false,
+    "score": 33,
+  },
+]
+`;
+
 exports[`FilterUtils filterData one item 1`] = `
 Array [
   Object {

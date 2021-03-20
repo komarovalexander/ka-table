@@ -1,7 +1,6 @@
 import defaultOptions from '../defaultOptions';
 import { DataType } from '../enums';
 import { Column } from '../Models/Column';
-import { EditableCell } from '../Models/EditableCell';
 import { convertToColumnTypes } from './TypeUtils';
 
 interface ITestOptions {
