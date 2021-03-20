@@ -76,6 +76,7 @@ export const getData = (props: ITableProps) => {
     groups,
     groupsExpanded,
     paging,
+    sort,
     sortingMode = SortingMode.None,
   } = props;
   let {
@@ -84,7 +85,7 @@ export const getData = (props: ITableProps) => {
   data = [...data];
   data = filterAndSearchData(props);
   if (!isRemoteSorting(sortingMode)){
-    data = sortData(columns, data);
+    data = sortData(columns, data, sort);
   }
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];

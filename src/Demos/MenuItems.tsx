@@ -11,8 +11,8 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
-const newItems: string[] = ['InfiniteScrollingDemo'];
-const updateItems: string[] = ['VirtualScrolling'];
+const newItems: string[] = ['SortingCustomLogicDemo', 'FilterRowCustomLogicDemo'];
+const updateItems: string[] = ['Sorting', 'Filtering'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 

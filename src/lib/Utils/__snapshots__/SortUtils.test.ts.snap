@@ -33,6 +33,39 @@ Array [
 ]
 `;
 
+exports[`sortData Custom logic 1`] = `
+Array [
+  Object {
+    "column": 3,
+    "id": 5,
+  },
+  Object {
+    "column": 3,
+    "id": 4,
+  },
+  Object {
+    "column": 3,
+    "id": 2,
+  },
+  Object {
+    "column": 1,
+    "id": 1,
+  },
+  Object {
+    "column": null,
+    "id": 6,
+  },
+  Object {
+    "column": 2,
+    "id": 3,
+  },
+  Object {
+    "column": null,
+    "id": 7,
+  },
+]
+`;
+
 exports[`sortData should be sorted by Ascend 1`] = `
 Array [
   Object {

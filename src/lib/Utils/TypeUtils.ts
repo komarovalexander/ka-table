@@ -6,7 +6,7 @@ export const convertToColumnTypes = (data: any[], columns: Column[]) => {
   const columnsToReplace = [...columns];
   const dataCopy = [...data];
   columnsToReplace.forEach((c) => {
-    if (c.dataType){
+    if (c.dataType && c.dataType !== DataType.Object){
       for (let i = 0; i < dataCopy.length; i++){
         const value = getValueByColumn(dataCopy[i], c);
         if (value != null) {

@@ -9,7 +9,9 @@ import { Focused } from '../../Models/Focused';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
-import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
+import {
+  DispatchFunc, FilterFunc, FormatFunc, SearchFunc, SortFunc, ValidationFunc,
+} from '../../types';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isPagingShown } from '../../Utils/PagingUtils';
 import Loading from '../Loading/Loading';
@@ -25,6 +27,7 @@ export interface ITableProps {
   editableCells?: EditableCell[];
   editingMode?: EditingMode;
   extendedFilter?: (data: any[]) => any[];
+  filter?: FilterFunc;
   filteringMode?: FilteringMode;
   focused?: Focused;
   format?: FormatFunc;
@@ -39,6 +42,7 @@ export interface ITableProps {
   searchText?: string;
   selectedRows?: any[];
   singleAction?: any;
+  sort?: SortFunc;
   sortingMode?: SortingMode;
   validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
