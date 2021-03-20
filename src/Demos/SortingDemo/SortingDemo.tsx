@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType, SortingMode } from '../../lib/enums';
+import { DataType, SortDirection, SortingMode } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
@@ -32,6 +32,7 @@ const tablePropsInit: ITableProps = {
     {
       dataType: DataType.Number,
       key: 'score',
+      sortDirection: SortDirection.Ascend,
       style: {width: 120},
       title: 'Score',
     }
