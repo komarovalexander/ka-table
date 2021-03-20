@@ -27,11 +27,10 @@ export interface ITableProps {
   editableCells?: EditableCell[];
   editingMode?: EditingMode;
   extendedFilter?: (data: any[]) => any[];
+  filter?: FilterFunc;
   filteringMode?: FilteringMode;
   focused?: Focused;
   format?: FormatFunc;
-  filter?: FilterFunc;
-  sort?: SortFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
   height?: number | string;
@@ -43,6 +42,7 @@ export interface ITableProps {
   searchText?: string;
   selectedRows?: any[];
   singleAction?: any;
+  sort?: SortFunc;
   sortingMode?: SortingMode;
   validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
