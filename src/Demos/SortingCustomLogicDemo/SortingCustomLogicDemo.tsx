@@ -38,6 +38,7 @@ const tablePropsInit: ITableProps = {
     },
     {
       dataType: DataType.Object,
+      sortDirection: SortDirection.Ascend,
       key: 'prevScores',
       style: {width: 120},
       title: 'Previous Scores',
