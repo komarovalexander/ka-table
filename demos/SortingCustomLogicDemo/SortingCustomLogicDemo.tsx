@@ -5,7 +5,7 @@ import { DataType, SortDirection, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
-  { id: 1, name: 'Mike Wazowski', score: 80, prevScores: [60, 65, 70], passed: true },
+  { id: 1, name: 'Mike Wazowski', score: 80, prevScores: [59, 65, 70], passed: true },
   { id: 2, name: 'Billi Bob', score: 55, prevScores: [60, 43, 50], passed: false },
   { id: 3, name: 'Tom Williams', score: 45, prevScores: [62, 61, 60], passed: false },
   { id: 4, name: 'Kurt Cobain', score: 75, prevScores: [63, 60, 71], passed: true },
