@@ -19,7 +19,6 @@ const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.Boolean,
-      filterRowValue: false,
       key: 'passed',
       style: {width: 90},
       title: 'Passed',
