@@ -9,7 +9,9 @@ import { Focused } from '../../Models/Focused';
 import { Group } from '../../Models/Group';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
-import { DispatchFunc, FilterFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
+import {
+  DispatchFunc, FilterFunc, FormatFunc, SearchFunc, SortFunc, ValidationFunc,
+} from '../../types';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isPagingShown } from '../../Utils/PagingUtils';
 import Loading from '../Loading/Loading';
@@ -29,6 +31,7 @@ export interface ITableProps {
   focused?: Focused;
   format?: FormatFunc;
   filter?: FilterFunc;
+  sort?: SortFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
   height?: number | string;
