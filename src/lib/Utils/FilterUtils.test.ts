@@ -98,7 +98,7 @@ describe('FilterUtils', () => {
       }];
       const result = filterData(data, columns, ({ column }) => {
         if (column.key === 'score'){
-          return (filterValue, value) => filterValue !== value;
+          return (value, filterValue) => value !== filterValue;
         }
       });
       expect(result).toMatchSnapshot();
