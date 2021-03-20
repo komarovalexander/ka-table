@@ -58,7 +58,7 @@ const SortingDemo: React.FC = () => {
       </div>
       <div style={{fontSize: 12}}>
         <b>'*Remote' sorting</b> modes changes do not sort data, it should be done outside of the grid,
-          see <a href='#/remote-data'>remote data demo</a> for details
+          see <a href='#/remote-data-editing'>remote data editing demo</a> for details
       </div>
     </>
   );

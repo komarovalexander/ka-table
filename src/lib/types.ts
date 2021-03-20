@@ -1,4 +1,5 @@
 import { AttributeTableData, Column } from './models';
+import { ICellProps } from './props';
 
 type AddParameters<T, I> =
 T extends (e: infer E) => void ? (
@@ -13,5 +14,6 @@ export type ChildAttributesItem<T> = WithExtraParameters<ElementAttributes<T>, T
 export type DispatchFunc = (action: any) => void;
 export type Field = string;
 export type FormatFunc = (props: { value: any, column: Column }) => any;
+export type FilterFunc = (props: { column: Column }) => ((value: any, filterRowValue: any) => boolean) | void;
 export type SearchFunc = (props: { searchText: string, rowData: any, column: Column }) => boolean;
 export type ValidationFunc = (props: { value: any, rowData: any, column: Column }) => string | void;

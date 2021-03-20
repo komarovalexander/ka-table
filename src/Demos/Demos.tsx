@@ -31,6 +31,7 @@ import ExportDemo from './ExportDemo/ExportDemo';
 import ExportToPdfDemo from './ExportToPdfDemo/ExportToPdfDemo';
 import FilterExtendedDemo from './FilterExtendedDemo/FilterExtendedDemo';
 import FilterRowCustomEditorDemo from './FilterRowCustomEditorDemo/FilterRowCustomEditorDemo';
+import FilterRowCustomLogicDemo from './FilterRowCustomLogicDemo/FilterRowCustomLogicDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
 import FixedColumnDemo from './FixedColumnDemo/FixedColumnDemo';
 import { initializeGA, trackEvent } from './ga';
@@ -94,6 +95,7 @@ const demos: Demo[] = [
   new Demo(ExportToPdfDemo, '/export-pdf', 'Export to PDF', 'ExportToPdfDemo', 'https://stackblitz.com/edit/table-export-pdf-js', 'https://stackblitz.com/edit/table-export-pdf-ts', 'Export / Print'),
   new Demo(FilterExtendedDemo, '/filter-extended', 'Filter Extended', 'FilterExtendedDemo', 'https://stackblitz.com/edit/table-filter-extended-js', 'https://stackblitz.com/edit/table-filter-extended-ts', 'Filtering'),
   new Demo(FilterRowCustomEditorDemo, '/filter-row-custom-editor', 'Filter Row - Custom Editor', 'FilterRowCustomEditorDemo', 'https://stackblitz.com/edit/table-filter-row-custom-editor-js', 'https://stackblitz.com/edit/table-filter-row-custom-editor-ts', 'Filtering'),
+  new Demo(FilterRowCustomLogicDemo, '/filter-row-custom-logic', 'Filter Row - Custom Logic', 'FilterRowCustomLogicDemo', 'https://stackblitz.com/edit/table-filter-row-custom-logic-js', 'https://stackblitz.com/edit/table-filter-row-custom-logic-ts', 'Filtering'),
   new Demo(FilterRowDemo, '/filter-row', 'Filter Row', 'FilterRowDemo', 'https://stackblitz.com/edit/table-filter-row-js', 'https://stackblitz.com/edit/table-filter-row-ts', 'Filtering'),
   new Demo(FixedColumnDemo, '/fixed-column', 'Fixed Colum', 'FixedColumnDemo', 'https://stackblitz.com/edit/table-fixed-column-js', 'https://stackblitz.com/edit/table-fixed-column-ts', 'Columns'),
   new Demo(GetDataByPropsDemo, '/get-data-by-props', 'Get Data By Props', 'GetDataByPropsDemo', 'https://stackblitz.com/edit/table-get-data-by-props-js', 'https://stackblitz.com/edit/table-get-data-by-props-ts', 'Miscellaneous'),
