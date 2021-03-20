@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from 'ka-table';
-import { DataType, SortingMode } from 'ka-table/enums';
+import { DataType, SortDirection, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
@@ -18,7 +18,6 @@ const tablePropsInit: ITableProps = {
   columns: [
     {
       dataType: DataType.Boolean,
-      filterRowValue: false,
       key: 'passed',
       style: {width: 90},
       title: 'Passed',
@@ -32,6 +31,7 @@ const tablePropsInit: ITableProps = {
     {
       dataType: DataType.Number,
       key: 'score',
+      sortDirection: SortDirection.Ascend,
       style: {width: 120},
       title: 'Score',
     }
