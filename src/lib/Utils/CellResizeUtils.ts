@@ -23,10 +23,12 @@ export const getValidatedWidth = (newWidth: number, minWidth: number) => {
   return newWidth;
 };
 
+export const isNumberWidth = (width: any): boolean => width && typeof width === 'number';
+
 export const getMinWidth = (style: any): number => {
   let minWidth: number = 20;
   const styleMinWidth = style && style.minWidth;
-  if (styleMinWidth && typeof styleMinWidth === 'number'){
+  if (isNumberWidth(styleMinWidth)){
     minWidth = styleMinWidth;
   }
   return minWidth;
