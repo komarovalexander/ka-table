@@ -4,7 +4,7 @@ import { resizeColumn } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { IHeadCellResizeProps } from '../../props';
 import {
-  getMinWidth, getMouseMove, getValidatedWidth, HeadCellResizeStateAction,
+  getMinWidth, getMouseMove, getValidatedWidth, HeadCellResizeStateAction, isNumberWidth,
 } from '../../Utils/CellResizeUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getEventListenerEffect } from '../../Utils/EffectUtils';
@@ -23,7 +23,7 @@ const HeadCellResize: React.FunctionComponent<IHeadCellResizeProps> = (props) =>
     draggable: false,
     onMouseDown: (mouseDownEvent: any) => {
       mouseDownEvent.preventDefault();
-      const startX = mouseDownEvent.screenX - mouseDownEvent.currentTarget.parentElement.offsetWidth;
+      const startX = mouseDownEvent.screenX - (isNumberWidth(currentWidth) ? currentWidth : mouseDownEvent.currentTarget.parentElement.offsetWidth);
       const mouseMoveStop = getEventListenerEffect('mousemove', getMouseMove(currentWidth, minWidth, startX, dispatch));
       const mouseUpStop = getEventListenerEffect('mouseup', (event: MouseEvent) => {
         const newWidth = getValidatedWidth(event.screenX - startX, minWidth);
