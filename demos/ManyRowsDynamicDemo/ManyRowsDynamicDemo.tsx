@@ -36,32 +36,28 @@ const tablePropsInit: ITableProps = {
   },
 };
 
-const initDynamicRowsOptions = ({ rowKeyField }: ITableProps) => {
-  const renderedRowSizes: any = {};
+const useDynamicRowsOptions = ({ rowKeyField } : ITableProps) => {
+  const [renderedRowSizes] = useState<any>({});
   let estimatedItemSize = 40;
   const addRowHeight = (rowData: any, height?: number) => { if (height) { renderedRowSizes[rowData[rowKeyField]] = height; } };
-  return () => {
-    const totalHeight = Object.keys(renderedRowSizes).reduce((sum, key) => sum + parseFloat(renderedRowSizes[key] || 0), 0);
-    estimatedItemSize = estimatedItemSize === 40 && Object.keys(renderedRowSizes).length
-      ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length)
-      : estimatedItemSize;
-    return {
-      addRowHeight,
-      itemHeight: (rowData: any) => renderedRowSizes[rowData[rowKeyField]] || estimatedItemSize
-    }
+  const totalHeight = Object.keys(renderedRowSizes).reduce((sum, key) => sum + parseFloat(renderedRowSizes[key] || 0), 0);
+  estimatedItemSize = estimatedItemSize === 40 && Object.keys(renderedRowSizes).length
+    ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length)
+    : estimatedItemSize;
+  return {
+    addRowHeight,
+    itemHeight: (rowData: any) => renderedRowSizes[rowData[rowKeyField]] || estimatedItemSize
   }
 }
 
-const dynamicRowsOptions = initDynamicRowsOptions(tablePropsInit);
 
 const ManyRowsDynamicDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const { itemHeight, addRowHeight } = useDynamicRowsOptions(tableProps);
 
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
-
-  const { itemHeight, addRowHeight } = dynamicRowsOptions();
 
   return (
     <Table
