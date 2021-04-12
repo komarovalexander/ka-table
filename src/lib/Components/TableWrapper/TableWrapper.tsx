@@ -6,6 +6,7 @@ import { ActionType, EditingMode, FilteringMode, SortingMode } from '../../enums
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { prepareTableOptions } from '../../Utils/PropsUtils';
+import { isVirtualScrollingEnabled } from '../../Utils/Virtualize';
 import TableBody from '../TableBody/TableBody';
 import { TableHead } from '../TableHead/TableHead';
 
@@ -38,7 +39,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
 
   const tableWrapper = getElementCustomization({
     className: defaultOptions.css.tableWrapper,
-    onScroll: virtualScrolling ? (event) => {
+    onScroll: isVirtualScrollingEnabled(virtualScrolling) ? (event) => {
       dispatch({
         scrollTop: event.currentTarget.scrollTop,
         type: ActionType.ScrollTable,

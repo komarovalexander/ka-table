@@ -50,6 +50,7 @@ describe('Virtualize', () => {
   });
 
   it('isVirtualScrollingEnabled', () => {
+    expect(isVirtualScrollingEnabled()).toBeFalsy();
     expect(isVirtualScrollingEnabled({})).toBeTruthy();
     expect(isVirtualScrollingEnabled({ enabled: true })).toBeTruthy();
     expect(isVirtualScrollingEnabled({ enabled: false })).toBeFalsy();
