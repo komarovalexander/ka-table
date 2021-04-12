@@ -270,11 +270,8 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     case ActionType.UpdateData:
       return { ...props, data: action.data };
     case ActionType.ScrollTable:
-      if (virtualScrolling) {
-          const scrollTop = action.scrollTop;
-          return {...props, ...{virtualScrolling: { ...virtualScrolling, scrollTop }}};
-        }
-      break;
+      const scrollTop = action.scrollTop;
+      return {...props, ...{virtualScrolling: { ...virtualScrolling, scrollTop }}};
     case ActionType.UpdateGroupsExpanded: {
       let currentGroupsExpanded = groupsExpanded;
       if (!currentGroupsExpanded) {
