@@ -84,14 +84,14 @@ describe('kaReducer', () => {
     });
   });
   it('ScrollTable', () => {
-    const scrollLeft = 10;
+    const scrollTop = 10;
     const intialState = {
       columns: [],
       data: [],
       rowKeyField: '',
     };
-    const newState = kaReducer(intialState, { type: ActionType.ScrollTable, scrollLeft });
-    expect(newState).toEqual(intialState);
+    const newState = kaReducer(intialState, { type: ActionType.ScrollTable, scrollTop });
+    expect(newState).toEqual({ ...intialState, virtualScrolling: { scrollTop } });
   });
   it('SelectAllRows', () => {
     const intialState = {
