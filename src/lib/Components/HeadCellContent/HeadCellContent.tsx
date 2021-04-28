@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { updateSortDirection } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { SortDirection } from '../../enums';
+import { FilteringMode, SortDirection } from '../../enums';
 import { IHeadCellProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
@@ -12,6 +12,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
     column,
     dispatch,
     sortingMode,
+    filteringMode,
     childComponents: { headCellContent }
   } = props;
   const sortingEnabled = isSortingEnabled(sortingMode);
@@ -27,6 +28,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   return (
     <div {...elementAttributes}>
       {content || <span>{column.title}</span>}
+      {filteringMode === FilteringMode.HeaderFilter && <span className={defaultOptions.css.iconHeaderFilter}>H</span>}
       {column.sortDirection && sortingEnabled && (
         <span
           className={

@@ -95,6 +95,7 @@ export enum SortingMode {
 export enum FilteringMode {
   None = 'none',
   FilterRow = 'filterRow',
+  HeaderFilter = 'headerFilter',
 }
 
 export enum FilterOperatorName {

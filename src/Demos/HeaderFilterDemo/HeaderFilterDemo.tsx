@@ -25,7 +25,7 @@ const tablePropsInit: ITableProps = {
     },
   ],
   data: dataArray,
-  filteringMode: FilteringMode.FilterRow,
+  filteringMode: FilteringMode.HeaderFilter,
   format: ({ column, value }) => {
     if (column.dataType === DataType.Date){
       return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });

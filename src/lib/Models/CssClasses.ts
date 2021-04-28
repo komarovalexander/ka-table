@@ -34,6 +34,7 @@ export class CssClasses {
   public iconClose = 'ka-icon ka-icon-close';
   public iconGroupArrowCollapsed = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-collapsed';
   public iconGroupArrowExpanded = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-expanded';
+  public iconHeaderFilter = 'ka-icon ka-icon-header-filter ka-icon-group-arrow-expanded';
   public iconSortArrowDown = 'ka-icon ka-icon-sort ka-icon-sort-arrow-down';
   public iconSortArrowUp = 'ka-icon ka-icon-sort ka-icon-sort-arrow-up';
 
