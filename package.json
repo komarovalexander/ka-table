@@ -1,6 +1,6 @@
 {
   "name": "ka-table",
-  "version": "6.8.2",
+  "version": "6.8.3",
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table/#/overview",
@@ -12,7 +12,7 @@
     "@types/react-csv": "^1.1.1",
     "@types/react-redux": "^7.1.7",
     "bootstrap": "^4.5.0",
-    "jspdf": "^2.1.1",
+    "jspdf": "^2.3.1",
     "jspdf-autotable": "^3.5.13",
     "lorem-ipsum": "^2.0.3",
     "materialize-css": "^1.0.0",

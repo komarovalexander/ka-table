@@ -90,7 +90,7 @@ export interface IGroupRowProps {
   groupIndex: number;
   groupKey: any[];
   isExpanded: boolean;
-  text: string;
+  text: string; // TODO: consider to pass the value insted of formatted text
 }
 
 export interface IHeadCellResizeProps {
