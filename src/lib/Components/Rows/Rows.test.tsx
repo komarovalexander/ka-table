@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { EditingMode } from '../../enums';
+import { getGroupMark } from '../../Utils/GroupUtils';
 import { ITableBodyProps } from '../TableBody/TableBody';
 import Rows, { IRowsProps } from './Rows';
 
@@ -18,12 +19,16 @@ const props: IRowsProps = {
   data: [
     { column: 1, column2: 2, id: 1 },
     { column: 12, column2: 22, id: 2 },
+    { key: [1], groupMark: getGroupMark(), value: 1 },
   ],
   dispatch: () => {},
+  format: ({value}) => `formatted: ${value}`,
   editableCells: [],
   editingMode: EditingMode.None,
-  groupColumnsCount: 0,
-  groupedColumns: [],
+  groupColumnsCount: 1,
+  groupedColumns: [
+    { key: 'column', title: 'Column 1' }],
+  groups: [{ columnKey: 'column'}],
   onFirstRowRendered: () => {},
   rowKeyField: 'id',
   selectedRows: [],
@@ -34,5 +39,14 @@ describe('Rows', () => {
     const element = document.createElement('tbody');
     ReactDOM.render(<Rows {...props} />, element);
     ReactDOM.unmountComponentAtNode(element);
+  });
+
+  it('formats group cell', () => {
+    const wrapper = mount((
+      <Rows {...props}/>
+    ), {
+      attachTo: document.createElement('tbody'),
+    });
+    expect(wrapper.find('.ka-group-text').text()).toBe('formatted: 1');
   });
 });
