@@ -7,14 +7,14 @@ or create an issue on github in any form
 
 2) Create a branch from the <code>master</code> branch with your feature or bug fix
 
-3) <code>npm i</code>
+3) <code>yarn</code>
 
 4)
-to run app: <code>npm run start</code>
+to run app: <code>yarn start</code>
 
-to run test: <code>npm run test</code>
+to run test: <code>yarn test</code>
 
-to create library's .tgz file: <code>npm run pack</code>
+to create library's .tgz file: <code>yarn run pack</code>
 
 5)
 if you fixed a bug - increase the 'path' package version

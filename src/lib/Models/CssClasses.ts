@@ -12,9 +12,12 @@ export class CssClasses {
   public tableWrapper = 'ka-table-wrapper';
   public table = 'ka-table';
   public tbody = 'ka-tbody';
+  public tfoot = 'ka-tfoot';
   public thead = 'ka-thead';
   public theadBackground = 'ka-thead-background';
   public theadCell = 'ka-thead-cell';
+  public summaryCell = 'ka-summary-cell';
+  public summaryRow = 'ka-summary-row';
   public theadCellContent = 'ka-thead-cell-content';
   public theadCellContentWrapper = 'ka-thead-cell-content-wrapper';
   public theadCellResize = 'ka-thead-cell-resize';

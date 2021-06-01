@@ -140,13 +140,14 @@ describe('getDraggableProps', () => {
   const key = 1;
   const actionType = 'test_action';
   const dispatch = jest.fn();
-  const actionCreator = jest.fn().mockReturnValue({ type: actionType });
+  const actionCreator = jest.fn();
   const draggedClass = 'draggedClassTest';
   const dragOverClass = 'dragOverClassTest';
   let event: any;
   beforeEach(() => {
     dispatch.mockClear();
     actionCreator.mockClear();
+    actionCreator.mockReturnValue({ type: actionType });
     event = {
       dataTransfer: {
         setData: jest.fn(),
@@ -183,8 +184,9 @@ describe('getDraggableProps', () => {
     const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
     result.onDrop!(event, {} as any);
     expect(event.currentTarget.classList.remove).toBeCalledWith(dragOverClass);
-    expect(dispatch).toBeCalledWith({ type: actionType });
     expect(actionCreator).toBeCalledWith(2, 1);
+    expect(dispatch).toBeCalledTimes(1);
+    expect(dispatch).toBeCalledWith({ type: actionType });
   });
   it('onDragEnter', () => {
     const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);

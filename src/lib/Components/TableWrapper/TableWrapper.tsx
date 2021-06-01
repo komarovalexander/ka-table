@@ -8,6 +8,7 @@ import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { prepareTableOptions } from '../../Utils/PropsUtils';
 import { isVirtualScrollingEnabled } from '../../Utils/Virtualize';
 import TableBody from '../TableBody/TableBody';
+import { TableFoot } from '../TableFoot/TableFoot';
 import { TableHead } from '../TableHead/TableHead';
 
 export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => {
@@ -78,6 +79,12 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
               rowReordering={rowReordering}
               selectedRows={selectedRows}
           />
+          {(childComponents.tableFoot || childComponents.summaryCell) && (
+              <TableFoot {...props}
+                data={data}
+                columns={preparedOptions.columns}
+                groupColumnsCount={preparedOptions.groupColumnsCount} />
+            )}
         </table>
       )}
     </div>
