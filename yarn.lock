@@ -2270,9 +2270,9 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@wojtekmaj/@wojtekmaj/enzyme-adapter-react-17@^0.6.1":
+"@wojtekmaj/enzyme-adapter-react-17@^0.6.1":
   version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@wojtekmaj/@wojtekmaj/enzyme-adapter-react-17/-/@wojtekmaj/enzyme-adapter-react-17-0.6.1.tgz#28caa37118c183e5f13c4dfb68cc32cde828ecbc"
+  resolved "https://registry.yarnpkg.com/@wojtekmaj/enzyme-adapter-react-17/-/enzyme-adapter-react-17-0.6.1.tgz#28caa37118c183e5f13c4dfb68cc32cde828ecbc"
   integrity sha512-xgPfzLVpN0epIHeZofahwr5qwpukEDNAbrufgeDWN6vZPtfblGCC+OZG5TlfK+A6ePVy8sBkD8S2X4tO17JKjg==
   dependencies:
     "@wojtekmaj/enzyme-adapter-utils" "^0.1.0"
