@@ -6,7 +6,6 @@
   "homepage": "https://komarovalexander.github.io/ka-table/#/overview",
   "dependencies": {
     "@types/enzyme": "^3.10.5",
-    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/materialize-css": "^1.0.8",
     "@types/react": "17.0.9",
     "@types/react-csv": "^1.1.1",
@@ -61,9 +60,9 @@
     "@types/react-highlight": "^0.12.2",
     "@types/react-router-dom": "^5.1.7",
     "@types/simulant": "^0.2.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "coveralls": "^3.0.11",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
     "gulp": "^4.0.2",
     "gulp-file": "^0.4.0",
     "gulp-gh-pages": "^0.5.4",
