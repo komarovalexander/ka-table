@@ -79,7 +79,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
               rowReordering={rowReordering}
               selectedRows={selectedRows}
           />
-          {(childComponents.tableFoot || childComponents.summaryCell) && (
+          {(childComponents.tableFoot || childComponents.summaryRow || childComponents.summaryCell) && (
               <TableFoot {...props}
                 data={data}
                 columns={preparedOptions.columns}
