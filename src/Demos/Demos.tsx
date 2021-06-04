@@ -67,6 +67,7 @@ import SortingCustomLogicDemo from './SortingCustomLogicDemo/SortingCustomLogicD
 import SortingDemo from './SortingDemo/SortingDemo';
 import SortingModesDemo from './SortingModesDemo/SortingModesDemo';
 import StateStoringDemo from './StateStoringDemo/StateStoringDemo';
+import SummaryDemo from './SummaryDemo/SummaryDemo';
 import TabIndexDemo from './TabIndexDemo/TabIndexDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
 
@@ -130,6 +131,7 @@ const demos: Demo[] = [
   new Demo(SortingModesDemo, '/sorting-modes', 'Sorting Modes', 'SortingModesDemo', 'https://stackblitz.com/edit/table-sorting-modes-js', 'https://stackblitz.com/edit/table-sorting-modes-ts', 'Sorting'),
   new Demo(SortingCustomLogicDemo, '/sorting-custom-logic', 'Sorting Logic', 'SortingCustomLogicDemo', 'https://stackblitz.com/edit/table-sorting-custom-logic-js', 'https://stackblitz.com/edit/table-sorting-custom-logic-ts', 'Sorting'),
   new Demo(StateStoringDemo, '/state-storing', 'State Storing', 'StateStoringDemo', 'https://stackblitz.com/edit/table-state-storing-js', 'https://stackblitz.com/edit/table-state-storing-ts', 'Miscellaneous'),
+  new Demo(SummaryDemo, '/summary', 'Summary', 'SummaryDemo', 'https://stackblitz.com/edit/table-summary-js', 'https://stackblitz.com/edit/table-summary-ts', 'Miscellaneous'),
   new Demo(TabIndexDemo, '/tab-index', 'Tab Index', 'TabIndexDemo', 'https://stackblitz.com/edit/table-tab-index-js', 'https://stackblitz.com/edit/table-tab-index-ts', 'Miscellaneous'),
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts', 'Editing'),
 ];

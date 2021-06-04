@@ -21,32 +21,88 @@ const tableProps: any = {
   rowKeyField: 'id',
 };
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<TableWrapper {...tableProps} />, div);
-  ReactDOM.unmountComponentAtNode(div);
-});
+describe('TableWrapper', () => {
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<TableWrapper {...tableProps} />, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
 
-it('should not dispatch ScrollTable on scroll', () => {
-  const wrapper = mount(<TableWrapper {...tableProps} />);
-  expect(wrapper.find('.ka-table-wrapper').prop('onScroll')).toBeUndefined();
-  expect(tableProps.dispatch).toBeCalledTimes(0);
-});
+  it('should not dispatch ScrollTable on scroll', () => {
+    const wrapper = mount(<TableWrapper {...tableProps} />);
+    expect(wrapper.find('.ka-table-wrapper').prop('onScroll')).toBeUndefined();
+    expect(tableProps.dispatch).toBeCalledTimes(0);
+  });
 
-it('should dispatch ScrollTable on scroll in case of virtual scrolling', () => {
-  const wrapper = mount(
-    (
-      <TableWrapper {...tableProps} virtualScrolling={({
-        itemHeight: 10,
-        tbodyHeight: 100
-      })}/>
-    )
-  );
-  const scrollTop = 11;
+  it('should dispatch ScrollTable on scroll in case of virtual scrolling', () => {
+    const wrapper = mount(
+      (
+        <TableWrapper {...tableProps} virtualScrolling={({
+          itemHeight: 10,
+          tbodyHeight: 100
+        })}/>
+      )
+    );
+    const scrollTop = 11;
 
-  wrapper.find('.ka-table-wrapper').prop('onScroll')!({ currentTarget: {scrollTop} } as any);
-  expect(tableProps.dispatch).toBeCalledTimes(1);
-  expect(tableProps.dispatch).toBeCalledWith(
-    { type: ActionType.ScrollTable, scrollTop },
-  );
+    wrapper.find('.ka-table-wrapper').prop('onScroll')!({ currentTarget: {scrollTop} } as any);
+    expect(tableProps.dispatch).toBeCalledTimes(1);
+    expect(tableProps.dispatch).toBeCalledWith(
+      { type: ActionType.ScrollTable, scrollTop },
+    );
+  });
+
+  it('does not have table foot by default', () => {
+    const wrapper = mount(<TableWrapper {...tableProps} />);
+
+    wrapper.contains('tfoot');
+    expect(wrapper.find('tfoot').length).toBe(0);
+  });
+
+  it('shows table foot in case of tableFoot to be set', () => {
+    const wrapper = mount((
+      <TableWrapper {...tableProps} childComponents={{
+        tableFoot: {
+          elementAttributes: () => ({ className: 'custom-footer' }),
+          content: () => <tr className='table-foot-custom-content'/>
+        }
+      }}/>
+    ));
+
+    wrapper.contains('tfoot');
+    expect(wrapper.find('tfoot').length).toBe(1);
+    expect(wrapper.find('tfoot.custom-footer').length).toBe(1);
+    expect(wrapper.find('.table-foot-custom-content').length).toBe(1);
+  });
+
+  it('shows table foot in case of summaryRow to be set', () => {
+    const wrapper = mount((
+      <TableWrapper {...tableProps} childComponents={{
+        summaryRow: {
+          elementAttributes: () => ({ className: 'custom-summaryRow' }),
+          content: () => <td className='summaryRow-content'/>
+        }
+      }}/>
+    ));
+
+    wrapper.contains('tfoot');
+    expect(wrapper.find('tfoot').length).toBe(1);
+    expect(wrapper.find('tr.custom-summaryRow').length).toBe(1);
+    expect(wrapper.find('.summaryRow-content').length).toBe(1);
+  });
+  it('shows table foot in case of summaryCell to be set', () => {
+    const wrapper = mount((
+      <TableWrapper {...tableProps} childComponents={{
+        summaryCell: {
+          elementAttributes: () => ({ className: 'custom-summaryCell' }),
+          content: () => <div className='summaryCell-content'/>
+        }
+      }}/>
+    ));
+
+    wrapper.contains('tfoot');
+    expect(wrapper.find('tfoot').length).toBe(1);
+    expect(wrapper.find('td.custom-summaryCell').length).toBe(2);
+    expect(wrapper.find('.summaryCell-content').length).toBe(2);
+  });
 });
