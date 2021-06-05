@@ -3,7 +3,7 @@ import React, { RefObject, useEffect, useRef } from 'react';
 import { ITableBodyProps } from '../../props';
 import { getValueByField } from '../../Utils/DataUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
-import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
+import { getGroupMark, getGroupSummaryMark, getGroupText } from '../../Utils/GroupUtils';
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
 
@@ -30,6 +30,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     validation,
   } = props;
   const groupMark = getGroupMark();
+  const groupSummaryMark = getGroupSummaryMark();
 
   const firstRowRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -57,6 +58,8 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             key={JSON.stringify(d.key)}
           />
         );
+      } else if (d.groupSummaryMark === groupSummaryMark) {
+        return <tr key={d.key}><td>Summary {JSON.stringify(d.groupData)}</td></tr>;
       } else {
         const rowKeyValue = getValueByField(d, rowKeyField);
         const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);

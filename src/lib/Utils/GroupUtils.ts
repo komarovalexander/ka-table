@@ -5,6 +5,10 @@ import { FormatFunc } from '../types';
 import { getValueByColumn } from './DataUtils';
 
 const groupMark = {};
+const groupSummaryMark = {};
+
+const getGroupSummary = (groupData: any[], key: any) => ({ groupData, groupSummaryMark, key: JSON.stringify([key, '--:+summary--']) });
+
 export const updateExpandedGroups = (groupsExpanded: any[][], groupKey: any[]): any[][] => {
   const newGroupsExpanded =
     groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(groupKey));
@@ -32,10 +36,14 @@ export const getGroupedData = (
 export const convertToFlat = (grouped: Map<any, any>, key: any[] = []) => {
   let result: any[] = [];
   grouped.forEach((value: any, groupValue: any) => {
-    const groupKey = [...key];
-    groupKey.push(groupValue);
-    result.push({ groupMark, key: groupKey, value: groupValue });
-    result = [...result, ...(Array.isArray(value) ? value : convertToFlat(value, groupKey))];
+    if (groupValue === groupSummaryMark){
+      result.push(value);
+    } else {
+      const groupKey = [...key];
+      groupKey.push(groupValue);
+      result.push({ groupMark, key: groupKey, value: groupValue });
+      result = [...result, ...(Array.isArray(value) ? value : convertToFlat(value, groupKey))];
+    }
   });
   return result;
 };
@@ -46,6 +54,7 @@ export const getGroupedStructure = (
   groupedColumns: Column[],
   expandedDeep: number = 0,
   groupsExpanded?: any[],
+  parentGroupKey: any[] = []
 ): Map<any, any> | void => {
   groups = [...groups];
   const group = groups.shift();
@@ -53,20 +62,28 @@ export const getGroupedStructure = (
     const column = groupedColumns && groupedColumns.find((g) => g.key === group.columnKey);
     if (column) {
       const grouped = groupBy(data, (item: any) => getValueByColumn(item, column));
-      grouped.forEach((value, key) => {
+      grouped.forEach((groupData, key) => {
         const groupExpandedItems = groupsExpanded && groupsExpanded.filter((ge) => ge[expandedDeep] === key);
         const isThisGroupExpanded = !groupExpandedItems
           || groupExpandedItems.some((ge) => ge.length === expandedDeep + 1);
         if (isThisGroupExpanded) {
+          const fullKey =  [...parentGroupKey, key];
           const newStructure = getGroupedStructure(
-            value,
+            groupData,
             groups,
             groupedColumns,
             expandedDeep + 1,
             groupExpandedItems && groupExpandedItems.filter((ge) => ge.length > expandedDeep + 1),
+            fullKey
           );
+
           if (newStructure) {
+            if (group.enableSummary){
+              newStructure.set(groupSummaryMark, getGroupSummary(groupData, fullKey));
+            }
             grouped.set(key, newStructure);
+          } else if (group.enableSummary) {
+            groupData.push(getGroupSummary([...groupData], fullKey));
           }
         } else {
           grouped.set(key, []);
@@ -96,6 +113,7 @@ export const groupBy = (data: any[], keyGetter: any, isEmptyValue: boolean = fal
 };
 
 export const getGroupMark = () => groupMark;
+export const getGroupSummaryMark = () => groupSummaryMark;
 
 export const getGroupText = (value: any, column: Column, format?: FormatFunc) => {
   return format ? format({ column, value }) : `${(column && column.title ? column.title + ': ' : '')}${value}`;

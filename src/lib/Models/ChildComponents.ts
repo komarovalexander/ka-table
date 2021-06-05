@@ -17,6 +17,7 @@ export class ChildComponents {
   public filterRowCell?: ChildComponent<IFilterRowEditorProps>;
   public groupCell?: ChildComponent<IGroupRowProps>;
   public groupRow?: ChildComponent<IGroupRowProps>;
+  public groupSummaryRow?: ChildComponent<IGroupRowProps>;
   public headCell?: ChildComponent<IHeadCellProps>;
   public headCellContent?: ChildComponent<IHeadCellProps>;
   public headCellResize?: ChildComponent<IHeadCellResizeProps>;
