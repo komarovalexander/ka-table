@@ -10,7 +10,7 @@ export const GroupSummaryRow: React.FunctionComponent<IGroupSummaryRowProps> = (
         childComponents,
         columns,
         groupColumnsCount
-    }= props;
+    } = props;
 
     const { elementAttributes, content } = getElementCustomization({
         className: defaultOptions.css.groupSummaryRow,
