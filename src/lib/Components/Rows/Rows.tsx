@@ -6,6 +6,7 @@ import { getRowEditableCells } from '../../Utils/FilterUtils';
 import { getGroupMark, getGroupSummaryMark, getGroupText } from '../../Utils/GroupUtils';
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
+import { GroupSummaryRow } from '../GroupSummaryRow/GroupSummaryRow';
 
 export interface IRowsProps extends ITableBodyProps {
   onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;
@@ -59,7 +60,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
           />
         );
       } else if (d.groupSummaryMark === groupSummaryMark) {
-        return <tr key={d.key}><td>Summary {JSON.stringify(d.groupData)}</td></tr>;
+        return <GroupSummaryRow {...props} groupData={d.groupData} groupIndex={d.groupIndex} />;
       } else {
         const rowKeyValue = getValueByField(d, rowKeyField);
         const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);

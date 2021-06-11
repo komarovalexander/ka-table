@@ -4,8 +4,10 @@ export class CssClasses {
   public cellEditor: string = 'ka-cell-editor';
   public cellText = 'ka-cell-text';
   public groupCell = 'ka-group-cell';
+  public groupSummaryRow = 'ka-group-summary-row'
   public detailsRow = 'ka-tr ka-details-row';
   public groupRow = 'ka-tr ka-group-row';
+  public groupSummaryCell = 'ka-cell ka-group-summary-cell';
   public kaCellEditorValidationError = 'ka-cell-editor-validation-error';
   public row = 'ka-tr ka-row';
   public rowSelected = 'ka-row-selected';

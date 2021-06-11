@@ -7,7 +7,7 @@ import { getValueByColumn } from './DataUtils';
 const groupMark = {};
 const groupSummaryMark = {};
 
-const getGroupSummary = (groupData: any[], key: any) => ({ groupData, groupSummaryMark, key: JSON.stringify([key, '--:+summary--']) });
+const getGroupSummary = (groupData: any[], key: any, groupIndex: any) => ({ groupData, groupSummaryMark, key: JSON.stringify([key, '--:+summary--']), groupIndex });
 
 export const updateExpandedGroups = (groupsExpanded: any[][], groupKey: any[]): any[][] => {
   const newGroupsExpanded =
@@ -79,11 +79,11 @@ export const getGroupedStructure = (
 
           if (newStructure) {
             if (group.enableSummary){
-              newStructure.set(groupSummaryMark, getGroupSummary(groupData, fullKey));
+              newStructure.set(groupSummaryMark, getGroupSummary(groupData, fullKey, expandedDeep));
             }
             grouped.set(key, newStructure);
           } else if (group.enableSummary) {
-            groupData.push(getGroupSummary([...groupData], fullKey));
+            groupData.push(getGroupSummary([...groupData], fullKey, expandedDeep));
           }
         } else {
           grouped.set(key, []);

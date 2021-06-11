@@ -20,7 +20,7 @@ const tablePropsInit: ITableProps = {
     { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' } },
   ],
   data: dataArray,
-  groups: [{ columnKey: 'country', enableSummary: true }, { columnKey: 'type', enableSummary: true }],
+  groups: [{ columnKey: 'country', enableSummary: false }, { columnKey: 'type', enableSummary: true }],
   rowKeyField: 'id',
 };
 
@@ -33,9 +33,13 @@ const GroupingSummaryDemo: React.FC = () => {
     <Table
       {...tableProps}
       childComponents={{
-        groupSummaryRow: {
-          content: () => {
-            return <>groupSummaryRow content</>;
+        groupSummaryCell: {
+          content: ({ groupData, column }) => {
+            switch (column.key) {
+              case 'age': return (
+                  <b>Max age: {Math.max.apply(Math, groupData.map((o) => o.age))}</b>
+              );
+            }
           }
         }
       }}
