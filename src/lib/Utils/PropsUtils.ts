@@ -10,6 +10,7 @@ import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
+import { getTreeData } from './TreeUtils';
 
 export function extendProps<T = HTMLElement>(
   childElementAttributes: AllHTMLAttributes<T>,
@@ -76,8 +77,11 @@ export const getData = (props: ITableProps) => {
     groups,
     groupsExpanded,
     paging,
+    parentRowKeyField,
+    parentsExpanded,
+    rowKeyField,
     sort,
-    sortingMode = SortingMode.None,
+    sortingMode = SortingMode.None
   } = props;
   let {
     data = [],
@@ -89,8 +93,9 @@ export const getData = (props: ITableProps) => {
   }
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
-  const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
-  data = getPageData(groupedData, paging);
+  data = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
+  data = parentRowKeyField ? getTreeData(data, rowKeyField, parentRowKeyField, parentsExpanded) : data;
+  data = getPageData(data, paging);
 
   return data;
 };

@@ -4,14 +4,13 @@ import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 
-const dataArray = [
+const data = [
   { parentId: null, id: 1, name: 'Microsoft', orderCount: 5 },
   { parentId: 1, id: 2, name: 'Xbox', orderCount: 2 },
   { parentId: 1, id: 3, name: 'HoloLens', orderCount: 3 },
   { parentId: null, id: 4, name: 'Apple', orderCount: 7 },
   { parentId: 4, id: 5, name: 'iPhone', orderCount: 2 },
   { parentId: 4, id: 6, name: 'MacBook', orderCount: 5 },
-
 ];
 
 const tablePropsInit: ITableProps = {
@@ -19,7 +18,7 @@ const tablePropsInit: ITableProps = {
     { key: 'name', title: 'Name', dataType: DataType.String },
     { key: 'orderCount', title: 'Count', dataType: DataType.Number },
   ],
-  data: dataArray,
+  data,
   parentRowKeyField: 'parentId',
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',

@@ -10,10 +10,13 @@ interface IRowCommonProps {
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
   editingMode: EditingMode;
+  index?: number;
+  isTreeParent?: boolean;
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
   selectedRows: any[];
+  treeDeep?: number;
 }
 
 export interface ICellProps {

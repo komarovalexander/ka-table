@@ -23,7 +23,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
 }) => {
   return (
     <>
-      {columns.map((column) => {
+      {columns.map((column, index) => {
         const editableCell = getEditableCell(column, rowEditableCells);
         const hasEditorValue = editableCell && editableCell.hasOwnProperty('editorValue');
         const editorValue = editableCell && editableCell.editorValue;
@@ -38,6 +38,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
             field={getField(column)}
             format={format}
             hasEditorValue={editableCell && editableCell.hasOwnProperty('editorValue')}
+            index={index}
             isDetailsRowShown={isDetailsRowShown}
             isEditableCell={!!editableCell}
             isSelectedRow={isSelectedRow}

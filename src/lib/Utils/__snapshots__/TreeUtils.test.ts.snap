@@ -1,0 +1,226 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TreeUtils getTreeData 2 levels 1`] = `
+Array [
+  Object {
+    "deep": 0,
+    "rowData": Object {
+      "id": 1,
+      "name": "level 1 - 1",
+      "orderCount": 5,
+      "parentId": null,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 7,
+      "name": "level 2 - 1",
+      "orderCount": 5,
+      "parentId": 1,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 2,
+    "rowData": Object {
+      "id": 2,
+      "name": "1 - 1 - Data 1",
+      "orderCount": 2,
+      "parentId": 7,
+    },
+    "treeDataMark": Object {},
+  },
+  Object {
+    "deep": 2,
+    "rowData": Object {
+      "id": 10,
+      "name": "1 - 1 - Data 2",
+      "orderCount": 2,
+      "parentId": 7,
+    },
+    "treeDataMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 8,
+      "name": "1 - level 2 - 2",
+      "orderCount": 5,
+      "parentId": 1,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 2,
+    "rowData": Object {
+      "id": 3,
+      "name": "1 - 2 - Data 1",
+      "orderCount": 3,
+      "parentId": 8,
+    },
+    "treeDataMark": Object {},
+  },
+  Object {
+    "deep": 0,
+    "rowData": Object {
+      "id": 4,
+      "name": "Level 1 - 2",
+      "orderCount": 7,
+      "parentId": null,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 5,
+      "name": "2 - Data 1",
+      "orderCount": 2,
+      "parentId": 4,
+    },
+    "treeDataMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 9,
+      "name": "2 - level 2 - 2",
+      "orderCount": 5,
+      "parentId": 4,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 2,
+    "rowData": Object {
+      "id": 6,
+      "name": "2 - 2 - Data 1",
+      "orderCount": 5,
+      "parentId": 9,
+    },
+    "treeDataMark": Object {},
+  },
+]
+`;
+
+exports[`TreeUtils getTreeData 3 levels 1`] = `
+Array [
+  Object {
+    "deep": 0,
+    "rowData": Object {
+      "id": 1,
+      "name": "level 1 - 1",
+      "orderCount": 5,
+      "parentId": null,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 7,
+      "name": "level 2 - 1",
+      "orderCount": 5,
+      "parentId": 1,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 2,
+    "rowData": Object {
+      "id": 2,
+      "name": "level 3 - 1",
+      "orderCount": 2,
+      "parentId": 7,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 3,
+    "rowData": Object {
+      "id": 10,
+      "name": "1 - 1 - 1 - Data 1",
+      "orderCount": 2,
+      "parentId": 2,
+    },
+    "treeDataMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 3,
+      "name": "1 - Data 1",
+      "orderCount": 3,
+      "parentId": 1,
+    },
+    "treeDataMark": Object {},
+  },
+]
+`;
+
+exports[`TreeUtils getTreeData default 1`] = `
+Array [
+  Object {
+    "deep": 0,
+    "rowData": Object {
+      "id": 1,
+      "name": "level 1 - 1",
+      "orderCount": 5,
+      "parentId": null,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 2,
+      "name": "1 - Data 1",
+      "orderCount": 2,
+      "parentId": 1,
+    },
+    "treeDataMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 3,
+      "name": "1 - Data 2",
+      "orderCount": 3,
+      "parentId": 1,
+    },
+    "treeDataMark": Object {},
+  },
+  Object {
+    "deep": 0,
+    "rowData": Object {
+      "id": 4,
+      "name": "Level 1 - 2",
+      "orderCount": 7,
+      "parentId": null,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 5,
+      "name": "2 - Data 1",
+      "orderCount": 2,
+      "parentId": 4,
+    },
+    "treeDataMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 6,
+      "name": "2 - Data 2",
+      "orderCount": 5,
+      "parentId": 4,
+    },
+    "treeDataMark": Object {},
+  },
+]
+`;

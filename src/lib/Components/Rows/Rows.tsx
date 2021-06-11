@@ -4,6 +4,7 @@ import { ITableBodyProps } from '../../props';
 import { getValueByField } from '../../Utils/DataUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
 import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
+import { treeDataMark, treeGroupMark } from '../../Utils/TreeUtils';
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
 
@@ -62,6 +63,10 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
         const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
         const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
         const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
+        const isTreeParent = d.treeGroupMark === treeGroupMark;
+        const isTreeData =  d.treeDataMark === treeDataMark;
+        const isTreeRow = isTreeParent || isTreeData;
+        const rowData = isTreeRow ? d.rowData : d;
         const dataRow = (
           <DataAndDetailsRows
             childComponents={props.childComponents}
@@ -69,12 +74,14 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             dispatch={dispatch}
             editableCells={props.editableCells}
             editingMode={props.editingMode}
+            isTreeParent={isTreeParent}
+            treeDeep={isTreeRow && d.deep}
             format={format}
             groupColumnsCount={props.groupColumnsCount}
             isDetailsRowShown={isDetailsRowShown}
             isSelectedRow={isSelectedRow}
             key={rowKeyValue}
-            rowData={d}
+            rowData={rowData}
             rowEditableCells={rowEditableCells}
             rowKeyField={props.rowKeyField}
             rowKeyValue={rowKeyValue}
