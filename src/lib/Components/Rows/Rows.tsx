@@ -60,7 +60,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
           />
         );
       } else if (d.groupSummaryMark === groupSummaryMark) {
-        return <GroupSummaryRow {...props} groupData={d.groupData} groupIndex={d.groupIndex} />;
+        return <GroupSummaryRow {...props} groupData={d.groupData} key={d.key} groupIndex={d.groupIndex} />;
       } else {
         const rowKeyValue = getValueByField(d, rowKeyField);
         const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);

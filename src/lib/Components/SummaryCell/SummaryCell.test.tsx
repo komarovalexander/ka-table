@@ -18,7 +18,7 @@ const tableProps: any = {
 };
 
 it('renders without crashing', () => {
-  const div = document.createElement('table');
+  const div = document.createElement('tr');
   ReactDOM.render(<SummaryCell {...tableProps} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
