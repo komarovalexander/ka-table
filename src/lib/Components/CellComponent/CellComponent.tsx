@@ -8,6 +8,7 @@ import CellText from '../CellText/CellText';
 
 const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   const {
+    beforeContentElement,
     childComponents,
     column: { style },
     isEditableCell,
@@ -22,14 +23,17 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
     <td {...elementAttributes}>
       { content ||
       (
-        isEditableCell ?
-        (
-          <CellEditor {...props} />
-        )
-        :
-        (
-          <CellText {...props} />
-        )
+        <>
+          {beforeContentElement}
+          {isEditableCell ?
+          (
+            <CellEditor {...props} />
+          )
+          :
+          (
+            <CellText {...props} />
+          )}
+        </>
       )
       }
     </td>

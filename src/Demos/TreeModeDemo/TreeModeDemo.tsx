@@ -20,6 +20,7 @@ const tablePropsInit: ITableProps = {
   ],
   data,
   parentRowKeyField: 'parentId',
+  parentsExpanded: [1],
   editingMode: EditingMode.Cell,
   rowKeyField: 'id',
   sortingMode: SortingMode.Single,

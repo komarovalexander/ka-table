@@ -13,6 +13,7 @@ import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
 import { getDownCell, getLeftCell, getRightCell, getUpCell } from '../Utils/NavigationUtils';
 import { getData, prepareTableOptions } from '../Utils/PropsUtils';
+import { getExpandedParents } from '../Utils/TreeUtils';
 
 const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
   const newEditableCells = [...editableCells];
@@ -49,6 +50,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     groupsExpanded,
     loading,
     paging,
+    parentsExpanded,
     rowKeyField,
     selectedRows = [],
     validation,
@@ -336,6 +338,17 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     case ActionType.UpdateRow: {
       const newData = getCopyOfArrayAndInsertOrReplaceItem(action.rowData, rowKeyField, data);
       return { ...props, data: newData };
+    }
+    case ActionType.CollapseTreeParent: {
+      let currentExpanded = parentsExpanded;
+      if (!currentExpanded){
+        const preparedOptions = prepareTableOptions(props);
+        currentExpanded = getExpandedParents(preparedOptions.groupedData, rowKeyField);
+      }
+      return { ...props, parentsExpanded: currentExpanded.filter(item => item !== action.rowKeyValue) };
+    }
+    case ActionType.ExpandTreeParent: {
+      return { ...props, parentsExpanded: [...(parentsExpanded || []), action.rowKeyValue] };
     }
   }
   return props;

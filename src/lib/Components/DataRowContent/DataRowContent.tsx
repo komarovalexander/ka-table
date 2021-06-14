@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { collapseTreeParent, expandTreeParent } from '../../actionCreators';
+import defaultOptions from '../../defaultOptions';
 import { IDataRowProps } from '../../props';
 import { getEditableCell } from '../../Utils/CellUtils';
 import { getField } from '../../Utils/ColumnUtils';
@@ -14,6 +16,8 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   format,
   isDetailsRowShown,
   isSelectedRow,
+  isTreeExpanded,
+  isTreeParent,
   rowData,
   rowEditableCells,
   rowKeyField,
@@ -21,6 +25,13 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   selectedRows,
   validation,
 }) => {
+  const arrow = isTreeParent ? [(
+    <div
+      onClick={() => { dispatch(isTreeExpanded ? collapseTreeParent(rowKeyValue) : expandTreeParent(rowKeyValue)); }}
+      className={isTreeExpanded
+        ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed}
+    />
+  )] : undefined;
   return (
     <>
       {columns.map((column, index) => {
@@ -30,6 +41,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
         const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
         return (
           <CellComponent
+            beforeContentElement={arrow?.pop()}
             childComponents={childComponents}
             column={column}
             dispatch={dispatch}
@@ -38,7 +50,6 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
             field={getField(column)}
             format={format}
             hasEditorValue={editableCell && editableCell.hasOwnProperty('editorValue')}
-            index={index}
             isDetailsRowShown={isDetailsRowShown}
             isEditableCell={!!editableCell}
             isSelectedRow={isSelectedRow}

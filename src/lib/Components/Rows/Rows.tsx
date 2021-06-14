@@ -10,6 +10,7 @@ import GroupRow from '../GroupRow/GroupRow';
 
 export interface IRowsProps extends ITableBodyProps {
   onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;
+  parentsExpanded?: any[];
 }
 
 const Rows: React.FunctionComponent<IRowsProps> = (props) => {
@@ -25,6 +26,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     groups = [],
     groupsExpanded = [],
     onFirstRowRendered,
+    parentsExpanded,
     rowKeyField,
     rowReordering,
     selectedRows,
@@ -59,14 +61,15 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
           />
         );
       } else {
-        const rowKeyValue = getValueByField(d, rowKeyField);
-        const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
-        const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
-        const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
         const isTreeParent = d.treeGroupMark === treeGroupMark;
         const isTreeData =  d.treeDataMark === treeDataMark;
         const isTreeRow = isTreeParent || isTreeData;
         const rowData = isTreeRow ? d.rowData : d;
+        const rowKeyValue = getValueByField(rowData, rowKeyField);
+        const isTreeExpanded = isTreeParent && (!parentsExpanded || parentsExpanded.includes(rowKeyValue));
+        const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
+        const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
+        const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
         const dataRow = (
           <DataAndDetailsRows
             childComponents={props.childComponents}
@@ -75,6 +78,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             editableCells={props.editableCells}
             editingMode={props.editingMode}
             isTreeParent={isTreeParent}
+            isTreeExpanded={isTreeExpanded}
             treeDeep={isTreeRow && d.deep}
             format={format}
             groupColumnsCount={props.groupColumnsCount}

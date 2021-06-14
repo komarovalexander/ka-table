@@ -12,6 +12,7 @@ interface IRowCommonProps {
   editingMode: EditingMode;
   index?: number;
   isTreeParent?: boolean;
+  isTreeExpanded?: boolean;
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
@@ -20,6 +21,7 @@ interface IRowCommonProps {
 }
 
 export interface ICellProps {
+  beforeContentElement?: any;
   childComponents: ChildComponents;
   column: Column;
   dispatch: DispatchFunc;

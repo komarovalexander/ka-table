@@ -38,7 +38,7 @@ export interface ITableProps {
   paging?: PagingOptions;
   rowKeyField: string;
   parentRowKeyField?: string;
-  parentsExpanded?: any[][];
+  parentsExpanded?: any[];
   rowReordering?: boolean;
   search?: SearchFunc;
   searchText?: string;

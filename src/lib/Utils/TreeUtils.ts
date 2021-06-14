@@ -4,11 +4,19 @@ import { getValueByField } from './DataUtils';
 export const treeGroupMark = {};
 export const treeDataMark = {};
 
+
+export const getExpandedParents = (groupedData: any[], rowKeyField: any): any[][] => {
+  return groupedData
+    .filter((item) => item.treeGroupMark === treeGroupMark)
+    .map((item) => getValueByField(item.rowData, rowKeyField));
+};
+
 const getItemStructure = (
   item: any,
   dataHash: any,
   rowKeyField: any,
   deep: number = 0): any[] => {
+    const key = getValueByField(item, rowKeyField);
     const children = dataHash[getValueByField(item, rowKeyField)];
     if (!children){
       return [{ treeDataMark, rowData: item, deep }];
@@ -33,11 +41,13 @@ export const getTreeData = (
         rootElements.push(d);
         return;
       }
-      const fieldValue = getValueByField(d, parentRowKeyField) ?? undefined;
-      if (!dataHash[fieldValue]){
-        dataHash[fieldValue] = [];
+      const rowKeyValue = getValueByField(d, parentRowKeyField) ?? undefined;
+      if (!dataHash[rowKeyValue]){
+        dataHash[rowKeyValue] = [];
       }
-      dataHash[fieldValue].push(d);
+      if (!parentsExpanded || parentsExpanded.includes(rowKeyValue)) {
+        dataHash[rowKeyValue].push(d);
+      }
     });
     const newData: any[] = [];
     rootElements.forEach(d => {
