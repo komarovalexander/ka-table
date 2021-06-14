@@ -16,7 +16,6 @@ const getItemStructure = (
   dataHash: any,
   rowKeyField: any,
   deep: number = 0): any[] => {
-    const key = getValueByField(item, rowKeyField);
     const children = dataHash[getValueByField(item, rowKeyField)];
     if (!children){
       return [{ treeDataMark, rowData: item, deep }];
