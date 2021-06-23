@@ -18,7 +18,7 @@ const getItemStructure = (
   deep: number = 0): any[] => {
     const children = dataHash[getValueByField(item, rowKeyField)];
     if (!children){
-      return [{ treeDataMark, rowData: item, deep }];
+      return [{ treeDataMark, rowData: item, deep: deep + 1 }];
     }
     const result = [{ treeGroupMark, rowData: item, deep }];
     children.forEach((c: any) => {

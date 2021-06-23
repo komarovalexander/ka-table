@@ -79,7 +79,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             editingMode={props.editingMode}
             isTreeParent={isTreeParent}
             isTreeExpanded={isTreeExpanded}
-            treeDeep={isTreeRow && d.deep}
+            deep={isTreeRow && d.deep}
             format={format}
             groupColumnsCount={props.groupColumnsCount}
             isDetailsRowShown={isDetailsRowShown}

@@ -8,23 +8,24 @@ import CellText from '../CellText/CellText';
 
 const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   const {
-    beforeContentElement,
+    deep,
+    treeArrowElement,
     childComponents,
     column: { style },
     isEditableCell,
   } = props;
 
   const { elementAttributes, content } = getElementCustomization({
-    className: defaultOptions.css.cell,
+    className: `${defaultOptions.css.cell} ${deep != null ? defaultOptions.css.treeCell : ''}`,
     style
   }, props, childComponents.cell);
-
   return (
     <td {...elementAttributes}>
+      {deep ? Array(deep).fill(undefined).map((_, index) => <div key={index} className={'ka-empty-space'}/>) : null}
       { content ||
       (
         <>
-          {beforeContentElement}
+          {treeArrowElement}
           {isEditableCell ?
           (
             <CellEditor {...props} />

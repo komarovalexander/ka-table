@@ -7,23 +7,24 @@ import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 interface IRowCommonProps {
   childComponents: ChildComponents;
   columns: Column[];
+  deep?: number;
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
   editingMode: EditingMode;
   index?: number;
-  isTreeParent?: boolean;
   isTreeExpanded?: boolean;
+  isTreeParent?: boolean;
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
   selectedRows: any[];
-  treeDeep?: number;
 }
 
 export interface ICellProps {
-  beforeContentElement?: any;
+  treeArrowElement?: any;
   childComponents: ChildComponents;
   column: Column;
+  deep?: number;
   dispatch: DispatchFunc;
   editingMode: EditingMode;
   editorValue?: any;
