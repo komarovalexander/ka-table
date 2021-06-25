@@ -23,7 +23,7 @@ Array [
     "treeGroupMark": Object {},
   },
   Object {
-    "deep": 2,
+    "deep": 3,
     "rowData": Object {
       "id": 2,
       "name": "1 - 1 - Data 1",
@@ -33,7 +33,7 @@ Array [
     "treeDataMark": Object {},
   },
   Object {
-    "deep": 2,
+    "deep": 3,
     "rowData": Object {
       "id": 10,
       "name": "1 - 1 - Data 2",
@@ -53,7 +53,7 @@ Array [
     "treeGroupMark": Object {},
   },
   Object {
-    "deep": 2,
+    "deep": 3,
     "rowData": Object {
       "id": 3,
       "name": "1 - 2 - Data 1",
@@ -73,7 +73,7 @@ Array [
     "treeGroupMark": Object {},
   },
   Object {
-    "deep": 1,
+    "deep": 2,
     "rowData": Object {
       "id": 5,
       "name": "2 - Data 1",
@@ -93,7 +93,7 @@ Array [
     "treeGroupMark": Object {},
   },
   Object {
-    "deep": 2,
+    "deep": 3,
     "rowData": Object {
       "id": 6,
       "name": "2 - 2 - Data 1",
@@ -138,7 +138,7 @@ Array [
     "treeGroupMark": Object {},
   },
   Object {
-    "deep": 3,
+    "deep": 4,
     "rowData": Object {
       "id": 10,
       "name": "1 - 1 - 1 - Data 1",
@@ -148,7 +148,7 @@ Array [
     "treeDataMark": Object {},
   },
   Object {
-    "deep": 1,
+    "deep": 2,
     "rowData": Object {
       "id": 3,
       "name": "1 - Data 1",
@@ -173,7 +173,7 @@ Array [
     "treeGroupMark": Object {},
   },
   Object {
-    "deep": 1,
+    "deep": 2,
     "rowData": Object {
       "id": 2,
       "name": "1 - Data 1",
@@ -183,7 +183,7 @@ Array [
     "treeDataMark": Object {},
   },
   Object {
-    "deep": 1,
+    "deep": 2,
     "rowData": Object {
       "id": 3,
       "name": "1 - Data 2",
@@ -203,7 +203,7 @@ Array [
     "treeGroupMark": Object {},
   },
   Object {
-    "deep": 1,
+    "deep": 2,
     "rowData": Object {
       "id": 5,
       "name": "2 - Data 1",
@@ -213,7 +213,7 @@ Array [
     "treeDataMark": Object {},
   },
   Object {
-    "deep": 1,
+    "deep": 2,
     "rowData": Object {
       "id": 6,
       "name": "2 - Data 2",
