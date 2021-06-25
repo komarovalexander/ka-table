@@ -35,16 +35,16 @@ export const getTreeData = (
     const dataHash: any = {};
     const rootElements: any[] = [];
     data.forEach(d => {
-      if (!d[parentRowKeyField]){
+      const parentRowKeyValue = getValueByField(d, parentRowKeyField) ?? undefined;
+      if (!parentRowKeyValue){
         rootElements.push(d);
         return;
       }
-      const rowKeyValue = getValueByField(d, parentRowKeyField) ?? undefined;
-      if (!dataHash[rowKeyValue]){
-        dataHash[rowKeyValue] = [];
+      if (!dataHash[parentRowKeyValue]){
+        dataHash[parentRowKeyValue] = [];
       }
-      if (!parentsExpanded || parentsExpanded.includes(rowKeyValue)) {
-        dataHash[rowKeyValue].push(d);
+      if (!parentsExpanded || parentsExpanded.includes(parentRowKeyValue)) {
+        dataHash[parentRowKeyValue].push(d);
       }
     });
     const newData: any[] = [];
