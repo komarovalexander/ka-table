@@ -1,4 +1,4 @@
-import { getTreeData } from './TreeUtils';
+import { getExpandedParents, getTreeData, treeDataMark, treeGroupMark } from './TreeUtils';
 
 describe('TreeUtils', () => {
   describe('getTreeData', () => {
@@ -41,6 +41,18 @@ describe('TreeUtils', () => {
       ];
       const treeData = getTreeData(data, 'id', 'parentId', undefined);
       expect(treeData).toMatchSnapshot();
+    });
+  });
+
+  describe('getExpandedParents', () => {
+    it('default', () => {
+      const data = [
+        { treeGroupMark, rowData: { parentId: null, id: 1, name: 'level 1', orderCount: 5 }},
+        { treeGroupMark, rowData: { parentId: 1, id: 2, name: 'level 2', orderCount: 2 }},
+        { treeDataMark, rowData: { parentId: 2, id: 3, name: 'Data 1', orderCount: 2 }}
+      ];
+      const expandedParents = getExpandedParents(data, 'id');
+      expect(expandedParents).toEqual([1, 2]);
     });
   });
 });

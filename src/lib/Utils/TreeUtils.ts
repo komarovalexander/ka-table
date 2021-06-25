@@ -5,11 +5,10 @@ export const treeGroupMark = {};
 export const treeDataMark = {};
 
 
-export const getExpandedParents = (groupedData: any[], rowKeyField: any): any[][] => {
-  return groupedData
+export const getExpandedParents = (treeData: any[], rowKeyField: any): any[][] =>
+  treeData
     .filter((item) => item.treeGroupMark === treeGroupMark)
     .map((item) => getValueByField(item.rowData, rowKeyField));
-};
 
 const getItemStructure = (
   item: any,
