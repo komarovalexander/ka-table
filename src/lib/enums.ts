@@ -23,13 +23,11 @@ export enum ActionType {
   ClearSingleAction = 'ClearSingleAction',
   CloseEditor = 'CloseEditor',
   CloseRowEditors = 'CloseRowEditors',
-  CollapseTreeParent = 'CollapseTreeParent',
   DeleteRow = 'DeleteRow',
   DeselectAllFilteredRows = 'DeselectAllFilteredRows',
   DeselectAllRows = 'DeselectAllRows',
   DeselectAllVisibleRows = 'DeselectAllVisibleRows',
   DeselectRow = 'DeselectRow',
-  ExpandTreeParent = 'ExpandTreeParent',
   HideColumn = 'HideColumn',
   HideDetailsRow = 'HideDetailsRow',
   HideLoading = 'HideLoading',
@@ -71,6 +69,7 @@ export enum ActionType {
   UpdatePagesCount = 'UpdatePagesCount',
   UpdateRow = 'UpdateRow',
   UpdateSortDirection = 'UpdateSortDirection',
+  UpdateTreeGroupExpanded = 'UpdateTreeGroupExpanded',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
 }
 

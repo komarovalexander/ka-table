@@ -30,12 +30,12 @@ const getItemStructure = (
 export const getTreeData = (
   data: any[],
   rowKeyField: any,
-  parentRowKeyField: any,
-  parentsExpanded?: any[][]): any[] => {
+  treeGroupKeyField: any,
+  treeGroupsExpanded?: any[][]): any[] => {
     const dataHash: any = {};
     const rootElements: any[] = [];
     data.forEach(d => {
-      const parentRowKeyValue = getValueByField(d, parentRowKeyField) ?? undefined;
+      const parentRowKeyValue = getValueByField(d, treeGroupKeyField) ?? undefined;
       if (!parentRowKeyValue){
         rootElements.push(d);
         return;
@@ -43,7 +43,7 @@ export const getTreeData = (
       if (!dataHash[parentRowKeyValue]){
         dataHash[parentRowKeyValue] = [];
       }
-      if (!parentsExpanded || parentsExpanded.includes(parentRowKeyValue)) {
+      if (!treeGroupsExpanded || treeGroupsExpanded.includes(parentRowKeyValue)) {
         dataHash[parentRowKeyValue].push(d);
       }
     });

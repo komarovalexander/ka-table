@@ -50,7 +50,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     groupsExpanded,
     loading,
     paging,
-    parentsExpanded,
+    treeGroupsExpanded,
     rowKeyField,
     selectedRows = [],
     validation,
@@ -339,16 +339,21 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const newData = getCopyOfArrayAndInsertOrReplaceItem(action.rowData, rowKeyField, data);
       return { ...props, data: newData };
     }
-    case ActionType.CollapseTreeParent: {
-      let currentExpanded = parentsExpanded;
+    case ActionType.UpdateTreeGroupExpanded: {
+      const rowKeyValue = action.rowKeyValue;
+      let value = action.value;
+      if (value == null){
+        value = treeGroupsExpanded ? !treeGroupsExpanded.some(v => v === rowKeyValue) : false;
+      }
+      if (value){
+        return { ...props, treeGroupsExpanded: [...(treeGroupsExpanded || []), rowKeyValue] };
+      }
+      let currentExpanded = treeGroupsExpanded;
       if (!currentExpanded){
         const preparedOptions = prepareTableOptions(props);
         currentExpanded = getExpandedParents(preparedOptions.groupedData, rowKeyField);
       }
-      return { ...props, parentsExpanded: currentExpanded.filter(item => item !== action.rowKeyValue) };
-    }
-    case ActionType.ExpandTreeParent: {
-      return { ...props, parentsExpanded: [...(parentsExpanded || []), action.rowKeyValue] };
+      return { ...props, treeGroupsExpanded: currentExpanded.filter(item => item !== rowKeyValue) };
     }
   }
   return props;

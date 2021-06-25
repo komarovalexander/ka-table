@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { collapseTreeParent, expandTreeParent } from '../../actionCreators';
+import { updateTreeGroupExpanded } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { IDataRowProps } from '../../props';
 import { getEditableCell } from '../../Utils/CellUtils';
@@ -18,7 +18,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   isDetailsRowShown,
   isSelectedRow,
   isTreeExpanded,
-  isTreeParent,
+  isTreeGroup,
   rowData,
   rowEditableCells,
   rowKeyField,
@@ -26,9 +26,9 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   selectedRows,
   validation,
 }) => {
-  const arrow = isTreeParent ? [(
+  const arrow = isTreeGroup ? [(
     <div
-      onClick={() => { dispatch(isTreeExpanded ? collapseTreeParent(rowKeyValue) : expandTreeParent(rowKeyValue)); }}
+      onClick={() => dispatch(updateTreeGroupExpanded(rowKeyValue))}
       className={isTreeExpanded
         ? defaultOptions.css.iconTreeArrowExpanded : defaultOptions.css.iconTreeArrowCollapsed}
     />

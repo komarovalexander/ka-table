@@ -255,12 +255,8 @@ export const moveFocusedDown = (settings?: IMoveFocusedSettings) => ({
   type: ActionType.MoveFocusedDown
 });
 
-export const expandTreeParent = (rowKeyValue: any) => ({
+export const updateTreeGroupExpanded = (rowKeyValue: any, value?: boolean) => ({
   rowKeyValue,
-  type: ActionType.ExpandTreeParent
-});
-
-export const collapseTreeParent = (rowKeyValue: any) => ({
-  rowKeyValue,
-  type: ActionType.CollapseTreeParent
+  value,
+  type: ActionType.UpdateTreeGroupExpanded,
 });

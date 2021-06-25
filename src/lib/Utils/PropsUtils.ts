@@ -77,8 +77,8 @@ export const getData = (props: ITableProps) => {
     groups,
     groupsExpanded,
     paging,
-    parentRowKeyField,
-    parentsExpanded,
+    treeGroupKeyField,
+    treeGroupsExpanded,
     rowKeyField,
     sort,
     sortingMode = SortingMode.None
@@ -94,7 +94,7 @@ export const getData = (props: ITableProps) => {
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
   data = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
-  data = parentRowKeyField ? getTreeData(data, rowKeyField, parentRowKeyField, parentsExpanded) : data;
+  data = treeGroupKeyField ? getTreeData(data, rowKeyField, treeGroupKeyField, treeGroupsExpanded) : data;
   data = getPageData(data, paging);
 
   return data;

@@ -13,7 +13,7 @@ interface IRowCommonProps {
   editingMode: EditingMode;
   index?: number;
   isTreeExpanded?: boolean;
-  isTreeParent?: boolean;
+  isTreeGroup?: boolean;
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;

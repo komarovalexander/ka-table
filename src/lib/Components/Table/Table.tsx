@@ -37,8 +37,8 @@ export interface ITableProps {
   loading?: ILoadingProps;
   paging?: PagingOptions;
   rowKeyField: string;
-  parentRowKeyField?: string;
-  parentsExpanded?: any[];
+  treeGroupKeyField?: string;
+  treeGroupsExpanded?: any[];
   rowReordering?: boolean;
   search?: SearchFunc;
   searchText?: string;

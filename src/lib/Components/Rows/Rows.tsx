@@ -10,7 +10,7 @@ import GroupRow from '../GroupRow/GroupRow';
 
 export interface IRowsProps extends ITableBodyProps {
   onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;
-  parentsExpanded?: any[];
+  treeGroupsExpanded?: any[];
 }
 
 const Rows: React.FunctionComponent<IRowsProps> = (props) => {
@@ -26,7 +26,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     groups = [],
     groupsExpanded = [],
     onFirstRowRendered,
-    parentsExpanded,
+    treeGroupsExpanded,
     rowKeyField,
     rowReordering,
     selectedRows,
@@ -61,12 +61,12 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
           />
         );
       } else {
-        const isTreeParent = d.treeGroupMark === treeGroupMark;
+        const isTreeGroup = d.treeGroupMark === treeGroupMark;
         const isTreeData =  d.treeDataMark === treeDataMark;
-        const isTreeRow = isTreeParent || isTreeData;
+        const isTreeRow = isTreeGroup || isTreeData;
         const rowData = isTreeRow ? d.rowData : d;
         const rowKeyValue = getValueByField(rowData, rowKeyField);
-        const isTreeExpanded = isTreeParent && (!parentsExpanded || parentsExpanded.includes(rowKeyValue));
+        const isTreeExpanded = isTreeGroup && (!treeGroupsExpanded || treeGroupsExpanded.includes(rowKeyValue));
         const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
         const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
         const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
@@ -77,7 +77,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             dispatch={dispatch}
             editableCells={props.editableCells}
             editingMode={props.editingMode}
-            isTreeParent={isTreeParent}
+            isTreeGroup={isTreeGroup}
             isTreeExpanded={isTreeExpanded}
             deep={isTreeRow && d.deep}
             format={format}
