@@ -116,6 +116,49 @@ Array [
 ]
 `;
 
+exports[`GroupUtils convertToFlat inner group with summart 1`] = `
+Array [
+  Object {
+    "groupMark": Object {},
+    "key": Array [
+      "France",
+    ],
+    "value": "France",
+  },
+  Object {
+    "groupMark": Object {},
+    "key": Array [
+      "France",
+      "Cat",
+    ],
+    "value": "Cat",
+  },
+  Object {
+    "country": "France",
+    "name": "Simba",
+    "type": "Cat",
+  },
+  Object {
+    "groupData": Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+    ],
+    "groupIndex": 0,
+    "groupSummaryMark": Object {},
+    "key": Array [
+      Array [
+        "France",
+        "Cat",
+      ],
+      "--: + summary--\\\\",
+    ],
+  },
+]
+`;
+
 exports[`GroupUtils convertToFlat simple 1`] = `
 Array [
   Object {

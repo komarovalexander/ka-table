@@ -4,8 +4,8 @@ import { Group } from '../Models/Group';
 import { FormatFunc } from '../types';
 import { getValueByColumn } from './DataUtils';
 
-const groupMark = {};
-const groupSummaryMark = {};
+export const groupMark = {};
+export const groupSummaryMark = {};
 
 const getGroupSummary = (groupData: any[], key: any, groupIndex: any) => ({ groupData, groupSummaryMark, key: JSON.stringify([key, '--:+summary--']), groupIndex });
 
@@ -113,7 +113,6 @@ export const groupBy = (data: any[], keyGetter: any, isEmptyValue: boolean = fal
 };
 
 export const getGroupMark = () => groupMark;
-export const getGroupSummaryMark = () => groupSummaryMark;
 
 export const getGroupText = (value: any, column: Column, format?: FormatFunc) => {
   return format ? format({ column, value }) : `${(column && column.title ? column.title + ': ' : '')}${value}`;

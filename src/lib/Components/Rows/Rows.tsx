@@ -3,7 +3,7 @@ import React, { RefObject, useEffect, useRef } from 'react';
 import { ITableBodyProps } from '../../props';
 import { getValueByField } from '../../Utils/DataUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
-import { getGroupMark, getGroupSummaryMark, getGroupText } from '../../Utils/GroupUtils';
+import { getGroupMark, getGroupText, groupSummaryMark } from '../../Utils/GroupUtils';
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
 import { GroupSummaryRow } from '../GroupSummaryRow/GroupSummaryRow';
@@ -31,7 +31,6 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     validation,
   } = props;
   const groupMark = getGroupMark();
-  const groupSummaryMark = getGroupSummaryMark();
 
   const firstRowRef = useRef<HTMLInputElement>(null);
   useEffect(() => {

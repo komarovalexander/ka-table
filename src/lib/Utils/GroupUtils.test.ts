@@ -2,7 +2,7 @@ import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import {
   convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, getGroupText, groupBy,
-  updateExpandedGroups,
+  groupSummaryMark, updateExpandedGroups,
 } from './GroupUtils';
 
 describe('GroupUtils', () => {
@@ -34,6 +34,30 @@ describe('GroupUtils', () => {
           name: 'Simba',
           type: 'Cat',
         }]]]),
+      ]]);
+      const result = convertToFlat(mappedData);
+      expect(result).toMatchSnapshot();
+    });
+    it('inner group with summart', () => {
+      const mappedData = new Map([['France',
+        new Map([['Cat', [{
+          country: 'France',
+          name: 'Simba',
+          type: 'Cat',
+        },
+        {
+          groupData: [
+            {
+              country: 'France',
+              name: 'Simba',
+              type: 'Cat',
+            }
+          ],
+          groupIndex: 0,
+          groupSummaryMark,
+          key: [['France', 'Cat'], '--: + summary--\\'],
+        },
+        ]]]),
       ]]);
       const result = convertToFlat(mappedData);
       expect(result).toMatchSnapshot();
