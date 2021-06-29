@@ -83,21 +83,21 @@ export const getData = (props: ITableProps) => {
     sort,
     sortingMode = SortingMode.None
   } = props;
-  let {
+  const {
     data = [],
   } = props;
-  data = [...data];
-  data = filterAndSearchData(props);
+  let resultData = [...data];
+  resultData = filterAndSearchData(props);
   if (!isRemoteSorting(sortingMode)){
-    data = sortData(columns, data, sort);
+    resultData = sortData(columns, resultData, sort);
   }
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
-  data = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
-  data = treeGroupKeyField ? getTreeData(data, rowKeyField, treeGroupKeyField, treeGroupsExpanded) : data;
-  data = getPageData(data, paging);
+  resultData = groups ? getGroupedData(resultData, groups, groupedColumns, groupsExpanded) : resultData;
+  resultData = treeGroupKeyField ? getTreeData({ data: resultData, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: data }) : resultData;
+  resultData = getPageData(resultData, paging);
 
-  return data;
+  return resultData;
 };
 
 export const getSelectedData = ({ data, selectedRows, rowKeyField }: ITableProps) => {
@@ -105,7 +105,7 @@ export const getSelectedData = ({ data, selectedRows, rowKeyField }: ITableProps
     const value = getValueByField(d, rowKeyField);
     return selectedRows?.some(v => v === value);
   }) : [];
-}
+};
 
 export const getSortedColumns = (props: ITableProps): Column[] => {
   return sortColumns(props.columns);
@@ -138,6 +138,7 @@ export const prepareTableOptions = (props: ITableProps) => {
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
   columns = columns.filter((c) => c.visible !== false);
+
   return {
     columns,
     groupColumnsCount,

@@ -160,6 +160,41 @@ Array [
 ]
 `;
 
+exports[`TreeUtils getTreeData contains filtered data 1`] = `
+Array [
+  Object {
+    "deep": 0,
+    "rowData": Object {
+      "id": 1,
+      "name": "level 1 - 1",
+      "orderCount": 5,
+      "treeGroupId": null,
+    },
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "deep": 2,
+    "rowData": Object {
+      "id": 3,
+      "name": "1 - Data 2",
+      "orderCount": 3,
+      "treeGroupId": 1,
+    },
+    "treeDataMark": Object {},
+  },
+  Object {
+    "deep": 1,
+    "rowData": Object {
+      "id": 4,
+      "name": "Level 1 - 2",
+      "orderCount": 7,
+      "treeGroupId": null,
+    },
+    "treeDataMark": Object {},
+  },
+]
+`;
+
 exports[`TreeUtils getTreeData default 1`] = `
 Array [
   Object {
@@ -221,6 +256,64 @@ Array [
       "treeGroupId": 4,
     },
     "treeDataMark": Object {},
+  },
+]
+`;
+
+exports[`TreeUtils restoreFilteredData 2 levels 1`] = `
+Array [
+  Object {
+    "id": 4,
+    "name": "Level 2 - 2 - 1",
+    "orderCount": 7,
+    "treeGroupId": 9,
+  },
+  Object {
+    "id": 9,
+    "name": "Level 1 - 2",
+    "orderCount": 7,
+    "treeGroupId": null,
+  },
+  Object {
+    "id": 6,
+    "name": "2 - 1 - Data 2",
+    "orderCount": 5,
+    "treeGroupId": 4,
+  },
+  Object {
+    "id": 10,
+    "name": "Level 2 - 2 - 2",
+    "orderCount": 7,
+    "treeGroupId": 9,
+  },
+  Object {
+    "id": 12,
+    "name": "2 - 2 - Data 2",
+    "orderCount": 5,
+    "treeGroupId": 10,
+  },
+]
+`;
+
+exports[`TreeUtils restoreFilteredData default 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "name": "level 1 - 1",
+    "orderCount": 5,
+    "treeGroupId": null,
+  },
+  Object {
+    "id": 3,
+    "name": "1 - Data 2",
+    "orderCount": 3,
+    "treeGroupId": 1,
+  },
+  Object {
+    "id": 4,
+    "name": "Level 1 - 2",
+    "orderCount": 7,
+    "treeGroupId": null,
   },
 ]
 `;

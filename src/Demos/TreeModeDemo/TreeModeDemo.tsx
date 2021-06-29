@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 
 const data = [
@@ -26,6 +26,7 @@ const tablePropsInit: ITableProps = {
     { key: 'productivity', title: 'Productivity', dataType: DataType.Number },
   ],
   data,
+  filteringMode: FilteringMode.FilterRow,
   treeGroupKeyField: 'treeGroupId',
   editingMode: EditingMode.Cell,
   treeGroupsExpanded: [7, 11],
@@ -43,6 +44,11 @@ const TreeModeDemo: React.FC = () => {
     <Table
       {...tableProps}
       dispatch={dispatch}
+      childComponents={{
+        noDataRow: {
+          content: () => 'No Data Found'
+        }
+      }}
     />
   );
 };
