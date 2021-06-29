@@ -156,6 +156,24 @@ Array [
       "--: + summary--\\\\",
     ],
   },
+  Object {
+    "groupData": Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+    ],
+    "groupIndex": 0,
+    "groupSummaryMark": Object {},
+    "key": Array [
+      Array [
+        "France",
+        "Cat",
+      ],
+      "--: + summary--\\\\",
+    ],
+  },
 ]
 `;
 

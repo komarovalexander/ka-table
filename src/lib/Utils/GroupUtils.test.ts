@@ -40,24 +40,39 @@ describe('GroupUtils', () => {
     });
     it('inner group with summart', () => {
       const mappedData = new Map([['France',
-        new Map([['Cat', [{
-          country: 'France',
-          name: 'Simba',
-          type: 'Cat',
-        },
-        {
-          groupData: [
+        new Map([
+          ['Cat', [{
+            country: 'France',
+            name: 'Simba',
+            type: 'Cat',
+          },
+          {
+            groupData: [
+              {
+                country: 'France',
+                name: 'Simba',
+                type: 'Cat',
+              }
+            ],
+            groupIndex: 0,
+            groupSummaryMark,
+            key: [['France', 'Cat'], '--: + summary--\\'],
+          },
+          ]],
+          [groupSummaryMark,
             {
-              country: 'France',
-              name: 'Simba',
-              type: 'Cat',
-            }
-          ],
-          groupIndex: 0,
-          groupSummaryMark,
-          key: [['France', 'Cat'], '--: + summary--\\'],
-        },
-        ]]]),
+              groupData: [
+                {
+                  country: 'France',
+                  name: 'Simba',
+                  type: 'Cat',
+                }
+              ],
+              groupIndex: 0,
+              groupSummaryMark,
+              key: [['France', 'Cat'], '--: + summary--\\'],
+            }]
+        ]),
       ]]);
       const result = convertToFlat(mappedData);
       expect(result).toMatchSnapshot();
