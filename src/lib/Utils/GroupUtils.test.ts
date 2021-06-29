@@ -149,6 +149,11 @@ describe('GroupUtils', () => {
       const result = getGroupedStructure(data, groups, [], 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
       expect(result).toBeUndefined();
     });
+    it('returns summary', () => {
+      const groupsWithSummary: Group[] = [{ columnKey: 'country' }, { columnKey: 'type', enableSummary: true }];
+      const result = getGroupedStructure(data, groupsWithSummary, groupedColumns, 0);
+      expect(result).toMatchSnapshot();
+    });
   });
 
   describe('getGroupText', () => {
