@@ -295,6 +295,28 @@ Map {
         "key": "[[\\"Czech Republic\\",\\"Dog\\"],\\"--:+summary--\\"]",
       },
     ],
+    Object {} => Object {
+      "groupData": Array [
+        Object {
+          "country": "Czech Republic",
+          "name": "Kas",
+          "type": "Cat",
+        },
+        Object {
+          "country": "Czech Republic",
+          "name": "Beethoven",
+          "type": "Dog",
+        },
+        Object {
+          "country": "Czech Republic",
+          "name": "Hash",
+          "type": "Cat",
+        },
+      ],
+      "groupIndex": 0,
+      "groupSummaryMark": Object {},
+      "key": "[[\\"Czech Republic\\"],\\"--:+summary--\\"]",
+    },
   },
   "Montenegro" => Map {
     "Dog" => Array [
@@ -316,6 +338,18 @@ Map {
         "key": "[[\\"Montenegro\\",\\"Dog\\"],\\"--:+summary--\\"]",
       },
     ],
+    Object {} => Object {
+      "groupData": Array [
+        Object {
+          "country": "Montenegro",
+          "name": "Rex",
+          "type": "Dog",
+        },
+      ],
+      "groupIndex": 0,
+      "groupSummaryMark": Object {},
+      "key": "[[\\"Montenegro\\"],\\"--:+summary--\\"]",
+    },
   },
   "France" => Map {
     "Cat" => Array [
@@ -337,6 +371,18 @@ Map {
         "key": "[[\\"France\\",\\"Cat\\"],\\"--:+summary--\\"]",
       },
     ],
+    Object {} => Object {
+      "groupData": Array [
+        Object {
+          "country": "France",
+          "name": "Simba",
+          "type": "Cat",
+        },
+      ],
+      "groupIndex": 0,
+      "groupSummaryMark": Object {},
+      "key": "[[\\"France\\"],\\"--:+summary--\\"]",
+    },
   },
 }
 `;

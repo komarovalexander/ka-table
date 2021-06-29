@@ -150,7 +150,7 @@ describe('GroupUtils', () => {
       expect(result).toBeUndefined();
     });
     it('returns summary', () => {
-      const groupsWithSummary: Group[] = [{ columnKey: 'country' }, { columnKey: 'type', enableSummary: true }];
+      const groupsWithSummary: Group[] = [{ columnKey: 'country', enableSummary: true }, { columnKey: 'type', enableSummary: true }];
       const result = getGroupedStructure(data, groupsWithSummary, groupedColumns, 0);
       expect(result).toMatchSnapshot();
     });
