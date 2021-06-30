@@ -12,7 +12,6 @@
 /build
 
 # misc
-package-lock.json
 .DS_Store
 .env.local
 .env.development.local
@@ -20,6 +19,7 @@ package-lock.json
 .env.production.local
 
 .publish
+
 
 npm-debug.log*
 yarn-debug.log*

@@ -176,6 +176,9 @@
   position: relative;
   left: 19px;
 }
+.ka-summary-cell{
+  padding: $ka-summary-cell-padding;
+}
 
 @keyframes typing{
   0%{

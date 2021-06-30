@@ -15,6 +15,7 @@
     "no-implicit-dependencies": false,
     "no-object-literal-type-assertion": [true, { "allow-arguments": true }],
     "no-submodule-imports": false,
+    "no-empty-interface": false,
     "quotemark": [true, "single", "jsx-single"]
   }
 }

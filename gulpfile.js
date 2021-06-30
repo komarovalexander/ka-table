@@ -33,6 +33,8 @@ gulp.task('compile', function () {
             delete pkg.scripts;
             delete pkg.husky;
             delete pkg.jest;
+            delete pkg.browserslist;
+            delete pkg.eslintConfig;
             var outputFile = 'dist/package.json';
             file(outputFile, '');
             jsonfile.writeFile('dist/package.json', pkg, { spaces: 2 });

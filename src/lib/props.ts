@@ -1,4 +1,5 @@
 
+import { ITableAllProps } from './Components/Table/Table';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
 import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
@@ -90,7 +91,7 @@ export interface IGroupRowProps {
   groupIndex: number;
   groupKey: any[];
   isExpanded: boolean;
-  text: string;
+  text: string; // TODO: consider to pass the value insted of formatted text
 }
 
 export interface IHeadCellResizeProps {
@@ -146,6 +147,16 @@ export interface ITableBodyProps {
   selectedRows: any[];
   validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
+}
+
+export interface ITableFootProps extends ITableAllProps {
+  data: any[];
+  groupColumnsCount: number;
+}
+export interface ISummaryRowProps extends ITableFootProps {
+}
+export interface ISummaryCellProps extends ISummaryRowProps {
+  column: Column;
 }
 
 export interface INewRowProps {

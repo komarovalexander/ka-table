@@ -1,8 +1,9 @@
 import Enzyme, { mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import simulant from 'simulant';
+
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import HeadCellResize from './HeadCellResize';
 
