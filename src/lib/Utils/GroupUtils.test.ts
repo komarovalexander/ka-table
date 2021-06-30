@@ -2,7 +2,7 @@ import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
 import {
   convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, getGroupText, groupBy,
-  updateExpandedGroups,
+  groupSummaryMark, updateExpandedGroups,
 } from './GroupUtils';
 
 describe('GroupUtils', () => {
@@ -34,6 +34,45 @@ describe('GroupUtils', () => {
           name: 'Simba',
           type: 'Cat',
         }]]]),
+      ]]);
+      const result = convertToFlat(mappedData);
+      expect(result).toMatchSnapshot();
+    });
+    it('inner group with summart', () => {
+      const mappedData = new Map([['France',
+        new Map([
+          ['Cat', [{
+            country: 'France',
+            name: 'Simba',
+            type: 'Cat',
+          },
+          {
+            groupData: [
+              {
+                country: 'France',
+                name: 'Simba',
+                type: 'Cat',
+              }
+            ],
+            groupIndex: 0,
+            groupSummaryMark,
+            key: [['France', 'Cat'], '--: + summary--\\'],
+          },
+          ]],
+          [groupSummaryMark,
+            {
+              groupData: [
+                {
+                  country: 'France',
+                  name: 'Simba',
+                  type: 'Cat',
+                }
+              ],
+              groupIndex: 0,
+              groupSummaryMark,
+              key: [['France', 'Cat'], '--: + summary--\\'],
+            }]
+        ]),
       ]]);
       const result = convertToFlat(mappedData);
       expect(result).toMatchSnapshot();
@@ -148,6 +187,11 @@ describe('GroupUtils', () => {
     it('groupedColumns are empty', () => {
       const result = getGroupedStructure(data, groups, [], 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
       expect(result).toBeUndefined();
+    });
+    it('returns summary', () => {
+      const groupsWithSummary: Group[] = [{ columnKey: 'country', enableSummary: true }, { columnKey: 'type', enableSummary: true }];
+      const result = getGroupedStructure(data, groupsWithSummary, groupedColumns, 0);
+      expect(result).toMatchSnapshot();
     });
   });
 

@@ -3,10 +3,11 @@ import React, { RefObject, useEffect, useRef } from 'react';
 import { ITableBodyProps } from '../../props';
 import { getValueByField } from '../../Utils/DataUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
-import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
+import { getGroupMark, getGroupText, groupSummaryMark } from '../../Utils/GroupUtils';
 import { treeDataMark, treeGroupMark } from '../../Utils/TreeUtils';
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
+import { GroupSummaryRow } from '../GroupSummaryRow/GroupSummaryRow';
 
 export interface IRowsProps extends ITableBodyProps {
   onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;
@@ -60,6 +61,8 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             key={JSON.stringify(d.key)}
           />
         );
+      } else if (d.groupSummaryMark === groupSummaryMark) {
+        return <GroupSummaryRow {...props} groupData={d.groupData} key={d.key} groupIndex={d.groupIndex} />;
       } else {
         const isTreeGroup = d.treeGroupMark === treeGroupMark;
         const isTreeData =  d.treeDataMark === treeDataMark;

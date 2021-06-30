@@ -1,4 +1,5 @@
 
+import { IRowsProps } from './Components/Rows/Rows';
 import { ITableAllProps } from './Components/Table/Table';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
@@ -98,6 +99,15 @@ export interface IGroupRowProps {
   groupKey: any[];
   isExpanded: boolean;
   text: string; // TODO: consider to pass the value insted of formatted text
+}
+
+export interface IGroupSummaryRowProps extends IRowsProps {
+  groupData: any[];
+  groupIndex: number;
+}
+
+export interface IGroupSummaryCellProps extends IGroupSummaryRowProps {
+  column: Column;
 }
 
 export interface IHeadCellResizeProps {
