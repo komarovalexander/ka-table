@@ -69,6 +69,7 @@ export enum ActionType {
   UpdatePagesCount = 'UpdatePagesCount',
   UpdateRow = 'UpdateRow',
   UpdateSortDirection = 'UpdateSortDirection',
+  UpdateTreeGroupsExpanded = 'UpdateTreeGroupsExpanded ',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
 }
 

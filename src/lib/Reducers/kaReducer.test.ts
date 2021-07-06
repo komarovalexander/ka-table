@@ -3,11 +3,46 @@ import {
   clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
   deselectRow, loadData, reorderColumns, reorderRows, selectAllFilteredRows, selectAllRows,
   selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction, updateData,
+  updateTreeGroupsExpanded,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName } from '../enums';
 import { kaReducer } from './kaReducer';
 
 describe('kaReducer', () => {
+  describe('UpdateTreeGroupsExpanded ', () => {
+    const intialState: ITableProps = {
+      data: [
+        { id: 1, treeGroupId: null },
+        { id: 2, treeGroupId: 1 },
+        { id: 3, treeGroupId: 2 },
+        { id: 4, treeGroupId: 3 }
+      ],
+      columns: [{ key: 'id' }],
+      rowKeyField: 'id',
+      treeGroupKeyField: 'treeGroupId'
+    };
+    it('collapse tree group, if treeGroupsExpanded contains it', () => {
+      const result: ITableProps = kaReducer({
+        ...intialState,
+        treeGroupsExpanded: [1, 2, 3]
+      }, updateTreeGroupsExpanded(2));
+      expect(result.treeGroupsExpanded).toEqual([1, 3]);
+    });
+    it('collapse tree group, if treeGroupsExpanded is undefined', () => {
+      const result: ITableProps = kaReducer({
+        ...intialState,
+        treeGroupsExpanded: undefined
+      }, updateTreeGroupsExpanded(2));
+      expect(result.treeGroupsExpanded).toEqual([1, 3]);
+    });
+    it('expands tree group, if treeGroupsExpanded does not contain it', () => {
+      const result: ITableProps = kaReducer({
+        ...intialState,
+        treeGroupsExpanded: [1, 3]
+      }, updateTreeGroupsExpanded(2));
+      expect(result.treeGroupsExpanded).toEqual([1, 3, 2]);
+    });
+  });
   describe('SelectRowsRange', () => {
     const intialState = {
       data: [

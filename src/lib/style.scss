@@ -51,6 +51,9 @@
 .ka-cell:hover{
   background-color: $ka-cell-hover-background-color;
 }
+.ka-tree-cell{
+  display: flex;
+}
 .ka-icon{
   font-weight: 100;
   font-size: $ka-icon-font-size;
@@ -81,6 +84,9 @@
 .ka-empty-cell{
   width: 40px;
   min-width: 40px;
+}
+.ka-tree-empty-space{
+  width: 20px;
 }
 .ka-tr {
   width: 100%;
@@ -131,6 +137,11 @@
 .ka-icon-group-arrow{
   padding: 10px 5px 10px 10px;
   margin-right: 5px;
+  cursor: pointer;
+}
+.ka-icon-tree-arrow{
+  padding: 0 10px 0 10px;
+  margin-left: -10px;
   cursor: pointer;
 }
 .ka-icon-sort{

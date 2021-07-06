@@ -8,9 +8,13 @@ import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 interface IRowCommonProps {
   childComponents: ChildComponents;
   columns: Column[];
+  treeDeep?: number;
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
   editingMode: EditingMode;
+  index?: number;
+  isTreeExpanded?: boolean;
+  isTreeGroup?: boolean;
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
@@ -18,8 +22,10 @@ interface IRowCommonProps {
 }
 
 export interface ICellProps {
+  treeArrowElement?: any;
   childComponents: ChildComponents;
   column: Column;
+  treeDeep?: number;
   dispatch: DispatchFunc;
   editingMode: EditingMode;
   editorValue?: any;

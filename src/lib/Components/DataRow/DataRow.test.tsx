@@ -32,7 +32,7 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe('CellEditorBoolean', () => {
+describe('DataRow', () => {
   it('renders without crashing', () => {
     const element = document.createElement('tbody');
     ReactDOM.render(<DataRow {...props} />, element);

@@ -10,6 +10,7 @@ import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
+import { getTreeData } from './TreeUtils';
 
 export function extendProps<T = HTMLElement>(
   childElementAttributes: AllHTMLAttributes<T>,
@@ -76,23 +77,27 @@ export const getData = (props: ITableProps) => {
     groups,
     groupsExpanded,
     paging,
+    treeGroupKeyField,
+    treeGroupsExpanded,
+    rowKeyField,
     sort,
-    sortingMode = SortingMode.None,
+    sortingMode = SortingMode.None
   } = props;
-  let {
+  const {
     data = [],
   } = props;
-  data = [...data];
-  data = filterAndSearchData(props);
+  let resultData = [...data];
+  resultData = filterAndSearchData(props);
   if (!isRemoteSorting(sortingMode)){
-    data = sortData(columns, data, sort);
+    resultData = sortData(columns, resultData, sort);
   }
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
-  const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
-  data = getPageData(groupedData, paging);
+  resultData = groups ? getGroupedData(resultData, groups, groupedColumns, groupsExpanded) : resultData;
+  resultData = treeGroupKeyField ? getTreeData({ data: resultData, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: data }) : resultData;
+  resultData = getPageData(resultData, paging);
 
-  return data;
+  return resultData;
 };
 
 export const getSelectedData = ({ data, selectedRows, rowKeyField }: ITableProps) => {
@@ -100,7 +105,7 @@ export const getSelectedData = ({ data, selectedRows, rowKeyField }: ITableProps
     const value = getValueByField(d, rowKeyField);
     return selectedRows?.some(v => v === value);
   }) : [];
-}
+};
 
 export const getSortedColumns = (props: ITableProps): Column[] => {
   return sortColumns(props.columns);
@@ -112,7 +117,10 @@ export const getPagesCountByProps = (props: ITableProps) => {
   } = props;
   let pagesCount = 1;
   if (paging && paging.enabled) {
-    pagesCount = getPagesCount(filterAndSearchData(props), paging);
+    let data = filterAndSearchData(props);
+    const { rowKeyField, treeGroupKeyField, treeGroupsExpanded } = props;
+    data = treeGroupKeyField ? getTreeData({ data, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: props.data || [] }) : data;
+    pagesCount = getPagesCount(data, paging);
   }
   return pagesCount;
 };
@@ -133,6 +141,7 @@ export const prepareTableOptions = (props: ITableProps) => {
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
   columns = columns.filter((c) => c.visible !== false);
+
   return {
     columns,
     groupColumnsCount,

@@ -64,9 +64,9 @@ export const getGroupedStructure = (
       const grouped = groupBy(data, (item: any) => getValueByColumn(item, column));
       grouped.forEach((groupData, key) => {
         const groupExpandedItems = groupsExpanded && groupsExpanded.filter((ge) => ge[expandedDeep] === key);
-        const isThisGroupExpanded = !groupExpandedItems
+        const isGroupExpanded = !groupExpandedItems
           || groupExpandedItems.some((ge) => ge.length === expandedDeep + 1);
-        if (isThisGroupExpanded) {
+        if (isGroupExpanded) {
           const fullKey =  [...parentGroupKey, key];
           const newStructure = getGroupedStructure(
             groupData,
