@@ -51,12 +51,13 @@ describe('Rows', () => {
     expect(wrapper.find('.ka-group-text').text()).toBe('formatted: 1');
   });
 
-  it('does not add ka-tree-cell class', () => {
+  it('does not add ka-tree-cell classes', () => {
     const wrapper = mount((
       <Rows {...props}/>
     ), {
       attachTo: document.createElement('tbody'),
     });
     expect(wrapper.find('.ka-tree-cell').length).toBe(0);
+    expect(wrapper.find('.ka-tree-empty-space').length).toBe(0);
   });
 });

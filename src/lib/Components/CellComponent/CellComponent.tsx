@@ -21,7 +21,7 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   }, props, childComponents.cell);
   return (
     <td {...elementAttributes}>
-      {treeDeep ? Array(treeDeep).fill(undefined).map((_, index) => <div key={index} className={'ka-empty-space'}/>) : null}
+      {treeDeep ? Array(treeDeep).fill(undefined).map((_, index) => <div key={index} className={defaultOptions.css.treeCellEmptySpace}/>) : null}
       { content ||
       (
         <>

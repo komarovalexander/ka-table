@@ -2,6 +2,7 @@ export class CssClasses {
   public root = 'ka';
   public cell = 'ka-cell';
   public treeCell = 'ka-tree-cell';
+  public treeCellEmptySpace = 'ka-tree-empty-space';
   public cellEditor: string = 'ka-cell-editor';
   public cellText = 'ka-cell-text';
   public groupCell = 'ka-group-cell';
