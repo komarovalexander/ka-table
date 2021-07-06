@@ -50,4 +50,13 @@ describe('Rows', () => {
     });
     expect(wrapper.find('.ka-group-text').text()).toBe('formatted: 1');
   });
+
+  it('does not add ka-tree-cell class', () => {
+    const wrapper = mount((
+      <Rows {...props}/>
+    ), {
+      attachTo: document.createElement('tbody'),
+    });
+    expect(wrapper.find('.ka-tree-cell').length).toBe(0);
+  });
 });
