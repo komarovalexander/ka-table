@@ -117,7 +117,10 @@ export const getPagesCountByProps = (props: ITableProps) => {
   } = props;
   let pagesCount = 1;
   if (paging && paging.enabled) {
-    pagesCount = getPagesCount(filterAndSearchData(props), paging);
+    let data = filterAndSearchData(props);
+    const { rowKeyField, treeGroupKeyField, treeGroupsExpanded } = props;
+    data = treeGroupKeyField ? getTreeData({ data, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: props.data || [] }) : data;
+    pagesCount = getPagesCount(data, paging);
   }
   return pagesCount;
 };
