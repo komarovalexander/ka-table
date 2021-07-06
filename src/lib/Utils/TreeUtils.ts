@@ -14,14 +14,14 @@ const getItemStructure = (
   item: any,
   dataHash: any,
   rowKeyField: any,
-  deep: number = 0): any[] => {
+  treeDeep: number = 0): any[] => {
     const children = dataHash[getValueByField(item, rowKeyField)];
     if (!children){
-      return [{ treeDataMark, rowData: item, deep: deep + 1 }];
+      return [{ treeDataMark, rowData: item, treeDeep: treeDeep + 1 }];
     }
-    const result = [{ treeGroupMark, rowData: item, deep }];
+    const result = [{ treeGroupMark, rowData: item, treeDeep }];
     children.forEach((c: any) => {
-      const childrenData = getItemStructure(c, dataHash, rowKeyField, deep + 1);
+      const childrenData = getItemStructure(c, dataHash, rowKeyField, treeDeep + 1);
       result.push(...childrenData);
     });
     return result;

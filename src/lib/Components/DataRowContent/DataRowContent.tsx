@@ -11,7 +11,7 @@ import CellComponent from '../CellComponent/CellComponent';
 const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   childComponents,
   columns,
-  deep,
+  treeDeep,
   dispatch,
   editingMode,
   format,
@@ -40,12 +40,12 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
         const hasEditorValue = editableCell && editableCell.hasOwnProperty('editorValue');
         const editorValue = editableCell && editableCell.editorValue;
         const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
-        const cellDeep = deep != null && index === 0 ? deep : undefined;
+        const cellDeep = treeDeep != null && index === 0 ? treeDeep : undefined;
         return (
           <CellComponent
             treeArrowElement={arrow?.pop()}
             childComponents={childComponents}
-            deep={cellDeep}
+            treeDeep={cellDeep}
             column={column}
             dispatch={dispatch}
             editingMode={editingMode}

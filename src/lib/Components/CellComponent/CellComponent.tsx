@@ -8,7 +8,7 @@ import CellText from '../CellText/CellText';
 
 const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   const {
-    deep,
+    treeDeep,
     treeArrowElement,
     childComponents,
     column: { style },
@@ -16,12 +16,12 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
   } = props;
 
   const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.cell} ${deep != null ? defaultOptions.css.treeCell : ''}`,
+    className: `${defaultOptions.css.cell} ${treeDeep != null ? defaultOptions.css.treeCell : ''}`,
     style
   }, props, childComponents.cell);
   return (
     <td {...elementAttributes}>
-      {deep ? Array(deep).fill(undefined).map((_, index) => <div key={index} className={'ka-empty-space'}/>) : null}
+      {treeDeep ? Array(treeDeep).fill(undefined).map((_, index) => <div key={index} className={'ka-empty-space'}/>) : null}
       { content ||
       (
         <>
