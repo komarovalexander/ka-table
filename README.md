@@ -1,5 +1,3 @@
-<a href="http://ka-table.com"><img src="http://ka-table.com/images/logo.svg"/></a>
-
 The customizable, extendable, lightweight and free React Table Component
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/ka-table/blob/master/LICENSE)
@@ -7,6 +5,8 @@ The customizable, extendable, lightweight and free React Table Component
 [![Coverage Status](https://coveralls.io/repos/github/komarovalexander/ka-table/badge.svg?branch=master&service=github)](https://coveralls.io/github/komarovalexander/ka-table?branch=master&service=github)
 [![Build Status](https://travis-ci.com/komarovalexander/ka-table.svg?token=9QUEx9r7MWqF44f9VDer&branch=master)](https://travis-ci.com/komarovalexander/ka-table)
 [![minzipped size](https://badgen.net/bundlephobia/minzip/ka-table)](https://badgen.net/bundlephobia/minzip/ka-table)
+
+<a href="http://ka-table.com"><img src="http://ka-table.com/images/logo.svg"/></a>
 
 [Site](http://ka-table.com) | [Demos](https://komarovalexander.github.io/ka-table/#/overview) | [Docs](http://ka-table.com/docs_get_started.html)
 

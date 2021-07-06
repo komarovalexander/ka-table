@@ -28,7 +28,7 @@ gulp.task('compile', function () {
         .pipe(gulp.dest('dist'))
         .on('end', () => {
             var pkg = require('./package.json');
-            pkg.dependencies = {};
+            delete pkg.dependencies;
             delete pkg.devDependencies;
             delete pkg.scripts;
             delete pkg.husky;
