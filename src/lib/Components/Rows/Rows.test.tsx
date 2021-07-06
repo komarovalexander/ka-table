@@ -59,5 +59,6 @@ describe('Rows', () => {
     });
     expect(wrapper.find('.ka-tree-cell').length).toBe(0);
     expect(wrapper.find('.ka-tree-empty-space').length).toBe(0);
+    expect(wrapper.find('.ka-icon-tree-arrow').length).toBe(0);
   });
 });
