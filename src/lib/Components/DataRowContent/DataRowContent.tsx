@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { updateTreeGroupsExpanded } from '../../actionCreators';
+import defaultOptions from '../../defaultOptions';
 import { IDataRowProps } from '../../props';
 import { getEditableCell } from '../../Utils/CellUtils';
 import { getField } from '../../Utils/ColumnUtils';
@@ -9,11 +11,14 @@ import CellComponent from '../CellComponent/CellComponent';
 const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   childComponents,
   columns,
+  treeDeep,
   dispatch,
   editingMode,
   format,
   isDetailsRowShown,
   isSelectedRow,
+  isTreeExpanded,
+  isTreeGroup,
   rowData,
   rowEditableCells,
   rowKeyField,
@@ -21,16 +26,26 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   selectedRows,
   validation,
 }) => {
+  const arrow = isTreeGroup ? [(
+    <div
+      onClick={() => dispatch(updateTreeGroupsExpanded(rowKeyValue))}
+      className={isTreeExpanded
+        ? defaultOptions.css.iconTreeArrowExpanded : defaultOptions.css.iconTreeArrowCollapsed}
+    />
+  )] : undefined;
   return (
     <>
-      {columns.map((column) => {
+      {columns.map((column, index) => {
         const editableCell = getEditableCell(column, rowEditableCells);
         const hasEditorValue = editableCell && editableCell.hasOwnProperty('editorValue');
         const editorValue = editableCell && editableCell.editorValue;
         const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
+        const cellDeep = treeDeep != null && index === 0 ? treeDeep : undefined;
         return (
           <CellComponent
+            treeArrowElement={arrow?.pop()}
             childComponents={childComponents}
+            treeDeep={cellDeep}
             column={column}
             dispatch={dispatch}
             editingMode={editingMode}

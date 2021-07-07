@@ -1,8 +1,14 @@
+import Enzyme, { mount } from 'enzyme';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+
 import { DataType, EditingMode } from '../../enums';
-import DataRowContent, { IDataRowProps } from './DataRowContent';
+import { IDataRowProps } from '../../props';
+import DataRowContent from './DataRowContent';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const props: IDataRowProps = {
   childComponents: {},
@@ -20,8 +26,19 @@ const props: IDataRowProps = {
   selectedRows: [],
 };
 
-it('renders without crashing', () => {
-  const element = document.createElement('tr');
-  ReactDOM.render(<DataRowContent {...props} />, element);
-  ReactDOM.unmountComponentAtNode(element);
+describe('DataRowContent', () => {
+  it('renders without crashing', () => {
+    const element = document.createElement('tr');
+    ReactDOM.render(<DataRowContent {...props} />, element);
+    ReactDOM.unmountComponentAtNode(element);
+  });
+  it('click by first row dispatches action', () => {
+    const dispatch = jest.fn();
+    const wrapper = mount(<DataRowContent {...props} dispatch={dispatch} isTreeGroup={true} />, {
+      attachTo: document.createElement('tr'),
+    });
+    expect(dispatch).toHaveBeenCalledTimes(0);
+    wrapper.find('.ka-icon-tree-arrow').simulate('click');
+    expect(dispatch).toHaveBeenCalledTimes(1);
+  });
 });

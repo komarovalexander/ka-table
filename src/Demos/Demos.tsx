@@ -41,6 +41,7 @@ import GroupingCustomCellDemo from './GroupingCustomCellDemo/GroupingCustomCellD
 import GroupingCustomRowDemo from './GroupingCustomRowDemo/GroupingCustomRowDemo';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
 import HeaderFilterDemo from './HeaderFilterDemo/HeaderFilterDemo';
+import GroupingSummaryDemo from './GroupingSummaryDemo/GroupingSummaryDemo';
 import HoverRowDemo from './HoverRowDemo/HoverRowDemo';
 import InfiniteScrollingDemo from './InfiniteScrollingDemo/InfiniteScrollingDemo';
 import JsonDemo from './JsonDemo/JsonDemo';
@@ -70,6 +71,7 @@ import SortingModesDemo from './SortingModesDemo/SortingModesDemo';
 import StateStoringDemo from './StateStoringDemo/StateStoringDemo';
 import SummaryDemo from './SummaryDemo/SummaryDemo';
 import TabIndexDemo from './TabIndexDemo/TabIndexDemo';
+import TreeModeDemo from './TreeModeDemo/TreeModeDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
 
 initializeGA();
@@ -107,6 +109,7 @@ const demos: Demo[] = [
   new Demo(GroupingCustomRowDemo, '/grouping-custom-row', 'Grouping Custom Row', 'GroupingCustomRowDemo', 'https://stackblitz.com/edit/table-grouping-custom-row-js', 'https://stackblitz.com/edit/table-grouping-custom-row-ts', 'Grouping'),
   new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo', 'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts', 'Grouping'),
   new Demo(HeaderFilterDemo, '/header-filter', 'Header Filter', 'HeaderFilterDemo', 'https://stackblitz.com/edit/table-header-filter-js', 'https://stackblitz.com/edit/table-header-filter-ts', 'Filtering'),
+  new Demo(GroupingSummaryDemo, '/grouping-summary', 'Grouping Summary', 'GroupingSummaryDemo', 'https://stackblitz.com/edit/table-grouping-summary-js', 'https://stackblitz.com/edit/table-grouping-summary-ts', 'Grouping'),
   new Demo(HoverRowDemo, '/hover-row', 'Hover Row', 'HoverRowDemo', 'https://stackblitz.com/edit/table-hover-row-js', 'https://stackblitz.com/edit/table-hover-row-ts', 'Rows'),
   new Demo(JsonDemo, '/json', 'Json', 'JsonDemo', 'https://stackblitz.com/edit/table-json-js', 'https://stackblitz.com/edit/table-json-ts', 'Remote Data'),
   new Demo(KeyboardNavigationDemo, '/keyboard-navigation', 'Keyboard Navigation', 'KeyboardNavigationDemo', 'https://stackblitz.com/edit/table-keyboard-navigation-js', 'https://stackblitz.com/edit/table-keyboard-navigation-ts', 'Miscellaneous'),
@@ -135,6 +138,7 @@ const demos: Demo[] = [
   new Demo(StateStoringDemo, '/state-storing', 'State Storing', 'StateStoringDemo', 'https://stackblitz.com/edit/table-state-storing-js', 'https://stackblitz.com/edit/table-state-storing-ts', 'Miscellaneous'),
   new Demo(SummaryDemo, '/summary', 'Summary', 'SummaryDemo', 'https://stackblitz.com/edit/table-summary-js', 'https://stackblitz.com/edit/table-summary-ts', 'Miscellaneous'),
   new Demo(TabIndexDemo, '/tab-index', 'Tab Index', 'TabIndexDemo', 'https://stackblitz.com/edit/table-tab-index-js', 'https://stackblitz.com/edit/table-tab-index-ts', 'Miscellaneous'),
+  new Demo(TreeModeDemo, '/tree-mode', 'Tree Mode', 'TreeModeDemo', 'https://stackblitz.com/edit/table-tree-mode-js', 'https://stackblitz.com/edit/table-tree-mode-ts', ''),
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts', 'Editing'),
 ];
 
@@ -151,12 +155,12 @@ const cases: DemoCase[] = demos.map((d: Demo) => {
 const Demos: React.FC = () => {
   return (
     <HashRouter>
-      <div className='demos-search-back'/>
+      <div className='demos-search-back' />
       <div className='demos'>
         <div className='header'>
           <div className='nav-container'>
             <div className='logo-container'>
-              <a href='http://ka-table.com/' className='logo'><img src='static/logo.svg' alt='ka-table'/></a>
+              <a href='http://ka-table.com/' className='logo'><img src='static/logo.svg' alt='ka-table' /></a>
             </div>
           </div>
           <div className='links'>
@@ -178,8 +182,8 @@ const Demos: React.FC = () => {
                   rel='noopener noreferrer'
                   target='_blank'
                   onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex'); }}>
-                    <img src='static/icons/link.svg' alt=''/>
-                    Developed by Alexander Komarov
+                  <img src='static/icons/link.svg' alt='' />
+                  Developed by Alexander Komarov
                 </a>
               </div>
               <div>
@@ -187,8 +191,8 @@ const Demos: React.FC = () => {
                   rel='noopener noreferrer'
                   target='_blank'
                   onMouseDown={() => { trackEvent('click', 'developed_by', 'Daria'); }}>
-                    <img src='static/icons/link.svg' alt=''/>
-                    UI Design by Daria Komarova
+                  <img src='static/icons/link.svg' alt='' />
+                  UI Design by Daria Komarova
                 </a>
               </div>
             </div>
@@ -204,11 +208,11 @@ const Demos: React.FC = () => {
         <footer>
           <h3>Provide your feedback</h3>
           <div>
-            if you like it - click the star in this repo: <a href='https://github.com/komarovalexander/ka-table'>https://github.com/komarovalexander/ka-table</a><br/>
-            if you found any issue or have any idea what to add/improve - feel free to create an issue: <a href='https://github.com/komarovalexander/ka-table/issues'>https://github.com/komarovalexander/ka-table/issues</a><br/>
-            <br/>
+            if you like it - click the star in this repo: <a href='https://github.com/komarovalexander/ka-table'>https://github.com/komarovalexander/ka-table</a><br />
+            if you found any issue or have any idea what to add/improve - feel free to create an issue: <a href='https://github.com/komarovalexander/ka-table/issues'>https://github.com/komarovalexander/ka-table/issues</a><br />
+            <br />
             you also can reach the <a href='https://github.com/komarovalexander' onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex (bottom)'); }}>developer</a> by this email: sanrkom@gmail.com
-            <br/>
+            <br />
             Thanks for collaboration!
           </div>
         </footer>

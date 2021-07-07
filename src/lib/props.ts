@@ -1,4 +1,5 @@
 
+import { IRowsProps } from './Components/Rows/Rows';
 import { ITableAllProps } from './Components/Table/Table';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
@@ -7,9 +8,13 @@ import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 interface IRowCommonProps {
   childComponents: ChildComponents;
   columns: Column[];
+  treeDeep?: number;
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
   editingMode: EditingMode;
+  index?: number;
+  isTreeExpanded?: boolean;
+  isTreeGroup?: boolean;
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
@@ -17,8 +22,10 @@ interface IRowCommonProps {
 }
 
 export interface ICellProps {
+  treeArrowElement?: any;
   childComponents: ChildComponents;
   column: Column;
+  treeDeep?: number;
   dispatch: DispatchFunc;
   editingMode: EditingMode;
   editorValue?: any;
@@ -92,6 +99,15 @@ export interface IGroupRowProps {
   groupKey: any[];
   isExpanded: boolean;
   text: string; // TODO: consider to pass the value insted of formatted text
+}
+
+export interface IGroupSummaryRowProps extends IRowsProps {
+  groupData: any[];
+  groupIndex: number;
+}
+
+export interface IGroupSummaryCellProps extends IGroupSummaryRowProps {
+  column: Column;
 }
 
 export interface IHeadCellResizeProps {
