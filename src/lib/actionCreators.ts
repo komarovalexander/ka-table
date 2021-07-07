@@ -2,6 +2,12 @@ import { ActionType } from './enums';
 import { Focused } from './Models/Focused';
 import { IMoveFocusedSettings } from './Utils/NavigationUtils';
 
+export const updateHeaderFilterPopupState = (columnKey: string, isHeaderFilterPopupShown: boolean | undefined) => ({
+  columnKey,
+  isHeaderFilterPopupShown,
+  type: ActionType.UpdateHeaderFilterPopupState
+}) 
+
 export const updateFilterRowValue = (columnKey: string, filterRowValue: any) => ({
   columnKey,
   filterRowValue,

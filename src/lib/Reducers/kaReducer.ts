@@ -57,6 +57,19 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   } = props;
 
   switch (action.type) {
+    case ActionType.UpdateHeaderFilterPopupState: {
+      const column = columns.find((c: Column) => c.key === action.columnKey);
+      const newColumn = {
+        ...column,
+        isHeaderFilterPopupShown: action.isHeaderFilterPopupShown
+      }
+      const newColumns = getCopyOfArrayAndInsertOrReplaceItem(
+        newColumn,
+        'key',
+        columns,
+      );
+      return {...props, columns: newColumns}
+    }
     case ActionType.MoveFocusedRight: {
       return getUpdatedFocused(props, action, getRightCell);
     }

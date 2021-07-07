@@ -2,7 +2,7 @@ import { ITableProps } from '../';
 import {
   clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
   deselectRow, loadData, reorderColumns, reorderRows, selectAllFilteredRows, selectAllRows,
-  selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction, updateData,
+  selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction, updateData, updateHeaderFilterPopupState,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -295,5 +295,48 @@ describe('kaReducer', () => {
     };
     const newState = kaReducer(intialState, clearSingleAction());
     expect(newState.singleAction).toBeUndefined();
+  });
+  describe('UpdateHeaderFilterPopupState', () => {
+    it('shows popup', () => {
+      const initialState: ITableProps = {
+        columns: [{
+          key: 'column1'
+        },{
+          key: 'column2'
+        }],
+        rowKeyField: 'id'
+      };
+      const columnKey = 'column1';
+      const newState = kaReducer(initialState, updateHeaderFilterPopupState(columnKey, true));
+      expect(newState.columns).toMatchSnapshot();
+    });
+    it('hides popup', () => {
+      const initialState: ITableProps = {
+        columns: [{
+          key: 'column1',
+          isHeaderFilterPopupShown: true
+        },{
+          key: 'column2'
+        }],
+        rowKeyField: 'id'
+      };
+      const columnKey = 'column1';
+      const newState = kaReducer(initialState, updateHeaderFilterPopupState(columnKey, false));
+      expect(newState.columns).toMatchSnapshot();
+    });
+    it('shows popup for 2 and hides for 1', () => {
+      const initialState: ITableProps = {
+        columns: [{
+          key: 'column1',
+          isHeaderFilterPopupShown: true
+        },{
+          key: 'column2'
+        }],
+        rowKeyField: 'id'
+      };
+      const columnKey = 'column2';
+      const newState = kaReducer(initialState, updateHeaderFilterPopupState(columnKey, true));
+      expect(newState.columns).toMatchSnapshot();
+    });
   });
 });

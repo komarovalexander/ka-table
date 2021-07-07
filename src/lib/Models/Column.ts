@@ -7,6 +7,7 @@ export class Column {
   public filterRowOperator?: any;
   public filterRowValue?: any;
   public headerFilterValues?: any[];
+  public isHeaderFilterPopupShown?: boolean; 
   public isEditable?: boolean;
   public isResizable?: boolean;
   public key!: string;

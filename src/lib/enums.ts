@@ -64,6 +64,7 @@ export enum ActionType {
   UpdateFilterRowOperator = 'UpdateFilterRowOperator',
   UpdateFilterRowValue = 'UpdateFilterRowValue',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',
+  UpdateHeaderFilterPopupState = 'UpdateHeaderFilterPopupState',
   UpdatePageIndex = 'UpdatePageIndex',
   UpdatePageSize = 'UpdatePageSize',
   UpdatePagesCount = 'UpdatePagesCount',

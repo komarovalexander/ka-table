@@ -111,3 +111,40 @@ Object {
   "type": "LoadData",
 }
 `;
+
+exports[`kaReducer UpdateHeaderFilterPopupState hides popup 1`] = `
+Array [
+  Object {
+    "isHeaderFilterPopupShown": false,
+    "key": "column1",
+  },
+  Object {
+    "key": "column2",
+  },
+]
+`;
+
+exports[`kaReducer UpdateHeaderFilterPopupState shows popup 1`] = `
+Array [
+  Object {
+    "isHeaderFilterPopupShown": true,
+    "key": "column1",
+  },
+  Object {
+    "key": "column2",
+  },
+]
+`;
+
+exports[`kaReducer UpdateHeaderFilterPopupState shows popup for 2 and hides for 1 1`] = `
+Array [
+  Object {
+    "isHeaderFilterPopupShown": false,
+    "key": "column1",
+  },
+  Object {
+    "isHeaderFilterPopupShown": true,
+    "key": "column2",
+  },
+]
+`;
