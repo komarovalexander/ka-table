@@ -24,6 +24,15 @@
   position: sticky;
   top: 0;
 }
+.ka-thead-grouped-cell {
+  height: $ka-grouped-header-cell-height;
+  box-sizing: border-box;
+}
+@for $i from 1 through 5 {
+  .ka-thead-row:nth-child(#{$i + 1}) .ka-thead-grouped-cell {
+    top: $ka-grouped-header-cell-height * $i;
+  }
+}
 .ka-thead-cell{
   padding: $ka-thead-cell-padding;
   color: $ka-thead-color;

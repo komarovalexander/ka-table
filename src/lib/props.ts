@@ -124,10 +124,10 @@ export interface IHeadCellProps {
   columnResizing?: boolean;
   column: Column;
   dispatch: DispatchFunc;
+  isGrouped?: boolean;
   sortingMode: SortingMode;
   colSpan?: number;
   rowSpan?: number;
-  headers?: any;
 }
 
 export interface INoDataRowProps {

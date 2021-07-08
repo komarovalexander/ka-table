@@ -28,8 +28,8 @@ export const GroupedColumnsRow: React.FunctionComponent<IHeadRowProps> = (props)
                   colSpan={item.colSpan}
                   rowSpan={item.rowSpan}
                   column={item.column}
+                  isGrouped={true}
                   key={columnIndex}
-                  headers={'grouped.column1-2'}
                 />
               );
 

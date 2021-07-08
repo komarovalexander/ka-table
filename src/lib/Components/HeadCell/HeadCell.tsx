@@ -20,7 +20,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     columnReordering,
     columnResizing,
     dispatch,
-    headers,
+    isGrouped,
     rowSpan,
     sortingMode
   } = props;
@@ -37,13 +37,12 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   }
 
   const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.theadCell} ${defaultOptions.css.theadBackground} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''}`,
+    className: `${defaultOptions.css.theadCell} ${defaultOptions.css.theadBackground} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''} ${isGrouped ? 'ka-thead-grouped-cell' : ''}`,
     colSpan,
     rowSpan,
     scope: 'col',
     style: stateStyle,
     id: key,
-    headers: key === 'column1' || key === 'column2' ? headers : '',
   }, props, headCell);
 
   return (
