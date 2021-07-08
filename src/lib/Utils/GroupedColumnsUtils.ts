@@ -21,6 +21,7 @@ export const addColumnToRows = (rows: any[], column: any, groupedColumns: Groupe
     if (last && last.column === item){
       if (isSameLast){
         last.colSpan++;
+        last.columns.push(column);
         return;
       }
       isSameLast = true;
@@ -30,7 +31,8 @@ export const addColumnToRows = (rows: any[], column: any, groupedColumns: Groupe
     rowsResult[index].push({
       colSpan: 1,
       columnChainLength: columnsChain.length,
-      column: item
+      column: item,
+      columns: [column]
     });
   });
   return rowsResult;

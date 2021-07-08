@@ -9,6 +9,11 @@ Array [
         "key": "1",
       },
       "columnChainLength": 1,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
     },
   ],
 ]
@@ -26,6 +31,11 @@ Array [
         "key": "group1",
       },
       "columnChainLength": 2,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
     },
   ],
   Array [
@@ -35,6 +45,11 @@ Array [
         "key": "1",
       },
       "columnChainLength": 2,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
     },
   ],
 ]
@@ -49,6 +64,11 @@ Array [
         "key": "2",
       },
       "columnChainLength": 1,
+      "columns": Array [
+        Object {
+          "key": "2",
+        },
+      ],
     },
   ],
 ]
@@ -77,6 +97,11 @@ Array [
         "key": "1",
       },
       "columnChainLength": 1,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
       "rowSpan": 1,
     },
   ],
@@ -95,6 +120,11 @@ Array [
         "key": "group1",
       },
       "columnChainLength": 2,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
       "rowSpan": 1,
     },
   ],
@@ -105,6 +135,11 @@ Array [
         "key": "1",
       },
       "columnChainLength": 2,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
       "rowSpan": 1,
     },
   ],
@@ -123,6 +158,11 @@ Array [
         "key": "group1",
       },
       "columnChainLength": 2,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
       "rowSpan": 1,
     },
     Object {
@@ -131,6 +171,11 @@ Array [
         "key": "2",
       },
       "columnChainLength": 1,
+      "columns": Array [
+        Object {
+          "key": "2",
+        },
+      ],
       "rowSpan": 2,
     },
   ],
@@ -141,6 +186,11 @@ Array [
         "key": "1",
       },
       "columnChainLength": 2,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
       "rowSpan": 1,
     },
   ],
@@ -159,6 +209,11 @@ Array [
         "key": "group2",
       },
       "columnChainLength": 3,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
       "rowSpan": 1,
     },
     Object {
@@ -167,6 +222,11 @@ Array [
         "key": "2",
       },
       "columnChainLength": 1,
+      "columns": Array [
+        Object {
+          "key": "2",
+        },
+      ],
       "rowSpan": 3,
     },
     Object {
@@ -178,6 +238,11 @@ Array [
         "key": "group2",
       },
       "columnChainLength": 3,
+      "columns": Array [
+        Object {
+          "key": "3",
+        },
+      ],
       "rowSpan": 1,
     },
   ],
@@ -192,6 +257,11 @@ Array [
         "key": "group1",
       },
       "columnChainLength": 3,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
       "rowSpan": 1,
     },
     Object {
@@ -204,6 +274,11 @@ Array [
         "key": "group1",
       },
       "columnChainLength": 3,
+      "columns": Array [
+        Object {
+          "key": "3",
+        },
+      ],
       "rowSpan": 1,
     },
   ],
@@ -214,6 +289,11 @@ Array [
         "key": "1",
       },
       "columnChainLength": 3,
+      "columns": Array [
+        Object {
+          "key": "1",
+        },
+      ],
       "rowSpan": 1,
     },
     Object {
@@ -222,6 +302,11 @@ Array [
         "key": "3",
       },
       "columnChainLength": 3,
+      "columns": Array [
+        Object {
+          "key": "3",
+        },
+      ],
       "rowSpan": 1,
     },
   ],

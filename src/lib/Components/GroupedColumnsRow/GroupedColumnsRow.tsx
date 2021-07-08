@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import defaultOptions from '../../defaultOptions';
+import { Column } from '../../models';
 import { IHeadRowProps } from '../../props';
 import { getRowsWithGroupedColumns } from '../../Utils/GroupedColumnsUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
@@ -27,7 +28,15 @@ export const GroupedColumnsRow: React.FunctionComponent<IHeadRowProps> = (props)
                   {...props}
                   colSpan={item.colSpan}
                   rowSpan={item.rowSpan}
-                  column={item.column}
+                  column={{
+                    ...item.column,
+                    style: {
+                      ...item.column.style,
+                      width: item.columns.reduce((acc: number, value: Column) => {
+                        return acc + (value?.style?.width as number ?? 0);
+                      }, 0)
+                    }
+                  }}
                   isGrouped={true}
                   key={columnIndex}
                 />
