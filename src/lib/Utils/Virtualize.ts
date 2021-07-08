@@ -1,6 +1,6 @@
 import { VirtualScrolling } from '../Models/VirtualScrolling';
 
-export const isVirtualScrollingEnabled = (virtualScrolling: VirtualScrolling) => {
+export const isVirtualScrollingEnabled = (virtualScrolling?: VirtualScrolling) => {
   return virtualScrolling && virtualScrolling.enabled !== false;
 }
 

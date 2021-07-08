@@ -2,13 +2,16 @@
 import { AllHTMLAttributes } from 'react';
 
 import { ITableProps } from '../';
-import { DataType, EditingMode, FilterOperatorName, SortDirection, SortingMode } from '../enums';
+import {
+  DataType, EditingMode, FilterOperatorName, PagingPosition, SortDirection, SortingMode,
+} from '../enums';
 import { Column } from '../models';
 import { ICellProps } from '../props';
 import { ChildAttributesItem } from '../types';
+import { isPagingShown } from './PagingUtils';
 import {
   areAllFilteredRowsSelected, areAllVisibleRowsSelected, getData, getDraggableProps,
-  getPagesCountByProps, mergeProps, prepareTableOptions,
+  getPagesCountByProps, getSelectedData, mergeProps, prepareTableOptions,
 } from './PropsUtils';
 
 describe('PropsUtils', () => {
@@ -137,13 +140,14 @@ describe('getDraggableProps', () => {
   const key = 1;
   const actionType = 'test_action';
   const dispatch = jest.fn();
-  const actionCreator = jest.fn().mockReturnValue({ type: actionType });
+  const actionCreator = jest.fn();
   const draggedClass = 'draggedClassTest';
   const dragOverClass = 'dragOverClassTest';
   let event: any;
   beforeEach(() => {
     dispatch.mockClear();
     actionCreator.mockClear();
+    actionCreator.mockReturnValue({ type: actionType });
     event = {
       dataTransfer: {
         setData: jest.fn(),
@@ -180,8 +184,9 @@ describe('getDraggableProps', () => {
     const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
     result.onDrop!(event, {} as any);
     expect(event.currentTarget.classList.remove).toBeCalledWith(dragOverClass);
-    expect(dispatch).toBeCalledWith({ type: actionType });
     expect(actionCreator).toBeCalledWith(2, 1);
+    expect(dispatch).toBeCalledTimes(1);
+    expect(dispatch).toBeCalledWith({ type: actionType });
   });
   it('onDragEnter', () => {
     const result = getDraggableProps(key, dispatch, actionCreator, draggedClass, dragOverClass);
@@ -240,10 +245,10 @@ describe('prepareTableOptions', () => {
 describe('areAllFilteredRowsSelected', () => {
   it('true', () => {
     const tableProps: ITableProps = {
-      columns: [{ key: 'id', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+      columns: [{ key: 'test', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
       data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
       selectedRows: [1, 2, 3, 4],
-      rowKeyField: 'id',
+      rowKeyField: 'test',
       paging: {
         enabled: true,
         pageSize: 2
@@ -305,15 +310,43 @@ describe('getDraggableProps', () => {
     const pagesCount = getPagesCountByProps({ ...tableProps, paging: undefined });
     expect(pagesCount).toEqual(1);
   });
+
+  describe('treeData', () => {
+    const data = [
+      { treeGroupId: null, id: 1, name: 'Department A', productivity: 5 },
+      { treeGroupId: 1, id: 2, name: 'Mike Wazowski', productivity: 2 },
+      { treeGroupId: 1, id: 3, name: 'Billi Bob', productivity: 3 },
+      { treeGroupId: null, id: 4, name: 'Department B', productivity: 7 },
+      { treeGroupId: 4, id: 5, name: 'Tom Williams', productivity: 2 },
+      { treeGroupId: 4, id: 6, name: 'Kurt Cobain', productivity: 5 },
+      { treeGroupId: null, id: 7, name: 'Department C', productivity: 11 },
+      { treeGroupId: 10, id: 8, name: 'Sunny Fox', productivity: 2 },
+      { treeGroupId: 10, id: 9, name: 'Marshall Bruce', productivity: 5 },
+      { treeGroupId: 7, id: 10, name: 'Squad A', productivity: 7 },
+      { treeGroupId: 7, id: 11, name: 'Squad B', productivity: 4 },
+      { treeGroupId: 11, id: 12, name: 'Alex Thomson', productivity: 1 },
+      { treeGroupId: 11, id: 13, name: 'Mike Griffinson', productivity: 3 },
+    ];
+    it('expanded', () => {
+      const treeProps: ITableProps = { ...tableProps, treeGroupKeyField: 'treeGroupId', data, searchText: undefined };
+      const pagesCount = getPagesCountByProps(treeProps);
+      expect(pagesCount).toEqual(5);
+    });
+    it('only one is expanded group', () => {
+      const treeProps: ITableProps = { ...tableProps, treeGroupKeyField: 'treeGroupId', treeGroupsExpanded: [1], data, searchText: undefined };
+      const pagesCount = getPagesCountByProps(treeProps);
+      expect(pagesCount).toEqual(2);
+    });
+  });
 });
 
 describe('areAllVisibleRowsSelected', () => {
   it('true', () => {
     const tableProps: ITableProps = {
-      columns: [{ key: 'id', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
+      columns: [{ key: 'test', filterRowValue: 4, filterRowOperator: FilterOperatorName.LessThanOrEqual }],
       data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
       selectedRows: [1, 2, 3, 5],
-      rowKeyField: 'id',
+      rowKeyField: 'test',
       paging: {
         enabled: true,
         pageSize: 2
@@ -350,3 +383,65 @@ describe('areAllVisibleRowsSelected', () => {
     expect(allFilteredRowsSelected).toBeFalsy();
   });
 });
+
+describe('getSelectedData', () => {
+  const propsInit: ITableProps = {
+    data: [
+      { id: 1, field: '11' },
+      { id: 2, field: '22' },
+      { id: 3, field: '33' },
+    ],
+    rowKeyField: 'id',
+    columns: []
+  }
+  it('one item', () => {
+    const props: ITableProps = {
+      ...propsInit,
+      selectedRows: [1]
+    }
+    expect(getSelectedData(props)).toMatchSnapshot();
+  });
+  it('two items', () => {
+    const props: ITableProps = {
+      ...propsInit,
+      selectedRows: [1, 2]
+    }
+    expect(getSelectedData(props)).toMatchSnapshot();
+  });
+  it('selectedRows is empty', () => {
+    const props: ITableProps = {
+      ...propsInit
+    }
+    expect(getSelectedData(props).length).toEqual(0);
+  });
+  it('data is undefined', () => {
+    const props: ITableProps = {
+      ...propsInit,
+      data: undefined,
+      selectedRows: [1]
+    }
+    expect(getSelectedData(props).length).toEqual(0);
+  });
+  it('selectedRows are not found', () => {
+    const props: ITableProps = {
+      ...propsInit,
+      selectedRows: [45]
+    }
+    expect(getSelectedData(props).length).toEqual(0);
+  });
+});
+
+
+describe('isPagingShown', () => {
+  it('default', () => {
+    expect(isPagingShown(PagingPosition.Bottom, { enabled: true })).toBeTruthy();
+    expect(isPagingShown(PagingPosition.Top, { enabled: true })).toBeFalsy();
+    expect(isPagingShown(PagingPosition.Top, { enabled: true, position: PagingPosition.Top })).toBeTruthy();
+    expect(isPagingShown(PagingPosition.Bottom, { enabled: true, position: PagingPosition.Top })).toBeFalsy();
+    expect(isPagingShown(PagingPosition.Top, { enabled: true, position: PagingPosition.Bottom })).toBeFalsy();
+    expect(isPagingShown(PagingPosition.Bottom, { enabled: true, position: PagingPosition.Bottom })).toBeTruthy();
+    expect(isPagingShown(PagingPosition.Top, { enabled: true, position: PagingPosition.TopAndBottom })).toBeTruthy();
+    expect(isPagingShown(PagingPosition.Bottom, { enabled: true, position: PagingPosition.TopAndBottom })).toBeTruthy();
+  });
+});
+

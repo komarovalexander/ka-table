@@ -2,6 +2,8 @@ import { DispatchFunc } from '../types';
 
 export const HeadCellResizeStateAction = 'HeadCellResizeStateAction';
 
+export const isCellResizeShown = (isResizable?: boolean, columnResizing?: boolean): boolean => !!((isResizable !== false) && (columnResizing || isResizable));
+
 export const getMouseMove = (
   currentWidth: any,
   minWidth: number,
@@ -21,10 +23,12 @@ export const getValidatedWidth = (newWidth: number, minWidth: number) => {
   return newWidth;
 };
 
+export const isNumberWidth = (width: any): boolean => width && typeof width === 'number';
+
 export const getMinWidth = (style: any): number => {
   let minWidth: number = 20;
   const styleMinWidth = style && style.minWidth;
-  if (styleMinWidth && typeof styleMinWidth === 'number'){
+  if (isNumberWidth(styleMinWidth)){
     minWidth = styleMinWidth;
   }
   return minWidth;

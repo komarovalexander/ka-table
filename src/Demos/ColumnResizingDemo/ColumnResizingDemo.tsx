@@ -10,10 +10,9 @@ import { DispatchFunc } from '../../lib/types';
 const columns: Column[] = Array(15).fill(undefined).map(
   (_, index) => ({
     key: 'column' + index,
-    style: { width: 150 },
+    style: { width: 150, minWidth: 100 },
     title: 'Column ' + index,
     type: DataType.String,
-    isResizable: true,
   }),
 );
 
@@ -25,11 +24,12 @@ const dataArray = Array(30).fill(undefined).map(
 );
 
 const tablePropsInit: ITableProps = {
-  columns,
-  data: dataArray,
-  editingMode: EditingMode.Cell,
-  rowKeyField: 'id',
   sortingMode: SortingMode.Single,
+  rowKeyField: 'id',
+  editingMode: EditingMode.Cell,
+  data: dataArray,
+  columns,
+  columnResizing: true,
 };
 
 const ColumnResizingDemo: React.FC = () => {

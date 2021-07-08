@@ -1,4 +1,6 @@
 import { ActionType } from './enums';
+import { Focused } from './Models/Focused';
+import { IMoveFocusedSettings } from './Utils/NavigationUtils';
 
 export const updateFilterRowValue = (columnKey: string, filterRowValue: any) => ({
   columnKey,
@@ -173,6 +175,11 @@ export const updatePageIndex = (pageIndex: number) => ({
   type: ActionType.UpdatePageIndex,
 });
 
+export const updatePageSize = (pageSize: number) => ({
+  pageSize,
+  type: ActionType.UpdatePageSize,
+});
+
 export const updatePagesCount = (pagesCount: number) => ({
   pagesCount,
   type: ActionType.UpdatePagesCount,
@@ -217,4 +224,38 @@ export const clearSingleAction = () => ({
 export const setSingleAction = (singleAction: any) => ({
   singleAction,
   type: ActionType.SetSingleAction
+});
+
+export const clearFocused = () => ({
+  type: ActionType.ClearFocused
+});
+
+export const setFocused = (focused: Focused) => ({
+  focused,
+  type: ActionType.SetFocused
+});
+
+export const moveFocusedRight = (settings: IMoveFocusedSettings) => ({
+  settings,
+  type: ActionType.MoveFocusedRight
+});
+
+export const moveFocusedLeft = (settings?: IMoveFocusedSettings) => ({
+  settings,
+  type: ActionType.MoveFocusedLeft
+});
+
+export const moveFocusedUp = (settings?: IMoveFocusedSettings) => ({
+  settings,
+  type: ActionType.MoveFocusedUp
+});
+
+export const moveFocusedDown = (settings?: IMoveFocusedSettings) => ({
+  settings,
+  type: ActionType.MoveFocusedDown
+});
+
+export const updateTreeGroupsExpanded = (rowKeyValue: any) => ({
+  rowKeyValue,
+  type: ActionType.UpdateTreeGroupsExpanded ,
 });

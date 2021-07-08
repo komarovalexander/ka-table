@@ -1,16 +1,17 @@
 import React, { RefObject, useEffect, useRef } from 'react';
 
-import { newRowId } from '../../const';
 import { ITableBodyProps } from '../../props';
 import { getValueByField } from '../../Utils/DataUtils';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
-import { getGroupMark, getGroupText } from '../../Utils/GroupUtils';
+import { getGroupMark, getGroupText, groupSummaryMark } from '../../Utils/GroupUtils';
+import { treeDataMark, treeGroupMark } from '../../Utils/TreeUtils';
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
-import NewRow from '../NewRow/NewRow';
+import { GroupSummaryRow } from '../GroupSummaryRow/GroupSummaryRow';
 
 export interface IRowsProps extends ITableBodyProps {
   onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;
+  treeGroupsExpanded?: any[];
 }
 
 const Rows: React.FunctionComponent<IRowsProps> = (props) => {
@@ -22,11 +23,11 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     dispatch,
     editableCells,
     format,
-    groupColumnsCount,
     groupedColumns,
     groups = [],
     groupsExpanded = [],
     onFirstRowRendered,
+    treeGroupsExpanded,
     rowKeyField,
     rowReordering,
     selectedRows,
@@ -40,22 +41,8 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
   }, [firstRowRef, onFirstRowRendered]);
 
   let rowRefLink: any = firstRowRef;
-  const newRowEditableCells = editableCells && editableCells.filter(c => c.rowKeyValue === newRowId);
   return (
     <>
-      {
-        newRowEditableCells && !!newRowEditableCells.length && (
-        <NewRow
-          childComponents={childComponents}
-          columns={columns}
-          dispatch={dispatch}
-          editableCells={newRowEditableCells}
-          format={format}
-          groupColumnsCount={groupColumnsCount}
-          rowKeyField={rowKeyField}
-          validation={validation}
-        />
-      )}
       {data.map((d) => {
       if (d.groupMark === groupMark) {
         const groupIndex = d.key.length - 1;
@@ -70,12 +57,19 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             groupIndex={groupIndex}
             groupKey={d.key}
             isExpanded={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(d.key))}
-            text={getGroupText(d.value, column)}
-            key={d.key}
+            text={getGroupText(d.value, column, format)}
+            key={JSON.stringify(d.key)}
           />
         );
+      } else if (d.groupSummaryMark === groupSummaryMark) {
+        return <GroupSummaryRow {...props} groupData={d.groupData} key={d.key} groupIndex={d.groupIndex} />;
       } else {
-        const rowKeyValue = getValueByField(d, rowKeyField);
+        const isTreeGroup = d.treeGroupMark === treeGroupMark;
+        const isTreeData =  d.treeDataMark === treeDataMark;
+        const isTreeRow = isTreeGroup || isTreeData;
+        const rowData = isTreeRow ? d.rowData : d;
+        const rowKeyValue = getValueByField(rowData, rowKeyField);
+        const isTreeExpanded = isTreeGroup && (!treeGroupsExpanded || treeGroupsExpanded.includes(rowKeyValue));
         const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
         const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
         const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
@@ -86,12 +80,15 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             dispatch={dispatch}
             editableCells={props.editableCells}
             editingMode={props.editingMode}
+            isTreeGroup={isTreeGroup}
+            isTreeExpanded={isTreeExpanded}
+            treeDeep={isTreeRow === true ? d.treeDeep : undefined}
             format={format}
             groupColumnsCount={props.groupColumnsCount}
             isDetailsRowShown={isDetailsRowShown}
             isSelectedRow={isSelectedRow}
             key={rowKeyValue}
-            rowData={d}
+            rowData={rowData}
             rowEditableCells={rowEditableCells}
             rowKeyField={props.rowKeyField}
             rowKeyValue={rowKeyValue}

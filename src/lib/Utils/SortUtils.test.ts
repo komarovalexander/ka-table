@@ -37,6 +37,15 @@ describe('sortData', () => {
     const newData = sortData(columns2, data);
     expect(newData).toMatchSnapshot();
   });
+
+  it('Custom logic', () => {
+    const newData = sortData(columns, data, ({ column }) => {
+      if (column.key === 'column') {
+        return (a: any, b: any) => a === 3 ? -1 : 0;
+      }
+    });
+    expect(newData).toMatchSnapshot();
+  });
 });
 
 it('isTripleStateSorting', () => {

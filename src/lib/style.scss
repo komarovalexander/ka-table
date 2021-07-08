@@ -51,6 +51,9 @@
 .ka-cell:hover{
   background-color: $ka-cell-hover-background-color;
 }
+.ka-tree-cell{
+  display: flex;
+}
 .ka-icon{
   font-weight: 100;
   font-size: $ka-icon-font-size;
@@ -81,6 +84,9 @@
 .ka-empty-cell{
   width: 40px;
   min-width: 40px;
+}
+.ka-tree-empty-space{
+  width: 20px;
 }
 .ka-tr {
   width: 100%;
@@ -133,6 +139,11 @@
   margin-right: 5px;
   cursor: pointer;
 }
+.ka-icon-tree-arrow{
+  padding: 0 10px 0 10px;
+  margin-left: -10px;
+  cursor: pointer;
+}
 .ka-icon-sort{
   margin-left: 3px;
 }
@@ -173,6 +184,9 @@
   position: relative;
   left: 19px;
 }
+.ka-summary-cell{
+  padding: $ka-summary-cell-padding;
+}
 
 @keyframes typing{
   0%{
@@ -199,15 +213,24 @@
   color: $ka-color-base;
 }
 
-.ka-paging-pages{
+.ka-paging-sizes-active {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ka-paging-pages, .ka-paging-sizes {
   list-style: none;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
   padding: $ka-paging-pages-padding;
+  margin: $ka-paging-pages-margin;
 }
 
-.ka-paging-page-index{
+.ka-paging-pages {
+  justify-content: flex-end;
+}
+
+.ka-paging-page-index, .ka-paging-size{
   cursor: pointer;
   padding: 5px;
   margin: 10px 5px;
@@ -218,7 +241,7 @@
   user-select: none;
 }
 
-.ka-paging-page-index-active{
+.ka-paging-page-index-active, .ka-paging-size-active {
   background-color: $ka-paging-index-active-background-color;
   font-weight: bold;
   color: $ka-paging-index-active-color;

@@ -1,0 +1,319 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TreeUtils getTreeData 2 levels 1`] = `
+Array [
+  Object {
+    "rowData": Object {
+      "id": 1,
+      "name": "level 1 - 1",
+      "orderCount": 5,
+      "treeGroupId": null,
+    },
+    "treeDeep": 0,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 7,
+      "name": "level 2 - 1",
+      "orderCount": 5,
+      "treeGroupId": 1,
+    },
+    "treeDeep": 1,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 2,
+      "name": "1 - 1 - Data 1",
+      "orderCount": 2,
+      "treeGroupId": 7,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 3,
+  },
+  Object {
+    "rowData": Object {
+      "id": 10,
+      "name": "1 - 1 - Data 2",
+      "orderCount": 2,
+      "treeGroupId": 7,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 3,
+  },
+  Object {
+    "rowData": Object {
+      "id": 8,
+      "name": "1 - level 2 - 2",
+      "orderCount": 5,
+      "treeGroupId": 1,
+    },
+    "treeDeep": 1,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 3,
+      "name": "1 - 2 - Data 1",
+      "orderCount": 3,
+      "treeGroupId": 8,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 3,
+  },
+  Object {
+    "rowData": Object {
+      "id": 4,
+      "name": "Level 1 - 2",
+      "orderCount": 7,
+      "treeGroupId": null,
+    },
+    "treeDeep": 0,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 5,
+      "name": "2 - Data 1",
+      "orderCount": 2,
+      "treeGroupId": 4,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 2,
+  },
+  Object {
+    "rowData": Object {
+      "id": 9,
+      "name": "2 - level 2 - 2",
+      "orderCount": 5,
+      "treeGroupId": 4,
+    },
+    "treeDeep": 1,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 6,
+      "name": "2 - 2 - Data 1",
+      "orderCount": 5,
+      "treeGroupId": 9,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 3,
+  },
+]
+`;
+
+exports[`TreeUtils getTreeData 3 levels 1`] = `
+Array [
+  Object {
+    "rowData": Object {
+      "id": 1,
+      "name": "level 1 - 1",
+      "orderCount": 5,
+      "treeGroupId": null,
+    },
+    "treeDeep": 0,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 7,
+      "name": "level 2 - 1",
+      "orderCount": 5,
+      "treeGroupId": 1,
+    },
+    "treeDeep": 1,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 2,
+      "name": "level 3 - 1",
+      "orderCount": 2,
+      "treeGroupId": 7,
+    },
+    "treeDeep": 2,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 10,
+      "name": "1 - 1 - 1 - Data 1",
+      "orderCount": 2,
+      "treeGroupId": 2,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 4,
+  },
+  Object {
+    "rowData": Object {
+      "id": 3,
+      "name": "1 - Data 1",
+      "orderCount": 3,
+      "treeGroupId": 1,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 2,
+  },
+]
+`;
+
+exports[`TreeUtils getTreeData contains filtered data 1`] = `
+Array [
+  Object {
+    "rowData": Object {
+      "id": 1,
+      "name": "level 1 - 1",
+      "orderCount": 5,
+      "treeGroupId": null,
+    },
+    "treeDeep": 0,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 3,
+      "name": "1 - Data 2",
+      "orderCount": 3,
+      "treeGroupId": 1,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 2,
+  },
+  Object {
+    "rowData": Object {
+      "id": 4,
+      "name": "Level 1 - 2",
+      "orderCount": 7,
+      "treeGroupId": null,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 1,
+  },
+]
+`;
+
+exports[`TreeUtils getTreeData default 1`] = `
+Array [
+  Object {
+    "rowData": Object {
+      "id": 1,
+      "name": "level 1 - 1",
+      "orderCount": 5,
+      "treeGroupId": null,
+    },
+    "treeDeep": 0,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 2,
+      "name": "1 - Data 1",
+      "orderCount": 2,
+      "treeGroupId": 1,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 2,
+  },
+  Object {
+    "rowData": Object {
+      "id": 3,
+      "name": "1 - Data 2",
+      "orderCount": 3,
+      "treeGroupId": 1,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 2,
+  },
+  Object {
+    "rowData": Object {
+      "id": 4,
+      "name": "Level 1 - 2",
+      "orderCount": 7,
+      "treeGroupId": null,
+    },
+    "treeDeep": 0,
+    "treeGroupMark": Object {},
+  },
+  Object {
+    "rowData": Object {
+      "id": 5,
+      "name": "2 - Data 1",
+      "orderCount": 2,
+      "treeGroupId": 4,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 2,
+  },
+  Object {
+    "rowData": Object {
+      "id": 6,
+      "name": "2 - Data 2",
+      "orderCount": 5,
+      "treeGroupId": 4,
+    },
+    "treeDataMark": Object {},
+    "treeDeep": 2,
+  },
+]
+`;
+
+exports[`TreeUtils restoreFilteredData 2 levels 1`] = `
+Array [
+  Object {
+    "id": 4,
+    "name": "Level 2 - 2 - 1",
+    "orderCount": 7,
+    "treeGroupId": 9,
+  },
+  Object {
+    "id": 9,
+    "name": "Level 1 - 2",
+    "orderCount": 7,
+    "treeGroupId": null,
+  },
+  Object {
+    "id": 6,
+    "name": "2 - 1 - Data 2",
+    "orderCount": 5,
+    "treeGroupId": 4,
+  },
+  Object {
+    "id": 10,
+    "name": "Level 2 - 2 - 2",
+    "orderCount": 7,
+    "treeGroupId": 9,
+  },
+  Object {
+    "id": 12,
+    "name": "2 - 2 - Data 2",
+    "orderCount": 5,
+    "treeGroupId": 10,
+  },
+]
+`;
+
+exports[`TreeUtils restoreFilteredData default 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "name": "level 1 - 1",
+    "orderCount": 5,
+    "treeGroupId": null,
+  },
+  Object {
+    "id": 3,
+    "name": "1 - Data 2",
+    "orderCount": 3,
+    "treeGroupId": 1,
+  },
+  Object {
+    "id": 4,
+    "name": "Level 1 - 2",
+    "orderCount": 7,
+    "treeGroupId": null,
+  },
+]
+`;

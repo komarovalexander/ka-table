@@ -74,7 +74,7 @@ body {
       width: 320px;
       box-sizing: border-box;
 
-      .menu{
+      .menu-ul{
         padding: 0;
         margin: 0;
         background: #fffB;
@@ -97,7 +97,7 @@ body {
       .menu-search {
         padding: 15px 40px;
         width: 100%;
-        background: #EDF2FD77;
+        background: #fff5;
         border: none;
         outline-color: #455880;
       }
@@ -111,7 +111,7 @@ body {
         box-sizing: border-box;
 
         .inner-menu{
-          margin-left: 30px;
+          margin-left: 20px;
         }
 
         a, .group {
@@ -139,7 +139,8 @@ body {
               top: -5px;
             }
             .new-badge, .upd-badge{
-              margin-left: 20px;
+              position: relative;
+              left: 20px;
               padding: 0 7px;
               background: rgba(118,74,188, 0.64);
               color: white;
@@ -151,7 +152,7 @@ body {
           }
 
           &.active{
-            background-color: #ECF0F4;
+            background-color: #f1f5f7;
             padding-left: 36px;
             border-left: 4px solid #353C44;
             color: #353C44;

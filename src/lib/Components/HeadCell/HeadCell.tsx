@@ -4,7 +4,7 @@ import { reorderColumns } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { IHeadCellProps } from '../../props';
 import { ChildAttributesItem } from '../../types';
-import { headCellDispatchWrapper } from '../../Utils/CellResizeUtils';
+import { headCellDispatchWrapper, isCellResizeShown } from '../../Utils/CellResizeUtils';
 import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
 import { getDraggableProps } from '../../Utils/PropsUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
@@ -13,13 +13,16 @@ import HeadCellResize from '../HeadCellResize/HeadCellResize';
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
+    childComponents,
     colSpan,
+    column,
     column: { style, isResizable, key },
     columnReordering,
+    columnResizing,
     dispatch,
+    headers,
     rowSpan,
-    sortingMode,
-    headers
+    sortingMode
   } = props;
   let {
     childComponents: { headCell }
@@ -49,10 +52,12 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
         <div className={defaultOptions.css.theadCellContentWrapper}>
          {content || <HeadCellContent {...props}/>}
         </div>
-        {isResizable && (
-          <HeadCellResize {...props}
+        {isCellResizeShown(isResizable, columnResizing) && (
+          <HeadCellResize
+            column={column}
             currentWidth={width}
-            dispatch={headCellDispatch}/>
+            dispatch={headCellDispatch}
+            childComponents={childComponents}/>
         )}
       </div>
     </th>

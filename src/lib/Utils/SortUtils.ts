@@ -1,5 +1,6 @@
 import { SortDirection, SortingMode } from '../enums';
 import { Column } from '../Models/Column';
+import { SortFunc } from '../types';
 import { getValueByColumn } from './DataUtils';
 
 export const sortColumns = (columns: Column[]) => {
@@ -20,11 +21,17 @@ export const sortColumns = (columns: Column[]) => {
   });
 }
 
-export const sortData = (columns: Column[], data: any): any[] => {
-  const sortedColumn = columns.find((column) => column.sortDirection);
-  if (!sortedColumn) { return data; }
-  const sortFunc = sortedColumn.sortDirection === SortDirection.Ascend
-    ? ascendSort(sortedColumn) : descendSort(sortedColumn);
+export const sortData = (columns: Column[], data: any, sort?: SortFunc): any[] => {
+  const column = columns.find((c) => c.sortDirection);
+  if (!column) { return data; }
+  const customSort = sort && sort({ column });
+  const sortFunc = (
+      customSort && ((rowDataA: any, rowDataB: any) => customSort(getValueByColumn(rowDataA, column), getValueByColumn(rowDataB, column)))
+    ) || (
+      column.sortDirection === SortDirection.Ascend
+        ? ascendSort(column)
+        : descendSort(column)
+    );
   const newData = [...data].sort(sortFunc);
   return newData;
 };

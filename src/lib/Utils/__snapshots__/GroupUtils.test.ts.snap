@@ -116,6 +116,67 @@ Array [
 ]
 `;
 
+exports[`GroupUtils convertToFlat inner group with summart 1`] = `
+Array [
+  Object {
+    "groupMark": Object {},
+    "key": Array [
+      "France",
+    ],
+    "value": "France",
+  },
+  Object {
+    "groupMark": Object {},
+    "key": Array [
+      "France",
+      "Cat",
+    ],
+    "value": "Cat",
+  },
+  Object {
+    "country": "France",
+    "name": "Simba",
+    "type": "Cat",
+  },
+  Object {
+    "groupData": Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+    ],
+    "groupIndex": 0,
+    "groupSummaryMark": Object {},
+    "key": Array [
+      Array [
+        "France",
+        "Cat",
+      ],
+      "--: + summary--\\\\",
+    ],
+  },
+  Object {
+    "groupData": Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+    ],
+    "groupIndex": 0,
+    "groupSummaryMark": Object {},
+    "key": Array [
+      Array [
+        "France",
+        "Cat",
+      ],
+      "--: + summary--\\\\",
+    ],
+  },
+]
+`;
+
 exports[`GroupUtils convertToFlat simple 1`] = `
 Array [
   Object {
@@ -241,6 +302,149 @@ Map {
   },
   "Montenegro" => Array [],
   "France" => Array [],
+}
+`;
+
+exports[`GroupUtils getGroupedStructure returns summary 1`] = `
+Map {
+  "Czech Republic" => Map {
+    "Cat" => Array [
+      Object {
+        "country": "Czech Republic",
+        "name": "Kas",
+        "type": "Cat",
+      },
+      Object {
+        "country": "Czech Republic",
+        "name": "Hash",
+        "type": "Cat",
+      },
+      Object {
+        "groupData": Array [
+          Object {
+            "country": "Czech Republic",
+            "name": "Kas",
+            "type": "Cat",
+          },
+          Object {
+            "country": "Czech Republic",
+            "name": "Hash",
+            "type": "Cat",
+          },
+        ],
+        "groupIndex": 1,
+        "groupSummaryMark": Object {},
+        "key": "[[\\"Czech Republic\\",\\"Cat\\"],\\"--:+summary--\\"]",
+      },
+    ],
+    "Dog" => Array [
+      Object {
+        "country": "Czech Republic",
+        "name": "Beethoven",
+        "type": "Dog",
+      },
+      Object {
+        "groupData": Array [
+          Object {
+            "country": "Czech Republic",
+            "name": "Beethoven",
+            "type": "Dog",
+          },
+        ],
+        "groupIndex": 1,
+        "groupSummaryMark": Object {},
+        "key": "[[\\"Czech Republic\\",\\"Dog\\"],\\"--:+summary--\\"]",
+      },
+    ],
+    Object {} => Object {
+      "groupData": Array [
+        Object {
+          "country": "Czech Republic",
+          "name": "Kas",
+          "type": "Cat",
+        },
+        Object {
+          "country": "Czech Republic",
+          "name": "Beethoven",
+          "type": "Dog",
+        },
+        Object {
+          "country": "Czech Republic",
+          "name": "Hash",
+          "type": "Cat",
+        },
+      ],
+      "groupIndex": 0,
+      "groupSummaryMark": Object {},
+      "key": "[[\\"Czech Republic\\"],\\"--:+summary--\\"]",
+    },
+  },
+  "Montenegro" => Map {
+    "Dog" => Array [
+      Object {
+        "country": "Montenegro",
+        "name": "Rex",
+        "type": "Dog",
+      },
+      Object {
+        "groupData": Array [
+          Object {
+            "country": "Montenegro",
+            "name": "Rex",
+            "type": "Dog",
+          },
+        ],
+        "groupIndex": 1,
+        "groupSummaryMark": Object {},
+        "key": "[[\\"Montenegro\\",\\"Dog\\"],\\"--:+summary--\\"]",
+      },
+    ],
+    Object {} => Object {
+      "groupData": Array [
+        Object {
+          "country": "Montenegro",
+          "name": "Rex",
+          "type": "Dog",
+        },
+      ],
+      "groupIndex": 0,
+      "groupSummaryMark": Object {},
+      "key": "[[\\"Montenegro\\"],\\"--:+summary--\\"]",
+    },
+  },
+  "France" => Map {
+    "Cat" => Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+      Object {
+        "groupData": Array [
+          Object {
+            "country": "France",
+            "name": "Simba",
+            "type": "Cat",
+          },
+        ],
+        "groupIndex": 1,
+        "groupSummaryMark": Object {},
+        "key": "[[\\"France\\",\\"Cat\\"],\\"--:+summary--\\"]",
+      },
+    ],
+    Object {} => Object {
+      "groupData": Array [
+        Object {
+          "country": "France",
+          "name": "Simba",
+          "type": "Cat",
+        },
+      ],
+      "groupIndex": 0,
+      "groupSummaryMark": Object {},
+      "key": "[[\\"France\\"],\\"--:+summary--\\"]",
+    },
+  },
 }
 `;
 

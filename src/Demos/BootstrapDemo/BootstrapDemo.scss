@@ -6,6 +6,9 @@
   $pagination-active-border-color: $table-dark-bg;
   @import '../../../node_modules/bootstrap/scss/bootstrap';
   @import '../../lib/static/icons.scss';
+  .ka{
+    background-color: white;
+  }
   .ka-icon{
     font-weight: 100;
     font-size: 10px;
@@ -41,6 +44,9 @@
   }
   .ka-paging{
     padding: 15px;
+    ul{
+      margin-bottom: 0;
+    }
   }
   .ka-paging-page-index{
     cursor: pointer;

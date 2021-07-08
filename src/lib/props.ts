@@ -1,3 +1,6 @@
+
+import { IRowsProps } from './Components/Rows/Rows';
+import { ITableAllProps } from './Components/Table/Table';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
 import { GroupedColumn } from './Models/GroupedColumn';
@@ -6,9 +9,13 @@ import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 interface IRowCommonProps {
   childComponents: ChildComponents;
   columns: Column[];
+  treeDeep?: number;
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
   editingMode: EditingMode;
+  index?: number;
+  isTreeExpanded?: boolean;
+  isTreeGroup?: boolean;
   rowData: any;
   rowKeyField: string;
   rowKeyValue: any;
@@ -16,8 +23,10 @@ interface IRowCommonProps {
 }
 
 export interface ICellProps {
+  treeArrowElement?: any;
   childComponents: ChildComponents;
   column: Column;
+  treeDeep?: number;
   dispatch: DispatchFunc;
   editingMode: EditingMode;
   editorValue?: any;
@@ -90,13 +99,29 @@ export interface IGroupRowProps {
   groupIndex: number;
   groupKey: any[];
   isExpanded: boolean;
-  text: string;
+  text: string; // TODO: consider to pass the value insted of formatted text
 }
 
+export interface IGroupSummaryRowProps extends IRowsProps {
+  groupData: any[];
+  groupIndex: number;
+}
+
+export interface IGroupSummaryCellProps extends IGroupSummaryRowProps {
+  column: Column;
+}
+
+export interface IHeadCellResizeProps {
+  dispatch: DispatchFunc;
+  column: Column;
+  currentWidth: any;
+  childComponents: ChildComponents;
+}
 export interface IHeadCellProps {
   areAllRowsSelected: boolean;
   childComponents: ChildComponents;
   columnReordering?: boolean;
+  columnResizing?: boolean;
   column: Column;
   dispatch: DispatchFunc;
   sortingMode: SortingMode;
@@ -114,6 +139,7 @@ export interface INoDataRowProps {
 export interface ITableHeadProps {
   columnReordering?: boolean;
   groupedColumns?: GroupedColumn[];
+  columnResizing?: boolean;
   areAllRowsSelected: boolean;
   childComponents: ChildComponents;
   columns: Column[];
@@ -141,6 +167,16 @@ export interface ITableBodyProps {
   selectedRows: any[];
   validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
+}
+
+export interface ITableFootProps extends ITableAllProps {
+  data: any[];
+  groupColumnsCount: number;
+}
+export interface ISummaryRowProps extends ITableFootProps {
+}
+export interface ISummaryCellProps extends ISummaryRowProps {
+  column: Column;
 }
 
 export interface INewRowProps {
@@ -186,6 +222,7 @@ export interface IHeadRowProps {
   areAllRowsSelected: boolean;
   childComponents: ChildComponents;
   columnReordering?: boolean;
+  columnResizing?: boolean;
   columns: Column[];
   dispatch: DispatchFunc;
   groupColumnsCount: number;
@@ -199,12 +236,16 @@ export interface ILoadingProps {
 }
 
 export interface IPagingProps {
+  childComponents: ChildComponents;
+  dispatch: DispatchFunc;
   enabled?: boolean;
   pageIndex?: number;
   pageSize?: number;
+  pageSizes?: number[];
   pagesCount?: number;
-  childComponents: ChildComponents;
-  dispatch: DispatchFunc;
+}
+export interface IPagingSizeProps extends IPagingProps {
+  value: number;
 }
 
 export interface IPagingIndexProps extends IPagingProps {
@@ -212,6 +253,8 @@ export interface IPagingIndexProps extends IPagingProps {
   pageIndex: number;
   text: any;
 }
+
 export interface IPagingPagesProps extends IPagingProps {
-  pages: number[];
+  pages?: number[]; // TODO: will be deprecated next major release
 }
+

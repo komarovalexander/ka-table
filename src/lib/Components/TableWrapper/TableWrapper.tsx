@@ -6,12 +6,16 @@ import { ActionType, EditingMode, FilteringMode, SortingMode } from '../../enums
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { prepareTableOptions } from '../../Utils/PropsUtils';
+import { isVirtualScrollingEnabled } from '../../Utils/Virtualize';
 import TableBody from '../TableBody/TableBody';
+import { TableFoot } from '../TableFoot/TableFoot';
 import { TableHead } from '../TableHead/TableHead';
 
 export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     childComponents = {},
+    columnReordering,
+    columnResizing,
     data = [],
     dispatch,
     editableCells = [],
@@ -36,17 +40,17 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
 
   const tableWrapper = getElementCustomization({
     className: defaultOptions.css.tableWrapper,
-    onScroll: virtualScrolling ? (event) => {
+    onScroll: isVirtualScrollingEnabled(virtualScrolling) ? (event) => {
       dispatch({
         scrollTop: event.currentTarget.scrollTop,
         type: ActionType.ScrollTable,
       });
     } : undefined,
-  }, { ...props, dispatch }, childComponents.tableWrapper);
+  }, props, childComponents.tableWrapper);
 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.table,
-  }, { ...props, dispatch }, childComponents.table);
+  }, props, childComponents.table);
   return (
     <div {...tableWrapper.elementAttributes}>
       {content || tableWrapper.content || (
@@ -55,6 +59,8 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
             {...props}
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
+            columnReordering={columnReordering}
+            columnResizing={columnResizing}
             columns={preparedOptions.columns}
             dispatch={dispatch}
             filteringMode={filteringMode}
@@ -66,7 +72,6 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
               childComponents={childComponents}
               columns={preparedOptions.columns}
               data={preparedOptions.groupedData}
-              dispatch={dispatch}
               editableCells={editableCells}
               editingMode={editingMode}
               groupColumnsCount={preparedOptions.groupColumnsCount}
@@ -75,6 +80,12 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
               rowReordering={rowReordering}
               selectedRows={selectedRows}
           />
+          {(childComponents.tableFoot || childComponents.summaryRow || childComponents.summaryCell) && (
+              <TableFoot {...props}
+                data={data}
+                columns={preparedOptions.columns}
+                groupColumnsCount={preparedOptions.groupColumnsCount} />
+            )}
         </table>
       )}
     </div>

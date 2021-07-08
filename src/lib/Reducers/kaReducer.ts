@@ -11,7 +11,9 @@ import { getValueByField, reorderData, replaceValue } from '../Utils/DataUtils';
 import { filterAndSearchData } from '../Utils/FilterUtils';
 import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
+import { getDownCell, getLeftCell, getRightCell, getUpCell } from '../Utils/NavigationUtils';
 import { getData, prepareTableOptions } from '../Utils/PropsUtils';
+import { getExpandedParents } from '../Utils/TreeUtils';
 
 const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
   const newEditableCells = [...editableCells];
@@ -33,6 +35,12 @@ const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKey
   return newSelectedRows;
 }
 
+const getUpdatedFocused = (props: ITableProps, action: any, funcToUpdate: any) => {
+  if (!props?.focused?.cell) return props;
+  const newFocused = { cell: funcToUpdate(props.focused.cell, props, action.settings)};
+  return { ...props, focused: newFocused };
+}
+
 const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   const {
     columns,
@@ -42,6 +50,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     groupsExpanded,
     loading,
     paging,
+    treeGroupsExpanded,
     rowKeyField,
     selectedRows = [],
     validation,
@@ -50,6 +59,24 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   } = props;
 
   switch (action.type) {
+    case ActionType.MoveFocusedRight: {
+      return getUpdatedFocused(props, action, getRightCell);
+    }
+    case ActionType.MoveFocusedLeft: {
+      return getUpdatedFocused(props, action, getLeftCell);
+    }
+    case ActionType.MoveFocusedUp: {
+      return getUpdatedFocused(props, action, getUpCell);
+    }
+    case ActionType.MoveFocusedDown: {
+      return getUpdatedFocused(props, action, getDownCell);
+    }
+    case ActionType.SetFocused: {
+      return { ...props, focused: action.focused };
+    }
+    case ActionType.ClearFocused : {
+      return { ...props, focused: undefined };
+    }
     case ActionType.ClearSingleAction: {
       return {...props, singleAction: undefined };
     }
@@ -93,6 +120,9 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     }
     case ActionType.UpdatePageIndex: {
       return { ...props, paging: {...paging, pageIndex: action.pageIndex } };
+    }
+    case ActionType.UpdatePageSize: {
+      return { ...props, paging: {...paging, pageSize: action.pageSize } };
     }
     case ActionType.UpdatePagesCount: {
       return { ...props, paging: {...paging, pagesCount: action.pagesCount }};
@@ -242,11 +272,8 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     case ActionType.UpdateData:
       return { ...props, data: action.data };
     case ActionType.ScrollTable:
-      if (virtualScrolling) {
-          const scrollTop = action.scrollTop;
-          return {...props, ...{virtualScrolling: { ...virtualScrolling, scrollTop }}};
-        }
-      break;
+      const scrollTop = action.scrollTop;
+      return {...props, ...{virtualScrolling: { ...virtualScrolling, scrollTop }}};
     case ActionType.UpdateGroupsExpanded: {
       let currentGroupsExpanded = groupsExpanded;
       if (!currentGroupsExpanded) {
@@ -311,6 +338,19 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     case ActionType.UpdateRow: {
       const newData = getCopyOfArrayAndInsertOrReplaceItem(action.rowData, rowKeyField, data);
       return { ...props, data: newData };
+    }
+    case ActionType.UpdateTreeGroupsExpanded : {
+      const rowKeyValue = action.rowKeyValue;
+      const value = treeGroupsExpanded ? !treeGroupsExpanded.some(v => v === rowKeyValue) : false;
+      if (value){
+        return { ...props, treeGroupsExpanded: [...(treeGroupsExpanded || []), rowKeyValue] };
+      }
+      let currentExpanded = treeGroupsExpanded;
+      if (!currentExpanded){
+        const preparedOptions = prepareTableOptions(props);
+        currentExpanded = getExpandedParents(preparedOptions.groupedData, rowKeyField);
+      }
+      return { ...props, treeGroupsExpanded: currentExpanded.filter(item => item !== rowKeyValue) };
     }
   }
   return props;

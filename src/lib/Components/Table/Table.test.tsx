@@ -1,10 +1,11 @@
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Enzyme, { mount } from 'enzyme';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+
 import { loadData } from '../../actionCreators';
-import { ActionType } from '../../enums';
+import { ActionType, PagingPosition } from '../../enums';
 import { Table } from './Table';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -56,4 +57,11 @@ it('should not dispatch in case of single action is undefined', () => {
   ReactDOM.render(<Table {...props} />, div);
   ReactDOM.unmountComponentAtNode(div);
   expect(dispatch).toHaveBeenCalledTimes(0);
+});
+
+it('Paging position property', () => {
+  expect(mount(<Table {...tableProps} paging={{enabled: true, position: PagingPosition.Top}}/>).find('.ka-paging').length).toBe(1)
+  expect(mount(<Table {...tableProps} paging={{enabled: true, position: PagingPosition.Bottom}}/>).find('.ka-paging').length).toBe(1)
+  expect(mount(<Table {...tableProps} paging={{enabled: true, position: PagingPosition.TopAndBottom}}/>).find('.ka-paging').length).toBe(2);
+  expect(mount(<Table {...tableProps} paging={{enabled: false, position: PagingPosition.TopAndBottom}}/>).find('.ka-paging').length).toBe(0);
 });

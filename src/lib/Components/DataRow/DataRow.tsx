@@ -32,7 +32,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   }, props, dataRow);
 
   return (
-    <tr {...elementAttributes} ref={trRef}>
+    <tr ref={trRef} {...elementAttributes}>
       {content
         ? <>{content}</>
         : (

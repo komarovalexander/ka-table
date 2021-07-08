@@ -1,11 +1,10 @@
-
 import { ITableProps } from '../';
 import defaultOptions from '../defaultOptions';
 import { DataType, FilterOperatorName } from '../enums';
 import { Column } from '../Models/Column';
 import { EditableCell } from '../Models/EditableCell';
 import { FilterOperator } from '../Models/FilterOperator';
-import { SearchFunc } from '../types';
+import { FilterFunc, SearchFunc } from '../types';
 import { isEmpty } from './CommonUtils';
 import { getValueByColumn } from './DataUtils';
 import { convertToColumnTypes } from './TypeUtils';
@@ -41,6 +40,7 @@ export const filterAndSearchData = (props: ITableProps) => {
     searchText,
     columns,
     search,
+    filter
   } = props;
   let {
     data = [],
@@ -49,12 +49,22 @@ export const filterAndSearchData = (props: ITableProps) => {
   data = extendedFilter ? extendedFilter(data) : data;
   data = searchText ? searchData(columns, data, searchText, search) : data;
   data = convertToColumnTypes(data, columns);
-  data = filterData(data, columns);
+  data = filterData(data, columns, filter);
 
   return data;
 };
 
-export const filterData = (data: any[], columns: Column[]): any[] => {
+const getCompare = (column: Column) => {
+  const filterRowOperator = column.filterRowOperator
+      || getDefaultOperatorForType(column.dataType  || defaultOptions.columnDataType);
+  const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
+  if (!filterOperator) {
+      throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
+    }
+  return filterOperator.compare;
+};
+
+export const filterData = (data: any[], columns: Column[], filter?: FilterFunc): any[] => {
   return columns.reduce((initialData, column) => {
     if (
       isEmpty(column.filterRowValue)
@@ -63,13 +73,7 @@ export const filterData = (data: any[], columns: Column[]): any[] => {
     ) {
       return initialData;
     }
-    const filterRowOperator = column.filterRowOperator
-      || getDefaultOperatorForType(column.dataType  || defaultOptions.columnDataType);
-    const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
-    if (!filterOperator) {
-      throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
-    }
-    const compare = filterOperator.compare;
+    const compare = filter?.({ column }) || getCompare(column);
     return initialData.filter((d: any) => {
       let fieldValue = getValueByColumn(d, column);
       let conditionValue = column.filterRowValue;

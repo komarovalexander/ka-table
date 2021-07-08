@@ -8,14 +8,13 @@ import TableBodyContent from '../TableBodyContent/TableBodyContent';
 const TableBody: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {
     childComponents,
-    dispatch,
   } = props;
 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.tbody,
-  }, { ...props, dispatch }, childComponents.tableBody);
+  }, props, childComponents.tableBody);
   return (
-    <tbody {...elementAttributes} className={defaultOptions.css.tbody}>
+    <tbody {...elementAttributes}>
       {content || <TableBodyContent {...props} />}
     </tbody>
   );

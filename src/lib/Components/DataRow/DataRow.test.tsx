@@ -1,7 +1,8 @@
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Enzyme, { mount, shallow } from 'enzyme';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import { DataType, EditingMode } from '../../enums';
 import { IRowProps } from '../../props';
@@ -31,7 +32,7 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe('CellEditorBoolean', () => {
+describe('DataRow', () => {
   it('renders without crashing', () => {
     const element = document.createElement('tbody');
     ReactDOM.render(<DataRow {...props} />, element);
@@ -46,6 +47,14 @@ describe('CellEditorBoolean', () => {
   it('renders without draggable', () => {
     const component = shallow(<DataRow {...props}/>);
     expect(component.props().draggable).toBeFalsy();
+  });
+
+  it('overrides default ref', () => {
+    const ref = jest.fn();
+    mount(<DataRow {...props} childComponents={{ dataRow: { elementAttributes: () => ({ ref })}}}/>, {
+      attachTo: document.createElement('tbody'),
+    });
+    expect(ref).toBeCalled();
   });
 });
 

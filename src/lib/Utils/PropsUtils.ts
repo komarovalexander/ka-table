@@ -5,15 +5,17 @@ import { SortingMode } from '../enums';
 import { Column } from '../models';
 import { ChildComponent } from '../Models/ChildComponent';
 import { ChildAttributesItem, DispatchFunc } from '../types';
+import { getValueByField } from './DataUtils';
 import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
+import { getTreeData } from './TreeUtils';
 
-export const extendProps = (
-  childElementAttributes: AllHTMLAttributes<HTMLElement>,
+export function extendProps<T = HTMLElement>(
+  childElementAttributes: AllHTMLAttributes<T>,
   childProps: any,
-  childComponent?: ChildComponent<any>): React.AllHTMLAttributes<HTMLElement> => {
+  childComponent?: ChildComponent<any>): React.AllHTMLAttributes<T> {
     let resultProps = childElementAttributes;
     const childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps);
     if (childCustomAttributes) {
@@ -24,11 +26,11 @@ export const extendProps = (
 };
 
 const emptyFunc = () => {};
-export const mergeProps = (
-  childElementAttributes: AllHTMLAttributes<HTMLElement>,
+export function mergeProps<T = HTMLElement>(
+  childElementAttributes: AllHTMLAttributes<T>,
   childProps: any,
   childCustomAttributes: ChildAttributesItem<any>,
-  dispatch: DispatchFunc): React.AllHTMLAttributes<HTMLElement> => {
+  dispatch: DispatchFunc): React.AllHTMLAttributes<T> {
   const customPropsWithEvents: any = {};
   for (const prop in childCustomAttributes) {
     if (childCustomAttributes.hasOwnProperty(prop)) {
@@ -48,25 +50,25 @@ export const mergeProps = (
     }
   }
 
-  const mergedResult: React.AllHTMLAttributes<HTMLDivElement> = {
+  const mergedResult: React.AllHTMLAttributes<T> = {
     ...childElementAttributes,
     ...childCustomAttributes,
     ...customPropsWithEvents,
     className: `${childElementAttributes.className || ''} ${childCustomAttributes.className || ''}`,
-    style: { ...childCustomAttributes.style, ...childElementAttributes.style }
+    style: { ...childElementAttributes.style, ...childCustomAttributes.style }
   };
 
   return mergedResult;
 };
 
 export const areAllFilteredRowsSelected = (props: ITableProps) => {
-  const { selectedRows = [] } = props;
-  return filterAndSearchData(props).every(d => selectedRows.includes(d.id))
+  const { selectedRows = [], rowKeyField } = props;
+  return filterAndSearchData(props).every(d => selectedRows.includes(getValueByField(d, rowKeyField)))
 }
 
 export const areAllVisibleRowsSelected = (props: ITableProps) => {
-  const { selectedRows = [] } = props;
-  return getData(props).every(d => selectedRows.includes(d.id))
+  const { selectedRows = [], rowKeyField } = props;
+  return getData(props).every(d => selectedRows.includes(getValueByField(d, rowKeyField)))
 }
 
 export const getData = (props: ITableProps) => {
@@ -75,22 +77,34 @@ export const getData = (props: ITableProps) => {
     groups,
     groupsExpanded,
     paging,
-    sortingMode = SortingMode.None,
+    treeGroupKeyField,
+    treeGroupsExpanded,
+    rowKeyField,
+    sort,
+    sortingMode = SortingMode.None
   } = props;
-  let {
+  const {
     data = [],
   } = props;
-  data = [...data];
-  data = filterAndSearchData(props);
+  let resultData = [...data];
+  resultData = filterAndSearchData(props);
   if (!isRemoteSorting(sortingMode)){
-    data = sortData(columns, data);
+    resultData = sortData(columns, resultData, sort);
   }
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
-  const groupedData = groups ? getGroupedData(data, groups, groupedColumns, groupsExpanded) : data;
-  data = getPageData(groupedData, paging);
+  resultData = groups ? getGroupedData(resultData, groups, groupedColumns, groupsExpanded) : resultData;
+  resultData = treeGroupKeyField ? getTreeData({ data: resultData, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: data }) : resultData;
+  resultData = getPageData(resultData, paging);
 
-  return data;
+  return resultData;
+};
+
+export const getSelectedData = ({ data, selectedRows, rowKeyField }: ITableProps) => {
+  return data ? data.filter(d => {
+    const value = getValueByField(d, rowKeyField);
+    return selectedRows?.some(v => v === value);
+  }) : [];
 };
 
 export const getSortedColumns = (props: ITableProps): Column[] => {
@@ -103,7 +117,10 @@ export const getPagesCountByProps = (props: ITableProps) => {
   } = props;
   let pagesCount = 1;
   if (paging && paging.enabled) {
-    pagesCount = getPagesCount(filterAndSearchData(props), paging);
+    let data = filterAndSearchData(props);
+    const { rowKeyField, treeGroupKeyField, treeGroupsExpanded } = props;
+    data = treeGroupKeyField ? getTreeData({ data, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: props.data || [] }) : data;
+    pagesCount = getPagesCount(data, paging);
   }
   return pagesCount;
 };
@@ -124,6 +141,7 @@ export const prepareTableOptions = (props: ITableProps) => {
     columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
   }
   columns = columns.filter((c) => c.visible !== false);
+
   return {
     columns,
     groupColumnsCount,

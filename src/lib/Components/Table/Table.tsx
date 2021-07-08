@@ -1,23 +1,27 @@
 import * as React from 'react';
 
 import { clearSingleAction } from '../../actionCreators';
-import { EditingMode, FilteringMode, SortingMode } from '../../enums';
+import { EditingMode, FilteringMode, PagingPosition, SortingMode } from '../../enums';
 import { EditableCell, PagingOptions } from '../../models';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
+import { Focused } from '../../Models/Focused';
 import { Group } from '../../Models/Group';
 import { GroupedColumn } from '../../Models/GroupedColumn';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
-import { DispatchFunc, FormatFunc, SearchFunc, ValidationFunc } from '../../types';
+import {
+  DispatchFunc, FilterFunc, FormatFunc, SearchFunc, SortFunc, ValidationFunc,
+} from '../../types';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { getPagesCountByProps } from '../../Utils/PropsUtils';
+import { isPagingShown } from '../../Utils/PagingUtils';
 import Loading from '../Loading/Loading';
-import Paging from '../Paging/Paging';
+import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
 
 export interface ITableProps {
   columnReordering?: boolean;
+  columnResizing?: boolean;
   columns: Column[];
   groupedColumns?: GroupedColumn[];
   data?: any[];
@@ -25,7 +29,9 @@ export interface ITableProps {
   editableCells?: EditableCell[];
   editingMode?: EditingMode;
   extendedFilter?: (data: any[]) => any[];
+  filter?: FilterFunc;
   filteringMode?: FilteringMode;
+  focused?: Focused;
   format?: FormatFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
@@ -33,11 +39,14 @@ export interface ITableProps {
   loading?: ILoadingProps;
   paging?: PagingOptions;
   rowKeyField: string;
+  treeGroupKeyField?: string;
+  treeGroupsExpanded?: any[];
   rowReordering?: boolean;
   search?: SearchFunc;
   searchText?: string;
   selectedRows?: any[];
   singleAction?: any;
+  sort?: SortFunc;
   sortingMode?: SortingMode;
   validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
@@ -54,12 +63,12 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
 
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
-    childComponents = {},
+    childComponents,
     dispatch,
     height,
     loading,
-    paging,
     width,
+    paging,
     singleAction
   } = props;
   const isLoadingActive = loading && loading.enabled;
@@ -67,7 +76,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
 
   const { elementAttributes, content: rootDivContent } = getElementCustomization({
     className:  kaCss
-  }, { ...props, dispatch }, childComponents.rootDiv);
+  }, props, childComponents?.rootDiv);
   elementAttributes.style = {width, height, ...elementAttributes.style}
 
   React.useEffect(() => {
@@ -78,16 +87,14 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   });
   return (
     <div {...elementAttributes}>
-      {rootDivContent || <TableWrapper {...props} />}
-      <Paging
-        {...paging}
-        dispatch={dispatch}
-        childComponents={childComponents}
-        pagesCount={getPagesCountByProps(props)}
-      />
-      <Loading
-        {...loading}
-      />
+      {rootDivContent || (
+        <>
+          {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props}/>}
+          <TableWrapper {...props} />
+          {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props}/>}
+          <Loading {...loading} />
+        </>
+      )}
     </div>
   );
 };

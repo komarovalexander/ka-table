@@ -1,6 +1,9 @@
 .material-demo{
   @import '../../../node_modules/materialize-css/sass/materialize.scss';
   @import '../../lib/static/icons.scss';
+  .ka{
+    background-color: white;
+  }
   td, th{
     padding-left: 20px;
     padding-right: 20px;
@@ -39,6 +42,9 @@
   }
   .ka-paging{
     padding: 15px;
+    ul{
+      margin: 0;
+    }
     li{
       & {
         color: #444;

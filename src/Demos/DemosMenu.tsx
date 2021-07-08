@@ -21,14 +21,15 @@ const synonyms: { [value: string]: any[] } = {
   'EditingRowDemo': ['Image', 'Button', 'Btn'],
   'EventsDemo': ['Action', 'Click'],
   'FilterRowCustomEditorDemo': ['filterRowCell'],
+  'FixedColumnDemo': ['Sticky'],
   'ManyColumnsDemo': ['horizontal'],
   'NullableCellDataDemo': ['groupsExpanded'],
   'PagingDemo': ['pageSize'],
+  'ResponsiveDemo': ['Adaptive', 'Mobile'],
   'RowReorderingDemo': ['Drag'],
-  'SearchDemo': ['No Data'],
-  'FixedColumnDemo': ['Sticky'],
-  'TabIndexDemo': ['keyboard navigation'],
-  'SelectionDemo': ['Checkbox']
+  'SearchDemo': ['No Data', 'Empty'],
+  'SelectionDemo': ['Checkbox'],
+  'TabIndexDemo': ['keyboard navigation']
 };
 
 const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
@@ -38,6 +39,7 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
       || c.group.toLowerCase().includes(search.toLowerCase())
       || (synonyms[c.name] && synonyms[c.name].some(t => t.toLowerCase().includes(search.toLowerCase())))
   }) : cases;
+  filteredCases.sort((a, b) => a.title.localeCompare(b.title));
 
   let menuItems: MenuItem[] = [];
   filteredCases.forEach(c => {
@@ -66,7 +68,7 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
 
   menuItems.sort((a, b) => a.title.localeCompare(b.title));
   return (
-    <ul className='menu'>
+    <div className='menu'>
       <input className='menu-search' type='search' placeholder='search by menu..' value={search} onChange={(e) => {
         const searchValue = e.currentTarget.value;
         clearTimeout(timeoutId);
@@ -77,8 +79,10 @@ const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
         }, 600);
         changeSearch(searchValue);
       }} />
-      <MenuItems items={menuItems}/>
-    </ul>
+      <ul className='menu-ul'>
+        <MenuItems items={menuItems}/>
+      </ul>
+    </div>
   );
 };
 
