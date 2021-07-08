@@ -12,20 +12,26 @@ export const getChain = (column: Column | GroupedColumn, groupedColumns: Grouped
 export const addColumnToRows = (rows: any[], column: any, groupedColumns: GroupedColumn[]) => {
   const rowsResult = [...rows];
   const columnsChain = getChain(column, groupedColumns);
+  let isSameLast = true;
   columnsChain.forEach((item, index) => {
     if (!rowsResult[index]){
       rowsResult[index] = [];
     }
     const last = [...rowsResult[index]].pop();
     if (last && last.column === item){
-      last.colSpan++;
+      if (isSameLast){
+        last.colSpan++;
+        return;
+      }
+      isSameLast = true;
     } else {
-      rowsResult[index].push({
-        colSpan: 1,
-        columnChainLength: columnsChain.length,
-        column: item
-      });
+      isSameLast = false;
     }
+    rowsResult[index].push({
+      colSpan: 1,
+      columnChainLength: columnsChain.length,
+      column: item
+    });
   });
   return rowsResult;
 };

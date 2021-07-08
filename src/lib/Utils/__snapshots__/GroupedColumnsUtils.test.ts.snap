@@ -146,3 +146,84 @@ Array [
   ],
 ]
 `;
+
+exports[`getRowsWithGroupedColumns group 2 columns in differnt places and 1 column between them 1`] = `
+Array [
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "columnsKeys": Array [
+          "group1",
+        ],
+        "key": "group2",
+      },
+      "columnChainLength": 3,
+      "rowSpan": 1,
+    },
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "key": "2",
+      },
+      "columnChainLength": 1,
+      "rowSpan": 3,
+    },
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "columnsKeys": Array [
+          "group1",
+        ],
+        "key": "group2",
+      },
+      "columnChainLength": 3,
+      "rowSpan": 1,
+    },
+  ],
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "columnsKeys": Array [
+          "1",
+          "3",
+        ],
+        "key": "group1",
+      },
+      "columnChainLength": 3,
+      "rowSpan": 1,
+    },
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "columnsKeys": Array [
+          "1",
+          "3",
+        ],
+        "key": "group1",
+      },
+      "columnChainLength": 3,
+      "rowSpan": 1,
+    },
+  ],
+  Array [
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "key": "1",
+      },
+      "columnChainLength": 3,
+      "rowSpan": 1,
+    },
+    Object {
+      "colSpan": 1,
+      "column": Object {
+        "key": "3",
+      },
+      "columnChainLength": 3,
+      "rowSpan": 1,
+    },
+  ],
+]
+`;

@@ -59,4 +59,10 @@ describe('getRowsWithGroupedColumns', () => {
     const result = getRowsWithGroupedColumns(columns, groupedColumns);
     expect(result).toMatchSnapshot();
   });
+  it('group 2 columns in differnt places and 1 column between them', () => {
+    const columns: any[] = [{ key: '1'}, { key: '2' }, { key: '3' }];
+    const groupedColumns: any[] = [{ key: 'group1', columnsKeys: ['1', '3'] }, { key: 'group2', columnsKeys: ['group1'] }];
+    const result = getRowsWithGroupedColumns(columns, groupedColumns);
+    expect(result).toMatchSnapshot();
+  });
 });
