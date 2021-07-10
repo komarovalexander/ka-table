@@ -11,10 +11,7 @@ export const GroupedColumnsRow: React.FunctionComponent<IHeadRowProps> = (props)
   const {
     columns,
     groupedColumns = [],
-  } = props;
-  if (!groupedColumns.length){
-    return <></>;
-  }
+  } = props
   const rows = getRowsWithGroupedColumns(columns, groupedColumns);
   return (
     <>

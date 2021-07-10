@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import MultiColumnHeaderDemo from './MultiColumnHeaderDemo';
+import GroupedHeaderColumnsDemo from './GroupedHeaderColumnsDemo';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<MultiColumnHeaderDemo />, div);
+  ReactDOM.render(<GroupedHeaderColumnsDemo />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

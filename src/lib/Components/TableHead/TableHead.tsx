@@ -19,6 +19,7 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
     filteringMode,
     groupColumnsCount,
     sortingMode,
+    groupedColumns = []
   } = props;
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.thead,
@@ -27,17 +28,18 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
     <thead {...elementAttributes}>
       {content || (
         <>
-          <GroupedColumnsRow {...props} />
+        {groupedColumns.length ? <GroupedColumnsRow {...props} /> : (
           <HeadRow
-            areAllRowsSelected={areAllRowsSelected}
-            childComponents={childComponents}
-            columnReordering={columnReordering}
-            columnResizing={columnResizing}
-            columns={columns}
-            dispatch={dispatch}
-            groupColumnsCount={groupColumnsCount}
-            sortingMode={sortingMode}
-          />
+              areAllRowsSelected={areAllRowsSelected}
+              childComponents={childComponents}
+              columnReordering={columnReordering}
+              columnResizing={columnResizing}
+              columns={columns}
+              dispatch={dispatch}
+              groupColumnsCount={groupColumnsCount}
+              sortingMode={sortingMode}
+            />
+          )}
           {
             filteringMode === FilteringMode.FilterRow &&
             (

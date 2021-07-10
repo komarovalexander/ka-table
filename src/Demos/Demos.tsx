@@ -37,6 +37,7 @@ import FixedColumnDemo from './FixedColumnDemo/FixedColumnDemo';
 import { initializeGA, trackEvent } from './ga';
 import { withTracker } from './GAWrapper';
 import GetDataByPropsDemo from './GetDataByPropsDemo/GetDataByPropsDemo';
+import GroupedHeaderColumnsDemo from './GroupedHeaderColumnsDemo/GroupedHeaderColumnsDemo';
 import GroupingCustomCellDemo from './GroupingCustomCellDemo/GroupingCustomCellDemo';
 import GroupingCustomRowDemo from './GroupingCustomRowDemo/GroupingCustomRowDemo';
 import GroupingDemo from './GroupingDemo/GroupingDemo';
@@ -52,7 +53,6 @@ import ManyRowsDynamicDemo from './ManyRowsDynamicDemo/ManyRowsDynamicDemo';
 import ManyRowsGroupingDemo from './ManyRowsGroupingDemo/ManyRowsGroupingDemo';
 import ManyRowsMemoDemo from './ManyRowsMemoDemo/ManyRowsMemoDemo';
 import MaterialDemo from './MaterialDemo/MaterialDemo';
-import MultiColumnHeaderDemo from './MultiColumnHeaderDemo/MultiColumnHeaderDemo';
 import NullableCellDataDemo from './NullableCellDataDemo/NullableCellDataDemo';
 import OverviewDemo from './OverviewDemo/OverviewDemo';
 import PagingDemo from './PagingDemo/PagingDemo';
@@ -120,7 +120,7 @@ const demos: Demo[] = [
   new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', '10k Grouped', 'ManyRowsGroupingDemo', 'https://stackblitz.com/edit/table-many-rows-grouping-js', 'https://stackblitz.com/edit/table-many-rows-grouping-ts', 'Virtual Scrolling'),
   new Demo(ManyRowsMemoDemo, '/many-rows-memo', '300K Rows & memo', 'ManyRowsMemoDemo', 'https://stackblitz.com/edit/table-many-rows-memo-js', 'https://stackblitz.com/edit/table-many-rows-memo-ts', 'Virtual Scrolling'),
   new Demo(MaterialDemo, '/material', 'Material', 'MaterialDemo', 'https://stackblitz.com/edit/table-material-js', 'https://stackblitz.com/edit/table-material-ts', 'Themes'),
-  new Demo(MultiColumnHeaderDemo, '/multi-column-header', 'Multi-Column Header', 'MultiColumnHeaderDemo', 'https://stackblitz.com/edit/table-multi-column-header-js', 'https://stackblitz.com/edit/table-multi-column-header-ts', ''),
+  new Demo(GroupedHeaderColumnsDemo, '/grouped-header-columns', 'Grouped Header Columns', 'GroupedHeaderColumnsDemo', 'https://stackblitz.com/edit/table-grouped-header-columns-js', 'https://stackblitz.com/edit/table-grouped-header-columns-ts', 'Columns'),
   new Demo(NullableCellDataDemo, '/nullable-cell-data', 'Nullable Cell Data', 'NullableCellDataDemo', 'https://stackblitz.com/edit/table-nullable-cell-data-js', 'https://stackblitz.com/edit/table-nullable-cell-data-ts', 'Miscellaneous'),
   new Demo(PagingDemo, '/paging', 'Paging', 'PagingDemo', 'https://stackblitz.com/edit/table-paging-js', 'https://stackblitz.com/edit/table-paging-ts', ''),
   new Demo(PrintDemo, '/print', 'Print', 'PrintDemo', 'https://stackblitz.com/edit/table-print-js', 'https://stackblitz.com/edit/table-print-ts', 'Export / Print'),
