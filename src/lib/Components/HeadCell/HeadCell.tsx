@@ -4,7 +4,7 @@ import { reorderColumns } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { IHeadCellProps } from '../../props';
 import { ChildAttributesItem } from '../../types';
-import { headCellDispatchWrapper, isCellResizeShown } from '../../Utils/CellResizeUtils';
+import { isCellResizeShown } from '../../Utils/CellResizeUtils';
 import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
 import { getDraggableProps } from '../../Utils/PropsUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
@@ -27,9 +27,6 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   let {
     childComponents: { headCell }
   } = props;
-  const [width, setWidth] = React.useState(style ? style.width : undefined);
-  const stateStyle = {...style, width};
-  const headCellDispatch = headCellDispatchWrapper(setWidth, dispatch);
 
   if (columnReordering){
     const reorderedRowProps: ChildAttributesItem<IHeadCellProps> = getDraggableProps(key, dispatch, reorderColumns, defaultOptions.css.draggedColumn, defaultOptions.css.dragOverColumn);
@@ -41,7 +38,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     colSpan,
     rowSpan,
     scope: 'col',
-    style: stateStyle,
+    style,
     id: key,
   }, props, headCell);
 
@@ -54,8 +51,8 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
         {isCellResizeShown(isResizable, columnResizing) && (
           <HeadCellResize
             column={column}
-            currentWidth={width}
-            dispatch={headCellDispatch}
+            currentWidth={style?.width} // TODO: remove currentWidth property as width can be obtained from the column
+            dispatch={dispatch}
             childComponents={childComponents}/>
         )}
       </div>

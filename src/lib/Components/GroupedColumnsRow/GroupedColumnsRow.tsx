@@ -20,7 +20,11 @@ export const GroupedColumnsRow: React.FunctionComponent<IHeadRowProps> = (props)
         <tr className={defaultOptions.css.theadRow} key={index}>
           <EmptyCells count={0} isTh={true}/>
           {row.map((item: any, columnIndex: number) => {
-              return (
+            // TODO: try colgroup to avoid additional calculation
+            const width = item.columns.reduce((acc: number, value: Column) => {
+              return acc + (value?.style?.width as number ?? 0);
+            }, 0);
+            return (
                 <HeadCell
                   {...props}
                   colSpan={item.colSpan}
@@ -29,9 +33,7 @@ export const GroupedColumnsRow: React.FunctionComponent<IHeadRowProps> = (props)
                     ...item.column,
                     style: {
                       ...item.column.style,
-                      width: item.columns.reduce((acc: number, value: Column) => {
-                        return acc + (value?.style?.width as number ?? 0);
-                      }, 0)
+                      width
                     }
                   }}
                   isGrouped={true}

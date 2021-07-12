@@ -24,7 +24,8 @@ const dataArray = Array(30).fill(undefined).map(
 );
 
 const tablePropsInit: ITableProps = {
-  // columnResizing: true,
+  columnResizing: true,
+  // columnReordering: true,
   groupedColumns: [ {
     key: 'grouped.column1',
     title: 'Group 1',
@@ -55,6 +56,7 @@ const tablePropsInit: ITableProps = {
 const GroupedHeaderColumnsDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
+    console.log({ action });
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
 
