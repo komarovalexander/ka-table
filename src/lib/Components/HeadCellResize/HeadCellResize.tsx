@@ -9,7 +9,7 @@ import {
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getEventListenerEffect } from '../../Utils/EffectUtils';
 
-const HeadCellResize: React.FunctionComponent<IHeadCellResizeProps> = React.memo((props) => {
+const HeadCellResize: React.FunctionComponent<IHeadCellResizeProps> = (props) => {
   const {
     column: { key, style },
     dispatch,
@@ -37,6 +37,6 @@ const HeadCellResize: React.FunctionComponent<IHeadCellResizeProps> = React.memo
   return (
     <div {...elementAttributes}>{content || <>&nbsp;</>}</div>
   );
-}, () => true);
+};
 
 export default HeadCellResize;

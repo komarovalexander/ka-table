@@ -185,7 +185,7 @@
   position: relative;
   left: -20px;
 }
-.ka-thead-cell-resize{
+.ka-thead-cell-resize{ // TODO: add active styles to avoid cursor flickering
   user-select: none;
   width: 2px;
   cursor: col-resize;
