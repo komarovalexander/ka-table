@@ -119,6 +119,7 @@ Array [
     "key": "column1",
   },
   Object {
+    "isHeaderFilterPopupShown": false,
     "key": "column2",
   },
 ]
@@ -131,6 +132,7 @@ Array [
     "key": "column1",
   },
   Object {
+    "isHeaderFilterPopupShown": false,
     "key": "column2",
   },
 ]

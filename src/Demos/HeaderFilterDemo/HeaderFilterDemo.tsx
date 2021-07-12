@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType, FilteringMode, SortDirection } from '../../lib/enums';
+import { DataType, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
@@ -25,10 +25,11 @@ const tablePropsInit: ITableProps = {
     },
   ],
   data: dataArray,
+  // sortingMode: SortingMode.Single,
   filteringMode: FilteringMode.HeaderFilter,
   format: ({ column, value }) => {
-    if (column.dataType === DataType.Date){
-      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+    if (column.dataType === DataType.Date) {
+      return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
     }
   },
   rowKeyField: 'id',
@@ -39,6 +40,7 @@ const HeaderFilterDemo: React.FC = () => {
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
+
   return (
     <Table
       {...tableProps}

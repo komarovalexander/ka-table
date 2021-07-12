@@ -60,16 +60,10 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
 
   switch (action.type) {
     case ActionType.UpdateHeaderFilterPopupState: {
-      const column = columns.find((c: Column) => c.key === action.columnKey);
-      const newColumn = {
-        ...column,
-        isHeaderFilterPopupShown: action.isHeaderFilterPopupShown
-      }
-      const newColumns = getCopyOfArrayAndInsertOrReplaceItem(
-        newColumn,
-        'key',
-        columns,
-      );
+      const newColumns = columns.map((c: Column) => ({
+        ...c,
+        isHeaderFilterPopupShown: c.key === action.columnKey ? !c.isHeaderFilterPopupShown : false
+      }));
       return {...props, columns: newColumns}
     }
     case ActionType.MoveFocusedRight: {
