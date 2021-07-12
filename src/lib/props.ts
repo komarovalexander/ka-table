@@ -119,6 +119,7 @@ export interface IHeadCellResizeProps {
 export interface IHeadCellProps {
   areAllRowsSelected: boolean;
   childComponents: ChildComponents;
+  filteringMode?: FilteringMode;
   columnReordering?: boolean;
   columnResizing?: boolean;
   column: Column;
@@ -220,6 +221,7 @@ export interface IHeadRowProps {
   columnResizing?: boolean;
   columns: Column[];
   dispatch: DispatchFunc;
+  filteringMode?: FilteringMode;
   groupColumnsCount: number;
   sortingMode: SortingMode;
 }

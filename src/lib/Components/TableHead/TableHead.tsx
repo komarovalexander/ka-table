@@ -35,6 +35,7 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
             dispatch={dispatch}
             groupColumnsCount={groupColumnsCount}
             sortingMode={sortingMode}
+            filteringMode={filteringMode}
           />
           {
             filteringMode === FilteringMode.FilterRow &&
