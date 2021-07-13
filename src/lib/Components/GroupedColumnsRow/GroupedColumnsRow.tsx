@@ -13,6 +13,7 @@ export const GroupedColumnsRow: React.FunctionComponent<IHeadRowProps> = (props)
     groupedColumns = [],
   } = props
   const rows = getRowsWithGroupedColumns(columns, groupedColumns);
+  const columnsKeys = columns.map(c => c.key);
   return (
     <>
       {rows.map((row, index) => (
@@ -36,11 +37,11 @@ export const GroupedColumnsRow: React.FunctionComponent<IHeadRowProps> = (props)
                       width
                     }
                   }}
+                  hasChildren={!columnsKeys.includes(item.column.key)}
                   isGrouped={true}
                   key={columnIndex}
                 />
               );
-
           })}
         </tr>
       )))}

@@ -1,6 +1,13 @@
 import { Column } from '../models';
 import { GroupedColumn } from '../Models/GroupedColumn';
 
+interface GroupedColumnResult {
+  colSpan: number;
+  columnChainLength: number;
+  column: Column,
+  columns: Column[]
+}
+
 export const getChain = (column: Column | GroupedColumn, groupedColumns: GroupedColumn[], currentChain: (Column | GroupedColumn)[] = []): any[] => {
   const newChain = [column, ...currentChain];
   const groupedColumn = groupedColumns.find(gc => gc.columnsKeys.includes(column.key));
@@ -9,8 +16,8 @@ export const getChain = (column: Column | GroupedColumn, groupedColumns: Grouped
   }
   return newChain;
 }
-export const addColumnToRows = (rows: any[], column: any, groupedColumns: GroupedColumn[]) => {
-  const rowsResult = [...rows];
+export const addColumnToRows = (rows: GroupedColumnResult[][], column: Column, groupedColumns: GroupedColumn[]): GroupedColumnResult[][] => {
+  const rowsResult: GroupedColumnResult[][] = [...rows];
   const columnsChain = getChain(column, groupedColumns);
   let isSameLast = true;
   columnsChain.forEach((item, index) => {
@@ -38,8 +45,8 @@ export const addColumnToRows = (rows: any[], column: any, groupedColumns: Groupe
   return rowsResult;
 };
 
-export const getRowsWithGroupedColumns = (columns: Column[], groupedColumns: GroupedColumn[]) => {
-  let rows: any[] = [];
+export const getRowsWithGroupedColumns = (columns: Column[], groupedColumns: GroupedColumn[]): GroupedColumnResult[][] => {
+  let rows: GroupedColumnResult[][] = [];
   columns.forEach(c => {
     rows = addColumnToRows(rows, c, groupedColumns);
   });

@@ -124,6 +124,7 @@ export interface IHeadCellProps {
   columnResizing?: boolean;
   column: Column;
   dispatch: DispatchFunc;
+  hasChildren?: boolean;
   isGrouped?: boolean;
   sortingMode: SortingMode;
   colSpan?: number;

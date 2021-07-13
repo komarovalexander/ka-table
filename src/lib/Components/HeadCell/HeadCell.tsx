@@ -20,6 +20,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     columnReordering,
     columnResizing,
     dispatch,
+    hasChildren,
     isGrouped,
     rowSpan,
     sortingMode
@@ -48,7 +49,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
         <div className={defaultOptions.css.theadCellContentWrapper}>
          {content || <HeadCellContent {...props}/>}
         </div>
-        {isCellResizeShown(isResizable, columnResizing) && (
+        {isCellResizeShown(isResizable, columnResizing) && !hasChildren && (
           <HeadCellResize
             column={column}
             currentWidth={style?.width} // TODO: remove currentWidth property as width can be obtained from the column
