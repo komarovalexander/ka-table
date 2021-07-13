@@ -31,6 +31,9 @@ describe('HeadCellResize', () => {
     const preventDefault = jest.fn();
     wrapper.simulate('mousedown', { preventDefault });
     expect(preventDefault).toBeCalledTimes(1);
+    expect(props.dispatch).toBeCalledTimes(0);
+    simulant.fire(document.body, 'mousemove');
+    expect(props.dispatch).toBeCalledTimes(1);
     simulant.fire(document.body, 'mouseup');
     expect(props.dispatch).toBeCalledTimes(2);
   });

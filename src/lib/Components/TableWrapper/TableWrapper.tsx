@@ -56,6 +56,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
       {content || tableWrapper.content || (
         <table {...elementAttributes}>
           <TableHead
+            {...props}
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
             columnReordering={columnReordering}

@@ -339,7 +339,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const newData = getCopyOfArrayAndInsertOrReplaceItem(action.rowData, rowKeyField, data);
       return { ...props, data: newData };
     }
-    case ActionType.UpdateTreeGroupsExpanded : {
+    case ActionType.UpdateTreeGroupsExpanded: {
       const rowKeyValue = action.rowKeyValue;
       const value = treeGroupsExpanded ? !treeGroupsExpanded.some(v => v === rowKeyValue) : false;
       if (value){

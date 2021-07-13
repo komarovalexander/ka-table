@@ -7,6 +7,7 @@ import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { Focused } from '../../Models/Focused';
 import { Group } from '../../Models/Group';
+import { GroupedColumn } from '../../Models/GroupedColumn';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
 import {
@@ -22,6 +23,7 @@ export interface ITableProps {
   columnReordering?: boolean;
   columnResizing?: boolean;
   columns: Column[];
+  groupedColumns?: GroupedColumn[];
   data?: any[];
   detailsRows?: any[];
   editableCells?: EditableCell[];

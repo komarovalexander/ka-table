@@ -1,28 +1,7 @@
 
-import {
-  getMinWidth, getMouseMove, getValidatedWidth, headCellDispatchWrapper, HeadCellResizeStateAction,
-  isCellResizeShown,
-} from './CellResizeUtils';
+import { getMinWidth, getMouseMove, getValidatedWidth, isCellResizeShown } from './CellResizeUtils';
 
 describe('CellUtils', () => {
-  describe('headCellDispatchWrapper', () => {
-    it('should scheck action', () => {
-      const setWidth = jest.fn();
-      const dispatch = jest.fn();
-
-      const headCellDispatch = headCellDispatchWrapper(setWidth, dispatch);
-      expect(setWidth.mock.calls.length).toBe(0);
-      expect(dispatch.mock.calls.length).toBe(0);
-
-      headCellDispatch({ type: HeadCellResizeStateAction });
-      expect(setWidth.mock.calls.length).toBe(1);
-      expect(dispatch.mock.calls.length).toBe(0);
-
-      headCellDispatch({ type: 'smth' });
-      expect(setWidth.mock.calls.length).toBe(1);
-      expect(dispatch.mock.calls.length).toBe(1);
-    });
-  });
   describe('getMinWidth', () => {
     it('default', () => {
       expect(getMinWidth({})).toBe(20);
@@ -45,13 +24,13 @@ describe('CellUtils', () => {
   describe('getMouseMove', () => {
     it('default', () => {
       const dispatch = jest.fn();
-      const mouseMoveEvent = getMouseMove(40, 50, 100, dispatch);
+      const mouseMoveEvent = getMouseMove(40, 50, 100, 'column1', dispatch);
       mouseMoveEvent({ screenX: 20 } as any);
-      expect(dispatch).toBeCalledWith({type: 'HeadCellResizeStateAction', width: 50});
+      expect(dispatch).toBeCalledWith({type: 'ResizeColumn', columnKey: 'column1', width: 50});
     });
     it('skip', () => {
       const dispatch = jest.fn();
-      const mouseMoveEvent = getMouseMove(40, 40, 0, dispatch);
+      const mouseMoveEvent = getMouseMove(40, 40, 0, 'column1', dispatch);
       mouseMoveEvent({ screenX: 40 } as any);
       expect(dispatch).toHaveBeenCalledTimes(0);
     });

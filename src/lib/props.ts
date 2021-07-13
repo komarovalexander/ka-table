@@ -3,6 +3,7 @@ import { IRowsProps } from './Components/Rows/Rows';
 import { ITableAllProps } from './Components/Table/Table';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
+import { GroupedColumn } from './Models/GroupedColumn';
 import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 
 interface IRowCommonProps {
@@ -123,7 +124,10 @@ export interface IHeadCellProps {
   columnResizing?: boolean;
   column: Column;
   dispatch: DispatchFunc;
+  isGrouped?: boolean;
   sortingMode: SortingMode;
+  colSpan?: number;
+  rowSpan?: number;
 }
 
 export interface INoDataRowProps {
@@ -134,6 +138,7 @@ export interface INoDataRowProps {
 
 export interface ITableHeadProps {
   columnReordering?: boolean;
+  groupedColumns?: GroupedColumn[];
   columnResizing?: boolean;
   areAllRowsSelected: boolean;
   childComponents: ChildComponents;
@@ -221,6 +226,7 @@ export interface IHeadRowProps {
   columns: Column[];
   dispatch: DispatchFunc;
   groupColumnsCount: number;
+  groupedColumns?: GroupedColumn[];
   sortingMode: SortingMode;
 }
 
