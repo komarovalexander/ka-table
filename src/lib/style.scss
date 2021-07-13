@@ -185,13 +185,27 @@
   position: relative;
   left: -20px;
 }
-.ka-thead-cell-resize{ // TODO: add active styles to avoid cursor flickering
+.ka-thead-cell-resize{
   user-select: none;
   width: 2px;
   cursor: col-resize;
   background-color: $ka-column-resize-border-color;
   position: relative;
   left: 19px;
+}
+.ka-thead-cell-resize:active:after{
+  content: "";
+  display: block;
+  position: fixed;
+  cursor: col-resize;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.ka-thead-background:active{
+  z-index: 1;
 }
 .ka-summary-cell{
   padding: $ka-summary-cell-padding;
