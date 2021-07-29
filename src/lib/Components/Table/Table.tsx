@@ -17,6 +17,7 @@ import { isPagingShown } from '../../Utils/PagingUtils';
 import Loading from '../Loading/Loading';
 import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
+import Popup from '../Popup/Popup';
 
 export interface ITableProps {
   columnReordering?: boolean;
@@ -36,6 +37,10 @@ export interface ITableProps {
   height?: number | string;
   loading?: ILoadingProps;
   paging?: PagingOptions;
+  popupPosition?: {
+    x: number,
+    y: number
+  };
   rowKeyField: string;
   treeGroupKeyField?: string;
   treeGroupsExpanded?: any[];
@@ -62,35 +67,45 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
 export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     childComponents,
+    columns,
     dispatch,
     height,
     loading,
     width,
     paging,
+    popupPosition,
     singleAction
   } = props;
   const isLoadingActive = loading && loading.enabled;
   const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
   const { elementAttributes, content: rootDivContent } = getElementCustomization({
-    className:  kaCss
+    className: kaCss
   }, props, childComponents?.rootDiv);
-  elementAttributes.style = {width, height, ...elementAttributes.style}
+  elementAttributes.style = { width, height, ...elementAttributes.style }
 
   React.useEffect(() => {
-    if (singleAction){
+    if (singleAction) {
       dispatch(singleAction);
       dispatch(clearSingleAction());
     }
   });
+
+
   return (
     <div {...elementAttributes}>
       {rootDivContent || (
         <>
-          {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props}/>}
+          {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
           <TableWrapper {...props} />
-          {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props}/>}
+          {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
           <Loading {...loading} />
+          {popupPosition && columns.map(column => column.isHeaderFilterPopupShown
+            && <Popup
+              key={column.key}
+              column={column}
+              dispatch={dispatch}
+              popupPosition={popupPosition} />)}
         </>
       )}
     </div>

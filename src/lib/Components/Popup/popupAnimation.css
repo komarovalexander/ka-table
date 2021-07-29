@@ -1,0 +1,16 @@
+.popup {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    box-shadow: 0 6px 12px rgb(0 0 0 / 18%);
+    padding: 3em;
+    position: absolute;
+    text-align: center;
+    width: 245px;
+    height: 325px;
+}
+
+.popup:focus {
+    outline: none;
+}

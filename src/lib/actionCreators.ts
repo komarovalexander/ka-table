@@ -2,11 +2,17 @@ import { ActionType } from './enums';
 import { Focused } from './Models/Focused';
 import { IMoveFocusedSettings } from './Utils/NavigationUtils';
 
+export const updatePopupPosition = (x: number | undefined, y: number | undefined) => ({
+  x,
+  y,
+  type: ActionType.UpdatePopupPosition
+})
+
 export const updateHeaderFilterPopupState = (columnKey: string, isHeaderFilterPopupShown: boolean | undefined) => ({
   columnKey,
   isHeaderFilterPopupShown,
   type: ActionType.UpdateHeaderFilterPopupState
-}) 
+})
 
 export const updateFilterRowValue = (columnKey: string, filterRowValue: any) => ({
   columnKey,
@@ -263,5 +269,5 @@ export const moveFocusedDown = (settings?: IMoveFocusedSettings) => ({
 
 export const updateTreeGroupsExpanded = (rowKeyValue: any) => ({
   rowKeyValue,
-  type: ActionType.UpdateTreeGroupsExpanded ,
+  type: ActionType.UpdateTreeGroupsExpanded,
 });

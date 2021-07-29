@@ -19,11 +19,11 @@ const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Co
   const newEditableCells = [...editableCells];
   columns.forEach(column => {
     if (column.isEditable !== false
-        && !newEditableCells.some(e => e.columnKey === column.key && e.rowKeyValue === rowKeyValue)) {
-          newEditableCells.push({
-            columnKey: column.key,
-            rowKeyValue
-          });
+      && !newEditableCells.some(e => e.columnKey === column.key && e.rowKeyValue === rowKeyValue)) {
+      newEditableCells.push({
+        columnKey: column.key,
+        rowKeyValue
+      });
     }
   });
   return newEditableCells;
@@ -37,7 +37,7 @@ const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKey
 
 const getUpdatedFocused = (props: ITableProps, action: any, funcToUpdate: any) => {
   if (!props?.focused?.cell) return props;
-  const newFocused = { cell: funcToUpdate(props.focused.cell, props, action.settings)};
+  const newFocused = { cell: funcToUpdate(props.focused.cell, props, action.settings) };
   return { ...props, focused: newFocused };
 }
 
@@ -59,12 +59,19 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   } = props;
 
   switch (action.type) {
+    case ActionType.UpdatePopupPosition: {
+      const newPopupPosition: any = {
+        x: action.x,
+        y: action.y
+      }
+      return { ...props, popupPosition: newPopupPosition }
+    }
     case ActionType.UpdateHeaderFilterPopupState: {
       const newColumns = columns.map((c: Column) => ({
         ...c,
         isHeaderFilterPopupShown: c.key === action.columnKey ? !c.isHeaderFilterPopupShown : false
       }));
-      return {...props, columns: newColumns}
+      return { ...props, columns: newColumns }
     }
     case ActionType.MoveFocusedRight: {
       return getUpdatedFocused(props, action, getRightCell);
@@ -81,34 +88,34 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     case ActionType.SetFocused: {
       return { ...props, focused: action.focused };
     }
-    case ActionType.ClearFocused : {
+    case ActionType.ClearFocused: {
       return { ...props, focused: undefined };
     }
     case ActionType.ClearSingleAction: {
-      return {...props, singleAction: undefined };
+      return { ...props, singleAction: undefined };
     }
     case ActionType.SetSingleAction: {
-      return {...props, singleAction: action.singleAction };
+      return { ...props, singleAction: action.singleAction };
     }
     case ActionType.ShowColumn: {
       const newColumns = [...columns];
       const columnIndex = newColumns.findIndex(c => c.key === action.columnKey);
-      newColumns[columnIndex] = {...newColumns[columnIndex], visible: true};
-      return {...props, columns: newColumns};
+      newColumns[columnIndex] = { ...newColumns[columnIndex], visible: true };
+      return { ...props, columns: newColumns };
     }
     case ActionType.HideColumn: {
       const newColumns = [...columns];
       const columnIndex = newColumns.findIndex(c => c.key === action.columnKey);
-      newColumns[columnIndex] = {...newColumns[columnIndex], visible: false};
-      return {...props, columns: newColumns};
+      newColumns[columnIndex] = { ...newColumns[columnIndex], visible: false };
+      return { ...props, columns: newColumns };
     }
     case ActionType.ReorderRows: {
       const newData = reorderData(data, (d) => getValueByField(d, rowKeyField), action.rowKeyValue, action.targetRowKeyValue);
-      return {...props, data: newData};
+      return { ...props, data: newData };
     }
     case ActionType.ReorderColumns: {
       const newData = reorderData(columns, (d) => d.key, action.columnKey, action.targetColumnKey);
-      return {...props, columns: newData};
+      return { ...props, columns: newData };
     }
     case ActionType.ResizeColumn: {
       const { columnKey, width } = action;
@@ -126,19 +133,19 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       return { ...props, columns: newColumns };
     }
     case ActionType.UpdatePageIndex: {
-      return { ...props, paging: {...paging, pageIndex: action.pageIndex } };
+      return { ...props, paging: { ...paging, pageIndex: action.pageIndex } };
     }
     case ActionType.UpdatePageSize: {
-      return { ...props, paging: {...paging, pageSize: action.pageSize } };
+      return { ...props, paging: { ...paging, pageSize: action.pageSize } };
     }
     case ActionType.UpdatePagesCount: {
-      return { ...props, paging: {...paging, pagesCount: action.pagesCount }};
+      return { ...props, paging: { ...paging, pagesCount: action.pagesCount } };
     }
     case ActionType.HideLoading: {
-      return { ...props, loading: {...loading, enabled: false } };
+      return { ...props, loading: { ...loading, enabled: false } };
     }
     case ActionType.ShowLoading: {
-      const newLoading: ILoadingProps = {...loading, enabled: true };
+      const newLoading: ILoadingProps = { ...loading, enabled: true };
       if (action.text !== undefined) {
         newLoading.text = action.text;
       }
@@ -246,19 +253,19 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.SelectRow:
-        return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
+      return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
     case ActionType.SelectRowsRange: {
       const rowKeyValueTo = action.rowKeyValueTo;
       if (rowKeyValueTo) {
         const shownData = kaPropsUtils.getData(props);
         const rowKeyValueToIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === rowKeyValueTo);
         const rowKeyValueFromIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === action.rowKeyValueFrom);
-        if (rowKeyValueToIndex != null && rowKeyValueFromIndex != null){
+        if (rowKeyValueToIndex != null && rowKeyValueFromIndex != null) {
           const [start, end] = rowKeyValueToIndex > rowKeyValueFromIndex ? [rowKeyValueFromIndex, rowKeyValueToIndex] : [rowKeyValueToIndex, rowKeyValueFromIndex];
           const rowsToSelect = [];
-          for (let i = start; i <= end; i++){
+          for (let i = start; i <= end; i++) {
             const value = getValueByField(shownData[i], rowKeyField);
-            if (!selectedRows.includes(value)){
+            if (!selectedRows.includes(value)) {
               rowsToSelect.push(value);
             }
           }
@@ -280,7 +287,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       return { ...props, data: action.data };
     case ActionType.ScrollTable:
       const scrollTop = action.scrollTop;
-      return {...props, ...{virtualScrolling: { ...virtualScrolling, scrollTop }}};
+      return { ...props, ...{ virtualScrolling: { ...virtualScrolling, scrollTop } } };
     case ActionType.UpdateGroupsExpanded: {
       let currentGroupsExpanded = groupsExpanded;
       if (!currentGroupsExpanded) {
@@ -312,7 +319,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       let updatedRowData = data.find((d) => getValueByField(d, rowKeyField) === rowEditorKeyValue);
       const rowEditableCells = editableCells.filter(
         editableCell => editableCell.rowKeyValue === rowEditorKeyValue
-        && (isNewRow || editableCell.hasOwnProperty('editorValue')));
+          && (isNewRow || editableCell.hasOwnProperty('editorValue')));
       if (action.validate) {
         let validationPassed = true;
         rowEditableCells.forEach(cell => {
@@ -324,7 +331,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
           });
           validationPassed = validationPassed && !cell.validationMessage;
         });
-        if (!validationPassed){
+        if (!validationPassed) {
           return { ...props, editableCells: [...editableCells] };
         }
       }
@@ -346,14 +353,14 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const newData = getCopyOfArrayAndInsertOrReplaceItem(action.rowData, rowKeyField, data);
       return { ...props, data: newData };
     }
-    case ActionType.UpdateTreeGroupsExpanded : {
+    case ActionType.UpdateTreeGroupsExpanded: {
       const rowKeyValue = action.rowKeyValue;
       const value = treeGroupsExpanded ? !treeGroupsExpanded.some(v => v === rowKeyValue) : false;
-      if (value){
+      if (value) {
         return { ...props, treeGroupsExpanded: [...(treeGroupsExpanded || []), rowKeyValue] };
       }
       let currentExpanded = treeGroupsExpanded;
-      if (!currentExpanded){
+      if (!currentExpanded) {
         const preparedOptions = prepareTableOptions(props);
         currentExpanded = getExpandedParents(preparedOptions.groupedData, rowKeyField);
       }

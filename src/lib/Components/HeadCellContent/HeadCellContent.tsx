@@ -1,13 +1,12 @@
 import * as React from 'react';
 
-import { updateSortDirection, updateHeaderFilterPopupState } from '../../actionCreators';
+import { updatePopupPosition, updateSortDirection } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { FilteringMode, SortDirection } from '../../enums';
 import { IHeadCellProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
 import FilterPopupButton from '../FilterPopupButton/FilterPopupButton';
-import Popup from '../Popup/Popup';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
@@ -15,7 +14,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
     dispatch,
     sortingMode,
     filteringMode,
-    childComponents: { headCellContent }
+    childComponents: { headCellContent },
   } = props;
   const sortingEnabled = isSortingEnabled(sortingMode);
   const onClick = sortingEnabled ? () => {
@@ -27,16 +26,25 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
     onClick
   }, props, headCellContent);
 
-  const onClickFilterPopup = () => {
-    dispatch(updateHeaderFilterPopupState(column.key, !column.isHeaderFilterPopupShown))
-  }
+
+  const refToElement = React.useRef<HTMLDivElement>(document.createElement('div'));
+  React.useLayoutEffect(() => {
+    const positionX = refToElement.current.offsetLeft + (refToElement.current.offsetParent as HTMLElement).offsetLeft;
+    const positionY = refToElement.current.offsetTop + (refToElement.current.offsetParent as HTMLElement).offsetTop + refToElement.current.offsetHeight;
+    if (column.isHeaderFilterPopupShown) {
+      dispatch(updatePopupPosition(positionX, positionY));
+    }
+  }, [column.isHeaderFilterPopupShown]);
+
 
   return (
     <>
-      <div {...elementAttributes}>
+      <div {...elementAttributes} ref={refToElement}>
         {content || <span>{column.title}</span>}
         {filteringMode === FilteringMode.HeaderFilter && <FilterPopupButton
-          clickButton={onClickFilterPopup}
+          column={column}
+          dispatch={dispatch}
+        // popupPosition={popupPosition}
         />}
         {column.sortDirection && sortingEnabled && (
           <span
@@ -47,11 +55,6 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
             }
           >{column.sortIndex}</span>
         )}
-        {column.isHeaderFilterPopupShown &&
-          <Popup>
-            Popup for {column.title}
-          </Popup>
-        }
       </div>
     </>
   );
