@@ -29,10 +29,12 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
 
   const refToElement = React.useRef<HTMLDivElement>(document.createElement('div'));
   React.useLayoutEffect(() => {
-    const positionX = refToElement.current.offsetLeft + (refToElement.current.offsetParent as HTMLElement).offsetLeft;
-    const positionY = refToElement.current.offsetTop + (refToElement.current.offsetParent as HTMLElement).offsetTop + refToElement.current.offsetHeight;
-    if (column.isHeaderFilterPopupShown) {
-      dispatch(updatePopupPosition(positionX, positionY));
+    if (refToElement.current) {
+      const positionX = refToElement.current.offsetLeft + (refToElement.current.offsetParent as HTMLElement)?.offsetLeft;
+      const positionY = refToElement.current.offsetTop + (refToElement.current.offsetParent as HTMLElement)?.offsetTop + refToElement.current.offsetHeight;
+      if (column.isHeaderFilterPopupShown) {
+        dispatch(updatePopupPosition(positionX, positionY));
+      }
     }
   }, [column.isHeaderFilterPopupShown]);
 
@@ -41,11 +43,13 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
     <>
       <div {...elementAttributes} ref={refToElement}>
         {content || <span>{column.title}</span>}
-        {filteringMode === FilteringMode.HeaderFilter && <FilterPopupButton
-          column={column}
-          dispatch={dispatch}
-        // popupPosition={popupPosition}
-        />}
+        {(filteringMode === FilteringMode.HeaderFilter) && (
+          <FilterPopupButton
+            column={column}
+            dispatch={dispatch}
+          />
+        )
+        }
         {column.sortDirection && sortingEnabled && (
           <span
             className={

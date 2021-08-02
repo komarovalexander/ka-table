@@ -2,7 +2,7 @@ import { ITableProps } from '../';
 import {
   clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
   deselectRow, loadData, reorderColumns, reorderRows, selectAllFilteredRows, selectAllRows,
-  selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction, updateData, updateHeaderFilterPopupState, updateTreeGroupsExpanded 
+  selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction, updateData, updateHeaderFilterPopupState, updateTreeGroupsExpanded
 } from '../actionCreators';
 import { ActionType, FilterOperatorName } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -253,7 +253,7 @@ describe('kaReducer', () => {
     expect(newState).toEqual({ ...intialState, selectedRows: [1] });
   });
   it('UpdateData', () => {
-    const newData =  [{ id: 3 }, { id: 4 }];
+    const newData = [{ id: 3 }, { id: 4 }];
     const intialState = {
       columns: [],
       data: [{ id: 1 }, { id: 2 }],
@@ -319,7 +319,7 @@ describe('kaReducer', () => {
     expect(newState.paging.pageIndex).toEqual(5);
   });
   it('SetSingleAction', () => {
-    const intialState = { };
+    const intialState = {};
     const newState = kaReducer(intialState, setSingleAction(loadData()));
     expect(newState.singleAction).toMatchSnapshot();
   });
@@ -335,7 +335,7 @@ describe('kaReducer', () => {
       const initialState: ITableProps = {
         columns: [{
           key: 'column1'
-        },{
+        }, {
           key: 'column2'
         }],
         rowKeyField: 'id'
@@ -349,7 +349,7 @@ describe('kaReducer', () => {
         columns: [{
           key: 'column1',
           isHeaderFilterPopupShown: true
-        },{
+        }, {
           key: 'column2'
         }],
         rowKeyField: 'id'
@@ -363,7 +363,7 @@ describe('kaReducer', () => {
         columns: [{
           key: 'column1',
           isHeaderFilterPopupShown: true
-        },{
+        }, {
           key: 'column2'
         }],
         rowKeyField: 'id'
