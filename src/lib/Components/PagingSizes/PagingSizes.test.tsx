@@ -4,14 +4,12 @@ import ReactDOM from 'react-dom';
 
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
-import { ActionType } from '../../enums';
-import { IPagingPagesProps } from '../../props';
+import { IPagingProps } from '../../props';
 import PagingSizes from './PagingSizes';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const props: IPagingPagesProps = {
-    pages: [1, 2, 3],
+const props: IPagingProps = {
     pageSize: 2,
     pageIndex: 2,
     enabled: true,

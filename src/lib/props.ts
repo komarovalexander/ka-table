@@ -260,7 +260,3 @@ export interface IPagingIndexProps extends IPagingProps {
   text: any;
 }
 
-export interface IPagingPagesProps extends IPagingProps {
-  pages?: number[]; // TODO: will be deprecated next major release
-}
-

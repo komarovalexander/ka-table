@@ -21,12 +21,4 @@ describe('ColGroup', () => {
     ReactDOM.render(<ColGroup {...props} />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
-  it('is null in case of empty settings for col group', () => {
-    const component = shallow(<ColGroup columns={[{ key: 'column2' }]} groupColumnsCount={0} />);
-    expect(component.type()).toEqual(null)
-  });
-  it('is not null in case of settings for col group to be set', () => {
-    const component = shallow(<ColGroup columns={[{ key: 'column2', width: 12 }]} groupColumnsCount={0} />);
-    expect(component.type()).toEqual('colgroup')
-  });
 })

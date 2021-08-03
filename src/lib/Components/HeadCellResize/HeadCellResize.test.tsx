@@ -10,9 +10,11 @@ import HeadCellResize from './HeadCellResize';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props = {
-  column: { key: 'column1'},
+  column: {
+    key: 'column1',
+    width: 100
+  },
   dispatch: jest.fn(),
-  currentWidth: 100,
   childComponents: {}
 };
 
@@ -39,13 +41,20 @@ describe('HeadCellResize', () => {
   });
 
   it('should use parentWidth for resizing', () => {
-    const wrapper = shallow(<HeadCellResize {...props} currentWidth={'20%'} />);
+    const wrapper = shallow(
+      <HeadCellResize {...props} column={{
+        key: 'column1',
+        style: {
+          width: '20%'
+        }
+      }} />
+    );
     wrapper.simulate('mousedown', { preventDefault: () => {}, screenX: 80, currentTarget: { parentElement : { offsetWidth: 80 } } });
     simulant.fire(document.body, 'mouseup', { screenX: 90 });
     expect(props.dispatch.mock.calls[0]).toEqual([{columnKey: 'column1', type: 'ResizeColumn', width: 90}]);
   });
 
-  it('should use currentWidth for resizing', () => {
+  it('should use column.width for resizing', () => {
     const wrapper = shallow(<HeadCellResize {...props} />);
     wrapper.simulate('mousedown', { preventDefault: () => {}, screenX: 150 });
     simulant.fire(document.body, 'mouseup', { screenX: 160 });
