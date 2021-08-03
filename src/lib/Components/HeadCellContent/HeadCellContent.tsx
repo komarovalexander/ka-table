@@ -37,7 +37,8 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
       }
       dispatch(updatePopupPosition(popupPosition));
     }
-  }, [column.isHeaderFilterPopupShown]);
+  }, [column.isHeaderFilterPopupShown]); // eslint-disable-line
+
 
 
   return (
