@@ -3,6 +3,7 @@ import * as React from 'react';
 import { updatePopupPosition, updateSortDirection } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { FilteringMode, SortDirection } from '../../enums';
+import { PopupPosition } from '../../Models/PopupPosition';
 import { IHeadCellProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
@@ -29,12 +30,12 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
 
   const refToElement = React.useRef<HTMLDivElement>(document.createElement('div'));
   React.useLayoutEffect(() => {
-    if (refToElement.current) {
-      const positionX = refToElement.current.offsetLeft + (refToElement.current.offsetParent as HTMLElement)?.offsetLeft;
-      const positionY = refToElement.current.offsetTop + (refToElement.current.offsetParent as HTMLElement)?.offsetTop + refToElement.current.offsetHeight;
-      if (column.isHeaderFilterPopupShown) {
-        dispatch(updatePopupPosition(positionX, positionY));
+    if (refToElement.current && column.isHeaderFilterPopupShown) {
+      const popupPosition: PopupPosition = {
+        x: refToElement.current.offsetLeft + (refToElement.current.offsetParent as HTMLElement)?.offsetLeft,
+        y: refToElement.current.offsetTop + (refToElement.current.offsetParent as HTMLElement)?.offsetTop + refToElement.current.offsetHeight
       }
+      dispatch(updatePopupPosition(popupPosition));
     }
   }, [column.isHeaderFilterPopupShown]);
 

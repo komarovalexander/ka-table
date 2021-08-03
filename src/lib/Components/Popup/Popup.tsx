@@ -4,14 +4,12 @@ import './popupAnimation.css';
 import { Column } from '../../models';
 import { DispatchFunc } from '../../types';
 import { updateHeaderFilterPopupState } from '../../actionCreators';
+import { PopupPosition } from '../../Models/PopupPosition';
 
 export interface PopupProps {
     column: Column;
     dispatch: DispatchFunc;
-    popupPosition?: {
-        x: number,
-        y: number
-    }
+    popupPosition?: PopupPosition
 }
 
 const Popup: React.FC<PopupProps> = (props) => {

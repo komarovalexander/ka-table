@@ -18,6 +18,7 @@ import Loading from '../Loading/Loading';
 import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
 import Popup from '../Popup/Popup';
+import { PopupPosition } from '../../Models/PopupPosition';
 
 export interface ITableProps {
   columnReordering?: boolean;
@@ -37,10 +38,7 @@ export interface ITableProps {
   height?: number | string;
   loading?: ILoadingProps;
   paging?: PagingOptions;
-  popupPosition?: {
-    x: number,
-    y: number
-  };
+  popupPosition?: PopupPosition;
   rowKeyField: string;
   treeGroupKeyField?: string;
   treeGroupsExpanded?: any[];

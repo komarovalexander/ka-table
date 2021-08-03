@@ -1,10 +1,10 @@
 import { ActionType } from './enums';
 import { Focused } from './Models/Focused';
+import { PopupPosition } from './Models/PopupPosition';
 import { IMoveFocusedSettings } from './Utils/NavigationUtils';
 
-export const updatePopupPosition = (x: number | undefined, y: number | undefined) => ({
-  x,
-  y,
+export const updatePopupPosition = (popupPosition: PopupPosition) => ({
+  popupPosition,
   type: ActionType.UpdatePopupPosition
 })
 
