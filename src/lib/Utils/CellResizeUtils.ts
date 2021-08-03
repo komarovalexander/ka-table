@@ -27,7 +27,9 @@ export const isNumberWidth = (width: any): boolean => width && typeof width === 
 
 export const getMinWidth = (style: any): number => {
   let minWidth: number = 20;
-  const styleMinWidth = style && style.minWidth;
+  if (!style){ return minWidth; }
+
+  const styleMinWidth = style.minWidth;
   if (isNumberWidth(styleMinWidth)){
     minWidth = styleMinWidth;
   }

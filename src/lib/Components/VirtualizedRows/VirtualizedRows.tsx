@@ -41,12 +41,12 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   }
   return (
     <>
-      {virtualized && <tr style={{height: virtualized.beginHeight}}><td style={{height: virtualized.beginHeight}}/></tr>}
+      {virtualized && virtualized.beginHeight !== 0 && <tr style={{height: virtualized.beginHeight}}><td style={{height: virtualized.beginHeight}}/></tr>}
       <Rows
         {...props}
         data={virtualizedData}
         onFirstRowRendered={onFirstRowRendered}/>
-      {virtualized && (<tr style={{height: virtualized.endHeight}}><td style={{height: virtualized.endHeight}}/></tr>)}
+      {virtualized && virtualized.endHeight !== 0 && (<tr style={{height: virtualized.endHeight}}><td style={{height: virtualized.endHeight}}/></tr>)}
     </>
   );
 };

@@ -11,12 +11,12 @@ import { getEventListenerEffect } from '../../Utils/EffectUtils';
 
 const HeadCellResize: React.FunctionComponent<IHeadCellResizeProps> = (props) => {
   const {
-    column: { key, style },
+    column: { key, style, col, width },
     dispatch,
-    currentWidth,
     childComponents
   } = props;
-  const minWidth = getMinWidth(style);
+  const minWidth = getMinWidth(style) || getMinWidth(col?.style);
+  const currentWidth = width || col?.style?.width || style?.width;
 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.theadCellResize,

@@ -68,6 +68,50 @@ Object {
 }
 `;
 
+exports[`kaReducer ResizeColumn has a col in settings 1`] = `
+Array [
+  Object {
+    "key": "id",
+  },
+  Object {
+    "col": Object {
+      "style": Object {
+        "width": 200,
+      },
+    },
+    "key": "name",
+    "width": 200,
+  },
+]
+`;
+
+exports[`kaReducer ResizeColumn has a width in settings 1`] = `
+Array [
+  Object {
+    "key": "id",
+  },
+  Object {
+    "key": "name",
+    "width": 200,
+  },
+]
+`;
+
+exports[`kaReducer ResizeColumn has styles only 1`] = `
+Array [
+  Object {
+    "key": "id",
+  },
+  Object {
+    "key": "name",
+    "style": Object {
+      "width": 200,
+    },
+    "width": 200,
+  },
+]
+`;
+
 exports[`kaReducer SelectRowsRange default 1`] = `
 Array [
   2,

@@ -10,7 +10,7 @@ import { DispatchFunc } from '../../lib/types';
 const columns: Column[] = Array(15).fill(undefined).map(
   (_, index) => ({
     key: 'column' + index,
-    style: { width: 200 },
+    width: 200,
     title: 'Column ' + index,
     type: DataType.String,
   }),

@@ -52,7 +52,6 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
         {isCellResizeShown(isResizable, columnResizing) && !hasChildren && (
           <HeadCellResize
             column={column}
-            currentWidth={style?.width} // TODO: remove currentWidth property as width can be obtained from the column
             dispatch={dispatch}
             childComponents={childComponents}/>
         )}

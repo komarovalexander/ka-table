@@ -7,6 +7,7 @@ import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { prepareTableOptions } from '../../Utils/PropsUtils';
 import { isVirtualScrollingEnabled } from '../../Utils/Virtualize';
+import { ColGroup } from '../ColGroup/ColGroup';
 import TableBody from '../TableBody/TableBody';
 import { TableFoot } from '../TableFoot/TableFoot';
 import { TableHead } from '../TableHead/TableHead';
@@ -55,6 +56,10 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
     <div {...tableWrapper.elementAttributes}>
       {content || tableWrapper.content || (
         <table {...elementAttributes}>
+          <ColGroup
+            columns={preparedOptions.columns}
+            groupColumnsCount={preparedOptions.groupColumnsCount}
+          />
           <TableHead
             {...props}
             areAllRowsSelected={areAllRowsSelected}

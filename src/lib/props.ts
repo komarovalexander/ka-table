@@ -6,6 +6,11 @@ import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from '
 import { GroupedColumn } from './Models/GroupedColumn';
 import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 
+export interface IColGroupProps {
+  columns: Column[];
+  groupColumnsCount: number;
+}
+
 interface IRowCommonProps {
   childComponents: ChildComponents;
   columns: Column[];
@@ -114,7 +119,6 @@ export interface IGroupSummaryCellProps extends IGroupSummaryRowProps {
 export interface IHeadCellResizeProps {
   dispatch: DispatchFunc;
   column: Column;
-  currentWidth: any;
   childComponents: ChildComponents;
 }
 export interface IHeadCellProps {
@@ -205,6 +209,7 @@ export interface IRowProps extends IRowCommonProps {
 export interface IEmptyCellsProps {
   count: number;
   isTh?: boolean;
+  isColGroup?: boolean;
   className?: string;
 }
 

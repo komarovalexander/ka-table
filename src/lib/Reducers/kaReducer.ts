@@ -105,17 +105,22 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     }
     case ActionType.ResizeColumn: {
       const { columnKey, width } = action;
-
-      const column = columns.find((c: Column) => c.key === columnKey)!;
-      const newColumn: Column = {
-        ...column,
-        style: { ...column.style, width },
-      };
-      const newColumns = getCopyOfArrayAndInsertOrReplaceItem(
-        newColumn,
-        'key',
-        columns,
-      );
+      const newColumns = columns.map((column: Column) => {
+        if (column.key === columnKey) {
+          const newColumn = {
+            ...column,
+            width,
+          };
+          if (newColumn.style?.width){
+            newColumn.style = { ...newColumn.style, width };
+          }
+          if (newColumn.col?.style?.width){
+            newColumn.col.style =  { ...newColumn.col.style, width };
+          }
+          return newColumn;
+        }
+        return column;
+    });
       return { ...props, columns: newColumns };
     }
     case ActionType.UpdatePageIndex: {
