@@ -15,5 +15,5 @@ export class Column {
   public style?: React.CSSProperties;
   public title?: string;
   public visible?: boolean;
-  public width?: number;
+  public width?: number | string;
 }

@@ -68,7 +68,7 @@ const tablePropsInit: ITableProps = {
     { key: 'score', title: 'Score', dataType: DataType.Number },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
     { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
-    { key: 'editColumn', style: { width: 50 } },
+    { key: 'editColumn', width: 80 },
   ],
   format: ({ column, value }) => {
     if (column.dataType === DataType.Date){

@@ -16,7 +16,7 @@ const dataArray = Array(10).fill(undefined).map(
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'drag', style: { width: 15 }, isEditable: false, title: '' },
+    { key: 'drag', width: 50, isEditable: false, title: '' },
     { key: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },

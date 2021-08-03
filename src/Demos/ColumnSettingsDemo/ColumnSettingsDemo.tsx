@@ -46,7 +46,8 @@ const ColumnSettings: React.FC<ITableAllProps> = (tableProps: ITableAllProps) =>
       key: 'visible',
       title: 'Visible',
       isEditable: false,
-      style: { width: 45 },
+      style: { textAlign: 'center' },
+      width: 80,
       dataType: DataType.Boolean
     }],
     editingMode: EditingMode.None,

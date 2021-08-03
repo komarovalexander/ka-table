@@ -17,7 +17,7 @@ const tablePropsInit: ITableProps = {
     { key: 'type', title: 'TYPE', dataType: DataType.String },
     { key: 'name', title: 'NAME', dataType: DataType.String },
     { key: 'country', title: 'COUNTRY', dataType: DataType.String },
-    { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' } },
+    { key: 'age', title: 'AGE', dataType: DataType.Number, width: '50%' },
   ],
   data: dataArray,
   editingMode: EditingMode.Cell,

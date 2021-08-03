@@ -34,7 +34,7 @@ const tablePropsInit: ITableProps = {
     {
       dataType: DataType.String,
       key: 'representative.name',
-      style: { width: '120px' },
+      width: 150,
       title: 'Representative',
     },
     {
@@ -46,18 +46,16 @@ const tablePropsInit: ITableProps = {
       dataType: DataType.String,
       filterRowValue: 'e',
       key: 'product.name',
-      style: {
-        width: '80px',
-      },
+      width: 110,
       title: 'Product',
     },
     {
       dataType: DataType.Number,
       key: 'product.price',
       sortDirection: SortDirection.Ascend,
+      width: 110,
       style: {
         textAlign: 'right',
-        width: '100px',
       },
       title: 'Product Price',
     },
@@ -66,9 +64,9 @@ const tablePropsInit: ITableProps = {
       filterRowOperator: '<',
       filterRowValue: new Date(2015, 1, 2),
       key: 'firstDealDate',
+      width: 190,
       style: {
         textAlign: 'center',
-        width: '165px',
       },
       title: 'First Deal Date',
     },
