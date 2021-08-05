@@ -25,6 +25,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
     rowReordering = false,
     selectedRows = [],
     sortingMode = SortingMode.None,
+    popupPosition,
     virtualScrolling
   } = props;
   let {
@@ -64,27 +65,28 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
             dispatch={dispatch}
             filteringMode={filteringMode}
             groupColumnsCount={preparedOptions.groupColumnsCount}
+            popupPosition={popupPosition}
             sortingMode={sortingMode}
           />
           <TableBody
-              {...props}
-              childComponents={childComponents}
-              columns={preparedOptions.columns}
-              data={preparedOptions.groupedData}
-              editableCells={editableCells}
-              editingMode={editingMode}
-              groupColumnsCount={preparedOptions.groupColumnsCount}
-              groupedColumns={preparedOptions.groupedColumns}
-              groupsExpanded={groupsExpanded}
-              rowReordering={rowReordering}
-              selectedRows={selectedRows}
+            {...props}
+            childComponents={childComponents}
+            columns={preparedOptions.columns}
+            data={preparedOptions.groupedData}
+            editableCells={editableCells}
+            editingMode={editingMode}
+            groupColumnsCount={preparedOptions.groupColumnsCount}
+            groupedColumns={preparedOptions.groupedColumns}
+            groupsExpanded={groupsExpanded}
+            rowReordering={rowReordering}
+            selectedRows={selectedRows}
           />
           {(childComponents.tableFoot || childComponents.summaryRow || childComponents.summaryCell) && (
-              <TableFoot {...props}
-                data={data}
-                columns={preparedOptions.columns}
-                groupColumnsCount={preparedOptions.groupColumnsCount} />
-            )}
+            <TableFoot {...props}
+              data={data}
+              columns={preparedOptions.columns}
+              groupColumnsCount={preparedOptions.groupColumnsCount} />
+          )}
         </table>
       )}
     </div>

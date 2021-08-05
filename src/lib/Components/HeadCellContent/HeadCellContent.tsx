@@ -16,6 +16,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
     sortingMode,
     filteringMode,
     childComponents: { headCellContent },
+    popupPosition
   } = props;
   const sortingEnabled = isSortingEnabled(sortingMode);
   const onClick = sortingEnabled ? () => {
@@ -31,13 +32,15 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const refToElement = React.useRef<HTMLDivElement>(document.createElement('div'));
   React.useLayoutEffect(() => {
     if (refToElement.current && column.isHeaderFilterPopupShown) {
-      const popupPosition: PopupPosition = {
+      const newPopupPosition: PopupPosition = {
         x: refToElement.current.offsetLeft + (refToElement.current.offsetParent as HTMLElement)?.offsetLeft,
         y: refToElement.current.offsetTop + (refToElement.current.offsetParent as HTMLElement)?.offsetTop + refToElement.current.offsetHeight
       }
-      dispatch(updatePopupPosition(popupPosition));
+      if (newPopupPosition.x !== popupPosition?.x || newPopupPosition.y !== popupPosition?.y) {
+        dispatch(updatePopupPosition(newPopupPosition));
+      }
     }
-  }, [column.isHeaderFilterPopupShown]); // eslint-disable-line
+  }, [column.isHeaderFilterPopupShown, dispatch, popupPosition]);
 
 
 

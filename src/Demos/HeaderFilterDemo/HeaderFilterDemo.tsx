@@ -25,7 +25,7 @@ const tablePropsInit: ITableProps = {
     },
   ],
   data: dataArray,
-  sortingMode: SortingMode.None,
+  sortingMode: SortingMode.Single,
   filteringMode: FilteringMode.HeaderFilter,
   format: ({ column, value }) => {
     if (column.dataType === DataType.Date) {

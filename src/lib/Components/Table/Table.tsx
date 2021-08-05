@@ -95,7 +95,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
       {rootDivContent || (
         <>
           {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
-          <TableWrapper {...props} />
+          <TableWrapper {...props} popupPosition={popupPosition} />
           {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
           <Loading {...loading} />
           {popupPosition && columns.map(column => column.isHeaderFilterPopupShown

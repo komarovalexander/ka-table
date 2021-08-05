@@ -65,6 +65,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         x: action.popupPosition.x,
         y: action.popupPosition.y
       }
+
       return { ...props, popupPosition: newPopupPosition }
     }
     case ActionType.UpdateHeaderFilterPopupState: {

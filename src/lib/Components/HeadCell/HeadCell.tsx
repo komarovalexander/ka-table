@@ -19,16 +19,17 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     column: { style, isResizable, key },
     dispatch,
     sortingMode,
-    childComponents
+    childComponents,
+    popupPosition
   } = props;
   let {
     childComponents: { headCell }
   } = props;
   const [width, setWidth] = React.useState(style ? style.width : undefined);
-  const stateStyle = {...style, width};
+  const stateStyle = { ...style, width };
   const headCellDispatch = headCellDispatchWrapper(setWidth, dispatch);
 
-  if (columnReordering){
+  if (columnReordering) {
     const reorderedRowProps: ChildAttributesItem<IHeadCellProps> = getDraggableProps(key, dispatch, reorderColumns, defaultOptions.css.draggedColumn, defaultOptions.css.dragOverColumn);
     headCell = addElementAttributes(reorderedRowProps, props, headCell);
   }
@@ -43,14 +44,14 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     <th {...elementAttributes}>
       <div className={defaultOptions.css.theadCellWrapper}>
         <div className={defaultOptions.css.theadCellContentWrapper}>
-         {content || <HeadCellContent {...props}/>}
+          {content || <HeadCellContent {...props} popupPosition={popupPosition} />}
         </div>
         {isCellResizeShown(isResizable, columnResizing) && (
           <HeadCellResize
             column={column}
             currentWidth={width}
             dispatch={headCellDispatch}
-            childComponents={childComponents}/>
+            childComponents={childComponents} />
         )}
       </div>
     </th>

@@ -3,6 +3,7 @@ import { IRowsProps } from './Components/Rows/Rows';
 import { ITableAllProps } from './Components/Table/Table';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
+import { PopupPosition } from './Models/PopupPosition';
 import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 
 interface IRowCommonProps {
@@ -124,6 +125,7 @@ export interface IHeadCellProps {
   columnResizing?: boolean;
   column: Column;
   dispatch: DispatchFunc;
+  popupPosition?: PopupPosition;
   sortingMode: SortingMode;
 }
 
@@ -142,6 +144,7 @@ export interface ITableHeadProps {
   dispatch: DispatchFunc;
   filteringMode: FilteringMode;
   groupColumnsCount: number;
+  popupPosition?: PopupPosition;
   sortingMode: SortingMode;
 }
 
@@ -223,6 +226,7 @@ export interface IHeadRowProps {
   dispatch: DispatchFunc;
   filteringMode?: FilteringMode;
   groupColumnsCount: number;
+  popupPosition?: PopupPosition;
   sortingMode: SortingMode;
 }
 

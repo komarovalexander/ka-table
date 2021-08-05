@@ -14,7 +14,8 @@ export interface FilterPopupButtonProps {
 const FilterPopupButton: React.FC<FilterPopupButtonProps> = (props) => {
     const { column, dispatch } = props;
 
-    const onClickFilterPopup = () => {
+    const onClickFilterPopup = (event: React.SyntheticEvent<HTMLSpanElement>) => {
+        event.stopPropagation();
         dispatch(updateHeaderFilterPopupState(column.key, !column.isHeaderFilterPopupShown))
     }
 

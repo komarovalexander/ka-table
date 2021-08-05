@@ -15,7 +15,7 @@ const props: FilterPopupButtonProps = {
 };
 
 it('renders without crashing', () => {
-    const element = document.createElement('span');
+    const element = document.createElement('div');
     ReactDOM.render(<FilterPopupButton {...props} />, element);
     ReactDOM.unmountComponentAtNode(element);
 });
@@ -23,7 +23,7 @@ it('renders without crashing', () => {
 it('should dispatch updateHeaderFilterPopupState onClick', () => {
     const wrapper = mount(<FilterPopupButton {...props} column={{ key: 'fieldTest', isHeaderFilterPopupShown: false }} dispatch={props.dispatch} />);
     wrapper.find('.ka-icon-header-filter').simulate('click');
-    expect(props.dispatch).toBeCalledWith({
+    expect(props.dispatch).toHaveBeenCalledWith({
         columnKey: 'fieldTest',
         isHeaderFilterPopupShown: true,
         type: ActionType.UpdateHeaderFilterPopupState
