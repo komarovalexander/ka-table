@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import GroupedHeaderColumnsDemo from './GroupedHeaderColumnsDemo';
+import GroupedColumnsDemo from './GroupedColumnsDemo';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<GroupedHeaderColumnsDemo />, div);
+  ReactDOM.render(<GroupedColumnsDemo />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

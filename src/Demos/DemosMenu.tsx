@@ -22,6 +22,7 @@ const synonyms: { [value: string]: any[] } = {
   'EventsDemo': ['Action', 'Click'],
   'FilterRowCustomEditorDemo': ['filterRowCell'],
   'FixedColumnDemo': ['Sticky'],
+  'GroupedColumnsDemo': ['Header', 'Many', 'Multi'],
   'ManyColumnsDemo': ['horizontal'],
   'NullableCellDataDemo': ['groupsExpanded'],
   'PagingDemo': ['pageSize'],

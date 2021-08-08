@@ -1,4 +1,4 @@
-import './GroupedHeaderColumnsDemo.scss';
+import './GroupedColumnsDemo.scss';
 
 import React, { useState } from 'react';
 
@@ -25,7 +25,6 @@ const dataArray = Array(30).fill(undefined).map(
 
 const tablePropsInit: ITableProps = {
   columnResizing: true,
-  // columnReordering: true,
   groupedColumns: [ {
     key: 'grouped.column1',
     title: 'Group 1',
@@ -53,7 +52,7 @@ const tablePropsInit: ITableProps = {
   sortingMode: SortingMode.Single
 };
 
-const GroupedHeaderColumnsDemo: React.FC = () => {
+const GroupedColumnsDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
@@ -69,4 +68,4 @@ const GroupedHeaderColumnsDemo: React.FC = () => {
   );
 };
 
-export default GroupedHeaderColumnsDemo;
+export default GroupedColumnsDemo;
