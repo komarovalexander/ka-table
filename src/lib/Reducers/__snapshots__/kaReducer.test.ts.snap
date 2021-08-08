@@ -85,6 +85,21 @@ Array [
 ]
 `;
 
+exports[`kaReducer ResizeColumn has a col.width in settings 1`] = `
+Array [
+  Object {
+    "key": "id",
+  },
+  Object {
+    "colGroup": Object {
+      "width": 200,
+    },
+    "key": "name",
+    "width": 200,
+  },
+]
+`;
+
 exports[`kaReducer ResizeColumn has a width in settings 1`] = `
 Array [
   Object {

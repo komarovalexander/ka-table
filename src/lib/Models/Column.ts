@@ -2,7 +2,7 @@ import { DataType, SortDirection } from '../enums';
 import { Field } from '../types';
 
 export class Column {
-  public col?: React.ColHTMLAttributes<HTMLElement>;
+  public colGroup?: React.ColHTMLAttributes<HTMLElement>;
   public dataType?: DataType;
   public field?: Field;
   public filterRowOperator?: any;

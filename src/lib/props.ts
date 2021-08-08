@@ -104,7 +104,7 @@ export interface IGroupRowProps {
   groupIndex: number;
   groupKey: any[];
   isExpanded: boolean;
-  text: string; // TODO: consider to pass the value insted of formatted text
+  text: string;
 }
 
 export interface IGroupSummaryRowProps extends IRowsProps {

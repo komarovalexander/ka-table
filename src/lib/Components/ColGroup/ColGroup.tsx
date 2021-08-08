@@ -7,7 +7,7 @@ export const ColGroup: React.FunctionComponent<IColGroupProps> = ({ columns, gro
   return (
     <colgroup>
       <EmptyCells count={groupColumnsCount} isColGroup={true}/>
-      {columns.map(c => <col key={c.key} {...c.col} width={c.width || c.col?.width} />)}
+      {columns.map(c => <col key={c.key} {...c.colGroup} width={c.width || c.colGroup?.width || c.colGroup?.style?.width} />)}
     </colgroup>
   );
 };

@@ -116,8 +116,11 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
           if (newColumn.style?.width == null || newColumn.width != null) {
             newColumn.width = width;
           }
-          if (newColumn.col?.style?.width != null){
-            newColumn.col.style =  { ...newColumn.col.style, width };
+          if (newColumn.colGroup?.style?.width != null){
+            newColumn.colGroup.style =  { ...newColumn.colGroup.style, width };
+          }
+          if (newColumn.colGroup?.width != null){
+            newColumn.colGroup.width = width;
           }
           return newColumn;
         }

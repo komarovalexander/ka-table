@@ -350,8 +350,22 @@ describe('kaReducer', () => {
           key: 'id'
         }, {
           key: 'name',
-          col: {
+          colGroup: {
             style: { width: 100 }
+          }
+        }],
+      };
+      const newState = kaReducer(intialState, resizeColumn('name', 200));
+      expect(newState.columns).toMatchSnapshot();
+    });
+    it('has a col.width in settings', () => {
+      const intialState = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'name',
+          colGroup: {
+            width: 100
           }
         }],
       };
