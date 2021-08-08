@@ -17,7 +17,7 @@ const defaultOption: ITableProps = {
     { key: 'type', title: 'TYPE', dataType: DataType.String, isResizable: true },
     { key: 'name', title: 'NAME', dataType: DataType.String, isResizable: true },
     { key: 'country', title: 'COUNTRY', dataType: DataType.String, isResizable: true },
-    { key: 'age', title: 'AGE', dataType: DataType.Number, style: { width: '50%' }, isResizable: true },
+    { key: 'age', title: 'AGE', dataType: DataType.Number, width: '50%', isResizable: true },
   ],
   data: initDataArray,
   editingMode: EditingMode.Cell,

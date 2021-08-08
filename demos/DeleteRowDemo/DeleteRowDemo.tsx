@@ -38,7 +38,7 @@ const tablePropsInit: ITableProps = {
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    { key: ':delete', style: { width: 40, textAlign: 'center' } },
+    { key: ':delete', width: 70, style: { textAlign: 'center' } },
   ],
   data: dataArray,
   rowKeyField: 'id',

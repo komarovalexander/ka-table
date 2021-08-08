@@ -10,7 +10,8 @@ import { DispatchFunc } from 'ka-table/types';
 const columns: Column[] = Array(15).fill(undefined).map(
   (_, index) => ({
     key: 'column' + index,
-    style: { width: 150, minWidth: 100 },
+    colGroup: { style: { minWidth: 100 }},
+    width: 200,
     title: 'Column ' + index,
     type: DataType.String,
   }),

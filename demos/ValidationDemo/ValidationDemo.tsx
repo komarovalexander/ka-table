@@ -18,13 +18,13 @@ const tablePropsInit: ITableProps = {
     {
       dataType: DataType.String,
       key: 'name',
-      style: { width: '40%' },
+      width: '45%',
       title: 'Name'
     },
     {
       dataType: DataType.Number,
       key: 'score',
-      style: { width: '70px' },
+      width: 110,
       title: 'Score'
     },
     {

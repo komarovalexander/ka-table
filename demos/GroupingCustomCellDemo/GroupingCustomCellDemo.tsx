@@ -32,7 +32,7 @@ const tablePropsInit: ITableProps = {
     {
       dataType: DataType.Number,
       key: 'age',
-      style: { width: '50%' },
+      width: '50%',
       title: 'AGE',
     },
   ],

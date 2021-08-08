@@ -15,8 +15,8 @@ const dataArray: any[] = [
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, style: { width: '40%' } },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '10%', textAlign: 'right' } },
+    { key: 'name', title: 'Name', dataType: DataType.String, width: '45%' },
+    { key: 'score', title: 'Score', dataType: DataType.Number, width: '15%', style: { textAlign: 'right' } },
     { dataType: DataType.Boolean, key: 'passed', title: 'Passed', style: {textAlign: 'right' } },
   ],
   data: dataArray,
