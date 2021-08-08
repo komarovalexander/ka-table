@@ -19,10 +19,10 @@ const tablePropsInit: ITableProps = {
     {
       dataType: DataType.String,
       key: 'name',
-      style: { width: '33%' },
+      width: '33%',
       title: 'Name',
     },
-    { key: 'score', title: 'Score', style: { width: '10%' }, dataType: DataType.Number, sortDirection: SortDirection.Ascend },
+    { key: 'score', title: 'Score', width: '15%', dataType: DataType.Number, sortDirection: SortDirection.Ascend },
     { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
   ],
   data: dataArray,

@@ -31,7 +31,7 @@ const tablePropsInit: ITableProps = {
       dataType: DataType.String,
       key: 'name',
       sortDirection: SortDirection.Descend,
-      style: { width: 60 },
+      width: 100,
       title: 'Student',
     },
     { key: 'score', title: 'Score', dataType: DataType.Number },

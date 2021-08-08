@@ -1,9 +1,9 @@
 import { ITableProps } from '../';
 import {
   clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
-  deselectRow, loadData, reorderColumns, reorderRows, selectAllFilteredRows, selectAllRows,
-  selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction, updateData,
-  updateTreeGroupsExpanded,
+  deselectRow, loadData, reorderColumns, reorderRows, resizeColumn, selectAllFilteredRows,
+  selectAllRows, selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction,
+  updateData, updateTreeGroupsExpanded,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -330,5 +330,61 @@ describe('kaReducer', () => {
     };
     const newState = kaReducer(intialState, clearSingleAction());
     expect(newState.singleAction).toBeUndefined();
+  });
+  describe('ResizeColumn', () => {
+    it('has a width in settings', () => {
+      const intialState = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'name',
+          width: 100
+        }],
+      };
+      const newState = kaReducer(intialState, resizeColumn('name', 200));
+      expect(newState.columns).toMatchSnapshot();
+    });
+    it('has a col in settings', () => {
+      const intialState = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'name',
+          colGroup: {
+            style: { width: 100 }
+          }
+        }],
+      };
+      const newState = kaReducer(intialState, resizeColumn('name', 200));
+      expect(newState.columns).toMatchSnapshot();
+    });
+    it('has a col.width in settings', () => {
+      const intialState = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'name',
+          colGroup: {
+            width: 100
+          }
+        }],
+      };
+      const newState = kaReducer(intialState, resizeColumn('name', 200));
+      expect(newState.columns).toMatchSnapshot();
+    });
+    it('has styles only', () => {
+      const intialState = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'name',
+          style: {
+            width: 100
+          }
+        }],
+      };
+      const newState = kaReducer(intialState, resizeColumn('name', 200));
+      expect(newState.columns).toMatchSnapshot();
+    });
   });
 });

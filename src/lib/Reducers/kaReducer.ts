@@ -105,17 +105,27 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     }
     case ActionType.ResizeColumn: {
       const { columnKey, width } = action;
-
-      const column = columns.find((c: Column) => c.key === columnKey)!;
-      const newColumn: Column = {
-        ...column,
-        style: { ...column.style, width },
-      };
-      const newColumns = getCopyOfArrayAndInsertOrReplaceItem(
-        newColumn,
-        'key',
-        columns,
-      );
+      const newColumns = columns.map((column: Column) => {
+        if (column.key === columnKey) {
+          const newColumn = {
+            ...column,
+          };
+          if (newColumn.style?.width != null){
+            newColumn.style = { ...newColumn.style, width };
+          }
+          if (newColumn.style?.width == null || newColumn.width != null) {
+            newColumn.width = width;
+          }
+          if (newColumn.colGroup?.style?.width != null){
+            newColumn.colGroup.style =  { ...newColumn.colGroup.style, width };
+          }
+          if (newColumn.colGroup?.width != null){
+            newColumn.colGroup.width = width;
+          }
+          return newColumn;
+        }
+        return column;
+    });
       return { ...props, columns: newColumns };
     }
     case ActionType.UpdatePageIndex: {
@@ -339,7 +349,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const newData = getCopyOfArrayAndInsertOrReplaceItem(action.rowData, rowKeyField, data);
       return { ...props, data: newData };
     }
-    case ActionType.UpdateTreeGroupsExpanded : {
+    case ActionType.UpdateTreeGroupsExpanded: {
       const rowKeyValue = action.rowKeyValue;
       const value = treeGroupsExpanded ? !treeGroupsExpanded.some(v => v === rowKeyValue) : false;
       if (value){

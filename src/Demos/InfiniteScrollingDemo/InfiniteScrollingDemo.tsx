@@ -49,7 +49,8 @@ const InfiniteScrollingDemo: React.FC = () => {
             onScroll: (event, { baseFunc }) => {
               baseFunc(event);
               const element =  event.currentTarget;
-              if (element.offsetHeight + element.scrollTop >= element.scrollHeight) {
+              const BOTTOM_OFFSET = 20;
+              if (element.offsetHeight + element.scrollTop >= element.scrollHeight - BOTTOM_OFFSET) {
                 dispatch({ type: LOAD_MORE_DATA });
               }
             },

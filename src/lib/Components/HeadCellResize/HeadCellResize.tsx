@@ -4,19 +4,19 @@ import { resizeColumn } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { IHeadCellResizeProps } from '../../props';
 import {
-  getMinWidth, getMouseMove, getValidatedWidth, HeadCellResizeStateAction, isNumberWidth,
+  getMinWidth, getMouseMove, getValidatedWidth, isNumberWidth,
 } from '../../Utils/CellResizeUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getEventListenerEffect } from '../../Utils/EffectUtils';
 
 const HeadCellResize: React.FunctionComponent<IHeadCellResizeProps> = (props) => {
   const {
-    column: { key, style },
+    column: { key, style, colGroup, width },
     dispatch,
-    currentWidth,
     childComponents
   } = props;
-  const minWidth = getMinWidth(style);
+  const minWidth = getMinWidth(style) || getMinWidth(colGroup?.style);
+  const currentWidth = width ||  colGroup?.width || colGroup?.style?.width || style?.width ;
 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.theadCellResize,
@@ -24,11 +24,10 @@ const HeadCellResize: React.FunctionComponent<IHeadCellResizeProps> = (props) =>
     onMouseDown: (mouseDownEvent: any) => {
       mouseDownEvent.preventDefault();
       const startX = mouseDownEvent.screenX - (isNumberWidth(currentWidth) ? currentWidth : mouseDownEvent.currentTarget.parentElement.offsetWidth);
-      const mouseMoveStop = getEventListenerEffect('mousemove', getMouseMove(currentWidth, minWidth, startX, dispatch));
+      const mouseMoveStop = getEventListenerEffect('mousemove', getMouseMove(currentWidth, minWidth, startX, key, dispatch));
       const mouseUpStop = getEventListenerEffect('mouseup', (event: MouseEvent) => {
         const newWidth = getValidatedWidth(event.screenX - startX, minWidth);
         dispatch(resizeColumn(key, newWidth));
-        dispatch({ type: HeadCellResizeStateAction, width: newWidth });
         mouseUpStop();
         mouseMoveStop();
       });
