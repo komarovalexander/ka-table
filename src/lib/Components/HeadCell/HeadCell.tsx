@@ -35,7 +35,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   }
 
   const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.theadCell} ${defaultOptions.css.theadBackground} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''} ${isGrouped ? 'ka-thead-grouped-cell' : ''}`,
+    className: `${defaultOptions.css.theadCell} ${defaultOptions.css.theadFixed} ${defaultOptions.css.theadBackground} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''} ${isGrouped ? 'ka-thead-grouped-cell' : ''}`,
     colSpan,
     rowSpan,
     scope: 'col',

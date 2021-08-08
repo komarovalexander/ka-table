@@ -3,7 +3,7 @@ import './GroupedColumnsDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType, SortingMode } from '../../lib/enums';
+import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
 import { Column } from '../../lib/models';
 import { DispatchFunc } from '../../lib/types';
 
@@ -25,6 +25,7 @@ const dataArray = Array(30).fill(undefined).map(
 
 const tablePropsInit: ITableProps = {
   columnResizing: true,
+  filteringMode: FilteringMode.FilterRow,
   groupedColumns: [ {
     key: 'grouped.column1',
     title: 'Group 1',

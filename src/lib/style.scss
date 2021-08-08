@@ -21,16 +21,19 @@
 }
 .ka-thead-background{
   background-color: $ka-thead-background-color;
-  position: sticky;
-  top: 0;
 }
 .ka-thead-grouped-cell {
-  height: $ka-grouped-header-cell-height;
+  height: $ka-header-cell-height;
   box-sizing: border-box;
 }
-@for $i from 1 through 5 {
-  .ka-thead-row:nth-child(#{$i + 1}) .ka-thead-grouped-cell {
-    top: $ka-grouped-header-cell-height * $i;
+.ka-thead-fixed {
+  position: sticky;
+}
+@for $i from 0 through 5 {
+  .ka-thead-row:nth-child(#{$i + 1}) {
+    .ka-thead-fixed {
+      top: $ka-header-cell-height * $i;
+    }
   }
 }
 .ka-thead-cell{
