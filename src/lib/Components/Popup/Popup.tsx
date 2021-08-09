@@ -16,8 +16,8 @@ const Popup: React.FC<PopupProps> = (props) => {
         dispatch
     } = props;
 
-    function useOuterClick(callback: any) {
-        const callbackRef = React.useRef(null);
+    function useOuterClick(callback: () => void) {
+        const callbackRef = React.useRef((event: MouseEvent) => { });
         const innerRef = React.useRef<HTMLDivElement>(document.createElement('div'));
 
         React.useEffect(() => {
@@ -30,11 +30,10 @@ const Popup: React.FC<PopupProps> = (props) => {
                 if (innerRef.current && callbackRef.current &&
                     !innerRef.current.contains(event.target as Node)
                 )
-                    (callbackRef.current as any)(event);
+                    callbackRef.current(event);
             }
 
         }, []);
-
         return innerRef;
     }
 
