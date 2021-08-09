@@ -3,6 +3,7 @@ import { Field } from '../types';
 import { PopupPosition } from './PopupPosition';
 
 export class Column {
+  public colGroup?: React.ColHTMLAttributes<HTMLElement>;
   public dataType?: DataType;
   public field?: Field;
   public filterRowOperator?: any;
@@ -18,4 +19,5 @@ export class Column {
   public style?: React.CSSProperties;
   public title?: string;
   public visible?: boolean;
+  public width?: number | string;
 }

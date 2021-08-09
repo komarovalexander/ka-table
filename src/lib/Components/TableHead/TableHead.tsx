@@ -5,6 +5,7 @@ import { FilteringMode } from '../../enums';
 import { ITableHeadProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import FilterRow from '../FilterRow/FilterRow';
+import { GroupedColumnsRow } from '../GroupedColumnsRow/GroupedColumnsRow';
 import HeadRow from '../HeadRow/HeadRow';
 
 export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
@@ -18,6 +19,7 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
     filteringMode,
     groupColumnsCount,
     sortingMode,
+    groupedColumns = []
   } = props;
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.thead,
@@ -26,7 +28,9 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
     <thead {...elementAttributes}>
       {content || (
         <>
+        {groupedColumns.length ? <GroupedColumnsRow {...props} /> : (
           <HeadRow
+<<<<<<< HEAD
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
             columnReordering={columnReordering}
@@ -37,14 +41,24 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
             sortingMode={sortingMode}
             filteringMode={filteringMode}
           />
+=======
+              areAllRowsSelected={areAllRowsSelected}
+              childComponents={childComponents}
+              columnReordering={columnReordering}
+              columnResizing={columnResizing}
+              columns={columns}
+              dispatch={dispatch}
+              groupColumnsCount={groupColumnsCount}
+              sortingMode={sortingMode}
+            />
+          )}
+>>>>>>> 339a589730a63ff62e8e1ac65c902ca05a302cb7
           {
             filteringMode === FilteringMode.FilterRow &&
             (
               <FilterRow
-                childComponents={childComponents}
-                columns={columns}
+                {...props}
                 dispatch={dispatch}
-                groupColumnsCount={groupColumnsCount}
               />
             )
           }

@@ -1,8 +1,14 @@
 import { ITableProps } from '../';
 import {
   clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
+<<<<<<< HEAD
   deselectRow, loadData, reorderColumns, reorderRows, selectAllFilteredRows, selectAllRows,
   selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction, updateData, updateHeaderFilterPopupState, updateTreeGroupsExpanded
+=======
+  deselectRow, loadData, reorderColumns, reorderRows, resizeColumn, selectAllFilteredRows,
+  selectAllRows, selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction,
+  updateData, updateTreeGroupsExpanded,
+>>>>>>> 339a589730a63ff62e8e1ac65c902ca05a302cb7
 } from '../actionCreators';
 import { ActionType, FilterOperatorName } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -330,6 +336,7 @@ describe('kaReducer', () => {
     const newState = kaReducer(intialState, clearSingleAction());
     expect(newState.singleAction).toBeUndefined();
   });
+<<<<<<< HEAD
   describe('UpdateHeaderFilterPopupState', () => {
     it('shows popup', () => {
       const initialState: ITableProps = {
@@ -370,6 +377,61 @@ describe('kaReducer', () => {
       };
       const columnKey = 'column2';
       const newState = kaReducer(initialState, updateHeaderFilterPopupState(columnKey, true));
+=======
+  describe('ResizeColumn', () => {
+    it('has a width in settings', () => {
+      const intialState = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'name',
+          width: 100
+        }],
+      };
+      const newState = kaReducer(intialState, resizeColumn('name', 200));
+      expect(newState.columns).toMatchSnapshot();
+    });
+    it('has a col in settings', () => {
+      const intialState = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'name',
+          colGroup: {
+            style: { width: 100 }
+          }
+        }],
+      };
+      const newState = kaReducer(intialState, resizeColumn('name', 200));
+      expect(newState.columns).toMatchSnapshot();
+    });
+    it('has a col.width in settings', () => {
+      const intialState = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'name',
+          colGroup: {
+            width: 100
+          }
+        }],
+      };
+      const newState = kaReducer(intialState, resizeColumn('name', 200));
+      expect(newState.columns).toMatchSnapshot();
+    });
+    it('has styles only', () => {
+      const intialState = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'name',
+          style: {
+            width: 100
+          }
+        }],
+      };
+      const newState = kaReducer(intialState, resizeColumn('name', 200));
+>>>>>>> 339a589730a63ff62e8e1ac65c902ca05a302cb7
       expect(newState.columns).toMatchSnapshot();
     });
   });

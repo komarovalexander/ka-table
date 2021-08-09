@@ -2,20 +2,19 @@ import * as React from 'react';
 
 import { updatePageIndex } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
-import { IPagingPagesProps } from '../../props';
+import { IPagingProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { centerLength, getPagesArrayBySize, getPagesForCenter } from '../../Utils/PagingUtils';
 import PagingIndex from '../PagingIndex/PagingIndex';
 
-const PagingPages: React.FunctionComponent<IPagingPagesProps> = (props) => {
+const PagingPages: React.FunctionComponent<IPagingProps> = (props) => {
     const {
       childComponents,
       dispatch,
       pagesCount,
       pageIndex = 0,
-      pages = getPagesArrayBySize(pagesCount),
     } = props;
-
+    const pages = getPagesArrayBySize(pagesCount);
     React.useEffect(() => {
       if (pageIndex !== 0 && pageIndex >= pages.length){
         dispatch(updatePageIndex(0));

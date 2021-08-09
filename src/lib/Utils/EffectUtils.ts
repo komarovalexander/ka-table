@@ -6,12 +6,10 @@ import { KeyboardEnum } from '../enums';
 */
 export const addEscEnterKeyEffect = (escKeyHandler: () => void, enterKeyHandler: () => void) => {
   const handleKeyboard = (event: KeyboardEvent) => {
-    // TODO: replace deprecated
     if (event.keyCode === KeyboardEnum.Esc) {
       escKeyHandler();
     }
 
-    // TODO: replace deprecated
     if (event.keyCode === KeyboardEnum.Enter) {
       enterKeyHandler();
     }

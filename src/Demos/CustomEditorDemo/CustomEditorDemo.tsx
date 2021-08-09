@@ -70,12 +70,12 @@ const CustomLookupEditor: React.FC<ICellEditorProps> = ({
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { dataType: DataType.String, key: 'name', title: 'Name', style: { width: '330px' } },
-    { key: 'score', title: 'Score', dataType: DataType.Number, style: { width: '50px' } },
+    { dataType: DataType.String, key: 'name', title: 'Name', width: 390 },
+    { key: 'score', title: 'Score', dataType: DataType.Number, width: 90 },
     {
       dataType: DataType.Boolean,
       key: 'passed',
-      style: { width: '50px' },
+      width: 90,
       title: 'Passed',
     },
     {
