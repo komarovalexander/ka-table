@@ -18,7 +18,6 @@ import Loading from '../Loading/Loading';
 import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
 import Popup from '../Popup/Popup';
-import { PopupPosition } from '../../Models/PopupPosition';
 
 export interface ITableProps {
   columnReordering?: boolean;
@@ -38,7 +37,6 @@ export interface ITableProps {
   height?: number | string;
   loading?: ILoadingProps;
   paging?: PagingOptions;
-  popupPosition?: PopupPosition;
   rowKeyField: string;
   treeGroupKeyField?: string;
   treeGroupsExpanded?: any[];
@@ -71,7 +69,6 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     loading,
     width,
     paging,
-    popupPosition,
     singleAction
   } = props;
   const isLoadingActive = loading && loading.enabled;
@@ -95,16 +92,17 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
       {rootDivContent || (
         <>
           {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
-          <TableWrapper {...props} popupPosition={popupPosition} />
+          <TableWrapper {...props} />
           {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
           <Loading {...loading} />
-          {popupPosition && columns.map(column => column.isHeaderFilterPopupShown
+          {columns.map(column =>
+            column.isHeaderFilterPopupShown
             && (
               <Popup
                 key={column.key}
                 column={column}
                 dispatch={dispatch}
-                popupPosition={popupPosition} />
+              />
             )
           )}
         </>

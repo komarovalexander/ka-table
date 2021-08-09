@@ -18,7 +18,6 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
     filteringMode,
     groupColumnsCount,
     sortingMode,
-    popupPosition,
   } = props;
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.thead,
@@ -35,7 +34,6 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
             columns={columns}
             dispatch={dispatch}
             groupColumnsCount={groupColumnsCount}
-            popupPosition={popupPosition}
             sortingMode={sortingMode}
             filteringMode={filteringMode}
           />

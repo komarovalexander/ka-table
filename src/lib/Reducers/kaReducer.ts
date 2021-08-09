@@ -3,7 +3,6 @@ import { ActionType, SortingMode } from '../enums';
 import { ITableProps } from '../index';
 import { Column } from '../models';
 import { EditableCell } from '../Models/EditableCell';
-import { PopupPosition } from '../Models/PopupPosition';
 import { ILoadingProps } from '../props';
 import { kaPropsUtils } from '../utils';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
@@ -61,12 +60,11 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
 
   switch (action.type) {
     case ActionType.UpdatePopupPosition: {
-      const newPopupPosition: PopupPosition = {
-        x: action.popupPosition.x,
-        y: action.popupPosition.y
-      }
-
-      return { ...props, popupPosition: newPopupPosition }
+      const newColumns = columns.map((c: Column) => ({
+        ...c,
+        headerFilterPopupPosition: action.popupPosition
+      }));
+      return { ...props, columns: newColumns }
     }
     case ActionType.UpdateHeaderFilterPopupState: {
       const newColumns = columns.map((c: Column) => ({

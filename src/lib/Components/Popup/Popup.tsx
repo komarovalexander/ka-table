@@ -4,31 +4,52 @@ import './popupAnimation.css';
 import { Column } from '../../models';
 import { DispatchFunc } from '../../types';
 import { updateHeaderFilterPopupState } from '../../actionCreators';
-import { PopupPosition } from '../../Models/PopupPosition';
 
 export interface PopupProps {
     column: Column;
     dispatch: DispatchFunc;
-    popupPosition?: PopupPosition
 }
 
 const Popup: React.FC<PopupProps> = (props) => {
     const {
         column,
-        dispatch,
-        popupPosition
+        dispatch
     } = props;
 
+    function useOuterClick(callback: any) {
+        const callbackRef = React.useRef(null);
+        const innerRef = React.useRef<HTMLDivElement>(document.createElement('div'));
+
+        React.useEffect(() => {
+            callbackRef.current = callback;
+        });
+        React.useEffect(() => {
+            document.addEventListener("click", handleClick);
+            return () => document.removeEventListener("click", handleClick);
+            function handleClick(event: MouseEvent) {
+                if (innerRef.current && callbackRef.current &&
+                    !innerRef.current.contains(event.target as Node)
+                )
+                    (callbackRef.current as any)(event);
+            }
+
+        }, []);
+
+        return innerRef;
+    }
+
+    const refToElement = useOuterClick(() => {
+        dispatch(updateHeaderFilterPopupState(column.key, !column.isHeaderFilterPopupShown));
+    });
+
     return (
-        <div tabIndex={1}
-            ref={(el) => el?.focus({ preventScroll: true })}
-            onBlur={() => dispatch(updateHeaderFilterPopupState(column.key, !column.isHeaderFilterPopupShown))}
-            className={'popup'}
+        <div className={'popup'} ref={refToElement}
             style={{
-                left: popupPosition?.x,
-                top: popupPosition?.y,
+                left: column.headerFilterPopupPosition?.x,
+                top: column.headerFilterPopupPosition?.y,
             }}>
             Popup for {column && column.title}
+            <input type="checkbox" />
         </div>
     )
 }

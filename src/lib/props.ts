@@ -125,7 +125,6 @@ export interface IHeadCellProps {
   columnResizing?: boolean;
   column: Column;
   dispatch: DispatchFunc;
-  popupPosition?: PopupPosition;
   sortingMode: SortingMode;
 }
 
@@ -144,7 +143,6 @@ export interface ITableHeadProps {
   dispatch: DispatchFunc;
   filteringMode: FilteringMode;
   groupColumnsCount: number;
-  popupPosition?: PopupPosition;
   sortingMode: SortingMode;
 }
 
@@ -226,7 +224,6 @@ export interface IHeadRowProps {
   dispatch: DispatchFunc;
   filteringMode?: FilteringMode;
   groupColumnsCount: number;
-  popupPosition?: PopupPosition;
   sortingMode: SortingMode;
 }
 

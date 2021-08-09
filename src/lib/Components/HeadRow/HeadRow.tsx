@@ -16,7 +16,6 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = (props) => {
     dispatch,
     filteringMode,
     groupColumnsCount,
-    popupPosition,
     sortingMode
   } = props;
   const { elementAttributes, content } = getElementCustomization({
@@ -41,7 +40,6 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = (props) => {
                     dispatch={dispatch}
                     filteringMode={filteringMode}
                     key={column.key}
-                    popupPosition={popupPosition}
                     sortingMode={sortingMode}
                   />
                 );

@@ -1,5 +1,6 @@
 import { DataType, SortDirection } from '../enums';
 import { Field } from '../types';
+import { PopupPosition } from './PopupPosition';
 
 export class Column {
   public dataType?: DataType;
@@ -7,6 +8,7 @@ export class Column {
   public filterRowOperator?: any;
   public filterRowValue?: any;
   public headerFilterValues?: any[];
+  public headerFilterPopupPosition?: PopupPosition;
   public isHeaderFilterPopupShown?: boolean;
   public isEditable?: boolean;
   public isResizable?: boolean;

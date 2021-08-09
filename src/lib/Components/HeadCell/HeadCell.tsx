@@ -20,7 +20,6 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     dispatch,
     sortingMode,
     childComponents,
-    popupPosition
   } = props;
   let {
     childComponents: { headCell }
@@ -44,7 +43,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     <th {...elementAttributes}>
       <div className={defaultOptions.css.theadCellWrapper}>
         <div className={defaultOptions.css.theadCellContentWrapper}>
-          {content || <HeadCellContent {...props} popupPosition={popupPosition} />}
+          {content || <HeadCellContent {...props} />}
         </div>
         {isCellResizeShown(isResizable, columnResizing) && (
           <HeadCellResize

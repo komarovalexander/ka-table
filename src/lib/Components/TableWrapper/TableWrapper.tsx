@@ -25,7 +25,6 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
     rowReordering = false,
     selectedRows = [],
     sortingMode = SortingMode.None,
-    popupPosition,
     virtualScrolling
   } = props;
   let {
@@ -65,7 +64,6 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
             dispatch={dispatch}
             filteringMode={filteringMode}
             groupColumnsCount={preparedOptions.groupColumnsCount}
-            popupPosition={popupPosition}
             sortingMode={sortingMode}
           />
           <TableBody

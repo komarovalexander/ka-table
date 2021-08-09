@@ -36,23 +36,4 @@ describe('HeadCellContent', () => {
       type: ActionType.UpdateSortDirection,
     });
   });
-
-  it('should dispatch popupPosition with condition', () => {
-    const dispatch = jest.fn();
-    const headCellProps = {
-      ...props,
-      popupPosition: {
-        x: 0,
-        y: 0
-      }
-    }
-    const div = document.createElement('div');
-    ReactDOM.render(<HeadCellContent {...headCellProps} column={{
-      key: 'fieldTest',
-      isHeaderFilterPopupShown: true
-    }}
-      popupPosition={headCellProps.popupPosition}
-    />, div);
-    ReactDOM.unmountComponentAtNode(div);
-  });
 });

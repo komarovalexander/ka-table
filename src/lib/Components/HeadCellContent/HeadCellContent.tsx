@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { updatePopupPosition, updateSortDirection } from '../../actionCreators';
+import { updateSortDirection } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { FilteringMode, SortDirection } from '../../enums';
-import { PopupPosition } from '../../Models/PopupPosition';
 import { IHeadCellProps } from '../../props';
+import { checkPopupPosition } from '../../Utils/CellUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
 import FilterPopupButton from '../FilterPopupButton/FilterPopupButton';
@@ -16,7 +16,6 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
     sortingMode,
     filteringMode,
     childComponents: { headCellContent },
-    popupPosition
   } = props;
   const sortingEnabled = isSortingEnabled(sortingMode);
   const onClick = sortingEnabled ? () => {
@@ -31,16 +30,8 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
 
   const refToElement = React.useRef<HTMLDivElement>(document.createElement('div'));
   React.useLayoutEffect(() => {
-    if (refToElement.current && column.isHeaderFilterPopupShown) {
-      const newPopupPosition: PopupPosition = {
-        x: refToElement.current.offsetLeft + (refToElement.current.offsetParent as HTMLElement)?.offsetLeft,
-        y: refToElement.current.offsetTop + (refToElement.current.offsetParent as HTMLElement)?.offsetTop + refToElement.current.offsetHeight
-      }
-      if (newPopupPosition.x !== popupPosition?.x || newPopupPosition.y !== popupPosition?.y) {
-        dispatch(updatePopupPosition(newPopupPosition));
-      }
-    }
-  }, [column.isHeaderFilterPopupShown, dispatch, popupPosition]);
+    checkPopupPosition(column, refToElement, dispatch);
+  }, [column, dispatch]);
 
 
 

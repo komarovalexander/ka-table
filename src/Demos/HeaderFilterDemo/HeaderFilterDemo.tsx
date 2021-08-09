@@ -17,7 +17,11 @@ const tablePropsInit: ITableProps = {
   columns: [
     { key: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend, filterRowValue: 'Billi Bob' },
     { key: 'score', title: 'Score', dataType: DataType.Number },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
+    {
+      key: 'passed',
+      title: 'Passed',
+      dataType: DataType.Boolean
+    },
     {
       dataType: DataType.Date,
       key: 'nextTry',
