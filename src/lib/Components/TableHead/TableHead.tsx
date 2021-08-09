@@ -28,20 +28,8 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
     <thead {...elementAttributes}>
       {content || (
         <>
-        {groupedColumns.length ? <GroupedColumnsRow {...props} /> : (
-          <HeadRow
-<<<<<<< HEAD
-            areAllRowsSelected={areAllRowsSelected}
-            childComponents={childComponents}
-            columnReordering={columnReordering}
-            columnResizing={columnResizing}
-            columns={columns}
-            dispatch={dispatch}
-            groupColumnsCount={groupColumnsCount}
-            sortingMode={sortingMode}
-            filteringMode={filteringMode}
-          />
-=======
+          {groupedColumns.length ? <GroupedColumnsRow {...props} /> : (
+            <HeadRow
               areAllRowsSelected={areAllRowsSelected}
               childComponents={childComponents}
               columnReordering={columnReordering}
@@ -50,9 +38,9 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
               dispatch={dispatch}
               groupColumnsCount={groupColumnsCount}
               sortingMode={sortingMode}
+              filteringMode={filteringMode}
             />
           )}
->>>>>>> 339a589730a63ff62e8e1ac65c902ca05a302cb7
           {
             filteringMode === FilteringMode.FilterRow &&
             (

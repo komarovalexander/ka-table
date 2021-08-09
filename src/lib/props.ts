@@ -3,11 +3,7 @@ import { IRowsProps } from './Components/Rows/Rows';
 import { ITableAllProps } from './Components/Table/Table';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
-<<<<<<< HEAD
-import { PopupPosition } from './Models/PopupPosition';
-=======
 import { GroupedColumn } from './Models/GroupedColumn';
->>>>>>> 339a589730a63ff62e8e1ac65c902ca05a302cb7
 import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 
 export interface IColGroupProps {

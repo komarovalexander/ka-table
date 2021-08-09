@@ -20,25 +20,14 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     columnReordering,
     columnResizing,
     dispatch,
-<<<<<<< HEAD
-    sortingMode,
-    childComponents,
-=======
     hasChildren,
     isGrouped,
     rowSpan,
     sortingMode
->>>>>>> 339a589730a63ff62e8e1ac65c902ca05a302cb7
   } = props;
   let {
     childComponents: { headCell }
   } = props;
-<<<<<<< HEAD
-  const [width, setWidth] = React.useState(style ? style.width : undefined);
-  const stateStyle = { ...style, width };
-  const headCellDispatch = headCellDispatchWrapper(setWidth, dispatch);
-=======
->>>>>>> 339a589730a63ff62e8e1ac65c902ca05a302cb7
 
   if (columnReordering) {
     const reorderedRowProps: ChildAttributesItem<IHeadCellProps> = getDraggableProps(key, dispatch, reorderColumns, defaultOptions.css.draggedColumn, defaultOptions.css.dragOverColumn);
@@ -63,14 +52,8 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
         {isCellResizeShown(isResizable, columnResizing) && !hasChildren && (
           <HeadCellResize
             column={column}
-<<<<<<< HEAD
-            currentWidth={width}
-            dispatch={headCellDispatch}
-            childComponents={childComponents} />
-=======
             dispatch={dispatch}
-            childComponents={childComponents}/>
->>>>>>> 339a589730a63ff62e8e1ac65c902ca05a302cb7
+            childComponents={childComponents} />
         )}
       </div>
     </th>
