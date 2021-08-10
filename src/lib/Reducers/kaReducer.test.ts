@@ -1,14 +1,9 @@
 import { ITableProps } from '../';
 import {
   clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
-<<<<<<< HEAD
-  deselectRow, loadData, reorderColumns, reorderRows, selectAllFilteredRows, selectAllRows,
-  selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction, updateData, updateHeaderFilterPopupState, updateTreeGroupsExpanded
-=======
   deselectRow, loadData, reorderColumns, reorderRows, resizeColumn, selectAllFilteredRows,
   selectAllRows, selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction,
   updateData, updateTreeGroupsExpanded,
->>>>>>> 339a589730a63ff62e8e1ac65c902ca05a302cb7
 } from '../actionCreators';
 import { ActionType, FilterOperatorName } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -336,48 +331,6 @@ describe('kaReducer', () => {
     const newState = kaReducer(intialState, clearSingleAction());
     expect(newState.singleAction).toBeUndefined();
   });
-<<<<<<< HEAD
-  describe('UpdateHeaderFilterPopupState', () => {
-    it('shows popup', () => {
-      const initialState: ITableProps = {
-        columns: [{
-          key: 'column1'
-        }, {
-          key: 'column2'
-        }],
-        rowKeyField: 'id'
-      };
-      const columnKey = 'column1';
-      const newState = kaReducer(initialState, updateHeaderFilterPopupState(columnKey, true));
-      expect(newState.columns).toMatchSnapshot();
-    });
-    it('hides popup', () => {
-      const initialState: ITableProps = {
-        columns: [{
-          key: 'column1',
-          isHeaderFilterPopupShown: true
-        }, {
-          key: 'column2'
-        }],
-        rowKeyField: 'id'
-      };
-      const columnKey = 'column1';
-      const newState = kaReducer(initialState, updateHeaderFilterPopupState(columnKey, false));
-      expect(newState.columns).toMatchSnapshot();
-    });
-    it('shows popup for 2 and hides for 1', () => {
-      const initialState: ITableProps = {
-        columns: [{
-          key: 'column1',
-          isHeaderFilterPopupShown: true
-        }, {
-          key: 'column2'
-        }],
-        rowKeyField: 'id'
-      };
-      const columnKey = 'column2';
-      const newState = kaReducer(initialState, updateHeaderFilterPopupState(columnKey, true));
-=======
   describe('ResizeColumn', () => {
     it('has a width in settings', () => {
       const intialState = {
@@ -431,7 +384,6 @@ describe('kaReducer', () => {
         }],
       };
       const newState = kaReducer(intialState, resizeColumn('name', 200));
->>>>>>> 339a589730a63ff62e8e1ac65c902ca05a302cb7
       expect(newState.columns).toMatchSnapshot();
     });
   });

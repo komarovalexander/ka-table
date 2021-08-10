@@ -9,6 +9,7 @@
     text-align: center;
     width: 245px;
     height: 325px;
+    z-index: 1000;
 }
 
 .popup:focus {
