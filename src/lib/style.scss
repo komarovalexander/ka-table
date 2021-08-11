@@ -276,3 +276,44 @@
   color: $ka-paging-index-active-color;
 }
 
+.ka-popup {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+  color: #747D86;
+  padding: 1.8em;
+  position: absolute;
+  text-align: center;
+  width: 245px;
+  height: 325px;
+  z-index: 1000;
+}
+
+.ka-popup-content {
+  box-sizing: border-box;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1em;
+  text-align: left;
+}
+
+.ka-popup-content-text-wrapper {
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.ka-popup-content-checkbox {
+  padding-left: .3em;
+}
+
+.ka-popup-content-text {
+  padding-top: .8em;
+  padding-bottom: .8em;
+  padding-left: 1em;
+}

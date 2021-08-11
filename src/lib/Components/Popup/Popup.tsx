@@ -1,20 +1,23 @@
 import * as React from 'react';
 
-import './popupAnimation.css';
+import '../../style.scss';
 import { Column } from '../../models';
 import { DispatchFunc } from '../../types';
 import { updateHeaderFilterPopupState } from '../../actionCreators';
 import { useOuterClick } from '../../Utils/UseOuterClickUtil';
+import PopupContent from '../PopupContent/PopupContent';
 
 export interface PopupProps {
     column: Column;
+    data?: any[];
     dispatch: DispatchFunc;
 }
 
 const Popup: React.FC<PopupProps> = (props) => {
     const {
         column,
-        dispatch
+        data,
+        dispatch,
     } = props;
 
     const refToElement = useOuterClick(() => {
@@ -22,13 +25,13 @@ const Popup: React.FC<PopupProps> = (props) => {
     });
 
     return (
-        <div className={'popup'} ref={refToElement}
+        <div className={'ka-popup'} ref={refToElement}
             style={{
                 left: column.headerFilterPopupPosition?.x,
                 top: column.headerFilterPopupPosition?.y,
             }}>
-            Popup for {column && column.title}
-            <input type='checkbox' />
+            Filter by {column && column.title}
+            <PopupContent column={column} data={data} />
         </div>
     )
 }
