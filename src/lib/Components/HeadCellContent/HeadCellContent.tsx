@@ -34,7 +34,6 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   }, [column, dispatch]);
 
 
-
   return (
     <>
       <div {...elementAttributes} ref={refToElement}>

@@ -1,27 +1,30 @@
 import * as React from 'react';
 
 import { Column } from '../../models';
-import PopupConntentText from '../PopupContentText/PopupContentText';
-import '../../style.scss';
+import { FormatFunc } from '../../types';
+import PopupConntentRow from '../PopupContentText/PopupContentRow';
 
 export interface PopupContentProps {
-    column?: Column;
+    column: Column;
     data?: any[];
+    format?: FormatFunc;
 }
 
 const PopupContent: React.FC<PopupContentProps> = (props) => {
     const {
         column,
-        data
+        data,
+        format
     } = props;
 
     return <div className='ka-popup-content'>
-        {data?.map((content: any) => (
+        {data?.map((item: any) => (
             <div>
-                <PopupConntentText
-                    key={content.id}
+                <PopupConntentRow
+                    key={item.id}
                     column={column}
-                    content={content}
+                    format={format}
+                    item={item}
                 />
             </div>
         ))}

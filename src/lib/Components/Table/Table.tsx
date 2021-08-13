@@ -67,6 +67,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
     childComponents,
     columns,
     dispatch,
+    format,
     height,
     loading,
     width,
@@ -105,6 +106,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
                 column={column}
                 data={props.data}
                 dispatch={dispatch}
+                format={format}
               />
             )
           )}

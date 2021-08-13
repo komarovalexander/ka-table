@@ -1,8 +1,7 @@
 import * as React from 'react';
 
-import '../../style.scss';
 import { Column } from '../../models';
-import { DispatchFunc } from '../../types';
+import { DispatchFunc, FormatFunc } from '../../types';
 import { updateHeaderFilterPopupState } from '../../actionCreators';
 import { useOuterClick } from '../../Utils/UseOuterClickUtil';
 import PopupContent from '../PopupContent/PopupContent';
@@ -11,6 +10,7 @@ export interface PopupProps {
     column: Column;
     data?: any[];
     dispatch: DispatchFunc;
+    format?: FormatFunc;
 }
 
 const Popup: React.FC<PopupProps> = (props) => {
@@ -18,6 +18,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         column,
         data,
         dispatch,
+        format
     } = props;
 
     const refToElement = useOuterClick(() => {
@@ -31,7 +32,11 @@ const Popup: React.FC<PopupProps> = (props) => {
                 top: column.headerFilterPopupPosition?.y,
             }}>
             Filter by {column && column.title}
-            <PopupContent column={column} data={data} />
+            <PopupContent
+                column={column}
+                data={data}
+                format={format}
+            />
         </div>
     )
 }
