@@ -169,3 +169,34 @@ Object {
   "type": "LoadData",
 }
 `;
+
+exports[`kaReducer Validate should use editor value 1`] = `
+Array [
+  Object {
+    "columnKey": "val",
+    "rowKeyValue": 1,
+    "validationMessage": "value should be less than 100",
+  },
+  Object {
+    "columnKey": "val",
+    "editorValue": 103,
+    "rowKeyValue": 2,
+    "validationMessage": "value should be less than 100",
+  },
+]
+`;
+
+exports[`kaReducer Validate validates values 1`] = `
+Array [
+  Object {
+    "columnKey": "val",
+    "rowKeyValue": 1,
+    "validationMessage": "value should be less than 100",
+  },
+  Object {
+    "columnKey": "val",
+    "rowKeyValue": 2,
+    "validationMessage": undefined,
+  },
+]
+`;

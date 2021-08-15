@@ -308,6 +308,22 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const newEditableCells = editableCells.filter(e => e.rowKeyValue !== rowKeyValue);
       return { ...props, editableCells: newEditableCells };
     }
+    case ActionType.Validate: {
+      const newEditableCells = editableCells.map(cell => {
+        const column = columns.find((c) => c.key === cell.columnKey)!;
+        const updatedRowData = data.find((d) => getValueByField(d, rowKeyField) === cell.rowKeyValue);
+        const value = cell.hasOwnProperty('editorValue') ? cell.editorValue : getValueByField(updatedRowData, cell.columnKey);
+        return {
+          ...cell,
+          validationMessage: validation && validation({
+            column,
+            rowData: updatedRowData,
+            value
+          })
+        }
+      });
+      return { ...props, editableCells: [...newEditableCells] };
+    }
     case ActionType.SaveRowEditors:
     case ActionType.SaveNewRow: {
       const isNewRow = action.type === ActionType.SaveNewRow;

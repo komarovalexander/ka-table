@@ -259,3 +259,7 @@ export const updateTreeGroupsExpanded = (rowKeyValue: any) => ({
   rowKeyValue,
   type: ActionType.UpdateTreeGroupsExpanded ,
 });
+
+export const validate = () => ({
+  type: ActionType.Validate,
+});

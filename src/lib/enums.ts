@@ -71,6 +71,7 @@ export enum ActionType {
   UpdateSortDirection = 'UpdateSortDirection',
   UpdateTreeGroupsExpanded = 'UpdateTreeGroupsExpanded ',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
+  Validate = 'Validate'
 }
 
 export enum KeyboardEnum {
