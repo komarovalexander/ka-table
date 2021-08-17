@@ -15,6 +15,17 @@ import { getDownCell, getLeftCell, getRightCell, getUpCell } from '../Utils/Navi
 import { getData, prepareTableOptions } from '../Utils/PropsUtils';
 import { getExpandedParents } from '../Utils/TreeUtils';
 
+export const getEditableCellsByData = (data: any[], rowKeyField: string, columns: Column[]) => {
+  const editableCells: EditableCell[] = [];
+  data?.forEach((rowData) => {
+    const rowKeyValue = getValueByField(rowData, rowKeyField);
+    columns.forEach(column => {
+      editableCells.push({ columnKey: column.key, rowKeyValue });
+    });
+  });
+  return editableCells;
+}
+
 const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
   const newEditableCells = [...editableCells];
   columns.forEach(column => {
@@ -302,6 +313,10 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const newEditableCells = addColumnsToRowEditableCells(editableCells, columns, rowKeyValue);
       return { ...props, editableCells: newEditableCells };
     }
+    case ActionType.OpenAllEditors: {
+      const newEditableCells = getEditableCellsByData(data, rowKeyField, columns);
+      return { ...props, editableCells: newEditableCells };
+    }
     case ActionType.HideNewRow:
     case ActionType.CloseRowEditors: {
       const rowKeyValue = action.type === ActionType.HideNewRow ? newRowId : action.rowKeyValue;
@@ -323,6 +338,19 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         }
       });
       return { ...props, editableCells: [...newEditableCells] };
+    }
+    case ActionType.SaveEditors: {
+      const newData = [...data];
+      editableCells?.forEach(editableCell => {
+        if (editableCell.hasOwnProperty('editorValue')){
+          const rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === editableCell.rowKeyValue);
+          if (rowIndex != null){
+            const column = columns.find((c) => c.key === editableCell.columnKey)!;
+            newData[rowIndex] = replaceValue(newData[rowIndex], column, editableCell.editorValue);
+          }
+        }
+      });
+      return { ...props, data: newData };
     }
     case ActionType.SaveRowEditors:
     case ActionType.SaveNewRow: {

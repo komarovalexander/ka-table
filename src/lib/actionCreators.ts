@@ -263,3 +263,11 @@ export const updateTreeGroupsExpanded = (rowKeyValue: any) => ({
 export const validate = () => ({
   type: ActionType.Validate,
 });
+
+export const openAllEditors = () => ({
+  type: ActionType.OpenAllEditors,
+});
+
+export const saveEditors = () => ({
+  type: ActionType.SaveEditors
+});
