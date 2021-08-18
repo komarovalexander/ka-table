@@ -3,7 +3,7 @@ import './EditingTableDemo.scss';
 import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
-import { openAllEditors, saveEditors, validate } from '../../lib/actionCreators';
+import { openAllEditors, saveAllEditors, validate } from '../../lib/actionCreators';
 import { DataType } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 import { kaPropsUtils } from '../../lib/utils';
@@ -47,7 +47,7 @@ const AddRowDemo = () => {
 
   const updateCells = () => {
     if (kaPropsUtils.isValid(tableProps)) {
-      dispatch(saveEditors());
+      dispatch(saveAllEditors());
     } else {
       dispatch(validate());
     }

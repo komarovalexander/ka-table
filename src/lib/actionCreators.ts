@@ -268,6 +268,6 @@ export const openAllEditors = () => ({
   type: ActionType.OpenAllEditors,
 });
 
-export const saveEditors = () => ({
-  type: ActionType.SaveEditors
+export const saveAllEditors = () => ({
+  type: ActionType.SaveAllEditors
 });

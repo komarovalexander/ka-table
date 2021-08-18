@@ -293,7 +293,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const newEditableCells = getValidatedEditableCells(props);
       return { ...props, editableCells: [...newEditableCells] };
     }
-    case ActionType.SaveEditors: {
+    case ActionType.SaveAllEditors: {
       const newData = [...data];
       editableCells?.forEach(editableCell => {
         if (editableCell.hasOwnProperty('editorValue')){
