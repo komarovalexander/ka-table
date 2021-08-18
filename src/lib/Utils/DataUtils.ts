@@ -7,8 +7,8 @@ export const getParentValue = (rowData: any, fieldParents: Field[]) => {
     const result = (previousValue && previousValue[currentValue]);
     return result !== undefined ? result : undefined;
   },
-  rowData);
-  return parentValue ? {...parentValue} : undefined;
+    rowData);
+  return parentValue ? { ...parentValue } : undefined;
 };
 
 export const createObjByFields = (fieldParents: Field[], field: Field, value: any) => {
@@ -22,11 +22,11 @@ export const createObjByFields = (fieldParents: Field[], field: Field, value: an
       }
       return lastObj;
     },
-    parentValue);
+      parentValue);
   } else {
     parentValue[field] = value;
   }
-  return {...parentValue};
+  return { ...parentValue };
 };
 
 export const getValueByColumn = (rowData: any, column: Column) => {
@@ -34,21 +34,21 @@ export const getValueByColumn = (rowData: any, column: Column) => {
 };
 
 export const getValueByField = (rowData: any, field: Field) => {
-  let o = {...rowData};
+  let o = { ...rowData };
   const names = getFieldParts(field);
   for (let i = 0, n = names.length; i < n; ++i) {
-      const k = names[i];
-      if (k in o) {
-          o = o[k];
-      } else {
-          return;
-      }
+    const k = names[i];
+    if (k in o) {
+      o = o[k];
+    } else {
+      return;
+    }
   }
   return o;
 };
 
 const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
-  let result = {...rowData};
+  let result = { ...rowData };
   if (fieldParents && fieldParents.length) {
     const parentValue = getParentValue(result, fieldParents) || {};
     parentValue[field] = newValue;

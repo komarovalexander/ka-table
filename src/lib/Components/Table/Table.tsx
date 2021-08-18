@@ -19,6 +19,7 @@ import Loading from '../Loading/Loading';
 import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
 import Popup from '../Popup/Popup';
+import { getData } from '../../Utils/PropsUtils';
 
 export interface ITableProps {
   columnReordering?: boolean;
@@ -104,7 +105,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
               <Popup
                 key={column.key}
                 column={column}
-                data={props.data}
+                data={getData(props)}
                 dispatch={dispatch}
                 format={format}
               />

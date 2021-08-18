@@ -50,17 +50,17 @@ export const filterAndSearchData = (props: ITableProps) => {
   data = searchText ? searchData(columns, data, searchText, search) : data;
   data = convertToColumnTypes(data, columns);
   data = filterData(data, columns, filter);
-
+  // data = filterByHeaderFilter(data, columns);
   return data;
 };
 
 const getCompare = (column: Column) => {
   const filterRowOperator = column.filterRowOperator
-      || getDefaultOperatorForType(column.dataType  || defaultOptions.columnDataType);
+    || getDefaultOperatorForType(column.dataType || defaultOptions.columnDataType);
   const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
   if (!filterOperator) {
-      throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
-    }
+    throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
+  }
   return filterOperator.compare;
 };
 
