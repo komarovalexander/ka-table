@@ -2,7 +2,6 @@ import { newRowId } from '../const';
 import { ActionType, SortingMode } from '../enums';
 import { ITableProps } from '../index';
 import { Column } from '../models';
-import { EditableCell } from '../Models/EditableCell';
 import { ILoadingProps } from '../props';
 import { kaPropsUtils } from '../utils';
 import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
@@ -12,45 +11,12 @@ import { filterAndSearchData } from '../Utils/FilterUtils';
 import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
 import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
 import { getDownCell, getLeftCell, getRightCell, getUpCell } from '../Utils/NavigationUtils';
-import { getData, prepareTableOptions } from '../Utils/PropsUtils';
+import { getData, isValid, prepareTableOptions } from '../Utils/PropsUtils';
+import {
+  addColumnsToRowEditableCells, getEditableCellsByData, getUpdatedFocused,
+  getValidatedEditableCells, removeDataKeysFromSelectedRows,
+} from '../Utils/ReducerUtils';
 import { getExpandedParents } from '../Utils/TreeUtils';
-
-export const getEditableCellsByData = (data: any[], rowKeyField: string, columns: Column[]) => {
-  const editableCells: EditableCell[] = [];
-  data?.forEach((rowData) => {
-    const rowKeyValue = getValueByField(rowData, rowKeyField);
-    columns.forEach(column => {
-      editableCells.push({ columnKey: column.key, rowKeyValue });
-    });
-  });
-  return editableCells;
-}
-
-const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
-  const newEditableCells = [...editableCells];
-  columns.forEach(column => {
-    if (column.isEditable !== false
-        && !newEditableCells.some(e => e.columnKey === column.key && e.rowKeyValue === rowKeyValue)) {
-          newEditableCells.push({
-            columnKey: column.key,
-            rowKeyValue
-          });
-    }
-  });
-  return newEditableCells;
-}
-
-const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKeyField: string) => {
-  const newSelectedRows = selectedRows.filter((rowKeyValue: any) =>
-    !data.some(d => getValueByField(d, rowKeyField) === rowKeyValue));
-  return newSelectedRows;
-}
-
-const getUpdatedFocused = (props: ITableProps, action: any, funcToUpdate: any) => {
-  if (!props?.focused?.cell) return props;
-  const newFocused = { cell: funcToUpdate(props.focused.cell, props, action.settings)};
-  return { ...props, focused: newFocused };
-}
 
 const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   const {
@@ -324,19 +290,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       return { ...props, editableCells: newEditableCells };
     }
     case ActionType.Validate: {
-      const newEditableCells = editableCells.map(cell => {
-        const column = columns.find((c) => c.key === cell.columnKey)!;
-        const updatedRowData = data.find((d) => getValueByField(d, rowKeyField) === cell.rowKeyValue);
-        const value = cell.hasOwnProperty('editorValue') ? cell.editorValue : getValueByField(updatedRowData, cell.columnKey);
-        return {
-          ...cell,
-          validationMessage: validation && validation({
-            column,
-            rowData: updatedRowData,
-            value
-          })
-        }
-      });
+      const newEditableCells = getValidatedEditableCells(props);
       return { ...props, editableCells: [...newEditableCells] };
     }
     case ActionType.SaveEditors: {
@@ -360,8 +314,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const rowEditableCells = editableCells.filter(
         editableCell => editableCell.rowKeyValue === rowEditorKeyValue
         && (isNewRow || editableCell.hasOwnProperty('editorValue')));
-      if (action.validate) {
-        let validationPassed = true;
+      if (action.validate && !isValid({ ...props, editableCells: rowEditableCells })) {
         rowEditableCells.forEach(cell => {
           const column = columns.find((c) => c.key === cell.columnKey)!;
           cell.validationMessage = validation && validation({
@@ -369,11 +322,8 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
             value: cell.editorValue,
             rowData: updatedRowData
           });
-          validationPassed = validationPassed && !cell.validationMessage;
         });
-        if (!validationPassed){
-          return { ...props, editableCells: [...editableCells] };
-        }
+        return { ...props, editableCells: [...editableCells] };
       }
       const newEditableCells = editableCells.filter(e => e.rowKeyValue !== rowEditorKeyValue);
       rowEditableCells.forEach(cell => {

@@ -11,8 +11,7 @@ import { ChildAttributesItem } from '../types';
 import { isPagingShown } from './PagingUtils';
 import {
   areAllFilteredRowsSelected, areAllVisibleRowsSelected, getData, getDraggableProps,
-  getEditableCellsByData, getPagesCountByProps, getSelectedData, isValid, mergeProps,
-  prepareTableOptions,
+  getPagesCountByProps, getSelectedData, isValid, mergeProps, prepareTableOptions,
 } from './PropsUtils';
 
 describe('PropsUtils', () => {

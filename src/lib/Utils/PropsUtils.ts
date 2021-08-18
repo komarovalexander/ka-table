@@ -9,6 +9,7 @@ import { getValueByField } from './DataUtils';
 import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
 import { getPageData, getPagesCount } from './PagingUtils';
+import { getValidatedEditableCells } from './ReducerUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 import { getTreeData } from './TreeUtils';
 
@@ -100,25 +101,9 @@ export const getData = (props: ITableProps) => {
   return resultData;
 };
 
-export const isValid = ({ editableCells, data, columns, rowKeyField, validation }: ITableProps) => {
+export const isValid = (props: ITableProps) => {
   return (
-    !validation ||
-    !editableCells?.some(cell => {
-      const column = columns.find(c => c.key === cell.columnKey);
-      if (!column) return true;
-
-      const updatedRowData = data?.find(
-        d => getValueByField(d, rowKeyField) === cell.rowKeyValue
-      );
-      const value = cell.hasOwnProperty('editorValue')
-        ? cell.editorValue
-        : getValueByField(updatedRowData, cell.columnKey);
-      return validation({
-        column,
-        rowData: updatedRowData,
-        value
-      });
-    })
+    !props.validation || !getValidatedEditableCells(props).some(cell => cell.validationMessage)
   );
 };
 
