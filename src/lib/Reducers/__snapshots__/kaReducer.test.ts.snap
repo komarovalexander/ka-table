@@ -68,6 +68,64 @@ Object {
 }
 `;
 
+exports[`kaReducer ResizeColumn has a col in settings 1`] = `
+Array [
+  Object {
+    "key": "id",
+  },
+  Object {
+    "colGroup": Object {
+      "style": Object {
+        "width": 200,
+      },
+    },
+    "key": "name",
+    "width": 200,
+  },
+]
+`;
+
+exports[`kaReducer ResizeColumn has a col.width in settings 1`] = `
+Array [
+  Object {
+    "key": "id",
+  },
+  Object {
+    "colGroup": Object {
+      "width": 200,
+    },
+    "key": "name",
+    "width": 200,
+  },
+]
+`;
+
+exports[`kaReducer ResizeColumn has a width in settings 1`] = `
+Array [
+  Object {
+    "key": "id",
+  },
+  Object {
+    "key": "name",
+    "width": 200,
+  },
+]
+`;
+
+exports[`kaReducer ResizeColumn has styles only 1`] = `
+Array [
+  Object {
+    "key": "id",
+  },
+  Object {
+    "key": "name",
+    "style": Object {
+      "width": 200,
+    },
+  },
+]
+`;
+
 exports[`kaReducer SelectRowsRange default 1`] = `
 Array [
   2,
@@ -110,4 +168,35 @@ exports[`kaReducer SetSingleAction 1`] = `
 Object {
   "type": "LoadData",
 }
+`;
+
+exports[`kaReducer Validate should use editor value 1`] = `
+Array [
+  Object {
+    "columnKey": "val",
+    "rowKeyValue": 1,
+    "validationMessage": "value should be less than 100",
+  },
+  Object {
+    "columnKey": "val",
+    "editorValue": 103,
+    "rowKeyValue": 2,
+    "validationMessage": "value should be less than 100",
+  },
+]
+`;
+
+exports[`kaReducer Validate validates values 1`] = `
+Array [
+  Object {
+    "columnKey": "val",
+    "rowKeyValue": 1,
+    "validationMessage": "value should be less than 100",
+  },
+  Object {
+    "columnKey": "val",
+    "rowKeyValue": 2,
+    "validationMessage": undefined,
+  },
+]
 `;

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { updatePageIndex, updatePageSize } from '../../lib/actionCreators';
 import { DataType } from '../../lib/enums';
-import { IPagingPagesProps, IPagingProps } from '../../lib/props';
+import { IPagingProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(180).fill(undefined).map(
@@ -51,7 +51,7 @@ const PageSizeSelector: React.FC<IPagingProps> = ({ pageSize, pageSizes, dispatc
   </>
 )
 
-const PagesSelector: React.FC<IPagingPagesProps> = ({ pageIndex, pagesCount, dispatch }) =>  (
+const PagesSelector: React.FC<IPagingProps> = ({ pageIndex, pagesCount, dispatch }) =>  (
   <>
     Page Number:
     <select

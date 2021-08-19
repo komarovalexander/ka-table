@@ -32,7 +32,7 @@ const AlertCell: React.FC<ICellTextProps> = ({
 
 const tablePropsInit: ITableProps = {
   columns: [
-    { key: 'command1', style: { width: 40, textAlign: 'center' } },
+    { key: 'command1', style: { textAlign: 'center' }, width: 70 },
     { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },

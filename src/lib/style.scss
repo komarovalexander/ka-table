@@ -21,8 +21,20 @@
 }
 .ka-thead-background{
   background-color: $ka-thead-background-color;
+}
+.ka-thead-grouped-cell {
+  height: $ka-header-cell-height;
+  box-sizing: border-box;
+}
+.ka-thead-fixed {
   position: sticky;
-  top: 0;
+}
+@for $i from 0 through 5 {
+  .ka-thead-row:nth-child(#{$i + 1}) {
+    .ka-thead-fixed {
+      top: $ka-header-cell-height * $i;
+    }
+  }
 }
 .ka-thead-cell{
   padding: $ka-thead-cell-padding;
@@ -183,6 +195,20 @@
   background-color: $ka-column-resize-border-color;
   position: relative;
   left: 19px;
+}
+.ka-thead-cell-resize:active:after{
+  content: "";
+  display: block;
+  position: fixed;
+  cursor: col-resize;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.ka-thead-background:active{
+  z-index: 1;
 }
 .ka-summary-cell{
   padding: $ka-summary-cell-padding;
