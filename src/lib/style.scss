@@ -22,8 +22,11 @@
 .ka-thead-background{
   background-color: $ka-thead-background-color;
 }
-.ka-thead-grouped-cell {
+.ka-thead-cell-height{
+  box-sizing: border-box;
   height: $ka-header-cell-height;
+}
+.ka-thead-grouped-cell {
   box-sizing: border-box;
 }
 .ka-thead-fixed {
