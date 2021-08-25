@@ -170,41 +170,33 @@ Object {
 }
 `;
 
-exports[`kaReducer UpdateHeaderFilterPopupState hides popup 1`] = `
+exports[`kaReducer Validate should use editor value 1`] = `
 Array [
   Object {
-    "isHeaderFilterPopupShown": false,
-    "key": "column1",
+    "columnKey": "val",
+    "rowKeyValue": 1,
+    "validationMessage": "value should be less than 100",
   },
   Object {
-    "isHeaderFilterPopupShown": false,
-    "key": "column2",
+    "columnKey": "val",
+    "editorValue": 103,
+    "rowKeyValue": 2,
+    "validationMessage": "value should be less than 100",
   },
 ]
 `;
 
-exports[`kaReducer UpdateHeaderFilterPopupState shows popup 1`] = `
+exports[`kaReducer Validate validates values 1`] = `
 Array [
   Object {
-    "isHeaderFilterPopupShown": true,
-    "key": "column1",
+    "columnKey": "val",
+    "rowKeyValue": 1,
+    "validationMessage": "value should be less than 100",
   },
   Object {
-    "isHeaderFilterPopupShown": false,
-    "key": "column2",
-  },
-]
-`;
-
-exports[`kaReducer UpdateHeaderFilterPopupState shows popup for 2 and hides for 1 1`] = `
-Array [
-  Object {
-    "isHeaderFilterPopupShown": false,
-    "key": "column1",
-  },
-  Object {
-    "isHeaderFilterPopupShown": true,
-    "key": "column2",
+    "columnKey": "val",
+    "rowKeyValue": 2,
+    "validationMessage": undefined,
   },
 ]
 `;

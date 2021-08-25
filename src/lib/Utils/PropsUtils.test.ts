@@ -11,7 +11,7 @@ import { ChildAttributesItem } from '../types';
 import { isPagingShown } from './PagingUtils';
 import {
   areAllFilteredRowsSelected, areAllVisibleRowsSelected, getData, getDraggableProps,
-  getPagesCountByProps, getSelectedData, mergeProps, prepareTableOptions,
+  getPagesCountByProps, getSelectedData, isValid, mergeProps, prepareTableOptions,
 } from './PropsUtils';
 
 describe('PropsUtils', () => {
@@ -445,3 +445,37 @@ describe('isPagingShown', () => {
   });
 });
 
+describe('isValid', () => {
+  const tableProps: ITableProps = {
+    columns: [
+      { key: 'column1' },
+      { key: 'column2' }
+    ],
+    rowKeyField: 'id',
+    data: [{
+      id: 1,
+      column1: 11,
+      column2: 12
+    }, {
+      id: 2,
+      column1: 21,
+      column2: 22
+    }]
+  };
+  it('validation is not set', () => {
+    expect(isValid({ ...tableProps, editableCells: [{ rowKeyValue: 1, columnKey: 'column1'}] })).toBeTruthy();
+  });
+  it('editableCells is not set', () => {
+    expect(isValid({ ...tableProps, validation: () => 'wrong value'})).toBeTruthy();
+  });
+  it('validate value', () => {
+    expect(
+      isValid({ ...tableProps,  editableCells: [{ rowKeyValue: 1, columnKey: 'column1'}], validation: ({value}) => value > 10 ? 'should be less than 10' : ''})
+    ).toBeFalsy();
+  });
+  it('validate editorValue', () => {
+    expect(
+      isValid({ ...tableProps,  editableCells: [{ rowKeyValue: 1, editorValue: 9, columnKey: 'column1'}], validation: ({value}) => value > 10 ? 'should be less than 10' : ''})
+    ).toBeTruthy();
+  });
+});

@@ -26,6 +26,7 @@ import DemosMenu from './DemosMenu';
 import DetailsRowDemo from './DetailsRowDemo/DetailsRowDemo';
 import EditingDemo from './EditingDemo/EditingDemo';
 import EditingRowDemo from './EditingRowDemo/EditingRowDemo';
+import EditingTableDemo from './EditingTableDemo/EditingTableDemo';
 import EventsDemo from './EventsDemo/EventsDemo';
 import ExportDemo from './ExportDemo/ExportDemo';
 import ExportToPdfDemo from './ExportToPdfDemo/ExportToPdfDemo';
@@ -97,6 +98,7 @@ const demos: Demo[] = [
   new Demo(DetailsRowDemo, '/details-row', 'Details Row', 'DetailsRowDemo', 'https://stackblitz.com/edit/table-details-row-js', 'https://stackblitz.com/edit/table-details-row-ts', 'Rows'),
   new Demo(EditingDemo, '/editing', 'Editing - Cell', 'EditingDemo', 'https://stackblitz.com/edit/table-editing-js', 'https://stackblitz.com/edit/table-editing-ts', 'Editing'),
   new Demo(EditingRowDemo, '/editing-row', 'Editing - Row', 'EditingRowDemo', 'https://stackblitz.com/edit/table-editing-row-js', 'https://stackblitz.com/edit/table-editing-row-ts', 'Editing'),
+  new Demo(EditingTableDemo, '/editing-table', 'Editing - Table', 'EditingTableDemo', 'https://stackblitz.com/edit/table-editing-table-js', 'https://stackblitz.com/edit/table-editing-table-ts', 'Editing'),
   new Demo(EventsDemo, '/events', 'Events', 'EventsDemo', 'https://stackblitz.com/edit/table-events-js', 'https://stackblitz.com/edit/table-events-ts', 'Miscellaneous'),
   new Demo(ExportDemo, '/export', 'Export to CSV', 'ExportDemo', 'https://stackblitz.com/edit/table-export-js', 'https://stackblitz.com/edit/table-export-ts', 'Export / Print'),
   new Demo(ExportToPdfDemo, '/export-pdf', 'Export to PDF', 'ExportToPdfDemo', 'https://stackblitz.com/edit/table-export-pdf-js', 'https://stackblitz.com/edit/table-export-pdf-ts', 'Export / Print'),

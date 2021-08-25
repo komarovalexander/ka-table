@@ -3,7 +3,7 @@ import {
   clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
   deselectRow, loadData, reorderColumns, reorderRows, resizeColumn, selectAllFilteredRows,
   selectAllRows, selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction,
-  updateData, updateTreeGroupsExpanded,
+  updateData, updateTreeGroupsExpanded, validate,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName } from '../enums';
 import { kaReducer } from './kaReducer';
@@ -385,6 +385,80 @@ describe('kaReducer', () => {
       };
       const newState = kaReducer(intialState, resizeColumn('name', 200));
       expect(newState.columns).toMatchSnapshot();
+    });
+  });
+  describe('Validate', () => {
+    it('validates values', () => {
+      const intialState: ITableProps = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'val'
+        }],
+        data: [{
+          id: 1,
+          val: 102
+        }, {
+          id: 2,
+          val: 10
+        }, {
+          id: 3,
+          val: 10
+        }],
+        rowKeyField: 'id',
+        editableCells: [{
+          rowKeyValue: 1,
+          columnKey: 'val',
+        }, {
+          rowKeyValue: 2,
+          columnKey: 'val',
+        }],
+        validation: ({ value }) => {
+          if (value > 100){
+            return 'value should be less than 100';
+          }
+        }
+      };
+      const newState = kaReducer(intialState, validate());
+      expect(newState.editableCells).toMatchSnapshot();
+    });
+    it('should use editor value', () => {
+      const validationCalls = jest.fn();
+      const intialState: ITableProps = {
+        columns: [{
+          key: 'id'
+        }, {
+          key: 'val'
+        }],
+        data: [{
+          id: 1,
+          val: 102
+        }, {
+          id: 2,
+          val: 10
+        }, {
+          id: 3,
+          val: 10
+        }],
+        rowKeyField: 'id',
+        editableCells: [{
+          rowKeyValue: 1,
+          columnKey: 'val',
+        }, {
+          rowKeyValue: 2,
+          editorValue: 103,
+          columnKey: 'val',
+        }],
+        validation: ({ value }) => {
+          validationCalls(value);
+          if (value > 100){
+            return 'value should be less than 100';
+          }
+        }
+      };
+      const newState = kaReducer(intialState, validate());
+      expect(validationCalls.mock.calls).toEqual([[102], [103]]);
+      expect(newState.editableCells).toMatchSnapshot();
     });
   });
 });

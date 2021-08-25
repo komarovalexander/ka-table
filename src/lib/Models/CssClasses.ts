@@ -21,6 +21,7 @@ export class CssClasses {
   public theadBackground = 'ka-thead-background';
   public theadFixed = 'ka-thead-fixed';
   public theadCell = 'ka-thead-cell';
+  public theadCellHeight = 'ka-thead-cell-height';
   public summaryCell = 'ka-summary-cell';
   public summaryRow = 'ka-summary-row';
   public theadCellContent = 'ka-thead-cell-content';

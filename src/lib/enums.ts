@@ -37,11 +37,13 @@ export enum ActionType {
   MoveFocusedLeft = 'MoveFocusedLeft',
   MoveFocusedRight = 'MoveFocusedRight',
   MoveFocusedUp = 'MoveFocusedUp',
+  OpenAllEditors = 'OpenAllEditors',
   OpenEditor = 'OpenEditor',
   OpenRowEditors = 'OpenRowEditors',
   ReorderColumns = 'ReorderColumns',
   ReorderRows = 'ReorderRows',
   ResizeColumn = 'ResizeColumn',
+  SaveAllEditors = 'SaveAllEditors',
   SaveNewRow = 'SaveNewRow',
   SaveRowEditors = 'SaveRowEditors',
   ScrollTable = 'ScrollTable',
@@ -74,6 +76,7 @@ export enum ActionType {
   UpdateSortDirection = 'UpdateSortDirection',
   UpdateTreeGroupsExpanded = 'UpdateTreeGroupsExpanded ',
   UpdateVirtualScrolling = 'UpdateVirtualScrolling',
+  Validate = 'Validate'
 }
 
 export enum KeyboardEnum {
