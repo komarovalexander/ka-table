@@ -42,7 +42,7 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
             />
           )}
           {
-            filteringMode === FilteringMode.HeaderFilter &&
+            filteringMode === FilteringMode.FilterRow &&
             (
               <FilterRow
                 {...props}

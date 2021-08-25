@@ -16,16 +16,16 @@ export function extendProps<T = HTMLElement>(
   childElementAttributes: AllHTMLAttributes<T>,
   childProps: any,
   childComponent?: ChildComponent<any>): React.AllHTMLAttributes<T> {
-    let resultProps = childElementAttributes;
-    const childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps);
-    if (childCustomAttributes) {
-      const dispatch: DispatchFunc = childProps.dispatch;
-      resultProps = mergeProps(childElementAttributes, childProps, childCustomAttributes, dispatch);
-    }
-    return resultProps;
+  let resultProps = childElementAttributes;
+  const childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps);
+  if (childCustomAttributes) {
+    const dispatch: DispatchFunc = childProps.dispatch;
+    resultProps = mergeProps(childElementAttributes, childProps, childCustomAttributes, dispatch);
+  }
+  return resultProps;
 };
 
-const emptyFunc = () => {};
+const emptyFunc = () => { };
 export function mergeProps<T = HTMLElement>(
   childElementAttributes: AllHTMLAttributes<T>,
   childProps: any,
@@ -88,7 +88,7 @@ export const getData = (props: ITableProps) => {
   } = props;
   let resultData = [...data];
   resultData = filterAndSearchData(props);
-  if (!isRemoteSorting(sortingMode)){
+  if (!isRemoteSorting(sortingMode)) {
     resultData = sortData(columns, resultData, sort);
   }
 
@@ -176,19 +176,19 @@ export const getDraggableProps = (
     },
     onDragEnter: (event) => {
       count++;
-      if (!event.currentTarget.classList.contains(dragOverClass)){
+      if (!event.currentTarget.classList.contains(dragOverClass)) {
         event.currentTarget.classList.add(dragOverClass);
       }
       event.preventDefault();
     },
     onDragLeave: (event) => {
       count--;
-      if (count === 0){
+      if (count === 0) {
         event.currentTarget.classList.remove(dragOverClass);
       }
     },
     onDragOver: (event) => {
-      if (!event.currentTarget.classList.contains(dragOverClass)){
+      if (!event.currentTarget.classList.contains(dragOverClass)) {
         event.currentTarget.classList.add(dragOverClass);
       }
       event.preventDefault();

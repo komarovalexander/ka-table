@@ -59,6 +59,24 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   } = props;
 
   switch (action.type) {
+    case ActionType.UpdateHeaderFilterValues: {
+
+      const newColumns = columns.map((c: Column) => {
+        // if (c.key === action.columnKey) {
+        //   if (c.headerFilterValues === undefined) {
+        //     c.headerFilterValues = [];
+        //   }
+        //   c.headerFilterValues.push(action.item);
+        // }
+        c = {
+          ...c,
+          headerFilterValues: c.headerFilterValues
+        }
+        return c;
+      });
+
+      return { ...props, columns: newColumns }
+    }
     case ActionType.UpdatePopupPosition: {
       const newColumns = columns.map((c: Column) => ({
         ...c,
@@ -124,22 +142,22 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
           const newColumn = {
             ...column,
           };
-          if (newColumn.style?.width != null){
+          if (newColumn.style?.width != null) {
             newColumn.style = { ...newColumn.style, width };
           }
           if (newColumn.style?.width == null || newColumn.width != null) {
             newColumn.width = width;
           }
-          if (newColumn.colGroup?.style?.width != null){
-            newColumn.colGroup.style =  { ...newColumn.colGroup.style, width };
+          if (newColumn.colGroup?.style?.width != null) {
+            newColumn.colGroup.style = { ...newColumn.colGroup.style, width };
           }
-          if (newColumn.colGroup?.width != null){
+          if (newColumn.colGroup?.width != null) {
             newColumn.colGroup.width = width;
           }
           return newColumn;
         }
         return column;
-    });
+      });
       return { ...props, columns: newColumns };
     }
     case ActionType.UpdatePageIndex: {

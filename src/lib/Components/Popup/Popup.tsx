@@ -35,6 +35,7 @@ const Popup: React.FC<PopupProps> = (props) => {
             <PopupContent
                 column={column}
                 data={data}
+                dispatch={dispatch}
                 format={format}
             />
         </div>

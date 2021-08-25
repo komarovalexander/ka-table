@@ -1,13 +1,14 @@
 import * as React from 'react';
 
 import { Column } from '../../models';
-import { FormatFunc } from '../../types';
+import { DispatchFunc, FormatFunc } from '../../types';
 import { getValueByColumn } from '../../Utils/DataUtils';
 import PopupContentRow from '../PopupContentText/PopupContentRow';
 
 export interface PopupContentProps {
     column: Column;
     data?: any[];
+    dispatch: DispatchFunc;
     format?: FormatFunc;
 }
 
@@ -15,29 +16,27 @@ const PopupContent: React.FC<PopupContentProps> = (props) => {
     const {
         column,
         data,
+        dispatch,
         format
     } = props;
 
-    column.headerFilterValues = [];
-
-    data?.map((item) => {
+    let headerFilterValues = data?.map((item) => {
         const value = getValueByColumn(item, column);
 
         const formatedValue =
             (format && format({ column, value }))
             || value?.toString();
-
-        column.headerFilterValues?.push(formatedValue);
-        let popupContentValues = column.headerFilterValues?.filter((v, index, array) => array.indexOf(v) === index);
-        column.headerFilterValues = popupContentValues;
-        return 0;
+        return formatedValue;
     });
 
+    headerFilterValues = Array.from(new Set(headerFilterValues));
 
     return <div className='ka-popup-content'>
-        {column.headerFilterValues?.map((item: any, index: number) => (
+        {headerFilterValues?.map((item: any, index: number) => (
             <PopupContentRow
                 key={index}
+                column={column}
+                dispatch={dispatch}
                 item={item}
             />
         ))}

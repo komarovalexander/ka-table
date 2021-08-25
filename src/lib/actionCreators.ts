@@ -3,16 +3,23 @@ import { Focused } from './Models/Focused';
 import { PopupPosition } from './Models/PopupPosition';
 import { IMoveFocusedSettings } from './Utils/NavigationUtils';
 
+export const updateHeaderFilterValues = (columnKey: string, item: any, checkedItem: boolean) => ({
+  columnKey,
+  item,
+  checkedItem,
+  type: ActionType.UpdateHeaderFilterValues
+});
+
 export const updatePopupPosition = (popupPosition: PopupPosition) => ({
   popupPosition,
   type: ActionType.UpdatePopupPosition
-})
+});
 
 export const updateHeaderFilterPopupState = (columnKey: string, isHeaderFilterPopupShown: boolean | undefined) => ({
   columnKey,
   isHeaderFilterPopupShown,
   type: ActionType.UpdateHeaderFilterPopupState
-})
+});
 
 export const updateFilterRowValue = (columnKey: string, filterRowValue: any) => ({
   columnKey,
