@@ -17,9 +17,8 @@ const PopupContentRow: React.FC<PopupContentRowProps> = (props) => {
     item
   } = props;
 
-  let headerFilterValues = column.headerFilterValues;
   let checkbox: boolean = false;
-  headerFilterValues?.map((value) => {
+  column.headerFilterValues?.map((value) => {
     if (value) {
       if (value === item) {
         checkbox = true;
