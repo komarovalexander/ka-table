@@ -4,7 +4,7 @@ import { DataType, FilterOperatorName } from '../enums';
 import { Column } from '../Models/Column';
 import { EditableCell } from '../Models/EditableCell';
 import { FilterOperator } from '../Models/FilterOperator';
-import { FilterFunc, SearchFunc } from '../types';
+import { FilterFunc, SearchFunc, FormatFunc } from '../types';
 import { isEmpty } from './CommonUtils';
 import { getValueByColumn } from './DataUtils';
 import { convertToColumnTypes } from './TypeUtils';
@@ -40,7 +40,8 @@ export const filterAndSearchData = (props: ITableProps) => {
     searchText,
     columns,
     search,
-    filter
+    filter,
+    format
   } = props;
   let {
     data = [],
@@ -50,7 +51,7 @@ export const filterAndSearchData = (props: ITableProps) => {
   data = searchText ? searchData(columns, data, searchText, search) : data;
   data = convertToColumnTypes(data, columns);
   data = filterData(data, columns, filter);
-  // data = filterByHeaderFilter(data, columns);
+  data = filterByHeaderFilter(data, columns, format);
   return data;
 };
 
@@ -126,3 +127,16 @@ export const predefinedFilterOperators: FilterOperator[] = [{
     !isEmpty(fieldValue),
   name: FilterOperatorName.IsNotEmpty,
 }];
+
+export const filterByHeaderFilter = (data: any[], columns: Column[], format: FormatFunc | undefined): any[] => {
+  return columns.reduce((initialData, column) => {
+    return initialData.filter((item: any) => {
+      let value: any = getValueByColumn(item, column);
+      const formatedFieldValue =
+        (format && format({ column, value }))
+        || value?.toString();
+      return !column.headerFilterValues?.includes(formatedFieldValue);
+    });
+  }, data);
+}
+

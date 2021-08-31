@@ -26,18 +26,20 @@ const Popup: React.FC<PopupProps> = (props) => {
     });
 
     return (
-        <div className={'ka-popup'} ref={refToElement}
+        <div className='ka-popup' ref={refToElement}
             style={{
                 left: column.headerFilterPopupPosition?.x,
                 top: column.headerFilterPopupPosition?.y,
             }}>
             Filter by {column && column.title}
-            <PopupContent
-                column={column}
-                data={data}
-                dispatch={dispatch}
-                format={format}
-            />
+            <div className='ka-popup-content-wrapper'>
+                <PopupContent
+                    column={column}
+                    data={data}
+                    dispatch={dispatch}
+                    format={format}
+                />
+            </div>
         </div>
     )
 }

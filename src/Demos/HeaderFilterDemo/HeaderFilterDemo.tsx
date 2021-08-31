@@ -11,6 +11,9 @@ const dataArray: any[] = [
   { id: 4, name: 'Kurt Cobain', score: 75, passed: true, nextTry: new Date(2021, 12, 9) },
   { id: 5, name: 'Marshall Bruce', score: 77, passed: true, nextTry: new Date(2021, 11, 12) },
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9) },
+  { id: 7, name: 'Fred Durst', score: 23, passed: false, nextTry: new Date(2021, 10, 9) },
+  { id: 8, name: 'John Davis', score: 40, passed: false, nextTry: new Date(2021, 10, 9) },
+  { id: 9, name: 'Chester Benington', score: 61, passed: false, nextTry: new Date(2021, 10, 9) },
 ];
 
 const tablePropsInit: ITableProps = {
@@ -50,6 +53,7 @@ const HeaderFilterDemo: React.FC = () => {
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
   };
+  console.log(tableProps.columns);
 
   return (
     <Table

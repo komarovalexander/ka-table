@@ -3,10 +3,9 @@ import { Focused } from './Models/Focused';
 import { PopupPosition } from './Models/PopupPosition';
 import { IMoveFocusedSettings } from './Utils/NavigationUtils';
 
-export const updateHeaderFilterValues = (columnKey: string, item: any, checkedItem: boolean) => ({
+export const updateHeaderFilterValues = (columnKey: string, headerFilterValues: any[] | undefined) => ({
   columnKey,
-  item,
-  checkedItem,
+  headerFilterValues,
   type: ActionType.UpdateHeaderFilterValues
 });
 

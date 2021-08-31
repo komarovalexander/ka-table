@@ -37,21 +37,11 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
 
   switch (action.type) {
     case ActionType.UpdateHeaderFilterValues: {
-
-      const newColumns = columns.map((c: Column) => {
-        // if (c.key === action.columnKey) {
-        //   if (c.headerFilterValues === undefined) {
-        //     c.headerFilterValues = [];
-        //   }
-        //   c.headerFilterValues.push(action.item);
-        // }
-        c = {
-          ...c,
-          headerFilterValues: c.headerFilterValues
-        }
-        return c;
-      });
-
+      const newColumns = columns.map((c: Column) => ({
+        ...c,
+        headerFilterValues: c.key === action.columnKey ? action.headerFilterValues : c.headerFilterValues
+      })
+      );
       return { ...props, columns: newColumns }
     }
     case ActionType.UpdatePopupPosition: {

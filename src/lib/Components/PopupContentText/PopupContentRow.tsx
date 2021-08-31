@@ -18,14 +18,11 @@ const PopupContentRow: React.FC<PopupContentRowProps> = (props) => {
   } = props;
 
   let checkbox: boolean = false;
-  column.headerFilterValues?.map((value) => {
-    if (value) {
-      if (value === item) {
-        checkbox = true;
-      }
-    }
-    return 0;
-  });
+
+  if (column.headerFilterValues?.includes(item)) {
+    checkbox = true;
+  }
+
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let checkedItem: boolean = event.currentTarget.checked;
@@ -34,10 +31,10 @@ const PopupContentRow: React.FC<PopupContentRowProps> = (props) => {
         column.headerFilterValues = [];
       }
       column.headerFilterValues.push(item);
-      dispatch(updateHeaderFilterValues(column.key, item, checkedItem));
+      dispatch(updateHeaderFilterValues(column.key, column.headerFilterValues));
     } else {
       column.headerFilterValues = column.headerFilterValues?.filter((value) => value !== item);
-      dispatch(updateHeaderFilterValues(column.key, item, checkedItem));
+      dispatch(updateHeaderFilterValues(column.key, column.headerFilterValues));
     }
   }
 
