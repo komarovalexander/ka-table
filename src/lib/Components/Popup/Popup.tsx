@@ -31,7 +31,6 @@ const Popup: React.FC<PopupProps> = (props) => {
                 left: column.headerFilterPopupPosition?.x,
                 top: column.headerFilterPopupPosition?.y,
             }}>
-            Filter by {column && column.title}
             <div className='ka-popup-content-wrapper'>
                 <PopupContent
                     column={column}

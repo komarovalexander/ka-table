@@ -52,6 +52,7 @@ export const filterAndSearchData = (props: ITableProps) => {
   data = convertToColumnTypes(data, columns);
   data = filterData(data, columns, filter);
   data = filterByHeaderFilter(data, columns, format);
+
   return data;
 };
 
@@ -128,14 +129,21 @@ export const predefinedFilterOperators: FilterOperator[] = [{
   name: FilterOperatorName.IsNotEmpty,
 }];
 
-export const filterByHeaderFilter = (data: any[], columns: Column[], format: FormatFunc | undefined): any[] => {
+export const filterByHeaderFilter = (data: any[], columns: Column[], format?: FormatFunc): any[] => {
   return columns.reduce((initialData, column) => {
+    if (
+      isEmpty(column.headerFilterValues)
+      && column.filterRowOperator !== FilterOperatorName.IsEmpty
+      && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
+    ) {
+      return initialData;
+    }
     return initialData.filter((item: any) => {
       let value: any = getValueByColumn(item, column);
-      const formatedFieldValue =
+      const fieldValue =
         (format && format({ column, value }))
         || value?.toString();
-      return !column.headerFilterValues?.includes(formatedFieldValue);
+      return column.headerFilterValues?.includes(fieldValue);
     });
   }, data);
 }
