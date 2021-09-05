@@ -7,7 +7,7 @@ import { IHeadCellProps } from '../../props';
 import { checkPopupPosition } from '../../Utils/CellUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
-import FilterPopupButton from '../FilterPopupButton/FilterPopupButton';
+import HeaderFilterButton from '../HeaderFilterButton/HeaderFilterButton';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
@@ -48,7 +48,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
           >{column.sortIndex}</span>
         )}
         {(filteringMode === FilteringMode.HeaderFilter) && (
-          <FilterPopupButton
+          <HeaderFilterButton
             column={column}
             dispatch={dispatch}
           />

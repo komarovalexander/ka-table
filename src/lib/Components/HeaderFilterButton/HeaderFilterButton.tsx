@@ -5,12 +5,12 @@ import defaultOptions from '../../defaultOptions';
 import { Column } from '../../models';
 import { DispatchFunc } from '../../types';
 
-export interface FilterPopupButtonProps {
+export interface HeaderFilterButtonProps {
   column: Column,
   dispatch: DispatchFunc
 }
 
-const FilterPopupButton: React.FC<FilterPopupButtonProps> = ({ column, dispatch }) => (
+const HeaderFilterButton: React.FC<HeaderFilterButtonProps> = ({ column, dispatch }) => (
   <span
     onClick={(event: React.SyntheticEvent<HTMLSpanElement>) => {
       event.stopPropagation();
@@ -19,4 +19,4 @@ const FilterPopupButton: React.FC<FilterPopupButtonProps> = ({ column, dispatch 
     className={`${defaultOptions.css.iconFilter} ka-header-filter-button ${column.headerFilterValues?.length ? 'ka-header-filter-button-has-value' : ''}`}/>
 );
 
-export default FilterPopupButton;
+export default HeaderFilterButton;
