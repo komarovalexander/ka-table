@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Column } from '../../models';
 import { DispatchFunc, FormatFunc } from '../../types';
 import { getValueByColumn } from '../../Utils/DataUtils';
-import PopupContentRow from '../PopupContentText/PopupContentRow';
+import PopupContentItem from '../PopupContentItem/PopupContentItem';
 
 export interface PopupContentProps {
     column: Column;
@@ -31,16 +31,18 @@ const PopupContent: React.FC<PopupContentProps> = (props) => {
 
     headerFilterValues = Array.from(new Set(headerFilterValues));
 
-    return <div className='ka-popup-content'>
-        {headerFilterValues?.map((item: any, index: number) => (
-            <PopupContentRow
-                key={index}
-                column={column}
-                dispatch={dispatch}
-                item={item}
-            />
-        ))}
-    </div>
+    return (
+        <div className='ka-popup-content'>
+            {headerFilterValues?.map((item: any, index: number) => (
+                <PopupContentItem
+                    key={index}
+                    column={column}
+                    dispatch={dispatch}
+                    item={item}
+                />
+            ))}
+        </div>
+    )
 }
 
 export default PopupContent;

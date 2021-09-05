@@ -38,13 +38,6 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
     <>
       <div {...elementAttributes} ref={refToElement}>
         {content || <span>{column.title}</span>}
-        {(filteringMode === FilteringMode.HeaderFilter) && (
-          <FilterPopupButton
-            column={column}
-            dispatch={dispatch}
-          />
-        )
-        }
         {column.sortDirection && sortingEnabled && (
           <span
             className={
@@ -54,6 +47,13 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
             }
           >{column.sortIndex}</span>
         )}
+        {(filteringMode === FilteringMode.HeaderFilter) && (
+          <FilterPopupButton
+            column={column}
+            dispatch={dispatch}
+          />
+        )
+        }
       </div>
     </>
   );

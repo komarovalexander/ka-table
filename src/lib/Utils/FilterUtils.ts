@@ -4,7 +4,7 @@ import { DataType, FilterOperatorName } from '../enums';
 import { Column } from '../Models/Column';
 import { EditableCell } from '../Models/EditableCell';
 import { FilterOperator } from '../Models/FilterOperator';
-import { FilterFunc, SearchFunc, FormatFunc } from '../types';
+import { FilterFunc, FormatFunc, SearchFunc } from '../types';
 import { isEmpty } from './CommonUtils';
 import { getValueByColumn } from './DataUtils';
 import { convertToColumnTypes } from './TypeUtils';
@@ -139,7 +139,7 @@ export const filterByHeaderFilter = (data: any[], columns: Column[], format?: Fo
       return initialData;
     }
     return initialData.filter((item: any) => {
-      let value: any = getValueByColumn(item, column);
+      const value: any = getValueByColumn(item, column);
       const fieldValue =
         (format && format({ column, value }))
         || value?.toString();

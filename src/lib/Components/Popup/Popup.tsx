@@ -1,8 +1,8 @@
 import * as React from 'react';
 
+import { updateHeaderFilterPopupState } from '../../actionCreators';
 import { Column } from '../../models';
 import { DispatchFunc, FormatFunc } from '../../types';
-import { updateHeaderFilterPopupState } from '../../actionCreators';
 import { useOuterClick } from '../../Utils/UseOuterClickUtil';
 import PopupContent from '../PopupContent/PopupContent';
 
@@ -31,14 +31,12 @@ const Popup: React.FC<PopupProps> = (props) => {
                 left: column.headerFilterPopupPosition?.x,
                 top: column.headerFilterPopupPosition?.y,
             }}>
-            <div className='ka-popup-content-wrapper'>
                 <PopupContent
                     column={column}
                     data={data}
                     dispatch={dispatch}
                     format={format}
                 />
-            </div>
         </div>
     )
 }

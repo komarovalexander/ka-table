@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { updateHeaderFilterValues } from '../../actionCreators';
 
+import { updateHeaderFilterValues } from '../../actionCreators';
 import { Column } from '../../models';
 import { DispatchFunc } from '../../types';
 
-export interface PopupContentRowProps {
+export interface PopupContentItemProps {
   column: Column;
   item?: any;
   dispatch: DispatchFunc;
 }
 
-const PopupContentRow: React.FC<PopupContentRowProps> = (props) => {
+const PopupContentItem: React.FC<PopupContentItemProps> = (props) => {
   const {
     column,
     dispatch,
@@ -25,7 +25,7 @@ const PopupContentRow: React.FC<PopupContentRowProps> = (props) => {
 
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let checkedItem: boolean = event.currentTarget.checked;
+    const checkedItem: boolean = event.currentTarget.checked;
     if (checkedItem) {
       if (column.headerFilterValues === undefined) {
         column.headerFilterValues = [];
@@ -38,19 +38,21 @@ const PopupContentRow: React.FC<PopupContentRowProps> = (props) => {
     }
   }
 
-  return <div className='ka-popup-content-text-wrapper'>
-    <div className='ka-popup-content-checkbox'>
-      <input
-        className='ka-input'
-        type="checkbox"
-        checked={checkbox}
-        onChange={handleChange}
-      />
-    </div>
-    <div className='ka-popup-content-text'>
-      {item}
-    </div>
+  return (
+    <div className='ka-popup-content-item'>
+      <div className='ka-popup-content-checkbox'>
+        <input
+          className='ka-input'
+          type='checkbox'
+          checked={checkbox}
+          onChange={handleChange}
+        />
+      </div>
+      <div className='ka-popup-content-text'>
+        {item}
+      </div>
   </div>
+  )
 }
 
-export default PopupContentRow;
+export default PopupContentItem;

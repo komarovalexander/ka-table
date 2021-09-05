@@ -283,44 +283,31 @@
   box-sizing: border-box;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
   color: #747D86;
-  padding: 1.8em;
+  padding: 15px 20px;
   position: absolute;
   text-align: center;
   width: 245px;
-  height: 325px;
+  max-height: 325px;
+  overflow-y: auto;
   z-index: 1000;
 }
 
-.ka-popup-content-wrapper {
-  margin-top: .7em;
-  overflow-y: auto;
-  width: 100%;
-  height: 250px;
-}
 
-.ka-popup-content {
-  box-sizing: border-box;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  padding-top: 1em;
-  text-align: left;
-}
-
-.ka-popup-content-text-wrapper {
-  border-bottom: 1px solid #ddd;
+.ka-popup-content-item {
   display: flex;
   align-items: center;
-  flex-direction: row;
-  width: 100%;
-}
-
-.ka-popup-content-checkbox {
-  padding-left: .3em;
+  border-bottom: 1px solid $ka-border-color;
 }
 
 .ka-popup-content-text {
-  padding-top: .8em;
-  padding-bottom: .8em;
-  padding-left: 1em;
+  padding: $ka-cell-padding;
+}
+
+.ka-header-filter-button{
+  font-size: 16px;
+  margin-left: 3px;
+}
+
+.ka-header-filter-button-has-value{
+  font-weight: bold;
 }
