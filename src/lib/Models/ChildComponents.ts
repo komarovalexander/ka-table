@@ -1,4 +1,6 @@
 import { ITableProps } from '../';
+import { IPopupContentItemInputProps, IPopupContentItemValueProps, IPopupContentProps } from '../props';
+import { IPopupContentItemProps } from '../props';
 import {
   ICellEditorProps, ICellProps, ICellTextProps, IDataRowProps, IFilterRowEditorProps,
   IGroupRowProps, IGroupSummaryCellProps, IGroupSummaryRowProps, IHeadCellProps,
@@ -30,6 +32,10 @@ export class ChildComponents {
   public pagingPages?: ChildComponent<IPagingProps>;
   public pagingSize?: ChildComponent<IPagingSizeProps>;
   public pagingSizes?: ChildComponent<IPagingProps>;
+  public popupContent?: ChildComponent<IPopupContentProps>;
+  public popupContentItem?: ChildComponent<IPopupContentItemProps>;
+  public popupContentItemInput?: ChildComponent<IPopupContentItemInputProps>;
+  public popupContentItemValue?: ChildComponent<IPopupContentItemValueProps>;
   public rootDiv?: ChildComponent<ITableProps>;
   public summaryCell?: ChildComponent<ISummaryCellProps>;
   public summaryRow?: ChildComponent<ISummaryRowProps>;

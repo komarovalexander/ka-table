@@ -1,20 +1,16 @@
 import * as React from 'react';
+import defaultOptions from '../../defaultOptions';
 
-import { Column } from '../../models';
-import { DispatchFunc, FormatFunc } from '../../types';
+import { IPopupContentProps } from '../../props';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getValueByColumn } from '../../Utils/DataUtils';
 import PopupContentItem from '../PopupContentItem/PopupContentItem';
 
-export interface PopupContentProps {
-  column: Column;
-  data?: any[];
-  dispatch: DispatchFunc;
-  format?: FormatFunc;
-}
 
-const PopupContent: React.FC<PopupContentProps> = (props) => {
+const PopupContent: React.FC<IPopupContentProps> = (props) => {
   const {
     column,
+    childComponents,
     data,
     dispatch,
     format
@@ -31,16 +27,23 @@ const PopupContent: React.FC<PopupContentProps> = (props) => {
 
   headerFilterValues = Array.from(new Set(headerFilterValues));
 
+  const { elementAttributes, content } = getElementCustomization({
+    className: `${defaultOptions.css.popupContent}`
+  }, props, childComponents?.popupContent
+  );
+
   return (
-    <div className='ka-popup-content'>
-      {headerFilterValues?.map((item: any, index: number) => (
-        <PopupContentItem
-          key={index}
-          column={column}
-          dispatch={dispatch}
-          item={item}
-        />
-      ))}
+    <div {...elementAttributes}>
+      {content ||
+        headerFilterValues?.map((item: any, index: number) => (
+          <PopupContentItem
+            key={index}
+            column={column}
+            childComponents={childComponents}
+            dispatch={dispatch}
+            item={item}
+          />
+        ))}
     </div>
   )
 }

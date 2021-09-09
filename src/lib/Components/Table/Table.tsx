@@ -105,6 +105,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
               <Popup
                 key={column.key}
                 column={column}
+                childComponents={childComponents}
                 data={data}
                 dispatch={dispatch}
                 format={format}

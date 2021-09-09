@@ -262,3 +262,29 @@ export interface IPagingIndexProps extends IPagingProps {
   text: any;
 }
 
+export interface IPopupContentProps {
+  column: Column;
+  childComponents?: ChildComponents;
+  data?: any[];
+  dispatch: DispatchFunc;
+  format?: FormatFunc;
+}
+
+export interface IPopupContentItemProps {
+  column: Column;
+  childComponents?: ChildComponents;
+  item?: any;
+  dispatch: DispatchFunc;
+}
+
+export interface IPopupContentItemValueProps {
+  childComponents?: ChildComponents;
+  item?: any;
+}
+
+export interface IPopupContentItemInputProps {
+  column: Column;
+  childComponents?: ChildComponents;
+  dispatch: DispatchFunc;
+  item: any;
+}
