@@ -34,8 +34,6 @@ export class ChildComponents {
   public pagingSizes?: ChildComponent<IPagingProps>;
   public popupContent?: ChildComponent<IPopupContentProps>;
   public popupContentItem?: ChildComponent<IPopupContentItemProps>;
-  public popupContentItemInput?: ChildComponent<IPopupContentItemInputProps>;
-  public popupContentItemValue?: ChildComponent<IPopupContentItemValueProps>;
   public rootDiv?: ChildComponent<ITableProps>;
   public summaryCell?: ChildComponent<ISummaryCellProps>;
   public summaryRow?: ChildComponent<ISummaryRowProps>;
