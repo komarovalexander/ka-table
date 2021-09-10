@@ -22,7 +22,7 @@ const PopupContentItem: React.FC<IPopupContentItemProps> = (props) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     checkbox = event.currentTarget.checked;
-    dispatch(updateHeaderFilterValues(column.key, column.headerFilterValues, checkbox, item));
+    dispatch(updateHeaderFilterValues(column.key, checkbox, item));
   }
 
   const { elementAttributes, content } = getElementCustomization({

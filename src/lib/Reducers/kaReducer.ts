@@ -37,19 +37,23 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
 
   switch (action.type) {
     case ActionType.UpdateHeaderFilterValues: {
-      let headerFilterValues = action.headerFilterValues;
-      if (action.checkbox) {
-        if (headerFilterValues === undefined) {
-          headerFilterValues = [];
+      const newColumns = columns.map((c: Column) => {
+        if (c.key === action.columnKey) {
+          let headerFilterValues = c.headerFilterValues;
+          if (action.checkbox) {
+            if (headerFilterValues === undefined) {
+              headerFilterValues = [];
+            }
+            if (!headerFilterValues.includes(action.item)) {
+              headerFilterValues.push(action.item);
+            }
+          } else {
+            headerFilterValues = headerFilterValues?.filter((value: any) => value !== action.item);
+          }
+          c.headerFilterValues = headerFilterValues;
         }
-        headerFilterValues.push(action.item);
-      } else {
-        headerFilterValues = headerFilterValues.filter((value: any) => value !== action.item);
+        return c;
       }
-      const newColumns = columns.map((c: Column) => ({
-        ...c,
-        headerFilterValues: c.key === action.columnKey ? headerFilterValues : c.headerFilterValues
-      })
       );
       return { ...props, columns: newColumns }
     }
