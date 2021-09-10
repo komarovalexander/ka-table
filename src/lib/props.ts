@@ -277,14 +277,10 @@ export interface IPopupContentItemProps {
   dispatch: DispatchFunc;
 }
 
-export interface IPopupContentItemValueProps {
-  childComponents?: ChildComponents;
-  item?: any;
-}
-
-export interface IPopupContentItemInputProps {
+export interface IPopupProps {
   column: Column;
   childComponents?: ChildComponents;
+  data?: any[];
   dispatch: DispatchFunc;
-  item: any;
+  format?: FormatFunc;
 }

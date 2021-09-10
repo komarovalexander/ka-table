@@ -1,5 +1,5 @@
 import { ITableProps } from '../';
-import { IPopupContentItemInputProps, IPopupContentItemValueProps, IPopupContentProps } from '../props';
+import { IPopupContentProps } from '../props';
 import { IPopupContentItemProps } from '../props';
 import {
   ICellEditorProps, ICellProps, ICellTextProps, IDataRowProps, IFilterRowEditorProps,

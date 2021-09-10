@@ -21,18 +21,8 @@ const PopupContentItem: React.FC<IPopupContentItemProps> = (props) => {
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const checkedItem: boolean = event.currentTarget.checked;
-    // move logic to reducer
-    if (checkedItem) {
-      if (column.headerFilterValues === undefined) {
-        column.headerFilterValues = [];
-      }
-      column.headerFilterValues.push(item);
-      dispatch(updateHeaderFilterValues(column.key, column.headerFilterValues));
-    } else {
-      column.headerFilterValues = column.headerFilterValues?.filter((value) => value !== item);
-      dispatch(updateHeaderFilterValues(column.key, column.headerFilterValues));
-    }
+    checkbox = event.currentTarget.checked;
+    dispatch(updateHeaderFilterValues(column.key, column.headerFilterValues, checkbox, item));
   }
 
   const { elementAttributes, content } = getElementCustomization({

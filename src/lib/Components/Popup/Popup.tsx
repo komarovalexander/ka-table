@@ -1,18 +1,10 @@
 import * as React from 'react';
 
 import { updateHeaderFilterPopupState } from '../../actionCreators';
-import { ChildComponents, Column } from '../../models';
-import { DispatchFunc, FormatFunc } from '../../types';
+import { IPopupProps } from '../../props';
 import { useOuterClick } from '../../Utils/UseOuterClickUtil';
 import PopupContent from '../PopupContent/PopupContent';
 
-export interface IPopupProps {
-  column: Column;
-  childComponents?: ChildComponents;
-  data?: any[];
-  dispatch: DispatchFunc;
-  format?: FormatFunc;
-}
 
 const Popup: React.FC<IPopupProps> = (props) => {
   const {
