@@ -17,7 +17,7 @@ const tableProps: any = {
 };
 
 it('renders without crashing', () => {
-  const div = document.createElement('table');
+  const div = document.createElement('tbody');
   ReactDOM.render(<GroupedColumnsRow {...tableProps} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
