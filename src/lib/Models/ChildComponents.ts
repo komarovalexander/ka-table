@@ -1,12 +1,10 @@
 import { ITableProps } from '../';
-import { IPopupContentProps } from '../props';
-import { IPopupContentItemProps } from '../props';
 import {
   ICellEditorProps, ICellProps, ICellTextProps, IDataRowProps, IFilterRowEditorProps,
   IGroupRowProps, IGroupSummaryCellProps, IGroupSummaryRowProps, IHeadCellProps,
   IHeadCellResizeProps, IHeadRowProps, INoDataRowProps, IPagingIndexProps, IPagingProps,
-  IPagingSizeProps, ISummaryCellProps, ISummaryRowProps, ITableBodyProps, ITableFootProps,
-  ITableHeadProps,
+  IPagingSizeProps, IPopupContentItemProps, IPopupContentProps, ISummaryCellProps, ISummaryRowProps,
+  ITableBodyProps, ITableFootProps, ITableHeadProps,
 } from '../props';
 import { ChildComponent } from './ChildComponent';
 
