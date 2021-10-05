@@ -40,7 +40,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const newColumns = columns.map((c: Column) => {
         if (c.key === action.columnKey) {
           let headerFilterValues = c.headerFilterValues;
-          if (action.checkbox) {
+          if (action.checked) {
             if (headerFilterValues === undefined) {
               headerFilterValues = [];
             }
