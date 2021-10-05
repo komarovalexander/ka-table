@@ -1,8 +1,9 @@
 
 
-import { closeEditor, updateEditorValue } from '../actionCreators';
+import { closeEditor, updateEditorValue, updatePopupPosition } from '../actionCreators';
 import { ActionType, EditingMode } from '../enums';
 import { EditableCell } from '../models';
+import { PopupPosition } from '../Models/PopupPosition';
 import {
   addItemToEditableCells, getCellEditorDispatchHandler, getEditableCell, isEditableCell,
   removeItemFromEditableCells,
@@ -94,5 +95,19 @@ describe('CellUtils', () => {
       dispathcHandler(action);
       expect(dispatch).toBeCalledWith(action);
     });
+  });
+});
+
+it('should dispatch the action', () => {
+  const dispatch = jest.fn();
+  const popupPosition: PopupPosition = {
+    x: 0,
+    y: 0
+  }
+  const dispatchHandler = getCellEditorDispatchHandler(dispatch);
+  dispatchHandler(updatePopupPosition(popupPosition));
+  expect(dispatch).toHaveBeenCalledWith({
+    popupPosition,
+    type: ActionType.UpdatePopupPosition
   });
 });

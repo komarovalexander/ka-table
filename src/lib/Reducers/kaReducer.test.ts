@@ -254,7 +254,7 @@ describe('kaReducer', () => {
     expect(newState).toEqual({ ...intialState, selectedRows: [1] });
   });
   it('UpdateData', () => {
-    const newData =  [{ id: 3 }, { id: 4 }];
+    const newData = [{ id: 3 }, { id: 4 }];
     const intialState = {
       columns: [],
       data: [{ id: 1 }, { id: 2 }],
@@ -320,7 +320,7 @@ describe('kaReducer', () => {
     expect(newState.paging.pageIndex).toEqual(5);
   });
   it('SetSingleAction', () => {
-    const intialState = { };
+    const intialState = {};
     const newState = kaReducer(intialState, setSingleAction(loadData()));
     expect(newState.singleAction).toMatchSnapshot();
   });

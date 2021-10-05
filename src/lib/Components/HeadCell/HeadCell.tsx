@@ -29,7 +29,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     childComponents: { headCell }
   } = props;
 
-  if (columnReordering){
+  if (columnReordering) {
     const reorderedRowProps: ChildAttributesItem<IHeadCellProps> = getDraggableProps(key, dispatch, reorderColumns, defaultOptions.css.draggedColumn, defaultOptions.css.dragOverColumn);
     headCell = addElementAttributes(reorderedRowProps, props, headCell);
   }
@@ -47,13 +47,13 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     <th {...elementAttributes}>
       <div className={defaultOptions.css.theadCellWrapper}>
         <div className={defaultOptions.css.theadCellContentWrapper}>
-         {content || <HeadCellContent {...props}/>}
+          {content || <HeadCellContent {...props} />}
         </div>
         {isCellResizeShown(isResizable, columnResizing) && !hasChildren && (
           <HeadCellResize
             column={column}
             dispatch={dispatch}
-            childComponents={childComponents}/>
+            childComponents={childComponents} />
         )}
       </div>
     </th>

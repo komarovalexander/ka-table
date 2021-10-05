@@ -16,13 +16,15 @@ const props: IDataRowProps = {
     { key: 'column', title: 'Column 1', dataType: DataType.String },
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
   ],
-  dispatch: () => {},
+  dispatch: () => { },
   editableCells: [],
   editingMode: EditingMode.None,
   isSelectedRow: false,
+  isDetailsRowShown: false,
   rowEditableCells: [],
   rowData: [{ column: 1, column2: 2 }],
   rowKeyField: 'column',
+  rowKeyValue: '',
   selectedRows: [],
 };
 

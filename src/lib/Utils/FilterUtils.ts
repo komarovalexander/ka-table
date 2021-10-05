@@ -4,7 +4,7 @@ import { DataType, FilterOperatorName } from '../enums';
 import { Column } from '../Models/Column';
 import { EditableCell } from '../Models/EditableCell';
 import { FilterOperator } from '../Models/FilterOperator';
-import { FilterFunc, SearchFunc } from '../types';
+import { FilterFunc, FormatFunc, SearchFunc } from '../types';
 import { isEmpty } from './CommonUtils';
 import { getValueByColumn } from './DataUtils';
 import { convertToColumnTypes } from './TypeUtils';
@@ -40,7 +40,8 @@ export const filterAndSearchData = (props: ITableProps) => {
     searchText,
     columns,
     search,
-    filter
+    filter,
+    format
   } = props;
   let {
     data = [],
@@ -50,17 +51,18 @@ export const filterAndSearchData = (props: ITableProps) => {
   data = searchText ? searchData(columns, data, searchText, search) : data;
   data = convertToColumnTypes(data, columns);
   data = filterData(data, columns, filter);
+  data = filterByHeaderFilter(data, columns, format);
 
   return data;
 };
 
 const getCompare = (column: Column) => {
   const filterRowOperator = column.filterRowOperator
-      || getDefaultOperatorForType(column.dataType  || defaultOptions.columnDataType);
+    || getDefaultOperatorForType(column.dataType || defaultOptions.columnDataType);
   const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
   if (!filterOperator) {
-      throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
-    }
+    throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
+  }
   return filterOperator.compare;
 };
 
@@ -126,3 +128,23 @@ export const predefinedFilterOperators: FilterOperator[] = [{
     !isEmpty(fieldValue),
   name: FilterOperatorName.IsNotEmpty,
 }];
+
+export const filterByHeaderFilter = (data: any[], columns: Column[], format?: FormatFunc): any[] => {
+  return columns.reduce((initialData, column) => {
+    if (
+      isEmpty(column.headerFilterValues)
+      && column.filterRowOperator !== FilterOperatorName.IsEmpty
+      && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
+    ) {
+      return initialData;
+    }
+    return initialData.filter((item: any) => {
+      const value: any = getValueByColumn(item, column);
+      const fieldValue =
+        (format && format({ column, value }))
+        || value?.toString();
+      return column.headerFilterValues?.includes(fieldValue);
+    });
+  }, data);
+}
+

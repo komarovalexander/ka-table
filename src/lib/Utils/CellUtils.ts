@@ -1,6 +1,7 @@
-import { updateCellValue } from '../actionCreators';
+import { updateCellValue, updatePopupPosition } from '../actionCreators';
 import { ActionType, EditingMode } from '../enums';
 import { Column, EditableCell } from '../models';
+import { PopupPosition } from '../Models/PopupPosition';
 import { DispatchFunc } from '../types';
 import { getCopyOfArrayAndAddItem } from './ArrayUtils';
 
@@ -20,7 +21,7 @@ export const getEditableCell = (column: Column, rowEditableCells: EditableCell[]
 
 export const addItemToEditableCells = (
   item: EditableCell, editableCells: EditableCell[]): EditableCell[] => {
-    return getCopyOfArrayAndAddItem(item, editableCells);
+  return getCopyOfArrayAndAddItem(item, editableCells);
 };
 
 export const getCellEditorDispatchHandler = (dispatch: DispatchFunc) => {
@@ -35,5 +36,21 @@ export const getCellEditorDispatchHandler = (dispatch: DispatchFunc) => {
 
 export const removeItemFromEditableCells = (
   item: EditableCell, editableCells: EditableCell[]): EditableCell[] => {
-    return editableCells.filter((c) => c.columnKey !== item.columnKey || c.rowKeyValue !== item.rowKeyValue);
+  return editableCells.filter((c) => c.columnKey !== item.columnKey || c.rowKeyValue !== item.rowKeyValue);
 };
+
+export const checkPopupPosition = (
+  column: Column,
+  refToElement: React.MutableRefObject<HTMLDivElement>,
+  dispatch: DispatchFunc,
+) => {
+  if (refToElement.current && column.isHeaderFilterPopupShown) {
+    const newPopupPosition: PopupPosition = {
+      x: refToElement.current.offsetLeft + (refToElement.current.offsetParent as HTMLElement)?.offsetLeft,
+      y: refToElement.current.offsetTop + (refToElement.current.offsetParent as HTMLElement)?.offsetTop + refToElement.current.offsetHeight
+    }
+    if (newPopupPosition.x !== column.headerFilterPopupPosition?.x || newPopupPosition.y !== column.headerFilterPopupPosition?.y) {
+      dispatch(updatePopupPosition(newPopupPosition));
+    }
+  }
+}

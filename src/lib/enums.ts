@@ -66,6 +66,9 @@ export enum ActionType {
   UpdateFilterRowOperator = 'UpdateFilterRowOperator',
   UpdateFilterRowValue = 'UpdateFilterRowValue',
   UpdateGroupsExpanded = 'UpdateGroupsExpanded',
+  UpdateHeaderFilterValues = 'UpdateHeaderFilterValues',
+  UpdateHeaderFilterPopupState = 'UpdateHeaderFilterPopupState',
+  UpdatePopupPosition = 'UpdatePopupPosition',
   UpdatePageIndex = 'UpdatePageIndex',
   UpdatePageSize = 'UpdatePageSize',
   UpdatePagesCount = 'UpdatePagesCount',
@@ -99,6 +102,7 @@ export enum SortingMode {
 export enum FilteringMode {
   None = 'none',
   FilterRow = 'filterRow',
+  HeaderFilter = 'headerFilter',
 }
 
 export enum FilterOperatorName {

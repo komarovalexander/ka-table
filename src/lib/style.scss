@@ -272,3 +272,39 @@
   font-weight: bold;
   color: $ka-paging-index-active-color;
 }
+
+.ka-popup {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+  color: #747D86;
+  padding: 15px 20px;
+  position: absolute;
+  text-align: center;
+  width: 245px;
+  max-height: 325px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+
+.ka-popup-content-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $ka-border-color;
+}
+
+.ka-popup-content-item-value {
+  padding: $ka-cell-padding;
+}
+
+.ka-header-filter-button{
+  font-size: 16px;
+  margin-left: 3px;
+}
+
+.ka-header-filter-button-has-value{
+  font-weight: bold;
+}

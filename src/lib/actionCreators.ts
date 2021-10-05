@@ -1,6 +1,25 @@
 import { ActionType } from './enums';
 import { Focused } from './Models/Focused';
+import { PopupPosition } from './Models/PopupPosition';
 import { IMoveFocusedSettings } from './Utils/NavigationUtils';
+
+export const updateHeaderFilterValues = (columnKey: string, checkbox: boolean, item: any) => ({
+  columnKey,
+  checkbox,
+  item,
+  type: ActionType.UpdateHeaderFilterValues
+});
+
+export const updatePopupPosition = (popupPosition: PopupPosition) => ({
+  popupPosition,
+  type: ActionType.UpdatePopupPosition
+});
+
+export const updateHeaderFilterPopupState = (columnKey: string, isHeaderFilterPopupShown: boolean | undefined) => ({
+  columnKey,
+  isHeaderFilterPopupShown,
+  type: ActionType.UpdateHeaderFilterPopupState
+});
 
 export const updateFilterRowValue = (columnKey: string, filterRowValue: any) => ({
   columnKey,
@@ -257,7 +276,7 @@ export const moveFocusedDown = (settings?: IMoveFocusedSettings) => ({
 
 export const updateTreeGroupsExpanded = (rowKeyValue: any) => ({
   rowKeyValue,
-  type: ActionType.UpdateTreeGroupsExpanded ,
+  type: ActionType.UpdateTreeGroupsExpanded,
 });
 
 export const validate = () => ({
