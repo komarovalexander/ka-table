@@ -15,7 +15,7 @@ export const updatePopupPosition = (popupPosition: PopupPosition) => ({
   type: ActionType.UpdatePopupPosition
 });
 
-export const updateHeaderFilterPopupState = (columnKey: string, isHeaderFilterPopupShown: boolean | undefined) => ({
+export const updateHeaderFilterPopupState = (columnKey: string, isHeaderFilterPopupShown?: boolean) => ({
   columnKey,
   isHeaderFilterPopupShown,
   type: ActionType.UpdateHeaderFilterPopupState
