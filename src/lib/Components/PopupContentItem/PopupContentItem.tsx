@@ -5,7 +5,6 @@ import defaultOptions from '../../defaultOptions';
 import { IPopupContentItemProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-
 const PopupContentItem: React.FC<IPopupContentItemProps> = (props) => {
   const {
     column,
@@ -14,23 +13,15 @@ const PopupContentItem: React.FC<IPopupContentItemProps> = (props) => {
     item
   } = props;
 
-  let checkbox: boolean = false;
-
-  if (column.headerFilterValues?.includes(item)) {
-    checkbox = true;
-  }
+  const checked: boolean = column.headerFilterValues?.includes(item) ?? false;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    checkbox = event.currentTarget.checked;
-    dispatch(updateHeaderFilterValues(column.key, checkbox, item));
+    dispatch(updateHeaderFilterValues(column.key, event.currentTarget.checked, item));
   }
 
   const { elementAttributes, content } = getElementCustomization({
     className: `${defaultOptions.css.popupContentItem}`
-  }, props, childComponents?.popupContentItem
-  );
-
-
+  }, props, childComponents?.popupContentItem);
 
   return (
     <div {...elementAttributes}>
@@ -40,7 +31,7 @@ const PopupContentItem: React.FC<IPopupContentItemProps> = (props) => {
             <input
               className='ka-input'
               type='checkbox'
-              checked={checkbox}
+              checked={checked}
               onChange={handleChange}
             />
           </div>
