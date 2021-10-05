@@ -16,7 +16,7 @@ const PopupContentItem: React.FC<IPopupContentItemProps> = (props) => {
   const checked: boolean = column.headerFilterValues?.includes(item) ?? false;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateHeaderFilterValues(column.key, event.currentTarget.checked, item));
+    dispatch(updateHeaderFilterValues(column.key, item, event.currentTarget.checked));
   }
 
   const { elementAttributes, content } = getElementCustomization({
