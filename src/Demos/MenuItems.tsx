@@ -11,8 +11,8 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
-const newItems: string[] = ['GroupedColumnsDemo'];
-const updateItems: string[] = ['Grouping'];
+const newItems: string[] = ['HeaderFilterDemo'];
+const updateItems: string[] = ['Filtering'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 
