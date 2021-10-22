@@ -32,6 +32,7 @@ export enum ActionType {
   HideDetailsRow = 'HideDetailsRow',
   HideLoading = 'HideLoading',
   HideNewRow = 'HideNewRow',
+  InsertRow = 'InsertRow',
   LoadData = 'LoadData',
   MoveFocusedDown = 'MoveFocusedDown',
   MoveFocusedLeft = 'MoveFocusedLeft',

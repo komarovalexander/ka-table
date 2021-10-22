@@ -290,3 +290,11 @@ export const openAllEditors = () => ({
 export const saveAllEditors = () => ({
   type: ActionType.SaveAllEditors
 });
+
+export const insertRow = (rowData: any, options: {
+  afterRowKeyValue: any
+}) => ({
+  rowData,
+  options,
+  type: ActionType.InsertRow
+});

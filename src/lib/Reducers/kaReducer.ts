@@ -36,6 +36,21 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   } = props;
 
   switch (action.type) {
+    case ActionType.InsertRow: {
+      const {
+        rowData,
+        options
+       } = action;
+      const { afterRowKeyValue } = options || {};
+      const newData = [...data];
+      if (afterRowKeyValue) {
+        const rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === afterRowKeyValue);
+        newData.splice(rowIndex, 0, rowData);
+      } else {
+        newData.push(rowData);
+      }
+      return { ...props, data: newData };
+    }
     case ActionType.UpdateHeaderFilterValues: {
       const newColumns = columns.map((c: Column) => {
         if (c.key === action.columnKey) {
