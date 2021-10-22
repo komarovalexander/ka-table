@@ -43,7 +43,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
        } = action;
       const { afterRowKeyValue } = options || {};
       const newData = [...data];
-      if (afterRowKeyValue) {
+      if (afterRowKeyValue != null) {
         const rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === afterRowKeyValue);
         newData.splice(rowIndex, 0, rowData);
       } else {

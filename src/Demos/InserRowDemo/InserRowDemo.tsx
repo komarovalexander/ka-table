@@ -7,9 +7,9 @@ import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
-    column1: `column:1 row:${index}`,
-    column2: `column:2 row:${index}`,
-    column3: `column:3 row:${index}`,
+    column1: `column:1 rowId:${index}`,
+    column2: `column:2 rowId:${index}`,
+    column3: `column:3 rowId:${index}`,
     id: index,
   }),
 );
@@ -54,7 +54,14 @@ const InserRowDemo: React.FC = () => {
             content: (props) => {
               if (props.column.key === 'insertRowColumn'){
                 return (
-                  <button onClick={() => dispatch(insertRow({ id: generateNewId() }, { afterRowKeyValue: props.rowKeyValue }))}>
+                  <button onClick={() => {
+                    const id = generateNewId();
+                    const newRow = {
+                      id,
+                      column1: `column:1 rowId:${id}`,
+                    };
+                    dispatch(insertRow(newRow, { afterRowKeyValue: props.rowKeyValue }))
+                  }}>
                     Insert Row Above
                   </button>
                 );
