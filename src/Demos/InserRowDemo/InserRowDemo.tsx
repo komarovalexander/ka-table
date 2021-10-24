@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
 import { insertRow } from '../../lib/actionCreators';
-import { DataType, EditingMode } from '../../lib/enums';
+import { DataType, EditingMode, InsertRowPosition } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(7).fill(undefined).map(
@@ -30,7 +30,11 @@ const tablePropsInit: ITableProps = {
     { key: 'column2', title: 'Column 2', dataType: DataType.String },
     { key: 'column3', title: 'Column 3', dataType: DataType.String },
     {
-      key: 'insertRowColumn',
+      key: 'insertRowBeforeColumn',
+      width: 200
+    },
+    {
+      key: 'insertRowAfterColumn',
       width: 200
     },
   ],
@@ -52,7 +56,7 @@ const InserRowDemo: React.FC = () => {
         childComponents={{
           cell: {
             content: (props) => {
-              if (props.column.key === 'insertRowColumn'){
+              if (props.column.key === 'insertRowBeforeColumn'){
                 return (
                   <button onClick={() => {
                     const id = generateNewId();
@@ -62,7 +66,21 @@ const InserRowDemo: React.FC = () => {
                     };
                     dispatch(insertRow(newRow, { rowKeyValue: props.rowKeyValue }))
                   }}>
-                    Insert Row Above
+                    Insert Row Before
+                  </button>
+                );
+              }
+              if (props.column.key === 'insertRowAfterColumn'){
+                return (
+                  <button onClick={() => {
+                    const id = generateNewId();
+                    const newRow = {
+                      id,
+                      column1: `column:1 rowId:${id}`,
+                    };
+                    dispatch(insertRow(newRow, { rowKeyValue: props.rowKeyValue, insertRowPosition: InsertRowPosition.after }))
+                  }}>
+                    Insert Row After
                   </button>
                 );
               }
