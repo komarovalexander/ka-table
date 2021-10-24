@@ -1,4 +1,3 @@
-import { insertRow } from '../actionCreators';
 import { newRowId } from '../const';
 import { ActionType, InsertRowPosition, SortingMode } from '../enums';
 import { ITableProps } from '../index';
