@@ -1,11 +1,11 @@
 import { ITableProps } from '../';
 import {
   clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
-  deselectRow, loadData, reorderColumns, reorderRows, resizeColumn, selectAllFilteredRows,
-  selectAllRows, selectAllVisibleRows, selectRowsRange, selectSingleRow, setSingleAction,
-  updateData, updateTreeGroupsExpanded, validate,
+  deselectRow, insertRow, loadData, reorderColumns, reorderRows, resizeColumn,
+  selectAllFilteredRows, selectAllRows, selectAllVisibleRows, selectRowsRange, selectSingleRow,
+  setSingleAction, updateData, updateTreeGroupsExpanded, validate,
 } from '../actionCreators';
-import { ActionType, FilterOperatorName } from '../enums';
+import { ActionType, FilterOperatorName, InsertRowPosition } from '../enums';
 import { kaReducer } from './kaReducer';
 
 describe('kaReducer', () => {
@@ -459,6 +459,93 @@ describe('kaReducer', () => {
       const newState = kaReducer(intialState, validate());
       expect(validationCalls.mock.calls).toEqual([[102], [103]]);
       expect(newState.editableCells).toMatchSnapshot();
+    });
+  });
+  describe('InsertRow', () => {
+    it('insert to 0 position by default', () => {
+      const intialState: ITableProps = {
+        columns: [],
+        data: [{
+          id: 1,
+          val: 102
+        }, {
+          id: 2,
+          val: 10
+        }],
+        rowKeyField: 'id'
+      };
+      const newState = kaReducer(intialState, insertRow({
+        id: 3,
+        val: 30
+      }));
+      expect(newState.data).toMatchSnapshot();
+    });
+    it('insert before row with id=2', () => {
+      const intialState: ITableProps = {
+        columns: [],
+        data: [{
+          id: 1,
+          val: 102
+        }, {
+          id: 2,
+          val: 10
+        }],
+        rowKeyField: 'id'
+      };
+      const newState = kaReducer(intialState, insertRow({
+        id: 3,
+        val: 30
+      }, {
+        rowKeyValue: 2
+      }));
+      expect(newState.data).toMatchSnapshot();
+    });
+    it('insert after row with id=2', () => {
+      const intialState: ITableProps = {
+        columns: [],
+        data: [{
+          id: 1,
+          val: 102
+        }, {
+          id: 2,
+          val: 10
+        }, {
+          id: 3,
+          val: 10
+        }],
+        rowKeyField: 'id'
+      };
+      const newState = kaReducer(intialState, insertRow({
+        id: 4,
+        val: 40
+      }, {
+        rowKeyValue: 2,
+        insertRowPosition: InsertRowPosition.after
+      }));
+      expect(newState.data).toMatchSnapshot();
+    });
+    it('insert to last position for after mode', () => {
+      const intialState: ITableProps = {
+        columns: [],
+        data: [{
+          id: 1,
+          val: 102
+        }, {
+          id: 2,
+          val: 10
+        }, {
+          id: 3,
+          val: 10
+        }],
+        rowKeyField: 'id'
+      };
+      const newState = kaReducer(intialState, insertRow({
+        id: 4,
+        val: 40
+      }, {
+        insertRowPosition: InsertRowPosition.after
+      }));
+      expect(newState.data).toMatchSnapshot();
     });
   });
 });

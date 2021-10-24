@@ -1,5 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`kaReducer InsertRow insert after row with id=2 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "val": 102,
+  },
+  Object {
+    "id": 2,
+    "val": 10,
+  },
+  Object {
+    "id": 4,
+    "val": 40,
+  },
+  Object {
+    "id": 3,
+    "val": 10,
+  },
+]
+`;
+
+exports[`kaReducer InsertRow insert before row with id=2 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "val": 102,
+  },
+  Object {
+    "id": 3,
+    "val": 30,
+  },
+  Object {
+    "id": 2,
+    "val": 10,
+  },
+]
+`;
+
+exports[`kaReducer InsertRow insert to 0 position by default 1`] = `
+Array [
+  Object {
+    "id": 3,
+    "val": 30,
+  },
+  Object {
+    "id": 1,
+    "val": 102,
+  },
+  Object {
+    "id": 2,
+    "val": 10,
+  },
+]
+`;
+
+exports[`kaReducer InsertRow insert to last position for after mode 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "val": 102,
+  },
+  Object {
+    "id": 2,
+    "val": 10,
+  },
+  Object {
+    "id": 3,
+    "val": 10,
+  },
+  Object {
+    "id": 4,
+    "val": 40,
+  },
+]
+`;
+
 exports[`kaReducer ReorderColumns default 1`] = `
 Object {
   "columns": Array [

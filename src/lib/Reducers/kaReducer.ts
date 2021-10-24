@@ -1,5 +1,5 @@
 import { newRowId } from '../const';
-import { ActionType, SortingMode } from '../enums';
+import { ActionType, InsertRowPosition, SortingMode } from '../enums';
 import { ITableProps } from '../index';
 import { Column } from '../models';
 import { ILoadingProps } from '../props';
@@ -36,6 +36,24 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   } = props;
 
   switch (action.type) {
+    case ActionType.InsertRow: {
+      const {
+        rowData,
+        options
+       } = action;
+      const { rowKeyValue, insertRowPosition } = options || {};
+      const newData = [...data];
+      if (rowKeyValue != null) {
+        let rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === rowKeyValue);
+        if (insertRowPosition === InsertRowPosition.after){
+          rowIndex++;
+        }
+        newData.splice(rowIndex, 0, rowData);
+      } else {
+        insertRowPosition === InsertRowPosition.after ? newData.push(rowData) : newData.unshift(rowData);
+      }
+      return { ...props, data: newData };
+    }
     case ActionType.UpdateHeaderFilterValues: {
       const newColumns = columns.map((c: Column) => {
         if (c.key === action.columnKey) {

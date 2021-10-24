@@ -32,6 +32,7 @@ export enum ActionType {
   HideDetailsRow = 'HideDetailsRow',
   HideLoading = 'HideLoading',
   HideNewRow = 'HideNewRow',
+  InsertRow = 'InsertRow',
   LoadData = 'LoadData',
   MoveFocusedDown = 'MoveFocusedDown',
   MoveFocusedLeft = 'MoveFocusedLeft',
@@ -114,4 +115,9 @@ export enum FilterOperatorName {
   Contains = 'contains',
   IsEmpty = 'IsEmpty',
   IsNotEmpty = 'IsNotEmpty',
+}
+
+export enum InsertRowPosition {
+  before = 'before',
+  after = 'after'
 }
