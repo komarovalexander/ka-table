@@ -1,5 +1,6 @@
+import { insertRow } from '../actionCreators';
 import { newRowId } from '../const';
-import { ActionType, SortingMode } from '../enums';
+import { ActionType, InsertRowPosition, SortingMode } from '../enums';
 import { ITableProps } from '../index';
 import { Column } from '../models';
 import { ILoadingProps } from '../props';
@@ -41,13 +42,16 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         rowData,
         options
        } = action;
-      const { afterRowKeyValue } = options || {};
+      const { rowKeyValue, insertRowPosition } = options || {};
       const newData = [...data];
-      if (afterRowKeyValue != null) {
-        const rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === afterRowKeyValue);
+      if (rowKeyValue != null) {
+        let rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === rowKeyValue);
+        if (insertRowPosition === InsertRowPosition.after){
+          rowIndex++;
+        }
         newData.splice(rowIndex, 0, rowData);
       } else {
-        newData.push(rowData);
+        insertRowPosition === InsertRowPosition.after ? newData.push(rowData) : newData.unshift(rowData);
       }
       return { ...props, data: newData };
     }

@@ -116,3 +116,8 @@ export enum FilterOperatorName {
   IsEmpty = 'IsEmpty',
   IsNotEmpty = 'IsNotEmpty',
 }
+
+export enum InsertRowPosition {
+  before = 'before',
+  after = 'after'
+}

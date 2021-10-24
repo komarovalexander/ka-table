@@ -1,4 +1,4 @@
-import { ActionType } from './enums';
+import { ActionType, InsertRowPosition } from './enums';
 import { Focused } from './Models/Focused';
 import { PopupPosition } from './Models/PopupPosition';
 import { IMoveFocusedSettings } from './Utils/NavigationUtils';
@@ -291,8 +291,9 @@ export const saveAllEditors = () => ({
   type: ActionType.SaveAllEditors
 });
 
-export const insertRow = (rowData: any, options: {
-  afterRowKeyValue: any
+export const insertRow = (rowData: any, options?: {
+  rowKeyValue?: any,
+  insertRowPosition?: InsertRowPosition
 }) => ({
   rowData,
   options,

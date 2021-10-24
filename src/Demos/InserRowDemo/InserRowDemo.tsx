@@ -60,7 +60,7 @@ const InserRowDemo: React.FC = () => {
                       id,
                       column1: `column:1 rowId:${id}`,
                     };
-                    dispatch(insertRow(newRow, { afterRowKeyValue: props.rowKeyValue }))
+                    dispatch(insertRow(newRow, { rowKeyValue: props.rowKeyValue }))
                   }}>
                     Insert Row Above
                   </button>
