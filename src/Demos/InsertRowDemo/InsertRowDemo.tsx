@@ -43,7 +43,7 @@ const tablePropsInit: ITableProps = {
   rowKeyField: 'id',
 };
 
-const InserRowDemo: React.FC = () => {
+const InsertRowDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
@@ -93,4 +93,4 @@ const InserRowDemo: React.FC = () => {
   );
 };
 
-export default InserRowDemo;
+export default InsertRowDemo;

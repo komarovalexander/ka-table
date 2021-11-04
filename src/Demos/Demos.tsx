@@ -46,7 +46,7 @@ import GroupingSummaryDemo from './GroupingSummaryDemo/GroupingSummaryDemo';
 import HeaderFilterDemo from './HeaderFilterDemo/HeaderFilterDemo';
 import HoverRowDemo from './HoverRowDemo/HoverRowDemo';
 import InfiniteScrollingDemo from './InfiniteScrollingDemo/InfiniteScrollingDemo';
-import InserRowDemo from './InserRowDemo/InserRowDemo';
+import InsertRowDemo from './InsertRowDemo/InsertRowDemo';
 import JsonDemo from './JsonDemo/JsonDemo';
 import KeyboardNavigationDemo from './KeyboardNavigationDemo/KeyboardNavigationDemo';
 import LoadingDemo from './LoadingDemo/LoadingDemo';
@@ -119,7 +119,7 @@ const demos: Demo[] = [
   new Demo(KeyboardNavigationDemo, '/keyboard-navigation', 'Keyboard Navigation', 'KeyboardNavigationDemo', 'https://stackblitz.com/edit/table-keyboard-navigation-js', 'https://stackblitz.com/edit/table-keyboard-navigation-ts', 'Miscellaneous'),
   new Demo(LoadingDemo, '/loading', 'Loading', 'LoadingDemo', 'https://stackblitz.com/edit/table-loading-js', 'https://stackblitz.com/edit/table-loading-ts', 'Miscellaneous'),
   new Demo(InfiniteScrollingDemo, '/infinite-scrolling', 'Infinite Scrolling', 'InfiniteScrollingDemo', 'https://stackblitz.com/edit/table-infinite-scrolling-js', 'https://stackblitz.com/edit/table-infinite-scrolling-ts', 'Virtual Scrolling'),
-  new Demo(InserRowDemo, '/insert-row', 'Insert Row', 'InserRowDemo', 'https://stackblitz.com/edit/table-insert-row-js', 'https://stackblitz.com/edit/table-insert-row-ts', 'Editing'),
+  new Demo(InsertRowDemo, '/insert-row', 'Insert Row', 'InsertRowDemo', 'https://stackblitz.com/edit/table-insert-row-js', 'https://stackblitz.com/edit/table-insert-row-ts', 'Editing'),
   new Demo(ManyColumnsDemo, '/many-columns', 'Many Columns', 'ManyColumnsDemo', 'https://stackblitz.com/edit/table-many-columns-js', 'https://stackblitz.com/edit/table-many-columns-ts', 'Columns'),
   new Demo(ManyRowsDemo, '/many-rows', '100K Rows', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts', 'Virtual Scrolling'),
   new Demo(ManyRowsDynamicDemo, '/many-rows-dynamic', '10K Rows Dynamic', 'ManyRowsDynamicDemo', 'https://stackblitz.com/edit/table-many-rows-dynamic-js', 'https://stackblitz.com/edit/table-many-rows-dynamic-ts', 'Virtual Scrolling'),
