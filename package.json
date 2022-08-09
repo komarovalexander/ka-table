@@ -21,6 +21,9 @@
     "react-redux": "^7.2.0",
     "react-to-print": "^2.12.6"
   },
+  "resolutions": {
+    "@types/react": "17"
+  },
   "peerDependencies": {
     "react": "^16.8.3 || ^17.0.0-0"
   },
@@ -70,14 +73,14 @@
     "gulp-file": "^0.4.0",
     "gulp-gh-pages": "^0.5.4",
     "gulp-replace": "^1.0.0",
-    "gulp-sass": "^5.1.0",
+    "gulp-sass": "^4.1.1",
     "jsonfile": "^6.0.1",
-    "node-sass": "^7.0.0",
     "react-filter-control": "^2.1.0",
     "react-ga": "^2.7.0",
     "react-highlight": "^0.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "4.0.0",
+    "sass": "^1.54.3",
     "simulant": "^0.2.2",
     "tslint": "^6.1.0",
     "tslint-react": "^4.2.0",

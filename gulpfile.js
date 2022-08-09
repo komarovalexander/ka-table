@@ -30,6 +30,7 @@ gulp.task('compile', function () {
             var pkg = require('./package.json');
             delete pkg.dependencies;
             delete pkg.devDependencies;
+            delete pkg.resolutions;
             delete pkg.scripts;
             delete pkg.husky;
             delete pkg.jest;
