@@ -28,7 +28,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   }, props, headCellContent);
 
 
-  const refToElement = React.useRef<HTMLDivElement>(document.createElement('div'));
+  const refToElement = React.useRef<HTMLDivElement>(null);
   React.useLayoutEffect(() => {
     checkPopupPosition(column, refToElement, dispatch);
   }, [column, dispatch]);

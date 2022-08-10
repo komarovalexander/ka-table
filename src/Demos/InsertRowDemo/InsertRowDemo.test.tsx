@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import InserRowDemo from './InserRowDemo';
+import InsertRowDemo from './InsertRowDemo';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<InserRowDemo />, div);
+  ReactDOM.render(<InsertRowDemo />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

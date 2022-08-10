@@ -41,7 +41,7 @@ export const removeItemFromEditableCells = (
 
 export const checkPopupPosition = (
   column: Column,
-  refToElement: React.MutableRefObject<HTMLDivElement>,
+  refToElement: React.MutableRefObject<HTMLDivElement | null>,
   dispatch: DispatchFunc,
 ) => {
   if (refToElement.current && column.isHeaderFilterPopupShown) {
