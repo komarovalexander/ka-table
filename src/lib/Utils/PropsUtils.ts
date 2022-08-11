@@ -72,12 +72,11 @@ export const areAllVisibleRowsSelected = (props: ITableProps) => {
   return getData(props).every(d => selectedRows.includes(getValueByField(d, rowKeyField)))
 }
 
-export const getData = (props: ITableProps) => {
+const getDataWithoutPaging =  (props: ITableProps) => {
   const {
     columns,
     groups,
     groupsExpanded,
-    paging,
     treeGroupKeyField,
     treeGroupsExpanded,
     rowKeyField,
@@ -96,6 +95,15 @@ export const getData = (props: ITableProps) => {
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
   resultData = groups ? getGroupedData(resultData, groups, groupedColumns, groupsExpanded) : resultData;
   resultData = treeGroupKeyField ? getTreeData({ data: resultData, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: data }) : resultData;
+
+  return resultData;
+};
+
+export const getData = (props: ITableProps) => {
+  const {
+    paging
+  } = props;
+  let resultData = getDataWithoutPaging(props);
   resultData = getPageData(resultData, paging);
 
   return resultData;
@@ -124,9 +132,7 @@ export const getPagesCountByProps = (props: ITableProps) => {
   } = props;
   let pagesCount = 1;
   if (paging && paging.enabled) {
-    let data = filterAndSearchData(props);
-    const { rowKeyField, treeGroupKeyField, treeGroupsExpanded } = props;
-    data = treeGroupKeyField ? getTreeData({ data, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: props.data || [] }) : data;
+    const data = getDataWithoutPaging(props);
     pagesCount = getPagesCount(data, paging);
   }
   return pagesCount;
