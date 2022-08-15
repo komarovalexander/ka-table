@@ -58,7 +58,7 @@ const HeaderFilterDemo: React.FC = () => {
       dispatch={dispatch}
       childComponents={{
         headFilterButton: {
-          content: ({ column: {key}}) => key === 'name' && <></>, // hide the header filter for 'nextTry' column
+          content: ({ column: {key}}) => key === 'name' && <></>,
         },
       }}
     />
