@@ -6,11 +6,12 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import { ActionType } from '../../enums';
 import { Column } from '../../models';
-import HeaderFilterButton, { HeaderFilterButtonProps } from './HeaderFilterButton';
+import { IHeaderFilterButtonProps } from '../../props';
+import HeaderFilterButton from './HeaderFilterButton';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const props: HeaderFilterButtonProps = {
+const props: IHeaderFilterButtonProps = {
     column: new Column(),
     dispatch: jest.fn()
 };

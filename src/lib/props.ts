@@ -284,3 +284,9 @@ export interface IPopupProps {
   dispatch: DispatchFunc;
   format?: FormatFunc;
 }
+
+export interface IHeaderFilterButtonProps {
+  childComponents?: ChildComponents;
+  column: Column,
+  dispatch: DispatchFunc
+}
