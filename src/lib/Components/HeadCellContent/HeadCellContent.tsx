@@ -15,7 +15,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
     dispatch,
     sortingMode,
     filteringMode,
-    childComponents: { headCellContent },
+    childComponents,
   } = props;
   const sortingEnabled = isSortingEnabled(sortingMode);
   const onClick = sortingEnabled ? () => {
@@ -25,7 +25,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const { elementAttributes, content } = getElementCustomization({
     className: `${defaultOptions.css.theadCellContent} ${sortingEnabled ? 'ka-pointer' : ''}`,
     onClick
-  }, props, headCellContent);
+  }, props, childComponents.headCellContent);
 
 
   const refToElement = React.useRef<HTMLDivElement>(null);
@@ -51,6 +51,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
           <HeaderFilterButton
             column={column}
             dispatch={dispatch}
+            childComponents={childComponents}
           />
         )
         }
