@@ -56,6 +56,11 @@ const HeaderFilterDemo: React.FC = () => {
       {...tableProps}
       data={dataArray}
       dispatch={dispatch}
+      childComponents={{
+        headFilterButton: {
+          content: ({ column: {key}}) => key === 'name' && <></>, // hide the header filter for 'nextTry' column
+        },
+      }}
     />
   );
 };
