@@ -1,6 +1,6 @@
 {
   "name": "ka-table",
-  "version": "7.4.1",
+  "version": "7.4.2",
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table/#/overview",
@@ -22,7 +22,7 @@
     "react-to-print": "^2.12.6"
   },
   "peerDependencies": {
-    "react": "^16.8.3 || ^17.0.0-0"
+    "react": "^16.8.3 || ^17.0.0-0 || ^18.0.0-0"
   },
   "scripts": {
     "start": "react-scripts start",
