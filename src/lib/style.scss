@@ -184,7 +184,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  animation: typing 1s linear infinite alternate;
+  animation: ka-loading-animation 1s linear infinite alternate;
   position: relative;
   left: -20px;
 }
@@ -214,7 +214,7 @@
   padding: $ka-summary-cell-padding;
 }
 
-@keyframes typing{
+@keyframes ka-loading-animation{
   0%{
     background-color: $ka-loading-background-color-base;
     box-shadow: 20px 0px 0px 0px transparentize($ka-loading-background-color-base, 0.8),
