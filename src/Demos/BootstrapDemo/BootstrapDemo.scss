@@ -1,10 +1,6 @@
+@import '../../../node_modules/bootstrap/scss/_functions.scss';
 .bootstrap-demo{
-  @import '../../../node_modules/bootstrap/scss/functions.scss';
-  @import '../../../node_modules/bootstrap/scss/variables.scss';
-  $pagination-active-bg: $table-dark-bg;
-  $pagination-color: $table-color;
-  $pagination-active-border-color: $table-dark-bg;
-  @import '../../../node_modules/bootstrap/scss/bootstrap';
+  @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
   @import '../../lib/static/icons.scss';
   .ka{
     background-color: white;
@@ -35,6 +31,7 @@
   }
   .ka-filter-row {
     select{
+      @extend .form-select;
       width: 70px;
       margin-right: 5px;
     }
@@ -47,6 +44,9 @@
     ul{
       margin-bottom: 0;
     }
+  }
+  .form-check-input{
+    margin-top: 12px;
   }
   .ka-paging-page-index{
     cursor: pointer;
