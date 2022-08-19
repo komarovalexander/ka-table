@@ -45,7 +45,7 @@ const tablePropsInit: ITableProps = {
 const bootstrapChildComponents: ChildComponents = {
   table: {
     elementAttributes: () => ({
-      className: 'table table-striped table-hover table-bordered'
+      className: 'table table-striped table-hover table-bordered table-primary'
     })
   },
   tableHead: {
@@ -71,11 +71,16 @@ const bootstrapChildComponents: ChildComponents = {
       )
     }
   },
+  cellEditorInput: {
+    elementAttributes: ({column}) => ({
+      className: column.dataType === DataType.Boolean ? 'form-check-input' : undefined
+    }),
+  },
   pagingIndex: {
     elementAttributes: ({ isActive }) => ({
       className: `page-item ${(isActive ? 'active' : '')}`
     }),
-    content: ({ text }) => <div className='page-link'>{text}</div>
+    content: ({ text, isActive }) => <div className={`page-link ${(isActive ? 'active' : '')}`}>{text}</div>
   },
   pagingPages: {
     elementAttributes: () => ({
