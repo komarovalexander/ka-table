@@ -16,9 +16,9 @@ import {
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isPagingShown } from '../../Utils/PagingUtils';
 import Loading from '../Loading/Loading';
+import Popup from '../Popup/Popup';
 import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
-import Popup from '../Popup/Popup';
 
 export interface ITableProps {
   columnReordering?: boolean;
@@ -98,7 +98,7 @@ export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
           {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
           <TableWrapper {...props} />
           {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
-          <Loading {...loading} />
+          <Loading {...loading} childComponents={childComponents}/>
           {columns.map(column =>
             column.isHeaderFilterPopupShown
             && (

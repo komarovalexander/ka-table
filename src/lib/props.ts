@@ -239,6 +239,7 @@ export interface IHeadRowProps {
 }
 
 export interface ILoadingProps {
+  childComponents?: ChildComponents;
   enabled?: boolean;
   text?: string;
 }
