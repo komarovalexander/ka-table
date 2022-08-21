@@ -2,9 +2,9 @@ import { ITableProps } from '../';
 import {
   ICellEditorProps, ICellProps, ICellTextProps, IDataRowProps, IFilterRowEditorProps,
   IGroupRowProps, IGroupSummaryCellProps, IGroupSummaryRowProps, IHeadCellProps,
-  IHeadCellResizeProps, IHeaderFilterButtonProps, IHeadRowProps, INoDataRowProps, IPagingIndexProps,
-  IPagingProps, IPagingSizeProps, IPopupContentItemProps, IPopupContentProps, ISummaryCellProps,
-  ISummaryRowProps, ITableBodyProps, ITableFootProps, ITableHeadProps,
+  IHeadCellResizeProps, IHeaderFilterButtonProps, IHeadRowProps, ILoadingProps, INoDataRowProps,
+  IPagingIndexProps, IPagingProps, IPagingSizeProps, IPopupContentItemProps, IPopupContentProps,
+  ISummaryCellProps, ISummaryRowProps, ITableBodyProps, ITableFootProps, ITableHeadProps,
 } from '../props';
 import { ChildComponent } from './ChildComponent';
 
@@ -25,6 +25,7 @@ export class ChildComponents {
   public headCellContent?: ChildComponent<IHeadCellProps>;
   public headCellResize?: ChildComponent<IHeadCellResizeProps>;
   public headRow?: ChildComponent<IHeadRowProps>;
+  public loading?: ChildComponent<ILoadingProps>;
   public noDataRow?: ChildComponent<INoDataRowProps>;
   public paging?: ChildComponent<IPagingProps>;
   public pagingIndex?: ChildComponent<IPagingIndexProps>;
