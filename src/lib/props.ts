@@ -289,5 +289,11 @@ export interface IPopupProps {
 export interface IHeaderFilterButtonProps {
   childComponents?: ChildComponents;
   column: Column,
-  dispatch: DispatchFunc
+  dispatch: DispatchFunc;
+}
+
+export interface ISortIconProps {
+  childComponents?: ChildComponents;
+  column: Column,
+  dispatch: DispatchFunc;
 }

@@ -81,5 +81,5 @@ export const isRemoteSorting =  (sortingMode: SortingMode) =>
   || sortingMode === SortingMode.SingleTripleStateRemote
   || sortingMode === SortingMode.MultipleRemote;
 
-export const isSortingEnabled = (sortingMode: SortingMode) =>
-  sortingMode !== SortingMode.None;
+export const isSortingEnabled = (sortingMode: SortingMode, column?: Column) =>
+  sortingMode !== SortingMode.None && column?.isSortable !== false;

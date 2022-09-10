@@ -84,6 +84,12 @@ it('isSortingEnabled', () => {
   expect(isSortingEnabled(SortingMode.MultipleTripleStateRemote)).toBeTruthy();
 });
 
+it('isSortingEnabled column.isSortable', () => {
+  expect(isSortingEnabled(SortingMode.Single, { isSortable: false } as Column)).toBeFalsy();
+  expect(isSortingEnabled(SortingMode.Single, { isSortable: true } as Column)).toBeTruthy();
+});
+
+
 it('sortColumns', () => {
   const newData = sortColumns([{
     key: '1',

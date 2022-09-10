@@ -13,6 +13,7 @@ export class Column {
   public isHeaderFilterPopupShown?: boolean;
   public isEditable?: boolean;
   public isResizable?: boolean;
+  public isSortable?: boolean;
   public key!: string;
   public sortDirection?: SortDirection;
   public sortIndex?: number;
