@@ -4,7 +4,8 @@ import {
   IGroupRowProps, IGroupSummaryCellProps, IGroupSummaryRowProps, IHeadCellProps,
   IHeadCellResizeProps, IHeaderFilterButtonProps, IHeadRowProps, ILoadingProps, INoDataRowProps,
   IPagingIndexProps, IPagingProps, IPagingSizeProps, IPopupContentItemProps, IPopupContentProps,
-  ISummaryCellProps, ISummaryRowProps, ITableBodyProps, ITableFootProps, ITableHeadProps,
+  ISortIconProps, ISummaryCellProps, ISummaryRowProps, ITableBodyProps, ITableFootProps,
+  ITableHeadProps,
 } from '../props';
 import { ChildComponent } from './ChildComponent';
 
@@ -35,6 +36,7 @@ export class ChildComponents {
   public popupContent?: ChildComponent<IPopupContentProps>;
   public popupContentItem?: ChildComponent<IPopupContentItemProps>;
   public rootDiv?: ChildComponent<ITableProps>;
+  public sortIcon?: ChildComponent<ISortIconProps>;
   public summaryCell?: ChildComponent<ISummaryCellProps>;
   public summaryRow?: ChildComponent<ISummaryRowProps>;
   public table?: ChildComponent<ITableProps>;
