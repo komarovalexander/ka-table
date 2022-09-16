@@ -10,7 +10,7 @@ const EmptyCells: React.FunctionComponent<IEmptyCellsProps> = ({ count, isTh, is
         isColGroup ?
           <col key={index} />
           : isTh ?
-            <th key={index} className={`ka-empty-cell ${defaultOptions.css.theadBackground}`}/> :
+            <th key={index} className={`ka-empty-cell ${defaultOptions.css.theadBackground} ${defaultOptions.css.theadFixed}`}/> :
             <td key={index} className='ka-empty-cell'/>)}
     </>
   );
