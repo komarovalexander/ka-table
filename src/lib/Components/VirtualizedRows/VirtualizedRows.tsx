@@ -3,6 +3,7 @@ import React, { RefObject } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { ActionType } from '../../enums';
 import { ITableBodyProps } from '../../props';
+import { getNewRowEditableCells } from '../../Utils/CellUtils';
 import { getVirtualized } from '../../Utils/Virtualize';
 import Rows from '../Rows/Rows';
 
@@ -11,6 +12,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
     data,
     dispatch,
     virtualScrolling,
+    editableCells,
   } = props;
 
   const onFirstRowRendered = (firstRowRef: RefObject<HTMLElement>) => {
@@ -36,7 +38,8 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   let virtualizedData = data;
   let virtualized;
   if (virtualScrolling) {
-    virtualized = getVirtualized(virtualScrolling, virtualizedData);
+    const isNewRowShown = !!getNewRowEditableCells(editableCells)?.length;
+    virtualized = getVirtualized(virtualScrolling, virtualizedData, isNewRowShown);
     virtualizedData = virtualized.virtualizedData;
   }
   return (

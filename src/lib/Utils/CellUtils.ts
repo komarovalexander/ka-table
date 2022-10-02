@@ -1,9 +1,14 @@
 import { updateCellValue, updatePopupPosition } from '../actionCreators';
+import { newRowId } from '../const';
 import { ActionType, EditingMode } from '../enums';
 import { Column, EditableCell } from '../models';
 import { PopupPosition } from '../Models/PopupPosition';
 import { DispatchFunc } from '../types';
 import { getCopyOfArrayAndAddItem } from './ArrayUtils';
+
+export const getNewRowEditableCells = (editableCells: EditableCell[]) => {
+  return editableCells && editableCells.filter(c => c.rowKeyValue === newRowId)
+};
 
 export const isEditableCell = (editingMode: EditingMode, column: Column, rowEditableCells: EditableCell[]): boolean => {
   if (column.isEditable !== undefined) {

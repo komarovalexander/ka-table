@@ -47,6 +47,17 @@ describe('Virtualize', () => {
 
       expect(result).toMatchSnapshot();
     });
+
+    it('with new row', () => {
+      const virtualScrolling: VirtualScrolling = {
+        itemHeight: () => 10,
+        scrollTop: 100,
+        tbodyHeight: 40,
+      };
+      const result = getVirtualized(virtualScrolling, data, true);
+
+      expect(result).toMatchSnapshot();
+    });
   });
 
   it('isVirtualScrollingEnabled', () => {
