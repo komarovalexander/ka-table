@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { newRowId } from '../../const';
 import { ITableBodyProps } from '../../props';
+import { getNewRowEditableCells } from '../../Utils/CellUtils';
 import NewRow from '../NewRow/NewRow';
 import NoDataRow from '../NoDataRow/NoDataRow';
 import VirtualizedRows from '../VirtualizedRows/VirtualizedRows';
@@ -19,11 +19,11 @@ const TableBodyContent: React.FunctionComponent<ITableBodyProps> = (props) => {
     validation,
   } = props;
 
-  const newRowEditableCells = editableCells && editableCells.filter(c => c.rowKeyValue === newRowId);
+  const newRowEditableCells = getNewRowEditableCells(editableCells);
   return (
     <>
       {
-        newRowEditableCells && !!newRowEditableCells.length && (
+        !!newRowEditableCells?.length && (
         <NewRow
           childComponents={childComponents}
           columns={columns}
