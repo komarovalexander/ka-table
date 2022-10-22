@@ -1,5 +1,5 @@
 .material-demo{
-  @import '../../../node_modules/materialize-css/sass/materialize.scss';
+
   @import '../../lib/static/icons.scss';
   .ka{
     background-color: white;
@@ -56,7 +56,6 @@
 
       &.active { color: #fff; }
 
-      &.active { background-color: $primary-color; }
     }
   }
   .ka-paging-page-index{

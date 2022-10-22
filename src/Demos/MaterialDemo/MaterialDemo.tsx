@@ -1,6 +1,5 @@
 import './MaterialDemo.scss';
 
-import M from 'materialize-css';
 import React, { useEffect, useState } from 'react';
 
 import { ITableProps, kaReducer, Table } from '../../lib';
