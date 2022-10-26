@@ -2,7 +2,7 @@ import './AlertCellDemo.scss';
 
 import React from 'react';
 
-import { DataType, ITableProps, Table } from '../../lib';
+import { DataType, Table } from '../../lib';
 import { ICellTextProps } from '../../lib/props';
 
 const dataArray = Array(10).fill(undefined).map(
