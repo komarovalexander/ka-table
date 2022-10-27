@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { DataType, Table } from '../../lib';
+import { EditingMode, SortingMode } from '../../lib/enums';
 import { Column } from '../../lib/models';
-import { DispatchFunc } from '../../lib/types';
 
 const columns: Column[] = Array(20).fill(undefined).map(
   (_, index) => ({
@@ -21,25 +20,15 @@ const dataArray = Array(30).fill(undefined).map(
   }, { id: index }),
 );
 
-const tablePropsInit: ITableProps = {
-  columns,
-  data: dataArray,
-  editingMode: EditingMode.Cell,
-  rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
-};
-
 const FixedColumnDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
-
   return (
     <div className='fixed-column-demo'>
       <Table
-        {...tableProps}
-        dispatch={dispatch}
+        columns={columns}
+        data={dataArray}
+        editingMode={EditingMode.Cell}
+        rowKeyField={'id'}
+        sortingMode={SortingMode.Single}
         childComponents={{
           headCell: {
             elementAttributes: (props) => {
