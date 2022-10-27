@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
+import { DataType, Table } from '../../lib';
 import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
-import { DataType, EditingMode, FilteringMode } from '../../lib/enums';
+import { EditingMode, FilteringMode } from '../../lib/enums';
 import { Column } from '../../lib/models';
 import { IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
