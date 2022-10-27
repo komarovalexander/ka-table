@@ -35,7 +35,7 @@ const CustomDataRowDemo: React.FC = () => {
           width: 100,
           title: 'Student',
         },
-        { key: 'score', title: 'Score', dataType: DataType.Number }
+        { key: 'score', title: 'Score', dataType: DataType.Number },
       ]}
       data={dataArray}
       rowKeyField={'id'}
