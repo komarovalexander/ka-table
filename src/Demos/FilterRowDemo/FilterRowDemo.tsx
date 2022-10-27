@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType, FilteringMode, SortDirection } from '../../lib/enums';
-import { DispatchFunc } from '../../lib/types';
+import { DataType, Table } from '../../lib';
+import { FilteringMode, SortDirection } from '../../lib/enums';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
@@ -13,37 +12,27 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9) },
 ];
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend, filterRowValue: 'Billi Bob' },
-    { key: 'score', title: 'Score', dataType: DataType.Number },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
-    {
-      dataType: DataType.Date,
-      key: 'nextTry',
-      title: 'Next Try',
-    },
-  ],
-  data: dataArray,
-  filteringMode: FilteringMode.FilterRow,
-  format: ({ column, value }) => {
-    if (column.dataType === DataType.Date){
-      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
-    }
-  },
-  rowKeyField: 'id',
-};
-
 const FilterRowDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
   return (
     <Table
-      {...tableProps}
+      columns= {[
+        { key: 'name', title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend, filterRowValue: 'Billi Bob' },
+        { key: 'score', title: 'Score', dataType: DataType.Number },
+        { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
+        {
+          dataType: DataType.Date,
+          key: 'nextTry',
+          title: 'Next Try',
+        },
+      ]}
       data={dataArray}
-      dispatch={dispatch}
+      filteringMode={FilteringMode.FilterRow}
+      format= {({ column, value }) => {
+        if (column.dataType === DataType.Date){
+          return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+        }
+      }}
+      rowKeyField={'id'}
     />
   );
 };
