@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import FilterControl from 'react-filter-control';
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType, EditingMode } from '../../lib/enums';
-import { DispatchFunc } from '../../lib/types';
+import { DataType, Table } from '../../lib';
+import { EditingMode } from '../../lib/enums';
 import { filterData } from './filterData';
 
 const dataArray: any[] = [
@@ -16,17 +15,6 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
   { id: 7, name: 'Tom Bruce', score: 67, passed: false },
 ];
-
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String },
-    { key: 'score', title: 'Score', dataType: DataType.Number },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
-  ],
-  data: dataArray,
-  editingMode: EditingMode.Cell,
-  rowKeyField: 'id',
-};
 
 const fields = [{
   caption: 'Name',
@@ -82,10 +70,6 @@ const filter: IFilterControlFilterValue = {
 };
 
 const FilterExtendedDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
   const [filterValue, changeFilter] = useState(filter);
   const onFilterChanged = (newFilterValue: IFilterControlFilterValue) => {
     changeFilter(newFilterValue);
@@ -96,8 +80,14 @@ const FilterExtendedDemo: React.FC = () => {
         <FilterControl {...{fields, groups, filterValue,  onFilterValueChanged: onFilterChanged}}/>
       </div>
       <Table
-        {...tableProps}
-        dispatch={dispatch}
+        columns= {[
+          { key: 'name', title: 'Name', dataType: DataType.String },
+          { key: 'score', title: 'Score', dataType: DataType.Number },
+          { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
+        ]}
+        data={dataArray}
+        editingMode={EditingMode.Cell}
+        rowKeyField={'id'}
         extendedFilter={(data) => filterData(data, filterValue)}
       />
     </>
