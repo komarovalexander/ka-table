@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import * as actionCreators from '../../actionCreators';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 import { EditableCell, PagingOptions } from '../../models';
 import { ChildComponents } from '../../Models/ChildComponents';
@@ -10,10 +11,17 @@ import { GroupedColumn } from '../../Models/GroupedColumn';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
 import {
-  DispatchFunc, FilterFunc, FormatFunc, SearchFunc, SortFunc, ValidationFunc,
+    DispatchFunc, FilterFunc, FormatFunc, SearchFunc, SortFunc, ValidationFunc
 } from '../../types';
 import { TableControlled } from '../TableControlled/TableControlled';
-import { ITableInstance, TableUncontrolled } from '../TableUncontrolled/TableUncontrolled';
+import { TableUncontrolled } from '../TableUncontrolled/TableUncontrolled';
+
+type ActionCreators = typeof actionCreators;
+export interface ITableInstance extends ActionCreators {
+  props: ITableProps;
+  changeProps: React.Dispatch<React.SetStateAction<ITableProps>>;
+  onDispatch: DispatchFunc;
+}
 
 export interface ITableProps {
   columnReordering?: boolean;
@@ -61,6 +69,7 @@ export interface IKaTableProps extends ITableProps {
   childComponents?: ChildComponents;
   dispatch?: DispatchFunc;
   table?: ITableInstance
+  onDispatch?: DispatchFunc;
 }
 
 

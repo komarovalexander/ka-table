@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
+import { ITableProps, Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 
 const dataArray = Array(20).fill(undefined).map(

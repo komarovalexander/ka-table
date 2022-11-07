@@ -1,3 +1,4 @@
+import { ITableProps } from './Components/Table/Table';
 import { AttributeTableData, Column } from './models';
 
 type AddParameters<T, I> =

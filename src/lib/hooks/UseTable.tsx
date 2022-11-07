@@ -1,19 +1,21 @@
-import { ITableProps } from '../Components/Table/Table';
-import { ITableInstance } from '../Components/TableUncontrolled/TableUncontrolled';
+import * as actionCreators from '../actionCreators';
+import { ITableInstance, ITableProps } from '../Components/Table/Table';
 import { DispatchFunc } from '../types';
 
 export const useTable = (options?: {
-  props?: ITableProps;
   changeProps?: React.Dispatch<React.SetStateAction<ITableProps>>;
   onDispatch?: DispatchFunc;
 }): ITableInstance => {
   const {
-    props,
     changeProps,
     onDispatch
   } = options || {};
-  const propsResult =  props || ({} as any);
+  const propsResult = ({} as any);
   return {
+    ...Object.keys(actionCreators).reduce((acc, key) => {
+      acc[key]= function(...args: any) { this.dispatch((actionCreators as any)[key](...args)) };
+      return acc;
+    }, {} as any) as typeof actionCreators,
     props: propsResult,
     changeProps: changeProps || (() => {}),
     onDispatch: onDispatch || (() => {}) as DispatchFunc
