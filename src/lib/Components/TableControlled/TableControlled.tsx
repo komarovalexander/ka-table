@@ -17,6 +17,8 @@ export interface ITableControlledProps extends ITableProps {
   dispatch: DispatchFunc;
 }
 
+export const TablePropsContext = React.createContext<ITableProps>({} as ITableProps);
+
 export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
     childComponents,
@@ -47,28 +49,30 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
 
 
   return (
-    <div {...elementAttributes}>
-      {rootDivContent || (
-        <>
-          {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
-          <TableWrapper {...props} />
-          {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
-          <Loading {...loading} childComponents={childComponents}/>
-          {columns.map(column =>
-            column.isHeaderFilterPopupShown
-            && (
-              <Popup
-                key={column.key}
-                column={column}
-                childComponents={childComponents}
-                data={data}
-                dispatch={dispatch}
-                format={format}
-              />
-            )
-          )}
-        </>
-      )}
-    </div>
+    <TablePropsContext.Provider value={props}>
+      <div {...elementAttributes}>
+        {rootDivContent || (
+          <>
+            {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
+            <TableWrapper {...props} />
+            {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
+            <Loading {...loading} childComponents={childComponents}/>
+            {columns.map(column =>
+              column.isHeaderFilterPopupShown
+              && (
+                <Popup
+                  key={column.key}
+                  column={column}
+                  childComponents={childComponents}
+                  data={data}
+                  dispatch={dispatch}
+                  format={format}
+                />
+              )
+            )}
+          </>
+        )}
+      </div>
+    </TablePropsContext.Provider>
   );
 };

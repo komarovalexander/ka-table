@@ -2,7 +2,7 @@ import * as actionCreators from '../actionCreators';
 import { ITableInstance, ITableProps } from '../Components/Table/Table';
 import { DispatchFunc } from '../types';
 
-export const useTable = (options?: {
+export const getTable = (options?: {
   changeProps?: React.Dispatch<React.SetStateAction<ITableProps>>;
   onDispatch?: DispatchFunc;
 }): ITableInstance => {
@@ -18,6 +18,14 @@ export const useTable = (options?: {
     }, {} as any) as typeof actionCreators,
     props: propsResult,
     changeProps: changeProps || (() => {}),
+    dispatch: (() => {}),
     onDispatch: onDispatch || (() => {}) as DispatchFunc
   };
+}
+
+export const useTable = (options?: {
+  changeProps?: React.Dispatch<React.SetStateAction<ITableProps>>;
+  onDispatch?: DispatchFunc;
+}): ITableInstance => {
+  return getTable(options);
 }

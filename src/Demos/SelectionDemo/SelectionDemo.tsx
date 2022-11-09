@@ -1,14 +1,11 @@
 import './SelectionDemo.scss';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
-import {
-  deselectAllFilteredRows, deselectRow, selectAllFilteredRows, selectRow, selectRowsRange,
-} from '../../lib/actionCreators';
+import { Table } from '../../lib';
 import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
-import { ICellTextProps, IHeadCellProps } from '../../lib/props';
-import { DispatchFunc } from '../../lib/types';
+import { useTableInstance } from '../../lib/hooks/UseTableInstance';
+import { ICellTextProps } from '../../lib/props';
 import { kaPropsUtils } from '../../lib/utils';
 
 const dataArray = Array(64).fill(undefined).map(
@@ -22,72 +19,66 @@ const dataArray = Array(64).fill(undefined).map(
 );
 
 const SelectionCell: React.FC<ICellTextProps> = ({
-  rowKeyValue, dispatch, isSelectedRow, selectedRows
+  rowKeyValue, isSelectedRow, selectedRows
 }) => {
+  const table = useTableInstance();
   return (
     <input
       type='checkbox'
       checked={isSelectedRow}
       onChange={(event: any) => {
         if (event.nativeEvent.shiftKey){
-          dispatch(selectRowsRange(rowKeyValue, [...selectedRows].pop()));
+          table.selectRowsRange(rowKeyValue, [...selectedRows].pop());
         } else if (event.currentTarget.checked) {
-          dispatch(selectRow(rowKeyValue));
+          table.selectRow(rowKeyValue);
         } else {
-          dispatch(deselectRow(rowKeyValue));
+          table.deselectRow(rowKeyValue);
         }
       }}
     />
   );
 };
 
-const SelectionHeader: React.FC<IHeadCellProps> = ({
-  dispatch, areAllRowsSelected,
-}) => {
+const SelectionHeader = () => {
+  const table = useTableInstance();
+  const areAllRowsSelected = kaPropsUtils.areAllFilteredRowsSelected(table.props);
+
   return (
     <input
       type='checkbox'
       checked={areAllRowsSelected}
       onChange={(event) => {
         if (event.currentTarget.checked) {
-          dispatch(selectAllFilteredRows()); // also available: selectAllVisibleRows(), selectAllRows()
+          table.selectAllFilteredRows(); // also available: selectAllVisibleRows(), selectAllRows()
         } else {
-          dispatch(deselectAllFilteredRows()); // also available: deselectAllVisibleRows(), deselectAllRows()
+          table.deselectAllFilteredRows(); // also available: deselectAllVisibleRows(), deselectAllRows()
         }
       }}
     />
   );
 };
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    {
-      key: 'selection-cell',
-    },
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'column4', title: 'Column 4', dataType: DataType.String },
-  ],
-  paging: {
-    enabled: true,
-  },
-  data: dataArray,
-  rowKeyField: 'id',
-  selectedRows: [3, 5],
-  sortingMode: SortingMode.Single,
-  filteringMode: FilteringMode.FilterRow,
-};
-
 const SelectionDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
   return (
     <div className='selection-demo'>
       <Table
-        {...tableProps}
+        columns= {[
+          {
+            key: 'selection-cell',
+          },
+          { key: 'column1', title: 'Column 1', dataType: DataType.String },
+          { key: 'column2', title: 'Column 2', dataType: DataType.String },
+          { key: 'column3', title: 'Column 3', dataType: DataType.String },
+          { key: 'column4', title: 'Column 4', dataType: DataType.String },
+        ]}
+        paging= {{
+          enabled: true,
+        }}
+        data={dataArray}
+        rowKeyField={'id'}
+        selectedRows={[3, 5]}
+        sortingMode={SortingMode.Single}
+        filteringMode={FilteringMode.FilterRow}
         childComponents={{
           cellText: {
             content: (props) => {
@@ -106,17 +97,12 @@ const SelectionDemo: React.FC = () => {
           headCell: {
             content: (props) => {
               if (props.column.key === 'selection-cell'){
-                return (
-                  <SelectionHeader {...props}
-                    areAllRowsSelected={kaPropsUtils.areAllFilteredRowsSelected(tableProps)}
-                    // areAllRowsSelected={kaPropsUtils.areAllVisibleRowsSelected(tableProps)}
-                  />
+                return (<SelectionHeader />
                 );
               }
             }
           }
         }}
-        dispatch={dispatch}
       />
     </div>
   );

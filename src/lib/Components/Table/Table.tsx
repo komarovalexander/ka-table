@@ -21,6 +21,7 @@ export interface ITableInstance extends ActionCreators {
   props: ITableProps;
   changeProps: React.Dispatch<React.SetStateAction<ITableProps>>;
   onDispatch: DispatchFunc;
+  dispatch: DispatchFunc;
 }
 
 export interface ITableProps {
