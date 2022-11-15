@@ -12,6 +12,7 @@ type ElementAttributes<T> = React.AllHTMLAttributes<HTMLElement>;
 
 export type ChildAttributesItem<T> = WithExtraParameters<ElementAttributes<T>, T> & { ref?: any };
 export type DispatchFunc = (action: any) => void;
+export type OnDispatchFunc = (action: any, tableProps: ITableProps) => void;
 export type Field = string;
 export type FormatFunc = (props: { value: any, column: Column }) => any;
 export type FilterFunc = (props: { column: Column }) => ((value: any, filterRowValue: any) => boolean) | void;

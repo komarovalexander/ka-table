@@ -1,10 +1,10 @@
 import * as actionCreators from '../actionCreators';
 import { ITableInstance, ITableProps } from '../Components/Table/Table';
-import { DispatchFunc } from '../types';
+import { DispatchFunc, OnDispatchFunc } from '../types';
 
 export const getTable = (options?: {
   changeProps?: React.Dispatch<React.SetStateAction<ITableProps>>;
-  onDispatch?: DispatchFunc;
+  onDispatch?: OnDispatchFunc;
 }): ITableInstance => {
   const {
     changeProps,
@@ -19,13 +19,13 @@ export const getTable = (options?: {
     props: propsResult,
     changeProps: changeProps || (() => {}),
     dispatch: (() => {}),
-    onDispatch: onDispatch || (() => {}) as DispatchFunc
+    onDispatch: onDispatch || (() => {}) as OnDispatchFunc
   };
 }
 
 export const useTable = (options?: {
   changeProps?: React.Dispatch<React.SetStateAction<ITableProps>>;
-  onDispatch?: DispatchFunc;
+  onDispatch?: OnDispatchFunc;
 }): ITableInstance => {
   return getTable(options);
 }

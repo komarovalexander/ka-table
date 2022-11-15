@@ -11,7 +11,7 @@ import { GroupedColumn } from '../../Models/GroupedColumn';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
 import {
-    DispatchFunc, FilterFunc, FormatFunc, SearchFunc, SortFunc, ValidationFunc
+    DispatchFunc, FilterFunc, FormatFunc, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc
 } from '../../types';
 import { TableControlled } from '../TableControlled/TableControlled';
 import { TableUncontrolled } from '../TableUncontrolled/TableUncontrolled';
@@ -20,7 +20,7 @@ type ActionCreators = typeof actionCreators;
 export interface ITableInstance extends ActionCreators {
   props: ITableProps;
   changeProps: React.Dispatch<React.SetStateAction<ITableProps>>;
-  onDispatch: DispatchFunc;
+  onDispatch: OnDispatchFunc;
   dispatch: DispatchFunc;
 }
 
