@@ -22,9 +22,7 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledProps>
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => {
       const nextState = kaReducer(prevState, action);
-      console.log(1);
       setTimeout(() => {
-        console.log(2);
         contextTable.onDispatch?.(action, nextState);
       }, 0)
       return nextState;

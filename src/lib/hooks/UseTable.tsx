@@ -1,6 +1,6 @@
 import * as actionCreators from '../actionCreators';
 import { ITableInstance, ITableProps } from '../Components/Table/Table';
-import { DispatchFunc, OnDispatchFunc } from '../types';
+import { OnDispatchFunc } from '../types';
 
 export const getTable = (options?: {
   changeProps?: React.Dispatch<React.SetStateAction<ITableProps>>;
