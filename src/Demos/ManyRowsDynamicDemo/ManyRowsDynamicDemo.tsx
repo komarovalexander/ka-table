@@ -1,9 +1,7 @@
 import { LoremIpsum } from 'lorem-ipsum';
 import React, { useState } from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType } from '../../lib/enums';
-import { DispatchFunc } from '../../lib/types';
+import { DataType, ITableProps, Table, useTable } from '../../lib';
 
 const lorem = new LoremIpsum({
   wordsPerSentence: {
@@ -22,20 +20,6 @@ const dataArray = Array(10000).fill(undefined).map(
   }),
 );
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'column4', title: 'Column 4', dataType: DataType.String },
-  ],
-  data: dataArray,
-  rowKeyField: 'id',
-  virtualScrolling: {
-    enabled: true
-  },
-};
-
 const useDynamicRowsOptions = ({ rowKeyField } : ITableProps) => {
   const [renderedRowSizes] = useState<any>({});
   let estimatedItemSize = 40;
@@ -52,20 +36,24 @@ const useDynamicRowsOptions = ({ rowKeyField } : ITableProps) => {
 
 
 const ManyRowsDynamicDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const { itemHeight, addRowHeight } = useDynamicRowsOptions(tableProps);
-
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
+  const table = useTable();
+  const { itemHeight, addRowHeight } = useDynamicRowsOptions(table.props);
 
   return (
     <Table
-      {...tableProps}
-      dispatch={dispatch}
+      table={table}
+      columns= {[
+        { key: 'column1', title: 'Column 1', dataType: DataType.String },
+        { key: 'column2', title: 'Column 2', dataType: DataType.String },
+        { key: 'column3', title: 'Column 3', dataType: DataType.String },
+        { key: 'column4', title: 'Column 4', dataType: DataType.String },
+      ]}
+      data={dataArray}
+      rowKeyField={'id'}
       virtualScrolling={{
-        ...tableProps.virtualScrolling,
+        ...table.props.virtualScrolling,
         itemHeight,
+        enabled: true
       }}
       childComponents={{
         dataRow: {
