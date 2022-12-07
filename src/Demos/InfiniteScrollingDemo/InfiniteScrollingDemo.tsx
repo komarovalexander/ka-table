@@ -1,48 +1,43 @@
 import React, { useState } from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
-import { hideLoading, showLoading, updateData } from '../../lib/actionCreators';
-import { DataType } from '../../lib/enums';
-import { DispatchFunc } from '../../lib/types';
+import { DataType, Table, useTable } from '../../lib';
 import serverEmulator from './serverEmulator';
 
 const LOAD_MORE_DATA = 'LOAD_MORE_DATA';
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'column4', title: 'Column 4', dataType: DataType.String },
-  ],
-  rowKeyField: 'id',
-  virtualScrolling: {
-    enabled: true
-  },
-  singleAction: { type: LOAD_MORE_DATA }
-};
-
 const InfiniteScrollingDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const [pageIndex, changePageIndex] = useState(0);
+  console.log(pageIndex);
 
-  const dispatch: DispatchFunc = async (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-    if (pageIndex !== -1) {
-      if (action.type === LOAD_MORE_DATA) {
-        dispatch(showLoading());
-        const result = await serverEmulator.get(pageIndex);
-        changePageIndex(result.pageIndex);
-        dispatch(updateData([...tableProps.data || [], ...result.data]));
-        dispatch(hideLoading());
+  const table = useTable({
+    onDispatch: async (action) => {
+      if (pageIndex !== -1) {
+        if (action.type === LOAD_MORE_DATA) {
+          table.showLoading();
+          const result = await serverEmulator.get(pageIndex);
+          changePageIndex(result.pageIndex);
+          table.updateData([...table.props.data || [], ...result.data]);
+          table.hideLoading();
+        }
       }
     }
-  };
-
+  });
+  
   return (
     <Table
-      {...tableProps}
-      dispatch={dispatch}
+      table={table}
+      columns= {[
+        { key: 'column1', title: 'Column 1', dataType: DataType.String },
+        { key: 'column2', title: 'Column 2', dataType: DataType.String },
+        { key: 'column3', title: 'Column 3', dataType: DataType.String },
+        { key: 'column4', title: 'Column 4', dataType: DataType.String },
+      ]}
+      data={[]}
+      rowKeyField={'id'}
+      virtualScrolling= {{
+        enabled: true
+      }}
+      singleAction= {{ type: LOAD_MORE_DATA }}
       childComponents={{
         tableWrapper: {
           elementAttributes: () => ({
@@ -50,8 +45,8 @@ const InfiniteScrollingDemo: React.FC = () => {
               baseFunc(event);
               const element =  event.currentTarget;
               const BOTTOM_OFFSET = 20;
-              if (element.offsetHeight + element.scrollTop >= element.scrollHeight - BOTTOM_OFFSET) {
-                dispatch({ type: LOAD_MORE_DATA });
+              if (element.offsetHeight + element.scrollTop >= element.scrollHeight - BOTTOM_OFFSET) {  
+                table.dispatch({ type: LOAD_MORE_DATA });
               }
             },
             style: { maxHeight: 600 }

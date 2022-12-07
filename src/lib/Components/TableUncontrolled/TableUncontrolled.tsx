@@ -18,7 +18,7 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledProps>
   const [tableProps, changeTableProps] = React.useState({...props, ...props.table?.props});
   const { table: _, ...tablePropsUncontrolled } = tableProps;
   const contextTable = props.table || getTable();
-
+ 
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => {
       const nextState = kaReducer(prevState, action);
@@ -32,5 +32,5 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledProps>
   contextTable.changeProps = changeTableProps;
   contextTable.dispatch = dispatch;
 
-  return <TableInstanceContext.Provider value={contextTable}><TableControlled {...tablePropsUncontrolled} dispatch={dispatch} /></TableInstanceContext.Provider>
+  return <TableInstanceContext.Provider value={contextTable}><TableControlled {...tablePropsUncontrolled} childComponents={props.childComponents} dispatch={dispatch} /></TableInstanceContext.Provider>
 };
