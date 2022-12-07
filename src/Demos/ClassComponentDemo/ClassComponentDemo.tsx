@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ITableProps, Table } from '../../lib';
+import { Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 
 const dataArray = Array(20).fill(undefined).map(
@@ -13,7 +13,7 @@ const dataArray = Array(20).fill(undefined).map(
   }),
 );
 
-class ClassComponentDemo extends React.Component<any, { tableProps: ITableProps }> {
+class ClassComponentDemo extends React.Component {
   public render() {
     return (
       <Table
