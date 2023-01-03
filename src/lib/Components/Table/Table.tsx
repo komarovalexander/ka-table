@@ -46,6 +46,7 @@ export interface ITableProps {
   rowKeyField: string;
   treeGroupKeyField?: string;
   treeGroupsExpanded?: any[];
+  treeExpandButtonColumnKey?: string;
   rowReordering?: boolean;
   search?: SearchFunc;
   searchText?: string;

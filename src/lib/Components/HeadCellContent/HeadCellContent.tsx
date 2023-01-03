@@ -10,6 +10,9 @@ import { isSortingEnabled } from '../../Utils/SortUtils';
 import HeaderFilterButton from '../HeaderFilterButton/HeaderFilterButton';
 import SortIcon from '../SortIcon/SortIcon';
 
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
     column,
@@ -30,7 +33,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
 
 
   const refToElement = React.useRef<HTMLDivElement>(null);
-  React.useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     checkPopupPosition(column, refToElement, dispatch);
   }, [column, dispatch]);
 

@@ -15,6 +15,7 @@ interface IRowCommonProps {
   childComponents: ChildComponents;
   columns: Column[];
   treeDeep?: number;
+  treeExpandButtonColumnKey?: string;
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
   editingMode: EditingMode;
@@ -93,7 +94,7 @@ export interface IDataRowProps extends IRowCommonProps {
   validation?: ValidationFunc;
   isDetailsRowShown: boolean;
   isSelectedRow: boolean;
-  rowEditableCells: EditableCell[]
+  rowEditableCells: EditableCell[];
 }
 
 export interface IGroupRowProps {
@@ -173,6 +174,7 @@ export interface ITableBodyProps {
   selectedRows: any[];
   validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
+  treeExpandButtonColumnKey?: string;
 }
 
 export interface ITableFootProps extends ITableAllProps {
