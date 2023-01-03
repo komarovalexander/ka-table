@@ -27,6 +27,7 @@ const tablePropsInit: ITableProps = {
   ],
   data,
   filteringMode: FilteringMode.FilterRow,
+  treeExpandButtonColumnKey: 'productivity',
   treeGroupKeyField: 'treeGroupId',
   editingMode: EditingMode.Cell,
   treeGroupsExpanded: [7, 11],
