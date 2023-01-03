@@ -25,14 +25,15 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   rowKeyValue,
   selectedRows,
   validation,
+  treeExpandButtonColumnKey
 }) => {
-  const arrow = isTreeGroup ? [(
+  const arrow = isTreeGroup ? (
     <div
       onClick={() => dispatch(updateTreeGroupsExpanded(rowKeyValue))}
       className={isTreeExpanded
         ? defaultOptions.css.iconTreeArrowExpanded : defaultOptions.css.iconTreeArrowCollapsed}
     />
-  )] : undefined;
+  ) : undefined;
   return (
     <>
       {columns.map((column, index) => {
@@ -40,10 +41,11 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
         const hasEditorValue = editableCell && editableCell.hasOwnProperty('editorValue');
         const editorValue = editableCell && editableCell.editorValue;
         const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
-        const cellDeep = treeDeep != null && index === 0 ? treeDeep : undefined;
+        const isTreeColumn = treeExpandButtonColumnKey ? treeExpandButtonColumnKey === column.key : index === 0;
+        const cellDeep = treeDeep != null && isTreeColumn ? treeDeep : undefined;
         return (
           <CellComponent
-            treeArrowElement={arrow?.pop()}
+            treeArrowElement={isTreeColumn && arrow}
             childComponents={childComponents}
             treeDeep={cellDeep}
             column={column}

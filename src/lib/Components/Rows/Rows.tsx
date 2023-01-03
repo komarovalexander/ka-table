@@ -32,6 +32,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     rowReordering,
     selectedRows,
     validation,
+    treeExpandButtonColumnKey
   } = props;
   const groupMark = getGroupMark();
 
@@ -83,6 +84,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             isTreeGroup={isTreeGroup}
             isTreeExpanded={isTreeExpanded}
             treeDeep={isTreeRow === true ? d.treeDeep : undefined}
+            treeExpandButtonColumnKey={treeExpandButtonColumnKey}
             format={format}
             groupColumnsCount={props.groupColumnsCount}
             isDetailsRowShown={isDetailsRowShown}
