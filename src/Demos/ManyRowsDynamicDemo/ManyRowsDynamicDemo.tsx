@@ -1,7 +1,9 @@
-import { LoremIpsum } from 'lorem-ipsum';
+import { ITableProps, Table, kaReducer } from '../../lib';
 import React, { useState } from 'react';
 
-import { DataType, ITableProps, Table, useTable } from '../../lib';
+import { DataType } from '../../lib/enums';
+import { DispatchFunc } from '../../lib/types';
+import { LoremIpsum } from 'lorem-ipsum';
 
 const lorem = new LoremIpsum({
   wordsPerSentence: {
@@ -10,60 +12,74 @@ const lorem = new LoremIpsum({
   },
 });
 
-const dataArray = Array(10000).fill(undefined).map(
-  (_, index) => ({
+const dataArray = Array(10000)
+  .fill(undefined)
+  .map((_, index) => ({
     column1: lorem.generateWords(),
     column2: `column:2 row:${index}`,
     column3: `column:3 row:${index}`,
     column4: `column:4 row:${index}`,
     id: index,
-  }),
-);
+  }));
 
-const useDynamicRowsOptions = ({ rowKeyField } : ITableProps) => {
+const tablePropsInit: ITableProps = {
+  columns: [
+    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String },
+  ],
+  data: dataArray,
+  rowKeyField: 'id',
+  virtualScrolling: {
+    enabled: true,
+  },
+};
+
+const useDynamicRowsOptions = ({ rowKeyField }: ITableProps) => {
   const [renderedRowSizes] = useState<any>({});
   let estimatedItemSize = 40;
-  const addRowHeight = (rowData: any, height?: number) => { if (height) { renderedRowSizes[rowData[rowKeyField]] = height; } };
+  const addRowHeight = (rowData: any, height?: number) => {
+    if (height) {
+      renderedRowSizes[rowData[rowKeyField]] = height;
+    }
+  };
   const totalHeight = Object.keys(renderedRowSizes).reduce((sum, key) => sum + parseFloat(renderedRowSizes[key] || 0), 0);
-  estimatedItemSize = estimatedItemSize === 40 && Object.keys(renderedRowSizes).length
-    ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length)
-    : estimatedItemSize;
+  estimatedItemSize =
+    estimatedItemSize === 40 && Object.keys(renderedRowSizes).length
+      ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length)
+      : estimatedItemSize;
   return {
     addRowHeight,
-    itemHeight: (rowData: any) => renderedRowSizes[rowData[rowKeyField]] || estimatedItemSize
-  }
-}
-
+    itemHeight: (rowData: any) => renderedRowSizes[rowData[rowKeyField]] || estimatedItemSize,
+  };
+};
 
 const ManyRowsDynamicDemo: React.FC = () => {
-  const table = useTable();
-  const { itemHeight, addRowHeight } = useDynamicRowsOptions(table.props);
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const { itemHeight, addRowHeight } = useDynamicRowsOptions(tableProps);
+
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
 
   return (
     <Table
-      table={table}
-      columns= {[
-        { key: 'column1', title: 'Column 1', dataType: DataType.String },
-        { key: 'column2', title: 'Column 2', dataType: DataType.String },
-        { key: 'column3', title: 'Column 3', dataType: DataType.String },
-        { key: 'column4', title: 'Column 4', dataType: DataType.String },
-      ]}
-      data={dataArray}
-      rowKeyField={'id'}
+      {...tableProps}
+      dispatch={dispatch}
       virtualScrolling={{
-        ...table.props.virtualScrolling,
+        ...tableProps.virtualScrolling,
         itemHeight,
-        enabled: true
       }}
       childComponents={{
         dataRow: {
           elementAttributes: ({ rowData }) => ({
-            ref: (ref: any) => addRowHeight(rowData, ref?.offsetHeight)
+            ref: (ref: any) => addRowHeight(rowData, ref?.offsetHeight),
           }),
         },
         tableWrapper: {
-          elementAttributes: () => ({ style: { maxHeight: 600 }})
-        }
+          elementAttributes: () => ({ style: { maxHeight: 600 } }),
+        },
       }}
     />
   );
