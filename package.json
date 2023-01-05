@@ -74,7 +74,7 @@
     "react-ga": "^3.3.1",
     "react-highlight": "^0.14.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "4.0.0",
+    "react-scripts": "^5.0.1",
     "sass": "^1.54.4",
     "simulant": "^0.2.2",
     "tslint": "^6.1.0",
