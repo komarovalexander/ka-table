@@ -1,11 +1,12 @@
+import { ActionType, DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { ITableInstance, Table, useTable } from '../../lib';
 import React, { useEffect } from 'react';
 
-import { ITableInstance, Table, useTable } from '../../lib';
 import CellEditorBoolean from '../../lib/Components/CellEditorBoolean/CellEditorBoolean';
-import { ActionType, DataType, EditingMode, SortingMode } from '../../lib/enums';
 
-const dataArray = Array(10).fill(undefined).map(
-  (_, index) => ({
+const dataArray = Array(10)
+  .fill(undefined)
+  .map((_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
     column3: `column:3 row:${index}`,
@@ -13,60 +14,62 @@ const dataArray = Array(10).fill(undefined).map(
     column5: `column:5 row:${index}`,
     column6: `column:6 row:${index}`,
     id: index,
-  }),
-);
+  }));
 
-const ColumnSettings = ({ table }: {table: ITableInstance}) => {
+const ColumnSettings = ({ table }: { table: ITableInstance }) => {
   const settingsTable = useTable();
   useEffect(() => {
-    table?.props?.columns && settingsTable.updateData(table.props.columns.map(c => ({...c, visible: c.visible !== false })));
+    table?.props?.columns && settingsTable.updateData(table.props.columns.map((c) => ({ ...c, visible: c.visible !== false })));
   }, [table.props.columns, settingsTable]);
   return (
     <Table
       table={settingsTable}
       rowKeyField={'key'}
       onDispatch={(action) => {
-        if (action.type === ActionType.UpdateCellValue){
-          action.value ? table.showColumn(action.rowKeyValue) : table.hideColumn(action.rowKeyValue)
+        if (action.type === ActionType.UpdateCellValue) {
+          action.value ? table.showColumn(action.rowKeyValue) : table.hideColumn(action.rowKeyValue);
         }
-
       }}
-      columns= {[{
-        key: 'title',
-        isEditable: false,
-        title: 'Field',
-        dataType: DataType.String
-      }, {
-        key: 'visible',
-        title: 'Visible',
-        isEditable: false,
-        style: { textAlign: 'center' },
-        width: 80,
-        dataType: DataType.Boolean
-      }]}
+      columns={[
+        {
+          key: 'title',
+          isEditable: false,
+          title: 'Field',
+          dataType: DataType.String,
+        },
+        {
+          key: 'visible',
+          title: 'Visible',
+          isEditable: false,
+          style: { textAlign: 'center' },
+          width: 80,
+          dataType: DataType.Boolean,
+        },
+      ]}
       editingMode={EditingMode.None}
       childComponents={{
-        rootDiv: { elementAttributes: () => ({style: {width: 400, marginBottom: 20}})},
+        rootDiv: { elementAttributes: () => ({ style: { width: 400, marginBottom: 20 } }) },
         cell: {
           content: (props) => {
-            switch (props.column.key){
-              case 'visible': return <CellEditorBoolean {...props}/>;
+            switch (props.column.key) {
+              case 'visible':
+                return <CellEditorBoolean {...props} />;
             }
-          }
-        }
+          },
+        },
       }}
     />
   );
-}
+};
 
 const ColumnSettingsDemo: React.FC = () => {
   const table = useTable();
   return (
     <div className='column-settings-demo'>
-      <ColumnSettings table={table}/>
+      <ColumnSettings table={table} />
       <Table
         table={table}
-        columns= {[
+        columns={[
           { key: 'column1', title: 'Column 1', dataType: DataType.String },
           { key: 'column2', title: 'Column 2', dataType: DataType.String },
           { key: 'column3', title: 'Column 3', dataType: DataType.String, visible: false },

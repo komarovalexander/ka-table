@@ -21,7 +21,7 @@ const SelectionCell: React.FC<ICellTextProps> = ({ rowKeyValue, isSelectedRow, s
   const table = useTableInstance();
   return (
     <input
-      type="checkbox"
+      type='checkbox'
       checked={isSelectedRow}
       onChange={(event: any) => {
         if (event.nativeEvent.shiftKey) {
@@ -42,7 +42,7 @@ const SelectionHeader = () => {
 
   return (
     <input
-      type="checkbox"
+      type='checkbox'
       checked={areAllRowsSelected}
       onChange={(event) => {
         if (event.currentTarget.checked) {
@@ -57,7 +57,7 @@ const SelectionHeader = () => {
 
 const SelectionDemo: React.FC = () => {
   return (
-    <div className="selection-demo">
+    <div className='selection-demo'>
       <Table
         columns={[
           {

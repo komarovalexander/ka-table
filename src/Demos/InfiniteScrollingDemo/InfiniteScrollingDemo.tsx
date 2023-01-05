@@ -1,13 +1,12 @@
+import { DataType, Table, useTable } from '../../lib';
 import React, { useState } from 'react';
 
-import { DataType, Table, useTable } from '../../lib';
 import serverEmulator from './serverEmulator';
 
 const LOAD_MORE_DATA = 'LOAD_MORE_DATA';
 
 const InfiniteScrollingDemo: React.FC = () => {
   const [pageIndex, changePageIndex] = useState(0);
-  console.log(pageIndex);
 
   const table = useTable({
     onDispatch: async (action) => {
@@ -16,17 +15,17 @@ const InfiniteScrollingDemo: React.FC = () => {
           table.showLoading();
           const result = await serverEmulator.get(pageIndex);
           changePageIndex(result.pageIndex);
-          table.updateData([...table.props.data || [], ...result.data]);
+          table.updateData([...(table.props.data || []), ...result.data]);
           table.hideLoading();
         }
       }
-    }
+    },
   });
-  
+
   return (
     <Table
       table={table}
-      columns= {[
+      columns={[
         { key: 'column1', title: 'Column 1', dataType: DataType.String },
         { key: 'column2', title: 'Column 2', dataType: DataType.String },
         { key: 'column3', title: 'Column 3', dataType: DataType.String },
@@ -34,24 +33,24 @@ const InfiniteScrollingDemo: React.FC = () => {
       ]}
       data={[]}
       rowKeyField={'id'}
-      virtualScrolling= {{
-        enabled: true
+      virtualScrolling={{
+        enabled: true,
       }}
-      singleAction= {{ type: LOAD_MORE_DATA }}
+      singleAction={{ type: LOAD_MORE_DATA }}
       childComponents={{
         tableWrapper: {
           elementAttributes: () => ({
             onScroll: (event, { baseFunc }) => {
               baseFunc(event);
-              const element =  event.currentTarget;
+              const element = event.currentTarget;
               const BOTTOM_OFFSET = 20;
-              if (element.offsetHeight + element.scrollTop >= element.scrollHeight - BOTTOM_OFFSET) {  
+              if (element.offsetHeight + element.scrollTop >= element.scrollHeight - BOTTOM_OFFSET) {
                 table.dispatch({ type: LOAD_MORE_DATA });
               }
             },
-            style: { maxHeight: 600 }
-          })
-        }
+            style: { maxHeight: 600 },
+          }),
+        },
       }}
     />
   );

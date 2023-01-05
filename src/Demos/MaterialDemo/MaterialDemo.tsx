@@ -24,7 +24,7 @@ const dataArray = Array(119)
 const MaterialDemo: React.FC = () => {
   const table = useTable();
   return (
-    <div className="material-demo">
+    <div className='material-demo'>
       <Table
         table={table}
         columns={[
@@ -51,7 +51,7 @@ const MaterialDemo: React.FC = () => {
           pageIndex: 0,
         }}
         data={dataArray}
-        rowKeyField="id"
+        rowKeyField='id'
         sortingMode={SortingMode.Single}
         filteringMode={FilteringMode.FilterRow}
         childComponents={{
@@ -82,7 +82,7 @@ const MaterialDemo: React.FC = () => {
               if (column.dataType === DataType.String) {
                 return (
                   <TextField
-                    variant="standard"
+                    variant='standard'
                     value={column.filterRowValue ?? ''}
                     onChange={(event) => {
                       table.updateFilterRowValue(column.key, event.target.value);
@@ -93,8 +93,8 @@ const MaterialDemo: React.FC = () => {
               if (column.dataType === DataType.Number) {
                 return (
                   <TextField
-                    variant="standard"
-                    type="number"
+                    variant='standard'
+                    type='number'
                     value={column.filterRowValue ?? ''}
                     onChange={(event) => {
                       table.updateFilterRowValue(column.key, event.target.value ? Number(event.target.value) : event.target.value);
@@ -112,7 +112,7 @@ const MaterialDemo: React.FC = () => {
                       }}
                       renderInput={(params: any) => (
                         <TextField
-                          variant="standard"
+                          variant='standard'
                           {...params}
                         />
                       )}

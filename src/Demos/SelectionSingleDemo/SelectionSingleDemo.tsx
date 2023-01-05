@@ -1,25 +1,25 @@
 import './SelectionSingleDemo.scss';
 
+import { DataType, Table, useTable } from '../../lib';
 import React, { useState } from 'react';
 
-import { DataType, Table, useTable } from '../../lib';
-import { kaPropsUtils } from '../../lib/utils';
 import dataArray from './data';
+import { kaPropsUtils } from '../../lib/utils';
 
 const SelectionSingleDemo: React.FC = () => {
   const [selectedData, changeSelectedData] = useState<any>();
   const table = useTable({
     onDispatch: (action, tableProps) => {
-      const selectedData = kaPropsUtils.getSelectedData(tableProps).pop();
-      changeSelectedData(selectedData);
-    }
+      const selected = kaPropsUtils.getSelectedData(tableProps).pop();
+      changeSelectedData(selected);
+    },
   });
-  
+
   return (
     <div className='selection-single-demo'>
       <Table
-         table={table}
-         columns= {[
+        table={table}
+        columns={[
           {
             dataType: DataType.String,
             key: 'name',
@@ -50,17 +50,21 @@ const SelectionSingleDemo: React.FC = () => {
               onClick: (event, extendedEvent) => {
                 table.selectSingleRow(extendedEvent.childProps.rowKeyValue);
               },
-            })
+            }),
           },
         }}
       />
-      { selectedData && (
+      {selectedData && (
         <div className='info'>
           <div>
             Selected: {selectedData.name} ({selectedData.company.name})
-            <button onClick={() => {
-              table.deselectAllRows();
-            }}>Deselect</button>
+            <button
+              onClick={() => {
+                table.deselectAllRows();
+              }}
+            >
+              Deselect
+            </button>
           </div>
         </div>
       )}

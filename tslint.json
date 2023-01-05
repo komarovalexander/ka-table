@@ -1,5 +1,5 @@
 {
-  "extends": ["tslint:latest", "tslint-react"],
+  "extends": ["tslint:latest"],
   "linterOptions": {
     "exclude": [
       "src/serviceWorker.ts"
@@ -16,6 +16,7 @@
     "no-object-literal-type-assertion": [true, { "allow-arguments": true }],
     "no-submodule-imports": false,
     "no-empty-interface": false,
-    "quotemark": [true, "single", "jsx-single"]
+    "quotemark": [true, "single", "jsx-single"],
+    "no-unused-expression": [true, "allow-fast-null-checks"]
   }
 }
