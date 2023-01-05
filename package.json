@@ -68,6 +68,7 @@
     "gulp-file": "^0.4.0",
     "gulp-gh-pages": "^0.5.4",
     "gulp-replace": "^1.0.0",
+    "gulp-sass": "^5.1.0",
     "jsonfile": "^6.0.1",
     "react-filter-control": "^2.1.0",
     "react-ga": "^3.3.1",
