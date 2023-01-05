@@ -1,20 +1,19 @@
 import * as React from 'react';
-
 import * as actionCreators from '../../actionCreators';
-import { EditingMode, FilteringMode, SortingMode } from '../../enums';
+
+import { DispatchFunc, FilterFunc, FormatFunc, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc } from '../../types';
 import { EditableCell, PagingOptions } from '../../models';
+import { EditingMode, FilteringMode, SortingMode } from '../../enums';
+
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { Focused } from '../../Models/Focused';
 import { Group } from '../../Models/Group';
 import { GroupedColumn } from '../../Models/GroupedColumn';
-import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
-import {
-    DispatchFunc, FilterFunc, FormatFunc, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc
-} from '../../types';
 import { TableControlled } from '../TableControlled/TableControlled';
 import { TableUncontrolled } from '../TableUncontrolled/TableUncontrolled';
+import { VirtualScrolling } from '../../Models/VirtualScrolling';
 
 type ActionCreators = typeof actionCreators;
 export interface ITableInstance extends ActionCreators {
@@ -70,17 +69,18 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
 export interface IKaTableProps extends ITableProps {
   childComponents?: ChildComponents;
   dispatch?: DispatchFunc;
-  table?: ITableInstance
-  onDispatch?: DispatchFunc;
+  table?: ITableInstance;
 }
-
 
 export const Table: React.FunctionComponent<IKaTableProps> = (props) => {
   const { dispatch } = props;
 
   return dispatch ? (
-    <TableControlled {...props} dispatch={dispatch}/>
+    <TableControlled
+      {...props}
+      dispatch={dispatch}
+    />
   ) : (
-    <TableUncontrolled {...props}/>
+    <TableUncontrolled {...props} />
   );
 };

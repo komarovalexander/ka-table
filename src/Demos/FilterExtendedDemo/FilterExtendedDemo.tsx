@@ -1,9 +1,9 @@
+import { DataType, Table } from '../../lib';
 import React, { useState } from 'react';
+
+import { EditingMode } from '../../lib/enums';
 import FilterControl from 'react-filter-control';
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
-
-import { DataType, Table } from '../../lib';
-import { EditingMode } from '../../lib/enums';
 import { filterData } from './filterData';
 
 const dataArray: any[] = [
@@ -16,41 +16,55 @@ const dataArray: any[] = [
   { id: 7, name: 'Tom Bruce', score: 67, passed: false },
 ];
 
-const fields = [{
-  caption: 'Name',
-  name: 'name',
-  operators: [{
-    caption: 'Contains',
-    name: 'contains',
-  }, {
-    caption: 'Does not Contain',
-    name: 'doesNotContain',
-  }],
-}, {
-  caption: 'Score',
-  name: 'score',
-  operators: [{
-    caption: 'Equals',
-    name: '=',
-  }, {
-    caption: 'Does not Equal',
-    name: '<>',
-  }, {
-    caption: 'More than',
-    name: '>',
-  }, {
-    caption: 'Less than',
-    name: '<',
-  }],
-}];
+const fields = [
+  {
+    caption: 'Name',
+    name: 'name',
+    operators: [
+      {
+        caption: 'Contains',
+        name: 'contains',
+      },
+      {
+        caption: 'Does not Contain',
+        name: 'doesNotContain',
+      },
+    ],
+  },
+  {
+    caption: 'Score',
+    name: 'score',
+    operators: [
+      {
+        caption: 'Equals',
+        name: '=',
+      },
+      {
+        caption: 'Does not Equal',
+        name: '<>',
+      },
+      {
+        caption: 'More than',
+        name: '>',
+      },
+      {
+        caption: 'Less than',
+        name: '<',
+      },
+    ],
+  },
+];
 
-const groups = [{
-  caption: 'And',
-  name: 'and',
-}, {
-  caption: 'Or',
-  name: 'or',
-}];
+const groups = [
+  {
+    caption: 'And',
+    name: 'and',
+  },
+  {
+    caption: 'Or',
+    name: 'or',
+  },
+];
 const filter: IFilterControlFilterValue = {
   groupName: 'and',
   items: [
@@ -77,10 +91,10 @@ const FilterExtendedDemo: React.FC = () => {
   return (
     <>
       <div className='top-element'>
-        <FilterControl {...{fields, groups, filterValue,  onFilterValueChanged: onFilterChanged}}/>
+        <FilterControl {...{ fields, groups, filterValue, onFilterValueChanged: onFilterChanged }} />
       </div>
       <Table
-        columns= {[
+        columns={[
           { key: 'name', title: 'Name', dataType: DataType.String },
           { key: 'score', title: 'Score', dataType: DataType.Number },
           { key: 'passed', title: 'Passed', dataType: DataType.Boolean },

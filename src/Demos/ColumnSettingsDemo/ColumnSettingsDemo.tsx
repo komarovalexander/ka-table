@@ -17,7 +17,13 @@ const dataArray = Array(10)
   }));
 
 const ColumnSettings = ({ table }: { table: ITableInstance }) => {
-  const settingsTable = useTable();
+  const settingsTable = useTable({
+    onDispatch: (action) => {
+      if (action.type === ActionType.UpdateCellValue) {
+        action.value ? table.showColumn(action.rowKeyValue) : table.hideColumn(action.rowKeyValue);
+      }
+    },
+  });
   useEffect(() => {
     table?.props?.columns && settingsTable.updateData(table.props.columns.map((c) => ({ ...c, visible: c.visible !== false })));
   }, [table.props.columns, settingsTable]);
@@ -25,11 +31,6 @@ const ColumnSettings = ({ table }: { table: ITableInstance }) => {
     <Table
       table={settingsTable}
       rowKeyField={'key'}
-      onDispatch={(action) => {
-        if (action.type === ActionType.UpdateCellValue) {
-          action.value ? table.showColumn(action.rowKeyValue) : table.hideColumn(action.rowKeyValue);
-        }
-      }}
       columns={[
         {
           key: 'title',

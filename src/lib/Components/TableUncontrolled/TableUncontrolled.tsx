@@ -38,6 +38,9 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledProps>
       <TableControlled
         {...tablePropsUncontrolled}
         childComponents={props.childComponents}
+        extendedFilter={props.extendedFilter}
+        filter={props.filter}
+        format={props.format}
         dispatch={dispatch}
       />
     </TableInstanceContext.Provider>
