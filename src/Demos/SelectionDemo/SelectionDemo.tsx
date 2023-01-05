@@ -1,33 +1,30 @@
 import './SelectionDemo.scss';
 
-import React from 'react';
-
-import { Table } from '../../lib';
 import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
-import { useTableInstance } from '../../lib/hooks/UseTableInstance';
+import { Table, useTableInstance } from '../../lib';
+
 import { ICellTextProps } from '../../lib/props';
+import React from 'react';
 import { kaPropsUtils } from '../../lib/utils';
 
-const dataArray = Array(64).fill(undefined).map(
-  (_, index) => ({
+const dataArray = Array(64)
+  .fill(undefined)
+  .map((_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
     column3: `column:3 row:${index}`,
     column4: `column:4 row:${index}`,
     id: index,
-  }),
-);
+  }));
 
-const SelectionCell: React.FC<ICellTextProps> = ({
-  rowKeyValue, isSelectedRow, selectedRows
-}) => {
+const SelectionCell: React.FC<ICellTextProps> = ({ rowKeyValue, isSelectedRow, selectedRows }) => {
   const table = useTableInstance();
   return (
     <input
-      type='checkbox'
+      type="checkbox"
       checked={isSelectedRow}
       onChange={(event: any) => {
-        if (event.nativeEvent.shiftKey){
+        if (event.nativeEvent.shiftKey) {
           table.selectRowsRange(rowKeyValue, [...selectedRows].pop());
         } else if (event.currentTarget.checked) {
           table.selectRow(rowKeyValue);
@@ -45,7 +42,7 @@ const SelectionHeader = () => {
 
   return (
     <input
-      type='checkbox'
+      type="checkbox"
       checked={areAllRowsSelected}
       onChange={(event) => {
         if (event.currentTarget.checked) {
@@ -60,9 +57,9 @@ const SelectionHeader = () => {
 
 const SelectionDemo: React.FC = () => {
   return (
-    <div className='selection-demo'>
+    <div className="selection-demo">
       <Table
-        columns= {[
+        columns={[
           {
             key: 'selection-cell',
           },
@@ -71,7 +68,7 @@ const SelectionDemo: React.FC = () => {
           { key: 'column3', title: 'Column 3', dataType: DataType.String },
           { key: 'column4', title: 'Column 4', dataType: DataType.String },
         ]}
-        paging= {{
+        paging={{
           enabled: true,
         }}
         data={dataArray}
@@ -82,26 +79,25 @@ const SelectionDemo: React.FC = () => {
         childComponents={{
           cellText: {
             content: (props) => {
-              if (props.column.key === 'selection-cell'){
-                return <SelectionCell {...props} />
+              if (props.column.key === 'selection-cell') {
+                return <SelectionCell {...props} />;
               }
-            }
+            },
           },
           filterRowCell: {
             content: (props) => {
-              if (props.column.key === 'selection-cell'){
+              if (props.column.key === 'selection-cell') {
                 return <></>;
               }
-            }
+            },
           },
           headCell: {
             content: (props) => {
-              if (props.column.key === 'selection-cell'){
-                return (<SelectionHeader />
-                );
+              if (props.column.key === 'selection-cell') {
+                return <SelectionHeader />;
               }
-            }
-          }
+            },
+          },
         }}
       />
     </div>
