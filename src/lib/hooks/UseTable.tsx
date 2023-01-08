@@ -24,9 +24,6 @@ export const getTable = (options?: {
   };
 };
 
-export const useTable = (options?: {
-  changeProps?: React.Dispatch<React.SetStateAction<ITableProps>>;
-  onDispatch?: OnDispatchFunc;
-}): ITableInstance => {
+export const useTable = (options?: { onDispatch?: OnDispatchFunc }): ITableInstance => {
   return getTable(options);
 };
