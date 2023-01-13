@@ -1,12 +1,10 @@
 import './AddRowDemo.scss';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from 'ka-table';
+import { DataType, Table } from 'ka-table';
 import { hideNewRow, saveNewRow, showNewRow } from 'ka-table/actionCreators';
-import { DataType } from 'ka-table/enums';
 import { ICellEditorProps, IHeadCellProps } from 'ka-table/props';
-import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -68,40 +66,31 @@ const SaveButton: React.FC<ICellEditorProps> = ({
  );
 };
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    {
-      key: 'column1',
-      title: 'Column 1',
-      dataType: DataType.String
-    },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    {
-      key: 'addColumn',
-      style: {width: 53}
-    },
-  ],
-  data: dataArray,
-  validation: ({ column, value }) => {
-    if (column.key === 'column1'){
-      return value ? '' : 'value must be specified';
-    }
-  },
-  rowKeyField: 'id',
-};
-
 const AddRowDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
-
   return (
     <div className='add-row-demo'>
       <Table
-        {...tableProps}
+        columns={[
+          {
+            key: 'column1',
+            title: 'Column 1',
+            dataType: DataType.String
+          },
+          { key: 'column2', title: 'Column 2', dataType: DataType.String },
+          { key: 'column3', title: 'Column 3', dataType: DataType.String },
+          { key: 'column4', title: 'Column 4', dataType: DataType.String },
+          {
+            key: 'addColumn',
+            style: {width: 53}
+          },
+        ]}
+        data={dataArray}
+        validation= {({ column, value }) => {
+          if (column.key === 'column1'){
+            return value ? '' : 'value must be specified';
+          }
+        }}
+        rowKeyField={'id'}
         childComponents={{
           cellEditor: {
             content: (props) => {
@@ -118,7 +107,6 @@ const AddRowDemo: React.FC = () => {
             }
           }
         }}
-        dispatch={dispatch}
       />
     </div>
   );

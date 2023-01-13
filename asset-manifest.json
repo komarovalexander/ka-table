@@ -1,32 +1,19 @@
 {
   "files": {
-    "main.css": "/ka-table/static/css/main.12230d02.chunk.css",
-    "main.js": "/ka-table/static/js/main.a934ec4c.chunk.js",
-    "main.js.map": "/ka-table/static/js/main.a934ec4c.chunk.js.map",
-    "runtime-main.js": "/ka-table/static/js/runtime-main.f7a08a1d.js",
-    "runtime-main.js.map": "/ka-table/static/js/runtime-main.f7a08a1d.js.map",
-    "static/js/2.d8b2f0aa.chunk.js": "/ka-table/static/js/2.d8b2f0aa.chunk.js",
-    "static/js/2.d8b2f0aa.chunk.js.map": "/ka-table/static/js/2.d8b2f0aa.chunk.js.map",
-    "static/css/3.b38e964e.chunk.css": "/ka-table/static/css/3.b38e964e.chunk.css",
-    "static/js/3.828cbd4f.chunk.js": "/ka-table/static/js/3.828cbd4f.chunk.js",
-    "static/js/3.828cbd4f.chunk.js.map": "/ka-table/static/js/3.828cbd4f.chunk.js.map",
-    "static/js/4.72f31812.chunk.js": "/ka-table/static/js/4.72f31812.chunk.js",
-    "static/js/4.72f31812.chunk.js.map": "/ka-table/static/js/4.72f31812.chunk.js.map",
-    "static/js/5.17fd3d2c.chunk.js": "/ka-table/static/js/5.17fd3d2c.chunk.js",
-    "static/js/5.17fd3d2c.chunk.js.map": "/ka-table/static/js/5.17fd3d2c.chunk.js.map",
+    "main.css": "/ka-table/static/css/main.31c51d50.css",
+    "main.js": "/ka-table/static/js/main.0cb33f65.js",
+    "static/js/746.af8be04a.chunk.js": "/ka-table/static/js/746.af8be04a.chunk.js",
+    "static/js/858.52adbd62.chunk.js": "/ka-table/static/js/858.52adbd62.chunk.js",
+    "static/js/896.ede737b5.chunk.js": "/ka-table/static/js/896.ede737b5.chunk.js",
     "index.html": "/ka-table/index.html",
-    "static/css/3.b38e964e.chunk.css.map": "/ka-table/static/css/3.b38e964e.chunk.css.map",
-    "static/css/main.12230d02.chunk.css.map": "/ka-table/static/css/main.12230d02.chunk.css.map",
-    "static/js/2.d8b2f0aa.chunk.js.LICENSE.txt": "/ka-table/static/js/2.d8b2f0aa.chunk.js.LICENSE.txt",
-    "static/js/3.828cbd4f.chunk.js.LICENSE.txt": "/ka-table/static/js/3.828cbd4f.chunk.js.LICENSE.txt",
-    "static/js/4.72f31812.chunk.js.LICENSE.txt": "/ka-table/static/js/4.72f31812.chunk.js.LICENSE.txt",
-    "static/js/5.17fd3d2c.chunk.js.LICENSE.txt": "/ka-table/static/js/5.17fd3d2c.chunk.js.LICENSE.txt"
+    "main.31c51d50.css.map": "/ka-table/static/css/main.31c51d50.css.map",
+    "main.0cb33f65.js.map": "/ka-table/static/js/main.0cb33f65.js.map",
+    "746.af8be04a.chunk.js.map": "/ka-table/static/js/746.af8be04a.chunk.js.map",
+    "858.52adbd62.chunk.js.map": "/ka-table/static/js/858.52adbd62.chunk.js.map",
+    "896.ede737b5.chunk.js.map": "/ka-table/static/js/896.ede737b5.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.f7a08a1d.js",
-    "static/css/3.b38e964e.chunk.css",
-    "static/js/3.828cbd4f.chunk.js",
-    "static/css/main.12230d02.chunk.css",
-    "static/js/main.a934ec4c.chunk.js"
+    "static/css/main.31c51d50.css",
+    "static/js/main.0cb33f65.js"
   ]
 }

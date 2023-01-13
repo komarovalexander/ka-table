@@ -1,14 +1,9 @@
 import './KeyboardNavigation.scss';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from 'ka-table';
-import {
-  clearFocused, moveFocusedDown, moveFocusedLeft, moveFocusedRight, moveFocusedUp, openEditor,
-  setFocused, updatePageIndex, updateSortDirection,
-} from 'ka-table/actionCreators';
-import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
-import { DispatchFunc } from 'ka-table/types';
+import { DataType, Table, useTable } from 'ka-table';
+import { EditingMode, SortingMode } from 'ka-table/enums';
 
 const dataArray = Array(100).fill(undefined).map(
   (_, index) => ({
@@ -20,98 +15,91 @@ const dataArray = Array(100).fill(undefined).map(
   }),
 );
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'column4', title: 'Column 4', dataType: DataType.String },
-  ],
-  data: dataArray,
-  rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
-  editingMode: EditingMode.Cell,
-  paging: {
-    enabled: true,
-    pageIndex: 0,
-    pageSize: 10,
-  },
-  focused: {
-    cell: {
-      columnKey: 'column4',
-      rowKeyValue: 2
-    }
-  }
-};
-
 const KeyboardNavigationDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
+  const table = useTable();
   return (
     <div className='keyboard-navigation-demo'>
       <Table
-        {...tableProps}
+        table={table}
+        columns= {[
+          { key: 'column1', title: 'Column 1', dataType: DataType.String },
+          { key: 'column2', title: 'Column 2', dataType: DataType.String },
+          { key: 'column3', title: 'Column 3', dataType: DataType.String },
+          { key: 'column4', title: 'Column 4', dataType: DataType.String },
+        ]}
+        data={dataArray}
+        rowKeyField={'id'}
+        sortingMode={SortingMode.Single}
+        editingMode={EditingMode.Cell}
+        paging= {{
+          enabled: true,
+          pageIndex: 0,
+          pageSize: 10,
+        }}
+        focused= {{
+          cell: {
+            columnKey: 'column4',
+            rowKeyValue: 2
+          }
+        }}
         childComponents={{
           cell: {
             elementAttributes: ({column, rowKeyValue, isEditableCell}) => {
               if (isEditableCell) return undefined;
 
               const cell = { columnKey: column.key, rowKeyValue }
-              const isFocused = cell.columnKey === tableProps.focused?.cell?.columnKey
-                && cell.rowKeyValue === tableProps.focused?.cell?.rowKeyValue;
+              const isFocused = cell.columnKey === table.props.focused?.cell?.columnKey
+                && cell.rowKeyValue === table.props.focused?.cell?.rowKeyValue;
               return {
                 tabIndex: 0,
                 ref: (ref: any) => isFocused && ref?.focus(),
                 onKeyUp: (e) => {
                   switch (e.keyCode){
-                    case 39: dispatch(moveFocusedRight({ end: e.ctrlKey })); break;
-                    case 37: dispatch(moveFocusedLeft({ end: e.ctrlKey })); break;
-                    case 38: dispatch(moveFocusedUp({ end: e.ctrlKey })); break;
-                    case 40: dispatch(moveFocusedDown({ end: e.ctrlKey })); break;
+                    case 39: table.moveFocusedRight({ end: e.ctrlKey }); break;
+                    case 37: table.moveFocusedLeft({ end: e.ctrlKey }); break;
+                    case 38: table.moveFocusedUp({ end: e.ctrlKey }); break;
+                    case 40: table.moveFocusedDown({ end: e.ctrlKey }); break;
                     case 13:
-                      dispatch(openEditor(cell.rowKeyValue, cell.columnKey));
-                      dispatch(setFocused({ cellEditorInput: cell }));
+                      table.openEditor(cell.rowKeyValue, cell.columnKey);
+                      table.setFocused({ cellEditorInput: cell });
                       break;
                   }
                 },
-                onFocus: () => !isFocused &&  dispatch(setFocused({ cell: { columnKey: column.key, rowKeyValue } })),
+                onFocus: () => !isFocused &&  table.setFocused({ cell: { columnKey: column.key, rowKeyValue } }),
                 onKeyDown: (e) => e.keyCode !== 9 && e.preventDefault(),
-                onBlur: () => isFocused && dispatch(clearFocused())
+                onBlur: () => isFocused && table.clearFocused()
               }
             },
           },
           cellEditorInput: {
             elementAttributes: ({column, rowKeyValue}) => {
-              const isFocused = column.key === tableProps.focused?.cellEditorInput?.columnKey
-                && rowKeyValue === tableProps.focused?.cellEditorInput?.rowKeyValue;
+              const isFocused = column.key === table.props.focused?.cellEditorInput?.columnKey
+                && rowKeyValue === table.props.focused?.cellEditorInput?.rowKeyValue;
               const cell = { columnKey: column.key, rowKeyValue };
               return {
                 ref: (ref: any) => isFocused && ref?.focus(),
-                onKeyUp: (e) => e.keyCode === 13 && dispatch(setFocused({ cell })),
+                onKeyUp: (e) => e.keyCode === 13 && table.setFocused({ cell }),
                 onBlur: (e, {baseFunc}) => {
                   baseFunc();
-                  dispatch(clearFocused())
+                  table.clearFocused()
                 },
-                onFocus: () => !isFocused && dispatch(setFocused({ cell: { columnKey: column.key, rowKeyValue } })),
+                onFocus: () => !isFocused && table.setFocused({ cell: { columnKey: column.key, rowKeyValue } }),
               }
             },
           },
           pagingIndex: {
             elementAttributes: (props) => ({
               tabIndex: 0,
-              onKeyUp: (e) => e.keyCode === 13 && dispatch(updatePageIndex(props.pageIndex))
+              onKeyUp: (e) => e.keyCode === 13 && table.updatePageIndex(props.pageIndex)
             }),
           },
           headCell: {
             elementAttributes: (props) => ({
               tabIndex: 0,
-              onKeyUp: (e) => e.keyCode === 13 && dispatch(updateSortDirection(props.column.key))
+              onKeyUp: (e) => e.keyCode === 13 && table.updateSortDirection(props.column.key)
             }),
           },
         }}
-        dispatch={dispatch}
       />
     </div>
   );

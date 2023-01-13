@@ -2,11 +2,10 @@ import './CustomEditorDemo.scss';
 
 import React, { useState } from 'react';
 
-import { ITableProps, kaReducer, Table } from 'ka-table';
+import { DataType, Table } from 'ka-table';
 import { closeEditor, updateCellValue } from 'ka-table/actionCreators';
-import { DataType, EditingMode } from 'ka-table/enums';
+import { EditingMode } from 'ka-table/enums';
 import { ICellEditorProps } from 'ka-table/props';
-import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -68,42 +67,33 @@ const CustomLookupEditor: React.FC<ICellEditorProps> = ({
   );
 };
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { dataType: DataType.String, key: 'name', title: 'Name', width: 390 },
-    { key: 'score', title: 'Score', dataType: DataType.Number, width: 90 },
-    {
-      dataType: DataType.Boolean,
-      key: 'passed',
-      width: 90,
-      title: 'Passed',
-    },
-    {
-      dataType: DataType.Date,
-      key: 'nextTry',
-      title: 'Next Try',
-    },
-  ],
-  format: ({ column, value }) => {
-    if (column.dataType === DataType.Date){
-      return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
-    }
-  },
-  data: dataArray,
-  editableCells: [{ columnKey: 'name', rowKeyValue: 1 }],
-  editingMode: EditingMode.Cell,
-  rowKeyField: 'id',
-};
-
 const CustomEditorDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
   return (
     <Table
-      {...tableProps}
-      dispatch={dispatch}
+      columns= {[
+        { dataType: DataType.String, key: 'name', title: 'Name', width: 390 },
+        { key: 'score', title: 'Score', dataType: DataType.Number, width: 90 },
+        {
+          dataType: DataType.Boolean,
+          key: 'passed',
+          width: 90,
+          title: 'Passed',
+        },
+        {
+          dataType: DataType.Date,
+          key: 'nextTry',
+          title: 'Next Try',
+        },
+      ]}
+      format= {({ column, value }) => {
+        if (column.dataType === DataType.Date){
+          return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+        }
+      }}
+      data={dataArray}
+      editableCells={[{ columnKey: 'name', rowKeyValue: 1 }]}
+      editingMode={EditingMode.Cell}
+      rowKeyField={'id'}
       childComponents={{
         table: {
           elementAttributes: () => ({

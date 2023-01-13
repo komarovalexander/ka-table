@@ -1,11 +1,9 @@
 import './EditingTableDemo.scss';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from 'ka-table';
-import { openAllEditors, saveAllEditors, validate } from 'ka-table/actionCreators';
-import { DataType } from 'ka-table/enums';
-import { DispatchFunc } from 'ka-table/types';
+import { DataType, Table, useTable } from 'ka-table';
+import { openAllEditors } from 'ka-table/actionCreators';
 import { kaPropsUtils } from 'ka-table/utils';
 
 const dataArray = Array(3)
@@ -18,49 +16,44 @@ const dataArray = Array(3)
     id: index
   }));
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    {
-      key: 'column1',
-      title: 'Column 1',
-      dataType: DataType.String
-    },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'value', title: 'Value', dataType: DataType.String }
-  ],
-  data: dataArray,
-  validation: ({ column, value }) => {
-    if (column.key === 'value') {
-      return value ? '' : 'value must be specified';
-    }
-  },
-  rowKeyField: 'id',
-  singleAction: openAllEditors()
-};
-
 const AddRowDemo = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = action => {
-    changeTableProps(prevState => kaReducer(prevState, action));
-  };
-
+  const table = useTable();
   const updateCells = () => {
-    if (kaPropsUtils.isValid(tableProps)) {
-      dispatch(saveAllEditors());
+    if (kaPropsUtils.isValid(table.props)) {
+      table.saveAllEditors();
     } else {
-      dispatch(validate());
+      table.validate();
     }
   };
 
   return (
     <div className='editing-table-demo'>
       <button onClick={updateCells}>update</button>
-      <button onClick={() => dispatch(validate())}>Validate</button>
-      <Table {...tableProps} dispatch={dispatch} />
+      <button onClick={() => table.validate()}>Validate</button>
+      <Table
+        table={table}
+        columns= {[
+          {
+            key: 'column1',
+            title: 'Column 1',
+            dataType: DataType.String
+          },
+          { key: 'column2', title: 'Column 2', dataType: DataType.String },
+          { key: 'column3', title: 'Column 3', dataType: DataType.String },
+          { key: 'value', title: 'Value', dataType: DataType.String }
+        ]}
+        data={dataArray}
+        validation={({ column, value }) => {
+          if (column.key === 'value') {
+            return value ? '' : 'value must be specified';
+          }
+        }}
+        rowKeyField={'id'}
+        singleAction={openAllEditors()}
+      />
       <div className='table-data'>
         <h4>Table Data:</h4>
-        <pre className='data'>{JSON.stringify(tableProps.data, null, 2)}</pre>
+        <pre className='data'>{JSON.stringify(table.props.data, null, 2)}</pre>
       </div>
     </div>
   );
