@@ -1,13 +1,13 @@
 import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import { ActionType } from '../../enums';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
-import GroupRowContent, { IGroupRowProps } from './GroupRowContent';
+import GroupRowContent from './GroupRowContent';
+import { IGroupRowProps } from '../../props';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -47,12 +47,19 @@ describe('GroupRowContent', () => {
     };
     const childComponents: ChildComponents = {
       groupCell: {
-        content: () => <div className='custom-group-cell'/>,
-      }
+        content: () => <div className='custom-group-cell' />,
+      },
     };
-    const wrapper = mount(<GroupRowContent {...props} childComponents={childComponents} column={column}/>, {
-      attachTo: document.createElement('tr'),
-    });
+    const wrapper = mount(
+      <GroupRowContent
+        {...props}
+        childComponents={childComponents}
+        column={column}
+      />,
+      {
+        attachTo: document.createElement('tr'),
+      }
+    );
     expect(wrapper.find('.custom-group-cell').length).toBe(1);
   });
 });

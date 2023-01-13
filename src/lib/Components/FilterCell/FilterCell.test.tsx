@@ -1,21 +1,20 @@
+import { DataType } from '../../enums';
+import FilterCell from './FilterCell';
+import { IFilterRowEditorProps } from '../../props';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { DataType } from '../../enums';
-import { IFilterRowEditorProps } from '../CellEditor/CellEditor';
-import FilterCell from './FilterCell';
-
 const props: IFilterRowEditorProps = {
-  childComponents: {},
-  column: {
-    dataType: DataType.String,
-    key: 'columnField',
-    title: 'Field',
-  }
-};
+    childComponents: {},
+    column: {
+        dataType: DataType.String,
+        key: 'columnField',
+        title: 'Field',
+    },
+} as any;
 
 it('renders without crashing', () => {
-  const element = document.createElement('tr');
-  ReactDOM.render(<FilterCell {...props} />, element);
-  ReactDOM.unmountComponentAtNode(element);
+    const element = document.createElement('tr');
+    ReactDOM.render(<FilterCell {...props} />, element);
+    ReactDOM.unmountComponentAtNode(element);
 });

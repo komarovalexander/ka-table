@@ -1,24 +1,27 @@
 import * as React from 'react';
+import * as actionCreators from '../../actionCreators';
 
-import { clearSingleAction } from '../../actionCreators';
-import { EditingMode, FilteringMode, PagingPosition, SortingMode } from '../../enums';
+import { DispatchFunc, FilterFunc, FormatFunc, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc } from '../../types';
 import { EditableCell, PagingOptions } from '../../models';
+import { EditingMode, FilteringMode, SortingMode } from '../../enums';
+
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { Focused } from '../../Models/Focused';
 import { Group } from '../../Models/Group';
 import { GroupedColumn } from '../../Models/GroupedColumn';
-import { VirtualScrolling } from '../../Models/VirtualScrolling';
 import { ILoadingProps } from '../../props';
-import {
-  DispatchFunc, FilterFunc, FormatFunc, SearchFunc, SortFunc, ValidationFunc,
-} from '../../types';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { isPagingShown } from '../../Utils/PagingUtils';
-import Loading from '../Loading/Loading';
-import Popup from '../Popup/Popup';
-import { TablePaging } from '../TablePaging/TablePaging';
-import { TableWrapper } from '../TableWrapper/TableWrapper';
+import { TableControlled } from '../TableControlled/TableControlled';
+import { TableUncontrolled } from '../TableUncontrolled/TableUncontrolled';
+import { VirtualScrolling } from '../../Models/VirtualScrolling';
+
+type ActionCreators = typeof actionCreators;
+export interface ITableInstance extends ActionCreators {
+  props: ITableProps;
+  changeProps: React.Dispatch<React.SetStateAction<ITableProps>>;
+  onDispatch: OnDispatchFunc;
+  dispatch: DispatchFunc;
+}
 
 export interface ITableProps {
   columnReordering?: boolean;
@@ -63,58 +66,21 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
   childComponents?: ChildComponents;
 }
 
-export const Table: React.FunctionComponent<ITableAllProps> = (props) => {
-  const {
-    childComponents,
-    columns,
-    dispatch,
-    data,
-    format,
-    height,
-    loading,
-    width,
-    paging,
-    singleAction
-  } = props;
-  const isLoadingActive = loading && loading.enabled;
-  const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
+export interface IKaTableProps extends ITableProps {
+  childComponents?: ChildComponents;
+  dispatch?: DispatchFunc;
+  table?: ITableInstance;
+}
 
-  const { elementAttributes, content: rootDivContent } = getElementCustomization({
-    className: kaCss
-  }, props, childComponents?.rootDiv);
-  elementAttributes.style = { width, height, ...elementAttributes.style }
+export const Table: React.FunctionComponent<IKaTableProps> = (props) => {
+  const { dispatch } = props;
 
-  React.useEffect(() => {
-    if (singleAction) {
-      dispatch(singleAction);
-      dispatch(clearSingleAction());
-    }
-  });
-
-
-  return (
-    <div {...elementAttributes}>
-      {rootDivContent || (
-        <>
-          {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
-          <TableWrapper {...props} />
-          {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
-          <Loading {...loading} childComponents={childComponents}/>
-          {columns.map(column =>
-            column.isHeaderFilterPopupShown
-            && (
-              <Popup
-                key={column.key}
-                column={column}
-                childComponents={childComponents}
-                data={data}
-                dispatch={dispatch}
-                format={format}
-              />
-            )
-          )}
-        </>
-      )}
-    </div>
+  return dispatch ? (
+    <TableControlled
+      {...props}
+      dispatch={dispatch}
+    />
+  ) : (
+    <TableUncontrolled {...props} />
   );
 };

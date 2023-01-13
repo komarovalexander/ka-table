@@ -4,7 +4,7 @@ var file = require('gulp-file');
 var jsonfile = require('jsonfile')
 var ghPages = require('gulp-gh-pages');
 var replace = require('gulp-replace');
-var sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 
 gulp.task('gh-pages', function () {
     return gulp.src('./build/**/*')

@@ -1,65 +1,74 @@
 import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
-import { newRowId } from '../../const';
 import { EditingMode } from '../../enums';
-import { ITableBodyProps } from '../TableBody/TableBody';
+import { ITableBodyProps } from '../../props';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import TableBodyContent from './TableBodyContent';
+import { newRowId } from '../../const';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: ITableBodyProps = {
-  childComponents: {},
-  columns: [
-    { key: 'column', title: 'Column 1' },
-    { key: 'column2', title: 'Column 2' },
-  ],
-  data: [
-    { column: 1, column2: 2, id: 1 },
-    { column: 12, column2: 22, id: 2 },
-  ],
-  dispatch: () => {},
-  editableCells: [],
-  editingMode: EditingMode.None,
-  groupColumnsCount: 0,
-  groupedColumns: [],
-  rowKeyField: 'id',
-  selectedRows: [],
-};
+    childComponents: {},
+    columns: [
+        { key: 'column', title: 'Column 1' },
+        { key: 'column2', title: 'Column 2' },
+    ],
+    data: [
+        { column: 1, column2: 2, id: 1 },
+        { column: 12, column2: 22, id: 2 },
+    ],
+    dispatch: () => {},
+    editableCells: [],
+    editingMode: EditingMode.None,
+    groupColumnsCount: 0,
+    groupedColumns: [],
+    rowKeyField: 'id',
+    selectedRows: [],
+} as any;
 
 describe('TableBodyContent', () => {
-  it('renders without crashing', () => {
-    const element = document.createElement('tbody');
-    ReactDOM.render(<TableBodyContent {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
-  });
-
-  it('should render noDataRow in case there are no data and noDataRow option is set', () => {
-    const noDataText = 'no data';
-    const wrapper = mount((
-      <TableBodyContent {...props} data={[]} childComponents={{
-        noDataRow: {
-          content: () => noDataText
-        }
-      }}/>
-    ), {
-      attachTo: document.createElement('tbody'),
+    it('renders without crashing', () => {
+        const element = document.createElement('tbody');
+        ReactDOM.render(<TableBodyContent {...props} />, element);
+        ReactDOM.unmountComponentAtNode(element);
     });
 
-    expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
-    expect(wrapper.find('.ka-tr').length).toBe(1);
-  });
+    it('should render noDataRow in case there are no data and noDataRow option is set', () => {
+        const noDataText = 'no data';
+        const wrapper = mount(
+            <TableBodyContent
+                {...props}
+                data={[]}
+                childComponents={{
+                    noDataRow: {
+                        content: () => noDataText,
+                    },
+                }}
+            />,
+            {
+                attachTo: document.createElement('tbody'),
+            }
+        );
 
-  it('should render noDataRow & NewRow', () => {
-    const wrapper = mount((
-      <TableBodyContent {...props} editableCells={[{ rowKeyValue: newRowId, columnKey: 'column'}]} data={[]}/>
-    ), {
-      attachTo: document.createElement('tbody'),
+        expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
+        expect(wrapper.find('.ka-tr').length).toBe(1);
     });
 
-    expect(wrapper.find('.ka-tr').length).toBe(2);
-  });
+    it('should render noDataRow & NewRow', () => {
+        const wrapper = mount(
+            <TableBodyContent
+                {...props}
+                editableCells={[{ rowKeyValue: newRowId, columnKey: 'column' }]}
+                data={[]}
+            />,
+            {
+                attachTo: document.createElement('tbody'),
+            }
+        );
+
+        expect(wrapper.find('.ka-tr').length).toBe(2);
+    });
 });
