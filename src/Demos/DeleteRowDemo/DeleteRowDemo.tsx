@@ -1,10 +1,12 @@
 import './DeleteRowDemo.scss';
 
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { deleteRow } from '../../lib/actionCreators';
+import { DataType } from '../../lib/enums';
 import { ICellTextProps } from '../../lib/props';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -29,19 +31,28 @@ const DeleteRow: React.FC<ICellTextProps> = ({
  );
 };
 
+const tablePropsInit: ITableProps = {
+  columns: [
+    { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String },
+    { key: ':delete', width: 70, style: { textAlign: 'center' } },
+  ],
+  data: dataArray,
+  rowKeyField: 'id',
+};
+
 const DeleteRowDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
+
   return (
     <Table
-      columns= {[
-        { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
-        { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
-        { key: 'column2', title: 'Column 2', dataType: DataType.String },
-        { key: 'column3', title: 'Column 3', dataType: DataType.String },
-        { key: 'column4', title: 'Column 4', dataType: DataType.String },
-        { key: ':delete', width: 70, style: { textAlign: 'center' } },
-      ]}
-      data={dataArray}
-      rowKeyField={'id'}
+      {...tableProps}
       childComponents={{
         cellText: {
           content: (props) => {
@@ -51,6 +62,7 @@ const DeleteRowDemo: React.FC = () => {
           }
         }
       }}
+      dispatch={dispatch}
     />
   );
 };

@@ -2,8 +2,10 @@ import './EventsDemo.scss';
 
 import React, { useState } from 'react';
 
-import { Table, useTable } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
+import { ChildComponents } from '../../lib/models';
+import { DispatchFunc } from '../../lib/types';
 import { EventsLog } from './EventsLog';
 
 const dataArray = Array(20).fill(undefined).map(
@@ -16,78 +18,83 @@ const dataArray = Array(20).fill(undefined).map(
   }),
 );
 
+const tablePropsInit: ITableProps = {
+  columns: [
+    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String },
+  ],
+  data: dataArray,
+  editingMode: EditingMode.Cell,
+  filteringMode: FilteringMode.FilterRow,
+  height: 300,
+  rowKeyField: 'id',
+  sortingMode: SortingMode.Single,
+};
+
+const childComponents: ChildComponents = {
+  cell: {
+    elementAttributes: () => ({
+      className: 'my-cell-class',
+      onClick: (e, extendedEvent) => {
+        const { childProps: { dispatch } } = extendedEvent;
+        dispatch({ type: 'MY_CELL_onClick', ...{ extendedEvent }});
+      },
+    })
+  },
+  cellText: {
+    elementAttributes: () => ({
+      className: 'my-cell-text-class',
+      onClick: (e, extendedEvent) => {
+        const { childProps: { dispatch } } = extendedEvent;
+        dispatch({ type: 'MY_CELL_TEXT_onClick', ...{ extendedEvent }});
+      },
+      onContextMenu: (e, extendedEvent) => {
+        extendedEvent.dispatch({ type: 'MY_CELL_onContextMenu', ...{ extendedEvent }});
+      },
+      onDoubleClick: (e, extendedEvent) => {
+        const { dispatch, childElementAttributes } = extendedEvent;
+        dispatch({ type: 'MY_CELL_TEXT_onDoubleClick', ...{ extendedEvent }});
+        childElementAttributes.onClick!(e);
+      },
+    })
+  },
+  dataRow: {
+    elementAttributes: () => ({
+      onClick: (e, extendedEvent) => {
+        const { childProps: { dispatch } } = extendedEvent;
+        dispatch({ type: 'MY_ROW_onClick', ...{ extendedEvent }});
+      }
+    }),
+  },
+  table: {
+    elementAttributes: () => ({
+      onMouseEnter: (e, extendedEvent) => {
+        const { dispatch } = extendedEvent;
+        dispatch({ type: 'MY_TABLE_onMouseEnter', ...{ extendedEvent }});
+      },
+      onMouseLeave: (e, extendedEvent) => {
+        const { dispatch } = extendedEvent;
+        dispatch({ type: 'MY_TABLE_onMouseLeave', ...{ extendedEvent }});
+      }
+    }),
+  },
+};
 
 const EventsDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
   const [events, changeEvents] = useState([] as any []);
-  const table = useTable({
-    onDispatch: (action) => {
-      changeEvents((prevValue) => ([{ type: action.type, data: action, date: new Date(), showData: false }, ...prevValue]));
-    }
-  });
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+    changeEvents((prevValue) => ([{ type: action.type, data: action, date: new Date(), showData: false }, ...prevValue]));
+  };
   return (
     <div className='events-demo'>
       <Table
-        table={table}
-        columns={[
-          { key: 'column1', title: 'Column 1', dataType: DataType.String },
-          { key: 'column2', title: 'Column 2', dataType: DataType.String },
-          { key: 'column3', title: 'Column 3', dataType: DataType.String },
-          { key: 'column4', title: 'Column 4', dataType: DataType.String },
-        ]}
-        data={dataArray}
-        editingMode={EditingMode.Cell}
-        filteringMode={FilteringMode.FilterRow}
-        height={300}
-        rowKeyField={'id'}
-        sortingMode={SortingMode.Single}
-        childComponents={{
-          cell: {
-            elementAttributes: () => ({
-              className: 'my-cell-class',
-              onClick: (e, extendedEvent) => {
-                const { childProps: { dispatch } } = extendedEvent;
-                dispatch({ type: 'MY_CELL_onClick', ...{ extendedEvent }});
-              },
-            })
-          },
-          cellText: {
-            elementAttributes: () => ({
-              className: 'my-cell-text-class',
-              onClick: (e, extendedEvent) => {
-                const { childProps: { dispatch } } = extendedEvent;
-                dispatch({ type: 'MY_CELL_TEXT_onClick', ...{ extendedEvent }});
-              },
-              onContextMenu: (e, extendedEvent) => {
-                extendedEvent.dispatch({ type: 'MY_CELL_onContextMenu', ...{ extendedEvent }});
-              },
-              onDoubleClick: (e, extendedEvent) => {
-                const { dispatch, childElementAttributes } = extendedEvent;
-                dispatch({ type: 'MY_CELL_TEXT_onDoubleClick', ...{ extendedEvent }});
-                childElementAttributes.onClick!(e);
-              },
-            })
-          },
-          dataRow: {
-            elementAttributes: () => ({
-              onClick: (e, extendedEvent) => {
-                const { childProps: { dispatch } } = extendedEvent;
-                dispatch({ type: 'MY_ROW_onClick', ...{ extendedEvent }});
-              }
-            }),
-          },
-          table: {
-            elementAttributes: () => ({
-              onMouseEnter: (e, extendedEvent) => {
-                const { dispatch } = extendedEvent;
-                dispatch({ type: 'MY_TABLE_onMouseEnter', ...{ extendedEvent }});
-              },
-              onMouseLeave: (e, extendedEvent) => {
-                const { dispatch } = extendedEvent;
-                dispatch({ type: 'MY_TABLE_onMouseLeave', ...{ extendedEvent }});
-              }
-            }),
-          },
-        }}
+        {...tableProps}
+        dispatch={dispatch}
+        childComponents={childComponents}
       />
       <EventsLog
         events={events}

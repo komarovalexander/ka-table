@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table } from '../../lib';
-import { SortDirection, SortingMode } from '../../lib/enums';
+import { ITableProps, kaReducer, Table } from '../../lib';
+import { DataType, SortDirection, SortingMode } from '../../lib/enums';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, faculty: 'Economics', comment: 'Well done!' },
@@ -12,46 +13,56 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, faculty: 'Mathematics', comment: 'It was just a bad day :)' },
 ];
 
+
+const tablePropsInit: ITableProps = {
+  columns: [
+    {
+      dataType: DataType.Boolean,
+      key: 'passed',
+      style: {width: 90},
+      title: 'Passed',
+    },
+    {
+      dataType: DataType.String,
+      key: 'name',
+      style: {width: 100},
+      title: 'Name',
+    },
+    {
+      dataType: DataType.Number,
+      key: 'score',
+      sortDirection: SortDirection.Ascend,
+      style: {width: 120},
+      title: 'Score',
+    },
+    {
+      dataType: DataType.String,
+      key: 'faculty',
+      style: {width: 150},
+      title: 'Faculty (Custom icon)',
+    },
+    {
+      dataType: DataType.String,
+      key: 'comment',
+      style: {width: 150},
+      isSortable: false,
+      title: 'Comment (sorting disabled)',
+    }
+  ],
+  data: dataArray,
+  rowKeyField: 'id',
+  sortingMode: SortingMode.Single,
+};
+
 const SortingDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
   return (
     <Table
-      columns= {[
-        {
-          dataType: DataType.Boolean,
-          key: 'passed',
-          style: {width: 90},
-          title: 'Passed',
-        },
-        {
-          dataType: DataType.String,
-          key: 'name',
-          style: {width: 100},
-          title: 'Name',
-        },
-        {
-          dataType: DataType.Number,
-          key: 'score',
-          sortDirection: SortDirection.Ascend,
-          style: {width: 120},
-          title: 'Score',
-        },
-        {
-          dataType: DataType.String,
-          key: 'faculty',
-          style: {width: 150},
-          title: 'Faculty (Custom icon)',
-        },
-        {
-          dataType: DataType.String,
-          key: 'comment',
-          style: {width: 150},
-          isSortable: false,
-          title: 'Comment (sorting disabled)',
-        }
-      ]}
-      data={dataArray}
-      rowKeyField={'id'}
-      sortingMode={SortingMode.Single}
+      {...tableProps}
+      dispatch={dispatch}
       childComponents={{
         sortIcon: {
           content: ({ column }) => {

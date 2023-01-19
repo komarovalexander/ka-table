@@ -1,57 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table, useTable } from '../../lib';
-import { loadData } from '../../lib/actionCreators';
-import { ActionType, EditingMode, SortingMode } from '../../lib/enums';
+import { ITableProps, kaReducer, Table } from '../../lib';
+import {
+  hideLoading, loadData, setSingleAction, showLoading, updateData, updatePagesCount,
+} from '../../lib/actionCreators';
+import { ActionType, DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { DispatchFunc } from '../../lib/types';
 import { DeleteRow } from './components';
 import serverEmulator from './serverEmulator';
 
+const tablePropsInit: ITableProps = {
+  columns: [
+    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String },
+    { key: ':delete', width: 70, style: { textAlign: 'center' }},
+  ],
+  editingMode: EditingMode.Cell,
+  loading: {
+    enabled: true
+  },
+  singleAction: loadData(),
+  paging: {
+    enabled: true,
+    pageIndex: 0,
+    pageSize: 10
+  },
+  sortingMode: SortingMode.SingleTripleStateRemote,
+  rowKeyField: 'id',
+};
+
 const RemoteDataEditingDemo: React.FC = () => {
-  const table = useTable({
-    onDispatch: async (action) => {
-      if (action.type === ActionType.DeleteRow) {
-        table.showLoading();
-        await serverEmulator.delete(action.rowKeyValue);
-        table.setSingleAction(loadData());
-      } else if (action.type === ActionType.UpdateCellValue) {
-        table.showLoading();
-        await serverEmulator.update(action.rowKeyValue, { [action.columnKey]: action.value });
-        table.setSingleAction(loadData());
-      } else if (action.type === ActionType.UpdateSortDirection || action.type === ActionType.UpdatePageIndex) {
-        table.setSingleAction(loadData());
-      } else if (action.type === ActionType.LoadData) {
-        table.showLoading();
-        const result = await serverEmulator.get(table.props.paging, table.props.columns, action?.pageIndex);
-        table.updatePagesCount(result.pagesCount);
-        table.updateData(result.data);
-        table.hideLoading();
-      }
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+
+  const dispatch: DispatchFunc = async (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+
+    if (action.type === ActionType.DeleteRow) {
+      dispatch(showLoading());
+      await serverEmulator.delete(action.rowKeyValue);
+      dispatch(setSingleAction(loadData()));
+    } else if (action.type === ActionType.UpdateCellValue) {
+      dispatch(showLoading());
+      await serverEmulator.update(action.rowKeyValue, { [action.columnKey]: action.value });
+      dispatch(setSingleAction(loadData()));
+    } else if (action.type === ActionType.UpdateSortDirection || action.type === ActionType.UpdatePageIndex) {
+      dispatch(setSingleAction(loadData()));
+    } else if (action.type === ActionType.LoadData) {
+      dispatch(showLoading());
+      const result = await serverEmulator.get(tableProps.paging, tableProps.columns, action?.pageIndex);
+      dispatch(updatePagesCount(result.pagesCount));
+      dispatch(updateData(result.data));
+      dispatch(hideLoading());
     }
-  });
+  };
 
   return (
     <div className='remote-data-demo'>
       <Table
-        table={table}
-        columns= {[
-          { key: 'column1', title: 'Column 1', dataType: DataType.String },
-          { key: 'column2', title: 'Column 2', dataType: DataType.String },
-          { key: 'column3', title: 'Column 3', dataType: DataType.String },
-          { key: 'column4', title: 'Column 4', dataType: DataType.String },
-          { key: ':delete', width: 70, style: { textAlign: 'center' }},
-        ]}
-        editingMode={EditingMode.Cell}
-        loading= {{
-          enabled: true
-        }}
-        singleAction={loadData()}
-        paging= {{
-          enabled: true,
-          pageIndex: 0,
-          pageSize: 10
-        }}
-        sortingMode={SortingMode.SingleTripleStateRemote}
-        rowKeyField={'id'}
+        {...tableProps}
         childComponents={{
           cell: {
             content: (props) => {
@@ -61,6 +69,7 @@ const RemoteDataEditingDemo: React.FC = () => {
             }
           }
         }}
+        dispatch={dispatch}
       />
     </div>
   );
