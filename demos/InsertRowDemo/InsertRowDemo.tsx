@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table, useTable } from 'ka-table';
-import { EditingMode, InsertRowPosition } from 'ka-table/enums';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { insertRow } from 'ka-table/actionCreators';
+import { DataType, EditingMode, InsertRowPosition } from 'ka-table/enums';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -18,33 +20,39 @@ const generateNewId = () => {
   return maxValue;
 };
 
+const tablePropsInit: ITableProps = {
+  columns: [
+    {
+      key: 'column1',
+      title: 'Column 1',
+      dataType: DataType.String
+    },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    {
+      key: 'insertRowBeforeColumn',
+      width: 200
+    },
+    {
+      key: 'insertRowAfterColumn',
+      width: 200
+    },
+  ],
+  editingMode: EditingMode.Cell,
+  data: dataArray,
+  rowKeyField: 'id',
+};
+
 const InsertRowDemo: React.FC = () => {
-  const table = useTable();
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
 
   return (
     <div className='add-row-demo'>
       <Table
-        table={table}
-        columns={[
-          {
-            key: 'column1',
-            title: 'Column 1',
-            dataType: DataType.String
-          },
-          { key: 'column2', title: 'Column 2', dataType: DataType.String },
-          { key: 'column3', title: 'Column 3', dataType: DataType.String },
-          {
-            key: 'insertRowBeforeColumn',
-            width: 200
-          },
-          {
-            key: 'insertRowAfterColumn',
-            width: 200
-          },
-        ]}
-        editingMode={EditingMode.Cell}
-        data={dataArray}
-        rowKeyField={'id'}
+        {...tableProps}
         childComponents={{
           cell: {
             content: (props) => {
@@ -56,7 +64,7 @@ const InsertRowDemo: React.FC = () => {
                       id,
                       column1: `column:1 rowId:${id}`,
                     };
-                    table.insertRow(newRow, { rowKeyValue: props.rowKeyValue })
+                    dispatch(insertRow(newRow, { rowKeyValue: props.rowKeyValue }))
                   }}>
                     Insert Row Before
                   </button>
@@ -70,7 +78,7 @@ const InsertRowDemo: React.FC = () => {
                       id,
                       column1: `column:1 rowId:${id}`,
                     };
-                    table.insertRow(newRow, { rowKeyValue: props.rowKeyValue, insertRowPosition: InsertRowPosition.after })
+                    dispatch(insertRow(newRow, { rowKeyValue: props.rowKeyValue, insertRowPosition: InsertRowPosition.after }))
                   }}>
                     Insert Row After
                   </button>
@@ -79,6 +87,7 @@ const InsertRowDemo: React.FC = () => {
             }
           },
         }}
+        dispatch={dispatch}
       />
     </div>
   );

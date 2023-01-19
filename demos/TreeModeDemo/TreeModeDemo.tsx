@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table } from 'ka-table';
-import { EditingMode, FilteringMode, SortingMode } from 'ka-table/enums';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { DataType, EditingMode, FilteringMode, SortingMode } from 'ka-table/enums';
+import { DispatchFunc } from 'ka-table/types';
 
 const data = [
   { treeGroupId: null, id: 1, name: 'Department A', productivity: 5 },
@@ -19,20 +20,30 @@ const data = [
   { treeGroupId: 11, id: 13, name: 'Mike Griffinson', productivity: 3 },
 ];
 
+const tablePropsInit: ITableProps = {
+  columns: [
+    { key: 'name', title: 'Name', dataType: DataType.String },
+    { key: 'productivity', title: 'Productivity', dataType: DataType.Number },
+  ],
+  data,
+  filteringMode: FilteringMode.FilterRow,
+  treeGroupKeyField: 'treeGroupId',
+  editingMode: EditingMode.Cell,
+  treeGroupsExpanded: [7, 11],
+  rowKeyField: 'id',
+  sortingMode: SortingMode.Single,
+};
+
 const TreeModeDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
+
   return (
     <Table
-      columns= {[
-        { key: 'name', title: 'Name', dataType: DataType.String },
-        { key: 'productivity', title: 'Productivity', dataType: DataType.Number },
-      ]}
-      data={data}
-      filteringMode={FilteringMode.FilterRow}
-      treeGroupKeyField={'treeGroupId'}
-      editingMode={EditingMode.Cell}
-      treeGroupsExpanded={[7, 11]}
-      rowKeyField={'id'}
-      sortingMode={SortingMode.Single}
+      {...tableProps}
+      dispatch={dispatch}
       childComponents={{
         noDataRow: {
           content: () => 'No Data Found'

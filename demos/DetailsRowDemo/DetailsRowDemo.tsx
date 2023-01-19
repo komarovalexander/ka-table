@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import { hideDetailsRow, showDetailsRow } from 'ka-table/actionCreators';
+import { DataType } from 'ka-table/enums';
 import { ICellTextProps, IDataRowProps } from 'ka-table/props';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -42,19 +44,29 @@ const DetailsRow: React.FC<IDataRowProps> = ({
   );
 };
 
+const tableOption: ITableProps = {
+  columns: [
+    { key: 'show-hide-details-row' },
+    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String }
+  ],
+  data: dataArray,
+  detailsRows: [1],
+  rowKeyField: 'id',
+};
+
 const DetailsRowDemo: React.FC = () => {
+  const [option, changeOptions] = useState(tableOption);
+  const dispatch: DispatchFunc = (action) => {
+    changeOptions((prevState: ITableProps) => kaReducer(prevState, action));
+  };
+
   return (
     <Table
-      columns= {[
-        { key: 'show-hide-details-row' },
-        { key: 'column1', title: 'Column 1', dataType: DataType.String },
-        { key: 'column2', title: 'Column 2', dataType: DataType.String },
-        { key: 'column3', title: 'Column 3', dataType: DataType.String },
-        { key: 'column4', title: 'Column 4', dataType: DataType.String },
-      ]}
-      data={dataArray}
-      detailsRows={[1]}
-      rowKeyField={'id'}
+      {...option}
+      dispatch={dispatch}
       childComponents={{
         cellText: {
           content: (props) => {

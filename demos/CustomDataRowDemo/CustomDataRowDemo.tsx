@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
 import defaultOptions from 'ka-table/defaultOptions';
-import { SortDirection, SortingMode } from 'ka-table/enums';
+import { DataType, SortDirection, SortingMode } from 'ka-table/enums';
 import { IDataRowProps } from 'ka-table/props';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -24,27 +25,36 @@ const DataRow: React.FC<IDataRowProps> = ({rowData, columns}) => {
   );
 };
 
+const tablePropsInit: ITableProps = {
+  columns: [
+    {
+      dataType: DataType.String,
+      key: 'name',
+      sortDirection: SortDirection.Descend,
+      width: 100,
+      title: 'Student',
+    },
+    { key: 'score', title: 'Score', dataType: DataType.Number },
+  ],
+  data: dataArray,
+  rowKeyField: 'id',
+  sortingMode: SortingMode.Single,
+};
+
 const CustomDataRowDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
   return (
     <Table
-      columns= {[
-        {
-          dataType: DataType.String,
-          key: 'name',
-          sortDirection: SortDirection.Descend,
-          width: 100,
-          title: 'Student',
-        },
-        { key: 'score', title: 'Score', dataType: DataType.Number },
-      ]}
-      data={dataArray}
-      rowKeyField={'id'}
-      sortingMode={SortingMode.Single}
+      {...tableProps}
       childComponents={{
         dataRow: {
           content: (props) => <DataRow {...props}/>,
         }
       }}
+      dispatch={dispatch}
     />
   );
 };

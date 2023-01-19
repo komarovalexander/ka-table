@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table } from 'ka-table';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { DataType } from 'ka-table/enums';
 import { Column } from 'ka-table/models';
+import { DispatchFunc } from 'ka-table/types';
 
 const columns: Column[] = Array(15).fill(undefined).map(
   (_, index) => ({
@@ -19,14 +21,23 @@ const dataArray = Array(30).fill(undefined).map(
   }, { id: index }),
 );
 
+const tablePropsInit: ITableProps = {
+  columnReordering: true,
+  columns,
+  data: dataArray,
+  rowKeyField: 'id'
+};
+
 const ColumnReorderingDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
 
   return (
     <Table
-      columnReordering={true}
-      columns={columns}
-      data={dataArray}
-      rowKeyField={'id'}
+      {...tableProps}
+      dispatch={dispatch}
       childComponents={{
         headCellContent: {
           content: ({column}) => {

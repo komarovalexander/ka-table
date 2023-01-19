@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table } from 'ka-table';
-import { FilteringMode, SortDirection, SortingMode } from 'ka-table/enums';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { DataType, FilteringMode, SortDirection, SortingMode } from 'ka-table/enums';
+import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 8) },
@@ -12,38 +13,49 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9) },
 ];
 
+const tablePropsInit: ITableProps = {
+  columns: [
+    {
+      key: 'name',
+      title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend,
+    },
+    {
+      key: 'score',
+      title: 'Score', dataType: DataType.Number
+    },
+    {
+      key: 'passed',
+      title: 'Passed',
+      dataType: DataType.Boolean
+    },
+    {
+      key: 'nextTry',
+      dataType: DataType.Date,
+      title: 'Next Try',
+    },
+  ],
+  data: dataArray,
+  sortingMode: SortingMode.Single,
+  filteringMode: FilteringMode.HeaderFilter,
+  format: ({ column, value }) => {
+    if (column.dataType === DataType.Date) {
+      return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+    }
+  },
+  rowKeyField: 'id',
+};
+
 const HeaderFilterDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
+
   return (
     <Table
-      columns= {[
-        {
-          key: 'name',
-          title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend,
-        },
-        {
-          key: 'score',
-          title: 'Score', dataType: DataType.Number
-        },
-        {
-          key: 'passed',
-          title: 'Passed',
-          dataType: DataType.Boolean
-        },
-        {
-          key: 'nextTry',
-          dataType: DataType.Date,
-          title: 'Next Try',
-        },
-      ]}
+      {...tableProps}
       data={dataArray}
-      sortingMode={SortingMode.Single}
-      filteringMode={FilteringMode.HeaderFilter}
-      format= {({ column, value }) => {
-        if (column.dataType === DataType.Date) {
-          return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
-        }
-      }}
-      rowKeyField={'id'}
+      dispatch={dispatch}
       childComponents={{
         headFilterButton: {
           content: ({ column: {key}}) => key === 'name' && <></>,

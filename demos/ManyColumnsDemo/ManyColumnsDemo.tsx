@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table } from 'ka-table';
-import { EditingMode, SortingMode } from 'ka-table/enums';
+import { ITableProps, kaReducer, Table } from 'ka-table';
+import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
 import { Column } from 'ka-table/models';
+import { DispatchFunc } from 'ka-table/types';
 
 const columns: Column[] = Array(100).fill(undefined).map(
   (_, index) => ({
@@ -20,14 +21,24 @@ const dataArray = Array(30).fill(undefined).map(
   }, { id: index }),
 );
 
+const tablePropsInit: ITableProps = {
+  columns,
+  data: dataArray,
+  editingMode: EditingMode.Cell,
+  rowKeyField: 'id',
+  sortingMode: SortingMode.Single,
+};
+
 const ManyColumnsDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
+
   return (
     <Table
-      columns={columns}
-      data={dataArray}
-      editingMode={EditingMode.Cell}
-      rowKeyField={'id'}
-      sortingMode={SortingMode.Single}
+      {...tableProps}
+      dispatch={dispatch}
     />
   );
 };
