@@ -1,12 +1,10 @@
 import './EditingRowDemo.scss';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
+import { DataType, Table } from '../../lib';
 import { closeRowEditors, openRowEditors, saveRowEditors } from '../../lib/actionCreators';
-import { DataType } from '../../lib/enums';
 import { ICellEditorProps, ICellTextProps } from '../../lib/props';
-import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -62,38 +60,29 @@ const SaveButton: React.FC<ICellEditorProps> = ({
  );
 };
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String },
-    { key: 'score', title: 'Score', dataType: DataType.Number },
-    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
-    { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
-    { key: 'editColumn', width: 80 },
-  ],
-  format: ({ column, value }) => {
-    if (column.dataType === DataType.Date){
-      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
-    }
-  },
-  data: dataArray,
-  rowKeyField: 'id',
-  validation: ({ column, value }) => {
-    if (column.key === 'name'){
-      return value ? '' : 'value must be specified';
-    }
-  }
-};
-
 const EditingDemoRow: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
-
   return (
     <div className='editing-row-demo'>
       <Table
-        {...tableProps}
+         columns= {[
+          { key: 'name', title: 'Name', dataType: DataType.String },
+          { key: 'score', title: 'Score', dataType: DataType.Number },
+          { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
+          { key: 'nextTry', title: 'Next Try', dataType: DataType.Date },
+          { key: 'editColumn', width: 80 },
+        ]}
+        format= {({ column, value }) => {
+          if (column.dataType === DataType.Date){
+            return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+          }
+        }}
+        data={dataArray}
+        rowKeyField={'id'}
+        validation= {({ column, value }) => {
+          if (column.key === 'name'){
+            return value ? '' : 'value must be specified';
+          }
+        }}
         childComponents={{
           cellText: {
             content: (props) => {
@@ -110,7 +99,6 @@ const EditingDemoRow: React.FC = () => {
             }
           }
         }}
-        dispatch={dispatch}
       />
     </div>
   );

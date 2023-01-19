@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
+import { DataType, Table } from '../../lib';
 import { openEditor, updateSortDirection } from '../../lib/actionCreators';
 import CellEditorString from '../../lib/Components/CellEditorString/CellEditorString';
-import { DataType, SortingMode } from '../../lib/enums';
-import { DispatchFunc } from '../../lib/types';
+import { SortingMode } from '../../lib/enums';
 import useKaFocusRef from './hook';
 
 const dataArray = Array(10).fill(undefined).map(
@@ -17,24 +16,7 @@ const dataArray = Array(10).fill(undefined).map(
   }),
 );
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'column4', title: 'Column 4', dataType: DataType.String },
-  ],
-  data: dataArray,
-  rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
-};
-
 const TabIndexDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
-
   const kaFocusRef = useKaFocusRef({
     columnKey: 'column2',
     rowKeyValue: 2
@@ -44,7 +26,15 @@ const TabIndexDemo: React.FC = () => {
     <>
       <p style={{fontSize: 12}}>Use <i>Tab</i> to navigate between cells. Press <i>Enter</i> - to start/stop editing cells, or sort column in case of header cell.</p>
       <Table
-        {...tableProps}
+        columns= {[
+          { key: 'column1', title: 'Column 1', dataType: DataType.String },
+          { key: 'column2', title: 'Column 2', dataType: DataType.String },
+          { key: 'column3', title: 'Column 3', dataType: DataType.String },
+          { key: 'column4', title: 'Column 4', dataType: DataType.String },
+        ]}
+        data={dataArray}
+        rowKeyField={'id'}
+        sortingMode={SortingMode.Single}
         childComponents={{
           headCell: {
             elementAttributes: (props) => ({
@@ -81,7 +71,6 @@ const TabIndexDemo: React.FC = () => {
             )
           }
         }}
-        dispatch={dispatch}
       />
     </>
   );

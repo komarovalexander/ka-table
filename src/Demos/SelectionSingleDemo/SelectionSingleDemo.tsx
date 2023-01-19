@@ -1,71 +1,70 @@
 import './SelectionSingleDemo.scss';
 
+import { DataType, Table, useTable } from '../../lib';
 import React, { useState } from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
-import { deselectAllRows, selectSingleRow } from '../../lib/actionCreators';
-import { DataType } from '../../lib/enums';
-import { DispatchFunc } from '../../lib/types';
-import { kaPropsUtils } from '../../lib/utils';
 import dataArray from './data';
-
-const tablePropsInit: ITableProps = {
-  columns: [
-    {
-      dataType: DataType.String,
-      key: 'name',
-      title: 'Representative',
-    },
-    {
-      dataType: DataType.String,
-      key: 'phoneNumber',
-      title: 'Phone',
-    },
-    {
-      dataType: DataType.Boolean,
-      key: 'hasLoyalProgram',
-      title: 'Loyal Program',
-    },
-    {
-      dataType: DataType.String,
-      field: 'name',
-      key: 'company.name',
-      title: 'Company Name',
-    },
-  ],
-  data: dataArray,
-  rowKeyField: 'id',
-};
+import { kaPropsUtils } from '../../lib/utils';
 
 const SelectionSingleDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
+  const [selectedData, changeSelectedData] = useState<any>();
+  const table = useTable({
+    onDispatch: (action, tableProps) => {
+      const selected = kaPropsUtils.getSelectedData(tableProps).pop();
+      changeSelectedData(selected);
+    },
+  });
 
-  const selectedData = kaPropsUtils.getSelectedData(tableProps).pop();
   return (
     <div className='selection-single-demo'>
       <Table
-        {...tableProps}
-        dispatch={dispatch}
+        table={table}
+        columns={[
+          {
+            dataType: DataType.String,
+            key: 'name',
+            title: 'Representative',
+          },
+          {
+            dataType: DataType.String,
+            key: 'phoneNumber',
+            title: 'Phone',
+          },
+          {
+            dataType: DataType.Boolean,
+            key: 'hasLoyalProgram',
+            title: 'Loyal Program',
+          },
+          {
+            dataType: DataType.String,
+            field: 'name',
+            key: 'company.name',
+            title: 'Company Name',
+          },
+        ]}
+        data={dataArray}
+        rowKeyField={'id'}
         childComponents={{
           dataRow: {
             elementAttributes: () => ({
               onClick: (event, extendedEvent) => {
-                extendedEvent.dispatch(selectSingleRow(extendedEvent.childProps.rowKeyValue));
+                table.selectSingleRow(extendedEvent.childProps.rowKeyValue);
               },
-            })
+            }),
           },
         }}
       />
-      { selectedData && (
+      {selectedData && (
         <div className='info'>
           <div>
             Selected: {selectedData.name} ({selectedData.company.name})
-            <button onClick={() => {
-              dispatch(deselectAllRows());
-            }}>Deselect</button>
+            <button
+              onClick={() => {
+                table.deselectAllRows();
+              }}
+            >
+              Deselect
+            </button>
           </div>
         </div>
       )}

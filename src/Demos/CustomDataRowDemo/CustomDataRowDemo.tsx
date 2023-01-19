@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
+import { DataType, Table } from '../../lib';
 import defaultOptions from '../../lib/defaultOptions';
-import { DataType, SortDirection, SortingMode } from '../../lib/enums';
+import { SortDirection, SortingMode } from '../../lib/enums';
 import { IDataRowProps } from '../../lib/props';
-import { DispatchFunc } from '../../lib/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -25,36 +24,27 @@ const DataRow: React.FC<IDataRowProps> = ({rowData, columns}) => {
   );
 };
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    {
-      dataType: DataType.String,
-      key: 'name',
-      sortDirection: SortDirection.Descend,
-      width: 100,
-      title: 'Student',
-    },
-    { key: 'score', title: 'Score', dataType: DataType.Number },
-  ],
-  data: dataArray,
-  rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
-};
-
 const CustomDataRowDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
   return (
     <Table
-      {...tableProps}
+      columns= {[
+        {
+          dataType: DataType.String,
+          key: 'name',
+          sortDirection: SortDirection.Descend,
+          width: 100,
+          title: 'Student',
+        },
+        { key: 'score', title: 'Score', dataType: DataType.Number },
+      ]}
+      data={dataArray}
+      rowKeyField={'id'}
+      sortingMode={SortingMode.Single}
       childComponents={{
         dataRow: {
           content: (props) => <DataRow {...props}/>,
         }
       }}
-      dispatch={dispatch}
     />
   );
 };
