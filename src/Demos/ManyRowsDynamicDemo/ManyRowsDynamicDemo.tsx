@@ -1,9 +1,9 @@
-import { ITableProps, Table, kaReducer } from '../../lib';
+import { LoremIpsum } from 'lorem-ipsum';
 import React, { useState } from 'react';
 
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { DataType } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
-import { LoremIpsum } from 'lorem-ipsum';
 
 const lorem = new LoremIpsum({
   wordsPerSentence: {
@@ -12,15 +12,15 @@ const lorem = new LoremIpsum({
   },
 });
 
-const dataArray = Array(10000)
-  .fill(undefined)
-  .map((_, index) => ({
+const dataArray = Array(10000).fill(undefined).map(
+  (_, index) => ({
     column1: lorem.generateWords(),
     column2: `column:2 row:${index}`,
     column3: `column:3 row:${index}`,
     column4: `column:4 row:${index}`,
     id: index,
-  }));
+  }),
+);
 
 const tablePropsInit: ITableProps = {
   columns: [
@@ -32,28 +32,24 @@ const tablePropsInit: ITableProps = {
   data: dataArray,
   rowKeyField: 'id',
   virtualScrolling: {
-    enabled: true,
+    enabled: true
   },
 };
 
-const useDynamicRowsOptions = ({ rowKeyField }: ITableProps) => {
+const useDynamicRowsOptions = ({ rowKeyField } : ITableProps) => {
   const [renderedRowSizes] = useState<any>({});
   let estimatedItemSize = 40;
-  const addRowHeight = (rowData: any, height?: number) => {
-    if (height) {
-      renderedRowSizes[rowData[rowKeyField]] = height;
-    }
-  };
+  const addRowHeight = (rowData: any, height?: number) => { if (height) { renderedRowSizes[rowData[rowKeyField]] = height; } };
   const totalHeight = Object.keys(renderedRowSizes).reduce((sum, key) => sum + parseFloat(renderedRowSizes[key] || 0), 0);
-  estimatedItemSize =
-    estimatedItemSize === 40 && Object.keys(renderedRowSizes).length
-      ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length)
-      : estimatedItemSize;
+  estimatedItemSize = estimatedItemSize === 40 && Object.keys(renderedRowSizes).length
+    ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length)
+    : estimatedItemSize;
   return {
     addRowHeight,
-    itemHeight: (rowData: any) => renderedRowSizes[rowData[rowKeyField]] || estimatedItemSize,
-  };
-};
+    itemHeight: (rowData: any) => renderedRowSizes[rowData[rowKeyField]] || estimatedItemSize
+  }
+}
+
 
 const ManyRowsDynamicDemo: React.FC = () => {
   const [tableProps, changeTableProps] = useState(tablePropsInit);
@@ -74,12 +70,12 @@ const ManyRowsDynamicDemo: React.FC = () => {
       childComponents={{
         dataRow: {
           elementAttributes: ({ rowData }) => ({
-            ref: (ref: any) => addRowHeight(rowData, ref?.offsetHeight),
+            ref: (ref: any) => addRowHeight(rowData, ref?.offsetHeight)
           }),
         },
         tableWrapper: {
-          elementAttributes: () => ({ style: { maxHeight: 600 } }),
-        },
+          elementAttributes: () => ({ style: { maxHeight: 600 }})
+        }
       }}
     />
   );

@@ -1,104 +1,122 @@
 import './SelectionDemo.scss';
 
-import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
-import { Table, useTableInstance } from '../../lib';
+import React, { useState } from 'react';
 
-import { ICellTextProps } from '../../lib/props';
-import React from 'react';
+import { ITableProps, kaReducer, Table } from '../../lib';
+import {
+  deselectAllFilteredRows, deselectRow, selectAllFilteredRows, selectRow, selectRowsRange,
+} from '../../lib/actionCreators';
+import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
+import { ICellTextProps, IHeadCellProps } from '../../lib/props';
+import { DispatchFunc } from '../../lib/types';
 import { kaPropsUtils } from '../../lib/utils';
 
-const dataArray = Array(64)
-  .fill(undefined)
-  .map((_, index) => ({
+const dataArray = Array(64).fill(undefined).map(
+  (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
     column3: `column:3 row:${index}`,
     column4: `column:4 row:${index}`,
     id: index,
-  }));
+  }),
+);
 
-const SelectionCell: React.FC<ICellTextProps> = ({ rowKeyValue, isSelectedRow, selectedRows }) => {
-  const table = useTableInstance();
+const SelectionCell: React.FC<ICellTextProps> = ({
+  rowKeyValue, dispatch, isSelectedRow, selectedRows
+}) => {
   return (
     <input
       type='checkbox'
       checked={isSelectedRow}
       onChange={(event: any) => {
-        if (event.nativeEvent.shiftKey) {
-          table.selectRowsRange(rowKeyValue, [...selectedRows].pop());
+        if (event.nativeEvent.shiftKey){
+          dispatch(selectRowsRange(rowKeyValue, [...selectedRows].pop()));
         } else if (event.currentTarget.checked) {
-          table.selectRow(rowKeyValue);
+          dispatch(selectRow(rowKeyValue));
         } else {
-          table.deselectRow(rowKeyValue);
+          dispatch(deselectRow(rowKeyValue));
         }
       }}
     />
   );
 };
 
-const SelectionHeader = () => {
-  const table = useTableInstance();
-  const areAllRowsSelected = kaPropsUtils.areAllFilteredRowsSelected(table.props);
-
+const SelectionHeader: React.FC<IHeadCellProps> = ({
+  dispatch, areAllRowsSelected,
+}) => {
   return (
     <input
       type='checkbox'
       checked={areAllRowsSelected}
       onChange={(event) => {
         if (event.currentTarget.checked) {
-          table.selectAllFilteredRows(); // also available: selectAllVisibleRows(), selectAllRows()
+          dispatch(selectAllFilteredRows()); // also available: selectAllVisibleRows(), selectAllRows()
         } else {
-          table.deselectAllFilteredRows(); // also available: deselectAllVisibleRows(), deselectAllRows()
+          dispatch(deselectAllFilteredRows()); // also available: deselectAllVisibleRows(), deselectAllRows()
         }
       }}
     />
   );
 };
 
+const tablePropsInit: ITableProps = {
+  columns: [
+    {
+      key: 'selection-cell',
+    },
+    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String },
+  ],
+  paging: {
+    enabled: true,
+  },
+  data: dataArray,
+  rowKeyField: 'id',
+  selectedRows: [3, 5],
+  sortingMode: SortingMode.Single,
+  filteringMode: FilteringMode.FilterRow,
+};
+
 const SelectionDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
   return (
     <div className='selection-demo'>
       <Table
-        columns={[
-          {
-            key: 'selection-cell',
-          },
-          { key: 'column1', title: 'Column 1', dataType: DataType.String },
-          { key: 'column2', title: 'Column 2', dataType: DataType.String },
-          { key: 'column3', title: 'Column 3', dataType: DataType.String },
-          { key: 'column4', title: 'Column 4', dataType: DataType.String },
-        ]}
-        paging={{
-          enabled: true,
-        }}
-        data={dataArray}
-        rowKeyField={'id'}
-        selectedRows={[3, 5]}
-        sortingMode={SortingMode.Single}
-        filteringMode={FilteringMode.FilterRow}
+        {...tableProps}
         childComponents={{
           cellText: {
             content: (props) => {
-              if (props.column.key === 'selection-cell') {
-                return <SelectionCell {...props} />;
+              if (props.column.key === 'selection-cell'){
+                return <SelectionCell {...props} />
               }
-            },
+            }
           },
           filterRowCell: {
             content: (props) => {
-              if (props.column.key === 'selection-cell') {
+              if (props.column.key === 'selection-cell'){
                 return <></>;
               }
-            },
+            }
           },
           headCell: {
             content: (props) => {
-              if (props.column.key === 'selection-cell') {
-                return <SelectionHeader />;
+              if (props.column.key === 'selection-cell'){
+                return (
+                  <SelectionHeader {...props}
+                    areAllRowsSelected={kaPropsUtils.areAllFilteredRowsSelected(tableProps)}
+                    // areAllRowsSelected={kaPropsUtils.areAllVisibleRowsSelected(tableProps)}
+                  />
+                );
               }
-            },
-          },
+            }
+          }
         }}
+        dispatch={dispatch}
       />
     </div>
   );

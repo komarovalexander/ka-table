@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { DataType, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
 import { updateGroupsExpanded } from '../../lib/actionCreators';
 import EmptyCells from '../../lib/Components/EmptyCells/EmptyCells';
+import { DataType } from '../../lib/enums';
 import { IGroupRowProps } from '../../lib/props';
+import { DispatchFunc } from '../../lib/types';
 
 const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
@@ -32,40 +34,49 @@ const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
   </>
 );
 
+const tablePropsInit: ITableProps = {
+  columns: [
+    {
+      dataType: DataType.String,
+      key: 'type',
+      title: 'TYPE',
+    },
+    {
+      dataType: DataType.String,
+      key: 'name',
+      title: 'NAME',
+    },
+    {
+      dataType: DataType.String,
+      key: 'country',
+      title: 'COUNTRY',
+    },
+    {
+      dataType: DataType.Number,
+      key: 'age',
+      width: '50%',
+      title: 'AGE',
+    },
+  ],
+  data: dataArray,
+  groups: [{ columnKey: 'country' }, { columnKey: 'type' }],
+  rowKeyField: 'id',
+};
+
 const GroupingCustomRowDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
   return (
     <Table
-      columns= {[
-        {
-          dataType: DataType.String,
-          key: 'type',
-          title: 'TYPE',
-        },
-        {
-          dataType: DataType.String,
-          key: 'name',
-          title: 'NAME',
-        },
-        {
-          dataType: DataType.String,
-          key: 'country',
-          title: 'COUNTRY',
-        },
-        {
-          dataType: DataType.Number,
-          key: 'age',
-          width: '50%',
-          title: 'AGE',
-        },
-      ]}
-      data={dataArray}
-      groups={[{ columnKey: 'country' }, { columnKey: 'type' }]}
-      rowKeyField={'id'}
+      {...tableProps}
       childComponents={{
         groupRow: {
           content: GroupRow
         }
       }}
+      dispatch={dispatch}
     />
   );
 };

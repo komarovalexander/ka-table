@@ -1,9 +1,10 @@
-import { DataType, Table } from '../../lib';
 import React, { useState } from 'react';
-
-import { EditingMode } from '../../lib/enums';
 import FilterControl from 'react-filter-control';
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
+
+import { ITableProps, kaReducer, Table } from '../../lib';
+import { DataType, EditingMode } from '../../lib/enums';
+import { DispatchFunc } from '../../lib/types';
 import { filterData } from './filterData';
 
 const dataArray: any[] = [
@@ -16,55 +17,52 @@ const dataArray: any[] = [
   { id: 7, name: 'Tom Bruce', score: 67, passed: false },
 ];
 
-const fields = [
-  {
-    caption: 'Name',
-    name: 'name',
-    operators: [
-      {
-        caption: 'Contains',
-        name: 'contains',
-      },
-      {
-        caption: 'Does not Contain',
-        name: 'doesNotContain',
-      },
-    ],
-  },
-  {
-    caption: 'Score',
-    name: 'score',
-    operators: [
-      {
-        caption: 'Equals',
-        name: '=',
-      },
-      {
-        caption: 'Does not Equal',
-        name: '<>',
-      },
-      {
-        caption: 'More than',
-        name: '>',
-      },
-      {
-        caption: 'Less than',
-        name: '<',
-      },
-    ],
-  },
-];
+const tablePropsInit: ITableProps = {
+  columns: [
+    { key: 'name', title: 'Name', dataType: DataType.String },
+    { key: 'score', title: 'Score', dataType: DataType.Number },
+    { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
+  ],
+  data: dataArray,
+  editingMode: EditingMode.Cell,
+  rowKeyField: 'id',
+};
 
-const groups = [
-  {
-    caption: 'And',
-    name: 'and',
-  },
-  {
-    caption: 'Or',
-    name: 'or',
-  },
-];
+const fields = [{
+  caption: 'Name',
+  name: 'name',
+  operators: [{
+    caption: 'Contains',
+    name: 'contains',
+  }, {
+    caption: 'Does not Contain',
+    name: 'doesNotContain',
+  }],
+}, {
+  caption: 'Score',
+  name: 'score',
+  operators: [{
+    caption: 'Equals',
+    name: '=',
+  }, {
+    caption: 'Does not Equal',
+    name: '<>',
+  }, {
+    caption: 'More than',
+    name: '>',
+  }, {
+    caption: 'Less than',
+    name: '<',
+  }],
+}];
+
+const groups = [{
+  caption: 'And',
+  name: 'and',
+}, {
+  caption: 'Or',
+  name: 'or',
+}];
 const filter: IFilterControlFilterValue = {
   groupName: 'and',
   items: [
@@ -84,6 +82,10 @@ const filter: IFilterControlFilterValue = {
 };
 
 const FilterExtendedDemo: React.FC = () => {
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const dispatch: DispatchFunc = (action) => {
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
   const [filterValue, changeFilter] = useState(filter);
   const onFilterChanged = (newFilterValue: IFilterControlFilterValue) => {
     changeFilter(newFilterValue);
@@ -91,17 +93,11 @@ const FilterExtendedDemo: React.FC = () => {
   return (
     <>
       <div className='top-element'>
-        <FilterControl {...{ fields, groups, filterValue, onFilterValueChanged: onFilterChanged }} />
+        <FilterControl {...{fields, groups, filterValue,  onFilterValueChanged: onFilterChanged}}/>
       </div>
       <Table
-        columns={[
-          { key: 'name', title: 'Name', dataType: DataType.String },
-          { key: 'score', title: 'Score', dataType: DataType.Number },
-          { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
-        ]}
-        data={dataArray}
-        editingMode={EditingMode.Cell}
-        rowKeyField={'id'}
+        {...tableProps}
+        dispatch={dispatch}
         extendedFilter={(data) => filterData(data, filterValue)}
       />
     </>

@@ -2,12 +2,42 @@ import './HoverRowDemo.scss';
 
 import React, { useState } from 'react';
 
-import { DataType, Table } from '../../lib';
+import { ITableProps, kaReducer, Table } from '../../lib';
+import { DataType } from '../../lib/enums';
 import { ChildComponents } from '../../lib/models';
+import { DispatchFunc } from '../../lib/types';
 import dataArray from './data';
 
 const ROW_MOUSE_ENTER = 'ROW_MOUSE_ENTER';
 const ROW_MOUSE_LEAVE = 'ROW_MOUSE_LEAVE';
+
+const tablePropsInit: ITableProps = {
+  columns: [
+    {
+      dataType: DataType.String,
+      key: 'name',
+      title: 'Representative',
+    },
+    {
+      dataType: DataType.String,
+      key: 'phoneNumber',
+      title: 'Phone',
+    },
+    {
+      dataType: DataType.Boolean,
+      key: 'hasLoyalProgram',
+      title: 'Loyal Program',
+    },
+    {
+      dataType: DataType.String,
+      field: 'name',
+      key: 'company.name',
+      title: 'Company Name',
+    },
+  ],
+  data: dataArray,
+  rowKeyField: 'id',
+};
 
 const childAttributes: ChildComponents = {
   dataRow: {
@@ -30,35 +60,19 @@ const childAttributes: ChildComponents = {
 };
 
 const HoverRowDemo: React.FC = () => {
-  const [selectedItem] = useState<any>();
+  const [tableProps, changeTableProps] = useState(tablePropsInit);
+  const [selectedItem, changeSelectedItem] = useState<any>();
+  const dispatch: DispatchFunc = (action) => {
+    if (action.type === ROW_MOUSE_ENTER || action.type === ROW_MOUSE_LEAVE) {
+      changeSelectedItem(dataArray.find((i) => i.id === action.rowKeyValue));
+    }
+    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
+  };
   return (
     <div className='hover-row-demo'>
       <Table
-        columns= {[
-          {
-            dataType: DataType.String,
-            key: 'name',
-            title: 'Representative',
-          },
-          {
-            dataType: DataType.String,
-            key: 'phoneNumber',
-            title: 'Phone',
-          },
-          {
-            dataType: DataType.Boolean,
-            key: 'hasLoyalProgram',
-            title: 'Loyal Program',
-          },
-          {
-            dataType: DataType.String,
-            field: 'name',
-            key: 'company.name',
-            title: 'Company Name',
-          },
-        ]}
-        data={dataArray}
-        rowKeyField={'id'}
+        {...tableProps}
+        dispatch={dispatch}
         childComponents={childAttributes}
       />
       { selectedItem && (
