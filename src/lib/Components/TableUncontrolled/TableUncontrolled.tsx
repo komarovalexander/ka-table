@@ -33,6 +33,13 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledProps>
   contextTable.changeProps = changeTableProps;
   contextTable.dispatch = dispatch;
 
+  React.useEffect(() => {
+    if (props?.loading?.enabled !== tablePropsUncontrolled?.loading?.enabled) {
+      props?.loading?.enabled ? contextTable.showLoading() : contextTable.hideLoading();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props?.loading?.enabled]);
+
   return (
     <TableInstanceContext.Provider value={contextTable}>
       <TableControlled
