@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
-
-import { closeEditor, updateEditorValue } from '../../actionCreators';
 import { ActionType, EditingMode } from '../../enums';
-import { ICellEditorProps } from '../../props';
+import React, { useCallback, useEffect, useState } from 'react';
+import { closeEditor, updateEditorValue } from '../../actionCreators';
+
+import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
 import { DispatchFunc } from '../../types';
-import { replaceValue } from '../../Utils/DataUtils';
+import { ICellEditorProps } from '../../props';
 import { addEscEnterKeyEffect } from '../../Utils/EffectUtils';
 import { getValidationValue } from '../../Utils/Validation';
-import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
+import { newRowId } from '../../const';
+import { replaceValue } from '../../Utils/DataUtils';
 
 const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
@@ -25,7 +26,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   const [rowDataState, changeRowData] = useState(rowData);
   const [editorValueState, changeEditorValue] = useState(value);
   const isCellEditingMode = editingMode === EditingMode.Cell;
-  validationMessage = isCellEditingMode || validationMessage
+  validationMessage = rowKeyValue === newRowId || isCellEditingMode || validationMessage
     ? getValidationValue(editorValueState, rowDataState, column, validation) || ''
     : validationMessage;
   const onValueStateChange = (action: any): void => {

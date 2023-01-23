@@ -1,8 +1,29 @@
+import { getColumn, getField, getFieldParts, getLastField, getLastFieldParents } from './ColumnUtils';
 
 import defaultOptions from '../defaultOptions';
-import { getField, getFieldParts, getLastField, getLastFieldParents } from './ColumnUtils';
 
 describe('ColumnUtils', () => {
+  describe('getColumn', () => {
+    it('default', () => {
+      const result = getColumn(
+        [
+          {
+            key: 'column1',
+          },
+          {
+            key: 'column2',
+          },
+          {
+            key: 'column3',
+          },
+        ],
+        'column3'
+      );
+      expect(result).toEqual({
+        key: 'column3',
+      });
+    });
+  });
   it('getField from field', () => {
     const field = getField({ key: '2.2', field: '2.3' });
     expect(field).toEqual('2.3');
