@@ -81,4 +81,3 @@ export default OverviewDemo;
 ```
 
 [Example link](https://komarovalexander.github.io/ka-table/#/overview)
-
