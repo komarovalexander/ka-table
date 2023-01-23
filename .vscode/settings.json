@@ -1,4 +1,9 @@
 {
   "prettier.jsxSingleQuote": true,
-  "prettier.printWidth": 140
+  "prettier.printWidth": 160,
+  "html.format.wrapLineLength": 160,
+  "editor.formatOnSaveMode": "modificationsIfAvailable",
+  "editor.formatOnSave": false,
+  "prettier.enable": false,
+  "prettier.embeddedLanguageFormatting": "off"
 }
