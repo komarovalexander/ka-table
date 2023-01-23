@@ -3,6 +3,7 @@ import {
   addItemToEditableCells,
   getCellEditorDispatchHandler,
   getEditableCell,
+  getNewRowDataFromEditableCells,
   isEditableCell,
   removeItemFromEditableCells,
 } from './CellUtils';

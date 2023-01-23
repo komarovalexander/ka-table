@@ -1,6 +1,7 @@
+import { getField, getFieldParts, getLastField, getLastFieldParents } from './ColumnUtils';
+
 import { Column } from '../Models/Column';
 import { Field } from '../types';
-import { getField, getFieldParts, getLastField, getLastFieldParents } from './ColumnUtils';
 
 export const getParentValue = (rowData: any, fieldParents: Field[]) => {
   const parentValue = fieldParents.reduce((previousValue, currentValue) => {
@@ -47,7 +48,7 @@ export const getValueByField = (rowData: any, field: Field) => {
   return o;
 };
 
-const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): void => {
+const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): any => {
   let result = { ...rowData };
   if (fieldParents && fieldParents.length) {
     const parentValue = getParentValue(result, fieldParents) || {};
