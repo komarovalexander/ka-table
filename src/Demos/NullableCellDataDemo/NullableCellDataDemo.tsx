@@ -1,4 +1,4 @@
-import { DataType, Table, useTable, useTableInstance } from '../../lib';
+import { DataType, Table, useTableInstance } from '../../lib';
 import { EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
 import React, { useState } from 'react';
 
