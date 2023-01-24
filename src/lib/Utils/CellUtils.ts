@@ -1,13 +1,25 @@
-import { updateCellValue, updatePopupPosition } from '../actionCreators';
-import { newRowId } from '../const';
 import { ActionType, EditingMode } from '../enums';
 import { Column, EditableCell } from '../models';
-import { PopupPosition } from '../Models/PopupPosition';
+import { updateCellValue, updatePopupPosition } from '../actionCreators';
+
 import { DispatchFunc } from '../types';
+import { PopupPosition } from '../Models/PopupPosition';
+import { getColumn } from './ColumnUtils';
 import { getCopyOfArrayAndAddItem } from './ArrayUtils';
+import { newRowId } from '../const';
+import { replaceValue } from './DataUtils';
 
 export const getNewRowEditableCells = (editableCells: EditableCell[]) => {
   return editableCells && editableCells.filter(c => c.rowKeyValue === newRowId)
+};
+
+export const getNewRowDataFromEditableCells = (editableCells: EditableCell[], columns: Column[]) => {
+  return editableCells.reduce((acc, item) => {
+    if (!item.hasOwnProperty('editorValue')) return acc;
+    const column = getColumn(columns, item.columnKey);
+    acc = replaceValue(acc, column!, item.editorValue);
+    return acc;
+  }, {});
 };
 
 export const isEditableCell = (editingMode: EditingMode, column: Column, rowEditableCells: EditableCell[]): boolean => {

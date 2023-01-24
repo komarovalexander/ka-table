@@ -1,6 +1,8 @@
-import defaultOptions from '../defaultOptions';
 import { Column } from '../models';
 import { Field } from '../types';
+import defaultOptions from '../defaultOptions';
+
+export const getColumn = (columns: Column[], columnKey: string) => columns.find((c) => c.key === columnKey);
 
 export const getField = (column: Column): Field => {
   return column.field || column.key;

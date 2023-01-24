@@ -1,13 +1,16 @@
-
-
-import { closeEditor, updateEditorValue, updatePopupPosition } from '../actionCreators';
 import { ActionType, EditingMode } from '../enums';
-import { EditableCell } from '../models';
-import { PopupPosition } from '../Models/PopupPosition';
 import {
-  addItemToEditableCells, getCellEditorDispatchHandler, getEditableCell, isEditableCell,
+  addItemToEditableCells,
+  getCellEditorDispatchHandler,
+  getEditableCell,
+  getNewRowDataFromEditableCells,
+  isEditableCell,
   removeItemFromEditableCells,
 } from './CellUtils';
+import { closeEditor, updateEditorValue, updatePopupPosition } from '../actionCreators';
+
+import { EditableCell } from '../models';
+import { PopupPosition } from '../Models/PopupPosition';
 
 describe('CellUtils', () => {
   it('isEditableCell equals true', () => {
@@ -94,6 +97,38 @@ describe('CellUtils', () => {
       const action = closeEditor(1, 'column');
       dispathcHandler(action);
       expect(dispatch).toBeCalledWith(action);
+    });
+  });
+  describe('getNewRowDataFromEditableCells', () => {
+    it('default', () => {
+      const editableCells: EditableCell[] = [
+        {
+          columnKey: 'column1',
+          rowKeyValue: 1,
+          editorValue: 11,
+        },
+        {
+          columnKey: 'column2',
+          rowKeyValue: 1,
+          editorValue: 22,
+        },
+        {
+          columnKey: 'column3',
+          rowKeyValue: 1,
+        },
+      ];
+      const result = getNewRowDataFromEditableCells(editableCells, [
+        {
+          key: 'column1',
+        },
+        {
+          key: 'column2',
+        },
+        {
+          key: 'column3',
+        },
+      ]);
+      expect(result).toEqual({ column1: 11, column2: 22 });
     });
   });
 });
