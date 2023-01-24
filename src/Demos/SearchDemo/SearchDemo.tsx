@@ -1,6 +1,5 @@
-import React from 'react';
-
-import { DataType, Table, useTable } from '../../lib';
+import { DataType, Table } from '../../lib';
+import React, { useState } from 'react';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -12,15 +11,13 @@ const dataArray: any[] = [
 ];
 
 const SearchDemo: React.FC = () => {
-  const defaultSearchText = 'Billi Bob';
-  const table = useTable();
+  const [searchText, setSearchText] = useState('Billi Bob');
   return (
     <>
-      <input type='search' defaultValue={defaultSearchText} onChange={(event) => {
-        table.search(event.currentTarget.value);
+      <input type='search' value={searchText} onChange={(event) => {
+        setSearchText(event.currentTarget.value);
       }} className='top-element'/>
       <Table
-        table={table}
         columns= {[
           { key: 'name', title: 'Name', dataType: DataType.String, width: '45%' },
           { key: 'score', title: 'Score', dataType: DataType.Number, width: '15%' },
@@ -33,7 +30,7 @@ const SearchDemo: React.FC = () => {
           }
         }}
         rowKeyField={'id'}
-        searchText={defaultSearchText}
+        searchText={searchText}
         childComponents={{
           noDataRow: {
             content: () => 'No Data Found'

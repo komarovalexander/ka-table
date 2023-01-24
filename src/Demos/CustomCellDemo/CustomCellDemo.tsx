@@ -1,22 +1,21 @@
 import './CustomCellDemo.scss';
 
-import React from 'react';
+import { DataType, Table, useTableInstance } from '../../lib';
 
-import { DataType, Table } from '../../lib';
-import { openEditor } from '../../lib/actionCreators';
 import { EditingMode } from '../../lib/enums';
 import { ICellTextProps } from '../../lib/props';
+import React from 'react';
 import dataArray from './data';
 
 const CustomCell: React.FC<ICellTextProps> = ({
   column,
-  dispatch,
   rowKeyValue,
   value,
 }) => {
+  const table = useTableInstance();
   return (
     <div onClick={() => {
-      dispatch(openEditor(rowKeyValue, column.key));
+      table.openEditor(rowKeyValue, column.key);
     }} className={value ? 'custom-cell-demo-loyal' : 'custom-cell-demo-no-loyal'}>
       {value ? 'Loyal Program Member' : 'No Loyal Programm'}
     </div>

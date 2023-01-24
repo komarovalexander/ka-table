@@ -16,8 +16,8 @@ export interface ITableUncontrolledProps extends ITableProps {
 export const TableInstanceContext = React.createContext<ITableInstance>({} as ITableInstance);
 
 export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledProps> = (props) => {
-  const [tableProps, changeTableProps] = React.useState({ ...props, ...props.table?.props });
-  const { table: _, ...tablePropsUncontrolled } = tableProps;
+  const { table: _, ...tablePropsControlled } = props;
+  const [tableProps, changeTableProps] = React.useState({ ...tablePropsControlled, ...props.table?.props });
   const contextTable = props.table || getTable();
 
   const dispatch: DispatchFunc = (action) => {
@@ -29,24 +29,19 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledProps>
       return nextState;
     });
   };
-  contextTable.props = tablePropsUncontrolled;
+  contextTable.props = { 
+    ...tableProps, 
+    searchText: props.searchText,
+    loading: props.loading,
+    data: props.data 
+  };
   contextTable.changeProps = changeTableProps;
   contextTable.dispatch = dispatch;
-
-  React.useEffect(() => {
-    if (props?.loading?.enabled !== tablePropsUncontrolled?.loading?.enabled) {
-      props?.loading?.enabled ? contextTable.showLoading() : contextTable.hideLoading();
-    }
-    if (props?.data !== tableProps?.data) {
-      contextTable?.updateData(props?.data || []);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props?.loading?.enabled, props?.data]);
 
   return (
     <TableInstanceContext.Provider value={contextTable}>
       <TableControlled
-        {...tablePropsUncontrolled}
+        {...contextTable.props}
         childComponents={props.childComponents}
         extendedFilter={props.extendedFilter}
         filter={props.filter}

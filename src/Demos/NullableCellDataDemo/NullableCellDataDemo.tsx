@@ -1,17 +1,17 @@
-import React from 'react';
-
-import { DataType, Table, useTable } from '../../lib';
-import { updateFilterRowValue } from '../../lib/actionCreators';
+import { DataType, Table, useTable, useTableInstance } from '../../lib';
 import { EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
+import React, { useState } from 'react';
+
 import { IFilterRowEditorProps } from '../../lib/props';
-import { kaDateUtils } from '../../lib/utils';
 import dataArray from './data';
+import { kaDateUtils } from '../../lib/utils';
 
 const CustomDateFilterEditor: React.FC<IFilterRowEditorProps> = ({
-  column, dispatch,
+  column,
 }) => {
   const fieldValue = column.filterRowValue;
   const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
+  const table = useTableInstance();
   return (
     <div>
       <>Less than: </>
@@ -21,7 +21,7 @@ const CustomDateFilterEditor: React.FC<IFilterRowEditorProps> = ({
         onChange={(event) => {
           const targetValue = event.currentTarget.value;
           const filterRowValue = targetValue ? new Date(targetValue) : null;
-          dispatch(updateFilterRowValue(column.key, filterRowValue));
+          table.updateFilterRowValue(column.key, filterRowValue);
         }}
       />
     </div>
@@ -29,14 +29,13 @@ const CustomDateFilterEditor: React.FC<IFilterRowEditorProps> = ({
 };
 
 const NullableCellDataDemo: React.FC = () => {
-  const table = useTable();
+  const [searchText, setSearchText] = useState('i');
   return (
     <>
-      <input type='search' defaultValue={table.props.searchText} onChange={(event) => {
-        table.search(event.currentTarget.value);
+      <input type='search' value={searchText} onChange={(event) => {
+        setSearchText(event.currentTarget.value);
       }} className='top-element'/>
       <Table
-        table={table}
         columns= {[
           {
             dataType: DataType.String,
@@ -95,7 +94,7 @@ const NullableCellDataDemo: React.FC = () => {
         groups={[{ columnKey: 'company.hasLoyalProgram' }]}
         groupsExpanded={[[true]]}
         rowKeyField={'id'}
-        searchText={'i'}
+        searchText={searchText}
         sortingMode={SortingMode.Single}
         childComponents={{
           filterRowCell: {

@@ -1,7 +1,7 @@
-import { Table, useTable } from '../../lib';
+import React, { useState } from 'react';
 
 import { DataType } from '../../lib/enums';
-import React from 'react';
+import { Table } from '../../lib';
 
 const dataArray = Array(10)
   .fill(undefined)
@@ -14,20 +14,19 @@ const dataArray = Array(10)
   }));
 
 const LoadingDemo: React.FC = () => {
-  const table = useTable();
+  const [loading, setLoading] = useState(true);
 
   return (
     <>
       <button
         onClick={(e) => {
-          table.props.loading?.enabled ? table.hideLoading() : table.showLoading();
+          setLoading(!loading);
         }}
         className='top-element'
       >
-        {table.props.loading?.enabled ? 'Hide Loading' : 'Show Loading'}
+        {loading ? 'Hide Loading' : 'Show Loading'}
       </button>
       <Table
-        table={table}
         columns={[
           { key: 'column1', title: 'Column 1', dataType: DataType.String },
           { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -36,7 +35,7 @@ const LoadingDemo: React.FC = () => {
         ]}
         data={dataArray}
         loading={{
-          enabled: true,
+          enabled: loading,
           text: 'Loading data',
         }}
         rowKeyField='id'
