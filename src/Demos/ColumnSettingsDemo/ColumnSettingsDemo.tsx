@@ -1,6 +1,6 @@
 import { ActionType, DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { ITableInstance, Table, useTable } from '../../lib';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 
 import CellEditorBoolean from '../../lib/Components/CellEditorBoolean/CellEditorBoolean';
 
@@ -17,20 +17,24 @@ const dataArray = Array(10)
   }));
 
 const ColumnSettings = ({ table }: { table: ITableInstance }) => {
+  const [data, setData] = useState<any[]>();
+  const updateData = () => setData(table?.props?.columns?.map((c) => ({ ...c, visible: c.visible !== false })));
   const settingsTable = useTable({
     onDispatch: (action) => {
       if (action.type === ActionType.UpdateCellValue) {
         action.value ? table.showColumn(action.rowKeyValue) : table.hideColumn(action.rowKeyValue);
+        updateData();
+      }
+      if (action.type === ActionType.ComponentDidMount) {
+        updateData();
       }
     },
   });
-  useEffect(() => {
-    table?.props?.columns && settingsTable.updateData(table.props.columns.map((c) => ({ ...c, visible: c.visible !== false })));
-  }, [table.props.columns, settingsTable]);
   return (
     <Table
       table={settingsTable}
       rowKeyField={'key'}
+      data={data}
       columns={[
         {
           key: 'title',

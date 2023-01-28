@@ -1,16 +1,17 @@
 import * as React from 'react';
 
-import { clearSingleAction } from '../../actionCreators';
-import { PagingPosition } from '../../enums';
+import { ActionType, PagingPosition } from '../../enums';
+import { ITableAllProps, ITableProps } from '../Table/Table';
+
 import { ChildComponents } from '../../Models/ChildComponents';
 import { DispatchFunc } from '../../types';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { isPagingShown } from '../../Utils/PagingUtils';
 import Loading from '../Loading/Loading';
 import Popup from '../Popup/Popup';
-import { ITableAllProps, ITableProps } from '../Table/Table';
 import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
+import { clearSingleAction } from '../../actionCreators';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { isPagingShown } from '../../Utils/PagingUtils';
 
 export interface ITableControlledProps extends ITableProps {
   childComponents?: ChildComponents;
@@ -46,7 +47,10 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
       dispatch(clearSingleAction());
     }
   });
-
+  React.useEffect(() => {
+    dispatch({ type: ActionType.ComponentDidMount });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <TablePropsContext.Provider value={props}>
