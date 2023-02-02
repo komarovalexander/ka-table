@@ -1,7 +1,8 @@
-
-import { Column, PagingOptions } from '../../lib/models';
 import { getPageData, getPagesCount } from '../../lib/Utils/PagingUtils';
+
+import { DataType } from '../../lib';
 import { sortData } from '../../lib/Utils/SortUtils';
+import { useQuery } from 'react-query';
 
 let dataArray = Array(100).fill(undefined).map(
   (_, index) => ({
@@ -13,9 +14,20 @@ let dataArray = Array(100).fill(undefined).map(
   }),
 );
 
-const get = (paging?: PagingOptions, columns?: Column[], pageIndexNew?: number): Promise<any> => {
-  return new Promise((resolve) => {
+export const useGet = (pageIndexNew?: number) => {
+  return useQuery<any, any>(['useGet', pageIndexNew], () => new Promise((resolve) => {
     setTimeout(() => {
+      const paging = {
+        enabled: true,
+        pageIndex: pageIndexNew,
+        pageSize: 10
+      };
+      const columns = [
+        { key: 'column1', title: 'Column 1', dataType: DataType.String },
+        { key: 'column2', title: 'Column 2', dataType: DataType.String },
+        { key: 'column3', title: 'Column 3', dataType: DataType.String },
+        { key: 'column4', title: 'Column 4', dataType: DataType.String },
+      ]
       const sortedData = columns ? sortData(columns, dataArray) : dataArray;
       const data = getPageData(sortedData, {
         ...paging,
@@ -26,26 +38,7 @@ const get = (paging?: PagingOptions, columns?: Column[], pageIndexNew?: number):
         data,
         pagesCount: getPagesCount(dataArray, { ...paging, pagesCount: undefined })
       });
-    }, 1000);
-  });
-};
-
-const update = (id: any, data: any): Promise<any> => {
-  for (let i = 0; i < dataArray.length; i++) {
-    if (dataArray[i].id === id) {
-      dataArray[i] = {...dataArray[i], ...data};
-    }
-  }
-  return new Promise((resolve) => {resolve()});
-};
-
-const deleteRow = (id: any): Promise<any> => {
-  dataArray = dataArray.filter((d) => d.id !== id);
-  return new Promise((resolve) => {resolve()});
-};
-
-export default {
-  delete: deleteRow,
-  get,
-  update,
-};
+    }, 1000)}), {
+      cacheTime: 0
+    });
+}

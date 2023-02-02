@@ -33,7 +33,8 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledProps>
     ...tableProps, 
     searchText: props.searchText,
     loading: props.loading,
-    data: props.data 
+    data: props.data,
+    paging: props.paging 
   };
   contextTable.changeProps = changeTableProps;
   contextTable.dispatch = dispatch;
@@ -42,6 +43,7 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledProps>
     <TableInstanceContext.Provider value={contextTable}>
       <TableControlled
         {...contextTable.props}
+       // paging={ props.paging }
         childComponents={props.childComponents}
         extendedFilter={props.extendedFilter}
         filter={props.filter}

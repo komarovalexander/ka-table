@@ -1,21 +1,17 @@
-import React from 'react';
-
 import { DataType, Table, useTable } from '../../lib';
-import { loadData } from '../../lib/actionCreators';
-import { ActionType } from '../../lib/enums';
-import serverEmulator from './serverEmulator';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import React, { useState } from 'react';
 
-const RemoteDataDemo: React.FC = () => {
+import { ActionType } from '../../lib/enums';
+import { useGet } from './serverEmulator';
+
+const RemoteDataTable: React.FC = () => {
+  const [pageIndex, setPageIndex] = useState(0);
+  const getQuery = useGet(pageIndex);
   const table = useTable({
     onDispatch: async (action) => {
-      if (action.type === ActionType.LoadData) {
-        table.showLoading();
-        const result = await serverEmulator.get(table.props.paging, table.props.columns, action?.pageIndex);
-        table.updatePagesCount(result.pagesCount);
-        table.updateData(result.data);
-        table.hideLoading();
-      } else if (action.type === ActionType.UpdatePageIndex) {
-        table.setSingleAction(loadData());
+      if (action.type === ActionType.UpdatePageIndex) {
+        !table.props?.loading?.enabled && setPageIndex(action.pageIndex);
       }
     }
   });
@@ -30,19 +26,28 @@ const RemoteDataDemo: React.FC = () => {
           { key: 'column3', title: 'Column 3', dataType: DataType.String },
           { key: 'column4', title: 'Column 4', dataType: DataType.String },
         ]}
+        data={getQuery.data?.data || []}
         loading= {{
-          enabled: true
+          enabled: getQuery.isLoading
         }}
         paging= {{
           enabled: true,
-          pageIndex: 0,
-          pageSize: 10
+          pageIndex: pageIndex,
+          pageSize: 10,
+          pagesCount: getQuery.data?.pagesCount
         }}
-        singleAction={loadData()}
         rowKeyField={'id'}
       />
     </div>
   );
 };
+
+export const queryClient = new QueryClient();
+
+const RemoteDataDemo: React.FC = () => (
+	<QueryClientProvider client={queryClient}>
+    <RemoteDataTable />
+  </QueryClientProvider>
+);
 
 export default RemoteDataDemo;
