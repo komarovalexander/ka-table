@@ -42,15 +42,16 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
   elementAttributes.style = { width, height, ...elementAttributes.style }
 
   React.useEffect(() => {
+    dispatch({ type: ActionType.ComponentDidMount });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
+  React.useEffect(() => {
     if (singleAction) {
       dispatch(singleAction);
       dispatch(clearSingleAction());
     }
   });
-  React.useEffect(() => {
-    dispatch({ type: ActionType.ComponentDidMount });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <TablePropsContext.Provider value={props}>
