@@ -11,7 +11,7 @@ const RemoteDataTable: React.FC = () => {
   const table = useTable({
     onDispatch: async (action) => {
       if (action.type === ActionType.UpdatePageIndex) {
-        !table.props?.loading?.enabled && setPageIndex(action.pageIndex);
+        setPageIndex(action.pageIndex);
       }
     }
   });
