@@ -1,17 +1,16 @@
 import { ActionType, SortDirection, SortingMode } from '../../lib/enums';
 import { DataType, Table, useTable } from '../../lib';
-
-import React from 'react';
-import { loadData } from '../../lib/actionCreators';
+import React, { useState } from 'react';
 
 const JsonDemo: React.FC = () => {
+  const [data, setData] = useState();
   const table = useTable({
     onDispatch: async (action) => {
-      if (action.type === ActionType.LoadData) {
+      if (action.type === ActionType.ComponentDidMount) {
         table.showLoading();
         const response = await fetch('https://komarovalexander.github.io/ka-table/data/employees.json');
-        const data = await response.json();
-        table.updateData(data);
+        const jsonData = await response.json();
+        setData(jsonData);
         table.hideLoading();
       }
     }
@@ -21,12 +20,12 @@ const JsonDemo: React.FC = () => {
     <div className='remote-data-demo'>
       <Table
         table={table}
+        data={data}
         columns= {[
           { key: 'name', title: 'Name', dataType: DataType.String },
           { key: 'score', title: 'Score', dataType: DataType.Number, sortDirection: SortDirection.Ascend },
           { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
         ]}
-        singleAction={loadData()}
         sortingMode={SortingMode.Single}
         rowKeyField={'id'}
       />
