@@ -7,3 +7,5 @@ script:
   - npm run lint
   - npm test -- --coverage
   - npm run build
+after_script:
+  - COVERALLS_REPO_TOKEN=$coveralls_repo_token npm run coveralls
