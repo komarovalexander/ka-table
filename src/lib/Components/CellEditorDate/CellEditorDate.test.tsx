@@ -45,7 +45,7 @@ describe('CellEditorDate', () => {
             columnKey: 'fieldName',
             rowKeyValue: 2,
             type: ActionType.UpdateCellValue,
-            value: newValue,
+            value: new Date(newValue.getTime() + newValue.getTimezoneOffset() * 60000), // https://github.com/komarovalexander/ka-table/issues/279
         });
     });
 
