@@ -1,10 +1,10 @@
-import React from 'react';
-
 import { closeEditor, updateCellValue } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
+
 import { ICellEditorProps } from '../../props';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
+import React from 'react';
+import defaultOptions from '../../defaultOptions';
 import { getDateInputValue } from '../../Utils/DateUtils';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 
 const CellEditorDate: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
@@ -24,7 +24,10 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = (props) => {
     onChange: (event) => {
       const targetValue: string = event.currentTarget.value;
       const newValue = targetValue ? new Date(targetValue) : null;
-      dispatch(updateCellValue(rowKeyValue, column.key, newValue));
+      dispatch(updateCellValue(
+        rowKeyValue,
+        column.key,
+        newValue && new Date(newValue.getTime() + newValue.getTimezoneOffset() * 60000)));
     },
     onBlur: () => dispatch(closeEditor(rowKeyValue, column.key))
   }, props, childComponents?.cellEditorInput);
