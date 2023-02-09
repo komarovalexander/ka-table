@@ -25,8 +25,8 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = (props) => {
       const targetValue: string = event.currentTarget.value;
       const newValue = targetValue ? new Date(targetValue) : null;
       dispatch(updateCellValue(
-        rowKeyValue, 
-        column.key, 
+        rowKeyValue,
+        column.key,
         newValue && new Date(newValue.getTime() + newValue.getTimezoneOffset() * 60000)));
     },
     onBlur: () => dispatch(closeEditor(rowKeyValue, column.key))
