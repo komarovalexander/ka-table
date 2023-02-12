@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { ActionType } from '../../lib/enums';
 import { useGet } from './serverEmulator';
 
-const RemoteDataTable: React.FC = () => {
+const RemoteDataTable = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const getQuery = useGet(pageIndex);
   const table = useTable({
@@ -44,7 +44,7 @@ const RemoteDataTable: React.FC = () => {
 
 export const queryClient = new QueryClient();
 
-const RemoteDataDemo: React.FC = () => (
+const RemoteDataDemo = () => (
 	<QueryClientProvider client={queryClient}>
     <RemoteDataTable />
   </QueryClientProvider>

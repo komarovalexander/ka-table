@@ -2,7 +2,7 @@ import { ActionType, SortDirection, SortingMode } from '../../lib/enums';
 import { DataType, Table, useTable } from '../../lib';
 import React, { useState } from 'react';
 
-const JsonDemo: React.FC = () => {
+const JsonDemo = () => {
   const [data, setData] = useState();
   const table = useTable({
     onDispatch: async (action) => {

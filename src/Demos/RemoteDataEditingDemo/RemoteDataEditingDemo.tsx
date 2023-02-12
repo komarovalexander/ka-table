@@ -1,30 +1,38 @@
-import React from 'react';
-
-import { DataType, Table, useTable } from '../../lib';
-import { loadData } from '../../lib/actionCreators';
 import { ActionType, EditingMode, SortingMode } from '../../lib/enums';
-import { DeleteRow } from './components';
-import serverEmulator from './serverEmulator';
+import { DataType, Table, useTable } from '../../lib';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import React, { useState } from 'react';
+import { useDelete, useGet, useUpdate } from './serverEmulator';
 
-const RemoteDataEditingDemo: React.FC = () => {
+import { Column } from '../../lib/models';
+import { DeleteRow } from './components';
+import { ReactQueryDevtools } from 'react-query/devtools';
+
+const RemoteDataEditingTable = () => {
+  const [columns, setColumns] = useState<Column[]>([
+    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+    { key: 'column4', title: 'Column 4', dataType: DataType.String },
+    { key: ':delete', width: 70, style: { textAlign: 'center' }},
+  ]);
+  const [pageIndex, setPageIndex] = useState(0);
+  const getQuery = useGet(pageIndex, columns);
+  const { mutateAsync: deleteItem, isLoading: deleting } = useDelete();
+  const { mutateAsync: updateItem, isLoading: updating } = useUpdate();
   const table = useTable({
-    onDispatch: async (action) => {
+    onDispatch: async (action, newState) => {
+      if (action.type === ActionType.UpdatePageIndex) {
+        setPageIndex(action.pageIndex);
+      }
       if (action.type === ActionType.DeleteRow) {
-        table.showLoading();
-        await serverEmulator.delete(action.rowKeyValue);
-        table.setSingleAction(loadData());
-      } else if (action.type === ActionType.UpdateCellValue) {
-        table.showLoading();
-        await serverEmulator.update(action.rowKeyValue, { [action.columnKey]: action.value });
-        table.setSingleAction(loadData());
-      } else if (action.type === ActionType.UpdateSortDirection || action.type === ActionType.UpdatePageIndex) {
-        table.setSingleAction(loadData());
-      } else if (action.type === ActionType.LoadData) {
-        table.showLoading();
-        const result = await serverEmulator.get(table.props.paging, table.props.columns, action?.pageIndex);
-        table.updatePagesCount(result.pagesCount);
-        table.updateData(result.data);
-        table.hideLoading();
+        await deleteItem(action.rowKeyValue);
+      }
+      if (action.type === ActionType.UpdateCellValue) {
+        await updateItem({ id: action.rowKeyValue, data: { [action.columnKey]: action.value } });
+      }
+      if (action.type === ActionType.UpdateSortDirection) {
+        setColumns(newState.columns)
       }
     }
   });
@@ -33,22 +41,17 @@ const RemoteDataEditingDemo: React.FC = () => {
     <div className='remote-data-demo'>
       <Table
         table={table}
-        columns= {[
-          { key: 'column1', title: 'Column 1', dataType: DataType.String },
-          { key: 'column2', title: 'Column 2', dataType: DataType.String },
-          { key: 'column3', title: 'Column 3', dataType: DataType.String },
-          { key: 'column4', title: 'Column 4', dataType: DataType.String },
-          { key: ':delete', width: 70, style: { textAlign: 'center' }},
-        ]}
+        columns={columns}
         editingMode={EditingMode.Cell}
+        data={getQuery.data?.data || []}
         loading= {{
-          enabled: true
+          enabled: getQuery.isLoading || deleting || updating
         }}
-        singleAction={loadData()}
         paging= {{
           enabled: true,
-          pageIndex: 0,
-          pageSize: 10
+          pageIndex: pageIndex,
+          pageSize: 10,
+          pagesCount: getQuery.data?.pagesCount
         }}
         sortingMode={SortingMode.SingleTripleStateRemote}
         rowKeyField={'id'}
@@ -65,5 +68,16 @@ const RemoteDataEditingDemo: React.FC = () => {
     </div>
   );
 };
+
+
+export const queryClient = new QueryClient();
+
+const RemoteDataEditingDemo = () => (
+	<QueryClientProvider client={queryClient}>
+    <RemoteDataEditingTable />
+
+			<ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>
+);
 
 export default RemoteDataEditingDemo;
