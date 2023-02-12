@@ -10,7 +10,7 @@ const DetailsRow: React.FunctionComponent<IRowProps> = (props) => {
   const { elementAttributes, content } = getElementCustomization({
     className: `${defaultOptions.css.detailsRow}`,
   }, props, childComponents.detailsRow);
-  
+
   const { elementAttributes: cellElementAttributes, content: cellContent } = getElementCustomization({
     className: `${defaultOptions.css.detailsCell} ${defaultOptions.css.cell}`,
   }, props, childComponents.detailsCell);
