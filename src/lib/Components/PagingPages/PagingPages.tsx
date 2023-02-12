@@ -1,11 +1,12 @@
 import * as React from 'react';
 
-import { updatePageIndex } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
-import { IPagingProps } from '../../props';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { centerLength, getPagesArrayBySize, getPagesForCenter } from '../../Utils/PagingUtils';
+
+import { IPagingProps } from '../../props';
 import PagingIndex from '../PagingIndex/PagingIndex';
+import defaultOptions from '../../defaultOptions';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { updatePageIndex } from '../../actionCreators';
 
 const PagingPages: React.FunctionComponent<IPagingProps> = (props) => {
     const {

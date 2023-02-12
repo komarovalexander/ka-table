@@ -1,11 +1,9 @@
 import 'jspdf-autotable';
 
 import jsPDF from 'jspdf';
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType } from '../../lib/enums';
-import { DispatchFunc } from '../../lib/types';
+import { DataType, Table, useTable } from '../../lib';
 import { getValueByColumn } from '../../lib/Utils/DataUtils';
 
 const dataArray = Array(2000).fill(undefined).map(
@@ -18,30 +16,12 @@ const dataArray = Array(2000).fill(undefined).map(
   }),
 );
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'column1', title: 'Column 1', dataType: DataType.String },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'column4', title: 'Column 4', dataType: DataType.String },
-  ],
-  virtualScrolling: {
-    enabled: true
-  },
-  data: dataArray,
-  rowKeyField: 'id',
-};
-
 const ExportToPdfDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
-
+  const table = useTable();
   const exportClick = (orientation?: any) => {
     const doc: any = new jsPDF(orientation);
-    const head = [tableProps.columns.map(c => c.title)];
-    const body = tableProps.data!.map(d => tableProps.columns.map(c => getValueByColumn(d, c)));
+    const head = [table.props.columns.map(c => c.title)];
+    const body = table.props.data!.map(d => table.props.columns.map(c => getValueByColumn(d, c)));
     doc.autoTable({
       margin: 1,
       headStyles: { fillColor: '#F1F5F7', textColor: '#747D86' },
@@ -63,8 +43,18 @@ const ExportToPdfDemo: React.FC = () => {
         <button style={{marginLeft: 40}} onClick={() => exportClick('landscape')}>Export to PDF (Landscape)</button>
       </div>
       <Table
-        {...tableProps}
-        dispatch={dispatch}
+        table={table}
+        columns= {[
+          { key: 'column1', title: 'Column 1', dataType: DataType.String },
+          { key: 'column2', title: 'Column 2', dataType: DataType.String },
+          { key: 'column3', title: 'Column 3', dataType: DataType.String },
+          { key: 'column4', title: 'Column 4', dataType: DataType.String },
+        ]}
+        virtualScrolling= {{
+          enabled: true
+        }}
+        data={dataArray}
+        rowKeyField={'id'}
       />
     </div >
   );

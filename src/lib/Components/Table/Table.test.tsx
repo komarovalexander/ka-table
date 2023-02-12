@@ -1,12 +1,11 @@
+import { ActionType, PagingPosition } from '../../enums';
 import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
-import { loadData } from '../../actionCreators';
-import { ActionType, PagingPosition } from '../../enums';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { Table } from './Table';
+import { loadData } from '../../actionCreators';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -39,10 +38,11 @@ it('should dispatch single action and clear it', () => {
   const div = document.createElement('div');
   ReactDOM.render(<Table {...props} />, div);
   ReactDOM.unmountComponentAtNode(div);
-  expect(dispatch).toHaveBeenCalledTimes(2);
+  expect(dispatch).toHaveBeenCalledTimes(3);
   expect(dispatch.mock.calls).toEqual([
+    [{type: ActionType.ComponentDidMount}],
     [{type: ActionType.LoadData}],
-    [{type: ActionType.ClearSingleAction}]
+    [{type: ActionType.ClearSingleAction}],
   ]);
 });
 
@@ -56,7 +56,10 @@ it('should not dispatch in case of single action is undefined', () => {
   const div = document.createElement('div');
   ReactDOM.render(<Table {...props} />, div);
   ReactDOM.unmountComponentAtNode(div);
-  expect(dispatch).toHaveBeenCalledTimes(0);
+  expect(dispatch).toHaveBeenCalledTimes(1);
+  expect(dispatch.mock.calls).toEqual([
+    [{type: ActionType.ComponentDidMount}]
+  ]);
 });
 
 it('Paging position property', () => {
