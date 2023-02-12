@@ -6,7 +6,7 @@ import Demo from './Demo';
 import DemoText from './DemoText';
 import { trackEvent } from './ga';
 
-const kaStylesDisabled = ['BootstrapDemo', 'MaterialDemo', 'CustomThemeDemo'];
+const kaStylesDisabled = ['BootstrapDemo', 'CustomThemeDemo'];
 const getDemoPage = (demo: Demo) => {
   return () => {
     return (
@@ -41,6 +41,7 @@ const getDemoPage = (demo: Demo) => {
               </a>
             </div>
             <DemoText demoFileName={demo.fileName}/>
+
           </div>
         </div>
       </div>

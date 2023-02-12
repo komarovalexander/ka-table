@@ -1,11 +1,9 @@
 import './AlertCellDemo.scss';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType } from '../../lib/enums';
+import { DataType, Table } from '../../lib';
 import { ICellTextProps } from '../../lib/props';
-import { DispatchFunc } from '../../lib/types';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -30,29 +28,23 @@ const AlertCell: React.FC<ICellTextProps> = ({
   );
 };
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'command1', style: { textAlign: 'center' }, width: 70 },
-    { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
-    { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
-    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-    { key: 'column3', title: 'Column 3', dataType: DataType.String },
-    { key: 'column4', title: 'Column 4', dataType: DataType.String },
-  ],
-  data: dataArray,
-  rowKeyField: 'id',
-};
-
 const AlertCellDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
-
   return (
     <Table
-      {...tableProps}
+      columns={[
+        {
+        key: 'command1',
+        style: { textAlign: 'center' },
+        width: 70
+        },
+        { key: 'column1-1', field: 'column1', title: 'Column 1', dataType: DataType.String },
+        { key: 'column1-2', field: 'column1', title: 'Column 1', dataType: DataType.String },
+        { key: 'column2', title: 'Column 2', dataType: DataType.String },
+        { key: 'column3', title: 'Column 3', dataType: DataType.String },
+        { key: 'column4', title: 'Column 4', dataType: DataType.String },
+      ]}
+      data={dataArray}
+      rowKeyField={'id'}
       childComponents={{
         cellText: {
           content: (props) => {
@@ -62,7 +54,6 @@ const AlertCellDemo: React.FC = () => {
           }
         }
       }}
-      dispatch={dispatch}
     />
   );
 };

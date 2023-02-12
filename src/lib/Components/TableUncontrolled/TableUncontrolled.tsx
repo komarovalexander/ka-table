@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { ITableInstance, ITableProps } from '../Table/Table';
+import { getControlledPropsKeys, getPropsToOverride } from './utils';
 
 import { ChildComponents } from '../../Models/ChildComponents';
 import { DispatchFunc } from '../../types';
@@ -8,45 +9,47 @@ import { TableControlled } from '../TableControlled/TableControlled';
 import { getTable } from '../../hooks/UseTable';
 import { kaReducer } from '../../Reducers/kaReducer';
 
-export interface ITableUncontrolledProps extends ITableProps {
+export interface ITableUncontrolledPropsKeys extends ITableProps {
   childComponents?: ChildComponents;
   table?: ITableInstance;
 }
 
 export const TableInstanceContext = React.createContext<ITableInstance>({} as ITableInstance);
 
-export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledProps> = (props) => {
-  const [tableProps, changeTableProps] = React.useState({ ...props, ...props.table?.props });
-  const { table: _, ...tablePropsUncontrolled } = tableProps;
-  const contextTable = props.table || getTable();
+export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsKeys> = (props) => {
+  const { table: _, ...tablePropsControlled } = props;
+  const [tableProps, changeTableProps] = React.useState({ ...tablePropsControlled, ...props.table?.props });
 
   const dispatch: DispatchFunc = (action) => {
     changeTableProps((prevState: ITableProps) => {
       const nextState = kaReducer(prevState, action);
       setTimeout(() => {
-        contextTable.onDispatch?.(action, nextState);
+        props.table?.onDispatch?.(action, nextState);
       }, 0);
       return nextState;
     });
   };
-  contextTable.props = tablePropsUncontrolled;
-  contextTable.changeProps = changeTableProps;
-  contextTable.dispatch = dispatch;
 
   React.useEffect(() => {
-    if (props?.loading?.enabled !== tablePropsUncontrolled?.loading?.enabled) {
-      props?.loading?.enabled ? contextTable.showLoading() : contextTable.hideLoading();
+    const controlledPropsKeys = getControlledPropsKeys(props);
+    const propsToOverride = getPropsToOverride(controlledPropsKeys, props, tableProps);
+
+    if (Object.keys(propsToOverride).length){
+      changeTableProps({...tableProps, ...propsToOverride});
     }
-    if (props?.data !== tableProps?.data) {
-      contextTable?.updateData(props?.data || []);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props?.loading?.enabled, props?.data]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
+
+  const contextTable = props.table || getTable();
+  contextTable.props = tableProps;
+  contextTable.changeProps = changeTableProps;
+  contextTable.dispatch = dispatch;
 
   return (
     <TableInstanceContext.Provider value={contextTable}>
       <TableControlled
-        {...tablePropsUncontrolled}
+        {...contextTable.props}
+       // paging={ props.paging }
         childComponents={props.childComponents}
         extendedFilter={props.extendedFilter}
         filter={props.filter}
