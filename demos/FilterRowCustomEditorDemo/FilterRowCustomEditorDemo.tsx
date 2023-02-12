@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { ITableProps, kaReducer, Table } from 'ka-table';
+import { DataType, Table } from 'ka-table';
 import { updateFilterRowOperator, updateFilterRowValue } from 'ka-table/actionCreators';
-import { DataType, EditingMode, FilteringMode } from 'ka-table/enums';
+import { EditingMode, FilteringMode } from 'ka-table/enums';
 import { Column } from 'ka-table/models';
 import { IFilterRowEditorProps } from 'ka-table/props';
 import { DispatchFunc } from 'ka-table/types';
@@ -103,57 +103,49 @@ const DateEditor: React.FC<IFilterRowEditorProps> = ({
   );
 };
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    {
-      dataType: DataType.Boolean,
-      filterRowValue: false,
-      key: 'passed',
-      style: {width: 90},
-      title: 'Passed',
-    },
-    {
-      dataType: DataType.String,
-      key: 'name',
-      style: {width: 100},
-      title: 'Name',
-    },
-    {
-      dataType: DataType.Number,
-      filterRowOperator: '>=',
-      filterRowValue: 45,
-      key: 'score',
-      style: {width: 120},
-      title: 'Score',
-    },
-    {
-      dataType: DataType.Date,
-      filterRowOperator: '<=',
-      filterRowValue: new Date(2021, 11, 11),
-      key: 'nextTry',
-      style: {width: 220},
-      title: 'Next Try',
-    },
-  ],
-  data: dataArray,
-  editingMode: EditingMode.Cell,
-  format: ({ column, value }) => {
-    if (column.dataType === DataType.Date){
-      return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
-    }
-  },
-  filteringMode: FilteringMode.FilterRow,
-  rowKeyField: 'id',
-};
-
 const FilterRowCustomEditorDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
   return (
     <Table
-      {...tableProps}
+      columns= {[
+        {
+          dataType: DataType.Boolean,
+          filterRowValue: false,
+          key: 'passed',
+          style: {width: 90},
+          title: 'Passed',
+        },
+        {
+          dataType: DataType.String,
+          key: 'name',
+          style: {width: 100},
+          title: 'Name',
+        },
+        {
+          dataType: DataType.Number,
+          filterRowOperator: '>=',
+          filterRowValue: 45,
+          key: 'score',
+          style: {width: 120},
+          title: 'Score',
+        },
+        {
+          dataType: DataType.Date,
+          filterRowOperator: '<=',
+          filterRowValue: new Date(2021, 11, 11),
+          key: 'nextTry',
+          style: {width: 220},
+          title: 'Next Try',
+        },
+      ]}
+      data={dataArray}
+      editingMode={EditingMode.Cell}
+      format= {({ column, value }) => {
+        if (column.dataType === DataType.Date){
+          return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+        }
+      }}
+      filteringMode= {FilteringMode.FilterRow}
+      rowKeyField={'id'}
       childComponents={{
         cellEditor: {
           content: (props) => {
@@ -173,7 +165,6 @@ const FilterRowCustomEditorDemo: React.FC = () => {
           }
         }
       }}
-      dispatch={dispatch}
     />
   );
 };

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-
-import { ITableProps, kaReducer, Table } from 'ka-table';
 import { DataType, EditingMode, FilteringMode, SortingMode } from 'ka-table/enums';
-import { DispatchFunc } from 'ka-table/types';
+import { Table, useTable } from 'ka-table';
+
+import React from 'react';
 
 const initDataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
@@ -12,40 +11,34 @@ const initDataArray = [
   { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
 ];
 
-const defaultOption: ITableProps = {
-  columns: [
-    { key: 'type', title: 'TYPE', dataType: DataType.String, isResizable: true },
-    { key: 'name', title: 'NAME', dataType: DataType.String, isResizable: true },
-    { key: 'country', title: 'COUNTRY', dataType: DataType.String, isResizable: true },
-    { key: 'age', title: 'AGE', dataType: DataType.Number, width: '50%', isResizable: true },
-  ],
-  data: initDataArray,
-  editingMode: EditingMode.Cell,
-  filteringMode: FilteringMode.FilterRow,
-  groups: [{ columnKey: 'country' }, { columnKey: 'type' }],
-  rowKeyField: 'id',
-  sortingMode: SortingMode.Single,
-};
-
 const OPTION_KEY = 'state-storing-demo-table-option';
-const tablePropsInit: ITableProps = {...defaultOption, ...JSON.parse(localStorage.getItem(OPTION_KEY) || '0')};
+const savedOptions = {...JSON.parse(localStorage.getItem(OPTION_KEY) || '0')};
 
 const StateStoringDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => {
-      const newState = kaReducer(prevState, action);
-      const { data, ...settingsWithoutData } = newState;
+  const table = useTable({
+    onDispatch: (action, newProps) => {
+      const { data, ...settingsWithoutData } = newProps;
       localStorage.setItem(OPTION_KEY, JSON.stringify(settingsWithoutData));
-      return newState;
-    });
-  };
+    }
+  });
   return (
     <>
       <button onClick={() => window.location.reload()} className='top-element' >Reload Page</button>
       <Table
-        {...tableProps}
-        dispatch={dispatch}
+        table={table}
+        columns={[
+          { key: 'type', title: 'TYPE', dataType: DataType.String, isResizable: true },
+          { key: 'name', title: 'NAME', dataType: DataType.String, isResizable: true },
+          { key: 'country', title: 'COUNTRY', dataType: DataType.String, isResizable: true },
+          { key: 'age', title: 'AGE', dataType: DataType.Number, width: '50%', isResizable: true },
+        ]}
+        data={initDataArray}
+        editingMode={EditingMode.Cell}
+        filteringMode={FilteringMode.FilterRow}
+        groups={[{ columnKey: 'country' }, { columnKey: 'type' }]}
+        rowKeyField={'id'}
+        sortingMode={SortingMode.Single}
+        {...savedOptions}
       />
     </>
   );

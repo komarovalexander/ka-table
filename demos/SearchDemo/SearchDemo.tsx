@@ -1,9 +1,5 @@
+import { DataType, Table } from 'ka-table';
 import React, { useState } from 'react';
-
-import { ITableProps, kaReducer, Table } from 'ka-table';
-import { search } from 'ka-table/actionCreators';
-import { DataType } from 'ka-table/enums';
-import { DispatchFunc } from 'ka-table/types';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -14,40 +10,32 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const tablePropsInit: ITableProps = {
-  columns: [
-    { key: 'name', title: 'Name', dataType: DataType.String, width: '45%' },
-    { key: 'score', title: 'Score', dataType: DataType.Number, width: '15%' },
-    { dataType: DataType.Boolean, key: 'passed', title: 'Passed' },
-  ],
-  data: dataArray,
-  search: ({ searchText, rowData, column }) => {
-    if (column.key === 'passed'){
-      return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
-    }
-  },
-  rowKeyField: 'id',
-  searchText: 'Billi Bob',
-};
-
 const SearchDemo: React.FC = () => {
-  const [tableProps, changeTableProps] = useState(tablePropsInit);
-  const dispatch: DispatchFunc = (action) => {
-    changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-  };
+  const [searchText, setSearchText] = useState('Billi Bob');
   return (
     <>
-      <input type='search' defaultValue={tableProps.searchText} onChange={(event) => {
-        dispatch(search(event.currentTarget.value));
+      <input type='search' value={searchText} onChange={(event) => {
+        setSearchText(event.currentTarget.value);
       }} className='top-element'/>
       <Table
-        {...tableProps}
+        columns= {[
+          { key: 'name', title: 'Name', dataType: DataType.String, width: '45%' },
+          { key: 'score', title: 'Score', dataType: DataType.Number, width: '15%' },
+          { dataType: DataType.Boolean, key: 'passed', title: 'Passed' },
+        ]}
+        data={dataArray}
+        search={({ searchText: searchTextValue, rowData, column }) => {
+          if (column.key === 'passed'){
+            return (searchTextValue === 'false' && !rowData.passed) || (searchTextValue === 'true' && rowData.passed);
+          }
+        }}
+        rowKeyField={'id'}
+        searchText={searchText}
         childComponents={{
           noDataRow: {
             content: () => 'No Data Found'
           }
         }}
-        dispatch={dispatch}
       />
     </>
   );
