@@ -32,7 +32,7 @@ const RemoteDataTable = () => {
         }}
         paging= {{
           enabled: true,
-          pageIndex: pageIndex,
+          pageIndex,
           pageSize: 10,
           pagesCount: getQuery.data?.pagesCount
         }}

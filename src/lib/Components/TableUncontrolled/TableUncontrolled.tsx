@@ -29,17 +29,17 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsK
       return nextState;
     });
   };
-  
+
   React.useEffect(() => {
     const controlledPropsKeys = getControlledPropsKeys(props);
     const propsToOverride = getPropsToOverride(controlledPropsKeys, props, tableProps);
-    
-    if(Object.keys(propsToOverride).length){
+
+    if (Object.keys(propsToOverride).length){
       changeTableProps({...tableProps, ...propsToOverride});
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
-  
+
   const contextTable = props.table || getTable();
   contextTable.props = tableProps;
   contextTable.changeProps = changeTableProps;

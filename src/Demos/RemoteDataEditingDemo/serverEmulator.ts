@@ -16,7 +16,7 @@ let dataArray = Array(100).fill(undefined).map(
 
 export const useGet = (pageIndexNew: number, columns: Column[]) => {
   return useQuery<any, any>(['useGet', pageIndexNew, JSON.stringify(columns)], async () => {
-    return await new Promise((resolve) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         const paging = {
           enabled: true,
@@ -39,7 +39,6 @@ export const useGet = (pageIndexNew: number, columns: Column[]) => {
   });
 }
 
-
 export const useUpdate = () => {
   const queryClient = useQueryClient();
   return useMutation(({id, data}: {id: any, data: any}) => new Promise((resolve) => {
@@ -51,7 +50,6 @@ export const useUpdate = () => {
       }
       await queryClient.refetchQueries();
       resolve({});
-      
     }, 1000)})
   );
 };

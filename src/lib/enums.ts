@@ -23,7 +23,7 @@ export enum ActionType {
   ClearSingleAction = 'ClearSingleAction',
   CloseEditor = 'CloseEditor',
   CloseRowEditors = 'CloseRowEditors',
-  ComponentDidMount='ComponentDidMount',
+  ComponentDidMount= 'ComponentDidMount',
   DeleteRow = 'DeleteRow',
   DeselectAllFilteredRows = 'DeselectAllFilteredRows',
   DeselectAllRows = 'DeselectAllRows',

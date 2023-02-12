@@ -24,9 +24,9 @@ const SearchDemo: React.FC = () => {
           { dataType: DataType.Boolean, key: 'passed', title: 'Passed' },
         ]}
         data={dataArray}
-        search= {({ searchText, rowData, column }) => {
+        search={({ searchText: searchTextValue, rowData, column }) => {
           if (column.key === 'passed'){
-            return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
+            return (searchTextValue === 'false' && !rowData.passed) || (searchTextValue === 'true' && rowData.passed);
           }
         }}
         rowKeyField={'id'}

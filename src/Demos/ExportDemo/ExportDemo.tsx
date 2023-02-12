@@ -40,7 +40,7 @@ const ExportDemo: React.FC = () => {
       <Table
         columns={columns}
         data={data}
-        rowKeyField="id"
+        rowKeyField={'id'}
       />
     </div>
   );

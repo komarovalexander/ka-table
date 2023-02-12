@@ -4,7 +4,7 @@ import { DataType } from '../../lib';
 import { sortData } from '../../lib/Utils/SortUtils';
 import { useQuery } from 'react-query';
 
-let dataArray = Array(100).fill(undefined).map(
+const dataArray = Array(100).fill(undefined).map(
   (_, index) => ({
     column1: `column:1 row:${index}`,
     column2: `column:2 row:${index}`,
