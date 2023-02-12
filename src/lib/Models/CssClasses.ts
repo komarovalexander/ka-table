@@ -8,6 +8,7 @@ export class CssClasses {
   public groupCell = 'ka-group-cell';
   public groupSummaryRow = 'ka-group-summary-row'
   public detailsRow = 'ka-tr ka-details-row';
+  public detailsCell = 'ka-details-cell';
   public groupRow = 'ka-tr ka-group-row';
   public groupSummaryCell = 'ka-cell ka-group-summary-cell';
   public kaCellEditorValidationError = 'ka-cell-editor-validation-error';
