@@ -15,6 +15,7 @@ export class ChildComponents {
   public cellEditorInput?: ChildComponent<ICellEditorProps>;
   public cellText?: ChildComponent<ICellTextProps>;
   public dataRow?: ChildComponent<IDataRowProps>;
+  public detailsCell?: ChildComponent<IDataRowProps>;
   public detailsRow?: ChildComponent<IDataRowProps>;
   public filterRowCell?: ChildComponent<IFilterRowEditorProps>;
   public groupCell?: ChildComponent<IGroupRowProps>;

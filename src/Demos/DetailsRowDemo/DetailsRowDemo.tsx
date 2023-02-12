@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
-import { hideDetailsRow, showDetailsRow } from '../../lib/actionCreators';
 import { ICellTextProps, IDataRowProps } from '../../lib/props';
+import { hideDetailsRow, showDetailsRow } from '../../lib/actionCreators';
+
+import React from 'react';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
