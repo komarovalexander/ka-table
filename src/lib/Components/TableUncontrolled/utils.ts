@@ -17,5 +17,5 @@ export const getPropsToOverride = (controlledPropsKeys: ControlledPropsKeys, pro
           acc[item] = props[item];
         }
         return acc;
-    }, {} as ITableProps);
+    }, {} as any);
 }
