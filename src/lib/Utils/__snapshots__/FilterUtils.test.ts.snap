@@ -111,6 +111,18 @@ Array [
 ]
 `;
 
+exports[`FilterUtils filterData custom filter: column with data type = "date" should not change filterRowValue 1`] = `
+Array [
+  Object {
+    "date": 2021-12-20T09:00:00.000Z,
+    "id": 1,
+    "name": "Mike Wazowski",
+    "passed": true,
+    "score": 80,
+  },
+]
+`;
+
 exports[`FilterUtils filterData one item 1`] = `
 Array [
   Object {
