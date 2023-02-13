@@ -1,13 +1,14 @@
-import { ITableProps } from '../';
-import defaultOptions from '../defaultOptions';
 import { DataType, FilterOperatorName } from '../enums';
+import { FilterFunc, FormatFunc, SearchFunc } from '../types';
+
 import { Column } from '../Models/Column';
 import { EditableCell } from '../Models/EditableCell';
 import { FilterOperator } from '../Models/FilterOperator';
-import { FilterFunc, FormatFunc, SearchFunc } from '../types';
-import { isEmpty } from './CommonUtils';
-import { getValueByColumn } from './DataUtils';
+import { ITableProps } from '../';
 import { convertToColumnTypes } from './TypeUtils';
+import defaultOptions from '../defaultOptions';
+import { getValueByColumn } from './DataUtils';
+import { isEmpty } from './CommonUtils';
 
 export const getRowEditableCells = (rowKeyValue: any, editableCells: EditableCell[]): EditableCell[] => {
   return editableCells.filter((c) => c.rowKeyValue === rowKeyValue);
@@ -75,11 +76,13 @@ export const filterData = (data: any[], columns: Column[], filter?: FilterFunc):
     ) {
       return initialData;
     }
-    const compare = filter?.({ column }) || getCompare(column);
+    const customFilter = filter?.({ column });
+    const compare = customFilter || getCompare(column);
+
     return initialData.filter((d: any) => {
       let fieldValue = getValueByColumn(d, column);
       let conditionValue = column.filterRowValue;
-      if (column.dataType === DataType.Date) {
+      if (column.dataType === DataType.Date && !customFilter) {
         fieldValue = fieldValue == null ? fieldValue : new Date(fieldValue).setHours(0, 0, 0, 0);
         conditionValue = conditionValue == null ? conditionValue : new Date(conditionValue).setHours(0, 0, 0, 0);
       }

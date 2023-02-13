@@ -1,9 +1,14 @@
 import { DataType, FilterOperatorName } from '../enums';
+import {
+  filterData,
+  getDefaultOperatorForType,
+  getRowEditableCells,
+  predefinedFilterOperators,
+  searchData,
+} from './FilterUtils';
+
 import { Column } from '../Models/Column';
 import { SearchFunc } from '../types';
-import {
-  filterData, getDefaultOperatorForType, getRowEditableCells, predefinedFilterOperators, searchData,
-} from './FilterUtils';
 
 describe('FilterUtils', () => {
   it('getRowEditableCells should return required cells from table EditableCells', () => {
@@ -99,6 +104,22 @@ describe('FilterUtils', () => {
       const result = filterData(data, columns, ({ column }) => {
         if (column.key === 'score'){
           return (value, filterValue) => value !== filterValue;
+        }
+      });
+      expect(result).toMatchSnapshot();
+    });
+
+    it('custom filter: column with data type = "date" should not change filterRowValue', () => {
+      const columns = [{
+        dataType: DataType.Date,
+        filterRowValue: ['date 1'],
+        key: 'date',
+      }];
+      const result = filterData(data, columns, ({ column }) => {
+        if (column.key === 'date'){
+          return (value, filterValue) => {
+            return filterValue[0] === 'date 1' && value === data[0].date
+          };
         }
       });
       expect(result).toMatchSnapshot();
