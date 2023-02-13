@@ -118,7 +118,6 @@ describe('FilterUtils', () => {
       const result = filterData(data, columns, ({ column }) => {
         if (column.key === 'date'){
           return (value, filterValue) => {
-            console.log(filterValue[0], value,  data[0].date);
             return filterValue[0] === 'date 1' && value === data[0].date
           };
         }
