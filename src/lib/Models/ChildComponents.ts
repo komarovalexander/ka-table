@@ -29,6 +29,7 @@ export class ChildComponents {
   public headRow?: ChildComponent<IHeadRowProps>;
   public loading?: ChildComponent<ILoadingProps>;
   public noDataRow?: ChildComponent<INoDataRowProps>;
+  public noDataCell?: ChildComponent<INoDataRowProps>;
   public paging?: ChildComponent<IPagingProps>;
   public pagingIndex?: ChildComponent<IPagingIndexProps>;
   public pagingPages?: ChildComponent<IPagingProps>;
