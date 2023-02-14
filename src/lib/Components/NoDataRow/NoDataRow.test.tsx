@@ -23,7 +23,7 @@ it('renders without crashing', () => {
 it('custom colspan for cell', () => {
     const wrapper = mount(<NoDataRow {...props} childComponents={{
         noDataCell: {
-            elementAttributes:() => ({
+            elementAttributes: () => ({
                 colSpan: 100
             })
         }
