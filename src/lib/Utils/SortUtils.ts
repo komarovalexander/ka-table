@@ -48,7 +48,7 @@ const ascendSort = (sortedColumn: Column) => {
     } else if (bValue == null) {
         return 1;
     }
-    if(typeof aValue === 'string' && typeof bValue === 'string'){
+    if (typeof aValue === 'string' && typeof bValue === 'string'){
       return aValue.toLowerCase() < bValue.toLowerCase() ? -1 : 1;
     }
     return aValue < bValue ? -1 : 1;
@@ -66,7 +66,7 @@ const descendSort = (sortedColumn: Column) => {
     } else if (bValue == null) {
         return -1;
     }
-    if(typeof aValue === 'string' && typeof bValue === 'string'){
+    if (typeof aValue === 'string' && typeof bValue === 'string'){
       return aValue.toLowerCase() > bValue.toLowerCase() ? -1 : 1;
     }
     return aValue > bValue ? -1 : 1;

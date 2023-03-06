@@ -28,8 +28,8 @@ const columns: Column[] = [
 describe('sortData', () => {
   describe('strings', () => {
     it('should be case insensitive', () => {
-      const data: any[] = [
-        { column: "A", id: 1 },
+      const stringData: any[] = [
+        { column: 'A', id: 1 },
         { column: null, id: 6 },
         { column: 'a', id: 2 },
         { column: 'Bb', id: 3 },
@@ -37,7 +37,7 @@ describe('sortData', () => {
         { column: 'aa', id: 5 },
         { column: null, id: 7 },
       ];
-      const newData = sortData(columns, data);
+      const newData = sortData(columns, stringData);
       expect(newData).toMatchSnapshot();
     });
   });
