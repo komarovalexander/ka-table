@@ -7,6 +7,7 @@ const NoDataRow: React.FunctionComponent<INoDataRowProps> = (props) => {
     childComponents,
     columns,
     groupColumnsCount,
+    noData
   } = props;
   const { elementAttributes, content } = getElementCustomization({
     className: 'ka-tr ka-no-data-row'
@@ -17,7 +18,7 @@ const NoDataRow: React.FunctionComponent<INoDataRowProps> = (props) => {
   return (
     <tr {...elementAttributes}>
       <td colSpan={columns.length + groupColumnsCount} {...cellElementAttributes}>
-        {content || cellContent}
+        {content || cellContent || noData?.text}
       </td>
     </tr>
   );

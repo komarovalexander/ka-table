@@ -1,16 +1,17 @@
 import * as React from 'react';
 
-import { ITableAllProps } from '../..';
-import defaultOptions from '../../defaultOptions';
 import { ActionType, EditingMode, FilteringMode, SortingMode } from '../../enums';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { getExpandedGroups } from '../../Utils/GroupUtils';
-import { prepareTableOptions } from '../../Utils/PropsUtils';
-import { isVirtualScrollingEnabled } from '../../Utils/Virtualize';
+
 import { ColGroup } from '../ColGroup/ColGroup';
+import { ITableAllProps } from '../..';
 import TableBody from '../TableBody/TableBody';
 import { TableFoot } from '../TableFoot/TableFoot';
 import { TableHead } from '../TableHead/TableHead';
+import defaultOptions from '../../defaultOptions';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { getExpandedGroups } from '../../Utils/GroupUtils';
+import { isVirtualScrollingEnabled } from '../../Utils/Virtualize';
+import { prepareTableOptions } from '../../Utils/PropsUtils';
 
 export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => {
   const {
@@ -26,7 +27,8 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
     rowReordering = false,
     selectedRows = [],
     sortingMode = SortingMode.None,
-    virtualScrolling
+    virtualScrolling,
+    noData
   } = props;
   let {
     groupsExpanded,
@@ -52,6 +54,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.table,
   }, props, childComponents.table);
+
   return (
     <div {...tableWrapper.elementAttributes}>
       {content || tableWrapper.content || (
@@ -60,7 +63,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
             columns={preparedOptions.columns}
             groupColumnsCount={preparedOptions.groupColumnsCount}
           />
-          <TableHead
+           {(!noData?.hideHeader || !!preparedOptions.groupedData.length) && <TableHead
             {...props}
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
@@ -71,7 +74,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
             filteringMode={filteringMode}
             groupColumnsCount={preparedOptions.groupColumnsCount}
             sortingMode={sortingMode}
-          />
+          />}
           <TableBody
             {...props}
             childComponents={childComponents}

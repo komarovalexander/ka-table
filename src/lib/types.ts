@@ -2,8 +2,12 @@ import { AttributeTableData, Column } from './models';
 
 import { ITableProps } from './Components/Table/Table';
 
-type AddParameters<T, I> =
-T extends (e: infer E) => void ? (
+export interface NoData {
+  text?: string;
+  hideHeader?: boolean;
+}
+
+type AddParameters<T, I> = T extends (e: infer E) => void ? (
     (e: E, extendedEvent: AttributeTableData<I>) => void
 ) : T;
 type WithExtraParameters<T, I> = {

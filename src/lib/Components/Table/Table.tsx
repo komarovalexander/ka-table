@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as actionCreators from '../../actionCreators';
 
-import { ControlledPropsKeys, DispatchFunc, FilterFunc, FormatFunc, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc } from '../../types';
+import { ControlledPropsKeys, DispatchFunc, FilterFunc, FormatFunc, NoData, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc } from '../../types';
 import { EditableCell, PagingOptions } from '../../models';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 
@@ -52,6 +52,7 @@ export interface ITableProps {
   selectedRows?: any[];
   singleAction?: any;
   sort?: SortFunc;
+  noData?: NoData,
   sortingMode?: SortingMode;
   validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;

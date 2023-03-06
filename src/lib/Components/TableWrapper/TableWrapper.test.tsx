@@ -1,10 +1,9 @@
 import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import { ActionType } from '../../enums';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { TableWrapper } from './TableWrapper';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -58,6 +57,30 @@ describe('TableWrapper', () => {
 
     wrapper.contains('tfoot');
     expect(wrapper.find('tfoot').length).toBe(0);
+  });
+
+  describe('header', () => {
+    it('hides table header in case of noData.hideHeader=true and data is empty', () => {
+      const wrapper = mount((
+        <TableWrapper {...tableProps} data={[]} noData={{hideHeader: true}}/>
+      ));
+
+      expect(wrapper.find('thead').length).toBe(0);
+    });
+    it('shows table header in case of noData.hideHeader=true and data has values', () => {
+      const wrapper = mount((
+        <TableWrapper {...tableProps} noData={{hideHeader: false}}/>
+      ));
+
+      expect(wrapper.find('thead').length).toBe(1);
+    });
+    it('shows table header in case of noData.hideHeader=false and data is empty', () => {
+      const wrapper = mount((
+        <TableWrapper {...tableProps} data={[]} noData={{hideHeader: false}}/>
+      ));
+
+      expect(wrapper.find('thead').length).toBe(1);
+    });
   });
 
   it('shows table foot in case of tableFoot to be set', () => {
