@@ -1,10 +1,10 @@
+import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
+import { DispatchFunc, Field, FormatFunc, NoData, ValidationFunc } from './types';
+import { EditingMode, FilteringMode, SortingMode } from './enums';
 
+import { GroupedColumn } from './Models/GroupedColumn';
 import { IRowsProps } from './Components/Rows/Rows';
 import { ITableAllProps } from './Components/Table/Table';
-import { EditingMode, FilteringMode, SortingMode } from './enums';
-import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
-import { GroupedColumn } from './Models/GroupedColumn';
-import { DispatchFunc, Field, FormatFunc, ValidationFunc } from './types';
 
 export interface IColGroupProps {
   columns: Column[];
@@ -141,6 +141,7 @@ export interface INoDataRowProps {
   childComponents: ChildComponents,
   columns: Column[];
   groupColumnsCount: number;
+  noData?: NoData;
 }
 
 export interface ITableHeadProps {
@@ -172,6 +173,7 @@ export interface ITableBodyProps {
   rowKeyField: string;
   rowReordering: boolean;
   selectedRows: any[];
+  noData?: NoData;
   validation?: ValidationFunc;
   virtualScrolling?: VirtualScrolling;
   treeExpandButtonColumnKey?: string;
