@@ -54,7 +54,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.table,
   }, props, childComponents.table);
-  
+
   return (
     <div {...tableWrapper.elementAttributes}>
       {content || tableWrapper.content || (
