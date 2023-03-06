@@ -1,4 +1,4 @@
-import { DataType, SortDirection, SortingMode } from '../enums';
+import { SortDirection, SortingMode } from '../enums';
 
 import { Column } from '../Models/Column';
 import { SortFunc } from '../types';
