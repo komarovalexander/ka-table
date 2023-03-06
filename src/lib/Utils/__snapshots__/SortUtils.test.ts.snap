@@ -131,3 +131,36 @@ Array [
   },
 ]
 `;
+
+exports[`sortData strings should be case insensitive 1`] = `
+Array [
+  Object {
+    "column": "cC",
+    "id": 4,
+  },
+  Object {
+    "column": "Bb",
+    "id": 3,
+  },
+  Object {
+    "column": "aa",
+    "id": 5,
+  },
+  Object {
+    "column": "A",
+    "id": 1,
+  },
+  Object {
+    "column": "a",
+    "id": 2,
+  },
+  Object {
+    "column": null,
+    "id": 6,
+  },
+  Object {
+    "column": null,
+    "id": 7,
+  },
+]
+`;

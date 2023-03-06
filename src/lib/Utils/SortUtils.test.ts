@@ -1,8 +1,14 @@
 import { DataType, SortDirection, SortingMode } from '../enums';
-import { Column } from '../Models/Column';
 import {
-  isMultipleSorting, isRemoteSorting, isSortingEnabled, isTripleStateSorting, sortColumns, sortData,
+  isMultipleSorting,
+  isRemoteSorting,
+  isSortingEnabled,
+  isTripleStateSorting,
+  sortColumns,
+  sortData,
 } from './SortUtils';
+
+import { Column } from '../Models/Column';
 
 const data: any[] = [
   { column: 1, id: 1 },
@@ -20,6 +26,21 @@ const columns: Column[] = [
 ];
 
 describe('sortData', () => {
+  describe('strings', () => {
+    it('should be case insensitive', () => {
+      const data: any[] = [
+        { column: "A", id: 1 },
+        { column: null, id: 6 },
+        { column: 'a', id: 2 },
+        { column: 'Bb', id: 3 },
+        { column: 'cC', id: 4 },
+        { column: 'aa', id: 5 },
+        { column: null, id: 7 },
+      ];
+      const newData = sortData(columns, data);
+      expect(newData).toMatchSnapshot();
+    });
+  });
   it('should not change original data', () => {
     const newData = sortData(columns, data);
     expect(newData).not.toBe(data);
