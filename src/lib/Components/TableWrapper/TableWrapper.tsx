@@ -63,7 +63,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
             columns={preparedOptions.columns}
             groupColumnsCount={preparedOptions.groupColumnsCount}
           />
-           {(!noData?.hideHeader || !!preparedOptions.groupedData.length) && <TableHead
+           {(!noData?.hideHeader || !!data.length) && <TableHead
             {...props}
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
