@@ -17,6 +17,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
   const {
     childComponents = {},
     columnReordering,
+    groupPanel,
     columnResizing,
     data = [],
     dispatch,
@@ -67,7 +68,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
             {...props}
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
-            columnReordering={columnReordering}
+            columnReordering={columnReordering || groupPanel?.enabled}
             columnResizing={columnResizing}
             columns={preparedOptions.columns}
             dispatch={dispatch}

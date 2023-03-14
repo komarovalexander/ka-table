@@ -1,15 +1,16 @@
 import * as React from 'react';
 
-import { reorderColumns } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
-import { IHeadCellProps } from '../../props';
-import { ChildAttributesItem } from '../../types';
-import { isCellResizeShown } from '../../Utils/CellResizeUtils';
 import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
-import { getDraggableProps } from '../../Utils/PropsUtils';
-import { isSortingEnabled } from '../../Utils/SortUtils';
+
+import { ChildAttributesItem } from '../../types';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
 import HeadCellResize from '../HeadCellResize/HeadCellResize';
+import { IHeadCellProps } from '../../props';
+import defaultOptions from '../../defaultOptions';
+import { getDraggableProps } from '../../Utils/PropsUtils';
+import { isCellResizeShown } from '../../Utils/CellResizeUtils';
+import { isSortingEnabled } from '../../Utils/SortUtils';
+import { reorderColumns } from '../../actionCreators';
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
   const {
@@ -29,8 +30,12 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     childComponents: { headCell }
   } = props;
 
+  let reorderedRowProps: ChildAttributesItem<IHeadCellProps> | undefined = undefined;
   if (columnReordering) {
-    const reorderedRowProps: ChildAttributesItem<IHeadCellProps> = getDraggableProps(key, dispatch, reorderColumns, defaultOptions.css.draggedColumn, defaultOptions.css.dragOverColumn);
+    reorderedRowProps = getDraggableProps(key, dispatch, reorderColumns, defaultOptions.css.draggedColumn, defaultOptions.css.dragOverColumn, true);
+  }
+
+  if(reorderedRowProps){
     headCell = addElementAttributes(reorderedRowProps, props, headCell);
   }
 

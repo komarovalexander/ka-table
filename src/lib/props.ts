@@ -17,6 +17,13 @@ export interface IGroupPanelProps {
   childComponents?: ChildComponents;
 }
 
+export interface IGroupPanelCellProps {
+  column: Column;
+  dispatch: DispatchFunc,
+  sortingMode?: SortingMode,
+  filteringMode?: FilteringMode,
+  childComponents?: ChildComponents;
+}
 export interface IColGroupProps {
   columns: Column[];
   groupColumnsCount: number;

@@ -1,7 +1,8 @@
 import { ActionType, InsertRowPosition } from './enums';
+
 import { Focused } from './Models/Focused';
-import { PopupPosition } from './Models/PopupPosition';
 import { IMoveFocusedSettings } from './Utils/NavigationUtils';
+import { PopupPosition } from './Models/PopupPosition';
 
 export const updateHeaderFilterValues = (columnKey: string, item: any, checked: boolean) => ({
   columnKey,
@@ -298,4 +299,14 @@ export const insertRow = (rowData: any, options?: {
   rowData,
   options,
   type: ActionType.InsertRow
+});
+
+export const group = (columnKey: string) => ({
+  columnKey,
+  type: ActionType.Group
+});
+
+export const ungroup = (columnKey: string) => ({
+  columnKey,
+  type: ActionType.Ungroup
 });

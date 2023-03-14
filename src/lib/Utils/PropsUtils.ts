@@ -1,17 +1,18 @@
-import { AllHTMLAttributes } from 'react';
+import { ChildAttributesItem, DispatchFunc } from '../types';
+import { getPageData, getPagesCount } from './PagingUtils';
+import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 
+import { AllHTMLAttributes } from 'react';
+import { ChildComponent } from '../Models/ChildComponent';
+import { Column } from '../models';
 import { ITableProps } from '../';
 import { SortingMode } from '../enums';
-import { Column } from '../models';
-import { ChildComponent } from '../Models/ChildComponent';
-import { ChildAttributesItem, DispatchFunc } from '../types';
-import { getValueByField } from './DataUtils';
 import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
-import { getPageData, getPagesCount } from './PagingUtils';
-import { getValidatedEditableCells } from './ReducerUtils';
-import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 import { getTreeData } from './TreeUtils';
+import { getValidatedEditableCells } from './ReducerUtils';
+import { getValueByField } from './DataUtils';
+import { ungroup } from '../actionCreators';
 
 export function extendProps<T = HTMLElement>(
   childElementAttributes: AllHTMLAttributes<T>,
@@ -169,6 +170,7 @@ export const getDraggableProps = (
   actionCreator: (draggableKeyValue: any, targetKeyValue: any) => any,
   draggedClass: string,
   dragOverClass: string,
+  acceptGroupPanelDrop?: boolean,
 ): ChildAttributesItem<any> => {
   let count: number = 0;
   return {
@@ -184,8 +186,15 @@ export const getDraggableProps = (
     },
     onDrop: (event) => {
       event.currentTarget.classList.remove(dragOverClass);
-      const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue'));
-      dispatch(actionCreator(draggableKeyValue, key));
+      if(event.dataTransfer.getData('ka-draggableKeyValue')){
+        const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue'));
+        dispatch(actionCreator(draggableKeyValue, key));
+      }
+      if(acceptGroupPanelDrop && event.dataTransfer.getData('ka-draggableKeyValue-group')){
+        const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue-group'));
+        dispatch(ungroup(draggableKeyValue));
+        dispatch(actionCreator(draggableKeyValue, key));
+      }
     },
     onDragEnter: (event) => {
       count++;
