@@ -1,9 +1,9 @@
 import './AlertCellDemo.scss';
 
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
+
 import { ICellTextProps } from 'ka-table/props';
+import React from 'react';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -14,6 +14,7 @@ const dataArray = Array(10).fill(undefined).map(
     id: index,
   }),
 );
+
 
 const AlertCell: React.FC<ICellTextProps> = ({
    rowData,
