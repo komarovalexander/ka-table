@@ -1,13 +1,34 @@
-import { ITableProps } from '../';
 import {
-  ICellEditorProps, ICellProps, ICellTextProps, IDataRowProps, IFilterRowEditorProps,
-  IGroupRowProps, IGroupSummaryCellProps, IGroupSummaryRowProps, IHeadCellProps,
-  IHeadCellResizeProps, IHeaderFilterButtonProps, IHeadRowProps, ILoadingProps, INoDataRowProps,
-  IPagingIndexProps, IPagingProps, IPagingSizeProps, IPopupContentItemProps, IPopupContentProps,
-  ISortIconProps, ISummaryCellProps, ISummaryRowProps, ITableBodyProps, ITableFootProps,
+  ICellEditorProps,
+  ICellProps,
+  ICellTextProps,
+  IDataRowProps,
+  IFilterRowEditorProps,
+  IGroupPanelProps,
+  IGroupRowProps,
+  IGroupSummaryCellProps,
+  IGroupSummaryRowProps,
+  IHeadCellProps,
+  IHeadCellResizeProps,
+  IHeadRowProps,
+  IHeaderFilterButtonProps,
+  ILoadingProps,
+  INoDataRowProps,
+  IPagingIndexProps,
+  IPagingProps,
+  IPagingSizeProps,
+  IPopupContentItemProps,
+  IPopupContentProps,
+  ISortIconProps,
+  ISummaryCellProps,
+  ISummaryRowProps,
+  ITableBodyProps,
+  ITableFootProps,
   ITableHeadProps,
 } from '../props';
+
 import { ChildComponent } from './ChildComponent';
+import { ITableProps } from '../';
 
 export class ChildComponents {
   public cell?: ChildComponent<ICellProps>;
@@ -18,6 +39,7 @@ export class ChildComponents {
   public detailsCell?: ChildComponent<IDataRowProps>;
   public detailsRow?: ChildComponent<IDataRowProps>;
   public filterRowCell?: ChildComponent<IFilterRowEditorProps>;
+  public groupPanel?: ChildComponent<IGroupPanelProps>;
   public groupCell?: ChildComponent<IGroupRowProps>;
   public groupRow?: ChildComponent<IGroupRowProps>;
   public groupSummaryRow?: ChildComponent<IGroupSummaryRowProps>;

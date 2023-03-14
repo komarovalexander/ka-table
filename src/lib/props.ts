@@ -2,9 +2,20 @@ import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from '
 import { DispatchFunc, Field, FormatFunc, NoData, ValidationFunc } from './types';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 
+import { GroupPannel } from './Models/GroupsPanel';
 import { GroupedColumn } from './Models/GroupedColumn';
 import { IRowsProps } from './Components/Rows/Rows';
 import { ITableAllProps } from './Components/Table/Table';
+
+export interface IGroupPanelProps {
+  groupPanel?: GroupPannel;
+  columns: Column[];
+  groups?: Group[];
+  dispatch: DispatchFunc,
+  sortingMode?: SortingMode,
+  filteringMode?: FilteringMode,
+  childComponents?: ChildComponents;
+}
 
 export interface IColGroupProps {
   columns: Column[];

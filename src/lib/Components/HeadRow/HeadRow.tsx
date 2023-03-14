@@ -1,10 +1,9 @@
-import React from 'react';
-
-import defaultOptions from '../../defaultOptions';
-import { IHeadRowProps } from '../../props';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
 import HeadCell from '../HeadCell/HeadCell';
+import { IHeadRowProps } from '../../props';
+import React from 'react';
+import defaultOptions from '../../defaultOptions';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 
 const HeadRow: React.FunctionComponent<IHeadRowProps> = (props) => {
   const {
