@@ -15,8 +15,8 @@ const InfiniteScrollingDemo: React.FC = () => {
           table.showLoading();
           const result = await serverEmulator.get(pageIndex);
           changePageIndex(result.pageIndex);
-          table.updateData([...(table.props.data || []), ...result.data]);
           table.hideLoading();
+          table.updateData([...(table.props.data || []), ...result.data]);
         }
       }
     },
@@ -40,12 +40,12 @@ const InfiniteScrollingDemo: React.FC = () => {
       childComponents={{
         tableWrapper: {
           elementAttributes: () => ({
-            onScroll: (event, { baseFunc }) => {
+            onScroll: (event, { baseFunc, dispatch }) => {
               baseFunc(event);
               const element = event.currentTarget;
               const BOTTOM_OFFSET = 20;
               if (element.offsetHeight + element.scrollTop >= element.scrollHeight - BOTTOM_OFFSET) {
-                table.dispatch({ type: LOAD_MORE_DATA });
+                dispatch({ type: LOAD_MORE_DATA });
               }
             },
             style: { maxHeight: 600 },

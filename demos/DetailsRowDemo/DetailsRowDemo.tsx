@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
-import { hideDetailsRow, showDetailsRow } from 'ka-table/actionCreators';
 import { ICellTextProps, IDataRowProps } from 'ka-table/props';
+import { hideDetailsRow, showDetailsRow } from 'ka-table/actionCreators';
+
+import React from 'react';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({

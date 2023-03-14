@@ -31,10 +31,8 @@ const SearchDemo: React.FC = () => {
         }}
         rowKeyField={'id'}
         searchText={searchText}
-        childComponents={{
-          noDataRow: {
-            content: () => 'No Data Found'
-          }
+        noData={{
+          text: 'No Data Found'
         }}
       />
     </>
