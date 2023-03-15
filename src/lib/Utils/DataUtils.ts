@@ -79,7 +79,7 @@ export const reorderDataByIndex = (data: any[], getKey: (d: any) => any, keyValu
 export const insertBefore = (data: any[], getKey: (d: any) => any, keyValue: any, targetKeyValue: any) => {
   let targetIndex = data.findIndex(d => getKey(d) === targetKeyValue);
   const moved = data.findIndex(d => getKey(d) === keyValue);
-  if(moved < targetIndex){
+  if (moved < targetIndex){
     targetIndex = targetIndex - 1;
   }
   return reorderDataByIndex(data, getKey, keyValue, targetIndex);

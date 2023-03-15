@@ -153,11 +153,11 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const newColumns = reorderDataByIndex(columns, (d) => d.key, action.columnKey, action.index != null ? action.index : columns?.length);
       return { ...props, columns: newColumns };
     }
-    case ActionType.Ungroup: {
+    case ActionType.UngroupColumn: {
       const newGroups = props?.groups?.filter(group => group.columnKey !== action.columnKey);
       return { ...props, groups: newGroups?.length ? newGroups : undefined }
     }
-    case ActionType.Group: {
+    case ActionType.GroupColumn: {
       const newGroups = [...props?.groups || [], { columnKey: action.columnKey}];
       return { ...props, groups: newGroups?.length ? newGroups : undefined }
     }

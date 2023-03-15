@@ -3,4 +3,3 @@ export class GroupPanelSettings {
     public text?: string;
     public deep?: number;
   }
-  

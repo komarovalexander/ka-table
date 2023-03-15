@@ -320,13 +320,13 @@ export const insertRow = (rowData: any, options?: {
   type: ActionType.InsertRow
 });
 
-export const group = (columnKey: string) => ({
+export const groupColumn = (columnKey: string) => ({
   columnKey,
-  type: ActionType.Group
+  type: ActionType.GroupColumn
 });
 
-export const ungroup = (columnKey: string, index?: number) => ({
+export const ungroupColumn = (columnKey: string, index?: number) => ({
   columnKey,
   index,
-  type: ActionType.Ungroup
+  type: ActionType.UngroupColumn
 });

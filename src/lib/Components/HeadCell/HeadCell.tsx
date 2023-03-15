@@ -30,12 +30,12 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     childComponents: { headCell }
   } = props;
 
-  let reorderedRowProps: ChildAttributesItem<IHeadCellProps> | undefined = undefined;
+  let reorderedRowProps: ChildAttributesItem<IHeadCellProps> | undefined;
   if (columnReordering) {
     reorderedRowProps = getDraggableProps(key, dispatch, reorderColumns, defaultOptions.css.draggedColumn, defaultOptions.css.dragOverColumn, true);
   }
 
-  if(reorderedRowProps){
+  if (reorderedRowProps){
     headCell = addElementAttributes(reorderedRowProps, props, headCell);
   }
 

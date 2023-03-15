@@ -1,7 +1,7 @@
 import { ChildAttributesItem, DispatchFunc } from '../types';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
-import { moveColumnBefore, ungroup } from '../actionCreators';
+import { moveColumnBefore, ungroupColumn } from '../actionCreators';
 
 import { AllHTMLAttributes } from 'react';
 import { ChildComponent } from '../Models/ChildComponent';
@@ -186,13 +186,13 @@ export const getDraggableProps = (
     },
     onDrop: (event) => {
       event.currentTarget.classList.remove(dragOverClass);
-      if(event.dataTransfer.getData('ka-draggableKeyValue')){
+      if (event.dataTransfer.getData('ka-draggableKeyValue')){
         const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue'));
         dispatch(actionCreator(draggableKeyValue, key));
       }
-      if(acceptGroupPanelDrop && event.dataTransfer.getData('ka-draggableKeyValue-group')){
+      if (acceptGroupPanelDrop && event.dataTransfer.getData('ka-draggableKeyValue-group')){
         const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue-group'));
-        dispatch(ungroup(draggableKeyValue));
+        dispatch(ungroupColumn(draggableKeyValue));
         dispatch(moveColumnBefore(draggableKeyValue, key));
       }
     },

@@ -4,7 +4,7 @@ import { GroupPanelCell } from '../GroupPanelCell/GroupPanelCell';
 import { IGroupPanelProps } from '../../props';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { group } from '../../actionCreators';
+import { groupColumn } from '../../actionCreators';
 import { isMaxDeep } from '../../Utils/GroupUtils';
 
 export const GroupPanel: React.FunctionComponent<IGroupPanelProps> = (props) => {
@@ -18,9 +18,9 @@ export const GroupPanel: React.FunctionComponent<IGroupPanelProps> = (props) => 
   const { elementAttributes, content } = getElementCustomization({
     className: defaultOptions.css.groupPanel,
     onDrop: !isMaxDeep(groupPanel, columns, groups) ? (event) => {
-      if(event.dataTransfer.getData('ka-draggableKeyValue')){
+      if (event.dataTransfer.getData('ka-draggableKeyValue')){
         const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue'));
-        dispatch(group(draggableKeyValue));
+        dispatch(groupColumn(draggableKeyValue));
       }
     } : undefined,
     onDragOver: (event) => {

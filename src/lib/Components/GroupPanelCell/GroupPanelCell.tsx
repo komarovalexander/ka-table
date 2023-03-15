@@ -16,7 +16,7 @@ export const GroupPanelCell: React.FunctionComponent<IGroupPanelCellProps> = (pr
   } = props;
   const { elementAttributes, content } = getElementCustomization({
     className: `${defaultOptions.css.groupPanelCell} ${defaultOptions.css.theadCell} ${defaultOptions.css.theadCellHeight} ${defaultOptions.css.theadFixed} ${defaultOptions.css.theadBackground} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''}`,
-    
+
     draggable: true,
     onDragStart: (event) => {
         event.dataTransfer.setData('ka-draggableKeyValue-group', JSON.stringify(column.key));
@@ -25,7 +25,7 @@ export const GroupPanelCell: React.FunctionComponent<IGroupPanelCellProps> = (pr
   }, props, childComponents.groupPanelCell);
   return (
     <div {...elementAttributes}>
-      {content || 
+      {content ||
         <HeadCellContent column={column} sortingMode={sortingMode} dispatch={dispatch} childComponents={childComponents} areAllRowsSelected={false} />}
     </div>
   );
