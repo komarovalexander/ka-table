@@ -232,7 +232,7 @@ describe('GroupUtils', () => {
       expect(isMaxDeep({ }, [{key: '1'}, { key: '2'}, { key: '3'}], [{ columnKey: '1' }])).toBeFalsy();
       expect(isMaxDeep({ }, [{key: '1'}, { key: '2'}], [{ columnKey: '1' }])).toBeTruthy();
       expect(isMaxDeep({ }, [{key: '1'}], [{ columnKey: '1' }])).toBeTruthy();
-      expect(isMaxDeep({ deep: 1 }, [{key: '1'}, { key: '2'}], )).toBeFalsy();
+      expect(isMaxDeep({ deep: 1 }, [{key: '1'}, { key: '2'}])).toBeFalsy();
     });
   });
 });
