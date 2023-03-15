@@ -1,9 +1,17 @@
+import {
+  convertToFlat,
+  getExpandedGroups,
+  getGroupMark,
+  getGroupText,
+  getGroupedStructure,
+  groupBy,
+  groupSummaryMark,
+  isMaxDeep,
+  updateExpandedGroups,
+} from './GroupUtils';
+
 import { Group } from '../Models/Group';
 import { GroupRowData } from '../Models/GroupRowData';
-import {
-  convertToFlat, getExpandedGroups, getGroupedStructure, getGroupMark, getGroupText, groupBy,
-  groupSummaryMark, updateExpandedGroups,
-} from './GroupUtils';
 
 describe('GroupUtils', () => {
   const groupedColumns = [{key: 'country'}, {key: 'type'}];
@@ -214,6 +222,17 @@ describe('GroupUtils', () => {
         ({column, value}) => `Column: ${column.title}, Value: ${value}`
       );
       expect(result).toEqual('Column: Column Title, Value: Group Text');
+    });
+  });
+
+  describe('isMaxDeep', () => {
+    it('default', () => {
+      expect(isMaxDeep({ deep: 1 }, [{key: '1'}, { key: '2'}], [{ columnKey: '1' }])).toBeTruthy();
+      expect(isMaxDeep({ deep: 2 }, [{key: '1'}, { key: '2'}], [{ columnKey: '1' }])).toBeFalsy();
+      expect(isMaxDeep({ }, [{key: '1'}, { key: '2'}, { key: '3'}], [{ columnKey: '1' }])).toBeFalsy();
+      expect(isMaxDeep({ }, [{key: '1'}, { key: '2'}], [{ columnKey: '1' }])).toBeTruthy();
+      expect(isMaxDeep({ }, [{key: '1'}], [{ columnKey: '1' }])).toBeTruthy();
+      expect(isMaxDeep({ deep: 1 }, [{key: '1'}, { key: '2'}],)).toBeFalsy();
     });
   });
 });

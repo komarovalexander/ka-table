@@ -1,7 +1,7 @@
-
 import { Column } from '../models';
-import { Group } from '../Models/Group';
 import { FormatFunc } from '../types';
+import { Group } from '../Models/Group';
+import { GroupPanelSettings } from '../Models/GroupPanelSettings';
 import { getValueByColumn } from './DataUtils';
 
 export const groupMark = {};
@@ -117,3 +117,8 @@ export const getGroupMark = () => groupMark;
 export const getGroupText = (value: any, column: Column, format?: FormatFunc) => {
   return format ? format({ column, value }) : `${(column && column.title ? column.title + ': ' : '')}${value}`;
 };
+
+export const isMaxDeep = (groupPanel: GroupPanelSettings, columns: Column[], groups?: Group[]) => {
+  const deep = groupPanel.deep || columns?.length - 1;
+  return groups?.length && (groups?.length >= deep);
+}

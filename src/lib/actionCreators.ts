@@ -1,5 +1,6 @@
 import { ActionType, InsertRowPosition } from './enums';
 
+import { Column } from './Models/Column';
 import { Focused } from './Models/Focused';
 import { IMoveFocusedSettings } from './Utils/NavigationUtils';
 import { PopupPosition } from './Models/PopupPosition';
@@ -223,6 +224,24 @@ export const reorderColumns = (columnKey: string, targetColumnKey: string) => ({
   targetColumnKey,
 });
 
+export const moveColumnBefore = (columnKey: string, targetColumnKey: string) => ({
+  type: ActionType.MoveColumnBefore,
+  columnKey,
+  targetColumnKey
+});
+
+export const insertColumn = (column: Column, index: number) => ({
+  type: ActionType.InsertColumn,
+  column,
+  index
+});
+
+export const moveColumnToIndex = (columnKey: string, index: number) => ({
+  type: ActionType.MoveColumnToIndex,
+  columnKey,
+  index,
+});
+
 export const showColumn = (columnKey: any) => ({
   columnKey,
   type: ActionType.ShowColumn,
@@ -306,7 +325,8 @@ export const group = (columnKey: string) => ({
   type: ActionType.Group
 });
 
-export const ungroup = (columnKey: string) => ({
+export const ungroup = (columnKey: string, index?: number) => ({
   columnKey,
+  index,
   type: ActionType.Ungroup
 });

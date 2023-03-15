@@ -60,7 +60,7 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
       <div {...elementAttributes}>
         {rootDivContent || (
           <>
-            {groupPanel?.enabled && <GroupPanel {...props}/>}
+            {groupPanel?.enabled && <GroupPanel {...props} groupPanel={groupPanel}/>}
             {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
             <TableWrapper {...props} />
             {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}

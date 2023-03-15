@@ -1,6 +1,7 @@
 import { ChildAttributesItem, DispatchFunc } from '../types';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
+import { moveColumnBefore, ungroup } from '../actionCreators';
 
 import { AllHTMLAttributes } from 'react';
 import { ChildComponent } from '../Models/ChildComponent';
@@ -12,7 +13,6 @@ import { getGroupedData } from './GroupUtils';
 import { getTreeData } from './TreeUtils';
 import { getValidatedEditableCells } from './ReducerUtils';
 import { getValueByField } from './DataUtils';
-import { ungroup } from '../actionCreators';
 
 export function extendProps<T = HTMLElement>(
   childElementAttributes: AllHTMLAttributes<T>,
@@ -193,7 +193,7 @@ export const getDraggableProps = (
       if(acceptGroupPanelDrop && event.dataTransfer.getData('ka-draggableKeyValue-group')){
         const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue-group'));
         dispatch(ungroup(draggableKeyValue));
-        dispatch(actionCreator(draggableKeyValue, key));
+        dispatch(moveColumnBefore(draggableKeyValue, key));
       }
     },
     onDragEnter: (event) => {

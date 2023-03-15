@@ -2,13 +2,13 @@ import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from '
 import { DispatchFunc, Field, FormatFunc, NoData, ValidationFunc } from './types';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 
-import { GroupPannel } from './Models/GroupsPanel';
+import { GroupPanelSettings } from './Models/GroupPanelSettings';
 import { GroupedColumn } from './Models/GroupedColumn';
 import { IRowsProps } from './Components/Rows/Rows';
 import { ITableAllProps } from './Components/Table/Table';
 
 export interface IGroupPanelProps {
-  groupPanel?: GroupPannel;
+  groupPanel: GroupPanelSettings;
   columns: Column[];
   groups?: Group[];
   dispatch: DispatchFunc,
@@ -234,6 +234,7 @@ export interface IEmptyCellsProps {
   isTh?: boolean;
   isColGroup?: boolean;
   className?: string;
+  dispatch?: DispatchFunc;
 }
 
 export interface ICellEditorValidationMessageProps {
