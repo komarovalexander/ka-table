@@ -13,13 +13,14 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, faculty: 'Mathematics', comment: 'It was just a bad day :)' },
 ];
 
-const SortingCustomLogicDemo: React.FC = () => {
+const SortingExtendedDemo: React.FC = () => {
   return (
     <Table
       columns= {[
         {
           dataType: DataType.Boolean,
           key: 'passed',
+          sortDirection: SortDirection.Ascend,
           style: {width: 90},
           title: 'Passed',
         },
@@ -32,7 +33,6 @@ const SortingCustomLogicDemo: React.FC = () => {
         {
           dataType: DataType.Number,
           key: 'score',
-          sortDirection: SortDirection.Ascend,
           style: {width: 120},
           title: 'Score',
         },
@@ -71,4 +71,5 @@ const SortingCustomLogicDemo: React.FC = () => {
     />
   );
 };
-export default SortingCustomLogicDemo;
+
+export default SortingExtendedDemo;
