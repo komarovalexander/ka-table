@@ -1,17 +1,17 @@
-import { AllHTMLAttributes } from 'react';
+import { ChildAttributesItem, DispatchFunc } from '../types';
+import { getPageData, getPagesCount } from './PagingUtils';
+import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 
+import { AllHTMLAttributes } from 'react';
+import { ChildComponent } from '../Models/ChildComponent';
+import { Column } from '../models';
 import { ITableProps } from '../';
 import { SortingMode } from '../enums';
-import { Column } from '../models';
-import { ChildComponent } from '../Models/ChildComponent';
-import { ChildAttributesItem, DispatchFunc } from '../types';
-import { getValueByField } from './DataUtils';
 import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
-import { getPageData, getPagesCount } from './PagingUtils';
-import { getValidatedEditableCells } from './ReducerUtils';
-import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 import { getTreeData } from './TreeUtils';
+import { getValidatedEditableCells } from './ReducerUtils';
+import { getValueByField } from './DataUtils';
 
 export function extendProps<T = HTMLElement>(
   childElementAttributes: AllHTMLAttributes<T>,
@@ -79,6 +79,7 @@ const getDataWithoutPaging =  (props: ITableProps) => {
     groupsExpanded,
     treeGroupKeyField,
     treeGroupsExpanded,
+    extendedSort,
     rowKeyField,
     sort,
     sortingMode = SortingMode.None
@@ -91,6 +92,7 @@ const getDataWithoutPaging =  (props: ITableProps) => {
   if (!isRemoteSorting(sortingMode)) {
     resultData = sortData(columns, resultData, sort);
   }
+  resultData = extendedSort ? extendedSort(resultData, columns) : resultData;
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
   resultData = groups ? getGroupedData(resultData, groups, groupedColumns, groupsExpanded) : resultData;
