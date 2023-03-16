@@ -71,5 +71,4 @@ const SortingCustomLogicDemo: React.FC = () => {
     />
   );
 };
-
 export default SortingCustomLogicDemo;
