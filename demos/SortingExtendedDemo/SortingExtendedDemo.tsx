@@ -71,4 +71,5 @@ const SortingExtendedDemo: React.FC = () => {
     />
   );
 };
+
 export default SortingExtendedDemo;
