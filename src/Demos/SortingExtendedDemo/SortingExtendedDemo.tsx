@@ -20,6 +20,7 @@ const SortingCustomLogicDemo: React.FC = () => {
         {
           dataType: DataType.Boolean,
           key: 'passed',
+          sortDirection: SortDirection.Ascend,
           style: {width: 90},
           title: 'Passed',
         },
@@ -32,7 +33,6 @@ const SortingCustomLogicDemo: React.FC = () => {
         {
           dataType: DataType.Number,
           key: 'score',
-          sortDirection: SortDirection.Ascend,
           style: {width: 120},
           title: 'Score',
         },
