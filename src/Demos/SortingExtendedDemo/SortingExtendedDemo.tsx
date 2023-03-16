@@ -13,7 +13,7 @@ const dataArray: any[] = [
   { id: 6, name: 'Sunny Fox', score: 33, passed: false, faculty: 'Mathematics', comment: 'It was just a bad day :)' },
 ];
 
-const SortingCustomLogicDemo: React.FC = () => {
+const SortingExtendedDemo: React.FC = () => {
   return (
     <Table
       columns= {[
@@ -72,4 +72,4 @@ const SortingCustomLogicDemo: React.FC = () => {
   );
 };
 
-export default SortingCustomLogicDemo;
+export default SortingExtendedDemo;
