@@ -1,10 +1,9 @@
-import React from 'react';
-
-import { updateGroupsExpanded } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
-import { IGroupRowProps } from '../../props';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
+import { IGroupRowProps } from '../../props';
+import React from 'react';
+import defaultOptions from '../../defaultOptions';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { updateGroupsExpanded } from '../../actionCreators';
 
 const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
   const {
@@ -24,7 +23,7 @@ const GroupRowContent: React.FunctionComponent<IGroupRowProps> = (props) => {
 
   return (
     <>
-      <EmptyCells count={groupIndex}/>
+      <EmptyCells count={groupIndex} childComponents={childComponents}/>
       <td {...elementAttributes}>
           <div className='ka-group-cell-content'>
             <div

@@ -1,9 +1,9 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
-import { updateGroupsExpanded } from '../../lib/actionCreators';
+
 import EmptyCells from '../../lib/Components/EmptyCells/EmptyCells';
 import { IGroupRowProps } from '../../lib/props';
+import React from 'react';
+import { updateGroupsExpanded } from '../../lib/actionCreators';
 
 const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },

@@ -235,6 +235,16 @@ export interface IEmptyCellsProps {
   isColGroup?: boolean;
   className?: string;
   dispatch?: DispatchFunc;
+  childComponents?: ChildComponents;
+}
+
+export interface IEmptyCellProps {
+  index: number;
+  isTh?: boolean;
+  isColGroup?: boolean;
+  className?: string;
+  dispatch?: DispatchFunc;
+  childComponents?: ChildComponents;
 }
 
 export interface ICellEditorValidationMessageProps {

@@ -1,13 +1,13 @@
-import React from 'react';
-
-import { reorderRows } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
-import { IRowProps } from '../../props';
-import { ChildAttributesItem } from '../../types';
 import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
-import { getDraggableProps } from '../../Utils/PropsUtils';
+
+import { ChildAttributesItem } from '../../types';
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
+import { IRowProps } from '../../props';
+import React from 'react';
+import defaultOptions from '../../defaultOptions';
+import { getDraggableProps } from '../../Utils/PropsUtils';
+import { reorderRows } from '../../actionCreators';
 
 const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   const {
@@ -17,10 +17,9 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
     rowKeyValue,
     rowReordering,
     trRef,
+    childComponents
   } = props;
-  let {
-    childComponents : { dataRow },
-  } = props;
+  let dataRow = childComponents.dataRow;
 
   if (rowReordering){
     const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps(rowKeyValue, dispatch, reorderRows, defaultOptions.css.draggedRow, defaultOptions.css.dragOverRow);
@@ -37,7 +36,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
         ? <>{content}</>
         : (
         <>
-          <EmptyCells count={groupColumnsCount}/>
+          <EmptyCells count={groupColumnsCount} childComponents={childComponents}/>
           <DataRowContent {...props}/>
         </>
         )

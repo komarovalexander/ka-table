@@ -3,6 +3,7 @@ import {
   ICellProps,
   ICellTextProps,
   IDataRowProps,
+  IEmptyCellProps,
   IFilterRowEditorProps,
   IGroupPanelCellProps,
   IGroupPanelProps,
@@ -39,6 +40,7 @@ export class ChildComponents {
   public dataRow?: ChildComponent<IDataRowProps>;
   public detailsCell?: ChildComponent<IDataRowProps>;
   public detailsRow?: ChildComponent<IDataRowProps>;
+  public emptyCell?: ChildComponent<IEmptyCellProps>;
   public filterRowCell?: ChildComponent<IFilterRowEditorProps>;
   public groupPanel?: ChildComponent<IGroupPanelProps>;
   public groupPanelCell?: ChildComponent<IGroupPanelCellProps>;

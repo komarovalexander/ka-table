@@ -26,7 +26,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = (props) => {
         content ||
         (
           <>
-            <EmptyCells count={groupColumnsCount} isTh={true} dispatch={dispatch} />
+            <EmptyCells count={groupColumnsCount} isTh={true} dispatch={dispatch} childComponents={childComponents} />
             {
               columns.map((column) => {
                 return (
