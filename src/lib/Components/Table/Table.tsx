@@ -34,6 +34,7 @@ export interface ITableProps {
   editableCells?: EditableCell[];
   editingMode?: EditingMode;
   extendedFilter?: (data: any[]) => any[];
+  extendedSort?: (data: any[], columns: Column[]) => any[];
   filter?: FilterFunc;
   filteringMode?: FilteringMode;
   focused?: Focused;

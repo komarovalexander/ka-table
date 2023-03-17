@@ -80,6 +80,7 @@ const getDataWithoutPaging =  (props: ITableProps) => {
     groupsExpanded,
     treeGroupKeyField,
     treeGroupsExpanded,
+    extendedSort,
     rowKeyField,
     sort,
     sortingMode = SortingMode.None
@@ -92,6 +93,7 @@ const getDataWithoutPaging =  (props: ITableProps) => {
   if (!isRemoteSorting(sortingMode)) {
     resultData = sortData(columns, resultData, sort);
   }
+  resultData = extendedSort ? extendedSort(resultData, columns) : resultData;
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
   resultData = groups ? getGroupedData(resultData, groups, groupedColumns, groupsExpanded) : resultData;
