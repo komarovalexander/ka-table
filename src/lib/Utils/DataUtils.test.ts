@@ -1,7 +1,13 @@
-import { Column } from '../models';
 import {
-  createObjByFields, getParentValue, getValueByColumn, getValueByField, replaceValue,
+  createObjByFields,
+  getParentValue,
+  getValueByColumn,
+  getValueByField,
+  insertBefore,
+  replaceValue,
 } from './DataUtils';
+
+import { Column } from '../models';
 
 describe('DataUtils', () => {
   describe('getValueByColumn', () => {
@@ -250,6 +256,12 @@ describe('DataUtils', () => {
           },
         },
       });
+    });
+  });
+  describe('insertBefore', () => {
+    it('default', () => {
+      expect(insertBefore([{key: 1}, {key: 2}, {key: 3}], (item) => item.key, 3, 2)).toEqual([{key: 1}, {key: 3}, {key: 2}]);
+      expect(insertBefore([{key: 1}, {key: 2}, {key: 3}], (item) => item.key, 1, 3)).toEqual([{key: 2}, {key: 1}, {key: 3}]);
     });
   });
 });
