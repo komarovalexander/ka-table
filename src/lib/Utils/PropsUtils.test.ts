@@ -275,8 +275,8 @@ describe('getDraggableProps', () => {
         expect(actionCreator).toBeCalledWith(2, 1);
         expect(dispatch).toBeCalledTimes(3);
         expect(dispatch).toHaveBeenNthCalledWith(1, { type: actionType });
-        expect(dispatch).toHaveBeenNthCalledWith(2, { type: "UngroupColumn", columnKey: 2 });
-        expect(dispatch).toHaveBeenNthCalledWith(3, { type: "MoveColumnBefore", columnKey: 2, targetColumnKey: 1 });
+        expect(dispatch).toHaveBeenNthCalledWith(2, { type: 'UngroupColumn', columnKey: 2 });
+        expect(dispatch).toHaveBeenNthCalledWith(3, { type: 'MoveColumnBefore', columnKey: 2, targetColumnKey: 1 });
     });
     it('onDragEnter', () => {
         const result = getDraggableProps(
