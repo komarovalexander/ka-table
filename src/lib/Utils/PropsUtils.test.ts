@@ -259,6 +259,25 @@ describe('getDraggableProps', () => {
         expect(dispatch).toBeCalledTimes(1);
         expect(dispatch).toBeCalledWith({ type: actionType });
     });
+    it('onDrop group', () => {
+        const result = getDraggableProps(
+            key,
+            dispatch,
+            actionCreator,
+            draggedClass,
+            dragOverClass,
+            true
+        );
+        result.onDrop!(event, {} as any);
+        expect(event.currentTarget.classList.remove).toBeCalledWith(
+            dragOverClass
+        );
+        expect(actionCreator).toBeCalledWith(2, 1);
+        expect(dispatch).toBeCalledTimes(3);
+        expect(dispatch).toHaveBeenNthCalledWith(1, { type: actionType });
+        expect(dispatch).toHaveBeenNthCalledWith(2, { type: "UngroupColumn", columnKey: 2 });
+        expect(dispatch).toHaveBeenNthCalledWith(3, { type: "MoveColumnBefore", columnKey: 2, targetColumnKey: 1 });
+    });
     it('onDragEnter', () => {
         const result = getDraggableProps(
             key,
