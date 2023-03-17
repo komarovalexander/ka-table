@@ -325,8 +325,7 @@ export const groupColumn = (columnKey: string) => ({
   type: ActionType.GroupColumn
 });
 
-export const ungroupColumn = (columnKey: string, index?: number) => ({
+export const ungroupColumn = (columnKey: string) => ({
   columnKey,
-  index,
   type: ActionType.UngroupColumn
 });

@@ -11,6 +11,7 @@ import {
     areAllVisibleRowsSelected,
     getData,
     getDraggableProps,
+    getEmptyCellOnDrop,
     getPagesCountByProps,
     getSelectedData,
     isValid,
@@ -575,6 +576,32 @@ describe('areAllVisibleRowsSelected', () => {
         };
         const allFilteredRowsSelected = areAllVisibleRowsSelected(tableProps);
         expect(allFilteredRowsSelected).toBeFalsy();
+    });
+});
+
+describe('getEmptyCellOnDrop', () => {
+    it('default', () => {
+        const dispatch = jest.fn();
+        const getData = jest.fn().mockReturnValue('"someColumnKey"');
+        getEmptyCellOnDrop({ dataTransfer: { getData }} as any, dispatch);
+        expect(getData).toHaveBeenCalledWith('ka-draggableKeyValue-group');
+        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenNthCalledWith(1, { 
+            columnKey: "someColumnKey",
+            type: "UngroupColumn"
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+            columnKey: "someColumnKey",
+            index: 0,
+            type: "MoveColumnToIndex"
+        });
+    });
+    it('shouldNot execute dispatch', () => {
+        const dispatch = jest.fn();
+        const getData = jest.fn().mockReturnValue('');
+        getEmptyCellOnDrop({ dataTransfer: { getData }} as any, dispatch);
+        expect(getData).toHaveBeenCalledWith('ka-draggableKeyValue-group');
+        expect(dispatch).toHaveBeenCalledTimes(0);
     });
 });
 

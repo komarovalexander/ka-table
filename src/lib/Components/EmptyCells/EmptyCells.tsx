@@ -1,9 +1,8 @@
 import * as React from 'react';
 
-import { moveColumnToIndex, ungroupColumn } from '../../actionCreators';
-
 import { IEmptyCellsProps } from '../../props';
 import defaultOptions from '../../defaultOptions';
+import { getEmptyCellOnDrop } from '../../Utils/PropsUtils';
 
 const EmptyCells: React.FunctionComponent<IEmptyCellsProps> = ({ count, isTh, isColGroup, dispatch }) => {
   return (
@@ -13,13 +12,7 @@ const EmptyCells: React.FunctionComponent<IEmptyCellsProps> = ({ count, isTh, is
           <col key={index} />
           : isTh ?
             <th key={index} className={`ka-empty-cell ${defaultOptions.css.theadBackground} ${defaultOptions.css.theadFixed}`}
-            onDrop={(event) => {
-              if (event.dataTransfer.getData('ka-draggableKeyValue-group')){
-                const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue-group'));
-                dispatch?.(ungroupColumn(draggableKeyValue));
-                dispatch?.(moveColumnToIndex(draggableKeyValue, 0));
-              }
-            }}
+            onDrop={(event) => getEmptyCellOnDrop(event, dispatch)}
             onDragOver={(event) => {
               event.preventDefault();
             }}/>

@@ -1,7 +1,7 @@
 import { ChildAttributesItem, DispatchFunc } from '../types';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
-import { moveColumnBefore, ungroupColumn } from '../actionCreators';
+import { moveColumnBefore, moveColumnToIndex, ungroupColumn } from '../actionCreators';
 
 import { AllHTMLAttributes } from 'react';
 import { ChildComponent } from '../Models/ChildComponent';
@@ -162,6 +162,15 @@ export const prepareTableOptions = (props: ITableProps) => {
     groupedColumns,
     groupedData
   };
+};
+
+export const getEmptyCellOnDrop = (event: React.DragEvent, dispatch?: DispatchFunc) => {
+  const eventData = event.dataTransfer.getData('ka-draggableKeyValue-group');
+  if (eventData){
+    const draggableKeyValue = JSON.parse(eventData);
+    dispatch?.(ungroupColumn(draggableKeyValue));
+    dispatch?.(moveColumnToIndex(draggableKeyValue, 0));
+  }
 };
 
 export const getDraggableProps = (
