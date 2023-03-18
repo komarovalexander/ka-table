@@ -158,6 +158,15 @@
   margin-bottom: 15px;
   margin-top: 15px;
   margin-left: 15px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.ka-group-panel-cell-remove{
+  cursor: pointer;
+  color: lighten($ka-thead-color, 25);
+  display: flex;
+  fill: currentColor;
 }
 .ka-group-panel-text{
   color: #747D86;

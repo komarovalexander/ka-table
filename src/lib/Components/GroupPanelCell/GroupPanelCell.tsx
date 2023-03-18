@@ -1,11 +1,13 @@
 import * as React from 'react';
 
+import { ReactComponent as CrossSvg } from '../../Icons/Cross.svg';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
 import { IGroupPanelCellProps } from '../../props';
 import { SortingMode } from '../../enums';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
+import { ungroupColumn } from '../../actionCreators';
 
 export const GroupPanelCell: React.FunctionComponent<IGroupPanelCellProps> = (props) => {
   const {
@@ -25,8 +27,14 @@ export const GroupPanelCell: React.FunctionComponent<IGroupPanelCellProps> = (pr
   }, props, childComponents.groupPanelCell);
   return (
     <div {...elementAttributes}>
-      {content ||
-        <HeadCellContent column={column} sortingMode={sortingMode} dispatch={dispatch} childComponents={childComponents} areAllRowsSelected={false} />}
+      {content || (<>
+          <HeadCellContent column={column} sortingMode={sortingMode} dispatch={dispatch} childComponents={childComponents} areAllRowsSelected={false} />
+          <span className={defaultOptions.css.groupPanelCellRemove}>
+            <CrossSvg onClick={() => {
+              dispatch(ungroupColumn(column.key));
+            }}/>
+          </span>
+        </>)}
     </div>
   );
 };

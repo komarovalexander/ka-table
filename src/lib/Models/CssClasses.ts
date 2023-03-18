@@ -13,6 +13,7 @@ export class CssClasses {
   public groupSummaryCell = 'ka-cell ka-group-summary-cell';
   public groupPanel = 'ka-group-panel';
   public groupPanelCell = 'ka-group-panel-cell';
+  public groupPanelCellRemove = 'ka-group-panel-cell-remove';
   public groupPanelText = 'ka-group-panel-text';
   public kaCellEditorValidationError = 'ka-cell-editor-validation-error';
   public row = 'ka-tr ka-row';
