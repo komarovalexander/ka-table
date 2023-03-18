@@ -13,6 +13,7 @@ import {
     getDraggableProps,
     getPagesCountByProps,
     getSelectedData,
+    groupPanelOnDrop,
     isValid,
     mergeProps,
     prepareTableOptions,
@@ -317,6 +318,27 @@ describe('getDraggableProps', () => {
         expect(event.preventDefault).toBeCalledTimes(2);
     });
 });
+
+describe('groupPanelOnDrop', () => {
+    it('default', () => {
+        const dispatch = jest.fn();
+        const getEventData = jest.fn().mockReturnValue('"someColumnKey"');
+        groupPanelOnDrop({ dataTransfer: { getData: getEventData }} as any, dispatch);
+        expect(getEventData).toHaveBeenCalledWith('ka-draggableKeyValue');
+        expect(dispatch).toHaveBeenCalledWith({
+            columnKey: 'someColumnKey',
+            type: 'GroupColumn'
+        });
+    });
+    it('shouldNot execute dispatch', () => {
+        const dispatch = jest.fn();
+        const getEventData = jest.fn().mockReturnValue('');
+        groupPanelOnDrop({ dataTransfer: { getData: getEventData }} as any, dispatch);
+        expect(getEventData).toHaveBeenCalledWith('ka-draggableKeyValue');
+        expect(dispatch).toHaveBeenCalledTimes(0);
+    });
+});
+
 
 describe('prepareTableOptions', () => {
     it('prepareTableOptions', () => {

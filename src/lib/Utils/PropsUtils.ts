@@ -12,6 +12,7 @@ import { getGroupedData } from './GroupUtils';
 import { getTreeData } from './TreeUtils';
 import { getValidatedEditableCells } from './ReducerUtils';
 import { getValueByField } from './DataUtils';
+import { groupColumn } from '../actionCreators';
 
 export function extendProps<T = HTMLElement>(
   childElementAttributes: AllHTMLAttributes<T>,
@@ -165,6 +166,14 @@ export const prepareTableOptions = (props: ITableProps) => {
   };
 };
 
+export const groupPanelOnDrop = (event: React.DragEvent, dispatch: DispatchFunc) => {
+  const draggableKeyValueData = event.dataTransfer?.getData('ka-draggableKeyValue');
+  if (draggableKeyValueData){
+    const draggableKeyValue = JSON.parse(draggableKeyValueData);
+    dispatch(groupColumn(draggableKeyValue));
+  }
+};
+
 export const getDraggableProps = ({
   key,
   dispatch,
@@ -224,3 +233,4 @@ export const getDraggableProps = ({
     ...reorderingProps
   };
 }
+
