@@ -11,7 +11,6 @@ import {
     areAllVisibleRowsSelected,
     getData,
     getDraggableProps,
-    getEmptyCellOnDrop,
     getPagesCountByProps,
     getSelectedData,
     isValid,
@@ -205,23 +204,25 @@ describe('getDraggableProps', () => {
         };
     });
     it('should be draggable', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         expect(result.draggable).toBeTruthy();
     });
     it('onDragStart', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         result.onDragStart!(event, {} as any);
         expect(event.dataTransfer.setData).toBeCalledWith(
             'ka-draggableKeyValue',
@@ -231,26 +232,28 @@ describe('getDraggableProps', () => {
         expect(event.dataTransfer.effectAllowed).toEqual('move');
     });
     it('onDragEnd', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         result.onDragEnd!(event, {} as any);
         expect(event.currentTarget.classList.remove).toBeCalledWith(
             draggedClass
         );
     });
     it('onDrop', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         result.onDrop!(event, {} as any);
         expect(event.currentTarget.classList.remove).toBeCalledWith(
             dragOverClass
@@ -259,33 +262,15 @@ describe('getDraggableProps', () => {
         expect(dispatch).toBeCalledTimes(1);
         expect(dispatch).toBeCalledWith({ type: actionType });
     });
-    it('onDrop group', () => {
-        const result = getDraggableProps(
+    it('onDragEnter', () => {
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
             dragOverClass,
-            true
-        );
-        result.onDrop!(event, {} as any);
-        expect(event.currentTarget.classList.remove).toBeCalledWith(
-            dragOverClass
-        );
-        expect(actionCreator).toBeCalledWith(2, 1);
-        expect(dispatch).toBeCalledTimes(3);
-        expect(dispatch).toHaveBeenNthCalledWith(1, { type: actionType });
-        expect(dispatch).toHaveBeenNthCalledWith(2, { type: 'UngroupColumn', columnKey: 2 });
-        expect(dispatch).toHaveBeenNthCalledWith(3, { type: 'MoveColumnBefore', columnKey: 2, targetColumnKey: 1 });
-    });
-    it('onDragEnter', () => {
-        const result = getDraggableProps(
-            key,
-            dispatch,
-            actionCreator,
-            draggedClass,
-            dragOverClass
-        );
+            hasReordering: true
+        });
         event.currentTarget.classList.contains.mockReturnValue(true);
         result.onDragEnter!(event, {} as any);
         expect(event.currentTarget.classList.add).toBeCalledTimes(0);
@@ -296,13 +281,14 @@ describe('getDraggableProps', () => {
         expect(event.preventDefault).toBeCalledTimes(2);
     });
     it('onDragLeave', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         result.onDragEnter!(event, {} as any);
         result.onDragEnter!(event, {} as any);
         result.onDragLeave!(event, {} as any);
@@ -313,13 +299,14 @@ describe('getDraggableProps', () => {
         );
     });
     it('onDragOver', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         event.currentTarget.classList.contains.mockReturnValue(true);
         result.onDragOver!(event, {} as any);
         expect(event.currentTarget.classList.add).toBeCalledTimes(0);
@@ -595,32 +582,6 @@ describe('areAllVisibleRowsSelected', () => {
         };
         const allFilteredRowsSelected = areAllVisibleRowsSelected(tableProps);
         expect(allFilteredRowsSelected).toBeFalsy();
-    });
-});
-
-describe('getEmptyCellOnDrop', () => {
-    it('default', () => {
-        const dispatch = jest.fn();
-        const getEventData = jest.fn().mockReturnValue('"someColumnKey"');
-        getEmptyCellOnDrop({ dataTransfer: { getData: getEventData }} as any, dispatch);
-        expect(getEventData).toHaveBeenCalledWith('ka-draggableKeyValue-group');
-        expect(dispatch).toHaveBeenCalledTimes(2);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-            columnKey: 'someColumnKey',
-            type: 'UngroupColumn'
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
-            columnKey: 'someColumnKey',
-            index: 0,
-            type: 'MoveColumnToIndex'
-        });
-    });
-    it('shouldNot execute dispatch', () => {
-        const dispatch = jest.fn();
-        const getEventData = jest.fn().mockReturnValue('');
-        getEmptyCellOnDrop({ dataTransfer: { getData: getEventData }} as any, dispatch);
-        expect(getEventData).toHaveBeenCalledWith('ka-draggableKeyValue-group');
-        expect(dispatch).toHaveBeenCalledTimes(0);
     });
 });
 

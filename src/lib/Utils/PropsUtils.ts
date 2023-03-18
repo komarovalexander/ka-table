@@ -1,7 +1,6 @@
 import { ChildAttributesItem, DispatchFunc } from '../types';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
-import { moveColumnBefore, moveColumnToIndex, ungroupColumn } from '../actionCreators';
 
 import { AllHTMLAttributes } from 'react';
 import { ChildComponent } from '../Models/ChildComponent';
@@ -166,47 +165,23 @@ export const prepareTableOptions = (props: ITableProps) => {
   };
 };
 
-export const getEmptyCellOnDrop = (event: React.DragEvent, dispatch?: DispatchFunc) => {
-  const eventData = event.dataTransfer.getData('ka-draggableKeyValue-group');
-  if (eventData){
-    const draggableKeyValue = JSON.parse(eventData);
-    dispatch?.(ungroupColumn(draggableKeyValue));
-    dispatch?.(moveColumnToIndex(draggableKeyValue, 0));
-  }
-};
-
-export const getDraggableProps = (
+export const getDraggableProps = ({
+  key,
+  dispatch,
+  actionCreator,
+  draggedClass,
+  dragOverClass,
+  hasReordering
+}: {
   key: any,
   dispatch: DispatchFunc,
   actionCreator: (draggableKeyValue: any, targetKeyValue: any) => any,
   draggedClass: string,
   dragOverClass: string,
-  acceptGroupPanelDrop?: boolean,
-): ChildAttributesItem<any> => {
+  hasReordering: boolean
+}): ChildAttributesItem<any> => {
   let count: number = 0;
-  return {
-    draggable: true,
-    onDragStart: (event) => {
-      count = 0;
-      event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
-      event.currentTarget.classList.add(draggedClass);
-      event.dataTransfer.effectAllowed = 'move';
-    },
-    onDragEnd: (event) => {
-      event.currentTarget.classList.remove(draggedClass);
-    },
-    onDrop: (event) => {
-      event.currentTarget.classList.remove(dragOverClass);
-      if (event.dataTransfer.getData('ka-draggableKeyValue')){
-        const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue'));
-        dispatch(actionCreator(draggableKeyValue, key));
-      }
-      if (acceptGroupPanelDrop && event.dataTransfer.getData('ka-draggableKeyValue-group')){
-        const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue-group'));
-        dispatch(ungroupColumn(draggableKeyValue));
-        dispatch(moveColumnBefore(draggableKeyValue, key));
-      }
-    },
+  const reorderingProps: ChildAttributesItem<any> = hasReordering ? {
     onDragEnter: (event) => {
       count++;
       if (!event.currentTarget.classList.contains(dragOverClass)) {
@@ -226,5 +201,26 @@ export const getDraggableProps = (
       }
       event.preventDefault();
     }
+  } : {};
+  return {
+    draggable: true,
+    onDragStart: (event) => {
+      count = 0;
+      event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
+      event.currentTarget.classList.add(draggedClass);
+      event.dataTransfer.effectAllowed = 'move';
+    },
+    onDragEnd: (event) => {
+      event.currentTarget.classList.remove(draggedClass);
+    },
+    onDrop: (event) => {
+      event.currentTarget.classList.remove(dragOverClass);
+      const keyDataTransfer = event.dataTransfer.getData('ka-draggableKeyValue')
+      if (hasReordering && keyDataTransfer){
+        const draggableKeyValue = JSON.parse(keyDataTransfer);
+        dispatch(actionCreator(draggableKeyValue, key));
+      }
+    },
+    ...reorderingProps
   };
 }

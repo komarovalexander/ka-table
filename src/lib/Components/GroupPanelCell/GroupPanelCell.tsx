@@ -6,7 +6,7 @@ import { IGroupPanelCellProps } from '../../props';
 import { SortingMode } from '../../enums';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
-import { isSortingEnabled } from '../../Utils/SortUtils';
+import { getHeadCellClassName } from '../../Utils/HeadRowUtils';
 import { ungroupColumn } from '../../actionCreators';
 
 export const GroupPanelCell: React.FunctionComponent<IGroupPanelCellProps> = (props) => {
@@ -17,13 +17,7 @@ export const GroupPanelCell: React.FunctionComponent<IGroupPanelCellProps> = (pr
     childComponents = {},
   } = props;
   const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.groupPanelCell} ${defaultOptions.css.theadCell} ${defaultOptions.css.theadCellHeight} ${defaultOptions.css.theadFixed} ${defaultOptions.css.theadBackground} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''}`,
-
-    draggable: true,
-    onDragStart: (event) => {
-        event.dataTransfer.setData('ka-draggableKeyValue-group', JSON.stringify(column.key));
-        event.dataTransfer.effectAllowed = 'move';
-    }
+    className: `${defaultOptions.css.groupPanelCell} ${getHeadCellClassName(sortingMode)}`,
   }, props, childComponents.groupPanelCell);
   return (
     <div {...elementAttributes}>

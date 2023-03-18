@@ -21,8 +21,15 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
   } = props;
   let dataRow = childComponents.dataRow;
 
-  if (rowReordering){
-    const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps(rowKeyValue, dispatch, reorderRows, defaultOptions.css.draggedRow, defaultOptions.css.dragOverRow);
+  if (rowReordering) {
+    const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps({
+      key: rowKeyValue,
+      dispatch,
+      actionCreator: reorderRows,
+      draggedClass: defaultOptions.css.draggedRow,
+      dragOverClass: defaultOptions.css.dragOverRow,
+      hasReordering: true
+    });
     dataRow = addElementAttributes(reorderedRowProps, props, dataRow);
   }
 
@@ -35,10 +42,10 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
       {content
         ? <>{content}</>
         : (
-        <>
-          <EmptyCells count={groupColumnsCount} childComponents={childComponents}/>
-          <DataRowContent {...props}/>
-        </>
+          <>
+            <EmptyCells count={groupColumnsCount} childComponents={childComponents} />
+            <DataRowContent {...props} />
+          </>
         )
       }
     </tr>

@@ -2,14 +2,13 @@ import * as React from 'react';
 
 import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
 
-import { ChildAttributesItem } from '../../types';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
 import HeadCellResize from '../HeadCellResize/HeadCellResize';
 import { IHeadCellProps } from '../../props';
 import defaultOptions from '../../defaultOptions';
 import { getDraggableProps } from '../../Utils/PropsUtils';
+import { getHeadCellClassName } from '../../Utils/HeadRowUtils';
 import { isCellResizeShown } from '../../Utils/CellResizeUtils';
-import { isSortingEnabled } from '../../Utils/SortUtils';
 import { reorderColumns } from '../../actionCreators';
 
 const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
@@ -21,6 +20,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     columnReordering,
     columnResizing,
     dispatch,
+    groupPanel,
     hasChildren,
     isGrouped,
     rowSpan,
@@ -30,17 +30,20 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     childComponents: { headCell }
   } = props;
 
-  let reorderedRowProps: ChildAttributesItem<IHeadCellProps> | undefined;
-  if (columnReordering) {
-    reorderedRowProps = getDraggableProps(key, dispatch, reorderColumns, defaultOptions.css.draggedColumn, defaultOptions.css.dragOverColumn, true);
-  }
-
-  if (reorderedRowProps){
+  if (columnReordering || groupPanel?.enabled) {
+    const reorderedRowProps = getDraggableProps({
+      key,
+      dispatch,
+      actionCreator: reorderColumns,
+      draggedClass: defaultOptions.css.draggedColumn,
+      dragOverClass: defaultOptions.css.dragOverColumn,
+      hasReordering: !!columnReordering
+    });
     headCell = addElementAttributes(reorderedRowProps, props, headCell);
   }
 
   const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.theadCell} ${defaultOptions.css.theadCellHeight} ${defaultOptions.css.theadFixed} ${defaultOptions.css.theadBackground} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''} ${isGrouped ? 'ka-thead-grouped-cell' : ''}`,
+    className: getHeadCellClassName(sortingMode, isGrouped),
     colSpan,
     rowSpan,
     scope: 'col',

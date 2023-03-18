@@ -68,12 +68,13 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
             {...props}
             areAllRowsSelected={areAllRowsSelected}
             childComponents={childComponents}
-            columnReordering={columnReordering || groupPanel?.enabled}
+            columnReordering={columnReordering}
             columnResizing={columnResizing}
             columns={preparedOptions.columns}
             dispatch={dispatch}
             filteringMode={filteringMode}
             groupColumnsCount={preparedOptions.groupColumnsCount}
+            groupPanel={groupPanel}
             sortingMode={sortingMode}
           />}
           <TableBody
