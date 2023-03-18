@@ -1,10 +1,10 @@
 import './Demos.scss';
 
+import MenuItems, { MenuItem } from './MenuItems';
 import React, { useState } from 'react';
 
 import { DemoCase } from './DemoCase';
 import { trackEvent } from './ga';
-import MenuItems, { MenuItem } from './MenuItems';
 
 interface IDemosMenuProps {
   cases: DemoCase[];
@@ -21,6 +21,7 @@ const synonyms: { [value: string]: any[] } = {
   'EditingRowDemo': ['Image', 'Button', 'Btn'],
   'EventsDemo': ['Action', 'Click'],
   'FilterRowCustomEditorDemo': ['filterRowCell'],
+  'GroupingDemo': ['groupPanel'],
   'FixedColumnDemo': ['Sticky'],
   'GroupedColumnsDemo': ['Header', 'Many', 'Multi'],
   'ManyColumnsDemo': ['horizontal'],
