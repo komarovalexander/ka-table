@@ -1,6 +1,7 @@
 import './Demos.scss';
 
 import React, { useState } from 'react';
+
 import { NavLink } from 'react-router-dom';
 
 export class MenuItem {
@@ -11,8 +12,8 @@ export class MenuItem {
   public isActive?: boolean;
 }
 
-const newItems: string[] = ['InsertRowDemo'];
-const updateItems: string[] = ['Editing'];
+const newItems: string[] = [];
+const updateItems: string[] = ['GroupingDemo'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 

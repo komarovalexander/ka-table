@@ -9,6 +9,7 @@ import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import { Focused } from '../../Models/Focused';
 import { Group } from '../../Models/Group';
+import { GroupPanelSettings } from '../../Models/GroupPanelSettings';
 import { GroupedColumn } from '../../Models/GroupedColumn';
 import { ILoadingProps } from '../../props';
 import { TableControlled } from '../TableControlled/TableControlled';
@@ -40,6 +41,7 @@ export interface ITableProps {
   format?: FormatFunc;
   groups?: Group[];
   groupsExpanded?: any[][];
+  groupPanel?: GroupPanelSettings;
   height?: number | string;
   loading?: ILoadingProps;
   paging?: PagingOptions;

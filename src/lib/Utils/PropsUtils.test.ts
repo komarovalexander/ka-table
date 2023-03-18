@@ -13,6 +13,7 @@ import {
     getDraggableProps,
     getPagesCountByProps,
     getSelectedData,
+    groupPanelOnDrop,
     isValid,
     mergeProps,
     prepareTableOptions,
@@ -204,23 +205,25 @@ describe('getDraggableProps', () => {
         };
     });
     it('should be draggable', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         expect(result.draggable).toBeTruthy();
     });
     it('onDragStart', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         result.onDragStart!(event, {} as any);
         expect(event.dataTransfer.setData).toBeCalledWith(
             'ka-draggableKeyValue',
@@ -230,26 +233,28 @@ describe('getDraggableProps', () => {
         expect(event.dataTransfer.effectAllowed).toEqual('move');
     });
     it('onDragEnd', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         result.onDragEnd!(event, {} as any);
         expect(event.currentTarget.classList.remove).toBeCalledWith(
             draggedClass
         );
     });
     it('onDrop', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         result.onDrop!(event, {} as any);
         expect(event.currentTarget.classList.remove).toBeCalledWith(
             dragOverClass
@@ -259,13 +264,14 @@ describe('getDraggableProps', () => {
         expect(dispatch).toBeCalledWith({ type: actionType });
     });
     it('onDragEnter', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         event.currentTarget.classList.contains.mockReturnValue(true);
         result.onDragEnter!(event, {} as any);
         expect(event.currentTarget.classList.add).toBeCalledTimes(0);
@@ -276,13 +282,14 @@ describe('getDraggableProps', () => {
         expect(event.preventDefault).toBeCalledTimes(2);
     });
     it('onDragLeave', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         result.onDragEnter!(event, {} as any);
         result.onDragEnter!(event, {} as any);
         result.onDragLeave!(event, {} as any);
@@ -293,13 +300,14 @@ describe('getDraggableProps', () => {
         );
     });
     it('onDragOver', () => {
-        const result = getDraggableProps(
+        const result = getDraggableProps({
             key,
             dispatch,
             actionCreator,
             draggedClass,
-            dragOverClass
-        );
+            dragOverClass,
+            hasReordering: true
+        });
         event.currentTarget.classList.contains.mockReturnValue(true);
         result.onDragOver!(event, {} as any);
         expect(event.currentTarget.classList.add).toBeCalledTimes(0);
@@ -310,6 +318,27 @@ describe('getDraggableProps', () => {
         expect(event.preventDefault).toBeCalledTimes(2);
     });
 });
+
+describe('groupPanelOnDrop', () => {
+    it('default', () => {
+        const dispatch = jest.fn();
+        const getEventData = jest.fn().mockReturnValue('"someColumnKey"');
+        groupPanelOnDrop({ dataTransfer: { getData: getEventData }} as any, dispatch);
+        expect(getEventData).toHaveBeenCalledWith('ka-draggableKeyValue');
+        expect(dispatch).toHaveBeenCalledWith({
+            columnKey: 'someColumnKey',
+            type: 'GroupColumn'
+        });
+    });
+    it('shouldNot execute dispatch', () => {
+        const dispatch = jest.fn();
+        const getEventData = jest.fn().mockReturnValue('');
+        groupPanelOnDrop({ dataTransfer: { getData: getEventData }} as any, dispatch);
+        expect(getEventData).toHaveBeenCalledWith('ka-draggableKeyValue');
+        expect(dispatch).toHaveBeenCalledTimes(0);
+    });
+});
+
 
 describe('prepareTableOptions', () => {
     it('prepareTableOptions', () => {

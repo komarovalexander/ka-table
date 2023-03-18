@@ -5,6 +5,7 @@ import { ITableAllProps, ITableProps } from '../Table/Table';
 
 import { ChildComponents } from '../../Models/ChildComponents';
 import { DispatchFunc } from '../../types';
+import { GroupPanel } from '../GroupPanel/GroupPanel';
 import Loading from '../Loading/Loading';
 import Popup from '../Popup/Popup';
 import { TablePaging } from '../TablePaging/TablePaging';
@@ -27,6 +28,7 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
     dispatch,
     data,
     format,
+    groupPanel,
     height,
     loading,
     width,
@@ -58,6 +60,7 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
       <div {...elementAttributes}>
         {rootDivContent || (
           <>
+            {groupPanel?.enabled && <GroupPanel {...props} groupPanel={groupPanel}/>}
             {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
             <TableWrapper {...props} />
             {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}

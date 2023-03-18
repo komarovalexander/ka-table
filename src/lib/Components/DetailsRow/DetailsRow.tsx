@@ -17,7 +17,7 @@ const DetailsRow: React.FunctionComponent<IRowProps> = (props) => {
   const renderContent = (cellContent || content);
   return (
     <tr {...elementAttributes} >
-      <EmptyCells count={groupColumnsCount}/>
+      <EmptyCells count={groupColumnsCount} childComponents={childComponents}/>
       {renderContent
         && <td colSpan={columns.length} {...cellElementAttributes}>{renderContent}</td>}
     </tr>

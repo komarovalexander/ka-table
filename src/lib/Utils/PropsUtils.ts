@@ -12,6 +12,7 @@ import { getGroupedData } from './GroupUtils';
 import { getTreeData } from './TreeUtils';
 import { getValidatedEditableCells } from './ReducerUtils';
 import { getValueByField } from './DataUtils';
+import { groupColumn } from '../actionCreators';
 
 export function extendProps<T = HTMLElement>(
   childElementAttributes: AllHTMLAttributes<T>,
@@ -165,30 +166,31 @@ export const prepareTableOptions = (props: ITableProps) => {
   };
 };
 
-export const getDraggableProps = (
+export const groupPanelOnDrop = (event: React.DragEvent, dispatch: DispatchFunc) => {
+  const draggableKeyValueData = event.dataTransfer?.getData('ka-draggableKeyValue');
+  if (draggableKeyValueData){
+    const draggableKeyValue = JSON.parse(draggableKeyValueData);
+    dispatch(groupColumn(draggableKeyValue));
+  }
+};
+
+export const getDraggableProps = ({
+  key,
+  dispatch,
+  actionCreator,
+  draggedClass,
+  dragOverClass,
+  hasReordering
+}: {
   key: any,
   dispatch: DispatchFunc,
   actionCreator: (draggableKeyValue: any, targetKeyValue: any) => any,
   draggedClass: string,
   dragOverClass: string,
-): ChildAttributesItem<any> => {
+  hasReordering: boolean
+}): ChildAttributesItem<any> => {
   let count: number = 0;
-  return {
-    draggable: true,
-    onDragStart: (event) => {
-      count = 0;
-      event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
-      event.currentTarget.classList.add(draggedClass);
-      event.dataTransfer.effectAllowed = 'move';
-    },
-    onDragEnd: (event) => {
-      event.currentTarget.classList.remove(draggedClass);
-    },
-    onDrop: (event) => {
-      event.currentTarget.classList.remove(dragOverClass);
-      const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue'));
-      dispatch(actionCreator(draggableKeyValue, key));
-    },
+  const reorderingProps: ChildAttributesItem<any> = hasReordering ? {
     onDragEnter: (event) => {
       count++;
       if (!event.currentTarget.classList.contains(dragOverClass)) {
@@ -208,5 +210,27 @@ export const getDraggableProps = (
       }
       event.preventDefault();
     }
+  } : {};
+  return {
+    draggable: true,
+    onDragStart: (event) => {
+      count = 0;
+      event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
+      event.currentTarget.classList.add(draggedClass);
+      event.dataTransfer.effectAllowed = 'move';
+    },
+    onDragEnd: (event) => {
+      event.currentTarget.classList.remove(draggedClass);
+    },
+    onDrop: (event) => {
+      event.currentTarget.classList.remove(dragOverClass);
+      const keyDataTransfer = event.dataTransfer.getData('ka-draggableKeyValue')
+      if (hasReordering && keyDataTransfer){
+        const draggableKeyValue = JSON.parse(keyDataTransfer);
+        dispatch(actionCreator(draggableKeyValue, key));
+      }
+    },
+    ...reorderingProps
   };
 }
+
