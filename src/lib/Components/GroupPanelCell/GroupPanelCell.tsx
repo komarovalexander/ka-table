@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ReactComponent as CrossSvg } from '../../Icons/Cross.svg';
+import { CrossIcon } from '../../Icons/CrossIcon';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
 import { IGroupPanelCellProps } from '../../props';
 import { SortingMode } from '../../enums';
@@ -24,7 +24,7 @@ export const GroupPanelCell: React.FunctionComponent<IGroupPanelCellProps> = (pr
       {content || (<>
           <HeadCellContent column={column} sortingMode={sortingMode} dispatch={dispatch} childComponents={childComponents} areAllRowsSelected={false} />
           <span className={defaultOptions.css.groupPanelCellRemove}>
-            <CrossSvg onClick={() => {
+            <CrossIcon onClick={() => {
               dispatch(ungroupColumn(column.key));
             }}/>
           </span>
