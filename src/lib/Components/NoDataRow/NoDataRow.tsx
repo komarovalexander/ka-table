@@ -19,7 +19,7 @@ const NoDataRow: React.FunctionComponent<INoDataRowProps> = (props) => {
   return (
     <tr {...elementAttributes}>
       <td colSpan={columns.length + groupColumnsCount} {...cellElementAttributes}>
-        {content || cellContent || loading?.enabled ? '' : noData?.text}
+        {content || cellContent || (loading?.enabled ? '' : noData?.text)}
       </td>
     </tr>
   );

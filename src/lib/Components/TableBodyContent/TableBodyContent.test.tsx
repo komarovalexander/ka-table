@@ -53,8 +53,51 @@ describe('TableBodyContent', () => {
             }
         );
 
-        expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
         expect(wrapper.find('.ka-tr').length).toBe(1);
+        expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
+    });
+
+    it('should render noDataRow with text in case there are no data and loading is disabled', () => {
+        const noDataText = 'no data';
+        const wrapper = mount(
+            <TableBodyContent
+                {...props}
+                data={[]}
+                loading={{
+                    enabled: false
+                }}
+                noData={{
+                    text: noDataText
+                }}
+            />,
+            {
+                attachTo: document.createElement('tbody'),
+            }
+        );
+
+        expect(wrapper.find('.ka-tr').length).toBe(1);
+        expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
+    });
+    it('should render noDataRow without text in case there are no data and loading is enabled', () => {
+        const noDataText = 'no data';
+        const wrapper = mount(
+            <TableBodyContent
+                {...props}
+                data={[]}
+                loading={{
+                    enabled: true
+                }}
+                noData={{
+                    text: noDataText
+                }}
+            />,
+            {
+                attachTo: document.createElement('tbody'),
+            }
+        );
+
+        expect(wrapper.find('.ka-tr').length).toBe(1);
+        expect(wrapper.find('.ka-tr').text()).toBe('');
     });
 
     it('should render noDataRow & NewRow', () => {
