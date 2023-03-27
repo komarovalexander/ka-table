@@ -157,7 +157,8 @@ export interface IHeadCellProps {
 }
 
 export interface INoDataRowProps {
-  childComponents: ChildComponents,
+  childComponents: ChildComponents;
+  loading?: ILoadingProps;
   columns: Column[];
   groupColumnsCount: number;
   noData?: NoData;
@@ -181,6 +182,7 @@ export interface ITableBodyProps {
   childComponents: ChildComponents;
   columns: Column[];
   data: any[];
+  loading?: ILoadingProps;
   detailsRows?: any[];
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
