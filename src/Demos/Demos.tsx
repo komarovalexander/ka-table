@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import './Demos.scss';
 
-import React from 'react';
 import { HashRouter, Route } from 'react-router-dom';
+import { initializeGA, trackEvent } from './ga';
 
 import AddRowDemo from './AddRowDemo/AddRowDemo';
 import AlertCellDemo from './AlertCellDemo/AlertCellDemo';
@@ -21,7 +21,6 @@ import CustomThemeDemo from './CustomThemeDemo/CustomThemeDemo';
 import DeleteRowDemo from './DeleteRowDemo/DeleteRowDemo';
 import Demo from './Demo';
 import { DemoCase } from './DemoCase';
-import getDemoPage from './DemoPage';
 import DemosMenu from './DemosMenu';
 import DetailsRowDemo from './DetailsRowDemo/DetailsRowDemo';
 import EditingDemo from './EditingDemo/EditingDemo';
@@ -35,8 +34,6 @@ import FilterRowCustomEditorDemo from './FilterRowCustomEditorDemo/FilterRowCust
 import FilterRowCustomLogicDemo from './FilterRowCustomLogicDemo/FilterRowCustomLogicDemo';
 import FilterRowDemo from './FilterRowDemo/FilterRowDemo';
 import FixedColumnDemo from './FixedColumnDemo/FixedColumnDemo';
-import { initializeGA, trackEvent } from './ga';
-import { withTracker } from './GAWrapper';
 import GetDataByPropsDemo from './GetDataByPropsDemo/GetDataByPropsDemo';
 import GroupedColumnsDemo from './GroupedColumnsDemo/GroupedColumnsDemo';
 import GroupingCustomCellDemo from './GroupingCustomCellDemo/GroupingCustomCellDemo';
@@ -60,6 +57,7 @@ import NullableCellDataDemo from './NullableCellDataDemo/NullableCellDataDemo';
 import OverviewDemo from './OverviewDemo/OverviewDemo';
 import PagingDemo from './PagingDemo/PagingDemo';
 import PrintDemo from './PrintDemo/PrintDemo';
+import React from 'react';
 import ReduxDemo from './ReduxDemo/ReduxDemo';
 import RemoteDataDemo from './RemoteDataDemo/RemoteDataDemo';
 import RemoteDataEditingDemo from './RemoteDataEditingDemo/RemoteDataEditingDemo';
@@ -70,12 +68,15 @@ import SelectionDemo from './SelectionDemo/SelectionDemo';
 import SelectionSingleDemo from './SelectionSingleDemo/SelectionSingleDemo';
 import SortingCustomLogicDemo from './SortingCustomLogicDemo/SortingCustomLogicDemo';
 import SortingDemo from './SortingDemo/SortingDemo';
+import SortingExtendedDemo from './SortingExtendedDemo/SortingExtendedDemo';
 import SortingModesDemo from './SortingModesDemo/SortingModesDemo';
 import StateStoringDemo from './StateStoringDemo/StateStoringDemo';
 import SummaryDemo from './SummaryDemo/SummaryDemo';
 import TabIndexDemo from './TabIndexDemo/TabIndexDemo';
 import TreeModeDemo from './TreeModeDemo/TreeModeDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
+import getDemoPage from './DemoPage';
+import { withTracker } from './GAWrapper';
 
 initializeGA();
 
@@ -141,6 +142,7 @@ const demos: Demo[] = [
   new Demo(SortingDemo, '/sorting', 'Sorting', 'SortingDemo', 'https://stackblitz.com/edit/table-sorting-js', 'https://stackblitz.com/edit/table-sorting-ts', 'Sorting'),
   new Demo(SortingModesDemo, '/sorting-modes', 'Sorting Modes', 'SortingModesDemo', 'https://stackblitz.com/edit/table-sorting-modes-js', 'https://stackblitz.com/edit/table-sorting-modes-ts', 'Sorting'),
   new Demo(SortingCustomLogicDemo, '/sorting-custom-logic', 'Sorting Logic', 'SortingCustomLogicDemo', 'https://stackblitz.com/edit/table-sorting-custom-logic-js', 'https://stackblitz.com/edit/table-sorting-custom-logic-ts', 'Sorting'),
+  new Demo(SortingExtendedDemo, '/sorting-extended', 'Sorting Extended', 'SortingExtendedDemo', 'https://stackblitz.com/edit/table-sorting-extended-js', 'https://stackblitz.com/edit/table-sorting-extended-ts', 'Sorting'),
   new Demo(StateStoringDemo, '/state-storing', 'State Storing', 'StateStoringDemo', 'https://stackblitz.com/edit/table-state-storing-js', 'https://stackblitz.com/edit/table-state-storing-ts', 'Miscellaneous'),
   new Demo(SummaryDemo, '/summary', 'Summary', 'SummaryDemo', 'https://stackblitz.com/edit/table-summary-js', 'https://stackblitz.com/edit/table-summary-ts', 'Miscellaneous'),
   new Demo(TabIndexDemo, '/tab-index', 'Tab Index', 'TabIndexDemo', 'https://stackblitz.com/edit/table-tab-index-js', 'https://stackblitz.com/edit/table-tab-index-ts', 'Miscellaneous'),

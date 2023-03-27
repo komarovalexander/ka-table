@@ -1,17 +1,18 @@
-import { AllHTMLAttributes } from 'react';
+import { ChildAttributesItem, DispatchFunc } from '../types';
+import { getPageData, getPagesCount } from './PagingUtils';
+import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 
+import { AllHTMLAttributes } from 'react';
+import { ChildComponent } from '../Models/ChildComponent';
+import { Column } from '../models';
 import { ITableProps } from '../';
 import { SortingMode } from '../enums';
-import { Column } from '../models';
-import { ChildComponent } from '../Models/ChildComponent';
-import { ChildAttributesItem, DispatchFunc } from '../types';
-import { getValueByField } from './DataUtils';
 import { filterAndSearchData } from './FilterUtils';
 import { getGroupedData } from './GroupUtils';
-import { getPageData, getPagesCount } from './PagingUtils';
-import { getValidatedEditableCells } from './ReducerUtils';
-import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 import { getTreeData } from './TreeUtils';
+import { getValidatedEditableCells } from './ReducerUtils';
+import { getValueByField } from './DataUtils';
+import { groupColumn } from '../actionCreators';
 
 export function extendProps<T = HTMLElement>(
   childElementAttributes: AllHTMLAttributes<T>,
@@ -79,6 +80,7 @@ const getDataWithoutPaging =  (props: ITableProps) => {
     groupsExpanded,
     treeGroupKeyField,
     treeGroupsExpanded,
+    extendedSort,
     rowKeyField,
     sort,
     sortingMode = SortingMode.None
@@ -91,6 +93,7 @@ const getDataWithoutPaging =  (props: ITableProps) => {
   if (!isRemoteSorting(sortingMode)) {
     resultData = sortData(columns, resultData, sort);
   }
+  resultData = extendedSort ? extendedSort(resultData, columns) : resultData;
 
   const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
   resultData = groups ? getGroupedData(resultData, groups, groupedColumns, groupsExpanded) : resultData;
@@ -163,30 +166,31 @@ export const prepareTableOptions = (props: ITableProps) => {
   };
 };
 
-export const getDraggableProps = (
+export const groupPanelOnDrop = (event: React.DragEvent, dispatch: DispatchFunc) => {
+  const draggableKeyValueData = event.dataTransfer?.getData('ka-draggableKeyValue');
+  if (draggableKeyValueData){
+    const draggableKeyValue = JSON.parse(draggableKeyValueData);
+    dispatch(groupColumn(draggableKeyValue));
+  }
+};
+
+export const getDraggableProps = ({
+  key,
+  dispatch,
+  actionCreator,
+  draggedClass,
+  dragOverClass,
+  hasReordering
+}: {
   key: any,
   dispatch: DispatchFunc,
   actionCreator: (draggableKeyValue: any, targetKeyValue: any) => any,
   draggedClass: string,
   dragOverClass: string,
-): ChildAttributesItem<any> => {
+  hasReordering: boolean
+}): ChildAttributesItem<any> => {
   let count: number = 0;
-  return {
-    draggable: true,
-    onDragStart: (event) => {
-      count = 0;
-      event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
-      event.currentTarget.classList.add(draggedClass);
-      event.dataTransfer.effectAllowed = 'move';
-    },
-    onDragEnd: (event) => {
-      event.currentTarget.classList.remove(draggedClass);
-    },
-    onDrop: (event) => {
-      event.currentTarget.classList.remove(dragOverClass);
-      const draggableKeyValue = JSON.parse(event.dataTransfer.getData('ka-draggableKeyValue'));
-      dispatch(actionCreator(draggableKeyValue, key));
-    },
+  const reorderingProps: ChildAttributesItem<any> = hasReordering ? {
     onDragEnter: (event) => {
       count++;
       if (!event.currentTarget.classList.contains(dragOverClass)) {
@@ -206,5 +210,27 @@ export const getDraggableProps = (
       }
       event.preventDefault();
     }
+  } : {};
+  return {
+    draggable: true,
+    onDragStart: (event) => {
+      count = 0;
+      event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
+      event.currentTarget.classList.add(draggedClass);
+      event.dataTransfer.effectAllowed = 'move';
+    },
+    onDragEnd: (event) => {
+      event.currentTarget.classList.remove(draggedClass);
+    },
+    onDrop: (event) => {
+      event.currentTarget.classList.remove(dragOverClass);
+      const keyDataTransfer = event.dataTransfer.getData('ka-draggableKeyValue')
+      if (hasReordering && keyDataTransfer){
+        const draggableKeyValue = JSON.parse(keyDataTransfer);
+        dispatch(actionCreator(draggableKeyValue, key));
+      }
+    },
+    ...reorderingProps
   };
 }
+

@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import defaultOptions from '../../defaultOptions';
-import { ISummaryRowProps } from '../../props';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
 import EmptyCells from '../EmptyCells/EmptyCells';
+import { ISummaryRowProps } from '../../props';
 import { SummaryCell } from '../SummaryCell/SummaryCell';
+import defaultOptions from '../../defaultOptions';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 
 export const SummaryRow: React.FunctionComponent<ISummaryRowProps> = (props) => {
   const {
@@ -19,7 +19,7 @@ export const SummaryRow: React.FunctionComponent<ISummaryRowProps> = (props) => 
     <tr {...elementAttributes}>
       {content || (
         <>
-          <EmptyCells count={groupColumnsCount}/>
+          <EmptyCells count={groupColumnsCount} childComponents={childComponents}/>
           {columns.map((column) => <SummaryCell key={column.key} {...props} column={column}/>)}
         </>
       )}

@@ -1,9 +1,8 @@
-import React from 'react';
-
-import defaultOptions from '../../defaultOptions';
-import { IFilterRowProps } from '../../props';
 import EmptyCells from '../EmptyCells/EmptyCells';
 import FilterCell from '../FilterCell/FilterCell';
+import { IFilterRowProps } from '../../props';
+import React from 'react';
+import defaultOptions from '../../defaultOptions';
 
 const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
   childComponents,
@@ -13,7 +12,7 @@ const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
 }) => {
   return (
     <tr className={`ka-filter-row ${defaultOptions.css.theadRow} ka-tr`}>
-      <EmptyCells count={groupColumnsCount} isTh={true}/>
+      <EmptyCells count={groupColumnsCount} isTh={true} childComponents={childComponents}/>
       {columns.map((column) => {
         return (
           <FilterCell

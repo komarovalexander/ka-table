@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-import { updateSortDirection } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { FilteringMode } from '../../enums';
+import HeaderFilterButton from '../HeaderFilterButton/HeaderFilterButton';
 import { IHeadCellProps } from '../../props';
+import SortIcon from '../SortIcon/SortIcon';
 import { checkPopupPosition } from '../../Utils/CellUtils';
+import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
-import HeaderFilterButton from '../HeaderFilterButton/HeaderFilterButton';
-import SortIcon from '../SortIcon/SortIcon';
+import { updateSortDirection } from '../../actionCreators';
 
 const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;

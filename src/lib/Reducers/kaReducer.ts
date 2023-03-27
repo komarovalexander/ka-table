@@ -1,22 +1,26 @@
-import { newRowId } from '../const';
 import { ActionType, InsertRowPosition, SortingMode } from '../enums';
-import { ITableProps } from '../index';
+import {
+  addColumnsToRowEditableCells,
+  getEditableCellsByData,
+  getUpdatedFocused,
+  getValidatedEditableCells,
+  removeDataKeysFromSelectedRows,
+} from '../Utils/ReducerUtils';
+import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
+import { getData, isValid, prepareTableOptions } from '../Utils/PropsUtils';
+import { getDownCell, getLeftCell, getRightCell, getUpCell } from '../Utils/NavigationUtils';
+import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
+import { getValueByField, insertBefore, reorderData, reorderDataByIndex, replaceValue } from '../Utils/DataUtils';
+
 import { Column } from '../models';
 import { ILoadingProps } from '../props';
-import { kaPropsUtils } from '../utils';
-import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
-import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
-import { getValueByField, reorderData, replaceValue } from '../Utils/DataUtils';
+import { ITableProps } from '../index';
 import { filterAndSearchData } from '../Utils/FilterUtils';
-import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
-import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
-import { getDownCell, getLeftCell, getRightCell, getUpCell } from '../Utils/NavigationUtils';
-import { getData, isValid, prepareTableOptions } from '../Utils/PropsUtils';
-import {
-  addColumnsToRowEditableCells, getEditableCellsByData, getUpdatedFocused,
-  getValidatedEditableCells, removeDataKeysFromSelectedRows,
-} from '../Utils/ReducerUtils';
+import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { getExpandedParents } from '../Utils/TreeUtils';
+import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
+import { kaPropsUtils } from '../utils';
+import { newRowId } from '../const';
 
 const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
   const {
@@ -129,9 +133,33 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
       const newData = reorderData(data, (d) => getValueByField(d, rowKeyField), action.rowKeyValue, action.targetRowKeyValue);
       return { ...props, data: newData };
     }
+    case ActionType.InsertColumn: {
+      const newColumns = [...columns];
+      newColumns.splice(action.index, 0, action.column);
+      return {
+        ...props,
+        columns: newColumns,
+      };
+    }
+    case ActionType.MoveColumnBefore: {
+      const newColumns = insertBefore(columns, (d) => d.key, action.columnKey, action.targetColumnKey);
+      return { ...props, columns: newColumns };
+    }
     case ActionType.ReorderColumns: {
       const newData = reorderData(columns, (d) => d.key, action.columnKey, action.targetColumnKey);
       return { ...props, columns: newData };
+    }
+    case ActionType.MoveColumnToIndex: {
+      const newColumns = reorderDataByIndex(columns, (d) => d.key, action.columnKey, action.index != null ? action.index : columns?.length);
+      return { ...props, columns: newColumns };
+    }
+    case ActionType.UngroupColumn: {
+      const newGroups = props?.groups?.filter(group => group.columnKey !== action.columnKey);
+      return { ...props, groups: newGroups?.length ? newGroups : undefined }
+    }
+    case ActionType.GroupColumn: {
+      const newGroups = [...props?.groups || [], { columnKey: action.columnKey}];
+      return { ...props, groups: newGroups?.length ? newGroups : undefined }
     }
     case ActionType.ResizeColumn: {
       const { columnKey, width } = action;

@@ -1,7 +1,9 @@
 import { ActionType, InsertRowPosition } from './enums';
+
+import { Column } from './Models/Column';
 import { Focused } from './Models/Focused';
-import { PopupPosition } from './Models/PopupPosition';
 import { IMoveFocusedSettings } from './Utils/NavigationUtils';
+import { PopupPosition } from './Models/PopupPosition';
 
 export const updateHeaderFilterValues = (columnKey: string, item: any, checked: boolean) => ({
   columnKey,
@@ -222,6 +224,24 @@ export const reorderColumns = (columnKey: string, targetColumnKey: string) => ({
   targetColumnKey,
 });
 
+export const moveColumnBefore = (columnKey: string, targetColumnKey: string) => ({
+  type: ActionType.MoveColumnBefore,
+  columnKey,
+  targetColumnKey
+});
+
+export const insertColumn = (column: Column, index: number) => ({
+  type: ActionType.InsertColumn,
+  column,
+  index
+});
+
+export const moveColumnToIndex = (columnKey: string, index: number) => ({
+  type: ActionType.MoveColumnToIndex,
+  columnKey,
+  index,
+});
+
 export const showColumn = (columnKey: any) => ({
   columnKey,
   type: ActionType.ShowColumn,
@@ -298,4 +318,14 @@ export const insertRow = (rowData: any, options?: {
   rowData,
   options,
   type: ActionType.InsertRow
+});
+
+export const groupColumn = (columnKey: string) => ({
+  columnKey,
+  type: ActionType.GroupColumn
+});
+
+export const ungroupColumn = (columnKey: string) => ({
+  columnKey,
+  type: ActionType.UngroupColumn
 });

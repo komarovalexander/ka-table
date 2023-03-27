@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { IColGroupProps } from '../../props';
 import EmptyCells from '../EmptyCells/EmptyCells';
+import { IColGroupProps } from '../../props';
 
 export const ColGroup: React.FunctionComponent<IColGroupProps> = ({ columns, groupColumnsCount }) => {
   return (

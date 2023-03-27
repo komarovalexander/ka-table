@@ -151,6 +151,27 @@
   margin-right: 5px;
   cursor: pointer;
 }
+.ka-group-panel{
+  display: flex;
+}
+.ka-group-panel-cell{
+  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-left: 15px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.ka-group-panel-cell-remove{
+  cursor: pointer;
+  color: lighten($ka-thead-color, 25);
+  display: flex;
+  fill: currentColor;
+}
+.ka-group-panel-text{
+  color: #747D86;
+  margin: 30px 20px;
+}
 .ka-icon-tree-arrow{
   padding: 0 10px 0 10px;
   margin-left: -10px;

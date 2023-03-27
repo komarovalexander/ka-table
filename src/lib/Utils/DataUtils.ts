@@ -68,10 +68,24 @@ export const replaceValue = (rowData: any, column: Column, newValue: any) => {
   return replaceValueForField(rowData, getLastField(field), newValue, getLastFieldParents(field));
 };
 
-export const reorderData = (data: any[], getKey: (d: any) => any, keyValue: any, targetKeyValue: any) => {
+
+export const reorderDataByIndex = (data: any[], getKey: (d: any) => any, keyValue: any, targetIndex: number) => {
   const moved = data.find(d => getKey(d) === keyValue);
   const newData = data.filter(d => getKey(d) !== keyValue);
-  const targetIndex = data.findIndex(d => getKey(d) === targetKeyValue);
   newData.splice(targetIndex, 0, moved);
   return newData;
+};
+
+export const insertBefore = (data: any[], getKey: (d: any) => any, keyValue: any, targetKeyValue: any) => {
+  let targetIndex = data.findIndex(d => getKey(d) === targetKeyValue);
+  const moved = data.findIndex(d => getKey(d) === keyValue);
+  if (moved < targetIndex){
+    targetIndex = targetIndex - 1;
+  }
+  return reorderDataByIndex(data, getKey, keyValue, targetIndex);
+};
+
+export const reorderData = (data: any[], getKey: (d: any) => any, keyValue: any, targetKeyValue: any) => {
+  const targetIndex = data.findIndex(d => getKey(d) === targetKeyValue);
+  return reorderDataByIndex(data, getKey, keyValue, targetIndex);
 };

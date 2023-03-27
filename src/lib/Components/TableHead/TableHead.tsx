@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import defaultOptions from '../../defaultOptions';
-import { FilteringMode } from '../../enums';
-import { ITableHeadProps } from '../../props';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
 import FilterRow from '../FilterRow/FilterRow';
+import { FilteringMode } from '../../enums';
 import { GroupedColumnsRow } from '../GroupedColumnsRow/GroupedColumnsRow';
 import HeadRow from '../HeadRow/HeadRow';
+import { ITableHeadProps } from '../../props';
+import defaultOptions from '../../defaultOptions';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
 
 export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
   const {
@@ -18,6 +18,7 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
     dispatch,
     filteringMode,
     groupColumnsCount,
+    groupPanel,
     sortingMode,
     groupedColumns = []
   } = props;
@@ -37,6 +38,7 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
               columns={columns}
               dispatch={dispatch}
               groupColumnsCount={groupColumnsCount}
+              groupPanel={groupPanel}
               sortingMode={sortingMode}
               filteringMode={filteringMode}
             />
