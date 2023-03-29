@@ -243,7 +243,7 @@ export interface IEmptyCellsProps {
 }
 
 export interface IEmptyCellProps {
-  index: number;
+  index?: number;
   isTh?: boolean;
   isColGroup?: boolean;
   className?: string;
