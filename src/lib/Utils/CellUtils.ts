@@ -61,10 +61,13 @@ export const checkPopupPosition = (
   refToElement: React.MutableRefObject<HTMLDivElement | null>,
   dispatch: DispatchFunc,
 ) => {
-  if (refToElement.current && column.isHeaderFilterPopupShown) {
+  const element = refToElement.current;
+  if (element && column.isHeaderFilterPopupShown) {
+    const parent = element.offsetParent as HTMLElement;
+    const table = parent.closest('table') as HTMLElement;
     const newPopupPosition: PopupPosition = {
-      x: refToElement.current.offsetLeft + (refToElement.current.offsetParent as HTMLElement)?.offsetLeft,
-      y: refToElement.current.offsetTop + (refToElement.current.offsetParent as HTMLElement)?.offsetTop + refToElement.current.offsetHeight
+      x: element.offsetLeft + parent?.offsetLeft,
+      y: element.offsetTop + table?.offsetTop + element.offsetHeight
     }
     if (newPopupPosition.x !== column.headerFilterPopupPosition?.x || newPopupPosition.y !== column.headerFilterPopupPosition?.y) {
       dispatch(updatePopupPosition(newPopupPosition));
