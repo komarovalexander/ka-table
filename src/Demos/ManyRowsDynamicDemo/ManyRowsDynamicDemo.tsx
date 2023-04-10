@@ -1,7 +1,7 @@
-import { DataType, FilteringMode } from '../../lib/enums';
 import { ITableProps, Table, kaReducer } from '../../lib';
 import React, { useState } from 'react';
 
+import { DataType } from '../../lib/enums';
 import { DispatchFunc } from '../../lib/types';
 import { LoremIpsum } from 'lorem-ipsum';
 
@@ -71,7 +71,6 @@ const ManyRowsDynamicDemo: React.FC = () => {
         ...tableProps.virtualScrolling,
         itemHeight,
       }}
-      filteringMode={FilteringMode.HeaderFilter}
       childComponents={{
         dataRow: {
           elementAttributes: ({ rowData }) => ({
