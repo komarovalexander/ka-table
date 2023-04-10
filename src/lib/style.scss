@@ -323,10 +323,15 @@
 
 .ka-header-filter-button-icon{
   font-size: 16px;
+  position: absolute;
+  top: -1px;
+  color: darken($ka-thead-color, 15);
+  fill: currentColor;
 }
 
 .ka-header-filter-button{
   margin-left: 3px;
+  position: relative;
 }
 
 .ka-header-filter-button-has-value{
