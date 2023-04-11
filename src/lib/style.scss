@@ -180,6 +180,18 @@
 .ka-icon-sort{
   margin-left: 3px;
 }
+.ka-icon-sort-arrow-up{
+  color: darken($ka-thead-color, 5);
+  fill: currentColor;
+  position: relative;
+  top: 1px;
+}
+.ka-icon-sort-arrow-down{
+  color: darken($ka-thead-color, 5);
+  fill: currentColor;
+  position: relative;
+  top: 1px;
+}
 .ka-pointer{
   cursor: pointer;
 }
