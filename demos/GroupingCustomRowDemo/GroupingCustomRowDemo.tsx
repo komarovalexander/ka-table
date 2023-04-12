@@ -1,9 +1,9 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
-import { updateGroupsExpanded } from 'ka-table/actionCreators';
+
 import EmptyCells from 'ka-table/Components/EmptyCells/EmptyCells';
 import { IGroupRowProps } from 'ka-table/props';
+import React from 'react';
+import { updateGroupsExpanded } from 'ka-table/actionCreators';
 
 const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },

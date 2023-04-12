@@ -1,7 +1,7 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
+
 import { EditingMode } from 'ka-table/enums';
+import React from 'react';
 
 const dataArray = [
   { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
@@ -23,6 +23,10 @@ const GroupingDemo: React.FC = () => {
       data={dataArray}
       editingMode={EditingMode.Cell}
       groups={[{ columnKey: 'country' }, { columnKey: 'type' }]}
+      groupPanel={{
+        enabled: true,
+        text: 'For grouping, drag a column here...'
+      }}
       rowKeyField={'id'}
     />
   );
