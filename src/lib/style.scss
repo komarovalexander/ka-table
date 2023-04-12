@@ -1,4 +1,3 @@
-@import './static/icons.scss';
 @import './static/themes/default.scss';
 
 
@@ -147,7 +146,7 @@
   align-items: center;
 }
 .ka-icon-group-arrow{
-  padding: 10px 5px 10px 10px;
+  padding: 7px 5px 7px 10px;
   margin-right: 5px;
   cursor: pointer;
 }
@@ -179,6 +178,18 @@
 }
 .ka-icon-sort{
   margin-left: 3px;
+}
+.ka-icon-sort-arrow-up{
+  color: darken($ka-thead-color, 5);
+  fill: currentColor;
+  position: relative;
+  top: 1px;
+}
+.ka-icon-sort-arrow-down{
+  color: darken($ka-thead-color, 5);
+  fill: currentColor;
+  position: relative;
+  top: 1px;
 }
 .ka-pointer{
   cursor: pointer;
@@ -323,10 +334,15 @@
 
 .ka-header-filter-button-icon{
   font-size: 16px;
+  position: absolute;
+  top: -1px;
+  color: darken($ka-thead-color, 15);
+  fill: currentColor;
 }
 
 .ka-header-filter-button{
   margin-left: 3px;
+  position: relative;
 }
 
 .ka-header-filter-button-has-value{

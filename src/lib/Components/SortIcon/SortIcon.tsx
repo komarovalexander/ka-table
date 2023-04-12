@@ -1,8 +1,10 @@
 import * as React from 'react';
 
-import defaultOptions from '../../defaultOptions';
-import { SortDirection } from '../../enums';
+import { DownIcon } from '../../Icons/DownIcon';
 import { ISortIconProps } from '../../props';
+import { SortDirection } from '../../enums';
+import { UpIcon } from '../../Icons/UpIcon';
+import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
 const SortIcon: React.FunctionComponent<ISortIconProps> = (props) => {
@@ -18,16 +20,11 @@ const SortIcon: React.FunctionComponent<ISortIconProps> = (props) => {
   return (
     <span {...elementAttributes}>
       {content || (
-        <span
-          className={
-            column.sortDirection === SortDirection.Ascend
-              ? defaultOptions.css.iconSortArrowUp
-              : defaultOptions.css.iconSortArrowDown
-            }
-          >
-            {column.sortIndex}
-        </span>
-      )}
+          <>
+            {column.sortDirection === SortDirection.Ascend ? <UpIcon className={defaultOptions.css.iconSortArrowUp} /> : <DownIcon className={defaultOptions.css.iconSortArrowDown} />}
+            <span>{column.sortIndex}</span>
+          </>
+        )}
     </span>
   );
 };

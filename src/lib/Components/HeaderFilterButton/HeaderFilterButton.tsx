@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { updateHeaderFilterPopupState } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
+import { FilterIcon } from '../../Icons/FilterIcon';
 import { IHeaderFilterButtonProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { updateHeaderFilterPopupState } from '../../actionCreators';
 
 const HeaderFilterButton: React.FC<IHeaderFilterButtonProps> = (props) => {
   const { childComponents, column, dispatch } = props;
@@ -17,8 +17,8 @@ const HeaderFilterButton: React.FC<IHeaderFilterButtonProps> = (props) => {
   return (
     <span {...elementAttributes}>
       {content || (
-        <span
-          className={`${defaultOptions.css.iconFilter} ka-header-filter-button-icon`}/>
+        <FilterIcon
+          className={`ka-icon ka-icon-filter ka-pointer ka-header-filter-button-icon`}/>
       )}
     </span>
   )
