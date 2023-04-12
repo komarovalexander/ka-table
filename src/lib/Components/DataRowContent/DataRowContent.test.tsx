@@ -1,12 +1,11 @@
+import { DataType, EditingMode } from '../../enums';
 import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
-import { DataType, EditingMode } from '../../enums';
-import { IDataRowProps } from '../../props';
 import DataRowContent from './DataRowContent';
+import { IDataRowProps } from '../../props';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 Enzyme.configure({ adapter: new Adapter() });
 

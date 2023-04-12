@@ -23,8 +23,8 @@ const GroupExpandButton: React.FunctionComponent<IGroupRowProps> = (props) => {
 
   return (
     content || <div {...elementAttributes}>{(
-      isExpanded 
-        ? <ExpandedIcon className={defaultOptions.css.iconGroupArrowExpanded } /> 
+      isExpanded
+        ? <ExpandedIcon className={defaultOptions.css.iconGroupArrowExpanded } />
         : <CollapsedIcon className={defaultOptions.css.iconGroupArrowCollapsed} />
   )}
 

@@ -38,8 +38,8 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
               {c.items ? (
                 <div className={(c.isActive ? 'active-group' : '') + ' group'} onClick={() => clickByGroup(c)}>
                   <span className='menu-button'>
-                    <span style={{left: -25, position: 'absolute'}}>{c.isActive 
-                        ? <ExpandedIcon className='' /> 
+                    <span style={{left: -25, position: 'absolute'}}>{c.isActive
+                        ? <ExpandedIcon className='' />
                         : <CollapsedIcon className='' />}</span>
                     <span className='menu-icon'><img src={`static/icons/groups/${c.name}.svg`} alt=''/></span>
                     <span className='menu-button-inner'>{c.title}</span>

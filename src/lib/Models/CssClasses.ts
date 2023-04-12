@@ -49,8 +49,8 @@ export class CssClasses {
 
   public iconGroupArrowCollapsed = 'ka-icon ka-icon-group-arrow-collapsed';
   public iconGroupArrowExpanded = 'ka-icon ka-icon-group-arrow-expanded';
-  public iconTreeArrowCollapsed = 'ka-icon ka-icon-tree-arrow ka-icon-tree-arrow-collapsed';
-  public iconTreeArrowExpanded = 'ka-icon ka-icon-tree-arrow ka-icon-tree-arrow-expanded';
+  public iconTreeArrowCollapsed = 'ka-icon ka-icon-tree-arrow-collapsed';
+  public iconTreeArrowExpanded = 'ka-icon ka-icon-tree-arrow-expanded';
   public iconSort = 'ka-icon ka-icon-sort';
   public iconSortContent = 'ka-icon-sort-content';
   public iconSortArrowDown = 'ka-icon-sort-arrow-down';

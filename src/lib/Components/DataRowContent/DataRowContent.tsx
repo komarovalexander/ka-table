@@ -28,13 +28,12 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   validation,
   treeExpandButtonColumnKey
 }) => {
-  const onIconClick = () => dispatch(updateTreeGroupsExpanded(rowKeyValue));
-  const arrow = isTreeGroup 
-    ? <div>{(
-        isTreeExpanded 
-          ? <ExpandedIcon onClick={onIconClick} className={defaultOptions.css.iconTreeArrowExpanded} /> 
-          : <CollapsedIcon onClick={onIconClick} className={defaultOptions.css.iconTreeArrowCollapsed} />
-    )}</div> : undefined;
+  const arrow = isTreeGroup
+    ? (<div className="ka-icon-tree-arrow" onClick={() => dispatch(updateTreeGroupsExpanded(rowKeyValue))}>{(
+        isTreeExpanded
+          ? <ExpandedIcon className={defaultOptions.css.iconTreeArrowExpanded} />
+          : <CollapsedIcon className={defaultOptions.css.iconTreeArrowCollapsed} />
+    )}</div>) : undefined;
   return (
     <>
       {columns.map((column, index) => {

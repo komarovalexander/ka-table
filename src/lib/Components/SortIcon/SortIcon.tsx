@@ -23,7 +23,7 @@ const SortIcon: React.FunctionComponent<ISortIconProps> = (props) => {
           <>
             {column.sortDirection === SortDirection.Ascend ? <UpIcon className={defaultOptions.css.iconSortArrowUp} /> : <DownIcon className={defaultOptions.css.iconSortArrowDown} />}
             <span>{column.sortIndex}</span>
-          </> 
+          </>
         )}
     </span>
   );
