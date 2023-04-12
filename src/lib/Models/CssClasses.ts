@@ -47,8 +47,8 @@ export class CssClasses {
   public popupContent = 'ka-popup-content';
   public popupContentItem = 'ka-popup-content-item';
 
-  public iconGroupArrowCollapsed = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-collapsed';
-  public iconGroupArrowExpanded = 'ka-icon ka-icon-group-arrow ka-icon-group-arrow-expanded';
+  public iconGroupArrowCollapsed = 'ka-icon ka-icon-group-arrow-collapsed';
+  public iconGroupArrowExpanded = 'ka-icon ka-icon-group-arrow-expanded';
   public iconTreeArrowCollapsed = 'ka-icon ka-icon-tree-arrow ka-icon-tree-arrow-collapsed';
   public iconTreeArrowExpanded = 'ka-icon ka-icon-tree-arrow ka-icon-tree-arrow-expanded';
   public iconSort = 'ka-icon ka-icon-sort';

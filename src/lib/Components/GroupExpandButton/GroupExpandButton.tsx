@@ -1,3 +1,5 @@
+import { CollapsedIcon } from '../../Icons/CollapsedIcon';
+import { ExpandedIcon } from '../../Icons/ExpandedIcon';
 import { IGroupRowProps } from '../../props';
 import React from 'react';
 import defaultOptions from '../../defaultOptions';
@@ -13,14 +15,20 @@ const GroupExpandButton: React.FunctionComponent<IGroupRowProps> = (props) => {
   } = props;
 
   const { elementAttributes, content } = getElementCustomization({
-    className: isExpanded ? defaultOptions.css.iconGroupArrowExpanded : defaultOptions.css.iconGroupArrowCollapsed,
+    className: 'ka-icon-group-arrow',
     onClick: () => {
       dispatch(updateGroupsExpanded(groupKey));
     }
   }, props, childComponents.groupExpandButton);
 
   return (
-    content || <div {...elementAttributes} />
+    content || <div {...elementAttributes}>{(
+      isExpanded 
+        ? <ExpandedIcon className={defaultOptions.css.iconGroupArrowExpanded } /> 
+        : <CollapsedIcon className={defaultOptions.css.iconGroupArrowCollapsed} />
+  )}
+
+    </div>
   );
 };
 

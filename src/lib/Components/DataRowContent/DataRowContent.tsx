@@ -1,12 +1,13 @@
-import React from 'react';
-
-import { updateTreeGroupsExpanded } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
+import CellComponent from '../CellComponent/CellComponent';
+import { CollapsedIcon } from '../../Icons/CollapsedIcon';
+import { ExpandedIcon } from '../../Icons/ExpandedIcon';
 import { IDataRowProps } from '../../props';
+import React from 'react';
+import defaultOptions from '../../defaultOptions';
 import { getEditableCell } from '../../Utils/CellUtils';
 import { getField } from '../../Utils/ColumnUtils';
 import { getValueByColumn } from '../../Utils/DataUtils';
-import CellComponent from '../CellComponent/CellComponent';
+import { updateTreeGroupsExpanded } from '../../actionCreators';
 
 const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   childComponents,
@@ -27,13 +28,13 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
   validation,
   treeExpandButtonColumnKey
 }) => {
-  const arrow = isTreeGroup ? (
-    <div
-      onClick={() => dispatch(updateTreeGroupsExpanded(rowKeyValue))}
-      className={isTreeExpanded
-        ? defaultOptions.css.iconTreeArrowExpanded : defaultOptions.css.iconTreeArrowCollapsed}
-    />
-  ) : undefined;
+  const onIconClick = () => dispatch(updateTreeGroupsExpanded(rowKeyValue));
+  const arrow = isTreeGroup 
+    ? <div>{(
+        isTreeExpanded 
+          ? <ExpandedIcon onClick={onIconClick} className={defaultOptions.css.iconTreeArrowExpanded} /> 
+          : <CollapsedIcon onClick={onIconClick} className={defaultOptions.css.iconTreeArrowCollapsed} />
+    )}</div> : undefined;
   return (
     <>
       {columns.map((column, index) => {
