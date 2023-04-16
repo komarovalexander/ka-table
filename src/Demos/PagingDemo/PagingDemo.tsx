@@ -1,7 +1,7 @@
-import React from 'react';
-
-import { Table, useTable } from '../../lib';
 import { DataType, EditingMode, PagingPosition, SortingMode } from '../../lib/enums';
+import { Table, useTable } from '../../lib';
+
+import React from 'react';
 
 const dataArray = Array(180).fill(undefined).map(
   (_, index) => ({
@@ -44,7 +44,7 @@ const PagingDemo: React.FC = () => {
           position: PagingPosition.Bottom
         }}
         sortingMode={SortingMode.Single}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         rowKeyField={'id'}
       />
     </>

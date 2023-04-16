@@ -21,7 +21,7 @@ const GroupingDemo: React.FC = () => {
         { key: 'age', title: 'AGE', dataType: DataType.Number, width: '50%' },
       ]}
       data={dataArray}
-      editingMode={EditingMode.Cell}
+      editingMode={'cell'}
       groups={[{ columnKey: 'country' }, { columnKey: 'type' }]}
       groupPanel={{
         enabled: true,

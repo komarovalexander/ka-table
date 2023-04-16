@@ -44,7 +44,7 @@ const GetDataByPropsDemo: React.FC = () => {
         ]}
         data={dataArray}
         searchText={searchText}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         format={({ column, value }) => {
           if (column.dataType === DataType.Date){
             return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });

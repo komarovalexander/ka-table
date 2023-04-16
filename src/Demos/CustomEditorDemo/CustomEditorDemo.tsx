@@ -1,9 +1,9 @@
 import './CustomEditorDemo.scss';
 
-import React, { useState } from 'react';
-
 import { DataType, Table } from '../../lib';
+import React, { useState } from 'react';
 import { closeEditor, updateCellValue } from '../../lib/actionCreators';
+
 import { EditingMode } from '../../lib/enums';
 import { ICellEditorProps } from '../../lib/props';
 
@@ -92,7 +92,7 @@ const CustomEditorDemo: React.FC = () => {
       }}
       data={dataArray}
       editableCells={[{ columnKey: 'name', rowKeyValue: 1 }]}
-      editingMode={EditingMode.Cell}
+      editingMode={'cell'}
       rowKeyField={'id'}
       childComponents={{
         table: {

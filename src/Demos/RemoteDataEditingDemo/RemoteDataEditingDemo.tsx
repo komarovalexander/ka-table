@@ -42,7 +42,7 @@ const RemoteDataEditingTable = () => {
       <Table
         table={table}
         columns={columns}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         data={getQuery.data?.data || []}
         loading= {{
           enabled: getQuery.isLoading || deleting || updating

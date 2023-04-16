@@ -83,7 +83,7 @@ const ColumnSettingsDemo: React.FC = () => {
           { key: 'column6', title: 'Column 6', dataType: DataType.String },
         ]}
         data={dataArray}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         rowKeyField={'id'}
         sortingMode={SortingMode.Single}
       />

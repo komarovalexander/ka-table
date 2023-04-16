@@ -1,7 +1,7 @@
-import React from 'react';
-
 import { DataType, Table, useTable } from '../../lib';
 import { EditingMode, InsertRowPosition } from '../../lib/enums';
+
+import React from 'react';
 
 const dataArray = Array(7).fill(undefined).map(
   (_, index) => ({
@@ -42,7 +42,7 @@ const InsertRowDemo: React.FC = () => {
             width: 200
           },
         ]}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         data={dataArray}
         rowKeyField={'id'}
         childComponents={{

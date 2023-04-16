@@ -78,7 +78,7 @@ const NullableCellDataDemo: React.FC = () => {
           },
         ]}
         data={dataArray}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         format= {({ column, value }) => {
           if (column.key === 'company.hasLoyalProgram'){
             return `Loyal program: ${ value == null ? 'Unspecified' : (value ? 'Yes' : 'No')}`;

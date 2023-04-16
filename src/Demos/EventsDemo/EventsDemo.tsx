@@ -1,9 +1,9 @@
 import './EventsDemo.scss';
 
-import React, { useState } from 'react';
-
-import { Table, useTable } from '../../lib';
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
+import React, { useState } from 'react';
+import { Table, useTable } from '../../lib';
+
 import { EventsLog } from './EventsLog';
 
 const dataArray = Array(20).fill(undefined).map(
@@ -35,7 +35,7 @@ const EventsDemo: React.FC = () => {
           { key: 'column4', title: 'Column 4', dataType: DataType.String },
         ]}
         data={dataArray}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         filteringMode={FilteringMode.FilterRow}
         height={300}
         rowKeyField={'id'}

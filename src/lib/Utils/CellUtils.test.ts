@@ -14,7 +14,7 @@ import { PopupPosition } from '../Models/PopupPosition';
 
 describe('CellUtils', () => {
   it('isEditableCell equals true', () => {
-    const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column' }, [{
+    const rowEditableCells = isEditableCell('cell', { key: 'column' }, [{
       columnKey: 'column',
       rowKeyValue: 10,
     }]);
@@ -22,7 +22,7 @@ describe('CellUtils', () => {
   });
 
   it('isEditableCell equals false', () => {
-    const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column2' }, [{
+    const rowEditableCells = isEditableCell('cell', { key: 'column2' }, [{
       columnKey: 'column',
       rowKeyValue: 10,
     }]);
@@ -30,7 +30,7 @@ describe('CellUtils', () => {
   });
 
   it('isEditableCell equals false if column.isEditable is false', () => {
-    const rowEditableCells = isEditableCell(EditingMode.Cell, { key: 'column', isEditable: false }, [{
+    const rowEditableCells = isEditableCell('cell', { key: 'column', isEditable: false }, [{
       columnKey: 'column',
       rowKeyValue: 10,
     }]);

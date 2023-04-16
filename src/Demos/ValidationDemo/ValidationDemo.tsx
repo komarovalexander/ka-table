@@ -1,7 +1,7 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
+
 import { EditingMode } from '../../lib/enums';
+import React from 'react';
 
 const dataArray: any[] = [
   { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -55,7 +55,7 @@ const ValidationDemo: React.FC = () => {
           columnKey: 'score',
           rowKeyValue: 2,
         }]}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         rowKeyField={'id'}
       />
     </>

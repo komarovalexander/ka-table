@@ -100,7 +100,7 @@ const FilterExtendedDemo: React.FC = () => {
           { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
         ]}
         data={dataArray}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         rowKeyField={'id'}
         extendedFilter={(data) => filterData(data, filterValue)}
       />

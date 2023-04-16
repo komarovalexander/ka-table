@@ -25,7 +25,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
   } = props;
   const [rowDataState, changeRowData] = useState(rowData);
   const [editorValueState, changeEditorValue] = useState(value);
-  const isCellEditingMode = editingMode === EditingMode.Cell;
+  const isCellEditingMode = editingMode === 'cell';
   validationMessage = rowKeyValue === newRowId || isCellEditingMode || validationMessage
     ? getValidationValue(editorValueState, rowDataState, column, validation) || ''
     : validationMessage;

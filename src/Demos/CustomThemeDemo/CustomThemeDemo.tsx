@@ -1,10 +1,10 @@
 // open TS Example or JS Example to see how to override styles
 import './CustomThemeDemo.scss';
 
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
 import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
+
+import React from 'react';
 
 const dataArray = Array(119).fill(undefined).map(
   (_, index) => ({
@@ -37,7 +37,7 @@ const CustomThemeDemo: React.FC = () => {
           pageIndex: 0
         }}
         data={dataArray}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         rowKeyField={'id'}
         sortingMode={SortingMode.Single}
         filteringMode={FilteringMode.FilterRow}

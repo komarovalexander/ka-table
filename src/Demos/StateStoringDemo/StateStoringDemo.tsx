@@ -33,7 +33,7 @@ const StateStoringDemo: React.FC = () => {
           { key: 'age', title: 'AGE', dataType: DataType.Number, width: '50%', isResizable: true },
         ]}
         data={initDataArray}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         filteringMode={FilteringMode.FilterRow}
         groups={[{ columnKey: 'country' }, { columnKey: 'type' }]}
         rowKeyField={'id'}

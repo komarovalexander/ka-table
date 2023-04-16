@@ -1,6 +1,6 @@
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
 import { DispatchFunc, Field, FormatFunc, NoData, ValidationFunc } from './types';
-import { EditingMode, FilteringMode, SortingMode } from './enums';
+import { FilteringMode, SortingMode } from './enums';
 
 import { GroupPanelSettings } from './Models/GroupPanelSettings';
 import { GroupedColumn } from './Models/GroupedColumn';
@@ -36,7 +36,7 @@ interface IRowCommonProps {
   treeExpandButtonColumnKey?: string;
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
-  editingMode: EditingMode;
+  editingMode: 'cell' | 'none';
   index?: number;
   isTreeExpanded?: boolean;
   isTreeGroup?: boolean;
@@ -52,7 +52,7 @@ export interface ICellProps {
   column: Column;
   treeDeep?: number;
   dispatch: DispatchFunc;
-  editingMode: EditingMode;
+  editingMode: 'cell' | 'none';
   editorValue?: any;
   field: Field;
   format?: FormatFunc;
@@ -77,7 +77,7 @@ export interface IFilterRowEditorProps {
 
 export interface ICellEditorProps extends IFilterRowEditorProps {
   autoFocus?: boolean;
-  editingMode: EditingMode;
+  editingMode:  'cell' | 'none';
   editorValue?: any;
   field: Field;
   isDetailsRowShown: boolean;
@@ -95,7 +95,7 @@ export interface ICellTextProps {
   childComponents: ChildComponents;
   column: Column;
   dispatch: DispatchFunc;
-  editingMode: EditingMode;
+  editingMode: 'cell' | 'none';
   field: Field;
   format?: FormatFunc;
   isDetailsRowShown: boolean;
@@ -186,7 +186,7 @@ export interface ITableBodyProps {
   detailsRows?: any[];
   dispatch: DispatchFunc;
   editableCells: EditableCell[];
-  editingMode: EditingMode;
+  editingMode: 'cell' | 'none';
   format?: FormatFunc;
   groupColumnsCount: number;
   groupedColumns: Column[];

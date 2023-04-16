@@ -1,7 +1,7 @@
-import React from 'react';
+import { DataType, SortingMode } from '../../lib/enums';
 
+import React from 'react';
 import { Table } from '../../lib';
-import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -24,7 +24,7 @@ const OverviewDemo: React.FC = () => {
         { key: 'column4', title: 'Column 4', dataType: DataType.String },
       ]}
       data={dataArray}
-      editingMode={EditingMode.Cell}
+      editingMode={"cell"}
       rowKeyField={'id'}
       sortingMode={SortingMode.Single}
     />

@@ -1,10 +1,10 @@
 // open TS Example or JS Example to see how to override styles
 import './ResponsiveDemo.scss';
 
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
+
 import { EditingMode } from '../../lib/enums';
+import React from 'react';
 
 const dataArray = Array(10).fill(undefined).map(
   (_, index) => ({
@@ -27,7 +27,7 @@ const ResponsiveDemo: React.FC = () => {
           { key: 'column4', title: 'Column 4', dataType: DataType.String },
         ]}
         data={dataArray}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         rowKeyField={'id'}
         childComponents={{
           cell: {

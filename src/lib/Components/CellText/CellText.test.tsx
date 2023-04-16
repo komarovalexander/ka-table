@@ -17,7 +17,7 @@ const props: ICellTextProps = {
         title: 'Field',
     },
     dispatch: jest.fn(),
-    editingMode: EditingMode.Cell,
+    editingMode: 'cell',
     field: 'columnField',
     isSelectedRow: false,
     rowData: { columnField: 'columnFieldValue', id: 1 },

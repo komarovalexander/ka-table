@@ -1,11 +1,11 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
-import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
 import { EditingMode, FilteringMode } from '../../lib/enums';
+import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
+
 import { Column } from '../../lib/models';
-import { IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
+import { IFilterRowEditorProps } from '../../lib/props';
+import React from 'react';
 import { kaDateUtils } from '../../lib/utils';
 
 const dataArray: any[] = [
@@ -138,7 +138,7 @@ const FilterRowCustomEditorDemo: React.FC = () => {
         },
       ]}
       data={dataArray}
-      editingMode={EditingMode.Cell}
+      editingMode={'cell'}
       format= {({ column, value }) => {
         if (column.dataType === DataType.Date){
           return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });

@@ -1,9 +1,9 @@
 import './KeyboardNavigation.scss';
 
-import React from 'react';
-
 import { DataType, Table, useTable } from '../../lib';
 import { EditingMode, SortingMode } from '../../lib/enums';
+
+import React from 'react';
 
 const dataArray = Array(100).fill(undefined).map(
   (_, index) => ({
@@ -30,7 +30,7 @@ const KeyboardNavigationDemo: React.FC = () => {
         data={dataArray}
         rowKeyField={'id'}
         sortingMode={SortingMode.Single}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         paging= {{
           enabled: true,
           pageIndex: 0,

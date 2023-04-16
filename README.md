@@ -59,7 +59,7 @@ const OverviewDemo: React.FC = () => {
         { key: 'column4', title: 'Column 4', dataType: DataType.String },
       ]}
       data={dataArray}
-      editingMode={EditingMode.Cell}
+      editingMode={'cell'}
       rowKeyField={'id'}
       sortingMode={SortingMode.Single}
     />

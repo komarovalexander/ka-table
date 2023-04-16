@@ -17,6 +17,7 @@ export enum EditingMode {
   None = 'none',
   Cell = 'cell',
 }
+export type EditingModeType = EditingMode | 'cell' | 'none';
 
 export enum ActionType {
   ClearFocused = 'ClearFocused',

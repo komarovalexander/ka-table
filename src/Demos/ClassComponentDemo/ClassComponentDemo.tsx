@@ -1,7 +1,7 @@
-import React from 'react';
-
-import { Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+
+import React from 'react';
+import { Table } from '../../lib';
 
 const dataArray = Array(20).fill(undefined).map(
   (_, index) => ({
@@ -24,7 +24,7 @@ class ClassComponentDemo extends React.Component {
           { key: 'column4', title: 'Column 4', dataType: DataType.String },
         ]}
         data={dataArray}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         rowKeyField={'id'}
         sortingMode={SortingMode.Single} />
     );

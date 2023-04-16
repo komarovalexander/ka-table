@@ -68,7 +68,7 @@ const CustomCellDemo: React.FC = () => {
         }
       }}
       data={dataArray}
-      editingMode={EditingMode.Cell}
+      editingMode={'cell'}
       rowKeyField={'id'}
       childComponents={{
         cellText: {

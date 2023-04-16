@@ -1,10 +1,10 @@
 import './ColumnResizingDemo.scss';
 
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
 import { EditingMode, SortingMode } from '../../lib/enums';
+
 import { Column } from '../../lib/models';
+import React from 'react';
 
 const columns: Column[] = Array(15).fill(undefined).map(
   (_, index) => ({
@@ -30,7 +30,7 @@ const ColumnResizingDemo: React.FC = () => {
       <Table
         sortingMode={SortingMode.Single}
         rowKeyField={'id'}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         data={dataArray}
         columns={columns}
         columnResizing={true}

@@ -1,7 +1,7 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
 import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
+
+import React from 'react';
 
 const data = [
   { treeGroupId: null, id: 1, name: 'Department A', productivity: 5 },
@@ -29,7 +29,7 @@ const TreeModeDemo: React.FC = () => {
       data={data}
       filteringMode={FilteringMode.FilterRow}
       treeGroupKeyField={'treeGroupId'}
-      editingMode={EditingMode.Cell}
+      editingMode={'cell'}
       treeGroupsExpanded={[7, 11]}
       rowKeyField={'id'}
       sortingMode={SortingMode.Single}

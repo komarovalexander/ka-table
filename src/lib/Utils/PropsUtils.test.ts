@@ -39,7 +39,7 @@ describe('PropsUtils', () => {
             childComponents: {},
             column: { key: 'column' },
             dispatch,
-            editingMode: EditingMode.Cell,
+            editingMode: 'cell',
             field: 'column',
             rowData: { column: 1, column2: 2, id: 0 },
             rowKeyField: 'id',

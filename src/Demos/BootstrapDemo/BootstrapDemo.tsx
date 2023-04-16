@@ -1,11 +1,11 @@
 import './BootstrapDemo.scss';
 
-import React from 'react';
-
+import { CustomLookupEditor, DateEditor, NumberEditor } from './editors';
 import { DataType, Table } from '../../lib';
 import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
+
 import { ChildComponents } from '../../lib/models';
-import { CustomLookupEditor, DateEditor, NumberEditor } from './editors';
+import React from 'react';
 
 const dataArray = Array(119).fill(undefined).map(
   (_, index) => ({
@@ -85,7 +85,7 @@ const BootstrapDemo: React.FC = () => {
           pageIndex: 0
         }}
         data={dataArray}
-        editingMode={EditingMode.Cell}
+        editingMode={'cell'}
         rowKeyField={'id'}
         sortingMode={SortingMode.Single}
         filteringMode={FilteringMode.FilterRow}

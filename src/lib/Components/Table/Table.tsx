@@ -3,7 +3,7 @@ import * as actionCreators from '../../actionCreators';
 
 import { ControlledPropsKeys, DispatchFunc, FilterFunc, FormatFunc, NoData, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc } from '../../types';
 import { EditableCell, PagingOptions } from '../../models';
-import { EditingMode, FilteringMode, SortingMode } from '../../enums';
+import { EditingModeType, FilteringMode, SortingMode } from '../../enums';
 
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
@@ -32,7 +32,7 @@ export interface ITableProps {
   data?: any[];
   detailsRows?: any[];
   editableCells?: EditableCell[];
-  editingMode?: EditingMode;
+  editingMode?: EditingModeType;
   extendedFilter?: (data: any[]) => any[];
   extendedSort?: (data: any[], columns: Column[]) => any[];
   filter?: FilterFunc;
