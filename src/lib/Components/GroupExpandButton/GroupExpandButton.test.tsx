@@ -20,7 +20,7 @@ const props: IGroupRowProps = {
 
 describe('GroupRowExpandButton', () => {
   it('renders without crashing', () => {
-    const element = document.createElement('tr');
+    const element = document.createElement('td');
     ReactDOM.render(<GroupExpandButton {...props} />, element);
     ReactDOM.unmountComponentAtNode(element);
   });

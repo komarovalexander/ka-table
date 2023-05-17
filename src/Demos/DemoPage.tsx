@@ -1,5 +1,6 @@
 import './DemoPage.scss';
 
+import { CollapsedIcon } from '../lib/Icons/CollapsedIcon';
 import Demo from './Demo';
 import DemoText from './DemoText';
 import React from 'react';
@@ -14,7 +15,7 @@ const getDemoPage = (demo: Demo) => {
           <h1>{demo.group && (
             <span className='group-header'>
               {demo.group}
-              <span className='group-header-icon ka-icon ka-icon-group-arrow ka-icon-group-arrow-collapsed'/>
+              <span className='group-header-icon'><CollapsedIcon style={{fill: 'currentColor', color: 'rgba(83, 88, 91, 0.6)'}} className='' /></span>
             </span>
           )} {demo.title}</h1>
           <demo.component />
