@@ -1,10 +1,10 @@
 import { SortDirection, SortingMode } from '../enums';
-import { isMultipleSorting, isSortingEnabled, isTripleStateSorting, sortColumns } from './SortUtils';
+import { isMultipleSorting, isTripleStateSorting, sortColumns } from './SortUtils';
 
 import { Column } from '../Models/Column';
 import defaultOptions from '../defaultOptions';
 
-export const getHeadCellClassName = (sortingMode: SortingMode, isGrouped?: boolean) => `${defaultOptions.css.theadCell} ${defaultOptions.css.theadCellHeight} ${defaultOptions.css.theadFixed} ${defaultOptions.css.theadBackground} ${isSortingEnabled(sortingMode) ? 'ka-pointer' : ''} ${isGrouped ? 'ka-thead-grouped-cell' : ''}`
+export const getHeadCellClassName = (sortingMode: SortingMode, isGrouped?: boolean) => `${defaultOptions.css.theadCell} ${defaultOptions.css.theadCellHeight} ${defaultOptions.css.theadFixed} ${defaultOptions.css.theadBackground} ${isGrouped ? 'ka-thead-grouped-cell' : ''}`
 
 export const getUpdatedSortedColumns = (
   columns: Column[],
