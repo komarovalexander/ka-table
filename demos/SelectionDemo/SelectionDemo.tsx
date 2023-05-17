@@ -62,6 +62,7 @@ const SelectionDemo: React.FC = () => {
         columns={[
           {
             key: 'selection-cell',
+            isFilterable: false,
           },
           { key: 'column1', title: 'Column 1', dataType: DataType.String },
           { key: 'column2', title: 'Column 2', dataType: DataType.String },
@@ -81,13 +82,6 @@ const SelectionDemo: React.FC = () => {
             content: (props) => {
               if (props.column.key === 'selection-cell') {
                 return <SelectionCell {...props} />;
-              }
-            },
-          },
-          filterRowCell: {
-            content: (props) => {
-              if (props.column.key === 'selection-cell') {
-                return <></>;
               }
             },
           },
