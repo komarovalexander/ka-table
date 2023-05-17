@@ -18,10 +18,10 @@ const FilterCell: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
   return (
     <td {...elementAttributes}>
       {
-        column.isFilterable === false 
-          ? <></> 
-          : content 
-            ? content 
+        column.isFilterable === false
+          ? <></>
+          : content
+            ? content
             : (
               <FilterRowDataType
                 {...props}
