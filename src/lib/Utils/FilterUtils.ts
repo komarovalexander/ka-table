@@ -86,7 +86,7 @@ export const filterData = (data: any[], columns: Column[], filter?: FilterFunc):
         fieldValue = fieldValue == null ? fieldValue : new Date(fieldValue).setHours(0, 0, 0, 0);
         conditionValue = conditionValue == null ? conditionValue : new Date(conditionValue).setHours(0, 0, 0, 0);
       }
-      return compare(fieldValue, conditionValue);
+      return compare(fieldValue, conditionValue, d);
     });
   }, data);
 };
