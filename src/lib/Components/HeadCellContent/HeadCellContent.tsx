@@ -48,7 +48,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
           childComponents={childComponents}
         />
       )}
-      {(filteringMode === FilteringMode.HeaderFilter) && (
+      {(filteringMode === FilteringMode.HeaderFilter) && column.isFilterable !== false && (
         <HeaderFilterButton
           column={column}
           dispatch={dispatch}
