@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import defaultOptions from '../../defaultOptions';
+import CellEditorState from '../CellEditorState/CellEditorState';
 import { EditingMode } from '../../enums';
 import { ICellEditorProps } from '../../props';
+import defaultOptions from '../../defaultOptions';
 import { getCellEditorDispatchHandler } from '../../Utils/CellUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
-import CellEditorState from '../CellEditorState/CellEditorState';
 
 const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
   const {
@@ -16,7 +16,7 @@ const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
 
   const { elementAttributes, content } = getElementCustomization({
     className: `${defaultOptions.css.cellEditor}`
-  }, props, childComponents.cellEditor);
+  }, props, childComponents?.cellEditor);
 
   return (
     <div {...elementAttributes}>

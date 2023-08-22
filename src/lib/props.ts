@@ -70,7 +70,7 @@ export interface ICellProps {
 }
 
 export interface IFilterRowEditorProps {
-  childComponents: ChildComponents;
+  childComponents?: ChildComponents;
   column: Column;
   dispatch: DispatchFunc;
 }
@@ -256,7 +256,7 @@ export interface ICellEditorValidationMessageProps {
 }
 
 export interface IFilterRowProps {
-  childComponents: ChildComponents;
+  childComponents?: ChildComponents;
   columns: Column[];
   dispatch: DispatchFunc;
   groupColumnsCount: number;
