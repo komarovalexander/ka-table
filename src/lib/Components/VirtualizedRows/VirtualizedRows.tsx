@@ -44,7 +44,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   }
   return (
     <>
-      {virtualized && <tr style={{height: virtualized.beginHeight, visibility: virtualized.beginHeight ?  'inherit' : 'collapse'}}><td style={{height: virtualized.beginHeight}}/></tr>}
+      {virtualized && virtualized.beginHeight !== 0 && <tr style={{height: virtualized.beginHeight}}><td style={{height: virtualized.beginHeight}}/></tr>}
       <Rows
         {...props}
         data={virtualizedData}
