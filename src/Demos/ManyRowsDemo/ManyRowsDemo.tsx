@@ -1,6 +1,6 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
+
+import React from 'react';
 
 const dataArray = Array(100000).fill(undefined).map(
   (_, index) => ({
@@ -24,7 +24,9 @@ const ManyRowsDemo: React.FC = () => {
       data={dataArray}
       rowKeyField={'id'}
       virtualScrolling= {{
-        enabled: true
+        enabled: true,
+        topInvisibleCount: 100,
+        bottomInvisibleCount: 100
       }}
       childComponents={{
         tableWrapper: {
