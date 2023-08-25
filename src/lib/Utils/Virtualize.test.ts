@@ -1,5 +1,6 @@
-import { VirtualScrolling } from '../Models/VirtualScrolling';
 import { getVirtualized, isVirtualScrollingEnabled } from './Virtualize';
+
+import { VirtualScrolling } from '../Models/VirtualScrolling';
 
 describe('Virtualize', () => {
   const data: any[] = new Array(100).fill(0).map((_, index) => index);
@@ -20,6 +21,29 @@ describe('Virtualize', () => {
         itemHeight: () => 10,
         scrollTop: 100,
         tbodyHeight: 40,
+      };
+      const result = getVirtualized(virtualScrolling, data);
+
+      expect(result).toMatchSnapshot();
+    });
+
+    it('scrollTop 100 bottomInvisibleCount', () => {
+      const virtualScrolling: VirtualScrolling = {
+        itemHeight: () => 10,
+        scrollTop: 100,
+        tbodyHeight: 40,
+        bottomInvisibleCount: 10
+      };
+      const result = getVirtualized(virtualScrolling, data);
+
+      expect(result).toMatchSnapshot();
+    });
+    it('scrollTop 900 topInvisibleCount', () => {
+      const virtualScrolling: VirtualScrolling = {
+        itemHeight: () => 10,
+        scrollTop: 900,
+        tbodyHeight: 40,
+        topInvisibleCount: 10
       };
       const result = getVirtualized(virtualScrolling, data);
 

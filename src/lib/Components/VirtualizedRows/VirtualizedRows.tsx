@@ -1,11 +1,11 @@
 import React, { RefObject } from 'react';
 
-import defaultOptions from '../../defaultOptions';
 import { ActionType } from '../../enums';
 import { ITableBodyProps } from '../../props';
+import Rows from '../Rows/Rows';
+import defaultOptions from '../../defaultOptions';
 import { getNewRowEditableCells } from '../../Utils/CellUtils';
 import { getVirtualized } from '../../Utils/Virtualize';
-import Rows from '../Rows/Rows';
 
 const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {
@@ -44,7 +44,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   }
   return (
     <>
-      {virtualized && virtualized.beginHeight !== 0 && <tr style={{height: virtualized.beginHeight}}><td style={{height: virtualized.beginHeight}}/></tr>}
+      {virtualized && <tr style={{height: virtualized.beginHeight, visibility: virtualized.beginHeight ?  'inherit' : 'collapse'}}><td style={{height: virtualized.beginHeight}}/></tr>}
       <Rows
         {...props}
         data={virtualizedData}
