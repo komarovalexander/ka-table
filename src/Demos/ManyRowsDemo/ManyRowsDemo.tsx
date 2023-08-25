@@ -24,9 +24,7 @@ const ManyRowsDemo: React.FC = () => {
       data={dataArray}
       rowKeyField={'id'}
       virtualScrolling= {{
-        enabled: true,
-        topInvisibleCount: 100,
-        bottomInvisibleCount: 100
+        enabled: true
       }}
       childComponents={{
         tableWrapper: {
