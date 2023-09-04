@@ -6,7 +6,7 @@ export const getControlledPropsKeys = (props: ITableProps) => {
         props.controlledPropsKeys
         : props.loading?.enabled
         ? ['searchText', 'loading']
-        : ['searchText', 'loading', 'data', 'paging'];
+        : ['searchText', 'loading', 'data', 'paging', 'selectedRows'];
 
     return controlledPropsKeys;
 }
