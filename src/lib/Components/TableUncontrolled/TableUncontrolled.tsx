@@ -33,8 +33,10 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsK
   React.useEffect(() => {
     const controlledPropsKeys = getControlledPropsKeys(props);
     const propsToOverride = getPropsToOverride(controlledPropsKeys, props, tableProps);
-
     if (Object.keys(propsToOverride).length){
+      if(propsToOverride?.paging){
+        propsToOverride.paging = {...tableProps.paging, ...propsToOverride.paging };
+      }
       changeTableProps({...tableProps, ...propsToOverride});
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
