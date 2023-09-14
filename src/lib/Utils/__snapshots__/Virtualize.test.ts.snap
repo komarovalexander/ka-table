@@ -57,11 +57,64 @@ Object {
 }
 `;
 
+exports[`Virtualize getVirtualized scrollTop 100 bottomInvisibleCount 1`] = `
+Object {
+  "beginHeight": 90,
+  "endHeight": 760,
+  "virtualizedData": Array [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+  ],
+}
+`;
+
 exports[`Virtualize getVirtualized scrollTop 900 1`] = `
 Object {
   "beginHeight": 890,
   "endHeight": 10,
   "virtualizedData": Array [
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+  ],
+}
+`;
+
+exports[`Virtualize getVirtualized scrollTop 900 topInvisibleCount 1`] = `
+Object {
+  "beginHeight": 790,
+  "endHeight": 10,
+  "virtualizedData": Array [
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
     89,
     90,
     91,

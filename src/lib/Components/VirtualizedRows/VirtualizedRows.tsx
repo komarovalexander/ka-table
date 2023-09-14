@@ -1,11 +1,11 @@
 import React, { RefObject } from 'react';
 
-import defaultOptions from '../../defaultOptions';
 import { ActionType } from '../../enums';
 import { ITableBodyProps } from '../../props';
+import Rows from '../Rows/Rows';
+import defaultOptions from '../../defaultOptions';
 import { getNewRowEditableCells } from '../../Utils/CellUtils';
 import { getVirtualized } from '../../Utils/Virtualize';
-import Rows from '../Rows/Rows';
 
 const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
   const {

@@ -6,7 +6,7 @@ export const isVirtualScrollingEnabled = (virtualScrolling?: VirtualScrolling) =
 
 export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[], isNewRowShown?: boolean) => {
   const virtualizedData: any[] = [];
-  const { scrollTop = 0 } = virtualScrolling;
+  const { scrollTop = 0, bottomInvisibleCount = 5, topInvisibleCount = 0 } = virtualScrolling;
   let { tbodyHeight = 600 } = virtualScrolling;
   let beginHeight = 0;
   let endHeight = 0;
@@ -18,8 +18,9 @@ export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[], 
         : virtualScrolling.itemHeight(value)
       )
       : 40;
-    if (acc >= scrollTop - itemHeight) {
-      if (tbodyHeight >= -(itemHeight * 5)) {
+    const topInvisibleHeight = (itemHeight * topInvisibleCount);
+    if (acc >= scrollTop - itemHeight - topInvisibleHeight) {
+      if (tbodyHeight + topInvisibleHeight >= -(itemHeight * bottomInvisibleCount)) {
         tbodyHeight = tbodyHeight - itemHeight;
         virtualizedData.push(value);
       } else {

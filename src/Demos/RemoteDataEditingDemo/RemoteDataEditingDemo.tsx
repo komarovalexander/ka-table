@@ -49,7 +49,6 @@ const RemoteDataEditingTable = () => {
         }}
         paging= {{
           enabled: true,
-          pageIndex,
           pageSize: 10,
           pagesCount: getQuery.data?.pagesCount
         }}

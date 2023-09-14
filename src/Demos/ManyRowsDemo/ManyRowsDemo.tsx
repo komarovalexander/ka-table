@@ -1,6 +1,6 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
+
+import React from 'react';
 
 const dataArray = Array(100000).fill(undefined).map(
   (_, index) => ({
