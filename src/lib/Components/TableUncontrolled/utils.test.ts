@@ -20,7 +20,7 @@ describe('TableUncontrolled', () => {
 
     it('getPropsToOverride', () => {
         const loading1 = { enabled: false };
-        expect(getPropsToOverride(['searchText', 'loading', 'data', 'paging'], {
+        expect(getPropsToOverride(['searchText', 'loading', 'data', 'paging', 'selectedRows'], {
             loading: loading1
         } as ITableProps, {
             loading: loading1
