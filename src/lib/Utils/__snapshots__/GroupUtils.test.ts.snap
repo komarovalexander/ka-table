@@ -3,6 +3,32 @@
 exports[`GroupUtils convertToFlat complex structure 1`] = `
 Array [
   Object {
+    "groupItems": Map {
+      "Cat" => Array [
+        Object {
+          "country": "France",
+          "name": "Simba",
+          "type": "Cat",
+        },
+        Object {
+          "country": "France",
+          "name": "Kas",
+          "type": "Cat",
+        },
+      ],
+      "Dog" => Array [
+        Object {
+          "country": "France",
+          "name": "Slimu",
+          "type": "Dog",
+        },
+        Object {
+          "country": "France",
+          "name": "Rex",
+          "type": "Dog",
+        },
+      ],
+    },
     "groupMark": Object {},
     "key": Array [
       "France",
@@ -10,6 +36,18 @@ Array [
     "value": "France",
   },
   Object {
+    "groupItems": Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+      Object {
+        "country": "France",
+        "name": "Kas",
+        "type": "Cat",
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "France",
@@ -28,6 +66,18 @@ Array [
     "type": "Cat",
   },
   Object {
+    "groupItems": Array [
+      Object {
+        "country": "France",
+        "name": "Slimu",
+        "type": "Dog",
+      },
+      Object {
+        "country": "France",
+        "name": "Rex",
+        "type": "Dog",
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "France",
@@ -46,6 +96,32 @@ Array [
     "type": "Dog",
   },
   Object {
+    "groupItems": Map {
+      "Cat" => Array [
+        Object {
+          "country": "Brazil",
+          "name": "Simba",
+          "type": "Cat",
+        },
+        Object {
+          "country": "Brazil",
+          "name": "Kas",
+          "type": "Cat",
+        },
+      ],
+      "Dog" => Array [
+        Object {
+          "country": "Brazil",
+          "name": "Slimu",
+          "type": "Dog",
+        },
+        Object {
+          "country": "Brazil",
+          "name": "Rex",
+          "type": "Dog",
+        },
+      ],
+    },
     "groupMark": Object {},
     "key": Array [
       "Brazil",
@@ -53,6 +129,18 @@ Array [
     "value": "Brazil",
   },
   Object {
+    "groupItems": Array [
+      Object {
+        "country": "Brazil",
+        "name": "Simba",
+        "type": "Cat",
+      },
+      Object {
+        "country": "Brazil",
+        "name": "Kas",
+        "type": "Cat",
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "Brazil",
@@ -71,6 +159,18 @@ Array [
     "type": "Cat",
   },
   Object {
+    "groupItems": Array [
+      Object {
+        "country": "Brazil",
+        "name": "Slimu",
+        "type": "Dog",
+      },
+      Object {
+        "country": "Brazil",
+        "name": "Rex",
+        "type": "Dog",
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "Brazil",
@@ -94,6 +194,15 @@ Array [
 exports[`GroupUtils convertToFlat inner group 1`] = `
 Array [
   Object {
+    "groupItems": Map {
+      "Cat" => Array [
+        Object {
+          "country": "France",
+          "name": "Simba",
+          "type": "Cat",
+        },
+      ],
+    },
     "groupMark": Object {},
     "key": Array [
       "France",
@@ -101,6 +210,13 @@ Array [
     "value": "France",
   },
   Object {
+    "groupItems": Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "France",
@@ -119,6 +235,51 @@ Array [
 exports[`GroupUtils convertToFlat inner group with summart 1`] = `
 Array [
   Object {
+    "groupItems": Map {
+      "Cat" => Array [
+        Object {
+          "country": "France",
+          "name": "Simba",
+          "type": "Cat",
+        },
+        Object {
+          "groupData": Array [
+            Object {
+              "country": "France",
+              "name": "Simba",
+              "type": "Cat",
+            },
+          ],
+          "groupIndex": 0,
+          "groupSummaryMark": Object {},
+          "key": Array [
+            Array [
+              "France",
+              "Cat",
+            ],
+            "--: + summary--\\\\",
+          ],
+        },
+      ],
+      Object {} => Object {
+        "groupData": Array [
+          Object {
+            "country": "France",
+            "name": "Simba",
+            "type": "Cat",
+          },
+        ],
+        "groupIndex": 0,
+        "groupSummaryMark": Object {},
+        "key": Array [
+          Array [
+            "France",
+            "Cat",
+          ],
+          "--: + summary--\\\\",
+        ],
+      },
+    },
     "groupMark": Object {},
     "key": Array [
       "France",
@@ -126,6 +287,31 @@ Array [
     "value": "France",
   },
   Object {
+    "groupItems": Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+      Object {
+        "groupData": Array [
+          Object {
+            "country": "France",
+            "name": "Simba",
+            "type": "Cat",
+          },
+        ],
+        "groupIndex": 0,
+        "groupSummaryMark": Object {},
+        "key": Array [
+          Array [
+            "France",
+            "Cat",
+          ],
+          "--: + summary--\\\\",
+        ],
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "France",
@@ -180,6 +366,13 @@ Array [
 exports[`GroupUtils convertToFlat simple 1`] = `
 Array [
   Object {
+    "groupItems": Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "France",

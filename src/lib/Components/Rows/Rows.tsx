@@ -1,13 +1,13 @@
 import React, { RefObject, useEffect, useRef } from 'react';
-
-import { ITableBodyProps } from '../../props';
-import { getValueByField } from '../../Utils/DataUtils';
-import { getRowEditableCells } from '../../Utils/FilterUtils';
 import { getGroupMark, getGroupText, groupSummaryMark } from '../../Utils/GroupUtils';
 import { treeDataMark, treeGroupMark } from '../../Utils/TreeUtils';
+
 import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
 import GroupRow from '../GroupRow/GroupRow';
 import { GroupSummaryRow } from '../GroupSummaryRow/GroupSummaryRow';
+import { ITableBodyProps } from '../../props';
+import { getRowEditableCells } from '../../Utils/FilterUtils';
+import { getValueByField } from '../../Utils/DataUtils';
 
 export interface IRowsProps extends ITableBodyProps {
   onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;
@@ -57,6 +57,9 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             dispatch={dispatch}
             groupIndex={groupIndex}
             groupKey={d.key}
+            groupItems={d.groupItems}
+            columns={columns}
+            groupedColumns={groupedColumns}
             isExpanded={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(d.key))}
             text={getGroupText(d.value, column, format)}
             key={JSON.stringify(d.key)}
