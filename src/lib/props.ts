@@ -118,12 +118,15 @@ export interface IDataRowProps extends IRowCommonProps {
 export interface IGroupRowProps {
   childComponents: ChildComponents;
   column: Column;
+  columns?: Column[];
+  groupedColumns?: Column[];
   contentColSpan: number;
   dispatch: DispatchFunc;
   groupIndex: number;
   groupKey: any[];
   isExpanded: boolean;
   text: string;
+  groupItems?: any[];
 }
 
 export interface IGroupSummaryRowProps extends IRowsProps {

@@ -47,6 +47,15 @@ Array [
 exports[`getData get grouped data 1`] = `
 Array [
   Object {
+    "groupItems": Array [
+      Object {
+        "column1": "column:1 row:0",
+        "column2": "column:2 row:0",
+        "column3": "column:3 row:0",
+        "column4": "column:4 row:0",
+        "id": 0,
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "column:1 row:0",
@@ -61,6 +70,15 @@ Array [
     "id": 0,
   },
   Object {
+    "groupItems": Array [
+      Object {
+        "column1": "column:1 row:1",
+        "column2": "column:2 row:1",
+        "column3": "column:3 row:1",
+        "column4": "column:4 row:1",
+        "id": 1,
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "column:1 row:1",
@@ -75,6 +93,15 @@ Array [
     "id": 1,
   },
   Object {
+    "groupItems": Array [
+      Object {
+        "column1": "column:1 row:2",
+        "column2": "column:2 row:2",
+        "column3": "column:3 row:2",
+        "column4": "column:4 row:2",
+        "id": 2,
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "column:1 row:2",
@@ -89,6 +116,15 @@ Array [
     "id": 2,
   },
   Object {
+    "groupItems": Array [
+      Object {
+        "column1": "column:1 row:3",
+        "column2": "column:2 row:3",
+        "column3": "column:3 row:3",
+        "column4": "column:4 row:3",
+        "id": 3,
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "column:1 row:3",
@@ -103,6 +139,15 @@ Array [
     "id": 3,
   },
   Object {
+    "groupItems": Array [
+      Object {
+        "column1": "column:1 row:4",
+        "column2": "column:2 row:4",
+        "column3": "column:3 row:4",
+        "column4": "column:4 row:4",
+        "id": 4,
+      },
+    ],
     "groupMark": Object {},
     "key": Array [
       "column:1 row:4",
