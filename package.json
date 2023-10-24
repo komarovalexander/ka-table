@@ -87,7 +87,7 @@
     "sass": "^1.54.4",
     "simulant": "^0.2.2",
     "tslint": "^6.1.0",
-    "typescript": "~5.2.2"
+    "typescript": "~5.2.0"
   },
   "jest": {
     "collectCoverageFrom": [
