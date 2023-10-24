@@ -49,7 +49,7 @@ const dataArray = Array(10)
     id: index,
   }));
 
-const OverviewDemo: React.FC = () => {
+const OverviewDemo = () => {
   return (
     <Table
       columns={[
