@@ -146,7 +146,7 @@ const demos: Demo[] = [
   new Demo(StateStoringDemo, '/state-storing', 'State Storing', 'StateStoringDemo', 'https://stackblitz.com/edit/table-state-storing-js', 'https://stackblitz.com/edit/table-state-storing-ts', 'Miscellaneous'),
   new Demo(SummaryDemo, '/summary', 'Summary', 'SummaryDemo', 'https://stackblitz.com/edit/table-summary-js', 'https://stackblitz.com/edit/table-summary-ts', 'Miscellaneous'),
   new Demo(TabIndexDemo, '/tab-index', 'Tab Index', 'TabIndexDemo', 'https://stackblitz.com/edit/table-tab-index-js', 'https://stackblitz.com/edit/table-tab-index-ts', 'Miscellaneous'),
-  new Demo(TreeModeDemo, '/tree-mode', 'Tree Mode', 'TreeModeDemo', 'https://stackblitz.com/edit/table-tree-mode-js', 'https://stackblitz.com/edit/table-tree-mode-ts', ''),
+  new Demo(TreeModeDemo, '/tree-mode', 'Tree Mode', 'TreeModeDemo', 'https://stackblitz.com/edit/table-tree-mode-js', 'https://stackblitz.com/edit/table-tree-mode-ts', 'Grouping'),
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts', 'Editing'),
 ];
 
