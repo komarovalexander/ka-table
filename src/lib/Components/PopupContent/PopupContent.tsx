@@ -8,44 +8,44 @@ import PopupContentItem from '../PopupContentItem/PopupContentItem';
 
 
 const PopupContent: React.FC<IPopupContentProps> = (props) => {
-  const {
-    column,
-    childComponents,
-    data,
-    dispatch,
-    format
-  } = props;
+    const {
+        column,
+        childComponents,
+        data,
+        dispatch,
+        format
+    } = props;
 
-  let headerFilterValues = data?.map((item) => {
-    const value = getValueByColumn(item, column);
+    let headerFilterValues = data?.map((item) => {
+        const value = getValueByColumn(item, column);
 
-    const formatedValue =
+        const formatedValue =
       (format && format({ column, value }))
       || value?.toString();
-    return formatedValue;
-  });
+        return formatedValue;
+    });
 
-  headerFilterValues = Array.from(new Set(headerFilterValues));
+    headerFilterValues = Array.from(new Set(headerFilterValues));
 
-  const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.popupContent}`
-  }, props, childComponents?.popupContent
-  );
+    const { elementAttributes, content } = getElementCustomization({
+        className: `${defaultOptions.css.popupContent}`
+    }, props, childComponents?.popupContent
+    );
 
-  return (
-    <div {...elementAttributes}>
-      {content ||
+    return (
+        <div {...elementAttributes}>
+            {content ||
         headerFilterValues?.map((item: any, index: number) => (
-          <PopupContentItem
-            key={index}
-            column={column}
-            childComponents={childComponents}
-            dispatch={dispatch}
-            item={item}
-          />
+            <PopupContentItem
+                key={index}
+                column={column}
+                childComponents={childComponents}
+                dispatch={dispatch}
+                item={item}
+            />
         ))}
-    </div>
-  )
+        </div>
+    )
 }
 
 export default PopupContent;

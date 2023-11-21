@@ -32,7 +32,7 @@ describe('CellText', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-    root.render(<CellText {...props} />);
+        root.render(<CellText {...props} />);
         root.unmount();
     });
 

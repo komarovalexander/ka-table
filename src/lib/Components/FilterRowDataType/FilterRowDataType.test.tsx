@@ -18,7 +18,7 @@ describe('FilterRowBoolean', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-    root.render(<FilterRowBoolean {...props} />);
+        root.render(<FilterRowBoolean {...props} />);
         root.unmount();
     });
 });

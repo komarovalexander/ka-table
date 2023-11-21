@@ -33,7 +33,7 @@ describe('TableBodyContent', () => {
     it('renders without crashing', () => {
         const element = document.createElement('tbody');
         const root = createRoot(element!);
-    root.render(<TableBodyContent {...props} />);
+        root.render(<TableBodyContent {...props} />);
         root.unmount();
     });
 

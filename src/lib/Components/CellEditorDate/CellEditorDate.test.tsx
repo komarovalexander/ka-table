@@ -30,7 +30,7 @@ describe('CellEditorDate', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-    root.render(<CellEditorDate {...props} />);
+        root.render(<CellEditorDate {...props} />);
         root.unmount();
     });
 

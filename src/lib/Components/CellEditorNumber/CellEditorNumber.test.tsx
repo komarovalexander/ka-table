@@ -31,7 +31,7 @@ describe('CellEditorNumber', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-    root.render(<CellEditorNumber {...props} />);
+        root.render(<CellEditorNumber {...props} />);
         root.unmount();
     });
 

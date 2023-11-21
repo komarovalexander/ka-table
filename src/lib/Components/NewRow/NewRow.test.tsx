@@ -14,7 +14,7 @@ const props: INewRowProps = {
 
 it('renders without crashing', () => {
     const div = document.createElement('tbody');
-    const root = createRoot(div!); 
+    const root = createRoot(div!);
     root.render(<NewRow  {...props} />);
     root.unmount();
 });

@@ -8,22 +8,22 @@ import { createRoot } from 'react-dom/client';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IGroupRowProps = {
-  childComponents: {},
-  column: { key: 'field' },
-  contentColSpan: 0,
-  dispatch: jest.fn(),
-  groupIndex: 0,
-  groupKey: ['group'],
-  isExpanded: false,
-  text: '',
+    childComponents: {},
+    column: { key: 'field' },
+    contentColSpan: 0,
+    dispatch: jest.fn(),
+    groupIndex: 0,
+    groupKey: ['group'],
+    isExpanded: false,
+    text: '',
 };
 
 describe('GroupRowExpandButton', () => {
-  it('renders without crashing', () => {
-    const element = document.createElement('td');
-    const root = createRoot(element!);
-    root.render(<GroupExpandButton {...props} />);
-    root.unmount();
-  });
+    it('renders without crashing', () => {
+        const element = document.createElement('td');
+        const root = createRoot(element!);
+        root.render(<GroupExpandButton {...props} />);
+        root.unmount();
+    });
 
 });

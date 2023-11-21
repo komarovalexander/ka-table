@@ -31,7 +31,7 @@ describe('CellEditorBoolean', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-    root.render(<CellEditorBoolean {...props} />);
+        root.render(<CellEditorBoolean {...props} />);
         root.unmount();
     });
 

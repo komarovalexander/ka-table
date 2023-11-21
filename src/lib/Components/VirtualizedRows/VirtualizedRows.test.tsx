@@ -2,7 +2,7 @@ import { EditingMode } from '../../enums';
 import { ITableBodyProps } from '../../props';
 import React from 'react';
 import VirtualizedRows from './VirtualizedRows';
-import { act } from "@testing-library/react";
+import { act } from '@testing-library/react';
 import { createRoot } from 'react-dom/client';
 
 const tableProps: ITableBodyProps = {
@@ -30,10 +30,10 @@ it('renders without crashing', () => {
     const div = document.createElement('tbody');
     const root = createRoot(div!);
     act(() => {
-      root.render(<VirtualizedRows {...tableProps} />);
+        root.render(<VirtualizedRows {...tableProps} />);
     });
     act(() => {
-      root.unmount();
+        root.unmount();
     });
 });
 
@@ -41,10 +41,10 @@ it('Should call dispatch when virtualScrolling.itemHeight is not set', () => {
     const div = document.createElement('tbody');
     const root = createRoot(div!);
     act(() => {
-      root.render(<VirtualizedRows {...tableProps} virtualScrolling={{ tbodyHeight: 1 }} />);
+        root.render(<VirtualizedRows {...tableProps} virtualScrolling={{ tbodyHeight: 1 }} />);
     });
     expect(tableProps.dispatch).toHaveBeenCalledTimes(1);
     act(() => {
-      root.unmount();
+        root.unmount();
     });
 });

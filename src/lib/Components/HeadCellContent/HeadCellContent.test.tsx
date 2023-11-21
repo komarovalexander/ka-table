@@ -10,30 +10,30 @@ import { createRoot } from 'react-dom/client';
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: IHeadCellProps = {
-  areAllRowsSelected: false,
-  childComponents: {},
-  column: {
-    key: 'fieldTest',
-  },
-  dispatch: jest.fn(),
-  sortingMode: SortingMode.Single,
+    areAllRowsSelected: false,
+    childComponents: {},
+    column: {
+        key: 'fieldTest',
+    },
+    dispatch: jest.fn(),
+    sortingMode: SortingMode.Single,
 };
 
 describe('HeadCellContent', () => {
-  it('renders without crashing', () => {
-    const element = document.createElement('th');
-    const root = createRoot(element!);
-    root.render(<HeadCellContent {...props} />);
-    root.unmount();
-  });
-
-  it('onClick should dispath ChangeSorting', () => {
-    const wrapper = mount(<HeadCellContent {...props} column={{ key: 'fieldTest', sortDirection: SortDirection.Ascend }} />);
-    wrapper.find('.ka-thead-cell-content').simulate('click');
-    expect(props.dispatch).toBeCalledTimes(1);
-    expect(props.dispatch).toBeCalledWith({
-      columnKey: 'fieldTest',
-      type: ActionType.UpdateSortDirection,
+    it('renders without crashing', () => {
+        const element = document.createElement('th');
+        const root = createRoot(element!);
+        root.render(<HeadCellContent {...props} />);
+        root.unmount();
     });
-  });
+
+    it('onClick should dispath ChangeSorting', () => {
+        const wrapper = mount(<HeadCellContent {...props} column={{ key: 'fieldTest', sortDirection: SortDirection.Ascend }} />);
+        wrapper.find('.ka-thead-cell-content').simulate('click');
+        expect(props.dispatch).toBeCalledTimes(1);
+        expect(props.dispatch).toBeCalledWith({
+            columnKey: 'fieldTest',
+            type: ActionType.UpdateSortDirection,
+        });
+    });
 });

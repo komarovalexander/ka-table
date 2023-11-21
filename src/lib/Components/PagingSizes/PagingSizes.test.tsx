@@ -17,18 +17,18 @@ const props: IPagingProps = {
 };
 
 beforeEach(() => {
-  jest.clearAllMocks();
+    jest.clearAllMocks();
 });
 
 it('renders without crashing', () => {
-  const element = document.createElement('div');
-  const root = createRoot(element!); 
-  root.render(<PagingSizes  {...props} />);
-  root.unmount();
-  expect(props.dispatch).toHaveBeenCalledTimes(0);
+    const element = document.createElement('div');
+    const root = createRoot(element!);
+    root.render(<PagingSizes  {...props} />);
+    root.unmount();
+    expect(props.dispatch).toHaveBeenCalledTimes(0);
 });
 it('should be rendered without PagingSizes', () => {
-  const wrapper = mount(<PagingSizes {...props} childComponents={{ pagingSizes: { content: () => (<>Custom Paging Sizes</>) }}} />);
-  expect(wrapper.find('.ka-paging-sizes').text()).toEqual('Custom Paging Sizes');
+    const wrapper = mount(<PagingSizes {...props} childComponents={{ pagingSizes: { content: () => (<>Custom Paging Sizes</>) }}} />);
+    expect(wrapper.find('.ka-paging-sizes').text()).toEqual('Custom Paging Sizes');
 });
 

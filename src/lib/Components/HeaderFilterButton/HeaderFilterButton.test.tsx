@@ -17,7 +17,7 @@ const props: IHeaderFilterButtonProps = {
 
 it('renders without crashing', () => {
     const element = document.createElement('div');
-    const root = createRoot(element!); 
+    const root = createRoot(element!);
     root.render(<HeaderFilterButton  {...props} />);
     root.unmount();
 });

@@ -14,50 +14,50 @@ const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
-  const {
-    column,
-    dispatch,
-    sortingMode,
-    filteringMode,
-    childComponents,
-  } = props;
-  const sortingEnabled = isSortingEnabled(sortingMode, column);
-  const onClick = sortingEnabled ? () => {
-    dispatch(updateSortDirection(column.key));
-  } : undefined;
+    const {
+        column,
+        dispatch,
+        sortingMode,
+        filteringMode,
+        childComponents,
+    } = props;
+    const sortingEnabled = isSortingEnabled(sortingMode, column);
+    const onClick = sortingEnabled ? () => {
+        dispatch(updateSortDirection(column.key));
+    } : undefined;
 
-  const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.theadCellContent} ${sortingEnabled ? 'ka-pointer' : ''}`,
-    onClick
-  }, props, childComponents.headCellContent);
-
-
-  const refToElement = React.useRef<HTMLDivElement>(null);
-  useIsomorphicLayoutEffect(() => {
-    checkPopupPosition(column, refToElement, dispatch);
-  }, [column, dispatch]);
+    const { elementAttributes, content } = getElementCustomization({
+        className: `${defaultOptions.css.theadCellContent} ${sortingEnabled ? 'ka-pointer' : ''}`,
+        onClick
+    }, props, childComponents.headCellContent);
 
 
-  return (
-    <div {...elementAttributes} ref={refToElement}>
-      {content || <span>{column.title}</span>}
-      {column.sortDirection && sortingEnabled && (
-        <SortIcon
-          column={column}
-          dispatch={dispatch}
-          childComponents={childComponents}
-        />
-      )}
-      {(filteringMode === FilteringMode.HeaderFilter) && column.isFilterable !== false && (
-        <HeaderFilterButton
-          column={column}
-          dispatch={dispatch}
-          childComponents={childComponents}
-        />
-      )
-      }
-    </div>
-  );
+    const refToElement = React.useRef<HTMLDivElement>(null);
+    useIsomorphicLayoutEffect(() => {
+        checkPopupPosition(column, refToElement, dispatch);
+    }, [column, dispatch]);
+
+
+    return (
+        <div {...elementAttributes} ref={refToElement}>
+            {content || <span>{column.title}</span>}
+            {column.sortDirection && sortingEnabled && (
+                <SortIcon
+                    column={column}
+                    dispatch={dispatch}
+                    childComponents={childComponents}
+                />
+            )}
+            {(filteringMode === FilteringMode.HeaderFilter) && column.isFilterable !== false && (
+                <HeaderFilterButton
+                    column={column}
+                    dispatch={dispatch}
+                    childComponents={childComponents}
+                />
+            )
+            }
+        </div>
+    );
 };
 
 export default HeadCellContent;

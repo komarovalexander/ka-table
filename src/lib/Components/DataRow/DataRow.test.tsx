@@ -35,7 +35,7 @@ describe('DataRow', () => {
     it('renders without crashing', () => {
         const element = document.createElement('tbody');
         const root = createRoot(element!);
-    root.render(<DataRow {...props} />);
+        root.render(<DataRow {...props} />);
         root.unmount();
     });
 
