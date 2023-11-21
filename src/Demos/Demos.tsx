@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import './Demos.scss';
 
-import { HashRouter, Route } from 'react-router-dom';
-import { initializeGA, trackEvent } from './ga';
+import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { initializeGA, trackEvent, trackPage } from './ga';
 
 import AddRowDemo from './AddRowDemo/AddRowDemo';
 import AlertCellDemo from './AlertCellDemo/AlertCellDemo';
@@ -76,7 +76,6 @@ import TabIndexDemo from './TabIndexDemo/TabIndexDemo';
 import TreeModeDemo from './TreeModeDemo/TreeModeDemo';
 import ValidationDemo from './ValidationDemo/ValidationDemo';
 import getDemoPage from './DemoPage';
-import { withTracker } from './GAWrapper';
 
 initializeGA();
 
@@ -150,6 +149,15 @@ const demos: Demo[] = [
   new Demo(ValidationDemo, '/validation', 'Validation', 'ValidationDemo', 'https://stackblitz.com/edit/table-validation-js', 'https://stackblitz.com/edit/table-validation-ts', 'Editing'),
 ];
 
+const PageRoute = ({ c }: { c: DemoCase }) => {
+  let location = useLocation();
+
+  React.useEffect(() => {
+    trackPage(location?.pathname);
+  }, [location?.pathname]);
+  return <>{c.demoComponent()}</>;
+};
+
 const cases: DemoCase[] = demos.map((d: Demo) => {
   return ({
     demoComponent: getDemoPage(d),
@@ -206,11 +214,13 @@ const Demos: React.FC = () => {
             </div>
           </nav>
           <main>
-            {
-              cases.map((c) => (
-                <Route key={c.name} path={c.path} component={withTracker(c.demoComponent)} />
-              ))
-            }
+          <Routes>
+          {
+            cases.map((c) => (
+              <Route key={c.name} path={c.path} element={<PageRoute c={c} />} />
+            ))
+          }
+          </Routes>
           </main>
         </div>
         <footer>

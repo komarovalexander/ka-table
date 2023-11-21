@@ -48,7 +48,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
                   </span>
                 </div>
               ) : (
-              <NavLink to={c.path!} activeClassName='active'>
+              <NavLink to={c.path!}>
                 <span className='menu-button'>
                   <span className='menu-icon'><img src={`static/icons/${c.name}.svg`} alt=''/></span>
                   <span className='menu-button-inner'>{c.title}</span>
@@ -62,7 +62,7 @@ const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
                   c.items.map((i) =>
                   (
                     <li key={i.name}>
-                      <NavLink to={i.path!} activeClassName='active'>
+                      <NavLink to={i.path!}>
                         <span className='menu-button'>
                           <span className='menu-icon'><img src={`static/icons/${i.name}.svg`} alt=''/></span>
                           <span className='menu-button-inner'>{i.title}</span>
