@@ -1,11 +1,10 @@
 import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { EditingMode } from '../../enums';
+import React from 'react';
 import TableBody from './TableBody';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -33,8 +32,9 @@ afterEach(() => jest.clearAllMocks());
 describe('TableBody', () => {
   it('renders without crashing', () => {
     const element = document.createElement('table');
-    ReactDOM.render(<TableBody {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<TableBody {...props} />);
+    root.unmount();
   });
   it('add custom className', () => {
     const wrapper = mount((

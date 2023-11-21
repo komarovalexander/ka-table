@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
+import { createRoot } from 'react-dom/client';
 import { useOuterClick } from './UseOuterClick';
 
 describe('UseOuterClick', () => {
@@ -13,6 +12,7 @@ describe('UseOuterClick', () => {
     };
 
     const div = document.createElement('tbody');
-    ReactDOM.render(<Component />, div);
+    const root = createRoot(div!);
+    root.render(<Component />);
   });
 });

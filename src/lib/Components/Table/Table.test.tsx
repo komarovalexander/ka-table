@@ -1,10 +1,11 @@
 import { ActionType, PagingPosition } from '../../enums';
 import Enzyme, { mount } from 'enzyme';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Table } from './Table';
+import { act } from "@testing-library/react";
+import { createRoot } from 'react-dom/client';
 import { loadData } from '../../actionCreators';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -24,8 +25,13 @@ const tableProps: any = {
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<Table {...tableProps} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  act(() => {
+    root.render(<Table {...tableProps} />);
+  });
+  act(() => {
+    root.unmount();
+  });
 });
 
 it('should dispatch single action and clear it', () => {
@@ -36,14 +42,19 @@ it('should dispatch single action and clear it', () => {
     dispatch
   };
   const div = document.createElement('div');
-  ReactDOM.render(<Table {...props} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  act(() => {
+    root.render(<Table {...props} />);
+  });
   expect(dispatch).toHaveBeenCalledTimes(3);
   expect(dispatch.mock.calls).toEqual([
     [{type: ActionType.ComponentDidMount}],
     [{type: ActionType.LoadData}],
     [{type: ActionType.ClearSingleAction}],
   ]);
+  act(() => {
+    root.unmount();
+  });
 });
 
 it('should not dispatch in case of single action is undefined', () => {
@@ -54,12 +65,17 @@ it('should not dispatch in case of single action is undefined', () => {
     dispatch
   };
   const div = document.createElement('div');
-  ReactDOM.render(<Table {...props} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  act(() => {
+    root.render(<Table {...props} />);
+  });
   expect(dispatch).toHaveBeenCalledTimes(1);
   expect(dispatch.mock.calls).toEqual([
     [{type: ActionType.ComponentDidMount}]
   ]);
+  act(() => {
+    root.unmount();
+  });
 });
 
 it('Paging position property', () => {

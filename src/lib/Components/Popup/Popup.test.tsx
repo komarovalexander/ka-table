@@ -1,7 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 import Popup from './Popup';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 const props: any = {
   column: {key: 'field'},
@@ -12,6 +11,7 @@ const props: any = {
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<Popup {...props} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!); 
+  root.render(<Popup {...props} />);
+  root.unmount();
 });

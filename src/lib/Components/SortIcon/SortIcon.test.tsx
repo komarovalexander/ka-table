@@ -1,8 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 import { ISortIconProps } from '../../props';
+import React from 'react';
 import SortIcon from './SortIcon';
+import { createRoot } from 'react-dom/client';
 
 const props: ISortIconProps = {
   childComponents: {},
@@ -12,6 +11,7 @@ const props: ISortIconProps = {
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<SortIcon {...props} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  root.render(<SortIcon {...props} />);
+  root.unmount();
 });

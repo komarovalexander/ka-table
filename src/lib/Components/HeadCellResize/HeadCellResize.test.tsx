@@ -1,11 +1,10 @@
 import Enzyme, { mount, shallow } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import simulant from 'simulant';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import HeadCellResize from './HeadCellResize';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import simulant from 'simulant';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -24,8 +23,9 @@ describe('HeadCellResize', () => {
   });
   it('renders without crashing', () => {
     const element = document.createElement('div');
-    ReactDOM.render(<HeadCellResize {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!); 
+    root.render(<HeadCellResize  {...props} />);
+    root.unmount();
   });
 
   it('should handle onMouseDown correctly', () => {

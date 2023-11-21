@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 import CustomPagingDemo from './CustomPagingDemo';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<CustomPagingDemo />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  root.render(<CustomPagingDemo />);
+  root.unmount();
 });

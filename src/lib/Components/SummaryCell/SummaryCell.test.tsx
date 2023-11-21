@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 import { SummaryCell } from './SummaryCell';
+import { createRoot } from 'react-dom/client';
 
-const tableProps: any = {
+const props: any = {
   childComponents: {},
   column: { key: 'column', name: 'Column 1'},
   columns: [
@@ -19,6 +18,7 @@ const tableProps: any = {
 
 it('renders without crashing', () => {
   const div = document.createElement('tr');
-  ReactDOM.render(<SummaryCell {...tableProps} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  root.render(<SummaryCell {...props} />);
+  root.unmount();
 });

@@ -1,11 +1,11 @@
 import Enzyme, { mount } from 'enzyme';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { DataType } from '../../enums';
 import GroupRow from './GroupRow';
 import { IGroupRowProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -28,8 +28,9 @@ const props: IGroupRowProps = {
 describe('GroupRow', () => {
   it('renders without crashing', () => {
     const element = document.createElement('tbody');
-    ReactDOM.render(<GroupRow {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<GroupRow {...props} />);
+    root.unmount();
   });
 
   it('Should render custom group cell', () => {

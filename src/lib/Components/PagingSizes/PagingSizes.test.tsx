@@ -1,11 +1,10 @@
 import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { IPagingProps } from '../../props';
 import PagingSizes from './PagingSizes';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -23,8 +22,9 @@ beforeEach(() => {
 
 it('renders without crashing', () => {
   const element = document.createElement('div');
-  ReactDOM.render(<PagingSizes {...props} />, element);
-  ReactDOM.unmountComponentAtNode(element);
+  const root = createRoot(element!); 
+  root.render(<PagingSizes  {...props} />);
+  root.unmount();
   expect(props.dispatch).toHaveBeenCalledTimes(0);
 });
 it('should be rendered without PagingSizes', () => {

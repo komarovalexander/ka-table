@@ -1,12 +1,11 @@
 import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import { ActionType } from '../../enums';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { IPagingProps } from '../../props';
 import PagingPages from './PagingPages';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -26,8 +25,9 @@ describe('PagingPages', () => {
 
   it('renders without crashing', () => {
     const element = document.createElement('div');
-    ReactDOM.render(<PagingPages {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!); 
+    root.render(<PagingPages  {...props} />);
+    root.unmount();
     expect(props.dispatch).toHaveBeenCalledTimes(0);
   });
 

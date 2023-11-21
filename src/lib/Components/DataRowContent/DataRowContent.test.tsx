@@ -1,11 +1,11 @@
 import { DataType, EditingMode } from '../../enums';
 import Enzyme, { mount } from 'enzyme';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import DataRowContent from './DataRowContent';
 import { IDataRowProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -30,8 +30,9 @@ const props: IDataRowProps = {
 describe('DataRowContent', () => {
   it('renders without crashing', () => {
     const element = document.createElement('tr');
-    ReactDOM.render(<DataRowContent {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<DataRowContent {...props} />);
+    root.unmount();
   });
   it('click by first row dispatches action', () => {
     const dispatch = jest.fn();

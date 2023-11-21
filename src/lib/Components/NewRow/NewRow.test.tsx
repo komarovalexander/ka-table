@@ -1,7 +1,7 @@
 import { INewRowProps } from '../../props';
 import NewRow from './NewRow';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: INewRowProps = {
     childComponents: {},
@@ -14,6 +14,7 @@ const props: INewRowProps = {
 
 it('renders without crashing', () => {
     const div = document.createElement('tbody');
-    ReactDOM.render(<NewRow {...props} />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    const root = createRoot(div!); 
+    root.render(<NewRow  {...props} />);
+    root.unmount();
 });

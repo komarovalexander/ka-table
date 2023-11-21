@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 import SortingModesDemo from './SortingModesDemo';
+import { createRoot } from 'react-dom/client';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<SortingModesDemo />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  root.render(<SortingModesDemo />);
+  root.unmount();
 });

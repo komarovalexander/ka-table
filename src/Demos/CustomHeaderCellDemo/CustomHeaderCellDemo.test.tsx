@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 import CustomHeaderCellDemo from './CustomHeaderCellDemo';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<CustomHeaderCellDemo />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  root.render(<CustomHeaderCellDemo />);
+  root.unmount();
 });

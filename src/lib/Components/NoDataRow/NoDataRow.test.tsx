@@ -1,10 +1,10 @@
 import Enzyme, { mount } from 'enzyme';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { INoDataRowProps } from '../../props';
 import NoDataRow from './NoDataRow';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -16,8 +16,9 @@ const props: INoDataRowProps = {
 
 it('renders without crashing', () => {
     const div = document.createElement('tbody');
-    ReactDOM.render(<NoDataRow {...props} />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    const root = createRoot(div!); 
+    root.render(<NoDataRow  {...props} />);
+    root.unmount();
 });
 
 it('custom colspan for cell', () => {

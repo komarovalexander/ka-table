@@ -1,8 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import { IEmptyCellsProps } from '../../props';
 import EmptyCells from './EmptyCells';
+import { IEmptyCellsProps } from '../../props';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 const props: IEmptyCellsProps = {
   count: 1,
@@ -10,12 +9,14 @@ const props: IEmptyCellsProps = {
 
 it('renders without crashing', () => {
   const element = document.createElement('tr');
-  ReactDOM.render(<EmptyCells {...props} />, element);
-  ReactDOM.unmountComponentAtNode(element);
+  const root = createRoot(element!);
+  root.render(<EmptyCells {...props} />);
+  root.unmount();
 });
 
 it('renders without crashing with isTh', () => {
   const element = document.createElement('tr');
-  ReactDOM.render(<EmptyCells {...props} isTh={true}/>, element);
-  ReactDOM.unmountComponentAtNode(element);
+  const root = createRoot(element!);
+  root.render(<EmptyCells {...props} isTh={true}/>);
+  root.unmount();
 });

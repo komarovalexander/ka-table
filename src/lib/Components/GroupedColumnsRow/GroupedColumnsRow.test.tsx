@@ -1,9 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 import { GroupedColumnsRow } from './GroupedColumnsRow';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
-const tableProps: any = {
+const props: any = {
   childComponents: {},
   columns: [
     { key: 'column', name: 'Column 1' },
@@ -18,6 +17,7 @@ const tableProps: any = {
 
 it('renders without crashing', () => {
   const div = document.createElement('tbody');
-  ReactDOM.render(<GroupedColumnsRow {...tableProps} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  root.render(<GroupedColumnsRow {...props} />);
+  root.unmount();
 });

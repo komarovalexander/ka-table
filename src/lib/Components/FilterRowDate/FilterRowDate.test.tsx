@@ -1,11 +1,11 @@
 import { ActionType, DataType } from '../../enums';
 import Enzyme, { mount } from 'enzyme';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import FilterRowDate from './FilterRowDate';
 import { IFilterRowEditorProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 const props: IFilterRowEditorProps = {
@@ -20,8 +20,9 @@ const props: IFilterRowEditorProps = {
 describe('FliterRowDate', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
-        ReactDOM.render(<FilterRowDate {...props} />, element);
-        ReactDOM.unmountComponentAtNode(element);
+        const root = createRoot(element!);
+        root.render(<FilterRowDate {...props} />);
+        root.unmount();
     });
 
     it('should fire UpdateFilterRowValue', () => {

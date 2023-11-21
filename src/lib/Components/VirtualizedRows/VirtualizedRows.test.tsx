@@ -1,8 +1,9 @@
 import { EditingMode } from '../../enums';
 import { ITableBodyProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import VirtualizedRows from './VirtualizedRows';
+import { act } from "@testing-library/react";
+import { createRoot } from 'react-dom/client';
 
 const tableProps: ITableBodyProps = {
     childComponents: {},
@@ -27,23 +28,23 @@ beforeEach(() => jest.clearAllMocks());
 
 it('renders without crashing', () => {
     const div = document.createElement('tbody');
-    ReactDOM.render(<VirtualizedRows {...tableProps} />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    const root = createRoot(div!);
+    act(() => {
+      root.render(<VirtualizedRows {...tableProps} />);
+    });
+    act(() => {
+      root.unmount();
+    });
 });
 
-it('Should call dispatch when virtualScrolling.itemHeight is not set', (done) => {
+it('Should call dispatch when virtualScrolling.itemHeight is not set', () => {
     const div = document.createElement('tbody');
-    ReactDOM.render(
-        <VirtualizedRows
-            {...tableProps}
-            virtualScrolling={{ tbodyHeight: 1 }}
-        />,
-        div,
-        () => {
-            setTimeout(() => {
-                expect(tableProps.dispatch).toHaveBeenCalledTimes(1);
-                done();
-            }, 10);
-        }
-    );
+    const root = createRoot(div!);
+    act(() => {
+      root.render(<VirtualizedRows {...tableProps} virtualScrolling={{ tbodyHeight: 1 }} />);
+    });
+    expect(tableProps.dispatch).toHaveBeenCalledTimes(1);
+    act(() => {
+      root.unmount();
+    });
 });

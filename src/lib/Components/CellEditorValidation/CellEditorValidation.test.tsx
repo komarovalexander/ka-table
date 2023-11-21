@@ -3,7 +3,7 @@ import { DataType, EditingMode } from '../../enums';
 import CellEditorValidation from './CellEditorValidation';
 import { ICellEditorProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: ICellEditorProps = {
     column: {
@@ -23,6 +23,7 @@ const props: ICellEditorProps = {
 
 it('renders without crashing', () => {
     const element = document.createElement('td');
-    ReactDOM.render(<CellEditorValidation {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<CellEditorValidation {...props} />);
+    root.unmount();
 });

@@ -1,12 +1,11 @@
-import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
 import { ActionType, SortDirection, SortingMode } from '../../enums';
-import { IHeadCellProps } from '../../props';
+import Enzyme, { mount } from 'enzyme';
+
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import HeadCellContent from './HeadCellContent';
+import { IHeadCellProps } from '../../props';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -23,8 +22,9 @@ const props: IHeadCellProps = {
 describe('HeadCellContent', () => {
   it('renders without crashing', () => {
     const element = document.createElement('th');
-    ReactDOM.render(<HeadCellContent {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<HeadCellContent {...props} />);
+    root.unmount();
   });
 
   it('onClick should dispath ChangeSorting', () => {

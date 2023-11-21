@@ -1,13 +1,13 @@
 import Enzyme, { mount } from 'enzyme';
 
 import { ActionType } from '../../enums';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import GroupRowContent from './GroupRowContent';
 import { IGroupRowProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -25,8 +25,9 @@ const props: IGroupRowProps = {
 describe('GroupRowContent', () => {
   it('renders without crashing', () => {
     const element = document.createElement('tr');
-    ReactDOM.render(<GroupRowContent {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<GroupRowContent {...props} />);
+    root.unmount();
   });
 
   it('onClick should change groupsExpanded', () => {

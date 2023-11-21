@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 import GroupingSummaryDemo from './GroupingSummaryDemo';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<GroupingSummaryDemo />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  root.render(<GroupingSummaryDemo />);
+  root.unmount();
 });

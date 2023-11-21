@@ -1,9 +1,9 @@
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import Enzyme from 'enzyme';
 import GroupExpandButton from './GroupExpandButton';
 import { IGroupRowProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -21,8 +21,9 @@ const props: IGroupRowProps = {
 describe('GroupRowExpandButton', () => {
   it('renders without crashing', () => {
     const element = document.createElement('td');
-    ReactDOM.render(<GroupExpandButton {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<GroupExpandButton {...props} />);
+    root.unmount();
   });
 
 });

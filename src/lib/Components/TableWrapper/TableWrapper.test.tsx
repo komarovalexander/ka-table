@@ -1,10 +1,10 @@
 import Enzyme, { mount } from 'enzyme';
 
 import { ActionType } from '../../enums';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { TableWrapper } from './TableWrapper';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -24,8 +24,9 @@ const tableProps: any = {
 describe('TableWrapper', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<TableWrapper {...tableProps} />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    const root = createRoot(div!);
+  root.render(<TableWrapper {...tableProps} />);
+    root.unmount();
   });
 
   it('should not dispatch ScrollTable on scroll', () => {

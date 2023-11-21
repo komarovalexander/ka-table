@@ -1,14 +1,13 @@
 import Enzyme, { mount } from 'enzyme';
+
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import React from 'react';
-import ReactDOM from 'react-dom';
-
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
 import { TableControlled } from './TableControlled';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const tableProps: any = {
+const props: any = {
   columns: [
     { key: 'column', name: 'Column 1' },
     { key: 'column2', name: 'Column 2' },
@@ -23,6 +22,7 @@ const tableProps: any = {
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<TableControlled {...tableProps} />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  root.render(<TableControlled {...props} />);
+  root.unmount();
 });

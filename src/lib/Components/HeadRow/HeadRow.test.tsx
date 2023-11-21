@@ -1,11 +1,10 @@
 import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { DataType } from '../../enums';
 import HeaderRow from './HeadRow';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -19,8 +18,9 @@ const props: any = {
 
 it('renders without crashing', () => {
   const element = document.createElement('thead');
-  ReactDOM.render(<HeaderRow {...props} />, element);
-  ReactDOM.unmountComponentAtNode(element);
+  const root = createRoot(element!); 
+  root.render(<HeaderRow  {...props} />);
+  root.unmount();
 });
 
 it('should handle onMouseDown correctly', () => {

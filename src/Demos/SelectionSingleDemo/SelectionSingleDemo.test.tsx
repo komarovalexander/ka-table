@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 import SelectionSingleDemo from './SelectionSingleDemo';
+import { createRoot } from 'react-dom/client';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<SelectionSingleDemo />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div!);
+  root.render(<SelectionSingleDemo />);
+  root.unmount();
 });

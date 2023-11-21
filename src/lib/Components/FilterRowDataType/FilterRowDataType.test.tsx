@@ -2,7 +2,7 @@ import { DataType } from '../../enums';
 import FilterRowBoolean from '../FilterRowBoolean/FilterRowBoolean';
 import { IFilterRowEditorProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: IFilterRowEditorProps = {
     column: {
@@ -17,7 +17,8 @@ const props: IFilterRowEditorProps = {
 describe('FilterRowBoolean', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
-        ReactDOM.render(<FilterRowBoolean {...props} />, element);
-        ReactDOM.unmountComponentAtNode(element);
+        const root = createRoot(element!);
+    root.render(<FilterRowBoolean {...props} />);
+        root.unmount();
     });
 });
