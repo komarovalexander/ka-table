@@ -1,5 +1,5 @@
 import { ActionType, DataType, EditingMode, SortingMode } from '../../lib/enums';
-import { ITableInstance, Table, useTable } from '../../lib';
+import { ITableProps, Table, useTable } from '../../lib';
 import React, { useState } from 'react';
 
 import CellEditorBoolean from '../../lib/Components/CellEditorBoolean/CellEditorBoolean';
@@ -16,17 +16,11 @@ const dataArray = Array(10)
         id: index,
     }));
 
-const ColumnSettings = ({ table }: { table: ITableInstance }) => {
-    const [data, setData] = useState<any[]>();
-    const updateData = () => setData(table?.props?.columns?.map((c) => ({ ...c, visible: c.visible !== false })));
+const ColumnSettings = ({ columns, onChange }: { columns: ITableProps['columns'], onChange: (columnKey: string, visible: boolean) => void }) => {
     const settingsTable = useTable({
         onDispatch: (action) => {
             if (action.type === ActionType.UpdateCellValue) {
-                action.value ? table.showColumn(action.rowKeyValue) : table.hideColumn(action.rowKeyValue);
-                updateData();
-            }
-            if (action.type === ActionType.ComponentDidMount) {
-                updateData();
+                onChange(action.rowKeyValue, action.value);
             }
         },
     });
@@ -34,7 +28,7 @@ const ColumnSettings = ({ table }: { table: ITableInstance }) => {
         <Table
             table={settingsTable}
             rowKeyField={'key'}
-            data={data}
+            data={columns?.map((c) => ({ ...c, visible: c.visible !== false }))}
             columns={[
                 {
                     key: 'title',
@@ -69,19 +63,22 @@ const ColumnSettings = ({ table }: { table: ITableInstance }) => {
 
 const ColumnSettingsDemo: React.FC = () => {
     const table = useTable();
+    const [columns] = useState([
+        { key: 'column1', title: 'Column 1', dataType: DataType.String },
+        { key: 'column2', title: 'Column 2', dataType: DataType.String },
+        { key: 'column3', title: 'Column 3', dataType: DataType.String, visible: false },
+        { key: 'column4', title: 'Column 4', dataType: DataType.String },
+        { key: 'column5', title: 'Column 5', dataType: DataType.String },
+        { key: 'column6', title: 'Column 6', dataType: DataType.String },
+    ]);
     return (
         <div className='column-settings-demo'>
-            <ColumnSettings table={table} />
+            <ColumnSettings columns={columns} onChange={(columnKey, visible) => {
+                visible ? table.showColumn(columnKey) : table.hideColumn(columnKey);
+            }} />
             <Table
                 table={table}
-                columns={[
-                    { key: 'column1', title: 'Column 1', dataType: DataType.String },
-                    { key: 'column2', title: 'Column 2', dataType: DataType.String },
-                    { key: 'column3', title: 'Column 3', dataType: DataType.String, visible: false },
-                    { key: 'column4', title: 'Column 4', dataType: DataType.String },
-                    { key: 'column5', title: 'Column 5', dataType: DataType.String },
-                    { key: 'column6', title: 'Column 6', dataType: DataType.String },
-                ]}
+                columns={columns}
                 data={dataArray}
                 editingMode={EditingMode.Cell}
                 rowKeyField={'id'}

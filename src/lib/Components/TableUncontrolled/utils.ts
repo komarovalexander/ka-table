@@ -1,12 +1,16 @@
 import { ControlledPropsKeys } from '../../types';
 import { ITableProps } from '../Table/Table';
 
+export const getDefaultControlledPropsKeys = (settings?: { loadingEnabled?: boolean }): ControlledPropsKeys => {
+    return  settings?.loadingEnabled
+        ? ['searchText', 'loading']
+        : ['searchText', 'loading', 'data', 'paging', 'selectedRows']
+}
+
 export const getControlledPropsKeys = (props: ITableProps) => {
     const controlledPropsKeys: ControlledPropsKeys = props.controlledPropsKeys ?
         props.controlledPropsKeys
-        : props.loading?.enabled
-            ? ['searchText', 'loading']
-            : ['searchText', 'loading', 'data', 'paging', 'selectedRows'];
+        : getDefaultControlledPropsKeys({ loadingEnabled: props.loading?.enabled });
 
     return controlledPropsKeys;
 }
