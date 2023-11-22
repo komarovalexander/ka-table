@@ -7,6 +7,7 @@ const LOAD_MORE_DATA = 'LOAD_MORE_DATA';
 
 const InfiniteScrollingDemo: React.FC = () => {
     const [pageIndex, changePageIndex] = useState(0);
+    const [data, changeData] = useState<any[]>([]);
 
     const table = useTable({
         onDispatch: async (action) => {
@@ -16,7 +17,7 @@ const InfiniteScrollingDemo: React.FC = () => {
                     const result = await serverEmulator.get(pageIndex);
                     changePageIndex(result.pageIndex);
                     table.hideLoading();
-                    table.updateData([...(table.props.data || []), ...result.data]);
+                    changeData([...data, ...result.data]);
                 }
             }
         },
@@ -31,7 +32,7 @@ const InfiniteScrollingDemo: React.FC = () => {
                 { key: 'column3', title: 'Column 3', dataType: DataType.String },
                 { key: 'column4', title: 'Column 4', dataType: DataType.String },
             ]}
-            data={[]}
+            data={data}
             rowKeyField={'id'}
             virtualScrolling={{
                 enabled: true,
