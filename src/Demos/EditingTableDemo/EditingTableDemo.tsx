@@ -1,10 +1,10 @@
 import './EditingTableDemo.scss';
 
-import React from 'react';
-
 import { DataType, Table, useTable } from '../../lib';
-import { openAllEditors } from '../../lib/actionCreators';
+import React, { useState } from 'react';
+
 import { kaPropsUtils } from '../../lib/utils';
+import { openAllEditors } from '../../lib/actionCreators';
 
 const dataArray = Array(3)
     .fill(undefined)
@@ -17,7 +17,12 @@ const dataArray = Array(3)
     }));
 
 const AddRowDemo = () => {
-    const table = useTable();
+    const [data, setData] = useState<any[]>();
+    const table = useTable({
+        onDispatch: (action, tableProps) => {
+            setData(tableProps.data);
+        }
+    });
     const updateCells = () => {
         if (kaPropsUtils.isValid(table.props)) {
             table.saveAllEditors();
@@ -53,7 +58,7 @@ const AddRowDemo = () => {
             />
             <div className='table-data'>
                 <h4>Table Data:</h4>
-                <pre className='data'>{JSON.stringify(table.props.data, null, 2)}</pre>
+                <pre className='data'>{JSON.stringify(data, null, 2)}</pre>
             </div>
         </div>
     );
