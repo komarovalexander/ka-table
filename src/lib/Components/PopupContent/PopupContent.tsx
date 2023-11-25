@@ -1,11 +1,10 @@
 import * as React from 'react';
-import defaultOptions from '../../defaultOptions';
 
 import { IPopupContentProps } from '../../props';
+import PopupContentItem from '../PopupContentItem/PopupContentItem';
+import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getValueByColumn } from '../../Utils/DataUtils';
-import PopupContentItem from '../PopupContentItem/PopupContentItem';
-
 
 const PopupContent: React.FC<IPopupContentProps> = (props) => {
     const {
@@ -19,10 +18,10 @@ const PopupContent: React.FC<IPopupContentProps> = (props) => {
     let headerFilterValues = data?.map((item) => {
         const value = getValueByColumn(item, column);
 
-        const formatedValue =
+        const formattedValue =
       (format && format({ column, value }))
       || value?.toString();
-        return formatedValue;
+        return formattedValue;
     });
 
     headerFilterValues = Array.from(new Set(headerFilterValues));

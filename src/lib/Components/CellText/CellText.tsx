@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { openEditor } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { EditingMode } from '../../enums';
 import { ICellTextProps } from '../../props';
+import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { openEditor } from '../../actionCreators';
 
 const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
     const {
@@ -17,7 +17,7 @@ const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
         value,
     } = props;
 
-    const formatedValue =
+    const formattedValue =
     (format && format({ column, value }))
     || value?.toString();
 
@@ -31,7 +31,7 @@ const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
     }, props, childComponents.cellText);
 
     return (
-        <div {...elementAttributes}>{content || formatedValue || <>&nbsp;</>}</div>
+        <div {...elementAttributes}>{content || formattedValue || <>&nbsp;</>}</div>
     );
 };
 
