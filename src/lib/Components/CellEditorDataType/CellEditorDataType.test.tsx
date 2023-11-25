@@ -3,7 +3,7 @@ import { DataType, EditingMode } from '../../enums';
 import CellEditorDataType from './CellEditorDataType';
 import { ICellEditorProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: ICellEditorProps = {
     column: {
@@ -24,8 +24,9 @@ const props: ICellEditorProps = {
 it('renders without crashing', () => {
     const testProps = { ...props };
     const element = document.createElement('td');
-    ReactDOM.render(<CellEditorDataType {...testProps} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<CellEditorDataType {...testProps} />);
+    root.unmount();
 });
 
 it('renders without crashing Boolean', () => {
@@ -40,8 +41,9 @@ it('renders without crashing Boolean', () => {
         value: true,
     };
     const element = document.createElement('td');
-    ReactDOM.render(<CellEditorDataType {...testProps} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<CellEditorDataType {...testProps} />);
+    root.unmount();
 });
 
 it('renders without crashing Date', () => {
@@ -56,6 +58,7 @@ it('renders without crashing Date', () => {
         value: new Date(2021, 10, 10),
     };
     const element = document.createElement('td');
-    ReactDOM.render(<CellEditorDataType {...testProps} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<CellEditorDataType {...testProps} />);
+    root.unmount();
 });

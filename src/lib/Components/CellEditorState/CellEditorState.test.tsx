@@ -2,7 +2,7 @@ import CellEditorState from './CellEditorState';
 import { DataType } from '../../enums';
 import { ICellEditorProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: ICellEditorProps = {
     column: {
@@ -19,6 +19,7 @@ const props: ICellEditorProps = {
 
 it('renders without crashing', () => {
     const element = document.createElement('td');
-    ReactDOM.render(<CellEditorState {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<CellEditorState {...props} />);
+    root.unmount();
 });

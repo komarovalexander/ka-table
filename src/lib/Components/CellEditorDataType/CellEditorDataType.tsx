@@ -8,12 +8,12 @@ import CellEditorNumber from '../CellEditorNumber/CellEditorNumber';
 import CellEditorString from '../CellEditorString/CellEditorString';
 
 const CellEditorDataType: React.FunctionComponent<ICellEditorProps> = (props) => {
-  switch (props.column.dataType) {
+    switch (props.column.dataType) {
     case DataType.Boolean: return <CellEditorBoolean {...props} />;
     case DataType.Date: return <CellEditorDate {...props} />;
     case DataType.Number: return <CellEditorNumber {...props} />;
     default: return <CellEditorString {...props} />;
-  }
+    }
 };
 
 export default CellEditorDataType;

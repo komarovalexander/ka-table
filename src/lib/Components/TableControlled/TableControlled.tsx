@@ -15,72 +15,71 @@ import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isPagingShown } from '../../Utils/PagingUtils';
 
 export interface ITableControlledProps extends ITableProps {
-  childComponents?: ChildComponents;
-  dispatch: DispatchFunc;
+    childComponents?: ChildComponents;
+    dispatch: DispatchFunc;
 }
 
 export const TablePropsContext = React.createContext<ITableProps>({} as ITableProps);
 
 export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) => {
-  const {
-    childComponents,
-    columns,
-    dispatch,
-    data,
-    format,
-    groupPanel,
-    height,
-    loading,
-    width,
-    paging,
-    singleAction
-  } = props;
-  const isLoadingActive = loading && loading.enabled;
-  const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
+    const {
+        childComponents,
+        columns,
+        dispatch,
+        data,
+        format,
+        groupPanel,
+        height,
+        loading,
+        width,
+        paging,
+        singleAction
+    } = props;
+    const isLoadingActive = loading && loading.enabled;
+    const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
-  const { elementAttributes, content: rootDivContent } = getElementCustomization({
-    className: kaCss
-  }, props, childComponents?.rootDiv);
-  elementAttributes.style = { width, height, ...elementAttributes.style }
+    const { elementAttributes, content: rootDivContent } = getElementCustomization({
+        className: kaCss
+    }, props, childComponents?.rootDiv);
+    elementAttributes.style = { width, height, ...elementAttributes.style }
 
-  React.useEffect(() => {
-    dispatch({ type: ActionType.ComponentDidMount });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    React.useEffect(() => {
+        dispatch({ type: ActionType.ComponentDidMount });
+    }, []);
 
-  React.useEffect(() => {
-    if (singleAction) {
-      dispatch(singleAction);
-      dispatch(clearSingleAction());
-    }
-  });
+    React.useEffect(() => {
+        if (singleAction) {
+            dispatch(singleAction);
+            dispatch(clearSingleAction());
+        }
+    });
 
-  return (
-    <TablePropsContext.Provider value={props}>
-      <div {...elementAttributes}>
-        {rootDivContent || (
-          <>
-            {groupPanel?.enabled && <GroupPanel {...props} groupPanel={groupPanel}/>}
-            {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
-            <TableWrapper {...props} />
-            {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
-            <Loading {...loading} childComponents={childComponents}/>
-            {columns.map(column =>
-              column.isHeaderFilterPopupShown
+    return (
+        <TablePropsContext.Provider value={props}>
+            <div {...elementAttributes}>
+                {rootDivContent || (
+                    <>
+                        {groupPanel?.enabled && <GroupPanel {...props} groupPanel={groupPanel}/>}
+                        {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
+                        <TableWrapper {...props} />
+                        {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
+                        <Loading {...loading} childComponents={childComponents}/>
+                        {columns.map(column =>
+                            column.isHeaderFilterPopupShown
               && (
-                <Popup
-                  key={column.key}
-                  column={column}
-                  childComponents={childComponents}
-                  data={data}
-                  dispatch={dispatch}
-                  format={format}
-                />
+                  <Popup
+                      key={column.key}
+                      column={column}
+                      childComponents={childComponents}
+                      data={data}
+                      dispatch={dispatch}
+                      format={format}
+                  />
               )
-            )}
-          </>
-        )}
-      </div>
-    </TablePropsContext.Provider>
-  );
+                        )}
+                    </>
+                )}
+            </div>
+        </TablePropsContext.Provider>
+    );
 };

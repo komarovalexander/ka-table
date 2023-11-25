@@ -7,29 +7,29 @@ import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { updateGroupsExpanded } from '../../actionCreators';
 
 const GroupExpandButton: React.FunctionComponent<IGroupRowProps> = (props) => {
-  const {
-    childComponents,
-    dispatch,
-    groupKey,
-    isExpanded,
-  } = props;
+    const {
+        childComponents,
+        dispatch,
+        groupKey,
+        isExpanded,
+    } = props;
 
-  const { elementAttributes, content } = getElementCustomization({
-    className: 'ka-icon-group-arrow',
-    onClick: () => {
-      dispatch(updateGroupsExpanded(groupKey));
-    }
-  }, props, childComponents.groupExpandButton);
+    const { elementAttributes, content } = getElementCustomization({
+        className: 'ka-icon-group-arrow',
+        onClick: () => {
+            dispatch(updateGroupsExpanded(groupKey));
+        }
+    }, props, childComponents.groupExpandButton);
 
-  return (
-    content || <div {...elementAttributes}>{(
-      isExpanded
-        ? <ExpandedIcon className={defaultOptions.css.iconGroupArrowExpanded } />
-        : <CollapsedIcon className={defaultOptions.css.iconGroupArrowCollapsed} />
-  )}
+    return (
+        content || <div {...elementAttributes}>{(
+            isExpanded
+                ? <ExpandedIcon className={defaultOptions.css.iconGroupArrowExpanded } />
+                : <CollapsedIcon className={defaultOptions.css.iconGroupArrowCollapsed} />
+        )}
 
-    </div>
-  );
+        </div>
+    );
 };
 
 export default GroupExpandButton;

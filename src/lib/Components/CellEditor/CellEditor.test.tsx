@@ -2,7 +2,7 @@ import { DataType, EditingMode } from '../../enums';
 
 import CellEditor from './CellEditor';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: any = {
     childComponents: {},
@@ -23,6 +23,7 @@ const props: any = {
 
 it('renders without crashing', () => {
     const element = document.createElement('td');
-    ReactDOM.render(<CellEditor {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<CellEditor {...props} />);
+    root.unmount();
 });

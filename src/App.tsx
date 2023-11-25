@@ -5,9 +5,9 @@ import React from 'react';
 import Demos from './Demos/Demos';
 
 const App: React.FC = () => {
-  return (
-    <Demos />
-  );
+    return (
+        <Demos />
+    );
 };
 
 export default App;

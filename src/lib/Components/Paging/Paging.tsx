@@ -8,22 +8,22 @@ import PagingSizes from '../PagingSizes/PagingSizes';
 
 const Paging: React.FunctionComponent<IPagingProps> = (props) => {
     const {
-      childComponents,
-      pageSizes
+        childComponents,
+        pageSizes
     } = props;
     const { elementAttributes, content } = getElementCustomization({
-      className: `${defaultOptions.css.paging} ${pageSizes ? 'ka-paging-sizes-active' : ''}`,
+        className: `${defaultOptions.css.paging} ${pageSizes ? 'ka-paging-sizes-active' : ''}`,
     }, props, childComponents.paging);
     return (
-      <div {...elementAttributes}>
-        {content ||
+        <div {...elementAttributes}>
+            {content ||
         (
-          <>
-            {pageSizes && <PagingSizes {...props}/>}
-            <PagingPages {...props}/>
-          </>
+            <>
+                {pageSizes && <PagingSizes {...props}/>}
+                <PagingPages {...props}/>
+            </>
         )}
-      </div>
+        </div>
     );
 }
 

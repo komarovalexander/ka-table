@@ -1,20 +1,22 @@
 import EmptyCell from './EmptyCell';
 import { IEmptyCellProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: IEmptyCellProps = {
-  index: 1,
+    index: 1,
 };
 
 it('renders without crashing', () => {
-  const element = document.createElement('tr');
-  ReactDOM.render(<EmptyCell {...props} />, element);
-  ReactDOM.unmountComponentAtNode(element);
+    const element = document.createElement('tr');
+    const root = createRoot(element!);
+    root.render(<EmptyCell {...props} />);
+    root.unmount();
 });
 
 it('renders without crashing with isTh', () => {
-  const element = document.createElement('tr');
-  ReactDOM.render(<EmptyCell {...props} isTh={true}/>, element);
-  ReactDOM.unmountComponentAtNode(element);
+    const element = document.createElement('tr');
+    const root = createRoot(element!);
+    root.render(<EmptyCell {...props} isTh={true}/>);
+    root.unmount();
 });

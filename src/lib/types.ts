@@ -3,15 +3,15 @@ import { AttributeTableData, Column } from './models';
 import { ITableProps } from './Components/Table/Table';
 
 export interface NoData {
-  text?: string;
-  hideHeader?: boolean;
+    text?: string;
+    hideHeader?: boolean;
 }
 
 type AddParameters<T, I> = T extends (e: infer E) => void ? (
     (e: E, extendedEvent: AttributeTableData<I>) => void
 ) : T;
 type WithExtraParameters<T, I> = {
-  [P in keyof T ] : AddParameters<T[P], I>;
+    [P in keyof T ] : AddParameters<T[P], I>;
 };
 type ElementAttributes<T> = React.AllHTMLAttributes<HTMLElement>;
 

@@ -5,5 +5,9 @@
   "editor.formatOnSaveMode": "modificationsIfAvailable",
   "editor.formatOnSave": false,
   "prettier.enable": false,
-  "prettier.embeddedLanguageFormatting": "off"
+  "prettier.embeddedLanguageFormatting": "off",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "eslint.validate": ["javascript"]
 }

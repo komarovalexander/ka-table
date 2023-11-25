@@ -5,8 +5,8 @@ import * as kaPropsUtils from './Utils/PropsUtils';
 import * as kaTypeUtils from './Utils/TypeUtils';
 
 export {
-  kaColumnUtils,
-  kaDateUtils,
-  kaPropsUtils,
-  kaTypeUtils,
+    kaColumnUtils,
+    kaDateUtils,
+    kaPropsUtils,
+    kaTypeUtils,
 };

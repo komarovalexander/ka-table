@@ -10,46 +10,46 @@ import { getDraggableProps } from '../../Utils/PropsUtils';
 import { reorderRows } from '../../actionCreators';
 
 const DataRow: React.FunctionComponent<IRowProps> = (props) => {
-  const {
-    dispatch,
-    groupColumnsCount,
-    isSelectedRow,
-    rowKeyValue,
-    rowReordering,
-    trRef,
-    childComponents
-  } = props;
-  let dataRow = childComponents.dataRow;
+    const {
+        dispatch,
+        groupColumnsCount,
+        isSelectedRow,
+        rowKeyValue,
+        rowReordering,
+        trRef,
+        childComponents
+    } = props;
+    let dataRow = childComponents.dataRow;
 
-  if (rowReordering) {
-    const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps({
-      key: rowKeyValue,
-      dispatch,
-      actionCreator: reorderRows,
-      draggedClass: defaultOptions.css.draggedRow,
-      dragOverClass: defaultOptions.css.dragOverRow,
-      hasReordering: true
-    });
-    dataRow = addElementAttributes(reorderedRowProps, props, dataRow);
-  }
+    if (rowReordering) {
+        const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps({
+            key: rowKeyValue,
+            dispatch,
+            actionCreator: reorderRows,
+            draggedClass: defaultOptions.css.draggedRow,
+            dragOverClass: defaultOptions.css.dragOverRow,
+            hasReordering: true
+        });
+        dataRow = addElementAttributes(reorderedRowProps, props, dataRow);
+    }
 
-  const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`
-  }, props, dataRow);
+    const { elementAttributes, content } = getElementCustomization({
+        className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`
+    }, props, dataRow);
 
-  return (
-    <tr ref={trRef} {...elementAttributes}>
-      {content
-        ? <>{content}</>
-        : (
-          <>
-            <EmptyCells count={groupColumnsCount} childComponents={childComponents} />
-            <DataRowContent {...props} />
-          </>
-        )
-      }
-    </tr>
-  );
+    return (
+        <tr ref={trRef} {...elementAttributes}>
+            {content
+                ? <>{content}</>
+                : (
+                    <>
+                        <EmptyCells count={groupColumnsCount} childComponents={childComponents} />
+                        <DataRowContent {...props} />
+                    </>
+                )
+            }
+        </tr>
+    );
 };
 
 
