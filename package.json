@@ -1,6 +1,6 @@
 {
   "name": "ka-table",
-  "version": "8.4.0",
+  "version": "8.4.1",
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table/#/overview",
@@ -41,7 +41,7 @@
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "dist": "tsc --declaration --jsx react --esModuleInterop true --outDir dist src/lib/index.ts && gulp build",
     "pack": "gulp build && cd dist && npm pack && cd ..",
-    "compile": "tsc src/lib/index.ts --jsx react --esModuleInterop true --outDir dist --declaration true --target es5 && gulp compile"
+    "compile": "tsc src/lib/index.ts --jsx react --esModuleInterop true --outDir dist --declaration true --skipLibCheck true --target es5 && gulp compile"
   },
   "eslintConfig": {
     "extends": "react-app",
