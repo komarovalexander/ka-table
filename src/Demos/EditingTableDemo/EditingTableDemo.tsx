@@ -17,7 +17,7 @@ const dataArray = Array(3)
     }));
 
 const AddRowDemo = () => {
-    const [data, setData] = useState<any[]>();
+    const [data, setData] = useState<any[] | undefined>(dataArray);
     const table = useTable({
         onDispatch: (action, tableProps) => {
             setData(tableProps.data);
@@ -47,7 +47,7 @@ const AddRowDemo = () => {
                     { key: 'column3', title: 'Column 3', dataType: DataType.String },
                     { key: 'value', title: 'Value', dataType: DataType.String }
                 ]}
-                data={dataArray}
+                data={data}
                 validation={({ column, value }) => {
                     if (column.key === 'value') {
                         return value ? '' : 'value must be specified';
