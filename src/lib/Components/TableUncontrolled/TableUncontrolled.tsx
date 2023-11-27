@@ -30,8 +30,8 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsK
         });
     };
 
-    const controlledPropsKeys = getControlledPropsKeys(props);
     React.useEffect(() => {
+        const controlledPropsKeys = getControlledPropsKeys(props);
         const propsToOverride = getPropsToOverride(controlledPropsKeys, props, tableProps);
         if (Object.keys(propsToOverride).length){
             if (propsToOverride?.paging){
@@ -39,7 +39,7 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsK
             }
             changeTableProps({...tableProps, ...propsToOverride});
         }
-    }, controlledPropsKeys.map((k) => props[k]));
+    }, [props]);
 
     const contextTable = props.table || getTable();
     contextTable.props = tableProps;
