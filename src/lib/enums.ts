@@ -113,6 +113,7 @@ export enum FilteringMode {
     None = 'none',
     FilterRow = 'filterRow',
     HeaderFilter = 'headerFilter',
+    FilterRowAndHeaderFilter = 'FilterRowAndHeaderFilter'
 }
 
 export enum FilterOperatorName {
