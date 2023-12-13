@@ -8,7 +8,7 @@ const EmptyCell: React.FunctionComponent<IEmptyCellProps> = (props) => {
     const { isTh, isColGroup, childComponents } = props;
     const { elementAttributes } = getElementCustomization({
         className: 'ka-empty-cell' + (isTh ? ` ${defaultOptions.css.theadBackground} ${defaultOptions.css.theadFixed}` : ''),
-    }, props, childComponents?.cellText);
+    }, props, childComponents?.emptyCell);
 
     return isColGroup
         ? <col />
