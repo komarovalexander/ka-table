@@ -16,6 +16,7 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
         columnResizing,
         columns,
         dispatch,
+        ellipsisHeader,
         filteringMode,
         groupColumnsCount,
         groupPanel,
@@ -37,10 +38,11 @@ export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
                             columnResizing={columnResizing}
                             columns={columns}
                             dispatch={dispatch}
+                            ellipsisHeader={ellipsisHeader}
+                            filteringMode={filteringMode}
                             groupColumnsCount={groupColumnsCount}
                             groupPanel={groupPanel}
                             sortingMode={sortingMode}
-                            filteringMode={filteringMode}
                         />
                     )}
                     {

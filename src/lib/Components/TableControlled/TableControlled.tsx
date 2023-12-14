@@ -36,10 +36,9 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
         singleAction
     } = props;
     const isLoadingActive = loading && loading.enabled;
-    const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
     const { elementAttributes, content: rootDivContent } = getElementCustomization({
-        className: kaCss
+        className: `ka ${isLoadingActive ? 'ka-loading-active' : ''}`
     }, props, childComponents?.rootDiv);
     elementAttributes.style = { width, height, ...elementAttributes.style }
 

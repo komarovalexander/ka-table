@@ -11,6 +11,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = (props) => {
         childComponents,
         columnReordering,
         columnResizing,
+        ellipsisHeader,
         columns,
         dispatch,
         filteringMode,
@@ -36,6 +37,7 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = (props) => {
                                 childComponents={childComponents}
                                 columnReordering={columnReordering}
                                 columnResizing={columnResizing}
+                                ellipsisHeader={ellipsisHeader}
                                 column={column}
                                 dispatch={dispatch}
                                 filteringMode={filteringMode}

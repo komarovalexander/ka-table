@@ -332,6 +332,12 @@
   padding: $ka-cell-padding;
 }
 
+.ka-ellipsis-header .ka-thead-cell-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .ka-header-filter-button-icon{
   font-size: 16px;
   position: absolute;

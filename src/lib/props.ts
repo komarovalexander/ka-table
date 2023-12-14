@@ -151,6 +151,7 @@ export interface IHeadCellProps {
     columnReordering?: boolean;
     columnResizing?: boolean;
     dispatch: DispatchFunc;
+    ellipsisHeader?: boolean;
     filteringMode?: FilteringMode;
     groupPanel?: GroupPanelSettings;
     hasChildren?: boolean;
@@ -168,16 +169,17 @@ export interface INoDataRowProps {
 }
 
 export interface ITableHeadProps {
-    groupPanel?: GroupPanelSettings;
-    columnReordering?: boolean;
-    groupedColumns?: GroupedColumn[];
-    columnResizing?: boolean;
     areAllRowsSelected: boolean;
     childComponents: ChildComponents;
+    columnReordering?: boolean;
+    columnResizing?: boolean;
     columns: Column[];
     dispatch: DispatchFunc;
+    ellipsisHeader?: boolean;
     filteringMode: FilteringMode;
     groupColumnsCount: number;
+    groupedColumns?: GroupedColumn[];
+    groupPanel?: GroupPanelSettings;
     sortingMode: SortingMode;
 }
 
@@ -272,6 +274,7 @@ export interface IHeadRowProps {
     columnResizing?: boolean;
     columns: Column[];
     dispatch: DispatchFunc;
+    ellipsisHeader?: boolean;
     filteringMode?: FilteringMode;
     groupColumnsCount: number;
     groupedColumns?: GroupedColumn[];

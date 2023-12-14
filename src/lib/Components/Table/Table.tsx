@@ -33,6 +33,7 @@ export interface ITableProps {
     detailsRows?: any[];
     editableCells?: EditableCell[];
     editingMode?: EditingMode;
+    ellipsisHeader?: boolean;
     extendedFilter?: (data: any[]) => any[];
     extendedSort?: (data: any[], columns: Column[]) => any[];
     filter?: FilterFunc;

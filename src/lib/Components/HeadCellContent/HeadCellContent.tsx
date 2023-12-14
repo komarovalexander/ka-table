@@ -19,6 +19,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
         dispatch,
         sortingMode,
         filteringMode,
+        ellipsisHeader,
         childComponents,
     } = props;
     const sortingEnabled = isSortingEnabled(sortingMode, column);
@@ -40,7 +41,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
 
     return (
         <div {...elementAttributes} ref={refToElement}>
-            {content || <span>{column.title}</span>}
+            {content || <span title={ellipsisHeader ? column.title : undefined}>{column.title}</span>}
             {column.sortDirection && sortingEnabled && (
                 <SortIcon
                     column={column}
