@@ -223,6 +223,15 @@ describe('GroupUtils', () => {
             );
             expect(result).toEqual('Column: Column Title, Value: Group Text');
         });
+        it('format - groupItems', () => {
+            const result = getGroupText(
+                'Group Text',
+                { key: 'column1', title: 'Column Title' },
+                ({column, value, rowData }) => `Column: ${column.title}, Value: ${value}, rowData: ${JSON.stringify(rowData)}`,
+                [{ id: 'hello'}, {id: 'im robot'}],
+            );
+            expect(result).toEqual('Column: Column Title, Value: Group Text, rowData: {\"id\":\"hello\"}');
+        });
     });
 
     describe('isMaxDeep', () => {

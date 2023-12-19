@@ -61,7 +61,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                             columns={columns}
                             groupedColumns={groupedColumns}
                             isExpanded={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(d.key))}
-                            text={getGroupText(d.value, column, format)}
+                            text={getGroupText(d.value, column, format, d.groupItems)}
                             key={JSON.stringify(d.key)}
                         />
                     );
