@@ -14,11 +14,12 @@ const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
         dispatch,
         editingMode,
         rowKeyValue,
+        rowData,
         value,
     } = props;
 
     const formattedValue =
-    (format && format({ column, value }))
+    (format && format({ column, value, rowData  }))
     || value?.toString();
 
     const { elementAttributes, content } = getElementCustomization({

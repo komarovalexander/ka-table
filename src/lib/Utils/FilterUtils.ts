@@ -144,7 +144,7 @@ export const filterByHeaderFilter = (data: any[], columns: Column[], format?: Fo
         return initialData.filter((item: any) => {
             const value: any = getValueByColumn(item, column);
             const fieldValue =
-        (format && format({ column, value }))
+        (format && format({ column, value, rowData: item }))
         || value?.toString();
             return column.headerFilterValues?.includes(fieldValue);
         });

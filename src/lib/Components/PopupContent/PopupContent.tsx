@@ -19,7 +19,7 @@ const PopupContent: React.FC<IPopupContentProps> = (props) => {
         const value = getValueByColumn(item, column);
 
         const formattedValue =
-      (format && format({ column, value }))
+      (format && format({ column, value, rowData: item }))
       || value?.toString();
         return formattedValue;
     });

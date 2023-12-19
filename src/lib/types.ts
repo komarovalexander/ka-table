@@ -20,7 +20,7 @@ export type DispatchFunc = (action: any) => void;
 export type OnDispatchFunc = (action: any, tableProps: ITableProps) => void;
 export type ControlledPropsKeys = (keyof ITableProps)[];
 export type Field = string;
-export type FormatFunc = (props: { value: any, column: Column }) => any;
+export type FormatFunc = (props: { value: any, column: Column, rowData?: any; }) => any;
 export type FilterFunc = (props: { column: Column }) => ((value: any, filterRowValue: any, rowData?: any) => boolean) | void;
 export type SortFunc = (props: { column: Column }) =>  ((value1: any, value2: any) => 0 | 1 | -1) | void;
 export type SearchFunc = (props: { searchText: string, rowData: any, column: Column }) => boolean;
