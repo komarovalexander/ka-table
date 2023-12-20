@@ -11,6 +11,7 @@ export class Column {
     public filterRowValue?: any;
     public headerFilterValues?: any[];
     public headerFilterPopupPosition?: PopupPosition;
+    public filter?: ((value: any, filterValue: any, rowData?: any) => boolean) | void;
     public isHeaderFilterPopupShown?: boolean;
     public isEditable?: boolean;
     public isFilterable?: boolean;

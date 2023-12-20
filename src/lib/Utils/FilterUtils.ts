@@ -76,7 +76,7 @@ export const filterData = (data: any[], columns: Column[], filter?: FilterFunc):
         ) {
             return initialData;
         }
-        const customFilter = filter?.({ column });
+        const customFilter = column.filter || filter?.({ column });
         const compare = customFilter || getCompare(column);
 
         return initialData.filter((d: any) => {
