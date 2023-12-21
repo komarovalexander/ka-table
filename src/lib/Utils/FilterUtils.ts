@@ -59,7 +59,7 @@ export const filterAndSearchData = (props: ITableProps) => {
 
 const getCompare = (column: Column) => {
     const filterRowOperator = column.filterRowOperator
-    || getDefaultOperatorForType(column.dataType || defaultOptions.columnDataType);
+        || getDefaultOperatorForType(column.dataType || defaultOptions.columnDataType);
     const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
     if (!filterOperator) {
         throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
@@ -71,8 +71,8 @@ export const filterData = (data: any[], columns: Column[], filter?: FilterFunc):
     return columns.reduce((initialData, column) => {
         if (
             isEmpty(column.filterRowValue)
-      && column.filterRowOperator !== FilterOperatorName.IsEmpty
-      && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
+            && column.filterRowOperator !== FilterOperatorName.IsEmpty
+            && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
         ) {
             return initialData;
         }
@@ -136,16 +136,19 @@ export const filterByHeaderFilter = (data: any[], columns: Column[], format?: Fo
     return columns.reduce((initialData, column) => {
         if (
             isEmpty(column.headerFilterValues)
-      && column.filterRowOperator !== FilterOperatorName.IsEmpty
-      && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
+            && column.filterRowOperator !== FilterOperatorName.IsEmpty
+            && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
         ) {
             return initialData;
         }
         return initialData.filter((item: any) => {
             const value: any = getValueByColumn(item, column);
+            if (column?.filter) {
+                return column.filter(value, column.headerFilterValues, item);
+            }
             const fieldValue =
-        (format && format({ column, value, rowData: item }))
-        || value?.toString();
+                (format && format({ column, value, rowData: item }))
+                || value?.toString();
             return column.headerFilterValues?.includes(fieldValue);
         });
     }, data);

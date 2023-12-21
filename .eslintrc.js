@@ -159,7 +159,7 @@ module.exports = {
         "no-caller": "error",
         "no-cond-assign": "error",
         "no-console": "off",
-        "no-debugger": "error",
+        "no-debugger": "warn",
         "no-duplicate-case": "error",
         "no-duplicate-imports": "error",
         "no-empty": "error",

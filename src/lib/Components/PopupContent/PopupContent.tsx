@@ -14,23 +14,25 @@ const PopupContent: React.FC<IPopupContentProps> = (props) => {
         dispatch,
         format
     } = props;
+    let headerFilterValues: any[] | undefined;
+    if (column?.headerFilterListItems){
+        headerFilterValues =  column?.headerFilterListItems({ data });
+    } else {
+        headerFilterValues = data?.map((item) => {
+            const value = getValueByColumn(item, column);
 
-    let headerFilterValues = data?.map((item) => {
-        const value = getValueByColumn(item, column);
-
-        const formattedValue =
-      (format && format({ column, value, rowData: item }))
-      || value?.toString();
-        return formattedValue;
-    });
-
-    headerFilterValues = Array.from(new Set(headerFilterValues));
+            const formattedValue =
+          (format && format({ column, value, rowData: item }))
+          || value?.toString();
+            return formattedValue;
+        });
+        headerFilterValues = Array.from(new Set(headerFilterValues));
+    }
 
     const { elementAttributes, content } = getElementCustomization({
         className: `${defaultOptions.css.popupContent}`
     }, props, childComponents?.popupContent
     );
-
     return (
         <div {...elementAttributes}>
             {content ||

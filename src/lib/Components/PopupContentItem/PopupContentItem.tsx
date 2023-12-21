@@ -1,9 +1,10 @@
 import * as React from 'react';
 
-import { updateHeaderFilterValues } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { IPopupContentItemProps } from '../../props';
+import PopupContentItemText from '../PopupContentItemText/PopupContentItemText';
+import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { updateHeaderFilterValues } from '../../actionCreators';
 
 const PopupContentItem: React.FC<IPopupContentItemProps> = (props) => {
     const {
@@ -35,9 +36,7 @@ const PopupContentItem: React.FC<IPopupContentItemProps> = (props) => {
                             onChange={handleChange}
                         />
                     </div>
-                    <div className='ka-popup-content-item-value'>
-                        {item}
-                    </div>
+                    <PopupContentItemText {...props} />
                 </>
             )}
         </div>
