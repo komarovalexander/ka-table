@@ -1,7 +1,7 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
 import { FilteringMode, SortDirection, SortingMode } from 'ka-table/enums';
+
+import React from 'react';
 
 const dataArray: any[] = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 8) },
@@ -19,6 +19,7 @@ const HeaderFilterDemo: React.FC = () => {
                 {
                     key: 'name',
                     title: 'Name', dataType: DataType.String, sortDirection: SortDirection.Descend,
+                    isFilterable: false
                 },
                 {
                     key: 'score',
@@ -44,11 +45,6 @@ const HeaderFilterDemo: React.FC = () => {
                 }
             }}
             rowKeyField={'id'}
-            childComponents={{
-                headFilterButton: {
-                    content: ({ column: {key}}) => key === 'name' && <></>,
-                },
-            }}
         />
     );
 };

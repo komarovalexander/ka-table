@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
+
 import FilterRowNumber from 'ka-table/Components/FilterRowNumber/FilterRowNumber';
 import { FilteringMode } from 'ka-table/enums';
+import React from 'react';
 
 const dataArray: any[] = [
     { id: 1, name: 'Mike Wazowski', score: 80, prevScores: [60, 65, 70], passed: true, nextTry: new Date(2021, 10, 9) },
@@ -42,6 +42,7 @@ const FilterRowCustomLogicDemo: React.FC = () => {
                     filterRowValue: 60,
                     key: 'prevScores',
                     style: {width: 120},
+                    filter: (value: number[], filterRowValue: number) => value.includes(Number(filterRowValue)),
                     title: 'Previous Scores',
                 }
             ]}
@@ -49,11 +50,6 @@ const FilterRowCustomLogicDemo: React.FC = () => {
             format= {({ column, value }) => {
                 if (column.key === 'prevScores'){
                     return value.join();
-                }
-            }}
-            filter= {({ column }) => {
-                if (column.key === 'prevScores') {
-                    return (value: number[], filterRowValue: number) => value.includes(Number(filterRowValue));
                 }
             }}
             filteringMode={FilteringMode.FilterRow}
