@@ -71,6 +71,18 @@ Array [
 ]
 `;
 
+exports[`FilterUtils filterData custom column filter 1`] = `
+Array [
+  Object {
+    "date": 2021-11-20T13:00:00.000Z,
+    "id": 3,
+    "name": "Tom Williams",
+    "passed": false,
+    "score": 45,
+  },
+]
+`;
+
 exports[`FilterUtils filterData custom filter 1`] = `
 Array [
   Object {

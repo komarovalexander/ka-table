@@ -64,6 +64,7 @@ export class ChildComponents {
     public pagingSizes?: ChildComponent<IPagingProps>;
     public popupContent?: ChildComponent<IPopupContentProps>;
     public popupContentItem?: ChildComponent<IPopupContentItemProps>;
+    public popupContentItemText?: ChildComponent<IPopupContentItemProps>;
     public rootDiv?: ChildComponent<ITableProps>;
     public sortIcon?: ChildComponent<ISortIconProps>;
     public summaryCell?: ChildComponent<ISummaryCellProps>;

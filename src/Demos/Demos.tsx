@@ -40,6 +40,7 @@ import GroupingCustomRowDemo from './GroupingCustomRowDemo/GroupingCustomRowDemo
 import GroupingDemo from './GroupingDemo/GroupingDemo';
 import GroupingSummaryDemo from './GroupingSummaryDemo/GroupingSummaryDemo';
 import HeaderFilterDemo from './HeaderFilterDemo/HeaderFilterDemo';
+import HeaderFilterLogicDemo from './HeaderFilterLogicDemo/HeaderFilterLogicDemo';
 import HoverRowDemo from './HoverRowDemo/HoverRowDemo';
 import InfiniteScrollingDemo from './InfiniteScrollingDemo/InfiniteScrollingDemo';
 import InsertRowDemo from './InsertRowDemo/InsertRowDemo';
@@ -113,6 +114,7 @@ const demos: Demo[] = [
     new Demo(GroupingCustomRowDemo, '/grouping-custom-row', 'Grouping Custom Row', 'GroupingCustomRowDemo', 'https://stackblitz.com/edit/table-grouping-custom-row-js', 'https://stackblitz.com/edit/table-grouping-custom-row-ts', 'Grouping'),
     new Demo(GroupingDemo, '/grouping', 'Grouping', 'GroupingDemo', 'https://stackblitz.com/edit/table-grouping-js', 'https://stackblitz.com/edit/table-grouping-ts', 'Grouping'),
     new Demo(HeaderFilterDemo, '/header-filter', 'Header Filter', 'HeaderFilterDemo', 'https://stackblitz.com/edit/table-header-filter-js', 'https://stackblitz.com/edit/table-header-filter-ts', 'Filtering'),
+    new Demo(HeaderFilterLogicDemo, '/header-filter-logic', 'Header Filter - Logic', 'HeaderFilterLogicDemo', 'https://stackblitz.com/edit/table-header-filter-logic-js', 'https://stackblitz.com/edit/table-header-filter-logic-ts', 'Filtering'),
     new Demo(GroupingSummaryDemo, '/grouping-summary', 'Grouping Summary', 'GroupingSummaryDemo', 'https://stackblitz.com/edit/table-grouping-summary-js', 'https://stackblitz.com/edit/table-grouping-summary-ts', 'Grouping'),
     new Demo(HoverRowDemo, '/hover-row', 'Hover Row', 'HoverRowDemo', 'https://stackblitz.com/edit/table-hover-row-js', 'https://stackblitz.com/edit/table-hover-row-ts', 'Rows'),
     new Demo(JsonDemo, '/json', 'Json', 'JsonDemo', 'https://stackblitz.com/edit/table-json-js', 'https://stackblitz.com/edit/table-json-ts', 'Remote Data'),

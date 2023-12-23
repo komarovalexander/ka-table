@@ -133,6 +133,17 @@ describe('FilterUtils', () => {
             }];
             expect(() => filterData(data, columns)).toThrowError('\'unknownOperator\' has not found in predefinedFilterOperators array, available operators: =, >, <, >=, <=, contains');
         });
+
+        it('custom column filter', () => {
+            const columns = [{
+                dataType: DataType.Number,
+                filterRowValue: 45,
+                key: 'score',
+                filter: (value: any, filterValue: any) => value === filterValue,
+            }];
+            const result = filterData(data, columns);
+            expect(result).toMatchSnapshot();
+        });
     });
 
     [{
