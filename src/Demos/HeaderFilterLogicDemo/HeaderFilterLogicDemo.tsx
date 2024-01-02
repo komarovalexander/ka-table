@@ -105,11 +105,6 @@ const HeaderFilterLogicDemo = () => {
                     return value?.map((d: any) => d.name).join(', ');
                 }
             }}
-            childComponents={{
-                popupContentItemText: {
-                    content: ({ item }) => item.name
-                },
-            }}
             rowKeyField={'id'}
         />
     );

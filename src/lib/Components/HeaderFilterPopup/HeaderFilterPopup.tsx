@@ -1,17 +1,14 @@
 import * as React from 'react';
 
-import { IPopupProps } from '../../props';
-import PopupContent from '../PopupContent/PopupContent';
+import { IHeaderFilterPopupProps } from '../../props';
+import PopupContent from '../HeaderFilterPopupContent/HeaderFilterPopupContent';
 import { updateHeaderFilterPopupState } from '../../actionCreators';
 import { useOuterClick } from '../../hooks/UseOuterClick';
 
-const Popup: React.FC<IPopupProps> = (props) => {
+const HeaderFilterPopup: React.FC<IHeaderFilterPopupProps> = (props) => {
     const {
         column,
-        childComponents,
-        data,
         dispatch,
-        format
     } = props;
 
     const refToElement = useOuterClick(() => {
@@ -24,15 +21,9 @@ const Popup: React.FC<IPopupProps> = (props) => {
                 left: column.headerFilterPopupPosition?.x,
                 top: column.headerFilterPopupPosition?.y,
             }}>
-            <PopupContent
-                column={column}
-                childComponents={childComponents}
-                data={data}
-                dispatch={dispatch}
-                format={format}
-            />
+            <PopupContent {...props} />
         </div>
     )
 }
 
-export default Popup;
+export default HeaderFilterPopup;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { DataType, FilteringMode, Table, useTable, useTableInstance } from '../..';
-import { ICellTextProps, IPopupContentProps } from '../../props';
+import { ICellTextProps, IHeaderFilterPopupProps } from '../../props';
 
 import { getValueByColumn } from '../../Utils/DataUtils';
 import { kaPropsUtils } from '../../utils';
@@ -44,7 +44,7 @@ const SelectionHeader = () => {
     );
 };
 
-const PopupContent: React.FC<IPopupContentProps> = (props) => {
+const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
     const {
         column,
         childComponents,

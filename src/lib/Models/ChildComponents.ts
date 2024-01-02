@@ -19,8 +19,6 @@ import {
     IPagingIndexProps,
     IPagingProps,
     IPagingSizeProps,
-    IPopupContentItemProps,
-    IPopupContentProps,
     ISortIconProps,
     ISummaryCellProps,
     ISummaryRowProps,
@@ -62,10 +60,6 @@ export class ChildComponents {
     public pagingPages?: ChildComponent<IPagingProps>;
     public pagingSize?: ChildComponent<IPagingSizeProps>;
     public pagingSizes?: ChildComponent<IPagingProps>;
-    public popupContent?: ChildComponent<IPopupContentProps>;
-    public popupContentItem?: ChildComponent<IPopupContentItemProps>;
-    public popupContentItemText?: ChildComponent<IPopupContentItemProps>;
-    public popupSearch?: ChildComponent<IPopupContentProps>;
     public rootDiv?: ChildComponent<ITableProps>;
     public sortIcon?: ChildComponent<ISortIconProps>;
     public summaryCell?: ChildComponent<ISummaryCellProps>;

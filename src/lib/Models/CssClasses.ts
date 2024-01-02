@@ -44,9 +44,6 @@ export class CssClasses {
     public pagingPageIndex = 'ka-paging-page-index';
     public pagingSize = 'ka-paging-size';
     public pagingSizes = 'ka-paging-sizes';
-    public popupContent = 'ka-popup-content';
-    public popupSearch = 'ka-popup-search';
-    public popupContentItem = 'ka-popup-content-item';
 
     public iconGroupArrowCollapsed = 'ka-icon ka-icon-group-arrow-collapsed';
     public iconGroupArrowExpanded = 'ka-icon ka-icon-group-arrow-expanded';
