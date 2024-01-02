@@ -65,6 +65,7 @@ export class ChildComponents {
     public popupContent?: ChildComponent<IPopupContentProps>;
     public popupContentItem?: ChildComponent<IPopupContentItemProps>;
     public popupContentItemText?: ChildComponent<IPopupContentItemProps>;
+    public popupSearch?: ChildComponent<IPopupContentProps>;
     public rootDiv?: ChildComponent<ITableProps>;
     public sortIcon?: ChildComponent<ISortIconProps>;
     public summaryCell?: ChildComponent<ISummaryCellProps>;

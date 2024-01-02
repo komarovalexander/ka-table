@@ -1,9 +1,8 @@
-import React from 'react';
-
-import { updateFilterRowValue } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
 import { IFilterRowEditorProps } from '../../props';
+import React from 'react';
+import defaultOptions from '../../defaultOptions';
 import { isEmpty } from '../../Utils/CommonUtils';
+import { updateFilterRowValue } from '../../actionCreators';
 
 const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = ({
     column,

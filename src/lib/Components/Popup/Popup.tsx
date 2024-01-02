@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { updateHeaderFilterPopupState } from '../../actionCreators';
-import { useOuterClick } from '../../hooks/UseOuterClick';
 import { IPopupProps } from '../../props';
 import PopupContent from '../PopupContent/PopupContent';
+import { updateHeaderFilterPopupState } from '../../actionCreators';
+import { useOuterClick } from '../../hooks/UseOuterClick';
 
 const Popup: React.FC<IPopupProps> = (props) => {
     const {

@@ -63,16 +63,19 @@ const HeaderFilterLogicDemo = () => {
                 },
                 {
                     key: 'score',
+                    isHeaderFilterSearchable: true,
                     title: 'Score', dataType: DataType.Number
                 },
                 {
                     key: 'passed',
                     title: 'Passed',
+                    isHeaderFilterSearchable: true,
                     dataType: DataType.Boolean
                 },
                 {
                     key: 'nextTry',
                     dataType: DataType.Date,
+                    isHeaderFilterSearchable: true,
                     title: 'Next Try',
                 },
                 {
@@ -87,7 +90,7 @@ const HeaderFilterLogicDemo = () => {
                         const departmentsUniqueByKey = departments?.filter((item: any, index) => {
                             return departments?.findIndex(i => i.id === item.id) === index;
                         });
-                        return departmentsUniqueByKey || [];
+                        return departmentsUniqueByKey?.map(v => v.name) || [];
                     }
                 },
             ]}
@@ -105,7 +108,7 @@ const HeaderFilterLogicDemo = () => {
             childComponents={{
                 popupContentItemText: {
                     content: ({ item }) => item.name
-                }
+                },
             }}
             rowKeyField={'id'}
         />

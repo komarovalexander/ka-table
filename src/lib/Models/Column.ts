@@ -11,9 +11,11 @@ export class Column {
     public filterRowValue?: any;
     public headerFilterValues?: any[];
     public headerFilterPopupPosition?: PopupPosition;
-    public headerFilterListItems?: (props: { data?: any[] }) => any[];
+    public headerFilterListItems?: (props: { data?: any[], column?: Column }) => string[];
+    public headerFilterSearchValue?: any;
     public filter?: (value: any, filterValue: any, rowData?: any) => boolean;
     public isHeaderFilterPopupShown?: boolean;
+    public isHeaderFilterSearchable?: boolean;
     public isEditable?: boolean;
     public isFilterable?: boolean;
     public isResizable?: boolean;
