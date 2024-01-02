@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { DataType, FilteringMode, Table, useTable, useTableInstance } from '../..';
+import { DataType, FilteringMode, SortDirection, Table, useTable, useTableInstance } from '../..';
 import { ICellTextProps, IHeaderFilterPopupProps } from '../../props';
 
 import { getValueByColumn } from '../../Utils/DataUtils';
@@ -72,7 +72,7 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                     elementAttributes:  () => ({style: { display: 'none'}})
                 },
                 filterRowCell: {
-                    elementAttributes: () => ({style: { top: 0 }})
+                    elementAttributes: ({ column: filterRowColumn }) => ({style: { top: 0, display: filterRowColumn.key === 'selection-cell' ? 'none' : undefined }, colSpan: filterRowColumn.key === 'selection-cell' ? 0 : 2})
                 },
                 rootDiv: {
                     elementAttributes: () => ({
