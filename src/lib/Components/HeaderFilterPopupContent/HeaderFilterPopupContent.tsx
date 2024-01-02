@@ -62,7 +62,7 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                 {
                     key: column.key, dataType: column?.headerFilterListItems ? DataType.String : column.dataType, style: { textAlign: 'left' }
                 }]}
-            filteringMode={FilteringMode.FilterRow}
+            filteringMode={column.isHeaderFilterSearchable ? FilteringMode.FilterRow : undefined}
             format={column?.headerFilterListItems ? undefined : format}
             data={headerFilterValues}
             filter={() => column.headerFilterSearch}

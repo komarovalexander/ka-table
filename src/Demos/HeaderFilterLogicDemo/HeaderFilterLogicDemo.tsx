@@ -69,19 +69,18 @@ const HeaderFilterLogicDemo = () => {
                 {
                     key: 'passed',
                     title: 'Passed',
-                    isHeaderFilterSearchable: true,
                     dataType: DataType.Boolean
                 },
                 {
                     key: 'nextTry',
                     dataType: DataType.Date,
-                    isHeaderFilterSearchable: true,
                     title: 'Next Try',
                 },
                 {
                     key: 'departments',
                     dataType: DataType.Object,
                     title: 'Departments',
+                    isHeaderFilterSearchable: true,
                     filter: (value: { name: string; id: number; }[], filterValues: { name: string; id: number; }[]) => {
                         return filterValues?.some(x => value?.some(v => v.id === x.id));
                     },
