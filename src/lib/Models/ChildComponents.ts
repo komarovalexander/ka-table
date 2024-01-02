@@ -41,6 +41,7 @@ export class ChildComponents {
     public detailsRow?: ChildComponent<IDataRowProps>;
     public emptyCell?: ChildComponent<IEmptyCellProps>;
     public filterRowCell?: ChildComponent<IFilterRowEditorProps>;
+    public filterRowCellInput?: ChildComponent<IFilterRowEditorProps>;
     public groupPanel?: ChildComponent<IGroupPanelProps>;
     public groupPanelCell?: ChildComponent<IGroupPanelCellProps>;
     public groupExpandButton?: ChildComponent<IGroupRowProps>;

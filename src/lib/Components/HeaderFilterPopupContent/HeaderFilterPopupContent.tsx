@@ -74,6 +74,9 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                 filterRowCell: {
                     elementAttributes: ({ column: filterRowColumn }) => ({style: { top: 0, display: filterRowColumn.key === 'selection-cell' ? 'none' : undefined }, colSpan: filterRowColumn.key === 'selection-cell' ? 0 : 2})
                 },
+                filterRowCellInput: {
+                    elementAttributes: () => ({ style: { width: '100%', boxSizing: 'border-box' }})
+                },
                 rootDiv: {
                     elementAttributes: () => ({
                         className: 'ka-header-filter-table'
