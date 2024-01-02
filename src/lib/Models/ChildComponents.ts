@@ -14,6 +14,7 @@ import {
     IHeadCellResizeProps,
     IHeadRowProps,
     IHeaderFilterButtonProps,
+    IHeaderFilterPopupProps,
     ILoadingProps,
     INoDataRowProps,
     IPagingIndexProps,
@@ -51,6 +52,7 @@ export class ChildComponents {
     public headCell?: ChildComponent<IHeadCellProps>;
     public headCellContent?: ChildComponent<IHeadCellProps>;
     public headCellResize?: ChildComponent<IHeadCellResizeProps>;
+    public headerFilterContentCellText?: ChildComponent<ICellTextProps>;
     public headRow?: ChildComponent<IHeadRowProps>;
     public loading?: ChildComponent<ILoadingProps>;
     public noDataRow?: ChildComponent<INoDataRowProps>;

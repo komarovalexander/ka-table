@@ -395,13 +395,12 @@
 .ka-header-filter-button-icon {
   font-size: 16px;
   position: absolute;
-  top: -1px;
+  padding: 1px 3px;
   color: darken($ka-thead-color, 15);
   fill: currentColor;
 }
 
 .ka-header-filter-button {
-  margin-left: 3px;
   position: relative;
 }
 
@@ -412,13 +411,12 @@
 .ka-header-filter-table {
   background-color: transparent;
   box-shadow: none;
-}
-
-.ka-header-filter-table .ka-cell {
-  padding: 3px 20px;
-}
-.ka-header-filter-table .ka-filter-row-cell {
-  top: 0;
-  padding-top: 15px;
-  background-color: transparent;
+  .ka-cell {
+    padding: 3px 20px;
+  }
+  .ka-filter-row-cell {
+    top: 0;
+    padding-top: 15px;
+    background-color: transparent;
+  }
 }

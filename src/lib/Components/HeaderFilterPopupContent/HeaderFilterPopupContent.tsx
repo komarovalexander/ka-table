@@ -4,7 +4,6 @@ import { DataType, FilteringMode, Table, useTable, useTableInstance } from '../.
 import { ICellTextProps, IHeaderFilterPopupProps } from '../../props';
 
 import { getValueByColumn } from '../../Utils/DataUtils';
-import { kaPropsUtils } from '../../utils';
 
 const SelectionCell = ({ rowKeyValue, isSelectedRow, selectedRows }: ICellTextProps) => {
     const table = useTableInstance();
@@ -19,25 +18,6 @@ const SelectionCell = ({ rowKeyValue, isSelectedRow, selectedRows }: ICellTextPr
                     table.selectRow(rowKeyValue);
                 } else {
                     table.deselectRow(rowKeyValue);
-                }
-            }}
-        />
-    );
-};
-
-const SelectionHeader = () => {
-    const table = useTableInstance();
-    const areAllRowsSelected = kaPropsUtils.areAllFilteredRowsSelected(table.props);
-
-    return (
-        <input
-            type='checkbox'
-            checked={areAllRowsSelected}
-            onChange={(event) => {
-                if (event.currentTarget.checked) {
-                    table.selectAllFilteredRows(); // also available: selectAllVisibleRows(), selectAllRows()
-                } else {
-                    table.deselectAllFilteredRows(); // also available: deselectAllVisibleRows(), deselectAllRows()
                 }
             }}
         />
@@ -66,8 +46,8 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
             return formattedValue;
         });
         headerFilterValues = Array.from(new Set(headerFilterValues));
+        headerFilterValues = headerFilterValues?.map((v, i) => ({ [column.key]: v, rowKeyValue: i }));
     }
-    headerFilterValues = headerFilterValues?.map((v, i) => ({ [column.key]: v, rowKeyValue: i }));
 
     const table = useTable({
         onDispatch: (action) => {
@@ -85,7 +65,8 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
             filteringMode={FilteringMode.FilterRow}
             format={column?.headerFilterListItems ? undefined : format}
             data={headerFilterValues}
-            rowKeyField={'rowKeyValue'}
+            filter={() => column.headerFilterSearch}
+            rowKeyField={column.headerFilterRowKeyField ? column.headerFilterRowKeyField : 'rowKeyValue'}
             childComponents={{
                 headRow: {
                     elementAttributes:  () => ({style: { display: 'none'}})
@@ -99,16 +80,13 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                     })
                 },
                 cellText: {
+                    elementAttributes: (componentProps) => componentProps?.column.key === column.key ? childComponents?.headerFilterContentCellText?.elementAttributes?.(componentProps) : undefined,
                     content: (componentProps) => {
                         if (componentProps.column.key === 'selection-cell') {
                             return <SelectionCell {...componentProps} />;
                         }
-                    },
-                },
-                headCell: {
-                    content: (componentProps) => {
-                        if (componentProps.column.key === 'selection-cell') {
-                            return <SelectionHeader />;
+                        if (componentProps?.column.key === column.key){
+                            return childComponents?.headerFilterContentCellText?.content?.(componentProps);
                         }
                     },
                 },

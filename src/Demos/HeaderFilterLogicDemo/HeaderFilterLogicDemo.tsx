@@ -85,12 +85,16 @@ const HeaderFilterLogicDemo = () => {
                     filter: (value: { name: string; id: number; }[], filterValues: { name: string; id: number; }[]) => {
                         return filterValues?.some(x => value?.some(v => v.id === x.id));
                     },
+                    headerFilterSearch: (value, searchValue, rowData) => {
+                        return rowData.name.toLowerCase().includes(searchValue.toLowerCase());
+                    },
+                    headerFilterRowKeyField: 'id',
                     headerFilterListItems: ({ data }) => {
                         const departments: any[] | undefined = data?.reduce((acc, item) => [...acc, ...item.departments || []], []);
                         const departmentsUniqueByKey = departments?.filter((item: any, index) => {
                             return departments?.findIndex(i => i.id === item.id) === index;
                         });
-                        return departmentsUniqueByKey?.map(v => v.name) || [];
+                        return departmentsUniqueByKey || [];
                     }
                 },
             ]}
@@ -104,6 +108,11 @@ const HeaderFilterLogicDemo = () => {
                 if (column.key === 'departments') {
                     return value?.map((d: any) => d.name).join(', ');
                 }
+            }}
+            childComponents={{
+                headerFilterContentCellText: {
+                    content: ({ rowData }) => rowData.name
+                },
             }}
             rowKeyField={'id'}
         />
