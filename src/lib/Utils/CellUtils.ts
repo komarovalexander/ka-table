@@ -65,8 +65,9 @@ export const checkPopupPosition = (
     if (element && column.isHeaderFilterPopupShown) {
         const parent = element.offsetParent as HTMLElement;
         const table = parent.closest('table') as HTMLElement;
+        const kaWrapper = parent.closest('.ka-table-wrapper') as HTMLElement;
         const newPopupPosition: PopupPosition = {
-            x: element.offsetLeft + parent?.offsetLeft,
+            x: element.offsetLeft + parent?.offsetLeft - kaWrapper?.scrollLeft,
             y: element.offsetTop + table?.offsetTop + element.offsetHeight
         }
         if (newPopupPosition.x !== column.headerFilterPopupPosition?.x || newPopupPosition.y !== column.headerFilterPopupPosition?.y) {
