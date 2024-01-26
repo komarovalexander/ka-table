@@ -120,7 +120,7 @@ export const selectRow = (rowKeyValue: any) => ({
     type: ActionType.SelectRow,
 });
 
-export const selectRows = (rowsKeyValues: any) => ({
+export const selectRows = (rowsKeyValues: any[]) => ({
     rowsKeyValues,
     type: ActionType.SelectRows,
 });
