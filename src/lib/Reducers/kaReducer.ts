@@ -308,6 +308,8 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     }
     case ActionType.SelectRow:
         return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
+    case ActionType.SelectRows:
+        return { ...props, selectedRows: [...selectedRows, ...action.rowsKeyValues] };
     case ActionType.SelectRowsRange: {
         const rowKeyValueTo = action.rowKeyValueTo;
         if (rowKeyValueTo) {
@@ -330,6 +332,10 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     }
     case ActionType.DeselectRow: {
         const newSelectedRows = [...selectedRows].filter((s) => s !== action.rowKeyValue);
+        return { ...props, selectedRows: newSelectedRows };
+    }
+    case ActionType.DeselectRows: {
+        const newSelectedRows = [...selectedRows].filter((s) => !action.rowsKeyValues.includes(s));
         return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.UpdateSortDirection:
