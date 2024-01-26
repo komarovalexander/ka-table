@@ -82,6 +82,11 @@ export const deselectRow = (rowKeyValue: any) => ({
     type: ActionType.DeselectRow,
 });
 
+export const deselectRows = (rowsKeyValues: any[]) => ({
+    rowsKeyValues,
+    type: ActionType.DeselectRows,
+});
+
 export const openEditor = (rowKeyValue: any, columnKey: string) => ({
     columnKey,
     rowKeyValue,
@@ -113,6 +118,11 @@ export const selectSingleRow = (rowKeyValue: any) => ({
 export const selectRow = (rowKeyValue: any) => ({
     rowKeyValue,
     type: ActionType.SelectRow,
+});
+
+export const selectRows = (rowsKeyValues: any) => ({
+    rowsKeyValues,
+    type: ActionType.SelectRows,
 });
 
 export const selectRowsRange = (rowKeyValueFrom: any, rowKeyValueTo: any) => ({
