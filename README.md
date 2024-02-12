@@ -1,4 +1,4 @@
-The customizable, extendable, lightweight (~25kb gzipped), and fully free React Table Component
+The customizable, extendable, lightweight (~92kb gzipped), and fully free React Table Component
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/ka-table/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/ka-table.svg?style=flat-square)](https://www.npmjs.com/package/ka-table)
