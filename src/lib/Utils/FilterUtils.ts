@@ -136,8 +136,6 @@ export const filterByHeaderFilter = (data: any[], columns: Column[], format?: Fo
     return columns.reduce((initialData, column) => {
         if (
             isEmpty(column.headerFilterValues)
-            && column.filterRowOperator !== FilterOperatorName.IsEmpty
-            && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
         ) {
             return initialData;
         }
