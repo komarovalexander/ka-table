@@ -11,6 +11,7 @@ import {
     areAllVisibleRowsSelected,
     getData,
     getDraggableProps,
+    getFilteredData,
     getPagesCountByProps,
     getSelectedData,
     groupPanelOnDrop,
@@ -752,5 +753,24 @@ describe('isValid', () => {
                     value > 10 ? 'should be less than 10' : '',
             })
         ).toBeTruthy();
+    });
+});
+
+describe('getFilteredData', () => {
+    const propsInit: ITableProps = {
+        data: [
+            { id: 1, field: '11' },
+            { id: 2, field: '21' },
+            { id: 3, field: '33' },
+        ],
+        rowKeyField: 'id',
+        columns: [{
+            key: 'field',
+            filterRowValue: '1'
+        }],
+    };
+    it('default', () => {
+        const result = getFilteredData(propsInit);
+        expect(result).toMatchSnapshot();
     });
 });
