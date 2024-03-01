@@ -63,6 +63,10 @@ export function mergeProps<T = HTMLElement>(
     return mergedResult;
 };
 
+export const getFilteredData = (props: ITableProps) => {
+    return filterAndSearchData(props);
+}
+
 export const areAllFilteredRowsSelected = (props: ITableProps) => {
     const { selectedRows = [], rowKeyField } = props;
     return filterAndSearchData(props).every(d => selectedRows.includes(getValueByField(d, rowKeyField)))
