@@ -35,6 +35,10 @@ export const updateFilterRowOperator = (columnKey: string, filterRowOperator: st
     type: ActionType.UpdateFilterRowOperator,
 });
 
+export const clearAllFilters = () => ({
+    type: ActionType.ClearAllFilters,
+});
+
 export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: any) => ({
     columnKey,
     rowKeyValue,
