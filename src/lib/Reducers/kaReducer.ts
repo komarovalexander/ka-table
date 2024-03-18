@@ -79,6 +79,9 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         );
         return { ...props, columns: newColumns }
     }
+    case ActionType.ClearAllFilters: {
+        return { ...props, columns: columns.map((c: Column) => ({ ...c, filterRowValue: undefined, headerFilterValues: undefined })) }
+    }
     case ActionType.UpdatePopupPosition: {
         const newColumns = columns.map((c: Column) => ({
             ...c,

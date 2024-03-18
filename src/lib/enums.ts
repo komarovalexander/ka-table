@@ -24,6 +24,7 @@ export enum EditingMode {
 export enum ActionType {
     ClearFocused = 'ClearFocused',
     ClearSingleAction = 'ClearSingleAction',
+    ClearAllFilters = 'ClearAllFilters',
     CloseEditor = 'CloseEditor',
     CloseRowEditors = 'CloseRowEditors',
     ComponentDidMount= 'ComponentDidMount',
