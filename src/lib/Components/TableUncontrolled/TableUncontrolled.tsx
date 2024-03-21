@@ -17,7 +17,7 @@ export interface ITableUncontrolledPropsKeys extends ITableProps {
 export const TableInstanceContext = React.createContext<ITableInstance>({} as ITableInstance);
 
 export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsKeys> = (props) => {
-    const { table: _, ...tablePropsControlled } = props;
+    const { table: _, childComponents, ...tablePropsControlled } = props;
     const [tableProps, changeTableProps] = React.useState({ ...tablePropsControlled, ...props.table?.props });
 
     const dispatch: DispatchFunc = (action) => {
@@ -51,7 +51,7 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsK
             <TableControlled
                 {...contextTable.props}
                 // paging={ props.paging }
-                childComponents={props.childComponents}
+                childComponents={childComponents}
                 extendedFilter={props.extendedFilter}
                 filter={props.filter}
                 format={props.format}

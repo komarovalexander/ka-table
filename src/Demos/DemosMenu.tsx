@@ -31,7 +31,8 @@ const synonyms: { [value: string]: any[] } = {
     'RowReorderingDemo': ['Drag'],
     'SearchDemo': ['No Data', 'Empty'],
     'SelectionDemo': ['Checkbox'],
-    'TabIndexDemo': ['keyboard navigation']
+    'TabIndexDemo': ['keyboard navigation'],
+    'StateStoringDemo': ['store']
 };
 
 const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
