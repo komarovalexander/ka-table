@@ -2,9 +2,12 @@ import Adapter from '@cfaester/enzyme-adapter-react-18';
 import Enzyme from 'enzyme';
 import React from 'react';
 import { TableUncontrolled } from './TableUncontrolled';
+import { act } from '@testing-library/react';
 import { createRoot } from 'react-dom/client';
+import { useTable } from '../../hooks/UseTable';
 
 Enzyme.configure({ adapter: new Adapter() });
+jest.useFakeTimers();
 
 const props: any = {
     columns: [
@@ -22,6 +25,32 @@ const props: any = {
 it('renders without crashing', () => {
     const div = document.createElement('div');
     const root = createRoot(div!);
-    root.render(<TableUncontrolled {...props} />);
-    root.unmount();
+    act(() => {
+        root.render(<TableUncontrolled {...props} />);
+    });
+    act(() => {
+        root.unmount();
+    });
+});
+
+const tableDispatchMock = jest.fn();
+const TableControlledWrapper = (wrapperProps: any) => {
+    const table = useTable(({ onDispatch: tableDispatchMock }));
+    return <TableUncontrolled table={table} {...wrapperProps} />
+}
+
+it('renders with table', () => {
+    const div = document.createElement('div');
+    const root = createRoot(div!);
+
+    act(() => {
+        root.render(<TableControlledWrapper {...props} childComponents={{}}/>);
+    });
+    jest.runAllTimers();
+    expect(tableDispatchMock.mock.calls).toHaveLength(1);
+    expect(tableDispatchMock.mock.calls[0][1]).not.toHaveProperty('childComponents');
+
+    act(() => {
+        root.unmount();
+    });
 });
