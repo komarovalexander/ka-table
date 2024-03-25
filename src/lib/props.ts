@@ -115,7 +115,7 @@ export interface IDataRowProps<TData= any> extends IRowCommonProps<TData> {
     rowEditableCells: EditableCell[];
 }
 
-export interface IGroupRowProps<TData> {
+export interface IGroupRowProps<TData= any> {
     childComponents: ChildComponents;
     column: Column;
     columns?: Column[];
