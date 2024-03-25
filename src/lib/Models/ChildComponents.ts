@@ -32,21 +32,21 @@ import {
 import { ChildComponent } from './ChildComponent';
 import { ITableProps } from '../';
 
-export class ChildComponents {
-    public cell?: ChildComponent<ICellProps>;
-    public cellEditor?: ChildComponent<ICellEditorProps>;
-    public cellEditorInput?: ChildComponent<ICellEditorProps>;
-    public cellText?: ChildComponent<ICellTextProps>;
-    public dataRow?: ChildComponent<IDataRowProps>;
-    public detailsCell?: ChildComponent<IDataRowProps>;
-    public detailsRow?: ChildComponent<IDataRowProps>;
+export class ChildComponents<T = any> {
+    public cell?: ChildComponent<ICellProps<T>>;
+    public cellEditor?: ChildComponent<ICellEditorProps<T>>;
+    public cellEditorInput?: ChildComponent<ICellEditorProps<T>>;
+    public cellText?: ChildComponent<ICellTextProps<T>>;
+    public dataRow?: ChildComponent<IDataRowProps<T>>;
+    public detailsCell?: ChildComponent<IDataRowProps<T>>;
+    public detailsRow?: ChildComponent<IDataRowProps<T>>;
     public emptyCell?: ChildComponent<IEmptyCellProps>;
     public filterRowCell?: ChildComponent<IFilterRowEditorProps>;
     public groupPanel?: ChildComponent<IGroupPanelProps>;
     public groupPanelCell?: ChildComponent<IGroupPanelCellProps>;
-    public groupExpandButton?: ChildComponent<IGroupRowProps>;
-    public groupCell?: ChildComponent<IGroupRowProps>;
-    public groupRow?: ChildComponent<IGroupRowProps>;
+    public groupExpandButton?: ChildComponent<IGroupRowProps<T>>;
+    public groupCell?: ChildComponent<IGroupRowProps<T>>;
+    public groupRow?: ChildComponent<IGroupRowProps<T>>;
     public groupSummaryRow?: ChildComponent<IGroupSummaryRowProps>;
     public groupSummaryCell?: ChildComponent<IGroupSummaryCellProps>;
     public headFilterButton?: ChildComponent<IHeaderFilterButtonProps>;
@@ -65,7 +65,7 @@ export class ChildComponents {
     public popupContent?: ChildComponent<IPopupContentProps>;
     public popupContentItem?: ChildComponent<IPopupContentItemProps>;
     public popupContentItemText?: ChildComponent<IPopupContentItemProps>;
-    public rootDiv?: ChildComponent<ITableProps>;
+    public rootDiv?: ChildComponent<ITableProps<T>>;
     public sortIcon?: ChildComponent<ISortIconProps>;
     public summaryCell?: ChildComponent<ISummaryCellProps>;
     public summaryRow?: ChildComponent<ISummaryRowProps>;

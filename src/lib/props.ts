@@ -29,7 +29,7 @@ export interface IColGroupProps {
     groupColumnsCount: number;
 }
 
-interface IRowCommonProps {
+interface IRowCommonProps<T = any> {
     childComponents: ChildComponents;
     columns: Column[];
     treeDeep?: number;
@@ -40,13 +40,13 @@ interface IRowCommonProps {
     index?: number;
     isTreeExpanded?: boolean;
     isTreeGroup?: boolean;
-    rowData: any;
+    rowData: T;
     rowKeyField: string;
     rowKeyValue: any;
     selectedRows: any[];
 }
 
-export interface ICellProps {
+export interface ICellProps<T= any> {
     treeArrowElement?: any;
     childComponents: ChildComponents;
     column: Column;
@@ -60,7 +60,7 @@ export interface ICellProps {
     isDetailsRowShown: boolean;
     isEditableCell: boolean;
     isSelectedRow: boolean;
-    rowData: any;
+    rowData: T;
     rowKeyField: string;
     rowKeyValue: any;
     selectedRows: any[];
@@ -75,14 +75,14 @@ export interface IFilterRowEditorProps {
     dispatch: DispatchFunc;
 }
 
-export interface ICellEditorProps extends IFilterRowEditorProps {
+export interface ICellEditorProps<T= any> extends IFilterRowEditorProps {
     autoFocus?: boolean;
     editingMode: EditingMode;
     editorValue?: any;
     field: Field;
     isDetailsRowShown: boolean;
     isSelectedRow: boolean;
-    rowData: any;
+    rowData: T;
     rowKeyField: string;
     rowKeyValue: any;
     value: any;
@@ -91,7 +91,7 @@ export interface ICellEditorProps extends IFilterRowEditorProps {
     validation?: ValidationFunc;
 }
 
-export interface ICellTextProps {
+export interface ICellTextProps<T= any> {
     childComponents: ChildComponents;
     column: Column;
     dispatch: DispatchFunc;
@@ -100,14 +100,14 @@ export interface ICellTextProps {
     format?: FormatFunc;
     isDetailsRowShown: boolean;
     isSelectedRow: boolean;
-    rowData: any;
+    rowData: T;
     rowKeyField: string;
     rowKeyValue: any;
     selectedRows: any[];
     value: any;
 }
 
-export interface IDataRowProps extends IRowCommonProps {
+export interface IDataRowProps<T= any> extends IRowCommonProps<T> {
     format?: FormatFunc;
     validation?: ValidationFunc;
     isDetailsRowShown: boolean;
@@ -115,7 +115,7 @@ export interface IDataRowProps extends IRowCommonProps {
     rowEditableCells: EditableCell[];
 }
 
-export interface IGroupRowProps {
+export interface IGroupRowProps<T> {
     childComponents: ChildComponents;
     column: Column;
     columns?: Column[];
@@ -126,7 +126,7 @@ export interface IGroupRowProps {
     groupKey: any[];
     isExpanded: boolean;
     text: string;
-    groupItems?: any[];
+    groupItems?: T[];
 }
 
 export interface IGroupSummaryRowProps extends IRowsProps {
