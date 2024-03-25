@@ -32,23 +32,23 @@ import {
 import { ChildComponent } from './ChildComponent';
 import { ITableProps } from '../';
 
-export class ChildComponents<T = any> {
-    public cell?: ChildComponent<ICellProps<T>>;
-    public cellEditor?: ChildComponent<ICellEditorProps<T>>;
-    public cellEditorInput?: ChildComponent<ICellEditorProps<T>>;
-    public cellText?: ChildComponent<ICellTextProps<T>>;
-    public dataRow?: ChildComponent<IDataRowProps<T>>;
-    public detailsCell?: ChildComponent<IDataRowProps<T>>;
-    public detailsRow?: ChildComponent<IDataRowProps<T>>;
+export class ChildComponents<TData= any> {
+    public cell?: ChildComponent<ICellProps<TData>>;
+    public cellEditor?: ChildComponent<ICellEditorProps<TData>>;
+    public cellEditorInput?: ChildComponent<ICellEditorProps<TData>>;
+    public cellText?: ChildComponent<ICellTextProps<TData>>;
+    public dataRow?: ChildComponent<IDataRowProps<TData>>;
+    public detailsCell?: ChildComponent<IDataRowProps<TData>>;
+    public detailsRow?: ChildComponent<IDataRowProps<TData>>;
     public emptyCell?: ChildComponent<IEmptyCellProps>;
     public filterRowCell?: ChildComponent<IFilterRowEditorProps>;
     public groupPanel?: ChildComponent<IGroupPanelProps>;
     public groupPanelCell?: ChildComponent<IGroupPanelCellProps>;
-    public groupExpandButton?: ChildComponent<IGroupRowProps<T>>;
-    public groupCell?: ChildComponent<IGroupRowProps<T>>;
-    public groupRow?: ChildComponent<IGroupRowProps<T>>;
-    public groupSummaryRow?: ChildComponent<IGroupSummaryRowProps>;
-    public groupSummaryCell?: ChildComponent<IGroupSummaryCellProps>;
+    public groupExpandButton?: ChildComponent<IGroupRowProps<TData>>;
+    public groupCell?: ChildComponent<IGroupRowProps<TData>>;
+    public groupRow?: ChildComponent<IGroupRowProps<TData>>;
+    public groupSummaryRow?: ChildComponent<IGroupSummaryRowProps<TData>>;
+    public groupSummaryCell?: ChildComponent<IGroupSummaryCellProps<TData>>;
     public headFilterButton?: ChildComponent<IHeaderFilterButtonProps>;
     public headCell?: ChildComponent<IHeadCellProps>;
     public headCellContent?: ChildComponent<IHeadCellProps>;
@@ -62,16 +62,16 @@ export class ChildComponents<T = any> {
     public pagingPages?: ChildComponent<IPagingProps>;
     public pagingSize?: ChildComponent<IPagingSizeProps>;
     public pagingSizes?: ChildComponent<IPagingProps>;
-    public popupContent?: ChildComponent<IPopupContentProps>;
+    public popupContent?: ChildComponent<IPopupContentProps<TData>>;
     public popupContentItem?: ChildComponent<IPopupContentItemProps>;
     public popupContentItemText?: ChildComponent<IPopupContentItemProps>;
-    public rootDiv?: ChildComponent<ITableProps<T>>;
+    public rootDiv?: ChildComponent<ITableProps<TData>>;
     public sortIcon?: ChildComponent<ISortIconProps>;
-    public summaryCell?: ChildComponent<ISummaryCellProps>;
-    public summaryRow?: ChildComponent<ISummaryRowProps>;
-    public table?: ChildComponent<ITableProps>;
-    public tableBody?: ChildComponent<ITableBodyProps>;
-    public tableFoot?: ChildComponent<ITableFootProps>;
+    public summaryCell?: ChildComponent<ISummaryCellProps<TData>>;
+    public summaryRow?: ChildComponent<ISummaryRowProps<TData>>;
+    public table?: ChildComponent<ITableProps<TData>>;
+    public tableBody?: ChildComponent<ITableBodyProps<TData>>;
+    public tableFoot?: ChildComponent<ITableFootProps<TData>>;
     public tableHead?: ChildComponent<ITableHeadProps>;
-    public tableWrapper?: ChildComponent<ITableProps>;
+    public tableWrapper?: ChildComponent<ITableProps<TData>>;
 }

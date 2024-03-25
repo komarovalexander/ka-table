@@ -24,12 +24,12 @@ export interface ITableInstance extends ActionCreators {
     dispatch: DispatchFunc;
 }
 
-export interface ITableProps<T = any> {
+export interface ITableProps<TData= any> {
     columnReordering?: boolean;
     columnResizing?: boolean;
     columns: Column[];
     groupedColumns?: GroupedColumn[];
-    data?: T[];
+    data?: TData[];
     detailsRows?: any[];
     editableCells?: EditableCell[];
     editingMode?: EditingMode;
@@ -71,13 +71,13 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
     childComponents?: ChildComponents;
 }
 
-export interface IKaTableProps<T = any> extends ITableProps<T> {
-    childComponents?: ChildComponents<T>;
+export interface IKaTableProps<TData= any> extends ITableProps<TData> {
+    childComponents?: ChildComponents<TData>;
     dispatch?: DispatchFunc;
     table?: ITableInstance;
 }
 
-export const Table = <T= any>(props: IKaTableProps<T>) => {
+export const Table = <TData= any>(props: IKaTableProps<TData>) => {
     const { dispatch } = props;
 
     return dispatch ? (
