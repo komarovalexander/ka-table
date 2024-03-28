@@ -1,9 +1,9 @@
 import './KeyboardNavigation.scss';
 
-import React from 'react';
-
 import { DataType, Table, useTable } from '../../lib';
 import { EditingMode, SortingMode } from '../../lib/enums';
+
+import React from 'react';
 
 const dataArray = Array(100).fill(undefined).map(
     (_, index) => ({
@@ -15,7 +15,7 @@ const dataArray = Array(100).fill(undefined).map(
     }),
 );
 
-const KeyboardNavigationDemo: React.FC = () => {
+const KeyboardNavigationDemo = () => {
     const table = useTable();
     return (
         <div className='keyboard-navigation-demo'>

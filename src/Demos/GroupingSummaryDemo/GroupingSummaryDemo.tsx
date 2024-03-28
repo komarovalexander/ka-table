@@ -1,6 +1,6 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
+
+import React from 'react';
 
 const dataArray = [
     { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
@@ -10,7 +10,7 @@ const dataArray = [
     { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
 ];
 
-const GroupingSummaryDemo: React.FC = () => {
+const GroupingSummaryDemo = () => {
     return (
         <Table
             columns= {[

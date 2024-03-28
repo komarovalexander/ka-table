@@ -1,7 +1,6 @@
-import React from 'react';
-
-import { Table } from '../../lib';
 import { IHeadCellProps } from '../../lib/props';
+import React from 'react';
+import { Table } from '../../lib';
 
 const dataArray = Array(7).fill(undefined).map(
     (_, index) => ({
@@ -11,9 +10,9 @@ const dataArray = Array(7).fill(undefined).map(
     }),
 );
 
-const HeadCell: React.FC<IHeadCellProps> = ({
+const HeadCell = ({
     column: { title },
-}) => {
+}: IHeadCellProps) => {
     return (
         <div style={{color: 'red'}}>
             {title} - (Custom)
@@ -21,7 +20,7 @@ const HeadCell: React.FC<IHeadCellProps> = ({
     );
 };
 
-const CustomHeaderCellDemo: React.FC = () => {
+const CustomHeaderCellDemo = () => {
     return (
         <Table
             columns= {[

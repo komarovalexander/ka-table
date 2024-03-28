@@ -13,7 +13,7 @@ const dataArray = Array(7).fill(undefined).map(
     }),
 );
 
-const ExportDemo: React.FC = () => {
+const ExportDemo = () => {
     const data = dataArray;
     const columns = [
         { key: 'column1', title: 'Column 1', dataType: DataType.String },
