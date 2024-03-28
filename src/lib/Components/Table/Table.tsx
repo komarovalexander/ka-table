@@ -27,18 +27,18 @@ export interface ITableInstance extends ActionCreators {
 export interface ITableProps<TData= any> {
     columnReordering?: boolean;
     columnResizing?: boolean;
-    columns: Column[];
+    columns: Column<TData>[];
     groupedColumns?: GroupedColumn[];
     data?: TData[];
     detailsRows?: any[];
     editableCells?: EditableCell[];
     editingMode?: EditingMode;
-    extendedFilter?: (data: any[]) => any[];
-    extendedSort?: (data: any[], columns: Column[]) => any[];
-    filter?: FilterFunc;
+    extendedFilter?: (data: TData[]) => TData[];
+    extendedSort?: (data: TData[], columns: Column[]) => TData[];
+    filter?: FilterFunc<TData>;
     filteringMode?: FilteringMode;
     focused?: Focused;
-    format?: FormatFunc;
+    format?: FormatFunc<TData>;
     groups?: Group[];
     groupsExpanded?: any[][];
     groupPanel?: GroupPanelSettings;
@@ -54,10 +54,10 @@ export interface ITableProps<TData= any> {
     searchText?: string;
     selectedRows?: any[];
     singleAction?: any;
-    sort?: SortFunc;
+    sort?: SortFunc<TData>;
     noData?: NoData,
     sortingMode?: SortingMode;
-    validation?: ValidationFunc;
+    validation?: ValidationFunc<TData>;
     virtualScrolling?: VirtualScrolling;
     width?: number | string;
     controlledPropsKeys?: ControlledPropsKeys;
