@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as actionCreators from '../../actionCreators';
 
-import { ControlledPropsKeys, DispatchFunc, FilterFunc, FormatFunc, NoData, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc } from '../../types';
+import { ControlledPropsKeys, CustomReducerFunc, DispatchFunc, FilterFunc, FormatFunc, NoData, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc } from '../../types';
 import { EditableCell, PagingOptions } from '../../models';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 
@@ -22,6 +22,7 @@ export interface ITableInstance extends ActionCreators {
     changeProps: React.Dispatch<React.SetStateAction<ITableProps>>;
     onDispatch: OnDispatchFunc;
     dispatch: DispatchFunc;
+    customReducer?: CustomReducerFunc;
 }
 
 export interface ITableProps<TData= any> {
