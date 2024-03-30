@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
+
 import DataRowContent from '../../lib/Components/DataRowContent/DataRowContent';
 import { IDataRowProps } from '../../lib/props';
+import React from 'react';
 
 let dataArray: any[];
 
@@ -23,7 +23,7 @@ const getDataArray = () => {
 
 const DataRowContentMemo = React.memo((props: IDataRowProps) => <DataRowContent {...props}/>, () => true);
 
-const ManyRowsMemoDemo: React.FC = () => {
+const ManyRowsMemoDemo = () => {
     return (
         <Table
             columns= {[

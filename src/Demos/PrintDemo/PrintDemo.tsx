@@ -1,9 +1,9 @@
 import './PrintDemo.scss';
 
-import React, { useRef } from 'react';
-import ReactToPrint from 'react-to-print';
-
 import { DataType, Table } from '../../lib';
+import React, { useRef } from 'react';
+
+import ReactToPrint from 'react-to-print';
 
 const dataArray = Array(180).fill(undefined).map(
     (_, index) => ({
@@ -15,7 +15,7 @@ const dataArray = Array(180).fill(undefined).map(
     }),
 );
 
-const PrintDemo: React.FC = () => {
+const PrintDemo = () => {
     const componentRef = useRef<any>();
 
     return (

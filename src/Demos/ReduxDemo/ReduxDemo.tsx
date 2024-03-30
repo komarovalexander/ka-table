@@ -1,9 +1,9 @@
-import React from 'react';
+import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+import { ITableProps, Table, kaReducer } from '../../lib';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
 
-import { ITableProps, kaReducer, Table } from '../../lib';
-import { DataType, EditingMode, SortingMode } from '../../lib/enums';
+import React from 'react';
 
 const dataArray = Array(30).fill(undefined).map(
     (_, index) => ({
@@ -47,7 +47,7 @@ const ReduxTableComponent = () => {
     );
 };
 
-const ReduxDemo: React.FC = () => {
+const ReduxDemo = () => {
     return (
         <Provider store={store}>
             <ReduxTableComponent />

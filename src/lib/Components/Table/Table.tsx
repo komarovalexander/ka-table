@@ -51,11 +51,11 @@ export interface ITableProps<TData= any> {
     treeGroupsExpanded?: any[];
     treeExpandButtonColumnKey?: string;
     rowReordering?: boolean;
-    search?: SearchFunc;
+    search?: SearchFunc<TData>;
     searchText?: string;
     selectedRows?: any[];
     singleAction?: any;
-    sort?: SortFunc<TData>;
+    sort?: SortFunc;
     noData?: NoData,
     sortingMode?: SortingMode;
     validation?: ValidationFunc<TData>;

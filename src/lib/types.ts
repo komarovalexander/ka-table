@@ -23,6 +23,6 @@ export type ControlledPropsKeys = (keyof ITableProps)[];
 export type Field = string;
 export type FormatFunc<TData= any> = (props: { value: any, column: Column, rowData?: TData; }) => any;
 export type FilterFunc<TData= any> = (props: { column: Column }) => ((value: any, filterRowValue: any, rowData?: TData) => boolean) | void;
-export type SortFunc<TData= any> = (props: { column: Column }) =>  ((value1: TData, value2: TData) => 0 | 1 | -1) | void;
-export type SearchFunc<TData= any> = (props: { searchText: string, rowData: TData, column: Column }) => boolean;
+export type SortFunc = (props: { column: Column }) =>  ((value1: any, value2: any) => 0 | 1 | -1) | void;
+export type SearchFunc<TData= any> = (props: { searchText: string, rowData: TData, column: Column }) => boolean | void;
 export type ValidationFunc<TData= any> = (props: { value: any, rowData: TData, column: Column }) => string | void;
