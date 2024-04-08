@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
 import { EditingMode, SortingMode } from 'ka-table/enums';
+
 import { Column } from 'ka-table/models';
+import React from 'react';
 
 const columns: Column[] = Array(20).fill(undefined).map(
     (_, index) => ({
@@ -20,7 +20,7 @@ const dataArray = Array(30).fill(undefined).map(
     }, { id: index }),
 );
 
-const FixedColumnDemo: React.FC = () => {
+const FixedColumnDemo = () => {
     return (
         <div className='fixed-column-demo'>
             <Table

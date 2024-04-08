@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import dataArray from './data';
 import { kaPropsUtils } from 'ka-table/utils';
 
-const SelectionSingleDemo: React.FC = () => {
+const SelectionSingleDemo = () => {
     const [selectedData, changeSelectedData] = useState<any>();
     const table = useTable({
         onDispatch: (action, tableProps) => {

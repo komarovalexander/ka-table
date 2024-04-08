@@ -1,9 +1,9 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
+
+import React from 'react';
 import { SortingMode } from 'ka-table/enums';
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false },
     { id: 3, name: 'Tom Williams', score: 45, passed: false },
@@ -12,7 +12,7 @@ const dataArray: any[] = [
     { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const SummaryDemo: React.FC = () => {
+const SummaryDemo = () => {
     return (
         <Table
             columns= {[

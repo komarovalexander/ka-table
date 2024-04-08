@@ -1,8 +1,7 @@
-import { ITableProps, Table, kaReducer } from 'ka-table';
 import React, { useState } from 'react';
+import { Table, useTable } from 'ka-table';
 
 import { DataType } from 'ka-table/enums';
-import { DispatchFunc } from 'ka-table/types';
 import { LoremIpsum } from 'lorem-ipsum';
 
 const lorem = new LoremIpsum({
@@ -22,26 +21,12 @@ const dataArray = Array(10000)
         id: index,
     }));
 
-const tablePropsInit: ITableProps = {
-    columns: [
-        { key: 'column1', title: 'Column 1', dataType: DataType.String },
-        { key: 'column2', title: 'Column 2', dataType: DataType.String },
-        { key: 'column3', title: 'Column 3', dataType: DataType.String },
-        { key: 'column4', title: 'Column 4', dataType: DataType.String },
-    ],
-    data: dataArray,
-    rowKeyField: 'id',
-    virtualScrolling: {
-        enabled: true,
-    },
-};
-
-const useDynamicRowsOptions = ({ rowKeyField }: ITableProps) => {
+const useDynamicRowsOptions = () => {
     const [renderedRowSizes] = useState<any>({});
     let estimatedItemSize = 40;
-    const addRowHeight = (rowData: any, height?: number) => {
+    const addRowHeight = (rowKeyValue: any, height?: number) => {
         if (height) {
-            renderedRowSizes[rowData[rowKeyField]] = height;
+            renderedRowSizes[rowKeyValue] = height;
         }
     };
     const totalHeight = Object.keys(renderedRowSizes).reduce((sum, key) => sum + parseFloat(renderedRowSizes[key] || 0), 0);
@@ -51,30 +36,36 @@ const useDynamicRowsOptions = ({ rowKeyField }: ITableProps) => {
         : estimatedItemSize;
     return {
         addRowHeight,
-        itemHeight: (rowData: any) => renderedRowSizes[rowData[rowKeyField]] || estimatedItemSize,
+        itemHeight: (rowKeyField: string) => (rowData: any) => renderedRowSizes[rowData[rowKeyField]] || estimatedItemSize,
     };
 };
 
-const ManyRowsDynamicDemo: React.FC = () => {
-    const [tableProps, changeTableProps] = useState(tablePropsInit);
-    const { itemHeight, addRowHeight } = useDynamicRowsOptions(tableProps);
-
-    const dispatch: DispatchFunc = (action) => {
-        changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));
-    };
-
+const ManyRowsDynamicDemo = () => {
+    const { itemHeight, addRowHeight } = useDynamicRowsOptions();
+    const table = useTable({
+        customReducer: (nextState, action, prevState) => {
+            if (nextState.virtualScrolling) nextState.virtualScrolling.itemHeight = itemHeight('id');
+            return nextState;
+        }
+    });
     return (
         <Table
-            {...tableProps}
-            dispatch={dispatch}
+            table={table}
+            columns={[
+                { key: 'column1', title: 'Column 1', dataType: DataType.String },
+                { key: 'column2', title: 'Column 2', dataType: DataType.String },
+                { key: 'column3', title: 'Column 3', dataType: DataType.String },
+                { key: 'column4', title: 'Column 4', dataType: DataType.String },
+            ]}
+            data={dataArray}
+            rowKeyField={'id'}
             virtualScrolling={{
-                ...tableProps.virtualScrolling,
-                itemHeight,
+                enabled: true,
             }}
             childComponents={{
                 dataRow: {
-                    elementAttributes: ({ rowData }) => ({
-                        ref: (ref: any) => addRowHeight(rowData, ref?.offsetHeight),
+                    elementAttributes: ({ rowKeyValue }) => ({
+                        ref: (ref: any) => addRowHeight(rowKeyValue, ref?.offsetHeight),
                     }),
                 },
                 tableWrapper: {

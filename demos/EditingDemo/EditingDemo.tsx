@@ -1,9 +1,9 @@
+import { DataType, Table } from 'ka-table';
+
+import { EditingMode } from 'ka-table/enums';
 import React from 'react';
 
-import { DataType, Table } from 'ka-table';
-import { EditingMode } from 'ka-table/enums';
-
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2021, 10, 8, 10) },
     { id: 3, name: 'Tom Williams', score: 45, passed: false, nextTry: new Date(2021, 11, 8, 10) },
@@ -30,7 +30,7 @@ const EditingDemo: React.FC = () => {
                     return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
                 }
             }}
-            data= {dataArray}
+            data={dataArray}
             editableCells= {[{
                 columnKey: 'name',
                 rowKeyValue: 2,

@@ -3,7 +3,7 @@ import { FilteringMode, SortDirection, SortingMode } from 'ka-table/enums';
 
 import React from 'react';
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 8) },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2021, 10, 8) },
     { id: 3, name: 'Tom Williams', score: 55, passed: false, nextTry: new Date(2021, 11, 8) },
@@ -12,7 +12,7 @@ const dataArray: any[] = [
     { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9) },
 ];
 
-const HeaderFilterDemo: React.FC = () => {
+const HeaderFilterDemo = () => {
     return (
         <Table
             columns= {[

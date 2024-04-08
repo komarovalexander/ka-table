@@ -1,11 +1,11 @@
+import { DataType, SortDirection, SortingMode } from 'ka-table/enums';
+import { ITableProps, Table, kaReducer } from 'ka-table';
 import React, { useState } from 'react';
 
-import { ITableProps, kaReducer, Table } from 'ka-table';
-import { DataType, SortDirection, SortingMode } from 'ka-table/enums';
 import { DispatchFunc } from 'ka-table/types';
 import { getSortedColumns } from 'ka-table/Utils/PropsUtils';
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false },
     { id: 3, name: 'Tom Williams', score: 45, passed: false },
@@ -30,7 +30,7 @@ const tablePropsInit: ITableProps = {
     sortingMode: SortingMode.Single,
 };
 
-const SortingModesDemo: React.FC = () => {
+const SortingModesDemo = () => {
     const [tableProps, changeTableProps] = useState(tablePropsInit);
     const dispatch: DispatchFunc = (action) => {
         changeTableProps((prevState: ITableProps) => kaReducer(prevState, action));

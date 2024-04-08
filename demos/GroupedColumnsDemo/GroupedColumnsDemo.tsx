@@ -1,10 +1,10 @@
 import './GroupedColumnsDemo.scss';
 
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
-import { SortingMode } from 'ka-table/enums';
+
 import { Column } from 'ka-table/models';
+import React from 'react';
+import { SortingMode } from 'ka-table/enums';
 
 const columns: Column[] = Array(15).fill(undefined).map(
     (_, index) => ({
@@ -22,7 +22,7 @@ const dataArray = Array(30).fill(undefined).map(
     }), { id: index }),
 );
 
-const GroupedColumnsDemo: React.FC = () => {
+const GroupedColumnsDemo = () => {
     return (
         <div className='group-header-column-demo'>
             <Table

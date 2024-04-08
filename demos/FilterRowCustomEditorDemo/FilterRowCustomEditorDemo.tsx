@@ -1,14 +1,14 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
-import { updateFilterRowOperator, updateFilterRowValue } from 'ka-table/actionCreators';
 import { EditingMode, FilteringMode } from 'ka-table/enums';
+import { updateFilterRowOperator, updateFilterRowValue } from 'ka-table/actionCreators';
+
 import { Column } from 'ka-table/models';
-import { IFilterRowEditorProps } from 'ka-table/props';
 import { DispatchFunc } from 'ka-table/types';
+import { IFilterRowEditorProps } from 'ka-table/props';
+import React from 'react';
 import { kaDateUtils } from 'ka-table/utils';
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2021, 12, 9) },
     { id: 3, name: 'Tom Williams', score: 45, passed: false, nextTry: new Date(2021, 7, 9) },
@@ -18,9 +18,9 @@ const dataArray: any[] = [
     { id: 7, name: 'Alex Brzowsky', score: 48, passed: false, nextTry: new Date(2021, 11, 11) },
 ];
 
-const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
+const CustomLookupEditor = ({
     column, dispatch,
-}) => {
+}: IFilterRowEditorProps) => {
     const toNullableBoolean = (value: any) => {
         switch (value) {
         case 'true': return true;
@@ -44,9 +44,9 @@ const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
     );
 };
 
-const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
+const FilterOperators  = ({
     column, dispatch,
-}) => {
+}: { column: Column; dispatch: DispatchFunc }) => {
     return (
         <select
             className='form-control'
@@ -63,9 +63,9 @@ const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
     );
 };
 
-const NumberEditor: React.FC<IFilterRowEditorProps> = ({
+const NumberEditor = ({
     column, dispatch,
-}) => {
+}: IFilterRowEditorProps) => {
     return (
         <div>
             <FilterOperators column={column} dispatch={dispatch}/>
@@ -82,9 +82,9 @@ const NumberEditor: React.FC<IFilterRowEditorProps> = ({
     );
 };
 
-const DateEditor: React.FC<IFilterRowEditorProps> = ({
+const DateEditor = ({
     column, dispatch,
-}) => {
+}: IFilterRowEditorProps) => {
     const fieldValue = column.filterRowValue;
     const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
     return (
@@ -103,7 +103,7 @@ const DateEditor: React.FC<IFilterRowEditorProps> = ({
     );
 };
 
-const FilterRowCustomEditorDemo: React.FC = () => {
+const FilterRowCustomEditorDemo = () => {
     return (
         <Table
             columns= {[

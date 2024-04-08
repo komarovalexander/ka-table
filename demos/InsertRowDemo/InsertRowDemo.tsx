@@ -1,7 +1,7 @@
-import React from 'react';
-
 import { DataType, Table, useTable } from 'ka-table';
 import { EditingMode, InsertRowPosition } from 'ka-table/enums';
+
+import React from 'react';
 
 const dataArray = Array(7).fill(undefined).map(
     (_, index) => ({
@@ -18,7 +18,7 @@ const generateNewId = () => {
     return maxValue;
 };
 
-const InsertRowDemo: React.FC = () => {
+const InsertRowDemo = () => {
     const table = useTable();
 
     return (

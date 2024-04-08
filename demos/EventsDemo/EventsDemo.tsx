@@ -1,9 +1,9 @@
 import './EventsDemo.scss';
 
-import React, { useState } from 'react';
-
-import { Table, useTable } from 'ka-table';
 import { DataType, EditingMode, FilteringMode, SortingMode } from 'ka-table/enums';
+import React, { useState } from 'react';
+import { Table, useTable } from 'ka-table';
+
 import { EventsLog } from './EventsLog';
 
 const dataArray = Array(20).fill(undefined).map(
@@ -17,8 +17,8 @@ const dataArray = Array(20).fill(undefined).map(
 );
 
 
-const EventsDemo: React.FC = () => {
-    const [events, changeEvents] = useState([] as any []);
+const EventsDemo = () => {
+    const [events, changeEvents] = useState<any[]>([]);
     const table = useTable({
         onDispatch: (action) => {
             changeEvents((prevValue) => ([{ type: action.type, data: action, date: new Date(), showData: false }, ...prevValue]));

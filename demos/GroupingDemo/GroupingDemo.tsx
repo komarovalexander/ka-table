@@ -11,7 +11,7 @@ const dataArray = [
     { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
 ];
 
-const GroupingDemo: React.FC = () => {
+const GroupingDemo = () => {
     return (
         <Table
             columns= {[

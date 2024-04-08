@@ -1,9 +1,9 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
+
+import React from 'react';
 import { SortingMode } from 'ka-table/enums';
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, tryDate: new Date(2021, 10, 9) },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, tryDate: new Date(2021, 10, 8) },
     { id: 3, name: 'Tom Williams', score: 45, passed: false, tryDate: new Date(2019, 11, 8) },
@@ -24,7 +24,7 @@ const CustomAttributesDemo: React.FC = () => {
                 { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
                 { dataType: DataType.Date, key: 'tryDate', title: 'Date', filterRowOperator: '<' },
             ]}
-            format= {({ column, value }) => {
+            format= {({ column, value, rowData }) => {
                 if (column.dataType === DataType.Date){
                     return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
                 }

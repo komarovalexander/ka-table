@@ -1,7 +1,7 @@
-import React from 'react';
-
-import { Table } from 'ka-table';
 import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
+
+import React from 'react';
+import { Table } from 'ka-table';
 
 const dataArray = Array(10).fill(undefined).map(
     (_, index) => ({
@@ -14,7 +14,7 @@ const dataArray = Array(10).fill(undefined).map(
 );
 
 
-const OverviewDemo: React.FC = () => {
+const OverviewDemo = () => {
     return (
         <Table
             columns={[

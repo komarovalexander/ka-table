@@ -1,7 +1,7 @@
-import React from 'react';
-
-import { Table, useTable } from 'ka-table';
 import { DataType, EditingMode, PagingPosition, SortingMode } from 'ka-table/enums';
+import { Table, useTable } from 'ka-table';
+
+import React from 'react';
 
 const dataArray = Array(180).fill(undefined).map(
     (_, index) => ({
@@ -13,7 +13,7 @@ const dataArray = Array(180).fill(undefined).map(
     }),
 );
 
-const PagingDemo: React.FC = () => {
+const PagingDemo = () => {
     const table = useTable();
 
     return (

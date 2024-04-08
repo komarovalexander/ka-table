@@ -1,7 +1,7 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
+
 import { EditingMode } from 'ka-table/enums';
+import React from 'react';
 
 const dataArray = Array(10).fill(undefined).map(
     (_, index) => ({
@@ -13,7 +13,7 @@ const dataArray = Array(10).fill(undefined).map(
     }),
 );
 
-const RowReorderingDemo: React.FC = () => {
+const RowReorderingDemo = () => {
     return (
         <div className='rows-reordering-demo'>
             <Table

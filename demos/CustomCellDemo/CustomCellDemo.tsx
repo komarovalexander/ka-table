@@ -7,11 +7,11 @@ import { ICellTextProps } from 'ka-table/props';
 import React from 'react';
 import dataArray from './data';
 
-const CustomCell: React.FC<ICellTextProps> = ({
+const CustomCell = ({
     column,
     rowKeyValue,
     value,
-}) => {
+}: ICellTextProps) => {
     const table = useTableInstance();
     return (
         <div onClick={() => {
@@ -22,7 +22,7 @@ const CustomCell: React.FC<ICellTextProps> = ({
     );
 };
 
-const CustomCellDemo: React.FC = () => {
+const CustomCellDemo = () => {
     return (
         <Table
             columns= {[

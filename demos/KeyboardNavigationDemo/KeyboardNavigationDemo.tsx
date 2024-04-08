@@ -1,9 +1,9 @@
 import './KeyboardNavigation.scss';
 
-import React from 'react';
-
 import { DataType, Table, useTable } from 'ka-table';
 import { EditingMode, SortingMode } from 'ka-table/enums';
+
+import React from 'react';
 
 const dataArray = Array(100).fill(undefined).map(
     (_, index) => ({
@@ -15,7 +15,7 @@ const dataArray = Array(100).fill(undefined).map(
     }),
 );
 
-const KeyboardNavigationDemo: React.FC = () => {
+const KeyboardNavigationDemo = () => {
     const table = useTable();
     return (
         <div className='keyboard-navigation-demo'>
@@ -62,6 +62,7 @@ const KeyboardNavigationDemo: React.FC = () => {
                                     case 13:
                                         table.openEditor(cell.rowKeyValue, cell.columnKey);
                                         table.setFocused({ cellEditorInput: cell });
+                                        e.stopPropagation();
                                         break;
                                     }
                                 },

@@ -1,6 +1,6 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
+
+import React from 'react';
 import { SortingMode } from 'ka-table/enums';
 
 const dataArray = Array(10000).fill(undefined).map(
@@ -13,7 +13,7 @@ const dataArray = Array(10000).fill(undefined).map(
     }),
 );
 
-const ManyRowsGroupingDemo: React.FC = () => {
+const ManyRowsGroupingDemo = () => {
     return (
         <Table
             columns= {[

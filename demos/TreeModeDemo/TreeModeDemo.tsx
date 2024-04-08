@@ -18,7 +18,7 @@ const data = [
     { treeGroupId: 7, id: 12, name: 'Squad C', productivity: 7 },
 ];
 
-const TreeModeDemo: React.FC = () => {
+const TreeModeDemo = () => {
     return (
         <Table
             columns= {[

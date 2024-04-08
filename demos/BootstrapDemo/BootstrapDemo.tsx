@@ -1,11 +1,10 @@
 import './BootstrapDemo.scss';
 
-import React from 'react';
-
+import { CustomLookupEditor, DateEditor, NumberEditor } from './editors';
 import { DataType, Table } from 'ka-table';
 import { EditingMode, FilteringMode, SortingMode } from 'ka-table/enums';
-import { ChildComponents } from 'ka-table/models';
-import { CustomLookupEditor, DateEditor, NumberEditor } from './editors';
+
+import React from 'react';
 
 const dataArray = Array(119).fill(undefined).map(
     (_, index) => ({
@@ -17,54 +16,7 @@ const dataArray = Array(119).fill(undefined).map(
     }),
 );
 
-const bootstrapChildComponents: ChildComponents = {
-    table: {
-        elementAttributes: () => ({
-            className: 'table table-striped table-hover table-bordered table-primary'
-        })
-    },
-    tableHead: {
-        elementAttributes: () => ({
-            className: 'thead-dark'
-        })
-    },
-    noDataRow: {
-        content: () => 'No Data Found'
-    },
-    filterRowCell: {
-        content: (props) => {
-            const getEditor = () => {
-                switch (props.column.key){
-                case 'column1': return <CustomLookupEditor {...props}/>;
-                case 'column2': return <></>;
-                case 'column3': return <NumberEditor {...props}/>;
-                case 'column4': return <DateEditor {...props}/>;
-                }
-            }
-            return (
-                <div className='d-flex'>{getEditor()}</div>
-            )
-        }
-    },
-    cellEditorInput: {
-        elementAttributes: ({column}) => ({
-            className: column.dataType === DataType.Boolean ? 'form-check-input' : undefined
-        }),
-    },
-    pagingIndex: {
-        elementAttributes: ({ isActive }) => ({
-            className: `page-item ${(isActive ? 'active' : '')}`
-        }),
-        content: ({ text, isActive }) => <div className={`page-link ${(isActive ? 'active' : '')}`}>{text}</div>
-    },
-    pagingPages: {
-        elementAttributes: () => ({
-            className: 'pagination'
-        }),
-    }
-};
-
-const BootstrapDemo: React.FC = () => {
+const BootstrapDemo = () => {
     return (
         <div className='bootstrap-demo'>
             <Table
@@ -89,7 +41,54 @@ const BootstrapDemo: React.FC = () => {
                 rowKeyField={'id'}
                 sortingMode={SortingMode.Single}
                 filteringMode={FilteringMode.FilterRow}
-                childComponents={bootstrapChildComponents}
+
+                // bootstrap overrides for child components
+                childComponents={{
+                    table: {
+                        elementAttributes: () => ({
+                            className: 'table table-striped table-hover table-bordered table-primary'
+                        })
+                    },
+                    tableHead: {
+                        elementAttributes: () => ({
+                            className: 'thead-dark'
+                        })
+                    },
+                    noDataRow: {
+                        content: () => 'No Data Found'
+                    },
+                    filterRowCell: {
+                        content: (props) => {
+                            const getEditor = () => {
+                                switch (props.column.key){
+                                case 'column1': return <CustomLookupEditor {...props}/>;
+                                case 'column2': return <></>;
+                                case 'column3': return <NumberEditor {...props}/>;
+                                case 'column4': return <DateEditor {...props}/>;
+                                }
+                            }
+                            return (
+                                <div className='d-flex'>{getEditor()}</div>
+                            )
+                        }
+                    },
+                    cellEditorInput: {
+                        elementAttributes: ({column}) => ({
+                            className: column.dataType === DataType.Boolean ? 'form-check-input' : undefined
+                        }),
+                    },
+                    pagingIndex: {
+                        elementAttributes: ({ isActive }) => ({
+                            className: `page-item ${(isActive ? 'active' : '')}`
+                        }),
+                        content: ({ text, isActive }) => <div className={`page-link ${(isActive ? 'active' : '')}`}>{text}</div>
+                    },
+                    pagingPages: {
+                        elementAttributes: () => ({
+                            className: 'pagination'
+                        }),
+                    }
+                }}
             />
         </div>
     );

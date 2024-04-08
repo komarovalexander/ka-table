@@ -1,7 +1,7 @@
 import { DataType, Table } from 'ka-table';
 import React, { useState } from 'react';
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false },
     { id: 3, name: 'Tom Williams', score: 45, passed: false },
@@ -10,7 +10,7 @@ const dataArray: any[] = [
     { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const SearchDemo: React.FC = () => {
+const SearchDemo = () => {
     const [searchText, setSearchText] = useState('Billi Bob');
     return (
         <>

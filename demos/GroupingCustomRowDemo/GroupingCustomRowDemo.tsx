@@ -32,7 +32,7 @@ const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
     </>
 );
 
-const GroupingCustomRowDemo: React.FC = () => {
+const GroupingCustomRowDemo = () => {
     return (
         <Table
             columns= {[

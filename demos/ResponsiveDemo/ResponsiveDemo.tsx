@@ -1,10 +1,10 @@
 // open TS Example or JS Example to see how to override styles
 import './ResponsiveDemo.scss';
 
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
+
 import { EditingMode } from 'ka-table/enums';
+import React from 'react';
 
 const dataArray = Array(10).fill(undefined).map(
     (_, index) => ({
@@ -16,7 +16,7 @@ const dataArray = Array(10).fill(undefined).map(
     }),
 );
 
-const ResponsiveDemo: React.FC = () => {
+const ResponsiveDemo = () => {
     return (
         <div className='responsive-demo'>
             <Table

@@ -21,7 +21,7 @@ const dataArray = Array(119)
         id: index,
     }));
 
-const MaterialDemo: React.FC = () => {
+const MaterialDemo = () => {
     const table = useTable();
     return (
         <div className='material-demo'>

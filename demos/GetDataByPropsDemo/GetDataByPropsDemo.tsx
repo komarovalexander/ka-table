@@ -6,7 +6,7 @@ import { Table, useTable } from 'ka-table';
 
 import { kaPropsUtils } from 'ka-table/utils';
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2019, 10, 8, 10) },
     { id: 3, name: 'Tom Williams', score: 45, passed: false, nextTry: new Date(2019, 11, 8, 10) },
@@ -16,7 +16,7 @@ const dataArray: any[] = [
 ];
 
 
-const GetDataByPropsDemo: React.FC = () => {
+const GetDataByPropsDemo = () => {
     const [printData, setPrintData] = useState<any[]>();
     const [searchText, setSearchText] = useState<string>();
     const table = useTable();

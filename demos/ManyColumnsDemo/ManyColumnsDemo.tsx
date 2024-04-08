@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
 import { EditingMode, SortingMode } from 'ka-table/enums';
+
 import { Column } from 'ka-table/models';
+import React from 'react';
 
 const columns: Column[] = Array(100).fill(undefined).map(
     (_, index) => ({
@@ -20,7 +20,7 @@ const dataArray = Array(30).fill(undefined).map(
     }, { id: index }),
 );
 
-const ManyColumnsDemo: React.FC = () => {
+const ManyColumnsDemo = () => {
     return (
         <Table
             columns={columns}

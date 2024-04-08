@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { DataType, Table } from 'ka-table';
+
 import DataRowContent from 'ka-table/Components/DataRowContent/DataRowContent';
 import { IDataRowProps } from 'ka-table/props';
+import React from 'react';
 
 let dataArray: any[];
 
@@ -23,7 +23,7 @@ const getDataArray = () => {
 
 const DataRowContentMemo = React.memo((props: IDataRowProps) => <DataRowContent {...props}/>, () => true);
 
-const ManyRowsMemoDemo: React.FC = () => {
+const ManyRowsMemoDemo = () => {
     return (
         <Table
             columns= {[

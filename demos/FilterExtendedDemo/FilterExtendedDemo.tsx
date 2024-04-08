@@ -6,7 +6,7 @@ import FilterControl from 'react-filter-control';
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
 import { filterData } from './filterData';
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false },
     { id: 3, name: 'Tom Parker', score: 45, passed: false },
