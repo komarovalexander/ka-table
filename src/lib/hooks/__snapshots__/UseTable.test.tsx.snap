@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UseTable customReducer 1`] = `
+Array [
+  Object {
+    "columns": Array [
+      Object {
+        "key": "id",
+      },
+    ],
+    "data": Array [],
+    "rowKeyField": "id",
+  },
+  Object {
+    "type": "CUSTOM_ACTION",
+  },
+  Object {
+    "columns": Array [
+      Object {
+        "key": "id",
+      },
+    ],
+    "data": Array [],
+    "rowKeyField": "id",
+  },
+]
+`;
+
+exports[`UseTable customReducer 2`] = `
+Object {
+  "type": "return",
+  "value": Object {
+    "columns": Array [
+      Object {
+        "key": "id",
+      },
+    ],
+    "data": Array [
+      Object {
+        "id": 2,
+      },
+    ],
+    "rowKeyField": "id",
+  },
+}
+`;

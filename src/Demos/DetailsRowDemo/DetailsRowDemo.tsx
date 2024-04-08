@@ -13,11 +13,10 @@ const dataArray = Array(10).fill(undefined).map(
     }),
 );
 
-const DetailsButton: React.FC<ICellTextProps> = ({
-    dispatch,
+const DetailsButton = ({
     rowKeyValue,
     isDetailsRowShown,
-}) => {
+}: ICellTextProps) => {
     const table = useTableInstance();
     return (
         <button onClick={() => {

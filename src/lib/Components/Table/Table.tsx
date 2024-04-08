@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as actionCreators from '../../actionCreators';
 
-import { ControlledPropsKeys, DispatchFunc, FilterFunc, FormatFunc, NoData, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc } from '../../types';
+import { ControlledPropsKeys, CustomReducerFunc, DispatchFunc, FilterFunc, FormatFunc, NoData, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc } from '../../types';
 import { EditableCell, PagingOptions } from '../../models';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 
@@ -22,23 +22,24 @@ export interface ITableInstance extends ActionCreators {
     changeProps: React.Dispatch<React.SetStateAction<ITableProps>>;
     onDispatch: OnDispatchFunc;
     dispatch: DispatchFunc;
+    customReducer?: CustomReducerFunc;
 }
 
 export interface ITableProps<TData= any> {
     columnReordering?: boolean;
     columnResizing?: boolean;
-    columns: Column[];
+    columns: Column<TData>[];
     groupedColumns?: GroupedColumn[];
     data?: TData[];
     detailsRows?: any[];
     editableCells?: EditableCell[];
     editingMode?: EditingMode;
-    extendedFilter?: (data: any[]) => any[];
-    extendedSort?: (data: any[], columns: Column[]) => any[];
-    filter?: FilterFunc;
+    extendedFilter?: (data: TData[]) => TData[];
+    extendedSort?: (data: TData[], columns: Column[]) => TData[];
+    filter?: FilterFunc<TData>;
     filteringMode?: FilteringMode;
     focused?: Focused;
-    format?: FormatFunc;
+    format?: FormatFunc<TData>;
     groups?: Group[];
     groupsExpanded?: any[][];
     groupPanel?: GroupPanelSettings;
@@ -50,14 +51,14 @@ export interface ITableProps<TData= any> {
     treeGroupsExpanded?: any[];
     treeExpandButtonColumnKey?: string;
     rowReordering?: boolean;
-    search?: SearchFunc;
+    search?: SearchFunc<TData>;
     searchText?: string;
     selectedRows?: any[];
     singleAction?: any;
     sort?: SortFunc;
     noData?: NoData,
     sortingMode?: SortingMode;
-    validation?: ValidationFunc;
+    validation?: ValidationFunc<TData>;
     virtualScrolling?: VirtualScrolling;
     width?: number | string;
     controlledPropsKeys?: ControlledPropsKeys;

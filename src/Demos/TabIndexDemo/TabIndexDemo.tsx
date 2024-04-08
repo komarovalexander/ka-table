@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
 import { openEditor, updateSortDirection } from '../../lib/actionCreators';
+
 import CellEditorString from '../../lib/Components/CellEditorString/CellEditorString';
+import React from 'react';
 import { SortingMode } from '../../lib/enums';
 import useKaFocusRef from './hook';
 
@@ -16,7 +16,7 @@ const dataArray = Array(10).fill(undefined).map(
     }),
 );
 
-const TabIndexDemo: React.FC = () => {
+const TabIndexDemo = () => {
     const kaFocusRef = useKaFocusRef({
         columnKey: 'column2',
         rowKeyValue: 2

@@ -17,7 +17,7 @@ const dataArray = Array(3)
     }));
 
 const AddRowDemo = () => {
-    const [data, setData] = useState<any[] | undefined>(dataArray);
+    const [data, setData] = useState<typeof dataArray | undefined>(dataArray);
     const table = useTable({
         onDispatch: (action, tableProps) => {
             setData(tableProps.data);

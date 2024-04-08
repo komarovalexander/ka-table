@@ -32,7 +32,9 @@ const synonyms: { [value: string]: any[] } = {
     'SearchDemo': ['No Data', 'Empty'],
     'SelectionDemo': ['Checkbox'],
     'TabIndexDemo': ['keyboard navigation'],
-    'StateStoringDemo': ['store']
+    'StateStoringDemo': ['store', 'localStorage'],
+    'RemoteDataEditingDemo': ['query'],
+    'SortingExtendedDemo': ['Multiple']
 };
 
 const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {

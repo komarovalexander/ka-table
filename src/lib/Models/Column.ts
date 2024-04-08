@@ -3,7 +3,7 @@ import { DataType, SortDirection } from '../enums';
 import { Field } from '../types';
 import { PopupPosition } from './PopupPosition';
 
-export class Column {
+export class Column<TData = any> {
     public colGroup?: React.ColHTMLAttributes<HTMLElement>;
     public dataType?: DataType;
     public field?: Field;
@@ -11,8 +11,8 @@ export class Column {
     public filterRowValue?: any;
     public headerFilterValues?: any[];
     public headerFilterPopupPosition?: PopupPosition;
-    public headerFilterListItems?: (props: { data?: any[] }) => any[];
-    public filter?: (value: any, filterValue: any, rowData?: any) => boolean;
+    public headerFilterListItems?: (props: { data?: TData[] }) => any[];
+    public filter?: (value: any, filterValue: any, rowData?: TData) => boolean;
     public isHeaderFilterPopupShown?: boolean;
     public isEditable?: boolean;
     public isFilterable?: boolean;

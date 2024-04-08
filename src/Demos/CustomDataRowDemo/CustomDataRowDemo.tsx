@@ -1,11 +1,10 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
-import defaultOptions from '../../lib/defaultOptions';
 import { SortDirection, SortingMode } from '../../lib/enums';
-import { IDataRowProps } from '../../lib/props';
 
-const dataArray: any[] = [
+import React from 'react';
+import defaultOptions from '../../lib/defaultOptions';
+
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false },
     { id: 3, name: 'Tom Williams', score: 45, passed: false },
@@ -14,17 +13,7 @@ const dataArray: any[] = [
     { id: 6, name: 'Sunny Fox', score: 33, passed: false },
 ];
 
-const DataRow: React.FC<IDataRowProps> = ({rowData, columns}) => {
-    return (
-        <td className={defaultOptions.css.cell} colSpan={columns.length}>
-            <div>
-                {rowData.name}: {rowData.score} ({rowData.passed ? 'Passed' : 'Failed'})
-            </div>
-        </td>
-    );
-};
-
-const CustomDataRowDemo: React.FC = () => {
+const CustomDataRowDemo = () => {
     return (
         <Table
             columns= {[
@@ -42,7 +31,15 @@ const CustomDataRowDemo: React.FC = () => {
             sortingMode={SortingMode.Single}
             childComponents={{
                 dataRow: {
-                    content: (props) => <DataRow {...props}/>,
+                    content: ({rowData, columns}) => {
+                        return (
+                            <td className={defaultOptions.css.cell} colSpan={columns.length}>
+                                <div>
+                                    {rowData.name}: {rowData.score} ({rowData.passed ? 'Passed' : 'Failed'})
+                                </div>
+                            </td>
+                        );
+                    }
                 }
             }}
         />

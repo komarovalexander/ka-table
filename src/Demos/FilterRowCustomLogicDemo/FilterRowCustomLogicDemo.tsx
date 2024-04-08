@@ -4,7 +4,7 @@ import FilterRowNumber from '../../lib/Components/FilterRowNumber/FilterRowNumbe
 import { FilteringMode } from '../../lib/enums';
 import React from 'react';
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, prevScores: [60, 65, 70], passed: true, nextTry: new Date(2021, 10, 9) },
     { id: 2, name: 'Billi Bob', score: 55, prevScores: [60, 43, 50], passed: false, nextTry: new Date(2021, 12, 9) },
     { id: 3, name: 'Tom Williams', score: 45, prevScores: [62, 61, 60], passed: false, nextTry: new Date(2021, 7, 9) },
