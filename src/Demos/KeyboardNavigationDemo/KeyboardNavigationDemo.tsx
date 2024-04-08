@@ -62,6 +62,7 @@ const KeyboardNavigationDemo = () => {
                                     case 13:
                                         table.openEditor(cell.rowKeyValue, cell.columnKey);
                                         table.setFocused({ cellEditorInput: cell });
+                                        e.stopPropagation();
                                         break;
                                     }
                                 },
