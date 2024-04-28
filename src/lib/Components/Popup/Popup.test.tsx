@@ -6,7 +6,7 @@ const props: any = {
     column: {key: 'field'},
     childComponents: {},
     dispatch: () => {},
-    data: [{ feild: 1 }]
+    data: [{ field: 1 }]
 };
 
 it('renders without crashing', () => {
