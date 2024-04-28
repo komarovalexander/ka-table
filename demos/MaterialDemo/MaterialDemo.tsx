@@ -42,7 +42,7 @@ const MaterialDemo = () => {
                 ]}
                 format={({ column, value }) => {
                     if (column.dataType === DataType.Date) {
-                        return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
                     }
                 }}
                 paging={{

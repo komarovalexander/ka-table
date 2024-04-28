@@ -10,7 +10,7 @@ const ROW_MOUSE_LEAVE = 'ROW_MOUSE_LEAVE';
 
 
 const HoverRowDemo = () => {
-    const [selectedItem] = useState<typeof dataArray[number]>();
+    const [hoveredItem, setHoveredItem] = useState<typeof dataArray[number]>();
     return (
         <div className='hover-row-demo'>
             <Table
@@ -46,22 +46,21 @@ const HoverRowDemo = () => {
                             onMouseEnter: (event, extendedEvent) => {
                                 const {
                                     childProps: {
-                                        rowKeyValue,
+                                        rowData,
                                     },
-                                    dispatch,
                                 } = extendedEvent;
-                                dispatch({ type: ROW_MOUSE_ENTER, rowKeyValue });
+                                setHoveredItem(rowData);
                             },
-                            onMouseLeave: (event, { dispatch }) => {
-                                dispatch({ type: ROW_MOUSE_LEAVE });
+                            onMouseLeave: () => {
+                                setHoveredItem(undefined);
                             },
                         }),
                     }
                 }}
             />
-            { selectedItem && (
+            { hoveredItem && (
                 <div className='info'>
-          Hovered: {selectedItem.name} ({selectedItem.company.name})
+          Hovered: {hoveredItem.name} ({hoveredItem.company.name})
                 </div>
             )}
         </div>

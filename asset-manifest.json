@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/ka-table/static/css/main.d6b13284.css",
-    "main.js": "/ka-table/static/js/main.7815aa9f.js",
+    "main.js": "/ka-table/static/js/main.a6e962eb.js",
     "static/js/498.c8a7be50.chunk.js": "/ka-table/static/js/498.c8a7be50.chunk.js",
     "static/js/703.b7d2156a.chunk.js": "/ka-table/static/js/703.b7d2156a.chunk.js",
     "static/js/198.0c4a55f8.chunk.js": "/ka-table/static/js/198.0c4a55f8.chunk.js",
     "index.html": "/ka-table/index.html",
     "main.d6b13284.css.map": "/ka-table/static/css/main.d6b13284.css.map",
-    "main.7815aa9f.js.map": "/ka-table/static/js/main.7815aa9f.js.map",
+    "main.a6e962eb.js.map": "/ka-table/static/js/main.a6e962eb.js.map",
     "498.c8a7be50.chunk.js.map": "/ka-table/static/js/498.c8a7be50.chunk.js.map",
     "703.b7d2156a.chunk.js.map": "/ka-table/static/js/703.b7d2156a.chunk.js.map",
     "198.0c4a55f8.chunk.js.map": "/ka-table/static/js/198.0c4a55f8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d6b13284.css",
-    "static/js/main.7815aa9f.js"
+    "static/js/main.a6e962eb.js"
   ]
 }

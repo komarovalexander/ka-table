@@ -21,7 +21,7 @@ const CustomDataRowDemo = () => {
                     dataType: DataType.String,
                     key: 'name',
                     sortDirection: SortDirection.Descend,
-                    width: 100,
+                    width: 150,
                     title: 'Student',
                 },
                 { key: 'score', title: 'Score', dataType: DataType.Number },
