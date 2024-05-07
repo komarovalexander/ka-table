@@ -6,7 +6,7 @@ describe('TableUncontrolled', () => {
     it('getControlledPropsKeys', () => {
         expect(getControlledPropsKeys({
             loading: { enabled: false }
-        } as ITableProps)).toEqual(['searchText', 'loading', 'data', 'paging']);
+        } as ITableProps)).toEqual(['searchText', 'loading', 'data', 'paging', 'selectedRows']);
 
         expect(getControlledPropsKeys({
             loading: { enabled: true }

@@ -2,7 +2,7 @@ import { DataType } from '../../enums';
 import FilterCell from './FilterCell';
 import { IFilterRowEditorProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: IFilterRowEditorProps = {
     childComponents: {},
@@ -15,6 +15,7 @@ const props: IFilterRowEditorProps = {
 
 it('renders without crashing', () => {
     const element = document.createElement('tr');
-    ReactDOM.render(<FilterCell {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<FilterCell {...props} />);
+    root.unmount();
 });

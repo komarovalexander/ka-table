@@ -8,12 +8,12 @@ import FilterRowNumber from '../FilterRowNumber/FilterRowNumber';
 import FilterRowString from '../FilterRowString/FilterRowString';
 
 const FilterRowDataType: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
-  switch (props.column.dataType) {
+    switch (props.column.dataType) {
     case DataType.Boolean: return <FilterRowBoolean {...props} />;
     case DataType.Date: return <FilterRowDate {...props} />;
     case DataType.Number: return <FilterRowNumber {...props} />;
     default: return <FilterRowString {...props} />;
-  }
+    }
 };
 
 export default FilterRowDataType;

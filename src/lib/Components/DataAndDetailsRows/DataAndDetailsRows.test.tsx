@@ -3,7 +3,7 @@ import { DataType, EditingMode } from '../../enums';
 import DataAndDetailsRows from './DataAndDetailsRows';
 import { IRowProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: IRowProps = {
     childComponents: {},
@@ -25,6 +25,7 @@ const props: IRowProps = {
 
 it('renders without crashing', () => {
     const element = document.createElement('tbody');
-    ReactDOM.render(<DataAndDetailsRows {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<DataAndDetailsRows {...props} />);
+    root.unmount();
 });

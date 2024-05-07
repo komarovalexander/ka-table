@@ -1,7 +1,7 @@
 import FilterRow from './FilterRow';
 import { IFilterRowProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 let props: IFilterRowProps;
 
@@ -15,6 +15,7 @@ beforeEach(() => {
 
 it('renders without crashing', () => {
     const element = document.createElement('tbody');
-    ReactDOM.render(<FilterRow {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<FilterRow {...props} />);
+    root.unmount();
 });

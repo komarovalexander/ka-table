@@ -1,13 +1,12 @@
 import Enzyme, { mount } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import { ActionType } from '../../enums';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { Column } from '../../models';
-import { IHeaderFilterButtonProps } from '../../props';
 import HeaderFilterButton from './HeaderFilterButton';
+import { IHeaderFilterButtonProps } from '../../props';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -18,8 +17,9 @@ const props: IHeaderFilterButtonProps = {
 
 it('renders without crashing', () => {
     const element = document.createElement('div');
-    ReactDOM.render(<HeaderFilterButton {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<HeaderFilterButton  {...props} />);
+    root.unmount();
 });
 
 it('should dispatch updateHeaderFilterPopupState onClick', () => {

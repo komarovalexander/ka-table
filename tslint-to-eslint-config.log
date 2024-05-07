@@ -1,0 +1,21 @@
+8 ESLint rules behave differently from their TSLint counterparts:
+  * react/jsx-no-bind:
+    - ESLint rule 'jsx-no-bind' also checks for Function.bind
+  * @typescript-eslint/quotes:
+    - Option "jsx-single" is not supported by ESLint.
+  * @typescript-eslint/no-unused-expressions:
+    - The TSLint optional config "allow-new" is the default ESLint behavior and will no longer be ignored.
+  * no-invalid-this:
+    - Functions in methods will no longer be ignored.
+  * prefer-arrow/prefer-arrow-functions:
+    - ESLint (eslint-plugin-prefer-arrow plugin) does not support allowing named functions defined with the function keyword.
+  * eqeqeq:
+    - Option "smart" allows for comparing two literal values, evaluating the value of typeof and null comparisons.
+  * no-underscore-dangle:
+    - Leading and trailing underscores (_) on identifiers will now be ignored.
+  * no-redeclare:
+    - ESLint does not support check-parameters.
+
+1 rule is not known by tslint-to-eslint-config to have an ESLint equivalent:
+  * tslint-to-eslint-config does not know the ESLint equivalent for TSLint's "whitespace".
+

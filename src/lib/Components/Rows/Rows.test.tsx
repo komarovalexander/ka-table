@@ -1,10 +1,10 @@
 import Enzyme, { mount } from 'enzyme';
 import Rows, { IRowsProps } from './Rows';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { EditingMode } from '../../enums';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { getGroupMark } from '../../Utils/GroupUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -35,8 +35,9 @@ const props: IRowsProps = {
 describe('Rows', () => {
     it('renders without crashing', () => {
         const element = document.createElement('tbody');
-        ReactDOM.render(<Rows {...props} />, element);
-        ReactDOM.unmountComponentAtNode(element);
+        const root = createRoot(element!);
+        root.render(<Rows {...props} />);
+        root.unmount();
     });
 
     it('formats group cell', () => {

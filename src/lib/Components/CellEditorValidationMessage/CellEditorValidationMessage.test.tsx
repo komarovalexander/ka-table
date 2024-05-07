@@ -1,7 +1,7 @@
 import CellEditorValidation from './CellEditorValidationMessage';
 import { ICellEditorValidationMessageProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: ICellEditorValidationMessageProps = {
     message: '',
@@ -9,6 +9,7 @@ const props: ICellEditorValidationMessageProps = {
 
 it('renders without crashing', () => {
     const element = document.createElement('td');
-    ReactDOM.render(<CellEditorValidation {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<CellEditorValidation {...props} />);
+    root.unmount();
 });

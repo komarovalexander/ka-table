@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 import FilterRowCustomEditorDemo from './FilterRowCustomEditorDemo';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<FilterRowCustomEditorDemo />, div);
-  ReactDOM.unmountComponentAtNode(div);
+    const div = document.createElement('div');
+    const root = createRoot(div!);
+    root.render(<FilterRowCustomEditorDemo />);
+    root.unmount();
 });

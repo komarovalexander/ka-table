@@ -7,20 +7,20 @@ import PagingSizeItem from '../PagingSize/PagingSize';
 
 const PagingSizes: React.FunctionComponent<IPagingProps> = (props) => {
     const {
-      childComponents,
-      pageSizes = [],
+        childComponents,
+        pageSizes = [],
     } = props;
 
     const { elementAttributes, content } = getElementCustomization({
-      className: defaultOptions.css.pagingSizes
+        className: defaultOptions.css.pagingSizes
     }, props, childComponents.pagingSizes);
 
     return (
-      <ul {...elementAttributes}>
-        { content || (
-          pageSizes.map(value => <PagingSizeItem {...props} key={value} value={value}/>)
-        )}
-      </ul>
+        <ul {...elementAttributes}>
+            { content || (
+                pageSizes.map(value => <PagingSizeItem {...props} key={value} value={value}/>)
+            )}
+        </ul>
     )
 }
 

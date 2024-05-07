@@ -1,11 +1,11 @@
 import Enzyme, { mount } from 'enzyme';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { EditingMode } from '../../enums';
 import { ITableBodyProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import TableBodyContent from './TableBodyContent';
+import { createRoot } from 'react-dom/client';
 import { newRowId } from '../../const';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -32,8 +32,9 @@ const props: ITableBodyProps = {
 describe('TableBodyContent', () => {
     it('renders without crashing', () => {
         const element = document.createElement('tbody');
-        ReactDOM.render(<TableBodyContent {...props} />, element);
-        ReactDOM.unmountComponentAtNode(element);
+        const root = createRoot(element!);
+        root.render(<TableBodyContent {...props} />);
+        root.unmount();
     });
 
     it('should render noDataRow in case there are no data and noDataRow option is set', () => {
@@ -53,8 +54,51 @@ describe('TableBodyContent', () => {
             }
         );
 
-        expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
         expect(wrapper.find('.ka-tr').length).toBe(1);
+        expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
+    });
+
+    it('should render noDataRow with text in case there are no data and loading is disabled', () => {
+        const noDataText = 'no data';
+        const wrapper = mount(
+            <TableBodyContent
+                {...props}
+                data={[]}
+                loading={{
+                    enabled: false
+                }}
+                noData={{
+                    text: noDataText
+                }}
+            />,
+            {
+                attachTo: document.createElement('tbody'),
+            }
+        );
+
+        expect(wrapper.find('.ka-tr').length).toBe(1);
+        expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
+    });
+    it('should render noDataRow without text in case there are no data and loading is enabled', () => {
+        const noDataText = 'no data';
+        const wrapper = mount(
+            <TableBodyContent
+                {...props}
+                data={[]}
+                loading={{
+                    enabled: true
+                }}
+                noData={{
+                    text: noDataText
+                }}
+            />,
+            {
+                attachTo: document.createElement('tbody'),
+            }
+        );
+
+        expect(wrapper.find('.ka-tr').length).toBe(1);
+        expect(wrapper.find('.ka-tr').text()).toBe('');
     });
 
     it('should render noDataRow & NewRow', () => {

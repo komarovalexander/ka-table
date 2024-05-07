@@ -2,7 +2,7 @@ import { Column } from '../../Models/Column';
 import HeaderCell from './HeadCell';
 import { IHeadCellProps } from '../../props';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 const props: IHeadCellProps = {
     column: new Column(),
@@ -11,6 +11,7 @@ const props: IHeadCellProps = {
 
 it('renders without crashing', () => {
     const element = document.createElement('tr');
-    ReactDOM.render(<HeaderCell {...props} />, element);
-    ReactDOM.unmountComponentAtNode(element);
+    const root = createRoot(element!);
+    root.render(<HeaderCell {...props} />);
+    root.unmount();
 });

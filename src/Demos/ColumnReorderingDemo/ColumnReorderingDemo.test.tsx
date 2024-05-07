@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
 import ColumnReorderingDemo from './ColumnReorderingDemo';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<ColumnReorderingDemo />, div);
-  ReactDOM.unmountComponentAtNode(div);
+    const div = document.createElement('div');
+    const root = createRoot(div!);
+    root.render(<ColumnReorderingDemo />);
+    root.unmount();
 });

@@ -1,5 +1,5 @@
 
 export class Group {
-  public columnKey!: string;
-  public enableSummary?: boolean;
+    public columnKey!: string;
+    public enableSummary?: boolean;
 }

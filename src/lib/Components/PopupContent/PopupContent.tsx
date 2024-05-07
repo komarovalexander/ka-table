@@ -1,51 +1,52 @@
 import * as React from 'react';
-import defaultOptions from '../../defaultOptions';
 
 import { IPopupContentProps } from '../../props';
+import PopupContentItem from '../PopupContentItem/PopupContentItem';
+import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getValueByColumn } from '../../Utils/DataUtils';
-import PopupContentItem from '../PopupContentItem/PopupContentItem';
-
 
 const PopupContent: React.FC<IPopupContentProps> = (props) => {
-  const {
-    column,
-    childComponents,
-    data,
-    dispatch,
-    format
-  } = props;
+    const {
+        column,
+        childComponents,
+        data,
+        dispatch,
+        format
+    } = props;
+    let headerFilterValues: any[] | undefined;
+    if (column?.headerFilterListItems){
+        headerFilterValues =  column?.headerFilterListItems({ data });
+    } else {
+        headerFilterValues = data?.map((item) => {
+            const value = getValueByColumn(item, column);
 
-  let headerFilterValues = data?.map((item) => {
-    const value = getValueByColumn(item, column);
+            const formattedValue =
+          (format && format({ column, value, rowData: item }))
+          || value?.toString();
+            return formattedValue;
+        });
+        headerFilterValues = Array.from(new Set(headerFilterValues));
+    }
 
-    const formatedValue =
-      (format && format({ column, value }))
-      || value?.toString();
-    return formatedValue;
-  });
-
-  headerFilterValues = Array.from(new Set(headerFilterValues));
-
-  const { elementAttributes, content } = getElementCustomization({
-    className: `${defaultOptions.css.popupContent}`
-  }, props, childComponents?.popupContent
-  );
-
-  return (
-    <div {...elementAttributes}>
-      {content ||
+    const { elementAttributes, content } = getElementCustomization({
+        className: `${defaultOptions.css.popupContent}`
+    }, props, childComponents?.popupContent
+    );
+    return (
+        <div {...elementAttributes}>
+            {content ||
         headerFilterValues?.map((item: any, index: number) => (
-          <PopupContentItem
-            key={index}
-            column={column}
-            childComponents={childComponents}
-            dispatch={dispatch}
-            item={item}
-          />
+            <PopupContentItem
+                key={index}
+                column={column}
+                childComponents={childComponents}
+                dispatch={dispatch}
+                item={item}
+            />
         ))}
-    </div>
-  )
+        </div>
+    )
 }
 
 export default PopupContent;

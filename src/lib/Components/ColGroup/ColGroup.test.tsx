@@ -1,24 +1,24 @@
 import Enzyme, { shallow } from 'enzyme';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-
+import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { ColGroup } from './ColGroup';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const props: any = {
-  columns: [
-    { key: 'column', width: 100 },
-    { key: 'column2' },
-  ]
+    columns: [
+        { key: 'column', width: 100 },
+        { key: 'column2' },
+    ]
 };
 
 describe('ColGroup', () => {
-  it('renders without crashing', () => {
-    const div = document.createElement('table');
-    ReactDOM.render(<ColGroup {...props} />, div);
-    ReactDOM.unmountComponentAtNode(div);
-  });
+    it('renders without crashing', () => {
+        const div = document.createElement('table');
+        const root = createRoot(div!);
+        root.render(<ColGroup {...props} />);
+        root.unmount();
+    });
 })
