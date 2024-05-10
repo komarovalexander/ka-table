@@ -1,7 +1,8 @@
 import { Column } from '../models';
 import { GroupedColumn } from '../Models/GroupedColumn';
 
-interface GroupedColumnResult {
+export interface GroupedColumnResult {
+    rowSpan?: number;
     colSpan: number;
     columnChainLength: number;
     column: Column,
@@ -51,7 +52,7 @@ export const getRowsWithGroupedColumns = (columns: Column[], groupedColumns: Gro
         rows = addColumnToRows(rows, c, groupedColumns);
     });
     rows.forEach((row, index) => {
-        row.forEach((c: any) => {
+        row.forEach((c: GroupedColumnResult) => {
             c.rowSpan = index === c.columnChainLength - 1 ? rows.length - c.columnChainLength + 1 : 1 ;
         });
     });
