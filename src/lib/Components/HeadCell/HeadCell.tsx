@@ -29,8 +29,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
     let {
         childComponents: { headCell }
     } = props;
-
-    if (columnReordering || groupPanel?.enabled) {
+    if ((columnReordering || groupPanel?.enabled) && !hasChildren) {
         const reorderedRowProps = getDraggableProps({
             key,
             dispatch,
