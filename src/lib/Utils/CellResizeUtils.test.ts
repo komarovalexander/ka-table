@@ -26,7 +26,7 @@ describe('CellUtils', () => {
             const dispatch = jest.fn();
             const mouseMoveEvent = getMouseMove(40, 50, 100, 'column1', dispatch);
             mouseMoveEvent({ screenX: 20 } as any);
-            expect(dispatch).toBeCalledWith({type: 'ResizeColumn', columnKey: 'column1', width: 50});
+            expect(dispatch).toHaveBeenCalledWith({type: 'ResizeColumn', columnKey: 'column1', width: 50});
         });
         it('skip', () => {
             const dispatch = jest.fn();

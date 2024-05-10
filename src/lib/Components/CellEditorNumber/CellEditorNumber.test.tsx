@@ -42,8 +42,8 @@ describe('CellEditorNumber', () => {
         wrapper.find('input').props().onChange!({
             currentTarget: { value: newValue },
         } as any);
-        expect(props.dispatch).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: 'fieldName',
             rowKeyValue: 1,
             type: ActionType.UpdateCellValue,
@@ -55,8 +55,8 @@ describe('CellEditorNumber', () => {
         const wrapper = mount(<CellEditorNumber {...props} />);
         wrapper.find('input').simulate('blur');
 
-        expect(props.dispatch).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledWith({
             type: ActionType.CloseEditor,
             columnKey: 'fieldName',
             rowKeyValue: 1,

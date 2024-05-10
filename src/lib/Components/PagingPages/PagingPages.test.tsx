@@ -33,7 +33,7 @@ describe('PagingPages', () => {
 
     it('set page index as 0 in case it out of the pages lenght', () => {
         mount(<PagingPages {...props} pageIndex={3} />);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledWith({
             pageIndex: 0,
             type: ActionType.UpdatePageIndex,
         });

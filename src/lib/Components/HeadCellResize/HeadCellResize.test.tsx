@@ -32,12 +32,12 @@ describe('HeadCellResize', () => {
         const wrapper = mount(<HeadCellResize {...props} />);
         const preventDefault = jest.fn();
         wrapper.simulate('mousedown', { preventDefault });
-        expect(preventDefault).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledTimes(0);
+        expect(preventDefault).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledTimes(0);
         simulant.fire(document.body, 'mousemove');
-        expect(props.dispatch).toBeCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
         simulant.fire(document.body, 'mouseup');
-        expect(props.dispatch).toBeCalledTimes(2);
+        expect(props.dispatch).toHaveBeenCalledTimes(2);
     });
 
     it('should use parentWidth for resizing', () => {
