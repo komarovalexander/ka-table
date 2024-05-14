@@ -44,7 +44,7 @@ export const addItemToEditableCells = (
 export const getCellEditorDispatchHandler = (dispatch: DispatchFunc) => {
     return (action: any) => {
         if (action.type === ActionType.UpdateEditorValue) {
-            dispatch(updateCellValue(action.rowKeyValue, action.columnKey, action.value));
+            dispatch(updateCellValue(action.rowKeyValue, action.columnKey, action.value, action.oldValue));
         } else {
             dispatch(action);
         }

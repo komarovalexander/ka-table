@@ -81,8 +81,8 @@ describe('CellUtils', () => {
     describe('getCellEditorDispatchHandler', () => {
         it('transform UpdateEditorValue to UpdateCellValue', () => {
             const dispatch = jest.fn();
-            const dispathcHandler = getCellEditorDispatchHandler(dispatch);
-            dispathcHandler(updateEditorValue(1, 'column', 2));
+            const dispatchHandler = getCellEditorDispatchHandler(dispatch);
+            dispatchHandler(updateEditorValue(1, 'column', 2));
             expect(dispatch).toHaveBeenCalledWith({
                 columnKey: 'column',
                 rowKeyValue: 1,

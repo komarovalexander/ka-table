@@ -1,10 +1,10 @@
-import React from 'react';
-
 import { closeEditor, updateCellValue } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
+
 import { ICellEditorProps } from '../../props';
-import { isEmpty } from '../../Utils/CommonUtils';
+import React from 'react';
+import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { isEmpty } from '../../Utils/CommonUtils';
 
 const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = (props) => {
     const {
@@ -20,7 +20,11 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = (props) => 
         autoFocus,
         type: 'checkbox',
         checked: value || false,
-        onChange: (event) => dispatch(updateCellValue(rowKeyValue, column.key, event.currentTarget.checked)),
+        onChange: (event) => dispatch(updateCellValue(
+            rowKeyValue,
+            column.key,
+            event.currentTarget.checked,
+            value)),
         onBlur: () => dispatch(closeEditor(rowKeyValue, column.key))
     }, props, childComponents?.cellEditorInput);
     return (

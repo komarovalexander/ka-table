@@ -42,7 +42,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     const closeHandler = useCallback(() => {
         if (!isCellEditingMode || !validationMessage) {
             if (editorValueState !== value) {
-                dispatch(updateEditorValue(rowKeyValue, column.key, editorValueState));
+                dispatch(updateEditorValue(rowKeyValue, column.key, editorValueState, value));
             }
             if (isCellEditingMode){
                 close();
