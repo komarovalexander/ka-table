@@ -35,8 +35,8 @@ describe('GroupRowContent', () => {
             attachTo: document.createElement('tr'),
         });
         wrapper.find('.ka-icon-group-arrow').simulate('click');
-        expect(props.dispatch).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledWith({
             groupKey: ['group'],
             type: ActionType.UpdateGroupsExpanded,
         });

@@ -62,6 +62,6 @@ describe('DataRow', () => {
                 attachTo: document.createElement('tbody'),
             }
         );
-        expect(ref).toBeCalled();
+        expect(ref).toHaveBeenCalled();
     });
 });

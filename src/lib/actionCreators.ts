@@ -39,18 +39,20 @@ export const clearAllFilters = () => ({
     type: ActionType.ClearAllFilters,
 });
 
-export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: any) => ({
+export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: any, oldValue?: any) => ({
     columnKey,
     rowKeyValue,
     type: ActionType.UpdateEditorValue,
     value,
+    oldValue
 });
 
-export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any) => ({
+export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any, oldValue?: any) => ({
     columnKey,
     rowKeyValue,
     type: ActionType.UpdateCellValue,
     value,
+    oldValue
 });
 
 export const updateSortDirection = (columnKey: string) => ({

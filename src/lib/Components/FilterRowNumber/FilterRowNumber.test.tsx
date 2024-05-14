@@ -32,8 +32,8 @@ describe('FilterRowNumber', () => {
         const wrapper = mount(<FilterRowNumber {...props} column={column} />);
 
         wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
-        expect(props.dispatch).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: 'nameKey',
             filterRowValue: newValue,
             type: ActionType.UpdateFilterRowValue,

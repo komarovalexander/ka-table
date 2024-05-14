@@ -38,8 +38,8 @@ it('onClick should dispath UpdatePageSize on click', () => {
     const dispatch = jest.fn();
     const wrapper = mount(<PagingSize {...props} dispatch={dispatch} />);
     wrapper.find('.ka-paging-size').first().simulate('click');
-    expect(dispatch).toBeCalledTimes(1);
-    expect(dispatch).toBeCalledWith({
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith({
         pageSize: 5,
         type: ActionType.UpdatePageSize,
     });

@@ -30,8 +30,8 @@ describe('HeadCellContent', () => {
     it('onClick should dispath ChangeSorting', () => {
         const wrapper = mount(<HeadCellContent {...props} column={{ key: 'fieldTest', sortDirection: SortDirection.Ascend }} />);
         wrapper.find('.ka-thead-cell-content').simulate('click');
-        expect(props.dispatch).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: 'fieldTest',
             type: ActionType.UpdateSortDirection,
         });
