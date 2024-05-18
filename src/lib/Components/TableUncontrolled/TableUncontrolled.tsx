@@ -25,7 +25,7 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsK
             const nextStateDefault = kaReducer(prevState, action);
             const nextState = props.table?.customReducer ? (props.table.customReducer(nextStateDefault, action, prevState) ?? nextStateDefault) : nextStateDefault;
             setTimeout(() => {
-                props.table?.onDispatch?.(action, nextState);
+                props.table?.onDispatch?.(action, nextState, prevState);
             }, 0);
             return nextState;
         });

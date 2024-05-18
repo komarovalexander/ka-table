@@ -44,7 +44,7 @@ export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: an
     rowKeyValue,
     type: ActionType.UpdateEditorValue,
     value,
-    oldValue
+    oldValue // TODO: deprecate it with next major release as prevState onDispatch can be used to achieve https://github.com/komarovalexander/ka-table/issues/411
 });
 
 export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any, oldValue?: any) => ({
@@ -52,7 +52,7 @@ export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any,
     rowKeyValue,
     type: ActionType.UpdateCellValue,
     value,
-    oldValue
+    oldValue // TODO: deprecate it with next major release as prevState onDispatch can be used to achieve https://github.com/komarovalexander/ka-table/issues/411
 });
 
 export const updateSortDirection = (columnKey: string) => ({
