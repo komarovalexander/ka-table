@@ -87,7 +87,7 @@ describe('CellUtils', () => {
                 columnKey: 'column',
                 rowKeyValue: 1,
                 type: ActionType.UpdateCellValue,
-                value: 2
+                value: 2,
             });
         });
 

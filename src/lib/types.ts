@@ -18,7 +18,7 @@ type ElementAttributes<T> = React.AllHTMLAttributes<HTMLElement>;
 export type ChildAttributesItem<T> = WithExtraParameters<ElementAttributes<T>, T> & { ref?: any };
 export type DispatchFunc = (action: any) => void;
 export type CustomReducerFunc = (nextState: ITableProps, action: any, prevState: ITableProps) => ITableProps;
-export type OnDispatchFunc = (action: any, tableProps: ITableProps) => void;
+export type OnDispatchFunc = (action: any, tableProps: ITableProps, prevState: ITableProps) => void;
 export type ControlledPropsKeys = (keyof ITableProps)[];
 export type Field = string;
 export type FormatFunc<TData= any> = (props: { value: any, column: Column, rowData?: TData; }) => any;
