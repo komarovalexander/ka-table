@@ -23,8 +23,7 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = (props) => 
         onChange: (event) => dispatch(updateCellValue(
             rowKeyValue,
             column.key,
-            event.currentTarget.checked,
-            value)),
+            event.currentTarget.checked)),
         onBlur: () => dispatch(closeEditor(rowKeyValue, column.key))
     }, props, childComponents?.cellEditorInput);
     return (

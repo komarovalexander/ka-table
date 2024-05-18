@@ -23,8 +23,7 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = (props) => {
             dispatch(updateCellValue(
                 rowKeyValue,
                 column.key,
-                event.currentTarget.value,
-                value
+                event.currentTarget.value
             ));
         },
         onBlur: () => {

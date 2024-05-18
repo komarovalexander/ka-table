@@ -39,20 +39,18 @@ export const clearAllFilters = () => ({
     type: ActionType.ClearAllFilters,
 });
 
-export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: any, oldValue?: any) => ({
+export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: any) => ({
     columnKey,
     rowKeyValue,
     type: ActionType.UpdateEditorValue,
-    value,
-    oldValue // TODO: deprecate it with next major release as prevState onDispatch can be used to achieve https://github.com/komarovalexander/ka-table/issues/411
+    value
 });
 
-export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any, oldValue?: any) => ({
+export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any) => ({
     columnKey,
     rowKeyValue,
     type: ActionType.UpdateCellValue,
-    value,
-    oldValue // TODO: deprecate it with next major release as prevState onDispatch can be used to achieve https://github.com/komarovalexander/ka-table/issues/411
+    value
 });
 
 export const updateSortDirection = (columnKey: string) => ({

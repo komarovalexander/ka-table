@@ -46,7 +46,6 @@ describe('CellEditorBoolean', () => {
         expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: 'fieldName',
             rowKeyValue: 2,
-            oldValue: 'columnFieldValue',
             type: ActionType.UpdateCellValue,
             value: false,
         });
