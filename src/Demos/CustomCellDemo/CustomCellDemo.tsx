@@ -7,11 +7,11 @@ import { ICellTextProps } from '../../lib/props';
 import React from 'react';
 import dataArray from './data';
 
-const CustomCell: React.FC<ICellTextProps> = ({
+const CustomCell = ({
     column,
     rowKeyValue,
     value,
-}) => {
+}: ICellTextProps) => {
     const table = useTableInstance();
     return (
         <div onClick={() => {
@@ -22,7 +22,7 @@ const CustomCell: React.FC<ICellTextProps> = ({
     );
 };
 
-const CustomCellDemo: React.FC = () => {
+const CustomCellDemo = () => {
     return (
         <Table
             columns= {[
@@ -64,7 +64,7 @@ const CustomCellDemo: React.FC = () => {
                     return `$${value}`;
                 }
                 if (column.dataType === DataType.Date){
-                    return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
                 }
             }}
             data={dataArray}

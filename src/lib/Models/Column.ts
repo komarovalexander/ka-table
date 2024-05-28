@@ -3,7 +3,7 @@ import { DataType, SortDirection } from '../enums';
 import { Field } from '../types';
 import { PopupPosition } from './PopupPosition';
 
-export class Column {
+export class Column<TData = any> {
     public colGroup?: React.ColHTMLAttributes<HTMLElement>;
     public dataType?: DataType;
     public field?: Field;

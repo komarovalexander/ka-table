@@ -46,8 +46,8 @@ describe('FilterRowBoolean', () => {
         wrapper.find('input').props().onChange!({
             currentTarget: { checked: newValue },
         } as any);
-        expect(props.dispatch).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: column.key,
             filterRowValue: newValue,
             type: ActionType.UpdateFilterRowValue,
@@ -67,8 +67,8 @@ describe('FilterRowBoolean', () => {
         wrapper.find('input').props().onChange!({
             currentTarget: { checked: newValue },
         } as any);
-        expect(props.dispatch).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledWith({
             type: ActionType.UpdateFilterRowValue,
             filterRowValue: undefined,
             columnKey: column.key,

@@ -1,10 +1,8 @@
 import './AddRowDemo.scss';
 
-import React from 'react';
+import { DataType, Table, useTableInstance } from '../../lib';
 
-import { DataType, Table } from '../../lib';
-import { hideNewRow, saveNewRow, showNewRow } from '../../lib/actionCreators';
-import { ICellEditorProps, IHeadCellProps } from '../../lib/props';
+import React from 'react';
 
 const dataArray = Array(7).fill(undefined).map(
     (_, index) => ({
@@ -22,29 +20,27 @@ const generateNewId = () => {
     return maxValue;
 };
 
-const AddButton: React.FC<IHeadCellProps> = ({
-    dispatch,
-}) => {
+const AddButton = () => {
+    const table = useTableInstance();
     return (
         <div className='plus-cell-button'>
             <img
                 src='static/icons/plus.svg'
                 alt='Add New Row'
                 title='Add New Row'
-                onClick={() => dispatch(showNewRow())}
+                onClick={() => table.showNewRow()}
             />
         </div>
     );
 };
 
-const SaveButton: React.FC<ICellEditorProps> = ({
-    dispatch
-}) => {
+const SaveButton = () => {
+    const table = useTableInstance();
     const saveNewData = () => {
         const rowKeyValue = generateNewId();
-        dispatch(saveNewRow(rowKeyValue, {
+        table.saveNewRow(rowKeyValue, {
             validate: true
-        }));
+        });
     };
     return (
         <div className='buttons'>
@@ -60,7 +56,7 @@ const SaveButton: React.FC<ICellEditorProps> = ({
                 className='close-cell-button'
                 alt='Cancel'
                 title='Cancel'
-                onClick={() => dispatch(hideNewRow())}
+                onClick={() => table.hideNewRow()}
             />
         </div>
     );
@@ -95,14 +91,14 @@ const AddRowDemo: React.FC = () => {
                     cellEditor: {
                         content: (props) => {
                             if (props.column.key === 'addColumn'){
-                                return <SaveButton {...props}/>;
+                                return <SaveButton />;
                             }
                         }
                     },
                     headCell: {
                         content: (props) => {
                             if (props.column.key === 'addColumn'){
-                                return <AddButton {...props}/>;
+                                return <AddButton />;
                             }
                         }
                     }

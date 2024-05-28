@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { closeEditor, updateCellValue } from '../../actionCreators';
-import defaultOptions from '../../defaultOptions';
+
 import { ICellEditorProps } from '../../props';
+import React from 'react';
+import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
 const CellEditorString: React.FunctionComponent<ICellEditorProps> = (props) => {
@@ -20,7 +20,11 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = (props) => {
         type: 'text',
         value: value || '',
         onChange: (event) => {
-            dispatch(updateCellValue(rowKeyValue, column.key, event.currentTarget.value));
+            dispatch(updateCellValue(
+                rowKeyValue,
+                column.key,
+                event.currentTarget.value
+            ));
         },
         onBlur: () => {
             dispatch(closeEditor(rowKeyValue, column.key));

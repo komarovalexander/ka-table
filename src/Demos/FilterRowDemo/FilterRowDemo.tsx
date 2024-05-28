@@ -1,9 +1,9 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
 import { FilteringMode, SortDirection } from '../../lib/enums';
 
-const dataArray: any[] = [
+import React from 'react';
+
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2021, 10, 8) },
     { id: 3, name: 'Tom Williams', score: 45, passed: false, nextTry: new Date(2021, 11, 8) },
@@ -12,7 +12,7 @@ const dataArray: any[] = [
     { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9) },
 ];
 
-const FilterRowDemo: React.FC = () => {
+const FilterRowDemo = () => {
     return (
         <Table
             columns= {[

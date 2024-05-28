@@ -12,7 +12,7 @@ const dataArray = Array(100000).fill(undefined).map(
     }),
 );
 
-const ManyRowsDemo: React.FC = () => {
+const ManyRowsDemo = () => {
     return (
         <Table
             columns= {[

@@ -29,7 +29,7 @@ export interface IColGroupProps {
     groupColumnsCount: number;
 }
 
-interface IRowCommonProps {
+interface IRowCommonProps<TData= any> {
     childComponents: ChildComponents;
     columns: Column[];
     treeDeep?: number;
@@ -40,13 +40,13 @@ interface IRowCommonProps {
     index?: number;
     isTreeExpanded?: boolean;
     isTreeGroup?: boolean;
-    rowData: any;
+    rowData: TData;
     rowKeyField: string;
     rowKeyValue: any;
     selectedRows: any[];
 }
 
-export interface ICellProps {
+export interface ICellProps<TData= any> {
     treeArrowElement?: any;
     childComponents: ChildComponents;
     column: Column;
@@ -60,7 +60,7 @@ export interface ICellProps {
     isDetailsRowShown: boolean;
     isEditableCell: boolean;
     isSelectedRow: boolean;
-    rowData: any;
+    rowData: TData;
     rowKeyField: string;
     rowKeyValue: any;
     selectedRows: any[];
@@ -75,14 +75,14 @@ export interface IFilterRowEditorProps {
     dispatch: DispatchFunc;
 }
 
-export interface ICellEditorProps extends IFilterRowEditorProps {
+export interface ICellEditorProps<TData= any> extends IFilterRowEditorProps {
     autoFocus?: boolean;
     editingMode: EditingMode;
     editorValue?: any;
     field: Field;
     isDetailsRowShown: boolean;
     isSelectedRow: boolean;
-    rowData: any;
+    rowData: TData;
     rowKeyField: string;
     rowKeyValue: any;
     value: any;
@@ -91,7 +91,7 @@ export interface ICellEditorProps extends IFilterRowEditorProps {
     validation?: ValidationFunc;
 }
 
-export interface ICellTextProps {
+export interface ICellTextProps<TData= any> {
     childComponents: ChildComponents;
     column: Column;
     dispatch: DispatchFunc;
@@ -100,14 +100,14 @@ export interface ICellTextProps {
     format?: FormatFunc;
     isDetailsRowShown: boolean;
     isSelectedRow: boolean;
-    rowData: any;
+    rowData: TData;
     rowKeyField: string;
     rowKeyValue: any;
     selectedRows: any[];
     value: any;
 }
 
-export interface IDataRowProps extends IRowCommonProps {
+export interface IDataRowProps<TData= any> extends IRowCommonProps<TData> {
     format?: FormatFunc;
     validation?: ValidationFunc;
     isDetailsRowShown: boolean;
@@ -115,7 +115,7 @@ export interface IDataRowProps extends IRowCommonProps {
     rowEditableCells: EditableCell[];
 }
 
-export interface IGroupRowProps {
+export interface IGroupRowProps<TData= any> {
     childComponents: ChildComponents;
     column: Column;
     columns?: Column[];
@@ -126,15 +126,15 @@ export interface IGroupRowProps {
     groupKey: any[];
     isExpanded: boolean;
     text: string;
-    groupItems?: any[];
+    groupItems?: TData[];
 }
 
-export interface IGroupSummaryRowProps extends IRowsProps {
-    groupData: any[];
+export interface IGroupSummaryRowProps<TData= any> extends IRowsProps {
+    groupData: TData[];
     groupIndex: number;
 }
 
-export interface IGroupSummaryCellProps extends IGroupSummaryRowProps {
+export interface IGroupSummaryCellProps<TData= any> extends IGroupSummaryRowProps<TData> {
     column: Column;
 }
 
@@ -181,10 +181,10 @@ export interface ITableHeadProps {
     sortingMode: SortingMode;
 }
 
-export interface ITableBodyProps {
+export interface ITableBodyProps<TData= any> {
     childComponents: ChildComponents;
     columns: Column[];
-    data: any[];
+    data: TData[];
     loading?: ILoadingProps;
     detailsRows?: any[];
     dispatch: DispatchFunc;
@@ -204,13 +204,13 @@ export interface ITableBodyProps {
     treeExpandButtonColumnKey?: string;
 }
 
-export interface ITableFootProps extends ITableAllProps {
-    data: any[];
+export interface ITableFootProps<TData= any> extends ITableAllProps {
+    data: TData[];
     groupColumnsCount: number;
 }
-export interface ISummaryRowProps extends ITableFootProps {
+export interface ISummaryRowProps<TData= any> extends ITableFootProps<TData> {
 }
-export interface ISummaryCellProps extends ISummaryRowProps {
+export interface ISummaryCellProps<TData= any> extends ISummaryRowProps<TData> {
     column: Column;
 }
 
@@ -304,7 +304,22 @@ export interface IPagingIndexProps extends IPagingProps {
     text: any;
 }
 
-export interface IHeaderFilterPopupProps {
+export interface IPopupContentProps<TData= any> {
+    column: Column;
+    childComponents?: ChildComponents;
+    data?: TData[];
+    dispatch: DispatchFunc;
+    format?: FormatFunc;
+}
+
+export interface IPopupContentItemProps {
+    column: Column;
+    childComponents?: ChildComponents;
+    item?: any;
+    dispatch: DispatchFunc;
+}
+
+export interface IPopupProps {
     column: Column;
     childComponents?: ChildComponents;
     data?: any[];

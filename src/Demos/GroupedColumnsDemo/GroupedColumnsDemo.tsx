@@ -1,10 +1,10 @@
 import './GroupedColumnsDemo.scss';
 
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
-import { SortingMode } from '../../lib/enums';
+
 import { Column } from '../../lib/models';
+import React from 'react';
+import { SortingMode } from '../../lib/enums';
 
 const columns: Column[] = Array(15).fill(undefined).map(
     (_, index) => ({
@@ -22,7 +22,7 @@ const dataArray = Array(30).fill(undefined).map(
     }), { id: index }),
 );
 
-const GroupedColumnsDemo: React.FC = () => {
+const GroupedColumnsDemo = () => {
     return (
         <div className='group-header-column-demo'>
             <Table

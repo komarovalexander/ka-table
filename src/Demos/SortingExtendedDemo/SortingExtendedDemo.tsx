@@ -4,7 +4,7 @@ import { SortDirection, SortingMode } from '../../lib/enums';
 import React from 'react';
 import orderBy from 'lodash.orderby';
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, faculty: 'Economics', comment: 'Well done!' },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, faculty: 'Engineering', comment: 'almost did it, keep going' },
     { id: 3, name: 'Tom Williams', score: 45, passed: false, faculty: 'Engineering', comment: 'you can do it better' },

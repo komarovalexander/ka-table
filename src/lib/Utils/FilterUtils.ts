@@ -5,7 +5,6 @@ import { Column } from '../Models/Column';
 import { EditableCell } from '../Models/EditableCell';
 import { FilterOperator } from '../Models/FilterOperator';
 import { ITableProps } from '../';
-import { convertToColumnTypes } from './TypeUtils';
 import defaultOptions from '../defaultOptions';
 import { getValueByColumn } from './DataUtils';
 import { isEmpty } from './CommonUtils';
@@ -50,7 +49,6 @@ export const filterAndSearchData = (props: ITableProps) => {
     data = [...data];
     data = extendedFilter ? extendedFilter(data) : data;
     data = searchText ? searchData(columns, data, searchText, search) : data;
-    data = convertToColumnTypes(data, columns);
     data = filterData(data, columns, filter);
     data = filterByHeaderFilter(data, columns, format);
 
@@ -136,8 +134,6 @@ export const filterByHeaderFilter = (data: any[], columns: Column[], format?: Fo
     return columns.reduce((initialData, column) => {
         if (
             isEmpty(column.headerFilterValues)
-            && column.filterRowOperator !== FilterOperatorName.IsEmpty
-            && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
         ) {
             return initialData;
         }

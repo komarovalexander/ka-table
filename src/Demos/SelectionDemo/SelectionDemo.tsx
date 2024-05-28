@@ -17,7 +17,7 @@ const dataArray = Array(64)
         id: index,
     }));
 
-const SelectionCell: React.FC<ICellTextProps> = ({ rowKeyValue, isSelectedRow, selectedRows }) => {
+const SelectionCell = ({ rowKeyValue, isSelectedRow, selectedRows }: ICellTextProps) => {
     const table = useTableInstance();
     return (
         <input
@@ -55,7 +55,7 @@ const SelectionHeader = () => {
     );
 };
 
-const SelectionDemo: React.FC = () => {
+const SelectionDemo = () => {
     return (
         <div className='selection-demo'>
             <Table

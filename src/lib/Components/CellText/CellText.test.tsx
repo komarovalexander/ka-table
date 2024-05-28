@@ -40,8 +40,8 @@ describe('CellText', () => {
         const wrapper = mount(<CellText {...props} />);
 
         wrapper.find('.ka-cell-text').simulate('click');
-        expect(props.dispatch).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledWith({
             type: ActionType.OpenEditor,
             columnKey: 'columnField',
             rowKeyValue: 1,
@@ -53,6 +53,6 @@ describe('CellText', () => {
             <CellText {...props} editingMode={EditingMode.None} />
         );
         wrapper.find('.ka-cell-text').simulate('click');
-        expect(props.dispatch).toBeCalledTimes(0);
+        expect(props.dispatch).toHaveBeenCalledTimes(0);
     });
 });

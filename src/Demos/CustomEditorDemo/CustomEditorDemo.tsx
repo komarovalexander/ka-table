@@ -1,9 +1,8 @@
 import './CustomEditorDemo.scss';
 
+import { DataType, Table, useTableInstance } from '../../lib';
 import React, { useState } from 'react';
 
-import { DataType, Table } from '../../lib';
-import { closeEditor, updateCellValue } from '../../lib/actionCreators';
 import { EditingMode } from '../../lib/enums';
 import { ICellEditorProps } from '../../lib/props';
 
@@ -16,11 +15,12 @@ const dataArray: any[] = [
     { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2019, 10, 9, 10) },
 ];
 
-const CustomEditor: React.FC<ICellEditorProps> = ({
-    column, rowKeyValue, dispatch, value,
-}) => {
+const CustomEditor = ({
+    column, rowKeyValue, value,
+}: ICellEditorProps) => {
+    const table = useTableInstance();
     const close = () => {
-        dispatch(closeEditor(rowKeyValue, column.key));
+        table.closeEditor(rowKeyValue, column.key);
     };
     const [editorValue, setValue] = useState(value);
     return (
@@ -32,7 +32,7 @@ const CustomEditor: React.FC<ICellEditorProps> = ({
                 onChange={(event) => setValue(event.currentTarget.value)}/>
             <button className='custom-editor-button custom-editor-button-save'
                 onClick={() => {
-                    dispatch(updateCellValue(rowKeyValue, column.key, editorValue));
+                    table.updateCellValue(rowKeyValue, column.key, editorValue);
                     close();
                 }}>Save</button>
             <button className='custom-editor-button custom-editor-button-cancel' onClick={close}>Cancel</button>
@@ -40,12 +40,10 @@ const CustomEditor: React.FC<ICellEditorProps> = ({
     );
 };
 
-const CustomLookupEditor: React.FC<ICellEditorProps> = ({
+const CustomLookupEditor = ({
     column, dispatch, rowKeyValue, value,
-}) => {
-    const close = () => {
-        dispatch(closeEditor(rowKeyValue, column.key));
-    };
+}: ICellEditorProps) => {
+    const table = useTableInstance();
     const [editorValue, setValue] = useState(value);
     return (
         <div>
@@ -54,8 +52,8 @@ const CustomLookupEditor: React.FC<ICellEditorProps> = ({
                 autoFocus={true}
                 defaultValue={editorValue}
                 onBlur={() => {
-                    dispatch(updateCellValue(rowKeyValue, column.key, editorValue));
-                    close();
+                    table.updateCellValue(rowKeyValue, column.key, editorValue);
+                    table.closeEditor(rowKeyValue, column.key);
                 }}
                 onChange={(event) => {
                     setValue(event.currentTarget.value === 'true');
@@ -87,7 +85,7 @@ const CustomEditorDemo: React.FC = () => {
             ]}
             format= {({ column, value }) => {
                 if (column.dataType === DataType.Date){
-                    return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
                 }
             }}
             data={dataArray}

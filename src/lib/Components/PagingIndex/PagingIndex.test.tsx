@@ -26,8 +26,8 @@ it('onClick should dispath UpdatePageIndex on click', () => {
         <PagingIndex {...props} pageIndex={2} dispatch={dispatch} />
     );
     wrapper.find('.ka-paging-page-index').first().simulate('click');
-    expect(dispatch).toBeCalledTimes(1);
-    expect(dispatch).toBeCalledWith({
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith({
         pageIndex: 2,
         type: ActionType.UpdatePageIndex,
     });

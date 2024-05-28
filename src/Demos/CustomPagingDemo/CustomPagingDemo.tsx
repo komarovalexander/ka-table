@@ -1,10 +1,10 @@
 import './CustomPagingDemo.scss';
 
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
 import { updatePageIndex, updatePageSize } from '../../lib/actionCreators';
+
 import { IPagingProps } from '../../lib/props';
+import React from 'react';
 
 const dataArray = Array(180).fill(undefined).map(
     (_, index) => ({
@@ -16,7 +16,7 @@ const dataArray = Array(180).fill(undefined).map(
     }),
 );
 
-const PageSizeSelector: React.FC<IPagingProps> = ({ pageSize, pageSizes, dispatch }) =>  (
+const PageSizeSelector = ({ pageSize, pageSizes, dispatch }: IPagingProps) =>  (
     <>
     Page Size:
         <select
@@ -32,7 +32,7 @@ const PageSizeSelector: React.FC<IPagingProps> = ({ pageSize, pageSizes, dispatc
     </>
 )
 
-const PagesSelector: React.FC<IPagingProps> = ({ pageIndex, pagesCount, dispatch }) =>  (
+const PagesSelector = ({ pageIndex, pagesCount, dispatch }: IPagingProps) =>  (
     <>
     Page Number:
         <select
@@ -48,7 +48,7 @@ const PagesSelector: React.FC<IPagingProps> = ({ pageIndex, pagesCount, dispatch
     </>
 )
 
-const CustomPagingDemo: React.FC = () => {
+const CustomPagingDemo = () => {
     return (
         <div className='custom-paging-demo'>
             <Table

@@ -22,6 +22,7 @@ export enum EditingMode {
 }
 
 export enum ActionType {
+    ClearAllFilters = 'ClearAllFilters',
     ClearFocused = 'ClearFocused',
     ClearSingleAction = 'ClearSingleAction',
     CloseEditor = 'CloseEditor',

@@ -1,10 +1,10 @@
 import './DeleteRowDemo.scss';
 
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
-import { deleteRow } from '../../lib/actionCreators';
+
 import { ICellTextProps } from '../../lib/props';
+import React from 'react';
+import { deleteRow } from '../../lib/actionCreators';
 
 const dataArray = Array(10).fill(undefined).map(
     (_, index) => ({
@@ -16,9 +16,9 @@ const dataArray = Array(10).fill(undefined).map(
     }),
 );
 
-const DeleteRow: React.FC<ICellTextProps> = ({
+const DeleteRow = ({
     dispatch, rowKeyValue,
-}) => {
+}: ICellTextProps) => {
     return (
         <img
             src='static/icons/delete.svg'
@@ -29,7 +29,7 @@ const DeleteRow: React.FC<ICellTextProps> = ({
     );
 };
 
-const DeleteRowDemo: React.FC = () => {
+const DeleteRowDemo = () => {
     return (
         <Table
             columns= {[

@@ -13,7 +13,7 @@ const dataArray = Array(10)
         id: index,
     }));
 
-const LoadingDemo: React.FC = () => {
+const LoadingDemo = () => {
     const [loading, setLoading] = useState(true);
 
     return (

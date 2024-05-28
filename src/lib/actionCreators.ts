@@ -41,18 +41,22 @@ export const updateFilterRowOperator = (columnKey: string, filterRowOperator: st
     type: ActionType.UpdateFilterRowOperator,
 });
 
+export const clearAllFilters = () => ({
+    type: ActionType.ClearAllFilters,
+});
+
 export const updateEditorValue = (rowKeyValue: any, columnKey: string, value: any) => ({
     columnKey,
     rowKeyValue,
     type: ActionType.UpdateEditorValue,
-    value,
+    value
 });
 
 export const updateCellValue = (rowKeyValue: any, columnKey: string, value: any) => ({
     columnKey,
     rowKeyValue,
     type: ActionType.UpdateCellValue,
-    value,
+    value
 });
 
 export const updateSortDirection = (columnKey: string) => ({
@@ -126,7 +130,7 @@ export const selectRow = (rowKeyValue: any) => ({
     type: ActionType.SelectRow,
 });
 
-export const selectRows = (rowsKeyValues: any) => ({
+export const selectRows = (rowsKeyValues: any[]) => ({
     rowsKeyValues,
     type: ActionType.SelectRows,
 });

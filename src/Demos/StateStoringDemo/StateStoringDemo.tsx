@@ -14,7 +14,7 @@ const initDataArray = [
 const OPTION_KEY = 'state-storing-demo-table-option';
 const savedOptions = {...JSON.parse(localStorage.getItem(OPTION_KEY) || '0')};
 
-const StateStoringDemo: React.FC = () => {
+const StateStoringDemo = () => {
     const table = useTable({
         onDispatch: (action, newProps) => {
             const { data, ...settingsWithoutData } = newProps;

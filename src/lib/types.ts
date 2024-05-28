@@ -17,11 +17,12 @@ type ElementAttributes<T> = React.AllHTMLAttributes<HTMLElement>;
 
 export type ChildAttributesItem<T> = WithExtraParameters<ElementAttributes<T>, T> & { ref?: any };
 export type DispatchFunc = (action: any) => void;
-export type OnDispatchFunc = (action: any, tableProps: ITableProps) => void;
+export type CustomReducerFunc = (nextState: ITableProps, action: any, prevState: ITableProps) => ITableProps;
+export type OnDispatchFunc = (action: any, tableProps: ITableProps, prevState: ITableProps) => void;
 export type ControlledPropsKeys = (keyof ITableProps)[];
 export type Field = string;
-export type FormatFunc = (props: { value: any, column: Column, rowData?: any; }) => any;
-export type FilterFunc = (props: { column: Column }) => ((value: any, filterRowValue: any, rowData?: any) => boolean) | void;
+export type FormatFunc<TData= any> = (props: { value: any, column: Column, rowData?: TData; }) => any;
+export type FilterFunc<TData= any> = (props: { column: Column }) => ((value: any, filterRowValue: any, rowData?: TData) => boolean) | void;
 export type SortFunc = (props: { column: Column }) =>  ((value1: any, value2: any) => 0 | 1 | -1) | void;
-export type SearchFunc = (props: { searchText: string, rowData: any, column: Column }) => boolean;
-export type ValidationFunc = (props: { value: any, rowData: any, column: Column }) => string | void;
+export type SearchFunc<TData= any> = (props: { searchText: string, rowData: TData, column: Column }) => boolean | void;
+export type ValidationFunc<TData= any> = (props: { value: any, rowData: TData, column: Column }) => string | void;

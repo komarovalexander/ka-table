@@ -5,7 +5,7 @@ import serverEmulator from './serverEmulator';
 
 const LOAD_MORE_DATA = 'LOAD_MORE_DATA';
 
-const InfiniteScrollingDemo: React.FC = () => {
+const InfiniteScrollingDemo = () => {
     const [pageIndex, changePageIndex] = useState(0);
     const [data, changeData] = useState<any[]>([]);
 

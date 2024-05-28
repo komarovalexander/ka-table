@@ -16,9 +16,9 @@ const dataArray = Array(10).fill(undefined).map(
 );
 
 
-const AlertCell: React.FC<ICellTextProps> = ({
+const AlertCell = ({
     rowData,
-}) => {
+}: ICellTextProps) => {
     return (
         <img
             src='static/icons/alert.svg'
@@ -29,7 +29,7 @@ const AlertCell: React.FC<ICellTextProps> = ({
     );
 };
 
-const AlertCellDemo: React.FC = () => {
+const AlertCellDemo = () => {
     return (
         <Table
             columns={[

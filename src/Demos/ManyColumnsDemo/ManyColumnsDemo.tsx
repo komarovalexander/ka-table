@@ -1,8 +1,8 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
 import { EditingMode, SortingMode } from '../../lib/enums';
+
 import { Column } from '../../lib/models';
+import React from 'react';
 
 const columns: Column[] = Array(100).fill(undefined).map(
     (_, index) => ({
@@ -20,7 +20,7 @@ const dataArray = Array(30).fill(undefined).map(
     }, { id: index }),
 );
 
-const ManyColumnsDemo: React.FC = () => {
+const ManyColumnsDemo = () => {
     return (
         <Table
             columns={columns}

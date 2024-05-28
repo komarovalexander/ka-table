@@ -263,6 +263,19 @@ Array [
 ]
 `;
 
+exports[`getFilteredData default 1`] = `
+Array [
+  Object {
+    "field": "11",
+    "id": 1,
+  },
+  Object {
+    "field": "21",
+    "id": 2,
+  },
+]
+`;
+
 exports[`getSelectedData one item 1`] = `
 Array [
   Object {

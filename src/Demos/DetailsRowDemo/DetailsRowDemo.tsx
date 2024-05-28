@@ -1,6 +1,5 @@
-import { DataType, Table } from '../../lib';
+import { DataType, Table, useTableInstance } from '../../lib';
 import { ICellTextProps, IDataRowProps } from '../../lib/props';
-import { hideDetailsRow, showDetailsRow } from '../../lib/actionCreators';
 
 import React from 'react';
 
@@ -14,14 +13,14 @@ const dataArray = Array(10).fill(undefined).map(
     }),
 );
 
-const DetailsButton: React.FC<ICellTextProps> = ({
-    dispatch,
+const DetailsButton = ({
     rowKeyValue,
     isDetailsRowShown,
-}) => {
+}: ICellTextProps) => {
+    const table = useTableInstance();
     return (
         <button onClick={() => {
-            dispatch(isDetailsRowShown ? hideDetailsRow(rowKeyValue) : showDetailsRow(rowKeyValue));
+            isDetailsRowShown ? table.hideDetailsRow(rowKeyValue) : table.showDetailsRow(rowKeyValue);
         }}>
             {isDetailsRowShown ? 'Hide' : 'Show'} Details Row
         </button>

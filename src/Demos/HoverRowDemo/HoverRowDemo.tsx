@@ -1,36 +1,16 @@
 import './HoverRowDemo.scss';
 
+import { DataType, Table } from '../../lib';
 import React, { useState } from 'react';
 
-import { DataType, Table } from '../../lib';
-import { ChildComponents } from '../../lib/models';
 import dataArray from './data';
 
 const ROW_MOUSE_ENTER = 'ROW_MOUSE_ENTER';
 const ROW_MOUSE_LEAVE = 'ROW_MOUSE_LEAVE';
 
-const childAttributes: ChildComponents = {
-    dataRow: {
-        elementAttributes: (props) => ({
-            title: `${props.rowData.name} ${props.rowData.phoneNumber}`,
-            onMouseEnter: (event, extendedEvent) => {
-                const {
-                    childProps: {
-                        rowKeyValue,
-                    },
-                    dispatch,
-                } = extendedEvent;
-                dispatch({ type: ROW_MOUSE_ENTER, rowKeyValue });
-            },
-            onMouseLeave: (event, { dispatch }) => {
-                dispatch({ type: ROW_MOUSE_LEAVE });
-            },
-        }),
-    },
-};
 
-const HoverRowDemo: React.FC = () => {
-    const [selectedItem] = useState<any>();
+const HoverRowDemo = () => {
+    const [hoveredItem, setHoveredItem] = useState<typeof dataArray[number]>();
     return (
         <div className='hover-row-demo'>
             <Table
@@ -59,11 +39,28 @@ const HoverRowDemo: React.FC = () => {
                 ]}
                 data={dataArray}
                 rowKeyField={'id'}
-                childComponents={childAttributes}
+                childComponents={{
+                    dataRow: {
+                        elementAttributes: (props) => ({
+                            title: `${props.rowData.name} ${props.rowData.phoneNumber}`,
+                            onMouseEnter: (event, extendedEvent) => {
+                                const {
+                                    childProps: {
+                                        rowData,
+                                    },
+                                } = extendedEvent;
+                                setHoveredItem(rowData);
+                            },
+                            onMouseLeave: () => {
+                                setHoveredItem(undefined);
+                            },
+                        }),
+                    }
+                }}
             />
-            { selectedItem && (
+            { hoveredItem && (
                 <div className='info'>
-          Hovered: {selectedItem.name} ({selectedItem.company.name})
+          Hovered: {hoveredItem.name} ({hoveredItem.company.name})
                 </div>
             )}
         </div>

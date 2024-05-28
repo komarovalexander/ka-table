@@ -1,12 +1,12 @@
 import './EditingRowDemo.scss';
 
+import { DataType, Table } from '../../lib';
+import { ICellEditorProps, ICellTextProps } from '../../lib/props';
+import { closeRowEditors, openRowEditors, saveRowEditors } from '../../lib/actionCreators';
+
 import React from 'react';
 
-import { DataType, Table } from '../../lib';
-import { closeRowEditors, openRowEditors, saveRowEditors } from '../../lib/actionCreators';
-import { ICellEditorProps, ICellTextProps } from '../../lib/props';
-
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2021, 10, 8, 10) },
     { id: 3, name: 'Tom Williams', score: 45, passed: false, nextTry: new Date(2021, 11, 8, 10) },
@@ -15,9 +15,9 @@ const dataArray: any[] = [
     { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9, 10) },
 ];
 
-const EditButton: React.FC<ICellTextProps> = ({
+const EditButton = ({
     dispatch, rowKeyValue
-}) => {
+}: ICellTextProps) => {
     return (
         <div className='edit-cell-button'>
             <img
@@ -30,9 +30,9 @@ const EditButton: React.FC<ICellTextProps> = ({
     );
 };
 
-const SaveButton: React.FC<ICellEditorProps> = ({
+const SaveButton = ({
     dispatch, rowKeyValue
-}) => {
+}: ICellEditorProps) => {
     return (
         <div className='buttons'
             style={{display: 'flex', justifyContent: 'space-between'}} >
@@ -60,7 +60,7 @@ const SaveButton: React.FC<ICellEditorProps> = ({
     );
 };
 
-const EditingDemoRow: React.FC = () => {
+const EditingDemoRow = () => {
     return (
         <div className='editing-row-demo'>
             <Table

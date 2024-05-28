@@ -32,7 +32,7 @@ describe('TableWrapper', () => {
     it('should not dispatch ScrollTable on scroll', () => {
         const wrapper = mount(<TableWrapper {...tableProps} />);
         expect(wrapper.find('.ka-table-wrapper').prop('onScroll')).toBeUndefined();
-        expect(tableProps.dispatch).toBeCalledTimes(0);
+        expect(tableProps.dispatch).toHaveBeenCalledTimes(0);
     });
 
     it('should dispatch ScrollTable on scroll in case of virtual scrolling', () => {
@@ -47,8 +47,8 @@ describe('TableWrapper', () => {
         const scrollTop = 11;
 
         wrapper.find('.ka-table-wrapper').prop('onScroll')!({ currentTarget: {scrollTop} } as any);
-        expect(tableProps.dispatch).toBeCalledTimes(1);
-        expect(tableProps.dispatch).toBeCalledWith(
+        expect(tableProps.dispatch).toHaveBeenCalledTimes(1);
+        expect(tableProps.dispatch).toHaveBeenCalledWith(
             { type: ActionType.ScrollTable, scrollTop },
         );
     });

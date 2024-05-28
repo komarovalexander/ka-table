@@ -42,8 +42,8 @@ describe('CellEditorBoolean', () => {
         wrapper.find('input').props().onChange!({
             currentTarget: { checked: newValue },
         } as any);
-        expect(props.dispatch).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: 'fieldName',
             rowKeyValue: 2,
             type: ActionType.UpdateCellValue,
@@ -55,8 +55,8 @@ describe('CellEditorBoolean', () => {
         const wrapper = mount(<CellEditorBoolean {...props} />);
 
         wrapper.find('input').props().onBlur!({} as any);
-        expect(props.dispatch).toBeCalledTimes(1);
-        expect(props.dispatch).toBeCalledWith({
+        expect(props.dispatch).toHaveBeenCalledTimes(1);
+        expect(props.dispatch).toHaveBeenCalledWith({
             type: ActionType.CloseEditor,
             columnKey: 'fieldName',
             rowKeyValue: 2,

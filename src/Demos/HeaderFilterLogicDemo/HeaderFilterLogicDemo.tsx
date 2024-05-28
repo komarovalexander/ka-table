@@ -3,7 +3,7 @@ import { FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
 
 import React from 'react';
 
-const dataArray: any[] = [
+const dataArray = [
     {
         id: 1,
         name: 'Mike Wazowski',
@@ -89,7 +89,7 @@ const HeaderFilterLogicDemo = () => {
                     },
                     headerFilterRowKeyField: 'id',
                     headerFilterListItems: ({ data }) => {
-                        const departments: any[] | undefined = data?.reduce((acc, item) => [...acc, ...item.departments || []], []);
+                        const departments = data?.reduce<{ name: string, id: number }[]>((acc, item) => [...acc, ...(item.departments || [])], []);
                         const departmentsUniqueByKey = departments?.filter((item: any, index) => {
                             return departments?.findIndex(i => i.id === item.id) === index;
                         });
@@ -102,7 +102,7 @@ const HeaderFilterLogicDemo = () => {
             filteringMode={FilteringMode.HeaderFilter}
             format={({ column, value }) => {
                 if (column.dataType === DataType.Date) {
-                    return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
                 }
                 if (column.key === 'departments') {
                     return value?.map((d: any) => d.name).join(', ');

@@ -21,7 +21,7 @@ const dataArray = Array(119)
         id: index,
     }));
 
-const MaterialDemo: React.FC = () => {
+const MaterialDemo = () => {
     const table = useTable();
     return (
         <div className='material-demo'>
@@ -42,7 +42,7 @@ const MaterialDemo: React.FC = () => {
                 ]}
                 format={({ column, value }) => {
                     if (column.dataType === DataType.Date) {
-                        return value && value.toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
                     }
                 }}
                 paging={{

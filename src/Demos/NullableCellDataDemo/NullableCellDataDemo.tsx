@@ -6,9 +6,9 @@ import { IFilterRowEditorProps } from '../../lib/props';
 import dataArray from './data';
 import { kaDateUtils } from '../../lib/utils';
 
-const CustomDateFilterEditor: React.FC<IFilterRowEditorProps> = ({
+const CustomDateFilterEditor = ({
     column,
-}) => {
+}: IFilterRowEditorProps) => {
     const fieldValue = column.filterRowValue;
     const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
     const table = useTableInstance();
@@ -28,7 +28,7 @@ const CustomDateFilterEditor: React.FC<IFilterRowEditorProps> = ({
     );
 };
 
-const NullableCellDataDemo: React.FC = () => {
+const NullableCellDataDemo = () => {
     const [searchText, setSearchText] = useState('i');
     return (
         <>
@@ -87,7 +87,7 @@ const NullableCellDataDemo: React.FC = () => {
                         return value == null ? '-' : `$${value}`;
                     }
                     if (column.dataType === DataType.Date){
-                        return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value && new Date(value).toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
                     }
                 }}
                 filteringMode={FilteringMode.FilterRow}

@@ -11,6 +11,7 @@ import {
     areAllVisibleRowsSelected,
     getData,
     getDraggableProps,
+    getFilteredData,
     getPagesCountByProps,
     getSelectedData,
     groupPanelOnDrop,
@@ -225,11 +226,11 @@ describe('getDraggableProps', () => {
             hasReordering: true
         });
         result.onDragStart!(event, {} as any);
-        expect(event.dataTransfer.setData).toBeCalledWith(
+        expect(event.dataTransfer.setData).toHaveBeenCalledWith(
             'ka-draggableKeyValue',
             '1'
         );
-        expect(event.currentTarget.classList.add).toBeCalledWith(draggedClass);
+        expect(event.currentTarget.classList.add).toHaveBeenCalledWith(draggedClass);
         expect(event.dataTransfer.effectAllowed).toEqual('move');
     });
     it('onDragEnd', () => {
@@ -242,7 +243,7 @@ describe('getDraggableProps', () => {
             hasReordering: true
         });
         result.onDragEnd!(event, {} as any);
-        expect(event.currentTarget.classList.remove).toBeCalledWith(
+        expect(event.currentTarget.classList.remove).toHaveBeenCalledWith(
             draggedClass
         );
     });
@@ -256,12 +257,12 @@ describe('getDraggableProps', () => {
             hasReordering: true
         });
         result.onDrop!(event, {} as any);
-        expect(event.currentTarget.classList.remove).toBeCalledWith(
+        expect(event.currentTarget.classList.remove).toHaveBeenCalledWith(
             dragOverClass
         );
-        expect(actionCreator).toBeCalledWith(2, 1);
-        expect(dispatch).toBeCalledTimes(1);
-        expect(dispatch).toBeCalledWith({ type: actionType });
+        expect(actionCreator).toHaveBeenCalledWith(2, 1);
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledWith({ type: actionType });
     });
     it('onDragEnter', () => {
         const result = getDraggableProps({
@@ -274,12 +275,12 @@ describe('getDraggableProps', () => {
         });
         event.currentTarget.classList.contains.mockReturnValue(true);
         result.onDragEnter!(event, {} as any);
-        expect(event.currentTarget.classList.add).toBeCalledTimes(0);
+        expect(event.currentTarget.classList.add).toHaveBeenCalledTimes(0);
         event.currentTarget.classList.contains.mockReturnValue(false);
         result.onDragEnter!(event, {} as any);
-        expect(event.currentTarget.classList.add).toBeCalledTimes(1);
-        expect(event.currentTarget.classList.add).toBeCalledWith(dragOverClass);
-        expect(event.preventDefault).toBeCalledTimes(2);
+        expect(event.currentTarget.classList.add).toHaveBeenCalledTimes(1);
+        expect(event.currentTarget.classList.add).toHaveBeenCalledWith(dragOverClass);
+        expect(event.preventDefault).toHaveBeenCalledTimes(2);
     });
     it('onDragLeave', () => {
         const result = getDraggableProps({
@@ -293,9 +294,9 @@ describe('getDraggableProps', () => {
         result.onDragEnter!(event, {} as any);
         result.onDragEnter!(event, {} as any);
         result.onDragLeave!(event, {} as any);
-        expect(event.currentTarget.classList.remove).toBeCalledTimes(0);
+        expect(event.currentTarget.classList.remove).toHaveBeenCalledTimes(0);
         result.onDragLeave!(event, {} as any);
-        expect(event.currentTarget.classList.remove).toBeCalledWith(
+        expect(event.currentTarget.classList.remove).toHaveBeenCalledWith(
             dragOverClass
         );
     });
@@ -310,12 +311,12 @@ describe('getDraggableProps', () => {
         });
         event.currentTarget.classList.contains.mockReturnValue(true);
         result.onDragOver!(event, {} as any);
-        expect(event.currentTarget.classList.add).toBeCalledTimes(0);
+        expect(event.currentTarget.classList.add).toHaveBeenCalledTimes(0);
         event.currentTarget.classList.contains.mockReturnValue(false);
         result.onDragOver!(event, {} as any);
-        expect(event.currentTarget.classList.add).toBeCalledTimes(1);
-        expect(event.currentTarget.classList.add).toBeCalledWith(dragOverClass);
-        expect(event.preventDefault).toBeCalledTimes(2);
+        expect(event.currentTarget.classList.add).toHaveBeenCalledTimes(1);
+        expect(event.currentTarget.classList.add).toHaveBeenCalledWith(dragOverClass);
+        expect(event.preventDefault).toHaveBeenCalledTimes(2);
     });
 });
 
@@ -752,5 +753,24 @@ describe('isValid', () => {
                     value > 10 ? 'should be less than 10' : '',
             })
         ).toBeTruthy();
+    });
+});
+
+describe('getFilteredData', () => {
+    const propsInit: ITableProps = {
+        data: [
+            { id: 1, field: '11' },
+            { id: 2, field: '21' },
+            { id: 3, field: '33' },
+        ],
+        rowKeyField: 'id',
+        columns: [{
+            key: 'field',
+            filterRowValue: '1'
+        }],
+    };
+    it('default', () => {
+        const result = getFilteredData(propsInit);
+        expect(result).toMatchSnapshot();
     });
 });

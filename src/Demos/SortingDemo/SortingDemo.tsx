@@ -1,9 +1,9 @@
-import React from 'react';
-
 import { DataType, Table } from '../../lib';
 import { SortDirection, SortingMode } from '../../lib/enums';
 
-const dataArray: any[] = [
+import React from 'react';
+
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, faculty: 'Economics', comment: 'Well done!' },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, faculty: 'Engineering', comment: 'almost did it, keep going' },
     { id: 3, name: 'Tom Williams', score: 45, passed: false, faculty: 'Engineering', comment: 'you can do it better' },
@@ -12,7 +12,7 @@ const dataArray: any[] = [
     { id: 6, name: 'Sunny Fox', score: 33, passed: false, faculty: 'Mathematics', comment: 'It was just a bad day :)' },
 ];
 
-const SortingDemo: React.FC = () => {
+const SortingDemo = () => {
     return (
         <Table
             columns= {[
