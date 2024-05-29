@@ -93,8 +93,6 @@
   background-color: $ka-input-background-color;
   border: 1px solid $ka-input-border-color;
   color: $ka-input-color;
-  border-radius: 3px;
-  padding: 3px 5px;
 }
 
 .ka-cell-editor-validation-error {
@@ -434,5 +432,7 @@
   .ka-input{
     width: 100%;
     box-sizing: border-box;
+    border-radius: 3px;
+    padding: 3px 5px;
   }
 }

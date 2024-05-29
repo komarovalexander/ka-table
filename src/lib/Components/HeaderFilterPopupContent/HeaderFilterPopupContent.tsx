@@ -1,29 +1,11 @@
 import * as React from 'react';
 
-import { ActionType, DataType, FilteringMode, SortDirection, Table, useTable, useTableInstance } from '../..';
-import { ICellTextProps, IHeaderFilterPopupProps } from '../../props';
+import { DataType, FilteringMode, Table, } from '../..';
 
+import CellEditorBoolean from '../CellEditorBoolean/CellEditorBoolean';
+import { IHeaderFilterPopupProps } from '../../props';
 import { getValueByColumn } from '../../Utils/DataUtils';
 import { updateHeaderFilterValues } from '../../actionCreators';
-
-const SelectionCell = ({ rowKeyValue, isSelectedRow, selectedRows }: ICellTextProps) => {
-    const table = useTableInstance();
-    return (
-        <input
-            type='checkbox'
-            checked={isSelectedRow}
-            onChange={(event: any) => {
-                if (event.nativeEvent.shiftKey) {
-                    table.selectRowsRange(rowKeyValue, [...selectedRows].pop());
-                } else if (event.currentTarget.checked) {
-                    table.selectRow(rowKeyValue);
-                } else {
-                    table.deselectRow(rowKeyValue);
-                }
-            }}
-        />
-    );
-};
 
 const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
     const {
@@ -43,11 +25,11 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
         return formattedValue;
     });
     headerFilterValues = Array.from(new Set(headerFilterValues));
-    headerFilterValues = headerFilterValues?.map((value, i) => ({ value }));
+    headerFilterValues = headerFilterValues?.map((value, i) => ({ value, isSelected: !!column.headerFilterValues && column.headerFilterValues.includes(value) }));
     return (
         <Table
             columns={[
-                { key: 'selection-cell', width: 35, isFilterable: false },
+                { key: 'isSelected', width: 35, isFilterable: false },
                 {
                     key: 'value', style: { textAlign: 'left' }
                 }]}
@@ -62,7 +44,7 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                     elementAttributes:  () => ({style: { display: 'none'}})
                 },
                 filterRowCell: {
-                    elementAttributes: ({ column: filterRowColumn }) => ({style: { top: 0, display: filterRowColumn.key === 'selection-cell' ? 'none' : undefined }, colSpan: filterRowColumn.key === 'selection-cell' ? 0 : 2})
+                    elementAttributes: ({ column: filterRowColumn }) => ({style: { top: 0, display: filterRowColumn.key === 'isSelected' ? 'none' : undefined }, colSpan: filterRowColumn.key === 'isSelected' ? 0 : 2})
                 },
                 filterRowCellInput: {
                     elementAttributes: () => ({ style: { width: '100%', boxSizing: 'border-box' }})
@@ -75,21 +57,18 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                 cell: {
                     elementAttributes:  (componentProps) => ({
                         onClick: () => {
-                            dispatch(updateHeaderFilterValues(column.key, componentProps?.rowKeyValue, !column?.headerFilterValues?.includes(componentProps?.rowKeyValue)));
+                            const isSelect = !column?.headerFilterValues?.includes(componentProps?.rowKeyValue);
+                            dispatch(updateHeaderFilterValues(column.key, componentProps?.rowKeyValue, isSelect));
+                            // dispatch(isSelect ? selectRow(componentProps?.rowKeyValue) : deselectRow(componentProps?.rowKeyValue));
                         }
-                    })
-                },
-                cellText: {
-                    elementAttributes: (componentProps) => componentProps?.column.key === column.key ? childComponents?.headerFilterContentCellText?.elementAttributes?.(componentProps) : undefined,
+                    }),
                     content: (componentProps) => {
-                        if (componentProps.column.key === 'selection-cell') {
-                            return <SelectionCell {...componentProps} />;
+                        switch (componentProps?.column.key){
+                        case 'isSelected': return <CellEditorBoolean {...componentProps}/>;
                         }
-                        if (componentProps?.column.key === column.key){
-                            return childComponents?.headerFilterContentCellText?.content?.(componentProps);
-                        }
-                    },
+                    }
                 },
+
             }} />
     )
 }
