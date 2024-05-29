@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { DataType, FilteringMode, Table, } from '../..';
+import { FilteringMode, Table, } from '../..';
 
 import CellEditorBoolean from '../CellEditorBoolean/CellEditorBoolean';
 import { IHeaderFilterPopupProps } from '../../props';
@@ -59,9 +59,10 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                         onClick: () => {
                             const isSelect = !column?.headerFilterValues?.includes(componentProps?.rowKeyValue);
                             dispatch(updateHeaderFilterValues(column.key, componentProps?.rowKeyValue, isSelect));
-                            // dispatch(isSelect ? selectRow(componentProps?.rowKeyValue) : deselectRow(componentProps?.rowKeyValue));
                         }
-                    }),
+                    })
+                },
+                cellText: {
                     content: (componentProps) => {
                         switch (componentProps?.column.key){
                         case 'isSelected': return <CellEditorBoolean {...componentProps}/>;
