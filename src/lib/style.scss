@@ -93,6 +93,8 @@
   background-color: $ka-input-background-color;
   border: 1px solid $ka-input-border-color;
   color: $ka-input-color;
+  border-radius: 3px;
+  padding: 3px 5px;
 }
 
 .ka-cell-editor-validation-error {
@@ -420,8 +422,17 @@
     align-items: center;
   }
   .ka-filter-row-cell {
-    top: 0;
     padding: 15px;
     background-color: transparent;
+  }
+  .ka-row{
+    cursor: pointer;
+  }
+  input[type='checkbox']{
+    cursor: pointer;
+  }
+  .ka-input{
+    width: 100%;
+    box-sizing: border-box;
   }
 }

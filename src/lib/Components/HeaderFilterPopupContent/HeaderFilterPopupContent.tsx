@@ -44,19 +44,8 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
     });
     headerFilterValues = Array.from(new Set(headerFilterValues));
     headerFilterValues = headerFilterValues?.map((value, i) => ({ value }));
-    const table = useTable({
-        onDispatch: (action) => {
-            if (action.type === ActionType.SelectRow){
-                dispatch(updateHeaderFilterValues(column.key, action.rowKeyValue, true))
-            }
-            if (action.type === ActionType.DeselectRow){
-                dispatch(updateHeaderFilterValues(column.key, action.rowKeyValue, false))
-            }
-        }
-    });
     return (
         <Table
-            table={table}
             columns={[
                 { key: 'selection-cell', width: 35, isFilterable: false },
                 {
@@ -81,6 +70,13 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                 rootDiv: {
                     elementAttributes: () => ({
                         className: 'ka-header-filter-table'
+                    })
+                },
+                cell: {
+                    elementAttributes:  (componentProps) => ({
+                        onClick: () => {
+                            dispatch(updateHeaderFilterValues(column.key, componentProps?.rowKeyValue, !column?.headerFilterValues?.includes(componentProps?.rowKeyValue)));
+                        }
                     })
                 },
                 cellText: {
