@@ -20,6 +20,8 @@ import {
     IPagingIndexProps,
     IPagingProps,
     IPagingSizeProps,
+    IPopupContentItemProps,
+    IPopupContentProps,
     ISortIconProps,
     ISummaryCellProps,
     ISummaryRowProps,

@@ -14,7 +14,7 @@ export class MenuItem {
     public isActive?: boolean;
 }
 
-const newItems: string[] = ['HeaderFilterLogicDemo'];
+const newItems: string[] = [];
 const updateItems: string[] = [];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {

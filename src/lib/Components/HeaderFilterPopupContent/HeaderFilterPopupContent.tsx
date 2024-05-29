@@ -1,9 +1,10 @@
 import * as React from 'react';
 
-import { DataType, FilteringMode, SortDirection, Table, useTable, useTableInstance } from '../..';
+import { ActionType, DataType, FilteringMode, SortDirection, Table, useTable, useTableInstance } from '../..';
 import { ICellTextProps, IHeaderFilterPopupProps } from '../../props';
 
 import { getValueByColumn } from '../../Utils/DataUtils';
+import { updateHeaderFilterValues } from '../../actionCreators';
 
 const SelectionCell = ({ rowKeyValue, isSelectedRow, selectedRows }: ICellTextProps) => {
     const table = useTableInstance();
@@ -33,40 +34,40 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
         format
     } = props;
     let headerFilterValues: any[] | undefined;
+    headerFilterValues = column?.headerFilterListItems ? column?.headerFilterListItems({ data, column }) : data?.map((item, i) => {
+        const value = getValueByColumn(item, column);
 
-    if (column?.headerFilterListItems) {
-        headerFilterValues = column?.headerFilterListItems({ data, column });
-    } else {
-        headerFilterValues = data?.map((item, i) => {
-            const value = getValueByColumn(item, column);
-
-            const formattedValue =
+        const formattedValue =
                 (format && format({ column, value, rowData: item }))
                 || value?.toString();
-            return formattedValue;
-        });
-        headerFilterValues = Array.from(new Set(headerFilterValues));
-        headerFilterValues = headerFilterValues?.map((v, i) => ({ [column.key]: v, rowKeyValue: i }));
-    }
-
+        return formattedValue;
+    });
+    headerFilterValues = Array.from(new Set(headerFilterValues));
+    headerFilterValues = headerFilterValues?.map((value, i) => ({ value }));
     const table = useTable({
         onDispatch: (action) => {
-            console.log(action)
+            if (action.type === ActionType.SelectRow){
+                dispatch(updateHeaderFilterValues(column.key, action.rowKeyValue, true))
+            }
+            if (action.type === ActionType.DeselectRow){
+                dispatch(updateHeaderFilterValues(column.key, action.rowKeyValue, false))
+            }
         }
     });
     return (
         <Table
             table={table}
             columns={[
-                { key: 'selection-cell', width: 50, isFilterable: false },
+                { key: 'selection-cell', width: 35, isFilterable: false },
                 {
-                    key: column.key, dataType: column?.headerFilterListItems ? DataType.String : column.dataType, style: { textAlign: 'left' }
+                    key: 'value', style: { textAlign: 'left' }
                 }]}
             filteringMode={column.isHeaderFilterSearchable ? FilteringMode.FilterRow : undefined}
             format={column?.headerFilterListItems ? undefined : format}
             data={headerFilterValues}
+            selectedRows={column.headerFilterValues}
             filter={() => column.headerFilterSearch}
-            rowKeyField={column.headerFilterRowKeyField ? column.headerFilterRowKeyField : 'rowKeyValue'}
+            rowKeyField={'value'}
             childComponents={{
                 headRow: {
                     elementAttributes:  () => ({style: { display: 'none'}})

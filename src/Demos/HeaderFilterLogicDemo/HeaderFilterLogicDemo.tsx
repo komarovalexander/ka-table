@@ -57,9 +57,9 @@ const HeaderFilterLogicDemo = () => {
             columns={[
                 {
                     key: 'name',
-                    title: 'Name', dataType: DataType.String,
-                    sortDirection: SortDirection.Descend,
-                    isFilterable: false
+                    title: 'Name',
+                    dataType: DataType.String,
+                    sortDirection: SortDirection.Descend
                 },
                 {
                     key: 'score',
@@ -81,19 +81,23 @@ const HeaderFilterLogicDemo = () => {
                     dataType: DataType.Object,
                     title: 'Departments',
                     isHeaderFilterSearchable: true,
-                    filter: (value: { name: string; id: number; }[], filterValues: { name: string; id: number; }[]) => {
-                        return filterValues?.some(x => value?.some(v => v.id === x.id));
+                    filter: (value: { name: string; id: number; }[], filterValues: string[]) => {
+                        if (value == null){
+                            return filterValues?.some(x => x === 'Department is unspecified');
+                        }
+                        return filterValues?.some(x => value?.some(v => v.name === x));
                     },
-                    headerFilterSearch: (value, searchValue, rowData) => {
-                        return rowData.name.toLowerCase().includes(searchValue.toLowerCase());
+                    headerFilterSearch: (value, searchValue) => {
+                        return value.toLowerCase().includes(searchValue.toLowerCase());
                     },
-                    headerFilterRowKeyField: 'id',
                     headerFilterListItems: ({ data }) => {
                         const departments = data?.reduce<{ name: string, id: number }[]>((acc, item) => [...acc, ...(item.departments || [])], []);
-                        const departmentsUniqueByKey = departments?.filter((item: any, index) => {
+                        const departmentsList = departments?.filter((item: any, index) => {
                             return departments?.findIndex(i => i.id === item.id) === index;
-                        });
-                        return departmentsUniqueByKey || [];
+                        }).map(x => x.name) || [];
+                        departmentsList?.unshift('Department is unspecified');
+                        console.log({departmentsList});
+                        return departmentsList;
                     }
                 },
             ]}

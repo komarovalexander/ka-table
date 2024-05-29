@@ -395,7 +395,7 @@
 .ka-header-filter-button-icon {
   font-size: 16px;
   position: absolute;
-  padding: 1px 3px;
+  padding: 0 3px;
   color: darken($ka-thead-color, 15);
   fill: currentColor;
 }
@@ -411,12 +411,17 @@
 .ka-header-filter-table {
   background-color: transparent;
   box-shadow: none;
+  
   .ka-cell {
-    padding: 3px 20px;
+    padding: 3px 11px;
+  }
+  .ka-cell-text {
+    display: flex;
+    align-items: center;
   }
   .ka-filter-row-cell {
     top: 0;
-    padding-top: 15px;
+    padding: 15px;
     background-color: transparent;
   }
 }

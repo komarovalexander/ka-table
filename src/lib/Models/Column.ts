@@ -13,7 +13,6 @@ export class Column<TData = any> {
     public headerFilterPopupPosition?: PopupPosition;
     public headerFilterListItems?: (props: { data?: any[], column?: Column }) => string[];
     public headerFilterSearchValue?: any;
-    public headerFilterRowKeyField?: any;
     public headerFilterSearch?: (value: any, searchValue: any, rowData?: any) => boolean;
     public filter?: (value: any, filterValue: any, rowData?: any) => boolean;
     public isHeaderFilterPopupShown?: boolean;
