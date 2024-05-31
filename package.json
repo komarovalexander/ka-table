@@ -2,6 +2,7 @@
   "name": "ka-table",
   "version": "11.0.0",
   "license": "MIT",
+  "type": "module",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table/#/overview",
   "dependencies": {
