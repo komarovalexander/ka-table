@@ -55,7 +55,6 @@ export class ChildComponents<TData= any> {
     public headCell?: ChildComponent<IHeadCellProps>;
     public headCellContent?: ChildComponent<IHeadCellProps>;
     public headCellResize?: ChildComponent<IHeadCellResizeProps>;
-    public headerFilterContentCellText?: ChildComponent<ICellTextProps>;
     public headRow?: ChildComponent<IHeadRowProps>;
     public loading?: ChildComponent<ILoadingProps>;
     public noDataRow?: ChildComponent<INoDataRowProps>;
@@ -66,8 +65,7 @@ export class ChildComponents<TData= any> {
     public pagingSize?: ChildComponent<IPagingSizeProps>;
     public pagingSizes?: ChildComponent<IPagingProps>;
     public popupContent?: ChildComponent<IPopupContentProps<TData>>;
-    public popupContentItem?: ChildComponent<IPopupContentItemProps>;
-    public popupContentItemText?: ChildComponent<IPopupContentItemProps>;
+    public popupContentItemCellText?: ChildComponent<ICellTextProps>;
     public rootDiv?: ChildComponent<ITableProps<TData>>;
     public sortIcon?: ChildComponent<ISortIconProps>;
     public summaryCell?: ChildComponent<ISummaryCellProps<TData>>;

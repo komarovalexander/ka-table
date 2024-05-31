@@ -112,11 +112,6 @@ const HeaderFilterLogicDemo = () => {
                     return value?.map((d: any) => d.name).join(', ');
                 }
             }}
-            childComponents={{
-                headerFilterContentCellText: {
-                    content: ({ rowData }) => rowData.name
-                },
-            }}
             rowKeyField={'id'}
         />
     );
