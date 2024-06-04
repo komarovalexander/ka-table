@@ -1,7 +1,7 @@
 import * as React from 'react';
 
+import HeaderFilterPopupContent from '../HeaderFilterPopupContent/HeaderFilterPopupContent';
 import { IHeaderFilterPopupProps } from '../../props';
-import PopupContent from '../HeaderFilterPopupContent/HeaderFilterPopupContent';
 import { updateHeaderFilterPopupState } from '../../actionCreators';
 import { useOuterClick } from '../../hooks/UseOuterClick';
 
@@ -21,7 +21,7 @@ const HeaderFilterPopup: React.FC<IHeaderFilterPopupProps> = (props) => {
                 left: column.headerFilterPopupPosition?.x,
                 top: column.headerFilterPopupPosition?.y,
             }}>
-            <PopupContent {...props} />
+            <HeaderFilterPopupContent {...props} />
         </div>
     )
 }

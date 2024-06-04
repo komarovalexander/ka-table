@@ -9,7 +9,7 @@ import { updateHeaderFilterValues } from '../../actionCreators';
 
 type HeaderFilterItem = { value: string; isSelected: boolean; };
 
-const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
+const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
     const {
         column,
         childComponents,
@@ -46,7 +46,14 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                     elementAttributes:  () => ({style: { display: 'none'}})
                 },
                 filterRowCell: {
-                    elementAttributes: ({ column: filterRowColumn }) => ({style: { top: 0, display: filterRowColumn.key === selectedColumnKey ? 'none' : undefined }, colSpan: filterRowColumn.key === selectedColumnKey ? 0 : 2})
+                    elementAttributes: ({ column: filterRowColumn }) => ({
+                        style: {
+                            top: 0,
+                            display: !column.isHeaderFilterSelectAllEnabled && filterRowColumn.key === selectedColumnKey ? 'none' : undefined
+                        },
+                        className: column.isHeaderFilterSelectAllEnabled ? 'ka-filter-row-cell-search-only' : undefined,
+                        colSpan: !column.isHeaderFilterSelectAllEnabled ? (filterRowColumn.key === selectedColumnKey ? 0 : 2) : undefined
+                    })
                 },
                 filterRowCellInput: childComponents?.headerFilterPopupSearchInput,
                 rootDiv: {
@@ -77,4 +84,4 @@ const PopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
     )
 }
 
-export default PopupContent;
+export default HeaderFilterPopupContent;
