@@ -96,7 +96,6 @@ const HeaderFilterLogicDemo = () => {
                             return departments?.findIndex(i => i.id === item.id) === index;
                         }).map(x => x.name) || [];
                         departmentsList?.unshift('Department is unspecified');
-                        console.log({departmentsList});
                         return departmentsList;
                     }
                 },
@@ -113,6 +112,38 @@ const HeaderFilterLogicDemo = () => {
                 }
             }}
             rowKeyField={'id'}
+            childComponents={{
+                headerFilterPopupSearchInput: {
+                    elementAttributes: ({ column }) => {
+                        if (column.key === 'departments'){
+                            return { placeholder: 'Search department..'};
+                        }
+                    }
+                },
+                headerFilterPopupRow: {
+                    elementAttributes: ({ rowData, columns }) => {
+                        if (rowData.value === 'Department is unspecified' && !rowData.isSelected && columns?.some(c => c.key === 'departments')){
+                            return { style: { backgroundColor: '#DDD'}};
+                        }
+                    }
+                },
+                headerFilterPopupTextCell: {
+                    elementAttributes: ({ rowData, column }) => {
+                        console.log(column);
+                        if (column.key === 'departments_isSelected'){
+                            return { style: { backgroundColor: rowData.isSelected ? '#00FF0033' : 'transparent'}};
+                        }
+                    },
+                    content: ({ column, rowData }) => {
+                        if (column.key === 'departments' && rowData.value !== 'Department is unspecified'){
+                            return `(${rowData.value})`;
+                        }
+                        if (column.key === 'departments_isSelected'){
+                            return<></>;
+                        }
+                    }
+                },
+            }}
         />
     );
 };

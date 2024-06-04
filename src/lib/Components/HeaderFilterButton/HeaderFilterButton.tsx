@@ -13,7 +13,7 @@ const HeaderFilterButton: React.FC<IHeaderFilterButtonProps> = (props) => {
             event.stopPropagation();
             dispatch(updateHeaderFilterPopupState(column.key, !column.isHeaderFilterPopupShown))
         }
-    }, props, childComponents?.headFilterButton);
+    }, props, childComponents?.headerFilterButton);
     return (
         <span {...elementAttributes}>
             {content || (
