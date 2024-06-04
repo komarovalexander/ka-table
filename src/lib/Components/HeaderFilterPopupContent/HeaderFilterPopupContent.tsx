@@ -49,10 +49,9 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                     elementAttributes: ({ column: filterRowColumn }) => ({
                         style: {
                             top: 0,
-                            display: !column.isHeaderFilterSelectAllEnabled && filterRowColumn.key === selectedColumnKey ? 'none' : undefined
+                            display: filterRowColumn.key === selectedColumnKey ? 'none' : undefined
                         },
-                        className: column.isHeaderFilterSelectAllEnabled ? 'ka-filter-row-cell-search-only' : undefined,
-                        colSpan: !column.isHeaderFilterSelectAllEnabled ? (filterRowColumn.key === selectedColumnKey ? 0 : 2) : undefined
+                        colSpan: filterRowColumn.key === selectedColumnKey ? 0 : 2
                     })
                 },
                 filterRowCellInput: childComponents?.headerFilterPopupSearchInput,
