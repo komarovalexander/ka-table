@@ -408,14 +408,14 @@
   }
   
   .ka-cell {
-    padding: 3px 11px;
+    padding: 3px 10px;
   }
   .ka-cell-text {
     display: flex;
     align-items: center;
   }
   .ka-filter-row-cell {
-    padding: 15px;
+    padding: 10px;
   }
   .ka-row{
     cursor: pointer;
@@ -428,5 +428,6 @@
     box-sizing: border-box;
     border-radius: 3px;
     padding: 3px 5px;
+    margin: 0;
   }
 }
