@@ -163,7 +163,7 @@
 }
 
 .ka-row-selected {
-  background-color: $ka-selecter-background-color;
+  background-color: $ka-selected-background-color;
 }
 
 .ka-group-row {
@@ -368,7 +368,7 @@
 
 .ka-popup {
   background-color: white;
-  border: 1px solid #ddd;
+  border: 1px solid $ka-border-color;
   border-radius: 6px;
   box-sizing: border-box;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
@@ -409,8 +409,10 @@
 }
 
 .ka-header-filter-table {
-  background-color: transparent;
   box-shadow: none;
+  .ka-thead-background{
+    background: $ka-background-color;
+  }
   
   .ka-cell {
     padding: 3px 11px;
@@ -421,7 +423,6 @@
   }
   .ka-filter-row-cell {
     padding: 15px;
-    background-color: transparent;
   }
   .ka-row{
     cursor: pointer;
