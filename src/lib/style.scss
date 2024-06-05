@@ -376,20 +376,8 @@
   position: absolute;
   text-align: center;
   width: 245px;
-  max-height: 325px;
   overflow-y: auto;
   z-index: 1000;
-}
-
-
-.ka-popup-content-item {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid $ka-border-color;
-}
-
-.ka-popup-content-item-value {
-  padding: $ka-cell-padding;
 }
 
 .ka-header-filter-button-icon {
@@ -410,6 +398,11 @@
 
 .ka-header-filter-table {
   box-shadow: none;
+
+  .ka-table-wrapper{
+    max-height: 325px;
+  }
+  
   .ka-thead-background{
     background: $ka-background-color;
   }
