@@ -129,7 +129,6 @@ const HeaderFilterLogicDemo = () => {
                 },
                 headerFilterPopupTextCell: {
                     elementAttributes: ({ rowData, column }) => {
-                        console.log(column);
                         if (column.key === 'departments_isSelected'){
                             return { style: { backgroundColor: rowData.isSelected ? '#00FF0033' : 'transparent'}};
                         }
