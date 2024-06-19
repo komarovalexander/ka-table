@@ -18,7 +18,7 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
         format
     } = props;
     let headerFilterValues: string[] | undefined;
-    headerFilterValues = column?.headerFilterListItems ? column?.headerFilterListItems({ data, column }) : data?.map((item, i) => {
+    headerFilterValues = column?.headerFilterListItems ? column?.headerFilterListItems({ data }) : data?.map((item, i) => {
         const value = getValueByColumn(item, column);
 
         const formattedValue =

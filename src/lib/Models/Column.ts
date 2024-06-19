@@ -11,7 +11,7 @@ export class Column<TData = any> {
     public filterRowValue?: any;
     public headerFilterValues?: string[];
     public headerFilterPopupPosition?: PopupPosition;
-    public headerFilterListItems?: (props: { data?: TData[], column?: Column }) => string[];
+    public headerFilterListItems?: (props: { data?: TData[] }) => string[];
     public headerFilterSearchValue?: any;
     public headerFilterSearch?: (value: any, searchValue: any, rowData?: any) => boolean;
     public filter?: (value: any, filterValue: any, rowData?: any) => boolean;
