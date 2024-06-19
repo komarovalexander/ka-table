@@ -64,6 +64,7 @@ const HeaderFilterLogicDemo = () => {
                 {
                     key: 'score',
                     isHeaderFilterSearchable: true,
+                    headerFilterSearchValue: 33,
                     title: 'Score', dataType: DataType.Number
                 },
                 {

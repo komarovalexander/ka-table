@@ -12,7 +12,7 @@ const FilterRowString: React.FunctionComponent<IFilterRowEditorProps> = (props) 
     } = props;
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: defaultOptions.css.textInput,
-        type: 'text',
+        type: 'search',
         value: column.filterRowValue || '',
         onChange: (event) => {
             dispatch(updateFilterRowValue(column.key, event.currentTarget.value));
