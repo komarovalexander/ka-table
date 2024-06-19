@@ -69,7 +69,6 @@ export class ChildComponents<TData= any> {
     public pagingPages?: ChildComponent<IPagingProps>;
     public pagingSize?: ChildComponent<IPagingSizeProps>;
     public pagingSizes?: ChildComponent<IPagingProps>;
-    public popupContentItemCellText?: ChildComponent<ICellTextProps>;
     public rootDiv?: ChildComponent<ITableProps<TData>>;
     public sortIcon?: ChildComponent<ISortIconProps>;
     public summaryCell?: ChildComponent<ISummaryCellProps<TData>>;
