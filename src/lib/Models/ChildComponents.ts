@@ -55,8 +55,7 @@ export class ChildComponents<TData= any> {
     public headCellContent?: ChildComponent<IHeadCellProps>;
     public headCellResize?: ChildComponent<IHeadCellResizeProps>;
     public headerFilterButton?: ChildComponent<IHeaderFilterButtonProps>;
-    public headerFilterPopup?: ChildComponent<IPopupContentProps<TData>>;
-    public headerFilterPopupCheckboxCell?: ChildComponent<ICellProps>;
+    public headerFilterPopupContent?: ChildComponent<IPopupContentProps<TData>>;
     public headerFilterPopupRow?: ChildComponent<IDataRowProps>;
     public headerFilterPopupSearchInput?: ChildComponent<IFilterRowEditorProps>;
     public headerFilterPopupTextCell?: ChildComponent<ICellProps>;
