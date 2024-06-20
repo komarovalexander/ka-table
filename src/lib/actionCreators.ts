@@ -29,6 +29,12 @@ export const updateFilterRowValue = (columnKey: string, filterRowValue: any) => 
     type: ActionType.UpdateFilterRowValue,
 });
 
+export const updateHeaderFilterSearchValue = (columnKey: string, headerFilterSearchValue: string) => ({
+    columnKey,
+    headerFilterSearchValue,
+    type: ActionType.UpdateHeaderFilterSearchValue,
+});
+
 export const updateFilterRowOperator = (columnKey: string, filterRowOperator: string) => ({
     columnKey,
     filterRowOperator,

@@ -319,7 +319,7 @@ export interface IPopupContentItemProps {
     dispatch: DispatchFunc;
 }
 
-export interface IPopupProps {
+export interface IHeaderFilterPopupProps {
     column: Column;
     childComponents?: ChildComponents;
     data?: any[];

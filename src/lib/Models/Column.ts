@@ -9,11 +9,14 @@ export class Column<TData = any> {
     public field?: Field;
     public filterRowOperator?: any;
     public filterRowValue?: any;
-    public headerFilterValues?: any[];
+    public headerFilterValues?: string[];
     public headerFilterPopupPosition?: PopupPosition;
-    public headerFilterListItems?: (props: { data?: TData[] }) => any[];
-    public filter?: (value: any, filterValue: any, rowData?: TData) => boolean;
+    public headerFilterListItems?: (props: { data?: TData[] }) => string[];
+    public headerFilterSearchValue?: any;
+    public headerFilterSearch?: (value: any, searchValue: any, rowData?: any) => boolean;
+    public filter?: (value: any, filterValue: any, rowData?: any) => boolean;
     public isHeaderFilterPopupShown?: boolean;
+    public isHeaderFilterSearchable?: boolean;
     public isEditable?: boolean;
     public isFilterable?: boolean;
     public isResizable?: boolean;
