@@ -4,14 +4,18 @@ import { DataType, Table, useTable } from 'ka-table';
 import React, { useState } from 'react';
 
 import dataArray from './data';
-import { kaPropsUtils } from 'ka-table/utils';
 
 const SelectionSingleDemo = () => {
-    const [selectedData, changeSelectedData] = useState<any>();
+    const [selectedId, changeSelectedId] = useState<any>();
+    const selectedData = selectedId && dataArray?.find(d => d.id === selectedId);
     const table = useTable({
         onDispatch: (action, tableProps) => {
-            const selected = kaPropsUtils.getSelectedData(tableProps).pop();
-            changeSelectedData(selected);
+            if (action.type === 'SelectSingleRow'){
+                changeSelectedId(action.rowKeyValue);
+            }
+            if (action.type === 'DeselectAllRows'){
+                changeSelectedId(undefined);
+            }
         },
     });
 
@@ -44,6 +48,7 @@ const SelectionSingleDemo = () => {
                 ]}
                 data={dataArray}
                 rowKeyField={'id'}
+                selectedRows={[selectedId]}
                 childComponents={{
                     dataRow: {
                         elementAttributes: () => ({

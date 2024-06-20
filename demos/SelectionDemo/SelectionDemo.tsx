@@ -63,6 +63,7 @@ const SelectionDemo = () => {
                     {
                         key: 'selection-cell',
                         isFilterable: false,
+                        width: 50
                     },
                     { key: 'column1', title: 'Column 1', dataType: DataType.String },
                     { key: 'column2', title: 'Column 2', dataType: DataType.String },
