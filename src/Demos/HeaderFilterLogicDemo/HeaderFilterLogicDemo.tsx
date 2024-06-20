@@ -57,12 +57,14 @@ const HeaderFilterLogicDemo = () => {
             columns={[
                 {
                     key: 'name',
-                    title: 'Name', dataType: DataType.String,
-                    sortDirection: SortDirection.Descend,
-                    isFilterable: false
+                    title: 'Name',
+                    dataType: DataType.String,
+                    sortDirection: SortDirection.Descend
                 },
                 {
                     key: 'score',
+                    isHeaderFilterSearchable: true,
+                    headerFilterSearchValue: 33,
                     title: 'Score', dataType: DataType.Number
                 },
                 {
@@ -79,15 +81,23 @@ const HeaderFilterLogicDemo = () => {
                     key: 'departments',
                     dataType: DataType.Object,
                     title: 'Departments',
-                    filter: (value: { name: string; id: number; }[], filterValues: { name: string; id: number; }[]) => {
-                        return filterValues?.some(x => value?.some(v => v.id === x.id));
+                    isHeaderFilterSearchable: true,
+                    filter: (value: { name: string; id: number; }[], filterValues: string[]) => {
+                        if (value == null){
+                            return filterValues?.some(x => x === 'Department is unspecified');
+                        }
+                        return filterValues?.some(x => value?.some(v => v.name === x));
+                    },
+                    headerFilterSearch: (value, searchValue) => {
+                        return value.toLowerCase().includes(searchValue.toLowerCase());
                     },
                     headerFilterListItems: ({ data }) => {
                         const departments = data?.reduce<{ name: string, id: number }[]>((acc, item) => [...acc, ...(item.departments || [])], []);
-                        const departmentsUniqueByKey = departments?.filter((item: any, index) => {
+                        const departmentsList = departments?.filter((item: any, index) => {
                             return departments?.findIndex(i => i.id === item.id) === index;
-                        });
-                        return departmentsUniqueByKey || [];
+                        }).map(x => x.name) || [];
+                        departmentsList?.unshift('Department is unspecified');
+                        return departmentsList;
                     }
                 },
             ]}
@@ -102,12 +112,38 @@ const HeaderFilterLogicDemo = () => {
                     return value?.map((d: any) => d.name).join(', ');
                 }
             }}
-            childComponents={{
-                popupContentItemText: {
-                    content: ({ item }) => item.name
-                }
-            }}
             rowKeyField={'id'}
+            childComponents={{
+                headerFilterPopupSearchInput: {
+                    elementAttributes: ({ column }) => {
+                        if (column.key === 'departments'){
+                            return { placeholder: 'Search department..'};
+                        }
+                    }
+                },
+                headerFilterPopupRow: {
+                    elementAttributes: ({ rowData, columns }) => {
+                        if (rowData.value === 'Department is unspecified' && !rowData.isSelected && columns?.some(c => c.key === 'departments')){
+                            return { style: { backgroundColor: '#DDD'}};
+                        }
+                    }
+                },
+                headerFilterPopupTextCell: {
+                    elementAttributes: ({ rowData, column }) => {
+                        if (column.key === 'departments_isSelected'){
+                            return { style: { backgroundColor: rowData.isSelected ? '#00FF0033' : 'transparent'}};
+                        }
+                    },
+                    content: ({ column, rowData }) => {
+                        if (column.key === 'departments' && rowData.value !== 'Department is unspecified'){
+                            return `(${rowData.value})`;
+                        }
+                        if (column.key === 'departments_isSelected'){
+                            return<></>;
+                        }
+                    }
+                },
+            }}
         />
     );
 };

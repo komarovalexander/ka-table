@@ -21,6 +21,7 @@ import { getExpandedParents } from '../Utils/TreeUtils';
 import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
 import { kaPropsUtils } from '../utils';
 import { newRowId } from '../const';
+import { replaceColumnValue } from '../Utils/ColumnUtils';
 
 const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     const {
@@ -49,7 +50,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         const newData = [...data];
         if (rowKeyValue != null) {
             let rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === rowKeyValue);
-            if (insertRowPosition === InsertRowPosition.after){
+            if (insertRowPosition === InsertRowPosition.after) {
                 rowIndex++;
             }
             newData.splice(rowIndex, 0, rowData);
@@ -121,15 +122,21 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, singleAction: action.singleAction };
     }
     case ActionType.ShowColumn: {
-        const newColumns = [...columns];
-        const columnIndex = newColumns.findIndex(c => c.key === action.columnKey);
-        newColumns[columnIndex] = { ...newColumns[columnIndex], visible: true };
+        const newColumns = replaceColumnValue({
+            columns,
+            columnKey: action.columnKey,
+            replacedOption: 'visible',
+            replacedValue: true
+        });
         return { ...props, columns: newColumns };
     }
     case ActionType.HideColumn: {
-        const newColumns = [...columns];
-        const columnIndex = newColumns.findIndex(c => c.key === action.columnKey);
-        newColumns[columnIndex] = { ...newColumns[columnIndex], visible: false };
+        const newColumns = replaceColumnValue({
+            columns,
+            columnKey: action.columnKey,
+            replacedOption: 'visible',
+            replacedValue: false
+        });
         return { ...props, columns: newColumns };
     }
     case ActionType.ReorderRows: {
@@ -161,7 +168,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, groups: newGroups?.length ? newGroups : undefined }
     }
     case ActionType.GroupColumn: {
-        const newGroups = [...props?.groups || [], { columnKey: action.columnKey}];
+        const newGroups = [...props?.groups || [], { columnKey: action.columnKey }];
         return { ...props, groups: newGroups?.length ? newGroups : undefined }
     }
     case ActionType.ResizeColumn: {
@@ -230,29 +237,30 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, editableCells: newEditableCells };
     }
     case ActionType.UpdateFilterRowValue: {
-        const column = columns.find((c: Column) => c.key === action.columnKey)!;
-        const newColumn: Column = {
-            ...column,
-            filterRowValue: action.filterRowValue,
-        };
-        const newColumns = getCopyOfArrayAndInsertOrReplaceItem(
-            newColumn,
-            'key',
+        const newColumns = replaceColumnValue({
             columns,
-        );
+            columnKey: action.columnKey,
+            replacedOption: 'filterRowValue',
+            replacedValue: action.filterRowValue
+        });
+        return { ...props, columns: newColumns };
+    }
+    case ActionType.UpdateHeaderFilterSearchValue: {
+        const newColumns = replaceColumnValue({
+            columns,
+            columnKey: action.columnKey,
+            replacedOption: 'headerFilterSearchValue',
+            replacedValue: action.headerFilterSearchValue
+        });
         return { ...props, columns: newColumns };
     }
     case ActionType.UpdateFilterRowOperator: {
-        const column = columns.find((c: Column) => c.key === action.columnKey)!;
-        const newColumn: Column = {
-            ...column,
-            filterRowOperator: action.filterRowOperator,
-        };
-        const newColumns = getCopyOfArrayAndInsertOrReplaceItem(
-            newColumn,
-            'key',
+        const newColumns = replaceColumnValue({
             columns,
-        );
+            columnKey: action.columnKey,
+            replacedOption: 'filterRowOperator',
+            replacedValue: action.filterRowOperator
+        });
         return { ...props, columns: newColumns };
     }
     case ActionType.UpdateEditorValue: {
@@ -403,7 +411,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         let updatedRowData = data.find((d) => getValueByField(d, rowKeyField) === rowEditorKeyValue);
         const rowEditableCells = editableCells.filter(
             editableCell => editableCell.rowKeyValue === rowEditorKeyValue
-          && (isNewRow || editableCell.hasOwnProperty('editorValue')));
+                    && (isNewRow || editableCell.hasOwnProperty('editorValue')));
         if (action.validate && !isValid({ ...props, editableCells: rowEditableCells })) {
             rowEditableCells.forEach(cell => {
                 const column = columns.find((c) => c.key === cell.columnKey)!;

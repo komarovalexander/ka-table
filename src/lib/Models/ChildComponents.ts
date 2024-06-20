@@ -14,6 +14,7 @@ import {
     IHeadCellResizeProps,
     IHeadRowProps,
     IHeaderFilterButtonProps,
+    IHeaderFilterPopupProps,
     ILoadingProps,
     INoDataRowProps,
     IPagingIndexProps,
@@ -42,29 +43,31 @@ export class ChildComponents<TData= any> {
     public detailsRow?: ChildComponent<IDataRowProps<TData>>;
     public emptyCell?: ChildComponent<IEmptyCellProps>;
     public filterRowCell?: ChildComponent<IFilterRowEditorProps>;
+    public filterRowCellInput?: ChildComponent<IFilterRowEditorProps>;
+    public groupCell?: ChildComponent<IGroupRowProps<TData>>;
+    public groupExpandButton?: ChildComponent<IGroupRowProps<TData>>;
     public groupPanel?: ChildComponent<IGroupPanelProps>;
     public groupPanelCell?: ChildComponent<IGroupPanelCellProps>;
-    public groupExpandButton?: ChildComponent<IGroupRowProps<TData>>;
-    public groupCell?: ChildComponent<IGroupRowProps<TData>>;
     public groupRow?: ChildComponent<IGroupRowProps<TData>>;
-    public groupSummaryRow?: ChildComponent<IGroupSummaryRowProps<TData>>;
     public groupSummaryCell?: ChildComponent<IGroupSummaryCellProps<TData>>;
-    public headFilterButton?: ChildComponent<IHeaderFilterButtonProps>;
+    public groupSummaryRow?: ChildComponent<IGroupSummaryRowProps<TData>>;
     public headCell?: ChildComponent<IHeadCellProps>;
     public headCellContent?: ChildComponent<IHeadCellProps>;
     public headCellResize?: ChildComponent<IHeadCellResizeProps>;
+    public headerFilterButton?: ChildComponent<IHeaderFilterButtonProps>;
+    public headerFilterPopupContent?: ChildComponent<IPopupContentProps<TData>>;
+    public headerFilterPopupRow?: ChildComponent<IDataRowProps>;
+    public headerFilterPopupSearchInput?: ChildComponent<IFilterRowEditorProps>;
+    public headerFilterPopupTextCell?: ChildComponent<ICellProps>;
     public headRow?: ChildComponent<IHeadRowProps>;
     public loading?: ChildComponent<ILoadingProps>;
-    public noDataRow?: ChildComponent<INoDataRowProps>;
     public noDataCell?: ChildComponent<INoDataRowProps>;
+    public noDataRow?: ChildComponent<INoDataRowProps>;
     public paging?: ChildComponent<IPagingProps>;
     public pagingIndex?: ChildComponent<IPagingIndexProps>;
     public pagingPages?: ChildComponent<IPagingProps>;
     public pagingSize?: ChildComponent<IPagingSizeProps>;
     public pagingSizes?: ChildComponent<IPagingProps>;
-    public popupContent?: ChildComponent<IPopupContentProps<TData>>;
-    public popupContentItem?: ChildComponent<IPopupContentItemProps>;
-    public popupContentItemText?: ChildComponent<IPopupContentItemProps>;
     public rootDiv?: ChildComponent<ITableProps<TData>>;
     public sortIcon?: ChildComponent<ISortIconProps>;
     public summaryCell?: ChildComponent<ISummaryCellProps<TData>>;

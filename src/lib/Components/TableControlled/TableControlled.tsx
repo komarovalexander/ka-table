@@ -7,7 +7,7 @@ import { ChildComponents } from '../../Models/ChildComponents';
 import { DispatchFunc } from '../../types';
 import { GroupPanel } from '../GroupPanel/GroupPanel';
 import Loading from '../Loading/Loading';
-import Popup from '../Popup/Popup';
+import Popup from '../HeaderFilterPopup/HeaderFilterPopup';
 import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
 import { clearSingleAction } from '../../actionCreators';
