@@ -7,7 +7,7 @@
   "prettier.enable": false,
   "prettier.embeddedLanguageFormatting": "off",
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "always"
   },
   "eslint.validate": ["javascript"]
 }
