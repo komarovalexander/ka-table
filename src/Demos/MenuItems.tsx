@@ -15,7 +15,7 @@ export class MenuItem {
 }
 
 const newItems: string[] = [];
-const updateItems: string[] = [];
+const updateItems: string[] = ['HeaderFilterLogicDemo'];
 
 const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
 
