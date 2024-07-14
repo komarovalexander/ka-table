@@ -10,6 +10,7 @@ import defaultOptions from '../../defaultOptions';
 export const GroupedColumnsRow: React.FunctionComponent<IHeadRowProps> = (props) => {
     const {
         columns,
+        groupColumnsCount,
         groupedColumns = [],
         childComponents,
     } = props
@@ -20,7 +21,7 @@ export const GroupedColumnsRow: React.FunctionComponent<IHeadRowProps> = (props)
             {rows.map((row, index) => (
                 (
                     <tr className={defaultOptions.css.theadRow} key={index}>
-                        <EmptyCells count={0} isTh={true} childComponents={childComponents}/>
+                        <EmptyCells count={groupColumnsCount} isTh={true} childComponents={childComponents}/>
                         {row.map((item: GroupedColumnResult, columnIndex: number) => {
                             return (
                                 <HeadCell
