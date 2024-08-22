@@ -29,6 +29,7 @@ const CustomDataRowDemo = () => {
             data={dataArray}
             rowKeyField={'id'}
             sortingMode={SortingMode.Single}
+            oddEvenRows={true}
             childComponents={{
                 dataRow: {
                     content: ({rowData, columns}) => {

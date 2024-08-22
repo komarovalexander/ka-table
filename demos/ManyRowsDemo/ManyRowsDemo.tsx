@@ -26,6 +26,7 @@ const ManyRowsDemo = () => {
             virtualScrolling= {{
                 enabled: true
             }}
+            oddEvenRows={true}
             childComponents={{
                 tableWrapper: {
                     elementAttributes: () => ({ style: { maxHeight: 600 }})

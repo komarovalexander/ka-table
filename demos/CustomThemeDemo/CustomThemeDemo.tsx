@@ -1,10 +1,10 @@
 // open TS Example or JS Example to see how to override styles
 import './CustomThemeDemo.scss';
 
+import React from 'react';
+
 import { DataType, Table } from 'ka-table';
 import { EditingMode, FilteringMode, SortingMode } from 'ka-table/enums';
-
-import React from 'react';
 
 const dataArray = Array(119).fill(undefined).map(
     (_, index) => ({
@@ -21,8 +21,8 @@ const CustomThemeDemo: React.FC = () => {
         <div className='custom-theme-demo'>
             <Table
                 columns= {[
-                    { key: 'column1', title: 'Column 1', dataType: DataType.Boolean, style: {minWidth: 130}, isHeaderFilterSearchable: true   },
-                    { key: 'column2', title: 'Column 2', dataType: DataType.String, style: {width: 240}, isHeaderFilterSearchable: true },
+                    { key: 'column1', title: 'Column 1', dataType: DataType.Boolean, style: {minWidth: 130}   },
+                    { key: 'column2', title: 'Column 2', dataType: DataType.String, style: {width: 240} },
                     { key: 'column3', title: 'Column 3', dataType: DataType.Number, style: {width: 230}  },
                     { key: 'column4', title: 'Column 4', dataType: DataType.Date, style: {minWidth: 100} },
                 ]}
@@ -40,7 +40,7 @@ const CustomThemeDemo: React.FC = () => {
                 editingMode={EditingMode.Cell}
                 rowKeyField={'id'}
                 sortingMode={SortingMode.Single}
-                filteringMode={FilteringMode.HeaderFilter}
+                filteringMode={FilteringMode.FilterRow}
             />
         </div>
     );
