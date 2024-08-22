@@ -138,6 +138,10 @@
   border-top: $ka-row-border-size solid $ka-border-color;
 }
 
+.ka-even {
+  background-color: $ka-border-color;
+}
+
 .ka-row:hover {
   background-color: $ka-row-hover-background-color;
 }

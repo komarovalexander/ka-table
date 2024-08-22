@@ -17,7 +17,8 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
         rowKeyValue,
         rowReordering,
         trRef,
-        childComponents
+        childComponents,
+        isOdd
     } = props;
     let dataRow = childComponents.dataRow;
 
@@ -34,7 +35,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
     }
 
     const { elementAttributes, content } = getElementCustomization({
-        className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`
+        className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}${isOdd === undefined ? '' : isOdd ? ' ka-odd' : ' ka-even'}`
     }, props, dataRow);
 
     return (

@@ -195,6 +195,7 @@ export interface ITableBodyProps<TData= any> {
     groupedColumns: Column[];
     groups?: Group[];
     groupsExpanded?: any[][];
+    oddEvenRows?: boolean;
     rowKeyField: string;
     rowReordering: boolean;
     selectedRows: any[];
@@ -226,6 +227,7 @@ export interface INewRowProps {
 }
 
 export interface IRowProps extends IRowCommonProps {
+    isOdd?: boolean;
     format?: FormatFunc;
     groupColumnsCount: number;
     isDetailsRowShown: boolean;

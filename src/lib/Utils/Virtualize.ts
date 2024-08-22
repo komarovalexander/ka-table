@@ -1,10 +1,11 @@
 import { VirtualScrolling } from '../Models/VirtualScrolling';
+import { checkRowOdd } from './DataUtils';
 
 export const isVirtualScrollingEnabled = (virtualScrolling?: VirtualScrolling) => {
     return virtualScrolling && virtualScrolling.enabled !== false;
 }
 
-export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[], isNewRowShown?: boolean) => {
+export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[], isNewRowShown?: boolean, oddEvenRows?: boolean) => {
     const virtualizedData: any[] = [];
     const { scrollTop = 0, bottomInvisibleCount = 5, topInvisibleCount = 0 } = virtualScrolling;
     let { tbodyHeight = 600 } = virtualScrolling;
@@ -39,5 +40,8 @@ export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[], 
         beginHeight,
         endHeight,
         virtualizedData,
+        isFirstVisibleRowOdd: oddEvenRows
+            ? checkRowOdd(data, virtualizedData[0])
+            : undefined
     };
 };

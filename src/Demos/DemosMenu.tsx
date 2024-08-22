@@ -17,6 +17,7 @@ const synonyms: { [value: string]: any[] } = {
     'ColumnSettingsDemo': ['Hide', 'Show', 'Action Creator'],
     'CustomCellDemo': ['Center', 'Width', 'openEditor', 'Format', 'Number', 'Money', 'Dollar'],
     'CustomEditorDemo': ['cellEditor'],
+    'CustomDataRowDemo': ['odd'],
     'CustomThemeDemo': ['Color', 'Dark', 'styles'],
     'EditingRowDemo': ['Image', 'Button', 'Btn'],
     'EventsDemo': ['Action', 'Click'],
@@ -34,7 +35,8 @@ const synonyms: { [value: string]: any[] } = {
     'TabIndexDemo': ['keyboard navigation'],
     'StateStoringDemo': ['store', 'localStorage'],
     'RemoteDataEditingDemo': ['query'],
-    'SortingExtendedDemo': ['Multiple']
+    'SortingExtendedDemo': ['Multiple'],
+    'ManyRowsDemo': ['odd', 'many']
 };
 
 const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
