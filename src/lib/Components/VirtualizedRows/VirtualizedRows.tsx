@@ -13,6 +13,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
         dispatch,
         virtualScrolling,
         editableCells,
+        oddEvenRows,
     } = props;
 
     const onFirstRowRendered = (firstRowRef: RefObject<HTMLElement>) => {
@@ -37,10 +38,12 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
 
     let virtualizedData = data;
     let virtualized;
+    let isFirstVisibleRowOdd;
     if (virtualScrolling) {
         const isNewRowShown = !!getNewRowEditableCells(editableCells)?.length;
-        virtualized = getVirtualized(virtualScrolling, virtualizedData, isNewRowShown);
+        virtualized = getVirtualized(virtualScrolling, virtualizedData, isNewRowShown, oddEvenRows);
         virtualizedData = virtualized.virtualizedData;
+        isFirstVisibleRowOdd = virtualized.isFirstVisibleRowOdd;
     }
     return (
         <>
@@ -48,7 +51,8 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
             <Rows
                 {...props}
                 data={virtualizedData}
-                onFirstRowRendered={onFirstRowRendered}/>
+                onFirstRowRendered={onFirstRowRendered}
+                isFirstRowOdd={isFirstVisibleRowOdd}/>
             {virtualized && virtualized.endHeight !== 0 && (<tr style={{height: virtualized.endHeight}}><td style={{height: virtualized.endHeight}}/></tr>)}
         </>
     );

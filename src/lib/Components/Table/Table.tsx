@@ -46,6 +46,7 @@ export interface ITableProps<TData= any> {
     height?: number | string;
     loading?: ILoadingProps;
     paging?: PagingOptions;
+    oddEvenRows?: boolean;
     rowKeyField: string;
     treeGroupKeyField?: string;
     treeGroupsExpanded?: any[];

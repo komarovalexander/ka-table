@@ -1,4 +1,5 @@
 import React, { RefObject, useEffect, useRef } from 'react';
+import { checkRowOdd, getValueByField } from '../../Utils/DataUtils';
 import { getGroupMark, getGroupText, groupSummaryMark } from '../../Utils/GroupUtils';
 import { treeDataMark, treeGroupMark } from '../../Utils/TreeUtils';
 
@@ -7,11 +8,11 @@ import GroupRow from '../GroupRow/GroupRow';
 import { GroupSummaryRow } from '../GroupSummaryRow/GroupSummaryRow';
 import { ITableBodyProps } from '../../props';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
-import { getValueByField } from '../../Utils/DataUtils';
 
 export interface IRowsProps extends ITableBodyProps {
     onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;
     treeGroupsExpanded?: any[];
+    isFirstRowOdd?: boolean;
 }
 
 const Rows: React.FunctionComponent<IRowsProps> = (props) => {
@@ -26,13 +27,15 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
         groupedColumns,
         groups = [],
         groupsExpanded = [],
+        isFirstRowOdd,
         onFirstRowRendered,
         treeGroupsExpanded,
         rowKeyField,
         rowReordering,
         selectedRows,
         validation,
-        treeExpandButtonColumnKey
+        treeExpandButtonColumnKey,
+        oddEvenRows
     } = props;
     const groupMark = getGroupMark();
 
@@ -77,8 +80,12 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                     const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
                     const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
                     const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
+                    const isOdd = oddEvenRows
+                        ? isFirstRowOdd ? checkRowOdd(data, rowData) : !checkRowOdd(data, rowData)
+                        : undefined;
                     const dataRow = (
                         <DataAndDetailsRows
+                            isOdd={isOdd}
                             childComponents={props.childComponents}
                             columns={props.columns}
                             dispatch={dispatch}
