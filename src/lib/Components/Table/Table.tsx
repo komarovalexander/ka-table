@@ -29,7 +29,7 @@ export interface ITableProps<TData= any> {
     columnReordering?: boolean;
     columnResizing?: boolean;
     columns: Column<TData>[];
-    groupedColumns?: GroupedColumn[];
+    controlledPropsKeys?: ControlledPropsKeys;
     data?: TData[];
     detailsRows?: any[];
     editableCells?: EditableCell[];
@@ -40,29 +40,29 @@ export interface ITableProps<TData= any> {
     filteringMode?: FilteringMode;
     focused?: Focused;
     format?: FormatFunc<TData>;
+    groupedColumns?: GroupedColumn[];
+    groupPanel?: GroupPanelSettings;
     groups?: Group[];
     groupsExpanded?: any[][];
-    groupPanel?: GroupPanelSettings;
     height?: number | string;
     loading?: ILoadingProps;
-    paging?: PagingOptions;
+    noData?: NoData,
     oddEvenRows?: boolean;
+    paging?: PagingOptions;
     rowKeyField: string;
-    treeGroupKeyField?: string;
-    treeGroupsExpanded?: any[];
-    treeExpandButtonColumnKey?: string;
     rowReordering?: boolean;
     search?: SearchFunc<TData>;
     searchText?: string;
     selectedRows?: any[];
     singleAction?: any;
     sort?: SortFunc;
-    noData?: NoData,
     sortingMode?: SortingMode;
+    treeExpandButtonColumnKey?: string;
+    treeGroupKeyField?: string;
+    treeGroupsExpanded?: any[];
     validation?: ValidationFunc<TData>;
     virtualScrolling?: VirtualScrolling;
     width?: number | string;
-    controlledPropsKeys?: ControlledPropsKeys;
 }
 
 export interface ITableEvents {
