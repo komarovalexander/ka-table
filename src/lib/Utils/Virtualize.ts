@@ -1,5 +1,5 @@
 import { VirtualScrolling } from '../Models/VirtualScrolling';
-import { checkRowOdd } from './DataUtils';
+import { checkIndexOdd } from './DataUtils';
 
 export const isVirtualScrollingEnabled = (virtualScrolling?: VirtualScrolling) => {
     return virtualScrolling && virtualScrolling.enabled !== false;
@@ -41,7 +41,7 @@ export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[], 
         endHeight,
         virtualizedData,
         isFirstVisibleRowOdd: oddEvenRows
-            ? checkRowOdd(data, virtualizedData[0])
+            ? checkIndexOdd(data?.indexOf(virtualizedData[0]))
             : undefined
     };
 };

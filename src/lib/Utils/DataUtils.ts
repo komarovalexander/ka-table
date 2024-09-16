@@ -90,6 +90,6 @@ export const reorderData = (data: any[], getKey: (d: any) => any, keyValue: any,
     return reorderDataByIndex(data, getKey, keyValue, targetIndex);
 };
 
-export const checkRowOdd = (data: any[], rowData: any) => {
-    return data?.indexOf(rowData) % 2 !== 0;
+export const checkIndexOdd = (index: number) => {
+    return index % 2 !== 0;
 }
