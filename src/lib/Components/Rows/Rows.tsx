@@ -1,5 +1,5 @@
 import React, { RefObject, useEffect, useRef } from 'react';
-import { checkRowOdd, getValueByField } from '../../Utils/DataUtils';
+import { checkIndexOdd, getValueByField } from '../../Utils/DataUtils';
 import { getGroupMark, getGroupText, groupSummaryMark } from '../../Utils/GroupUtils';
 import { treeDataMark, treeGroupMark } from '../../Utils/TreeUtils';
 
@@ -47,7 +47,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     let rowRefLink: any = firstRowRef;
     return (
         <>
-            {data.map((d) => {
+            {data.map((d, index) => {
                 if (d.groupMark === groupMark) {
                     const groupIndex = d.key.length - 1;
                     const group = groups && groups[groupIndex];
@@ -81,7 +81,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                     const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
                     const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
                     const isOdd = oddEvenRows
-                        ? isFirstRowOdd ? checkRowOdd(data, rowData) : !checkRowOdd(data, rowData)
+                        ? isFirstRowOdd ? checkIndexOdd(index) : !checkIndexOdd(index)
                         : undefined;
                     const dataRow = (
                         <DataAndDetailsRows

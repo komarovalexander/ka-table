@@ -223,6 +223,14 @@ describe('GroupUtils', () => {
             );
             expect(result).toEqual('Column: Column Title, Value: Group Text');
         });
+        it('format does not return value', () => {
+            const result = getGroupText(
+                'Group Text',
+                { key: 'column1', title: 'Column Title' },
+                ({column, value}) => undefined
+            );
+            expect(result).toEqual('Column Title: Group Text');
+        });
         it('format - groupItems', () => {
             const result = getGroupText(
                 'Group Text',

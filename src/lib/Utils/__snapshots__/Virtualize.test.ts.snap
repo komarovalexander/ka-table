@@ -4,6 +4,7 @@ exports[`Virtualize getVirtualized itemHeight 40 1`] = `
 Object {
   "beginHeight": 0,
   "endHeight": 3600,
+  "isFirstVisibleRowOdd": undefined,
   "virtualizedData": Array [
     0,
     1,
@@ -23,6 +24,7 @@ exports[`Virtualize getVirtualized scrollTop 0 1`] = `
 Object {
   "beginHeight": 0,
   "endHeight": 900,
+  "isFirstVisibleRowOdd": undefined,
   "virtualizedData": Array [
     0,
     1,
@@ -42,6 +44,7 @@ exports[`Virtualize getVirtualized scrollTop 100 1`] = `
 Object {
   "beginHeight": 90,
   "endHeight": 810,
+  "isFirstVisibleRowOdd": undefined,
   "virtualizedData": Array [
     9,
     10,
@@ -61,6 +64,7 @@ exports[`Virtualize getVirtualized scrollTop 100 bottomInvisibleCount 1`] = `
 Object {
   "beginHeight": 90,
   "endHeight": 760,
+  "isFirstVisibleRowOdd": undefined,
   "virtualizedData": Array [
     9,
     10,
@@ -85,6 +89,7 @@ exports[`Virtualize getVirtualized scrollTop 900 1`] = `
 Object {
   "beginHeight": 890,
   "endHeight": 10,
+  "isFirstVisibleRowOdd": undefined,
   "virtualizedData": Array [
     89,
     90,
@@ -104,6 +109,7 @@ exports[`Virtualize getVirtualized scrollTop 900 topInvisibleCount 1`] = `
 Object {
   "beginHeight": 790,
   "endHeight": 10,
+  "isFirstVisibleRowOdd": undefined,
   "virtualizedData": Array [
     79,
     80,
@@ -133,6 +139,7 @@ exports[`Virtualize getVirtualized with new row 1`] = `
 Object {
   "beginHeight": 80,
   "endHeight": 810,
+  "isFirstVisibleRowOdd": undefined,
   "virtualizedData": Array [
     9,
     10,

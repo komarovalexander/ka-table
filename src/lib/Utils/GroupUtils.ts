@@ -115,7 +115,8 @@ export const groupBy = (data: any[], keyGetter: any, isEmptyValue: boolean = fal
 export const getGroupMark = () => groupMark;
 
 export const getGroupText = (value: any, column: Column, format?: FormatFunc, groupItems?: any[]) => {
-    return format ? format({ column, value, rowData: groupItems?.[0] }) : `${(column && column.title ? column.title + ': ' : '')}${value}`;
+    const formattedValue = format && format({ column, value, rowData: groupItems?.[0] });
+    return formattedValue != null ? formattedValue : `${(column && column.title ? column.title + ': ' : '')}${value}`;
 };
 
 export const isMaxDeep = (groupPanel: GroupPanelSettings, columns: Column[], groups?: Group[]) => {
