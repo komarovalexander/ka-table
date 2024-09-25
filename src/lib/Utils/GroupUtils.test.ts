@@ -5,6 +5,7 @@ import {
     getGroupText,
     getGroupedStructure,
     groupBy,
+    groupDataMark,
     groupSummaryMark,
     isMaxDeep,
     updateExpandedGroups,
@@ -31,6 +32,20 @@ describe('GroupUtils', () => {
                 name: 'Simba',
                 type: 'Cat',
             }]]]);
+            const result = convertToFlat(mappedData);
+            expect(result).toMatchSnapshot();
+        });
+
+
+        it('simple - group items', () => {
+            const value: any = []; // value is empty in case of collapsed group
+            value.groupDataMark = groupDataMark;
+            value.groupData = [{
+                country: 'France',
+                name: 'Simba',
+                type: 'Cat',
+            }];
+            const mappedData = new Map([['France', value]]);
             const result = convertToFlat(mappedData);
             expect(result).toMatchSnapshot();
         });
@@ -167,38 +182,38 @@ describe('GroupUtils', () => {
 
     describe('getGroupedStructure', () => {
         it('basic', () => {
-            const result = getGroupedStructure(data, groups, groupedColumns);
+            const result = getGroupedStructure({ data, groups, groupedColumns});
             expect(result).toMatchSnapshot();
         });
 
         it('expanded root', () => {
-            const result = getGroupedStructure(data, groups, groupedColumns, 0, [['Czech Republic']]);
+            const result = getGroupedStructure({ data, groups, groupedColumns, expandedDeep: 0, groupsExpanded: [['Czech Republic']]});
             expect(result).toMatchSnapshot();
         });
         it('expanded second', () => {
-            const result = getGroupedStructure(data, groups, groupedColumns, 0, [['Czech Republic'], ['Czech Republic', 'Cat']]);
+            const result = getGroupedStructure({data, groups, groupedColumns, expandedDeep: 0, groupsExpanded: [['Czech Republic'], ['Czech Republic', 'Cat']]});
             expect(result).toMatchSnapshot();
         });
         it('should not expand second', () => {
-            const result = getGroupedStructure(data, groups, groupedColumns, 0, [['Czech Republic', 'Cat']]);
+            const result = getGroupedStructure({data, groups, groupedColumns, expandedDeep: 0, groupsExpanded: [['Czech Republic', 'Cat']]});
             expect(result).toMatchSnapshot();
         });
         it('expanded couple', () => {
-            const result = getGroupedStructure(data, groups, groupedColumns, 0,
-                [['Czech Republic'], ['Czech Republic', 'Cat'], ['Montenegro']]);
+            const result = getGroupedStructure({data, groups, groupedColumns, expandedDeep: 0, groupsExpanded:
+                [['Czech Republic'], ['Czech Republic', 'Cat'], ['Montenegro']]});
             expect(result).toMatchSnapshot();
         });
         it('expanded couple (skip Czech Republic)', () => {
-            const result = getGroupedStructure(data, groups, groupedColumns, 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
+            const result = getGroupedStructure({data, groups, groupedColumns, expandedDeep: 0, groupsExpanded:  [['Czech Republic', 'Cat'], ['Montenegro']]});
             expect(result).toMatchSnapshot();
         });
         it('groupedColumns are empty', () => {
-            const result = getGroupedStructure(data, groups, [], 0, [['Czech Republic', 'Cat'], ['Montenegro']]);
+            const result = getGroupedStructure({data, groups, groupedColumns: [], expandedDeep: 0, groupsExpanded:  [['Czech Republic', 'Cat'], ['Montenegro']]});
             expect(result).toBeUndefined();
         });
         it('returns summary', () => {
             const groupsWithSummary: Group[] = [{ columnKey: 'country', enableSummary: true }, { columnKey: 'type', enableSummary: true }];
-            const result = getGroupedStructure(data, groupsWithSummary, groupedColumns, 0);
+            const result = getGroupedStructure({data, groups: groupsWithSummary, groupedColumns, expandedDeep: 0});
             expect(result).toMatchSnapshot();
         });
     });

@@ -6,6 +6,7 @@ import { getValueByColumn } from './DataUtils';
 
 export const groupMark = {};
 export const groupSummaryMark = {};
+export const groupDataMark = {};
 
 const getGroupSummary = (groupData: any[], key: any, groupIndex: any) => ({ groupData, groupSummaryMark, key: JSON.stringify([key, '--:+summary--']), groupIndex });
 
@@ -29,7 +30,12 @@ export const getGroupedData = (
     groups: Group[],
     groupedColumns: Column[],
     groupsExpanded?: any[]): any[] => {
-    const grouped = getGroupedStructure(data, groups, groupedColumns, 0, groupsExpanded) as Map<any, any>;
+    const grouped = getGroupedStructure({
+        data,
+        groups,
+        groupedColumns,
+        groupsExpanded
+    }) as Map<any, any>;
     return convertToFlat(grouped);
 };
 
@@ -41,20 +47,28 @@ export const convertToFlat = (grouped: Map<any, any>, key: any[] = []) => {
         } else {
             const groupKey = [...key];
             groupKey.push(groupValue);
-            result.push({ groupMark, key: groupKey, value: groupValue, groupItems: value });
+            result.push({ groupMark, key: groupKey, value: groupValue, groupItems: value.groupDataMark === groupDataMark ? value.groupData : value });
             result = [...result, ...(Array.isArray(value) ? value : convertToFlat(value, groupKey))];
         }
     });
     return result;
 };
 
-export const getGroupedStructure = (
-    data: any[],
-    groups: Group[],
-    groupedColumns: Column[],
-    expandedDeep: number = 0,
-    groupsExpanded?: any[],
-    parentGroupKey: any[] = []
+export const getGroupedStructure = ({
+    data,
+    groups,
+    groupedColumns,
+    expandedDeep = 0,
+    groupsExpanded,
+    parentGroupKey = []
+}: {
+    data: any[];
+    groups: Group[];
+    groupedColumns: Column[];
+    expandedDeep?: number;
+    groupsExpanded?: any[];
+    parentGroupKey?: any[];
+}
 ): Map<any, any> | void => {
     groups = [...groups];
     const group = groups.shift();
@@ -68,25 +82,30 @@ export const getGroupedStructure = (
           || groupExpandedItems.some((ge) => ge.length === expandedDeep + 1);
                 if (isGroupExpanded) {
                     const fullKey =  [...parentGroupKey, key];
-                    const newStructure = getGroupedStructure(
-                        groupData,
+                    const newStructure = getGroupedStructure({
+                        data: groupData,
                         groups,
                         groupedColumns,
-                        expandedDeep + 1,
-                        groupExpandedItems && groupExpandedItems.filter((ge) => ge.length > expandedDeep + 1),
-                        fullKey
-                    );
+                        expandedDeep: expandedDeep + 1,
+                        groupsExpanded: groupExpandedItems && groupExpandedItems.filter((ge) => ge.length > expandedDeep + 1),
+                        parentGroupKey: fullKey
+                    });
 
                     if (newStructure) {
                         if (group.enableSummary){
                             newStructure.set(groupSummaryMark, getGroupSummary(groupData, fullKey, expandedDeep));
                         }
+                        (newStructure as any).groupDataMark = groupDataMark;
+                        (newStructure as any).groupData = groupData;
                         grouped.set(key, newStructure);
                     } else if (group.enableSummary) {
                         groupData.push(getGroupSummary([...groupData], fullKey, expandedDeep));
                     }
                 } else {
-                    grouped.set(key, []);
+                    const emptyArray: any = [];
+                    emptyArray.groupDataMark = groupDataMark;
+                    emptyArray.groupData = groupData;
+                    grouped.set(key, emptyArray);
                 }
             });
             return grouped;
