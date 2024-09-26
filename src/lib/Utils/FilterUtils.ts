@@ -101,6 +101,10 @@ export const predefinedFilterOperators: FilterOperator[] = [{
     name: FilterOperatorName.Equal,
 }, {
     compare: (fieldValue: any, conditionValue: any) =>
+        fieldValue !== conditionValue,
+    name: FilterOperatorName.IsNotEqual,
+}, {
+    compare: (fieldValue: any, conditionValue: any) =>
         fieldValue > conditionValue,
     name: FilterOperatorName.MoreThan,
 }, {
