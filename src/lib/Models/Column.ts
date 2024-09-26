@@ -21,6 +21,7 @@ export class Column<TData = any> {
     public isFilterable?: boolean;
     public isResizable?: boolean;
     public isSortable?: boolean;
+    public isDraggable?: boolean;
     public key!: string;
     public sortDirection?: SortDirection;
     public sortIndex?: number;
