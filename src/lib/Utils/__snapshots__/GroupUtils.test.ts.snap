@@ -363,6 +363,25 @@ Array [
 ]
 `;
 
+exports[`GroupUtils convertToFlat simple - group items 1`] = `
+Array [
+  Object {
+    "groupItems": Array [
+      Object {
+        "country": "France",
+        "name": "Simba",
+        "type": "Cat",
+      },
+    ],
+    "groupMark": Object {},
+    "key": Array [
+      "France",
+    ],
+    "value": "France",
+  },
+]
+`;
+
 exports[`GroupUtils convertToFlat simple 1`] = `
 Array [
   Object {
