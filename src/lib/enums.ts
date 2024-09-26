@@ -122,6 +122,7 @@ export enum FilteringMode {
 
 export enum FilterOperatorName {
     Equal = '=',
+    IsNotEqual = '!=',
     MoreThan = '>',
     LessThan = '<',
     MoreThanOrEqual = '>=',
