@@ -47,7 +47,7 @@ export const convertToFlat = (grouped: Map<any, any>, key: any[] = []) => {
         } else {
             const groupKey = [...key];
             groupKey.push(groupValue);
-            result.push({ groupMark, key: groupKey, value: groupValue, groupItems: value.groupDataMark === groupDataMark ? value.groupData : value });
+            result.push({ groupMark, key: groupKey, value: groupValue, groupItems: value?.groupDataMark === groupDataMark ? value?.groupData : value });
             result = [...result, ...(Array.isArray(value) ? value : convertToFlat(value, groupKey))];
         }
     });
