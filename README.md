@@ -6,10 +6,15 @@ The customizable, extendable, lightweight, and fully free React Table Component
 
 <a href="http://ka-table.com"><img src="http://ka-table.com/images/logo.svg"/></a>
 
-[Site](http://ka-table.com) | [Demos](https://komarovalexander.github.io/ka-table/#/overview) | [Docs](http://ka-table.com/docs_get_started.html)
+[Site](http://ka-table.com) | [Demos](https://komarovalexander.github.io/ka-table/#/overview) | [Docs](http://ka-table.com/docs_get_started.html) | [Ka-table AI Bot](https://codeparrot.ai/oracle?owner=komarovalexander&repo=ka-table)
 
 ![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/delete-row.png)
 [Demo link](https://komarovalexander.github.io/ka-table/#/delete-row)
+
+### Ka-table AI Bot
+
+[Ka-table](https://codeparrot.ai/oracle?owner=komarovalexander&repo=ka-table) Bot will help you understand this repository better. You can ask for code examples, installation guide, debugging help and much more.
+
 
 ## Installation
 
