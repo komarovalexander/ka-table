@@ -116,7 +116,7 @@ export const getGroupedStructure = ({
 export const groupBy = (data: any[], keyGetter: any, isEmptyValue: boolean = false) => {
     const map = new Map();
     data.forEach((item) => {
-        const key = keyGetter(item);
+        const key = normalizeKeyForMap(keyGetter(item));
         if (isEmptyValue) {
             map.set(key, []);
         } else {
@@ -130,6 +130,14 @@ export const groupBy = (data: any[], keyGetter: any, isEmptyValue: boolean = fal
     });
     return map;
 };
+
+export const normalizeKeyForMap = (key: any) => {
+    return key instanceof Date
+        ? key.toString()
+        : key instanceof Object
+            ? JSON.stringify(key)
+            : key;
+}
 
 export const getGroupMark = () => groupMark;
 
