@@ -55,6 +55,7 @@ const FilterOperators  = ({
                 dispatch(updateFilterRowOperator(column.key, event.currentTarget.value));
             }}>
             <option value={'='}>=</option>
+            <option value={'!='}>!=</option>
             <option value={'<'}>{'<'}</option>
             <option value={'>'}>{'>'}</option>
             <option value={'<='}>{'<='}</option>
