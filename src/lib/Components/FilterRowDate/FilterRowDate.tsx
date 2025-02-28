@@ -21,7 +21,7 @@ const FilterRowDate: React.FunctionComponent<IFilterRowEditorProps> = (props) =>
         onChange: (event) => {
             const targetValue = event.currentTarget.value;
             const filterRowValue = targetValue ? new Date(targetValue) : null;
-            dispatch(updateFilterRowValue(column.key, filterRowValue));
+            dispatch(updateFilterRowValue(column.key, filterRowValue && new Date(filterRowValue.getTime() + filterRowValue.getTimezoneOffset() * 60000)));
         }
     }, props, childComponents?.filterRowCellInput);
     return (
