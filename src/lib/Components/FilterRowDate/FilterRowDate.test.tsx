@@ -40,7 +40,7 @@ describe('FliterRowDate', () => {
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             type: ActionType.UpdateFilterRowValue,
-            filterRowValue: newValue,
+            filterRowValue: new Date(newValue.getTime() + newValue.getTimezoneOffset() * 60000),
             columnKey: 'nameKey',
         });
     });

@@ -131,7 +131,7 @@ describe('FilterUtils', () => {
                 filterRowValue: 'Billi Bob',
                 key: 'name',
             }];
-            expect(() => filterData(data, columns)).toThrowError('\'unknownOperator\' has not found in predefinedFilterOperators array, available operators: =, >, <, >=, <=, contains');
+            expect(() => filterData(data, columns)).toThrow('\'unknownOperator\' has not found in predefinedFilterOperators array, available operators: =, !=, >, <, >=, <=, contains, IsEmpty, IsNotEmpty');
         });
 
         it('custom column filter', () => {
