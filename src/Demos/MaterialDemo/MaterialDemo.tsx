@@ -110,12 +110,7 @@ const MaterialDemo = () => {
                                             onChange={(value: any) => {
                                                 table.updateFilterRowValue(column.key, value);
                                             }}
-                                            renderInput={(params: any) => (
-                                                <TextField
-                                                    variant='standard'
-                                                    {...params}
-                                                />
-                                            )}
+                                            slotProps={{ textField: { size: 'small' } }}
                                         />
                                     </LocalizationProvider>
                                 );

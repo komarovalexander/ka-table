@@ -25,7 +25,6 @@ module.exports = {
         "eslint-plugin-react",
         "eslint-plugin-import",
         "eslint-plugin-prefer-arrow",
-        "eslint-plugin-unicorn",
         "@typescript-eslint",
         "@typescript-eslint/tslint"
     ],
@@ -213,7 +212,6 @@ module.exports = {
                 ]
             }
         ],
-        "unicorn/prefer-ternary": "error",
         "use-isnan": "error",
         "valid-typeof": "off",
         "@typescript-eslint/tslint/config": [

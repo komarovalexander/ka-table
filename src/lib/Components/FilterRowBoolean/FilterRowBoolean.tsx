@@ -29,7 +29,9 @@ const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = (props)
     }, props, childComponents?.filterRowCellInput);
     return (
         content || (<input
-            ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}
+            ref={(elem) => {
+                elem && (elem.indeterminate = isEmpty(value))
+            }}
             {...elementAttributes}
         />)
     );

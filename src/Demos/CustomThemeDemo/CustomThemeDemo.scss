@@ -1,4 +1,5 @@
 .custom-theme-demo{
   @import './dark.scss';
+  @import '../../lib/static/themes/default.scss';
   @import '../../lib/style.scss';
 }

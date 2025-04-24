@@ -1,4 +1,5 @@
-@import './static/themes/default.scss';
+@use "sass:color";
+@use './static/themes/default.scss'  as *;
 
 
 .ka {
@@ -208,7 +209,7 @@
 
 .ka-group-panel-cell-remove {
   cursor: pointer;
-  color: lighten($ka-thead-color, 25);
+  color: color.adjust($ka-thead-color, $lightness: 25%);
   display: flex;
   fill: currentColor;
 }
@@ -229,14 +230,14 @@
 }
 
 .ka-icon-sort-arrow-up {
-  color: darken($ka-thead-color, 5);
+  color: color.adjust($ka-thead-color, $lightness: -5%);
   fill: currentColor;
   position: relative;
   top: 1px;
 }
 
 .ka-icon-sort-arrow-down {
-  color: darken($ka-thead-color, 5);
+  color: color.adjust($ka-thead-color, $lightness: -5%);
   fill: currentColor;
   position: relative;
   top: 1px;
@@ -308,19 +309,19 @@
 @keyframes ka-loading-animation {
   0% {
     background-color: $ka-loading-background-color-base;
-    box-shadow: 20px 0px 0px 0px transparentize($ka-loading-background-color-base, 0.8),
-      40px 0px 0px 0px transparentize($ka-loading-background-color-base, 0.8);
+    box-shadow: 20px 0px 0px 0px color.adjust($ka-loading-background-color-base, $alpha: -0.8),
+      40px 0px 0px 0px color.adjust($ka-loading-background-color-base, $alpha: -0.8);
   }
 
   25% {
-    background-color: transparentize($ka-loading-background-color-base, 0.6);
+    background-color: color.adjust($ka-loading-background-color-base, $alpha: -0.6);
     box-shadow: 20px 0px 0px 0px $ka-loading-background-color-base,
-      40px 0px 0px 0px transparentize($ka-loading-background-color-base, 0.8);
+      40px 0px 0px 0px color.adjust($ka-loading-background-color-base, $alpha: -0.8);
   }
 
   75% {
-    background-color: transparentize($ka-loading-background-color-base, 0.6);
-    box-shadow: 20px 0px 0px 0px transparentize($ka-loading-background-color-base, 0.8),
+    background-color: color.adjust($ka-loading-background-color-base, $alpha: -0.6);
+    box-shadow: 20px 0px 0px 0px color.adjust($ka-loading-background-color-base, $alpha: -0.8),
       40px 0px 0px 0px $ka-loading-background-color-base;
   }
 
@@ -389,7 +390,7 @@
   font-size: 16px;
   position: absolute;
   padding: 0 3px;
-  color: darken($ka-thead-color, 15);
+  color: color.adjust($ka-thead-color, $lightness: -15%);
   fill: currentColor;
 }
 

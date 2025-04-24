@@ -1,7 +1,7 @@
+@use "sass:color";
 $ka-border-color: #F9FBFC !default;
 $ka-color-base: #353C44 !default;
 $ka-thead-color: #646D76 !default;
-
 $ka-background-color: white !default;
 $ka-input-background-color: null !default;
 $ka-input-border-color: #747D86 !default;
@@ -10,7 +10,7 @@ $ka-cell-color: $ka-color-base !default;
 $ka-cell-hover-background-color: null !default;
 $ka-cell-line-height: 29px !default;
 $ka-cell-padding: 8px 20px !default;
-$ka-column-resize-border-color: darken($ka-border-color, 10) !default;
+$ka-column-resize-border-color: color.adjust($ka-border-color, $lightness: -10%) !default;
 $ka-filter-row-cell-padding: 0 20px 15px 20px !default;
 $ka-font-size: 14px !default;
 $ka-group-cell-padding: 8px 10px !default;
@@ -28,7 +28,7 @@ $ka-paging-pages-margin: 0 !default;
 $ka-paging-pages-padding: 0 10px !default;
 $ka-row-border-size: 2px !default;
 $ka-row-hover-background-color: null !default;
-$ka-selected-border-color: darken($ka-border-color, 7) !default;
+$ka-selected-border-color: color.adjust($ka-border-color, $lightness: -7%) !default;
 $ka-selected-background-color: #F7FcFd !default;
 $ka-summary-cell-padding: 12px 20px !default;
 $ka-thead-background-color: #F1F5F7 !default;
