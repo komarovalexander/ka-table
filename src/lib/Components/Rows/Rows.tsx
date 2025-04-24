@@ -10,7 +10,7 @@ import { ITableBodyProps } from '../../props';
 import { getRowEditableCells } from '../../Utils/FilterUtils';
 
 export interface IRowsProps extends ITableBodyProps {
-    onFirstRowRendered: (firstRowRef: RefObject<HTMLElement>) => any;
+    onFirstRowRendered: (firstRowRef: RefObject<HTMLElement | null>) => any;
     treeGroupsExpanded?: any[];
     isFirstRowOdd?: boolean;
 }
@@ -39,7 +39,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     } = props;
     const groupMark = getGroupMark();
 
-    const firstRowRef = useRef<HTMLInputElement>(null);
+    const firstRowRef = useRef<HTMLElement>(null);
     useEffect(() => {
         onFirstRowRendered(firstRowRef);
     }, [firstRowRef, onFirstRowRendered]);

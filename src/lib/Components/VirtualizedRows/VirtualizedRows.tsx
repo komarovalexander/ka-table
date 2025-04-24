@@ -16,7 +16,7 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
         oddEvenRows,
     } = props;
 
-    const onFirstRowRendered = (firstRowRef: RefObject<HTMLElement>) => {
+    const onFirstRowRendered = (firstRowRef: RefObject<HTMLElement | null>) => {
         if (firstRowRef
       && firstRowRef.current
       && (virtualScrolling

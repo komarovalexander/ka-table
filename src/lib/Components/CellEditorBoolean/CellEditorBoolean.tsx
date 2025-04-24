@@ -30,7 +30,9 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = (props) => 
         content ||
     (
         <input
-            ref={(elem) => elem && (elem.indeterminate = isEmpty(value))}
+            ref={(elem) => {
+                elem && (elem.indeterminate = isEmpty(value));
+            }}
             {...elementAttributes}
         />
     )
