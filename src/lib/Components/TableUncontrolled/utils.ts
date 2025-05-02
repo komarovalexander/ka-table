@@ -4,7 +4,7 @@ import { ITableProps } from '../Table/Table';
 export const getDefaultControlledPropsKeys = (settings?: { loadingEnabled?: boolean }): ControlledPropsKeys => {
     return  settings?.loadingEnabled
         ? ['searchText', 'loading']
-        : ['searchText', 'loading', 'data', 'paging', 'selectedRows']
+        : ['searchText', 'loading', 'data', 'columns', 'paging', 'selectedRows']
 }
 
 export const getControlledPropsKeys = (props: ITableProps) => {
