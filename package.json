@@ -15,7 +15,7 @@
     "@types/react-redux": "^7.1.34",
     "bootstrap": "5.3.5",
     "date-fns": "^4.1.0",
-    "jspdf": "^4.1.0",
+    "jspdf": "^4.2.0",
     "jspdf-autotable": "^5.0.2",
     "lodash.orderby": "^4.6.0",
     "lorem-ipsum": "^2.0.3",
