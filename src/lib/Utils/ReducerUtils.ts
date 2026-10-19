@@ -1,7 +1,7 @@
 import { ITableProps } from '../';
 import { Column, EditableCell } from '../models';
 import { ValidationFunc } from '../types';
-import { getValueByField } from './DataUtils';
+import { getValueByColumn, getValueByField } from './DataUtils';
 
 export const getValidatedEditableCells = ({
     data,
@@ -19,7 +19,10 @@ export const getValidatedEditableCells = ({
     return editableCells.map(cell => {
         const column = columns.find((c) => c.key === cell.columnKey)!;
         const updatedRowData = data?.find((d) => getValueByField(d, rowKeyField) === cell.rowKeyValue);
-        const value = cell.hasOwnProperty('editorValue') ? cell.editorValue : getValueByField(updatedRowData, cell.columnKey);
+        let value = cell.editorValue;
+        if (!cell.hasOwnProperty('editorValue')) {
+            value = column ? getValueByColumn(updatedRowData, column) : getValueByField(updatedRowData, cell.columnKey);
+        }
         return {
             ...cell,
             validationMessage: validation && validation({
@@ -36,7 +39,9 @@ export const getEditableCellsByData = (data: any[], rowKeyField: string, columns
     data?.forEach((rowData) => {
         const rowKeyValue = getValueByField(rowData, rowKeyField);
         columns.forEach(column => {
-            editableCells.push({ columnKey: column.key, rowKeyValue });
+            if (column.isEditable !== false) {
+                editableCells.push({ columnKey: column.key, rowKeyValue });
+            }
         });
     });
     return editableCells;
@@ -54,6 +59,17 @@ export const addColumnsToRowEditableCells = (editableCells: EditableCell[], colu
         }
     });
     return newEditableCells;
+}
+
+export const insertOrReplaceRow = (data: any[], rowData: any, rowKeyField: string) => {
+    const rowKeyValue = getValueByField(rowData, rowKeyField);
+    const rowIndex = data.findIndex((d) => getValueByField(d, rowKeyField) === rowKeyValue);
+    if (rowIndex === -1) {
+        return [...data, rowData];
+    }
+    const newData = [...data];
+    newData[rowIndex] = rowData;
+    return newData;
 }
 
 export const addRowKeyValuesToSelectedRows = (selectedRows: any[], rowKeyValues: any[]) => {

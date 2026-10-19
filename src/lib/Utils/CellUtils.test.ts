@@ -1,6 +1,7 @@
 import { ActionType, EditingMode } from '../enums';
 import {
     addItemToEditableCells,
+    checkPopupPosition,
     getCellEditorDispatchHandler,
     getEditableCell,
     getNewRowDataFromEditableCells,
@@ -144,5 +145,37 @@ it('should dispatch the action', () => {
     expect(dispatch).toHaveBeenCalledWith({
         popupPosition,
         type: ActionType.UpdatePopupPosition
+    });
+});
+
+describe('checkPopupPosition', () => {
+    const createHeadCellContent = () => {
+        const tableWrapper = document.createElement('div');
+        tableWrapper.className = 'ka-table-wrapper';
+        const headCell = tableWrapper.appendChild(document.createElement('table')).appendChild(document.createElement('th'));
+        const element = headCell.appendChild(document.createElement('div'));
+        Object.defineProperty(element, 'offsetParent', { value: headCell });
+        return element;
+    };
+
+    it('dispatches the popup position', () => {
+        const dispatch = jest.fn();
+        checkPopupPosition({ key: 'name', isHeaderFilterPopupShown: true }, { current: createHeadCellContent() }, dispatch);
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledWith(updatePopupPosition({ x: 0, y: 0 }));
+    });
+    it('does not dispatch if the position is not changed', () => {
+        const dispatch = jest.fn();
+        checkPopupPosition({
+            headerFilterPopupPosition: { x: 0, y: 0 },
+            isHeaderFilterPopupShown: true,
+            key: 'name',
+        }, { current: createHeadCellContent() }, dispatch);
+        expect(dispatch).not.toHaveBeenCalled();
+    });
+    it('does not dispatch if the popup is not shown', () => {
+        const dispatch = jest.fn();
+        checkPopupPosition({ key: 'name' }, { current: createHeadCellContent() }, dispatch);
+        expect(dispatch).not.toHaveBeenCalled();
     });
 });

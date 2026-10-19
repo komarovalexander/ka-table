@@ -1,14 +1,16 @@
 import { ITableProps } from '../';
 import {
     clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
-    deselectRow, insertRow, loadData, reorderColumns, reorderRows, resizeColumn,
-    saveAllEditors, saveRowEditors, selectAllFilteredRows, selectAllRows, selectAllVisibleRows,
-    selectRow, selectRows, selectRowsRange, selectSingleRow, setSingleAction, updateData,
-    updateEditorValue, updateHeaderFilterValues, updateTreeGroupsExpanded, validate,
+    deselectRow, insertRow, loadData, openAllEditors, reorderColumns, reorderRows, resizeColumn,
+    saveAllEditors, saveNewRow, saveRowEditors, selectAllFilteredRows, selectAllRows, selectAllVisibleRows,
+    selectRow, selectRows, selectRowsRange, selectSingleRow, setSingleAction, updateCellValue, updateData,
+    updateEditorValue, updateHeaderFilterValues, updatePopupPosition, updateRow, updateTreeGroupsExpanded,
+    validate,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName, InsertRowPosition } from '../enums';
 import { deepFreeze } from '../../testUtils/deepFreeze';
 import { kaReducer as kaReducerOriginal } from './kaReducer';
+import { newRowId } from '../const';
 
 // The state is deeply frozen in every test: a reducer which mutates the previous state throws a TypeError
 const kaReducer = (state: any, action: any): any => kaReducerOriginal(deepFreeze(state), action);
@@ -196,6 +198,88 @@ describe('kaReducer', () => {
             }, saveRowEditors(1, { validate: true }));
             expect(result.data).toEqual([{ id: 1, name: 'b' }]);
             expect(result.editableCells).toEqual([]);
+        });
+        it('supports a nested rowKeyField', () => {
+            const result: ITableProps = kaReducer({
+                columns: [{ key: 'name' }],
+                data: [{ meta: { id: 1 }, name: 'a' }, { meta: { id: 2 }, name: 'b' }],
+                editableCells: [{ rowKeyValue: 2, columnKey: 'name', editorValue: 'c' }],
+                rowKeyField: 'meta.id',
+            }, saveRowEditors(2));
+            expect(result.data).toEqual([{ meta: { id: 1 }, name: 'a' }, { meta: { id: 2 }, name: 'c' }]);
+        });
+        it('does nothing if the row is not in data', () => {
+            const state: ITableProps = {
+                ...intialState,
+                editableCells: [{ rowKeyValue: 5, columnKey: 'name', editorValue: 'b' }],
+            };
+            const result: ITableProps = kaReducer(state, saveRowEditors(5));
+            expect(result).toBe(state);
+        });
+    });
+    describe('SaveNewRow', () => {
+        it('sets a nested rowKeyField of the new row', () => {
+            const result: ITableProps = kaReducer({
+                columns: [{ key: 'name' }],
+                data: [{ meta: { id: 1 }, name: 'a' }],
+                editableCells: [{ rowKeyValue: newRowId, columnKey: 'name', editorValue: 'b' }],
+                rowKeyField: 'meta.id',
+            }, saveNewRow(2));
+            expect(result.data).toEqual([{ meta: { id: 2 }, name: 'b' }, { meta: { id: 1 }, name: 'a' }]);
+            expect(result.editableCells).toEqual([]);
+        });
+        it('does nothing if the new row is not shown', () => {
+            const intialState: ITableProps = {
+                columns: [{ key: 'name' }],
+                data: [{ id: 1, name: 'a' }],
+                rowKeyField: 'id',
+            };
+            const result: ITableProps = kaReducer(intialState, saveNewRow(2));
+            expect(result).toBe(intialState);
+        });
+    });
+    describe('UpdateCellValue', () => {
+        it('supports a nested rowKeyField', () => {
+            const result: ITableProps = kaReducer({
+                columns: [{ key: 'name' }],
+                data: [{ meta: { id: 1 }, name: 'a' }, { meta: { id: 2 }, name: 'b' }],
+                rowKeyField: 'meta.id',
+            }, updateCellValue(2, 'name', 'c'));
+            expect(result.data).toEqual([{ meta: { id: 1 }, name: 'a' }, { meta: { id: 2 }, name: 'c' }]);
+        });
+    });
+    describe('UpdateRow', () => {
+        it('supports a nested rowKeyField', () => {
+            const result: ITableProps = kaReducer({
+                columns: [{ key: 'name' }],
+                data: [{ meta: { id: 1 }, name: 'a' }, { meta: { id: 2 }, name: 'b' }],
+                rowKeyField: 'meta.id',
+            }, updateRow({ meta: { id: 2 }, name: 'c' }));
+            expect(result.data).toEqual([{ meta: { id: 1 }, name: 'a' }, { meta: { id: 2 }, name: 'c' }]);
+        });
+    });
+    describe('OpenAllEditors', () => {
+        it('does not open editors of columns which are not editable', () => {
+            const result: ITableProps = kaReducer({
+                columns: [{ key: 'id', isEditable: false }, { key: 'name' }],
+                data: [{ id: 1, name: 'a' }, { id: 2, name: 'b' }],
+                rowKeyField: 'id',
+            }, openAllEditors());
+            expect(result.editableCells).toEqual([
+                { columnKey: 'name', rowKeyValue: 1 },
+                { columnKey: 'name', rowKeyValue: 2 },
+            ]);
+        });
+    });
+    describe('UpdatePopupPosition', () => {
+        it('updates the position of the shown popup only', () => {
+            const intialState: ITableProps = {
+                columns: [{ key: 'id' }, { key: 'name', isHeaderFilterPopupShown: true }],
+                rowKeyField: 'id',
+            };
+            const result: ITableProps = kaReducer(intialState, updatePopupPosition({ x: 10, y: 20 }));
+            expect(result.columns[0]).toBe(intialState.columns[0]);
+            expect(result.columns[1].headerFilterPopupPosition).toEqual({ x: 10, y: 20 });
         });
     });
     describe('ReorderColumns', () => {
@@ -582,6 +666,18 @@ describe('kaReducer', () => {
             const newState = kaReducer(intialState, validate());
             expect(validationCalls.mock.calls).toEqual([[102], [103]]);
             expect(newState.editableCells).toMatchSnapshot();
+        });
+        it('uses column.field to get the value of a cell without editor value', () => {
+            const validation = jest.fn();
+            kaReducer({
+                columns: [{ key: 'name', field: 'user.name' }],
+                data: [{ id: 1, user: { name: 'Mike' } }],
+                editableCells: [{ rowKeyValue: 1, columnKey: 'name' }],
+                rowKeyField: 'id',
+                validation,
+            }, validate());
+            expect(validation).toHaveBeenCalledTimes(1);
+            expect(validation.mock.calls[0][0].value).toBe('Mike');
         });
     });
     describe('InsertRow', () => {

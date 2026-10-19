@@ -5,6 +5,7 @@ import {
     getEditableCellsByData,
     getUpdatedFocused,
     getValidatedEditableCells,
+    insertOrReplaceRow,
     removeDataKeysFromSelectedRows,
 } from '../Utils/ReducerUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
@@ -17,7 +18,6 @@ import { Column } from '../models';
 import { ILoadingProps } from '../props';
 import { ITableProps } from '../index';
 import { filterAndSearchData } from '../Utils/FilterUtils';
-import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
 import { getExpandedParents } from '../Utils/TreeUtils';
 import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
 import { kaPropsUtils } from '../utils';
@@ -82,10 +82,9 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, columns: columns.map((c: Column) => ({ ...c, filterRowValue: undefined, headerFilterValues: undefined })) }
     }
     case ActionType.UpdatePopupPosition: {
-        const newColumns = columns.map((c: Column) => ({
-            ...c,
-            headerFilterPopupPosition: action.popupPosition
-        }));
+        const newColumns = columns.map((c: Column) => c.isHeaderFilterPopupShown
+            ? { ...c, headerFilterPopupPosition: action.popupPosition }
+            : c);
         return { ...props, columns: newColumns }
     }
     case ActionType.UpdateHeaderFilterPopupState: {
@@ -274,7 +273,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         const row = data.find((d) => getValueByField(d, rowKeyField) === action.rowKeyValue);
         const column = columns.find((c) => c.key === action.columnKey)!;
         const updatedRowData = replaceValue(row, column, action.value);
-        const newData = getCopyOfArrayAndInsertOrReplaceItem(updatedRowData, rowKeyField, data);
+        const newData = insertOrReplaceRow(data, updatedRowData, rowKeyField);
         return { ...props, data: newData };
     }
     case ActionType.DeleteRow: {
@@ -409,6 +408,10 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         const rowEditableCells = editableCells.filter(
             editableCell => editableCell.rowKeyValue === rowEditorKeyValue
                     && (isNewRow || editableCell.hasOwnProperty('editorValue')));
+        if (isNewRow ? !rowEditableCells.length : !updatedRowData) {
+            // the new row is not shown or the row is not in data: there is nothing to save
+            return props;
+        }
         if (action.validate && !isValid({ ...props, editableCells: rowEditableCells })) {
             const validatedEditableCells = editableCells.map(cell => {
                 if (!rowEditableCells.includes(cell)) {
@@ -433,15 +436,15 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         });
         let newData;
         if (isNewRow) {
-            updatedRowData[rowKeyField] = action.rowKeyValue;
+            updatedRowData = replaceValue(updatedRowData, { key: rowKeyField }, action.rowKeyValue);
             newData = [updatedRowData, ...data];
         } else {
-            newData = getCopyOfArrayAndInsertOrReplaceItem(updatedRowData, rowKeyField, data);
+            newData = insertOrReplaceRow(data, updatedRowData, rowKeyField);
         }
         return { ...props, data: newData, editableCells: newEditableCells };
     }
     case ActionType.UpdateRow: {
-        const newData = getCopyOfArrayAndInsertOrReplaceItem(action.rowData, rowKeyField, data);
+        const newData = insertOrReplaceRow(data, action.rowData, rowKeyField);
         return { ...props, data: newData };
     }
     case ActionType.UpdateTreeGroupsExpanded: {
