@@ -14,24 +14,28 @@ export const getRowEditableCells = (rowKeyValue: any, editableCells: EditableCel
 };
 
 export const searchData = (columns: Column[], data: any[], searchText: string, search?: SearchFunc): any[] => {
-    const searched = columns.reduce((initialData: any[], c: Column) => {
-        const filterFunction = (item: any) => {
-            if (initialData.indexOf(item) >= 0) {
-                return false;
+    const lowerCaseSearchText = searchText.toLowerCase();
+    // a set instead of searching in the found rows for every row of every column
+    const found = new Set<any>();
+    columns.forEach((c: Column) => {
+        data.forEach((item: any) => {
+            if (found.has(item)) {
+                return;
             }
             const searchContent = search && search({ column: c, searchText, rowData: item });
             if (searchContent != null) {
-                return searchContent;
+                if (searchContent) {
+                    found.add(item);
+                }
+                return;
             }
             const columnValue = getValueByColumn(item, c);
-            if (columnValue == null) {
-                return false;
+            if (columnValue != null && columnValue.toString().toLowerCase().includes(lowerCaseSearchText)) {
+                found.add(item);
             }
-            return columnValue.toString().toLowerCase().includes(searchText.toLowerCase());
-        };
-        return initialData.concat(data.filter(filterFunction));
-    }, []);
-    return data.filter(d => searched.indexOf(d) >= 0);
+        });
+    });
+    return data.filter(d => found.has(d));
 };
 
 export const filterAndSearchData = (props: ITableProps) => {

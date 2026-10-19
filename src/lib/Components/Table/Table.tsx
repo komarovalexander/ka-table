@@ -46,6 +46,14 @@ export interface ITableProps<TData= any> {
     groupsExpanded?: any[][];
     height?: number | string;
     loading?: ILoadingProps;
+    /**
+     * Rows and their cells are re-rendered only when their own props change, which is much faster for big tables.
+     * Customizations of rows and cells (childComponents) have to render from their props then:
+     * values read from table.props or from closures during rendering are not updated.
+     * childComponents, format, validation and dispatch should keep their references between renders
+     * (be declared outside of the component or memoized), otherwise all the rows are re-rendered.
+     */
+    memoizedRows?: boolean;
     noData?: NoData,
     oddEvenRows?: boolean;
     paging?: PagingOptions;

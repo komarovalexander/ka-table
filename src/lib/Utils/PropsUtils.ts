@@ -8,7 +8,7 @@ import { Column } from '../models';
 import { ITableProps } from '../';
 import { SortingMode } from '../enums';
 import { filterAndSearchData } from './FilterUtils';
-import { getGroupedData } from './GroupUtils';
+import { getGroupedAndVisibleColumns, getGroupedData } from './GroupUtils';
 import { getTreeData } from './TreeUtils';
 import { getValidatedEditableCells } from './ReducerUtils';
 import { getValueByField } from './DataUtils';
@@ -69,12 +69,14 @@ export const getFilteredData = (props: ITableProps) => {
 
 export const areAllFilteredRowsSelected = (props: ITableProps) => {
     const { selectedRows = [], rowKeyField } = props;
-    return filterAndSearchData(props).every(d => selectedRows.includes(getValueByField(d, rowKeyField)))
+    const selectedRowsSet = new Set(selectedRows);
+    return filterAndSearchData(props).every(d => selectedRowsSet.has(getValueByField(d, rowKeyField)))
 }
 
 export const areAllVisibleRowsSelected = (props: ITableProps) => {
     const { selectedRows = [], rowKeyField } = props;
-    return getData(props).every(d => selectedRows.includes(getValueByField(d, rowKeyField)))
+    const selectedRowsSet = new Set(selectedRows);
+    return getData(props).every(d => selectedRowsSet.has(getValueByField(d, rowKeyField)))
 }
 
 const getDataWithoutPaging =  (props: ITableProps) => {
@@ -123,10 +125,8 @@ export const isValid = (props: ITableProps) => {
 };
 
 export const getSelectedData = ({ data, selectedRows, rowKeyField }: ITableProps) => {
-    return data ? data.filter(d => {
-        const value = getValueByField(d, rowKeyField);
-        return selectedRows?.some(v => v === value);
-    }) : [];
+    const selectedRowsSet = new Set(selectedRows);
+    return data ? data.filter(d => selectedRowsSet.has(getValueByField(d, rowKeyField))) : [];
 };
 
 export const getSortedColumns = (props: ITableProps): Column[] => {
@@ -146,27 +146,9 @@ export const getPagesCountByProps = (props: ITableProps) => {
 };
 
 export const prepareTableOptions = (props: ITableProps) => {
-    const {
-        groups,
-    } = props;
-    let {
-        columns,
-    } = props;
-    const groupedData = getData(props);
-    let groupColumnsCount = 0;
-    let groupedColumns: Column[] = [];
-    if (groups) {
-        groupColumnsCount = groups.length;
-        groupedColumns = columns.filter((c) => groups.some((g) => g.columnKey === c.key));
-        columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
-    }
-    columns = columns.filter((c) => c.visible !== false);
-
     return {
-        columns,
-        groupColumnsCount,
-        groupedColumns,
-        groupedData
+        ...getGroupedAndVisibleColumns(props.columns, props.groups),
+        groupedData: getData(props),
     };
 };
 

@@ -1,7 +1,7 @@
 import { ITableProps } from '../';
 import {
     clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
-    deselectRow, insertRow, loadData, openAllEditors, reorderColumns, reorderRows, resizeColumn,
+    deselectRow, deselectRows, insertRow, loadData, openAllEditors, reorderColumns, reorderRows, resizeColumn,
     saveAllEditors, saveNewRow, saveRowEditors, selectAllFilteredRows, selectAllRows, selectAllVisibleRows,
     selectRow, selectRows, selectRowsRange, selectSingleRow, setSingleAction, updateCellValue, updateData,
     updateEditorValue, updateHeaderFilterValues, updatePopupPosition, updateRow, updateTreeGroupsExpanded,
@@ -94,6 +94,16 @@ describe('kaReducer', () => {
                 selectedRows: [3],
             }, selectRowsRange(2, 4));
             expect(result.selectedRows).toEqual([3, 2, 4]);
+        });
+    });
+    describe('DeselectRows', () => {
+        it('deselects the rows', () => {
+            const result: ITableProps = kaReducer({
+                columns: [],
+                rowKeyField: 'id',
+                selectedRows: [1, 2, 3, 4],
+            }, deselectRows([2, 4, 5]));
+            expect(result.selectedRows).toEqual([1, 3]);
         });
     });
     describe('SelectRow', () => {

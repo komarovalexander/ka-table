@@ -8,6 +8,16 @@ export const groupMark = {};
 export const groupSummaryMark = {};
 export const groupDataMark = {};
 
+// visible columns which are not grouped, and grouped columns
+export const getGroupedAndVisibleColumns = (columns: Column[], groups?: Group[]) => {
+    const isGrouped = (column: Column) => !!groups && groups.some((g) => g.columnKey === column.key);
+    return {
+        columns: columns.filter((c) => !isGrouped(c) && c.visible !== false),
+        groupColumnsCount: groups ? groups.length : 0,
+        groupedColumns: groups ? columns.filter(isGrouped) : [],
+    };
+};
+
 const getGroupSummary = (groupData: any[], key: any, groupIndex: any) => ({ groupData, groupSummaryMark, key: JSON.stringify([key, '--:+summary--']), groupIndex });
 
 export const updateExpandedGroups = (groupsExpanded: any[][], groupKey: any[]): any[][] => {

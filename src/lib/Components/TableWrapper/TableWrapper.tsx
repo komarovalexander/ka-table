@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { ActionType, EditingMode, FilteringMode, SortingMode } from '../../enums';
 
+import { ChildComponents } from '../../Models/ChildComponents';
 import { ColGroup } from '../ColGroup/ColGroup';
 import { ITableAllProps } from '../..';
 import TableBody from '../TableBody/TableBody';
@@ -12,7 +13,11 @@ import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { getValueByField } from '../../Utils/DataUtils';
 import { isVirtualScrollingEnabled } from '../../Utils/Virtualize';
-import { prepareTableOptions } from '../../Utils/PropsUtils';
+import { useTableData } from '../../hooks/UseTableData';
+
+// the same empty values on every render, so memoized children are not re-rendered because of new defaults
+const emptyArray: any[] = [];
+const emptyChildComponents: ChildComponents = {};
 
 const getAreAllRowsSelected = (data: any[], selectedRows: any[], rowKeyField: string) => {
     if (selectedRows.length < data.length) {
@@ -24,33 +29,33 @@ const getAreAllRowsSelected = (data: any[], selectedRows: any[], rowKeyField: st
 
 export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => {
     const {
-        childComponents = {},
+        childComponents = emptyChildComponents,
         columnReordering,
         groupPanel,
         columnResizing,
-        data = [],
+        data = emptyArray,
         dispatch,
-        editableCells = [],
+        editableCells = emptyArray,
         editingMode = EditingMode.None,
         filteringMode = FilteringMode.None,
         groups,
         rowReordering = false,
-        selectedRows = [],
+        selectedRows = emptyArray,
         sortingMode = SortingMode.None,
         virtualScrolling,
         noData,
         rowKeyField,
     } = props;
-    let {
-        groupsExpanded,
-    } = props;
+    const preparedOptions = useTableData(props);
+    const groupsExpanded = React.useMemo(
+        () => groups && !props.groupsExpanded ? getExpandedGroups(preparedOptions.groupedData) : props.groupsExpanded,
+        [groups, props.groupsExpanded, preparedOptions.groupedData]
+    );
 
-    const preparedOptions = prepareTableOptions(props);
-    if (groups && !groupsExpanded) {
-        groupsExpanded = getExpandedGroups(preparedOptions.groupedData);
-    }
-
-    const areAllRowsSelected = getAreAllRowsSelected(data, selectedRows, rowKeyField);
+    const areAllRowsSelected = React.useMemo(
+        () => getAreAllRowsSelected(data, selectedRows, rowKeyField),
+        [data, selectedRows, rowKeyField]
+    );
 
     const tableWrapper = getElementCustomization({
         className: defaultOptions.css.tableWrapper,

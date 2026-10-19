@@ -85,9 +85,8 @@ export const addRowKeyValuesToSelectedRows = (selectedRows: any[], rowKeyValues:
 }
 
 export const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKeyField: string) => {
-    const newSelectedRows = selectedRows.filter((rowKeyValue: any) =>
-        !data.some(d => getValueByField(d, rowKeyField) === rowKeyValue));
-    return newSelectedRows;
+    const dataKeys = new Set(data.map((d) => getValueByField(d, rowKeyField)));
+    return selectedRows.filter((rowKeyValue: any) => !dataKeys.has(rowKeyValue));
 }
 
 export const getUpdatedFocused = (props: ITableProps, action: any, funcToUpdate: any) => {

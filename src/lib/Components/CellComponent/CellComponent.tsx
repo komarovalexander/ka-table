@@ -41,4 +41,6 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
     );
 };
 
+export const CellComponentMemo = React.memo(CellComponent);
+
 export default CellComponent;

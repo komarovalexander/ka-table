@@ -195,6 +195,7 @@ export interface ITableBodyProps<TData= any> {
     groupedColumns: Column[];
     groups?: Group[];
     groupsExpanded?: any[][];
+    memoizedRows?: boolean;
     oddEvenRows?: boolean;
     rowKeyField: string;
     rowReordering: boolean;

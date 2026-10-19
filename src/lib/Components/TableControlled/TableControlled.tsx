@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { ActionType, PagingPosition } from '../../enums';
 import { ITableAllProps, ITableProps } from '../Table/Table';
+import { TableDataContext, useTableDataCalculation } from '../../hooks/UseTableData';
 
 import { ChildComponents } from '../../Models/ChildComponents';
 import { DispatchFunc } from '../../types';
@@ -43,6 +44,9 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
     }, props, childComponents?.rootDiv);
     elementAttributes.style = { width, height, ...elementAttributes.style }
 
+    // the data is processed once for the table and the paging
+    const tableData = useTableDataCalculation(props);
+
     React.useEffect(() => {
         dispatch({ type: ActionType.ComponentDidMount });
     }, []);
@@ -56,30 +60,32 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
 
     return (
         <TablePropsContext.Provider value={props}>
-            <div {...elementAttributes}>
-                {rootDivContent || (
-                    <>
-                        {groupPanel?.enabled && <GroupPanel {...props} groupPanel={groupPanel}/>}
-                        {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
-                        <TableWrapper {...props} />
-                        {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
-                        <Loading {...loading} childComponents={childComponents}/>
-                        {columns.map(column =>
-                            column.isHeaderFilterPopupShown
-              && (
-                  <Popup
-                      key={column.key}
-                      column={column}
-                      childComponents={childComponents}
-                      data={data}
-                      dispatch={dispatch}
-                      format={format}
-                  />
-              )
-                        )}
-                    </>
-                )}
-            </div>
+            <TableDataContext.Provider value={tableData}>
+                <div {...elementAttributes}>
+                    {rootDivContent || (
+                        <>
+                            {groupPanel?.enabled && <GroupPanel {...props} groupPanel={groupPanel}/>}
+                            {isPagingShown(PagingPosition.Top, paging) && <TablePaging {...props} />}
+                            <TableWrapper {...props} />
+                            {isPagingShown(PagingPosition.Bottom, paging) && <TablePaging {...props} />}
+                            <Loading {...loading} childComponents={childComponents}/>
+                            {columns.map(column =>
+                                column.isHeaderFilterPopupShown
+                  && (
+                      <Popup
+                          key={column.key}
+                          column={column}
+                          childComponents={childComponents}
+                          data={data}
+                          dispatch={dispatch}
+                          format={format}
+                      />
+                  )
+                            )}
+                        </>
+                    )}
+                </div>
+            </TableDataContext.Provider>
         </TablePropsContext.Provider>
     );
 };

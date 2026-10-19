@@ -14,4 +14,6 @@ const DataAndDetailsRows: React.FunctionComponent<IRowProps> = (props) => {
     );
 };
 
+export const DataAndDetailsRowsMemo = React.memo(DataAndDetailsRows);
+
 export default DataAndDetailsRows;

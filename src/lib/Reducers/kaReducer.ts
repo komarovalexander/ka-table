@@ -342,7 +342,8 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.DeselectRows: {
-        const newSelectedRows = [...selectedRows].filter((s) => !action.rowsKeyValues.includes(s));
+        const rowsKeyValues = new Set(action.rowsKeyValues);
+        const newSelectedRows = selectedRows.filter((s) => !rowsKeyValues.has(s));
         return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.UpdateSortDirection:

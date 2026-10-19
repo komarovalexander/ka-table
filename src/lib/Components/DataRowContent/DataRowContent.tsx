@@ -1,7 +1,9 @@
-import CellComponent from '../CellComponent/CellComponent';
+import CellComponent, { CellComponentMemo } from '../CellComponent/CellComponent';
+
 import { CollapsedIcon } from '../../Icons/CollapsedIcon';
 import { ExpandedIcon } from '../../Icons/ExpandedIcon';
 import { IDataRowProps } from '../../props';
+import { MemoizedRowsContext } from '../Rows/MemoizedRowsContext';
 import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getEditableCell } from '../../Utils/CellUtils';
@@ -28,6 +30,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
     validation,
     treeExpandButtonColumnKey
 }) => {
+    const Cell = React.useContext(MemoizedRowsContext) ? CellComponentMemo : CellComponent;
     const arrow = isTreeGroup
         ? (<div className='ka-icon-tree-arrow' onClick={() => dispatch(updateTreeGroupsExpanded(rowKeyValue))}>{(
             isTreeExpanded
@@ -44,7 +47,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
                 const isTreeColumn = treeExpandButtonColumnKey ? treeExpandButtonColumnKey === column.key : index === 0;
                 const cellDeep = treeDeep != null && isTreeColumn ? treeDeep : undefined;
                 return (
-                    <CellComponent
+                    <Cell
                         treeArrowElement={isTreeColumn && arrow}
                         childComponents={childComponents}
                         treeDeep={cellDeep}
