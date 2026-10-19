@@ -1,6 +1,7 @@
 import { ActionType, InsertRowPosition, SortingMode } from '../enums';
 import {
     addColumnsToRowEditableCells,
+    addRowKeyValuesToSelectedRows,
     getEditableCellsByData,
     getUpdatedFocused,
     getValidatedEditableCells,
@@ -61,23 +62,20 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     }
     case ActionType.UpdateHeaderFilterValues: {
         const newColumns = columns.map((c: Column) => {
-            if (c.key === action.columnKey) {
-                let headerFilterValues = c.headerFilterValues;
-                if (action.checked) {
-                    if (headerFilterValues === undefined) {
-                        headerFilterValues = [];
-                    }
-                    if (!headerFilterValues.includes(action.item)) {
-                        headerFilterValues.push(action.item);
-                    }
-                } else {
-                    headerFilterValues = headerFilterValues?.filter((value: any) => value !== action.item);
-                }
-                c.headerFilterValues = headerFilterValues;
+            if (c.key !== action.columnKey) {
+                return c;
             }
-            return c;
-        }
-        );
+            const headerFilterValues = c.headerFilterValues;
+            let newHeaderFilterValues: string[] | undefined;
+            if (action.checked) {
+                newHeaderFilterValues = headerFilterValues?.includes(action.item)
+                    ? headerFilterValues
+                    : [...(headerFilterValues || []), action.item];
+            } else {
+                newHeaderFilterValues = headerFilterValues?.filter((value: any) => value !== action.item);
+            }
+            return { ...c, headerFilterValues: newHeaderFilterValues };
+        });
         return { ...props, columns: newColumns }
     }
     case ActionType.ClearAllFilters: {
@@ -185,10 +183,10 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
                     newColumn.width = width;
                 }
                 if (newColumn.colGroup?.style?.width != null) {
-                    newColumn.colGroup.style = { ...newColumn.colGroup.style, width };
+                    newColumn.colGroup = { ...newColumn.colGroup, style: { ...newColumn.colGroup.style, width } };
                 }
                 if (newColumn.colGroup?.width != null) {
-                    newColumn.colGroup.width = width;
+                    newColumn.colGroup = { ...newColumn.colGroup, width };
                 }
                 return newColumn;
             }
@@ -264,10 +262,12 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, columns: newColumns };
     }
     case ActionType.UpdateEditorValue: {
+        const editableCellIndex = editableCells.findIndex((c) => c.columnKey === action.columnKey && c.rowKeyValue === action.rowKeyValue);
+        if (editableCellIndex === -1) {
+            return props;
+        }
         const newEditableCells = [...editableCells];
-        const editableCellIndex = newEditableCells.findIndex((c) => c.columnKey === action.columnKey && c.rowKeyValue === action.rowKeyValue);
-        const editableCell = { ...newEditableCells[editableCellIndex], editorValue: action.value };
-        newEditableCells[editableCellIndex] = editableCell;
+        newEditableCells[editableCellIndex] = { ...newEditableCells[editableCellIndex], editorValue: action.value };
         return { ...props, editableCells: newEditableCells };
     }
     case ActionType.UpdateCellValue: {
@@ -318,28 +318,25 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.SelectRow:
-        return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
+        return { ...props, selectedRows: addRowKeyValuesToSelectedRows(selectedRows, [action.rowKeyValue]) };
     case ActionType.SelectRows:
-        return { ...props, selectedRows: [...selectedRows, ...action.rowsKeyValues] };
+        return { ...props, selectedRows: addRowKeyValuesToSelectedRows(selectedRows, action.rowsKeyValues) };
     case ActionType.SelectRowsRange: {
-        const rowKeyValueTo = action.rowKeyValueTo;
-        if (rowKeyValueTo) {
+        const { rowKeyValueFrom, rowKeyValueTo } = action;
+        if (rowKeyValueTo != null) {
             const shownData = kaPropsUtils.getData(props);
             const rowKeyValueToIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === rowKeyValueTo);
-            const rowKeyValueFromIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === action.rowKeyValueFrom);
-            if (rowKeyValueToIndex != null && rowKeyValueFromIndex != null) {
+            const rowKeyValueFromIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === rowKeyValueFrom);
+            if (rowKeyValueToIndex !== -1 && rowKeyValueFromIndex !== -1) {
                 const [start, end] = rowKeyValueToIndex > rowKeyValueFromIndex ? [rowKeyValueFromIndex, rowKeyValueToIndex] : [rowKeyValueToIndex, rowKeyValueFromIndex];
-                const rowsToSelect = [];
-                for (let i = start; i <= end; i++) {
-                    const value = getValueByField(shownData[i], rowKeyField);
-                    if (!selectedRows.includes(value)) {
-                        rowsToSelect.push(value);
-                    }
-                }
-                return { ...props, selectedRows: [...selectedRows, ...rowsToSelect] };
+                const rowsToSelect = shownData
+                    .slice(start, end + 1)
+                    .map(d => getValueByField(d, rowKeyField))
+                    .filter(value => value !== undefined);
+                return { ...props, selectedRows: addRowKeyValuesToSelectedRows(selectedRows, rowsToSelect) };
             }
         }
-        return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValueFrom]] };
+        return { ...props, selectedRows: addRowKeyValuesToSelectedRows(selectedRows, [rowKeyValueFrom]) };
     }
     case ActionType.DeselectRow: {
         const newSelectedRows = [...selectedRows].filter((s) => s !== action.rowKeyValue);
@@ -396,7 +393,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         editableCells?.forEach(editableCell => {
             if (editableCell.hasOwnProperty('editorValue')) {
                 const rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === editableCell.rowKeyValue);
-                if (rowIndex != null) {
+                if (rowIndex !== -1) {
                     const column = columns.find((c) => c.key === editableCell.columnKey)!;
                     newData[rowIndex] = replaceValue(newData[rowIndex], column, editableCell.editorValue);
                 }
@@ -413,15 +410,21 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
             editableCell => editableCell.rowKeyValue === rowEditorKeyValue
                     && (isNewRow || editableCell.hasOwnProperty('editorValue')));
         if (action.validate && !isValid({ ...props, editableCells: rowEditableCells })) {
-            rowEditableCells.forEach(cell => {
+            const validatedEditableCells = editableCells.map(cell => {
+                if (!rowEditableCells.includes(cell)) {
+                    return cell;
+                }
                 const column = columns.find((c) => c.key === cell.columnKey)!;
-                cell.validationMessage = validation && validation({
-                    column,
-                    value: cell.editorValue,
-                    rowData: updatedRowData
-                });
+                return {
+                    ...cell,
+                    validationMessage: validation && validation({
+                        column,
+                        value: cell.editorValue,
+                        rowData: updatedRowData
+                    })
+                };
             });
-            return { ...props, editableCells: [...editableCells] };
+            return { ...props, editableCells: validatedEditableCells };
         }
         const newEditableCells = editableCells.filter(e => e.rowKeyValue !== rowEditorKeyValue);
         rowEditableCells.forEach(cell => {

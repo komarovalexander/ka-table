@@ -3,6 +3,7 @@ import Enzyme, { mount } from 'enzyme';
 import { ActionType } from '../../enums';
 import Adapter from '@cfaester/enzyme-adapter-react-18';
 import React from 'react';
+import { TableHead } from '../TableHead/TableHead';
 import { TableWrapper } from './TableWrapper';
 import { createRoot } from 'react-dom/client';
 
@@ -58,6 +59,25 @@ describe('TableWrapper', () => {
 
         wrapper.contains('tfoot');
         expect(wrapper.find('tfoot').length).toBe(0);
+    });
+
+    describe('areAllRowsSelected', () => {
+        const getAreAllRowsSelected = (selectedRows: any[]) => mount(
+            <TableWrapper {...tableProps} selectedRows={selectedRows} />
+        ).find(TableHead).prop('areAllRowsSelected');
+
+        it('is true if all rows are selected', () => {
+            expect(getAreAllRowsSelected([2, 1])).toBe(true);
+        });
+        it('is false if some rows are not selected', () => {
+            expect(getAreAllRowsSelected([1])).toBe(false);
+        });
+        it('is false if the same number of other rows is selected', () => {
+            expect(getAreAllRowsSelected([1, 3])).toBe(false);
+        });
+        it('is true if selectedRows also contains keys which are not in data', () => {
+            expect(getAreAllRowsSelected([1, 2, 3])).toBe(true);
+        });
     });
 
     describe('header', () => {

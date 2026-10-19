@@ -2,11 +2,16 @@ import { ITableProps } from '../';
 import {
     clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
     deselectRow, insertRow, loadData, reorderColumns, reorderRows, resizeColumn,
-    selectAllFilteredRows, selectAllRows, selectAllVisibleRows, selectRowsRange, selectSingleRow,
-    setSingleAction, updateData, updateTreeGroupsExpanded, validate,
+    saveAllEditors, saveRowEditors, selectAllFilteredRows, selectAllRows, selectAllVisibleRows,
+    selectRow, selectRows, selectRowsRange, selectSingleRow, setSingleAction, updateData,
+    updateEditorValue, updateHeaderFilterValues, updateTreeGroupsExpanded, validate,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName, InsertRowPosition } from '../enums';
-import { kaReducer } from './kaReducer';
+import { deepFreeze } from '../../testUtils/deepFreeze';
+import { kaReducer as kaReducerOriginal } from './kaReducer';
+
+// The state is deeply frozen in every test: a reducer which mutates the previous state throws a TypeError
+const kaReducer = (state: any, action: any): any => kaReducerOriginal(deepFreeze(state), action);
 
 describe('kaReducer', () => {
     describe('UpdateTreeGroupsExpanded ', () => {
@@ -66,13 +71,131 @@ describe('kaReducer', () => {
             const result: ITableProps = kaReducer(intialState, selectRowsRange(2, null));
             expect(result.selectedRows).toMatchSnapshot();
         });
-        it('skip if rowKeyValueTo is not found', () => {
+        it('selects only rowKeyValueFrom if rowKeyValueTo is not found', () => {
             const result: ITableProps = kaReducer(intialState, selectRowsRange(2, 7));
-            expect(result.selectedRows).toMatchSnapshot();
+            expect(result.selectedRows).toEqual([2]);
         });
-        it('skip if rowKeyValue is not found', () => {
+        it('selects only rowKeyValueFrom if rowKeyValueFrom is not found', () => {
             const result: ITableProps = kaReducer(intialState, selectRowsRange(7, 2));
-            expect(result.selectedRows).toMatchSnapshot();
+            expect(result.selectedRows).toEqual([7]);
+        });
+        it('supports 0 as rowKeyValueTo', () => {
+            const result: ITableProps = kaReducer({
+                ...intialState,
+                data: [{ key: 0 }, ...intialState.data],
+            }, selectRowsRange(2, 0));
+            expect(result.selectedRows).toEqual([0, 1, 2]);
+        });
+        it('does not duplicate already selected rows', () => {
+            const result: ITableProps = kaReducer({
+                ...intialState,
+                selectedRows: [3],
+            }, selectRowsRange(2, 4));
+            expect(result.selectedRows).toEqual([3, 2, 4]);
+        });
+    });
+    describe('SelectRow', () => {
+        it('does not duplicate selected rows', () => {
+            const result: ITableProps = kaReducer({
+                columns: [],
+                rowKeyField: 'id',
+                selectedRows: [1],
+            }, selectRow(1));
+            expect(result.selectedRows).toEqual([1]);
+        });
+    });
+    describe('SelectRows', () => {
+        it('does not duplicate selected rows', () => {
+            const result: ITableProps = kaReducer({
+                columns: [],
+                rowKeyField: 'id',
+                selectedRows: [1],
+            }, selectRows([1, 2, 2, 3]));
+            expect(result.selectedRows).toEqual([1, 2, 3]);
+        });
+    });
+    describe('UpdateHeaderFilterValues', () => {
+        const intialState: ITableProps = {
+            columns: [{ key: 'name', headerFilterValues: ['a'] }, { key: 'id' }],
+            rowKeyField: 'id',
+        };
+        it('adds a value', () => {
+            const result: ITableProps = kaReducer(intialState, updateHeaderFilterValues('name', 'b', true));
+            expect(result.columns[0].headerFilterValues).toEqual(['a', 'b']);
+        });
+        it('adds a value to a column without values', () => {
+            const result: ITableProps = kaReducer(intialState, updateHeaderFilterValues('id', '1', true));
+            expect(result.columns[1].headerFilterValues).toEqual(['1']);
+        });
+        it('does not duplicate a value', () => {
+            const result: ITableProps = kaReducer(intialState, updateHeaderFilterValues('name', 'a', true));
+            expect(result.columns[0].headerFilterValues).toEqual(['a']);
+        });
+        it('removes a value', () => {
+            const result: ITableProps = kaReducer(intialState, updateHeaderFilterValues('name', 'a', false));
+            expect(result.columns[0].headerFilterValues).toEqual([]);
+        });
+        it('keeps other columns as is', () => {
+            const result: ITableProps = kaReducer(intialState, updateHeaderFilterValues('name', 'b', true));
+            expect(result.columns[1]).toBe(intialState.columns[1]);
+        });
+    });
+    describe('UpdateEditorValue', () => {
+        const intialState: ITableProps = {
+            columns: [{ key: 'name' }],
+            editableCells: [{ rowKeyValue: 1, columnKey: 'name' }],
+            rowKeyField: 'id',
+        };
+        it('updates editor value', () => {
+            const result: ITableProps = kaReducer(intialState, updateEditorValue(1, 'name', 'new value'));
+            expect(result.editableCells).toEqual([{ rowKeyValue: 1, columnKey: 'name', editorValue: 'new value' }]);
+        });
+        it('ignores a cell which is not being edited', () => {
+            const result: ITableProps = kaReducer(intialState, updateEditorValue(2, 'name', 'new value'));
+            expect(result).toBe(intialState);
+        });
+    });
+    describe('SaveAllEditors', () => {
+        it('saves editor values', () => {
+            const result: ITableProps = kaReducer({
+                columns: [{ key: 'name' }],
+                data: [{ id: 1, name: 'a' }, { id: 2, name: 'b' }],
+                editableCells: [{ rowKeyValue: 2, columnKey: 'name', editorValue: 'c' }],
+                rowKeyField: 'id',
+            }, saveAllEditors());
+            expect(result.data).toEqual([{ id: 1, name: 'a' }, { id: 2, name: 'c' }]);
+        });
+        it('ignores editors of rows which are not in data', () => {
+            const result: ITableProps = kaReducer({
+                columns: [{ key: 'name' }],
+                data: [{ id: 1, name: 'a' }],
+                editableCells: [{ rowKeyValue: 2, columnKey: 'name', editorValue: 'c' }],
+                rowKeyField: 'id',
+            }, saveAllEditors());
+            expect(result.data).toEqual([{ id: 1, name: 'a' }]);
+            expect(Object.keys(result.data!)).toEqual(['0']);
+        });
+    });
+    describe('SaveRowEditors', () => {
+        const intialState: ITableProps = {
+            columns: [{ key: 'name' }],
+            data: [{ id: 1, name: 'a' }],
+            editableCells: [{ rowKeyValue: 1, columnKey: 'name', editorValue: '' }],
+            rowKeyField: 'id',
+            validation: ({ value }) => value ? undefined : 'required',
+        };
+        it('sets validation messages if the row is not valid', () => {
+            const result: ITableProps = kaReducer(intialState, saveRowEditors(1, { validate: true }));
+            expect(result.editableCells).toEqual([{ rowKeyValue: 1, columnKey: 'name', editorValue: '', validationMessage: 'required' }]);
+            expect(result.data).toBe(intialState.data);
+        });
+        it('saves the row if it is valid', () => {
+            const result: ITableProps = kaReducer({
+                ...intialState,
+                editableCells: [{ rowKeyValue: 1, columnKey: 'name', editorValue: 'b' }],
+            }, saveRowEditors(1, { validate: true }));
+            expect(result.data).toEqual([{ id: 1, name: 'b' }]);
+            expect(result.editableCells).toEqual([]);
         });
     });
     describe('ReorderColumns', () => {
