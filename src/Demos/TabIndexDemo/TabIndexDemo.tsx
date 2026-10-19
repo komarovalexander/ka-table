@@ -1,5 +1,5 @@
 import { DataType, Table } from '../../lib';
-import { openEditor, updateSortDirection } from '../../lib/actionCreators';
+import { openEditor } from '../../lib/actionCreators';
 
 import CellEditorString from '../../lib/Components/CellEditorString/CellEditorString';
 import React from 'react';
@@ -36,16 +36,7 @@ const TabIndexDemo = () => {
                 rowKeyField={'id'}
                 sortingMode={SortingMode.Single}
                 childComponents={{
-                    headCell: {
-                        elementAttributes: (props) => ({
-                            tabIndex: 0,
-                            onKeyUp: (e) => {
-                                if (e.key === 'Enter') {
-                                    props.dispatch(updateSortDirection(props.column.key));
-                                }
-                            }
-                        })
-                    },
+                    // the headers are sorted by their buttons: Tab moves the focus to them, Enter sorts
                     cell: {
                         elementAttributes: (props) => ({
                             tabIndex: 0,

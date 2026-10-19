@@ -81,7 +81,11 @@ const BootstrapDemo = () => {
                         elementAttributes: ({ isActive }) => ({
                             className: `page-item ${(isActive ? 'active' : '')}`
                         }),
-                        content: ({ text, isActive }) => <div className={`page-link ${(isActive ? 'active' : '')}`}>{text}</div>
+                        content: ({ text, isActive }) => (
+                            <button type='button' className={`page-link ${(isActive ? 'active' : '')}`} aria-current={isActive ? 'page' : undefined}>
+                                {text}
+                            </button>
+                        )
                     },
                     pagingPages: {
                         elementAttributes: () => ({

@@ -10,11 +10,10 @@ const EmptyCell: React.FunctionComponent<IEmptyCellProps> = (props) => {
         className: 'ka-empty-cell' + (isTh ? ` ${defaultOptions.css.theadBackground} ${defaultOptions.css.theadFixed}` : ''),
     }, props, childComponents?.emptyCell);
 
+    // a cell of the header without a title is not a header cell (th) for screen readers
     return isColGroup
         ? <col />
-        : isTh
-            ? <th {...elementAttributes}/>
-            : <td {...elementAttributes}/>;
+        : <td {...elementAttributes}/>;
 };
 
 export default EmptyCell;

@@ -3,6 +3,7 @@ import * as React from 'react';
 import { updatePageIndex } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { IPagingIndexProps } from '../../props';
+import { buttonAttributes } from '../../Utils/AriaUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
 const PagingIndex: React.FunctionComponent<IPagingIndexProps> = (props) => {
@@ -20,7 +21,10 @@ const PagingIndex: React.FunctionComponent<IPagingIndexProps> = (props) => {
     return  (
         <li
             {...elementAttributes}>
-            {content || text}
+            {content || (
+                // the page is chosen from the keyboard: the click is handled by the onClick above
+                <span {...buttonAttributes} aria-current={isActive ? 'page' : undefined}>{text}</span>
+            )}
         </li>
     );
 };

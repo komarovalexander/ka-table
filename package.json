@@ -73,6 +73,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/simulant": "^0.2.0",
     "@typescript-eslint/eslint-plugin-tslint": "^7.0.2",
+    "axe-core": "=4.7.0",
     "coveralls": "^3.0.11",
     "eslint-plugin-jsdoc": "^50.6.10",
     "eslint-plugin-prefer-arrow": "^1.2.3",

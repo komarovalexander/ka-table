@@ -4,6 +4,7 @@ import { CrossIcon } from '../../Icons/CrossIcon';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
 import { IGroupPanelCellProps } from '../../props';
 import { SortingMode } from '../../enums';
+import { buttonAttributes } from '../../Utils/AriaUtils';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getHeadCellClassName } from '../../Utils/HeadRowUtils';
@@ -23,10 +24,14 @@ export const GroupPanelCell: React.FunctionComponent<IGroupPanelCellProps> = (pr
         <div {...elementAttributes}>
             {content || (<>
                 <HeadCellContent column={column} sortingMode={sortingMode} dispatch={dispatch} childComponents={childComponents} areAllRowsSelected={false} />
-                <span className={defaultOptions.css.groupPanelCellRemove}>
-                    <CrossIcon onClick={() => {
+                <span
+                    className={defaultOptions.css.groupPanelCellRemove}
+                    {...buttonAttributes}
+                    aria-label={`Ungroup ${column.title || column.key}`}
+                    onClick={() => {
                         dispatch(ungroupColumn(column.key));
-                    }}/>
+                    }}>
+                    <CrossIcon />
                 </span>
             </>)}
         </div>

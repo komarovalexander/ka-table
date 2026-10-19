@@ -15,6 +15,7 @@ const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = (props)
 
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: defaultOptions.css.checkbox,
+        'aria-label': column.title,
         type: 'checkbox',
         checked: value || false,
         onChange: (event) => {

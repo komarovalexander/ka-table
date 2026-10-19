@@ -14,6 +14,7 @@ const FilterRowNumber: React.FunctionComponent<IFilterRowEditorProps> = (props) 
 
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: defaultOptions.css.numberInput,
+        'aria-label': column.title,
         type: 'number',
         value: value === null || value === undefined ? '' : value,
         onChange: (event) => {

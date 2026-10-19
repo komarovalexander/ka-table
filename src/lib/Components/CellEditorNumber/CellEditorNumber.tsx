@@ -16,6 +16,7 @@ const CellEditorNumber: React.FunctionComponent<ICellEditorProps> = (props) => {
     } = props;
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: `${defaultOptions.css.numberInput}`,
+        'aria-label': column.title,
         autoFocus,
         type: 'number',
         value: value === null || value === undefined ? '' : value,

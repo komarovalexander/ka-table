@@ -63,7 +63,11 @@ export const checkPopupPosition = (
 ) => {
     const element = refToElement.current;
     if (element && column.isHeaderFilterPopupShown) {
-        const parent = element.offsetParent as HTMLElement;
+        const parent = element.offsetParent as HTMLElement | null;
+        // there is no offsetParent while the table is hidden (display: none)
+        if (!parent) {
+            return;
+        }
         const table = parent.closest('table') as HTMLElement;
         const kaWrapper = parent.closest('.ka-table-wrapper') as HTMLElement;
         const newPopupPosition: PopupPosition = {

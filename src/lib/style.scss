@@ -398,6 +398,15 @@
   position: relative;
 }
 
+// the button itself has no size (its icon is positioned absolutely), so the focus is shown on the icon
+.ka-header-filter-button:focus-visible {
+  outline: none;
+
+  .ka-header-filter-button-icon {
+    outline: auto;
+  }
+}
+
 .ka-header-filter-button-has-value {
   font-weight: bold;
 }

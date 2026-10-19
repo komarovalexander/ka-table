@@ -4,6 +4,7 @@ import { FilteringMode } from '../../enums';
 import HeaderFilterButton from '../HeaderFilterButton/HeaderFilterButton';
 import { IHeadCellProps } from '../../props';
 import SortIcon from '../SortIcon/SortIcon';
+import { buttonAttributes } from '../../Utils/AriaUtils';
 import { checkPopupPosition } from '../../Utils/CellUtils';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
@@ -38,7 +39,10 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
 
     return (
         <div {...elementAttributes} ref={refToElement}>
-            {content || <span>{column.title}</span>}
+            {content || (
+                // the title sorts from the keyboard: its click is handled by the onClick above
+                <span {...(sortingEnabled ? buttonAttributes : undefined)}>{column.title}</span>
+            )}
             {column.sortDirection && sortingEnabled && (
                 <SortIcon
                     column={column}

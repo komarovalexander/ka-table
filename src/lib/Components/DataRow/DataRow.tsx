@@ -35,7 +35,8 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
     }
 
     const { elementAttributes, content } = getElementCustomization({
-        className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}${isOdd === undefined ? '' : isOdd ? ' ka-odd' : ' ka-even'}`
+        className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}${isOdd === undefined ? '' : isOdd ? ' ka-odd' : ' ka-even'}`,
+        'aria-selected': isSelectedRow || undefined,
     }, props, dataRow);
 
     return (

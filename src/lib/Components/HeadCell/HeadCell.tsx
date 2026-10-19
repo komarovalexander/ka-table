@@ -7,6 +7,7 @@ import HeadCellResize from '../HeadCellResize/HeadCellResize';
 import { IHeadCellProps } from '../../props';
 import defaultOptions from '../../defaultOptions';
 import { getDraggableProps } from '../../Utils/PropsUtils';
+import { getAriaSort } from '../../Utils/SortUtils';
 import { getHeadCellClassName } from '../../Utils/HeadRowUtils';
 import { isCellResizeShown } from '../../Utils/CellResizeUtils';
 import { reorderColumns } from '../../actionCreators';
@@ -43,6 +44,7 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
 
     const { elementAttributes, content } = getElementCustomization({
         className: getHeadCellClassName(sortingMode, isGrouped),
+        'aria-sort': getAriaSort(sortingMode, column),
         colSpan,
         rowSpan,
         scope: 'col',

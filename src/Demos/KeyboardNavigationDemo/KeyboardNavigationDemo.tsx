@@ -88,18 +88,6 @@ const KeyboardNavigationDemo = () => {
                             }
                         },
                     },
-                    pagingIndex: {
-                        elementAttributes: (props) => ({
-                            tabIndex: 0,
-                            onKeyUp: (e) => e.keyCode === 13 && table.updatePageIndex(props.pageIndex)
-                        }),
-                    },
-                    headCell: {
-                        elementAttributes: (props) => ({
-                            tabIndex: 0,
-                            onKeyUp: (e) => e.keyCode === 13 && table.updateSortDirection(props.column.key)
-                        }),
-                    },
                 }}
             />
         </div>

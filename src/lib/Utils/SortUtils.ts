@@ -90,3 +90,11 @@ export const isRemoteSorting =  (sortingMode: SortingMode) =>
 
 export const isSortingEnabled = (sortingMode: SortingMode, column?: Column) =>
     sortingMode !== SortingMode.None && column?.isSortable !== false;
+
+// aria-sort is set only for the sorted columns, sortable columns are recognized by their buttons
+export const getAriaSort = (sortingMode: SortingMode, column: Column): 'ascending' | 'descending' | undefined => {
+    if (!isSortingEnabled(sortingMode, column) || !column.sortDirection) {
+        return undefined;
+    }
+    return column.sortDirection === SortDirection.Ascend ? 'ascending' : 'descending';
+};

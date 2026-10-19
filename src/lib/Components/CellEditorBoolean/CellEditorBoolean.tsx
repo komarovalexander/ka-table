@@ -17,6 +17,7 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = (props) => 
     } = props;
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: `${defaultOptions.css.checkbox}`,
+        'aria-label': column.title,
         autoFocus,
         type: 'checkbox',
         checked: value || false,

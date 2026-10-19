@@ -3,6 +3,7 @@ import * as React from 'react';
 import { updatePageSize } from '../../actionCreators';
 import defaultOptions from '../../defaultOptions';
 import { IPagingSizeProps } from '../../props';
+import { buttonAttributes } from '../../Utils/AriaUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
 const PagingSize: React.FunctionComponent<IPagingSizeProps> = (props) => {
@@ -20,7 +21,10 @@ const PagingSize: React.FunctionComponent<IPagingSizeProps> = (props) => {
     return  (
         <li
             {...elementAttributes}>
-            {content || value}
+            {content || (
+                // the size is chosen from the keyboard: the click is handled by the onClick above
+                <span {...buttonAttributes} aria-pressed={isActive}>{value}</span>
+            )}
         </li>
     );
 };

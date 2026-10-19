@@ -17,9 +17,21 @@ const sortedColumns = [{ key: 'name', sortDirection: SortDirection.Ascend }, { k
 const baseProps: ITableProps = { columns, data, rowKeyField: 'id' };
 const dispatch = () => {};
 
+// the attributes are sorted: an attribute added on a re-render goes after the others
+const normalizeHtml = (html: string) => {
+    const element = document.createElement('div');
+    element.innerHTML = html;
+    element.querySelectorAll('*').forEach((child) => {
+        const attributes = Array.from(child.attributes).sort((a, b) => a.name.localeCompare(b.name));
+        attributes.forEach((attribute) => child.removeAttribute(attribute.name));
+        attributes.forEach((attribute) => child.setAttribute(attribute.name, attribute.value));
+    });
+    return element.innerHTML;
+};
+
 const getHtml = (props: ITableProps) => {
     const { container, unmount } = render(<Table {...props} dispatch={dispatch} />);
-    const html = container.innerHTML;
+    const html = normalizeHtml(container.innerHTML);
     unmount();
     return html;
 };
@@ -70,7 +82,7 @@ describe('useTableData', () => {
 
         const { container, rerender } = render(<Table {...props} dispatch={dispatch} />);
         rerender(<Table {...newProps} dispatch={dispatch} />);
-        expect(container.innerHTML).toBe(expectedHtml);
+        expect(normalizeHtml(container.innerHTML)).toBe(expectedHtml);
     });
 
     it('processes the data once for the table and the paging, and only when it is needed', () => {

@@ -44,6 +44,8 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                 {
                     key: column.key,
                     field: 'value',
+                    // the header is hidden, the title names the search input
+                    title: column.title,
                     style: { textAlign: 'left' },
                     filterRowValue: column.headerFilterSearchValue
                 }]}
@@ -55,6 +57,10 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
             childComponents={{
                 headRow: {
                     elementAttributes: () => ({ style: { display: 'none' } })
+                },
+                headCell: {
+                    // the id (the column key) is already used by the header cell of the table
+                    elementAttributes: () => ({ id: undefined })
                 },
                 filterRowCell: {
                     elementAttributes: ({ column: filterRowColumn }) => ({
@@ -81,6 +87,9 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                         },
                         ...childComponents?.headerFilterPopupTextCell?.elementAttributes?.(componentProps)
                     }),
+                },
+                cellEditorInput: {
+                    elementAttributes: ({ rowData }) => ({ 'aria-label': rowData?.value }),
                 },
                 cellText: {
                     content: (componentProps) => {

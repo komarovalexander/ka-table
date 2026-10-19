@@ -16,6 +16,7 @@ const FilterRowDate: React.FunctionComponent<IFilterRowEditorProps> = (props) =>
 
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: defaultOptions.css.dateInput,
+        'aria-label': column.title,
         type: 'date',
         value: value || '',
         onChange: (event) => {

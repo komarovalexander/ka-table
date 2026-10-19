@@ -18,6 +18,7 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = (props) => {
     const inputValue = value && getDateInputValue(value);
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: `${defaultOptions.css.dateInput}`,
+        'aria-label': column.title,
         autoFocus,
         type: 'date',
         value: inputValue || '',
