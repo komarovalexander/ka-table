@@ -1,12 +1,9 @@
 import { ActionType, DataType } from '../../enums';
-import Enzyme, { mount } from 'enzyme';
+import { act, fireEvent, render } from '@testing-library/react';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import FilterRowString from './FilterRowString';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const props: any = {
     column: {
@@ -24,16 +21,20 @@ describe('FilterRowString', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-        root.render(<FilterRowString {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<FilterRowString {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('FilterRowString: should pass field name to filterCellValueChangeHandler', () => {
         const newValue = '2';
         const column = { field: 'name', key: 'nameKey' };
-        const wrapper = mount(<FilterRowString {...props} column={column} />);
+        const { container } = render(<FilterRowString {...props} column={column} />);
 
-        wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
+        fireEvent.change(container.querySelector('input')!, { target: { value: newValue } });
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith(
             { type: ActionType.UpdateFilterRowValue, columnKey: 'nameKey', filterRowValue: newValue },

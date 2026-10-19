@@ -56,6 +56,18 @@ export const addColumnsToRowEditableCells = (editableCells: EditableCell[], colu
     return newEditableCells;
 }
 
+export const addRowKeyValuesToSelectedRows = (selectedRows: any[], rowKeyValues: any[]) => {
+    const selectedRowsSet = new Set(selectedRows);
+    const newSelectedRows = [...selectedRows];
+    rowKeyValues.forEach((rowKeyValue) => {
+        if (!selectedRowsSet.has(rowKeyValue)) {
+            selectedRowsSet.add(rowKeyValue);
+            newSelectedRows.push(rowKeyValue);
+        }
+    });
+    return newSelectedRows;
+}
+
 export const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKeyField: string) => {
     const newSelectedRows = selectedRows.filter((rowKeyValue: any) =>
         !data.some(d => getValueByField(d, rowKeyField) === rowKeyValue));

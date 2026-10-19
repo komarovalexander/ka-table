@@ -1,13 +1,11 @@
 import { ActionType, DataType } from '../../enums';
-import Enzyme, { mount } from 'enzyme';
+import { act, fireEvent, render } from '@testing-library/react';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import FilterRowDate from './FilterRowDate';
 import { IFilterRowEditorProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-Enzyme.configure({ adapter: new Adapter() });
 const props: IFilterRowEditorProps = {
     column: {
         dataType: DataType.Date,
@@ -21,26 +19,27 @@ describe('FliterRowDate', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-        root.render(<FilterRowDate {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<FilterRowDate {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('should fire UpdateFilterRowValue', () => {
-        const newValue = new Date(2020, 1, 2);
         const column = {
             field: 'name',
             key: 'nameKey',
             dataType: DataType.Date,
         };
-        const wrapper = mount(<FilterRowDate {...props} column={column} />);
+        const { container } = render(<FilterRowDate {...props} column={column} />);
 
-        wrapper.find('input').props().onChange!({
-            currentTarget: { value: newValue },
-        } as any);
+        fireEvent.change(container.querySelector('input')!, { target: { value: '2020-02-02' } });
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             type: ActionType.UpdateFilterRowValue,
-            filterRowValue: new Date(newValue.getTime() + newValue.getTimezoneOffset() * 60000),
+            filterRowValue: new Date(2020, 1, 2), // the date from the input is converted to the local date
             columnKey: 'nameKey',
         });
     });

@@ -1,13 +1,10 @@
-import Enzyme, { mount } from 'enzyme';
-
-import Adapter from '@cfaester/enzyme-adapter-react-18';
+import { act } from '@testing-library/react';
 import { DataType } from '../../enums';
 import GroupRow from './GroupRow';
 import { IGroupRowProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { renderInto } from '../../../testUtils/renderInto';
 
 const props: IGroupRowProps = {
     childComponents: {},
@@ -29,13 +26,17 @@ describe('GroupRow', () => {
     it('renders without crashing', () => {
         const element = document.createElement('tbody');
         const root = createRoot(element!);
-        root.render(<GroupRow {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<GroupRow {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('Should render custom group cell', () => {
         const groupRow = () => <td className='custom-group-row' />;
-        const wrapper = mount(
+        const { container } = renderInto('tbody', (
             <GroupRow
                 {...props}
                 childComponents={{
@@ -43,11 +44,8 @@ describe('GroupRow', () => {
                         content: groupRow,
                     },
                 }}
-            />,
-            {
-                attachTo: document.createElement('tbody'),
-            }
-        );
-        expect(wrapper.find('.custom-group-row').length).toBe(1);
+            />
+        ));
+        expect(container.querySelectorAll('.custom-group-row').length).toBe(1);
     });
 });

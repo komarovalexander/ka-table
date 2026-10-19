@@ -10,8 +10,17 @@ import { TableHead } from '../TableHead/TableHead';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getExpandedGroups } from '../../Utils/GroupUtils';
+import { getValueByField } from '../../Utils/DataUtils';
 import { isVirtualScrollingEnabled } from '../../Utils/Virtualize';
 import { prepareTableOptions } from '../../Utils/PropsUtils';
+
+const getAreAllRowsSelected = (data: any[], selectedRows: any[], rowKeyField: string) => {
+    if (selectedRows.length < data.length) {
+        return false;
+    }
+    const selectedRowsSet = new Set(selectedRows);
+    return data.every((d) => selectedRowsSet.has(getValueByField(d, rowKeyField)));
+};
 
 export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => {
     const {
@@ -29,7 +38,8 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
         selectedRows = [],
         sortingMode = SortingMode.None,
         virtualScrolling,
-        noData
+        noData,
+        rowKeyField,
     } = props;
     let {
         groupsExpanded,
@@ -40,7 +50,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
         groupsExpanded = getExpandedGroups(preparedOptions.groupedData);
     }
 
-    const areAllRowsSelected = data.length === selectedRows.length;
+    const areAllRowsSelected = getAreAllRowsSelected(data, selectedRows, rowKeyField);
 
     const tableWrapper = getElementCustomization({
         className: defaultOptions.css.tableWrapper,

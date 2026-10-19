@@ -1,13 +1,11 @@
 import { ActionType, DataType } from '../../enums';
-import Enzyme, { mount } from 'enzyme';
+import { act, fireEvent, render } from '@testing-library/react';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import CellEditorBoolean from './CellEditorBoolean';
 import { ICellEditorProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-Enzyme.configure({ adapter: new Adapter() });
 const props: ICellEditorProps = {
     column: {
         dataType: DataType.String,
@@ -31,17 +29,19 @@ describe('CellEditorBoolean', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-        root.render(<CellEditorBoolean {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<CellEditorBoolean {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('should dispatch RowDataChanged', () => {
-        const newValue = false;
-        const wrapper = mount(<CellEditorBoolean {...props} />);
+        const { container } = render(<CellEditorBoolean {...props} />);
 
-        wrapper.find('input').props().onChange!({
-            currentTarget: { checked: newValue },
-        } as any);
+        // the value is truthy, so the checkbox is checked and a click unchecks it
+        fireEvent.click(container.querySelector('input')!);
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: 'fieldName',
@@ -52,9 +52,9 @@ describe('CellEditorBoolean', () => {
     });
 
     it('should dispatch CloseEditor', () => {
-        const wrapper = mount(<CellEditorBoolean {...props} />);
+        const { container } = render(<CellEditorBoolean {...props} />);
 
-        wrapper.find('input').props().onBlur!({} as any);
+        fireEvent.blur(container.querySelector('input')!);
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             type: ActionType.CloseEditor,

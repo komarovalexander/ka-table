@@ -1,11 +1,6 @@
-import Enzyme, { mount } from 'enzyme';
-
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import React from 'react';
 import { TableControlled } from './TableControlled';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const props: any = {
     columns: [

@@ -224,22 +224,6 @@ Array [
 ]
 `;
 
-exports[`kaReducer SelectRowsRange skip if rowKeyValue is not found 1`] = `
-Array [
-  undefined,
-  1,
-  2,
-]
-`;
-
-exports[`kaReducer SelectRowsRange skip if rowKeyValueTo is not found 1`] = `
-Array [
-  undefined,
-  1,
-  2,
-]
-`;
-
 exports[`kaReducer SetSingleAction 1`] = `
 Object {
   "type": "LoadData",

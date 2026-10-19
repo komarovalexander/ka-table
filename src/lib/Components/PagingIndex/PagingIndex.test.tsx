@@ -1,13 +1,10 @@
-import Enzyme, { mount } from 'enzyme';
+import { act, fireEvent, render } from '@testing-library/react';
 
 import { ActionType } from '../../enums';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { IPagingIndexProps } from '../../props';
 import PagingIndex from './PagingIndex';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const props: IPagingIndexProps = {
     childComponents: {},
@@ -16,16 +13,20 @@ const props: IPagingIndexProps = {
 it('renders without crashing', () => {
     const element = document.createElement('div');
     const root = createRoot(element!);
-    root.render(<PagingIndex  {...props} />);
-    root.unmount();
+    act(() => {
+        root.render(<PagingIndex  {...props} />);
+    });
+    act(() => {
+        root.unmount();
+    });
 });
 
 it('onClick should dispath UpdatePageIndex on click', () => {
     const dispatch = jest.fn();
-    const wrapper = mount(
+    const { container } = render(
         <PagingIndex {...props} pageIndex={2} dispatch={dispatch} />
     );
-    wrapper.find('.ka-paging-page-index').first().simulate('click');
+    fireEvent.click(container.querySelector('.ka-paging-page-index')!);
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
         pageIndex: 2,

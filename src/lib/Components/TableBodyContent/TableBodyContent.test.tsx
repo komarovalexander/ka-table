@@ -1,14 +1,11 @@
-import Enzyme, { mount } from 'enzyme';
-
-import Adapter from '@cfaester/enzyme-adapter-react-18';
+import { act } from '@testing-library/react';
 import { EditingMode } from '../../enums';
 import { ITableBodyProps } from '../../props';
 import React from 'react';
 import TableBodyContent from './TableBodyContent';
 import { createRoot } from 'react-dom/client';
 import { newRowId } from '../../const';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { renderInto } from '../../../testUtils/renderInto';
 
 const props: ITableBodyProps = {
     childComponents: {},
@@ -33,13 +30,17 @@ describe('TableBodyContent', () => {
     it('renders without crashing', () => {
         const element = document.createElement('tbody');
         const root = createRoot(element!);
-        root.render(<TableBodyContent {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<TableBodyContent {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('should render noDataRow in case there are no data and noDataRow option is set', () => {
         const noDataText = 'no data';
-        const wrapper = mount(
+        const { container } = renderInto('tbody', (
             <TableBodyContent
                 {...props}
                 data={[]}
@@ -48,19 +49,16 @@ describe('TableBodyContent', () => {
                         content: () => noDataText,
                     },
                 }}
-            />,
-            {
-                attachTo: document.createElement('tbody'),
-            }
-        );
+            />
+        ));
 
-        expect(wrapper.find('.ka-tr').length).toBe(1);
-        expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
+        expect(container.querySelectorAll('.ka-tr').length).toBe(1);
+        expect(container.querySelector('.ka-tr')!.textContent).toBe(noDataText);
     });
 
     it('should render noDataRow with text in case there are no data and loading is disabled', () => {
         const noDataText = 'no data';
-        const wrapper = mount(
+        const { container } = renderInto('tbody', (
             <TableBodyContent
                 {...props}
                 data={[]}
@@ -70,18 +68,15 @@ describe('TableBodyContent', () => {
                 noData={{
                     text: noDataText
                 }}
-            />,
-            {
-                attachTo: document.createElement('tbody'),
-            }
-        );
+            />
+        ));
 
-        expect(wrapper.find('.ka-tr').length).toBe(1);
-        expect(wrapper.find('.ka-tr').text()).toBe(noDataText);
+        expect(container.querySelectorAll('.ka-tr').length).toBe(1);
+        expect(container.querySelector('.ka-tr')!.textContent).toBe(noDataText);
     });
     it('should render noDataRow without text in case there are no data and loading is enabled', () => {
         const noDataText = 'no data';
-        const wrapper = mount(
+        const { container } = renderInto('tbody', (
             <TableBodyContent
                 {...props}
                 data={[]}
@@ -91,28 +86,22 @@ describe('TableBodyContent', () => {
                 noData={{
                     text: noDataText
                 }}
-            />,
-            {
-                attachTo: document.createElement('tbody'),
-            }
-        );
+            />
+        ));
 
-        expect(wrapper.find('.ka-tr').length).toBe(1);
-        expect(wrapper.find('.ka-tr').text()).toBe('');
+        expect(container.querySelectorAll('.ka-tr').length).toBe(1);
+        expect(container.querySelector('.ka-tr')!.textContent).toBe('');
     });
 
     it('should render noDataRow & NewRow', () => {
-        const wrapper = mount(
+        const { container } = renderInto('tbody', (
             <TableBodyContent
                 {...props}
                 editableCells={[{ rowKeyValue: newRowId, columnKey: 'column' }]}
                 data={[]}
-            />,
-            {
-                attachTo: document.createElement('tbody'),
-            }
-        );
+            />
+        ));
 
-        expect(wrapper.find('.ka-tr').length).toBe(2);
+        expect(container.querySelectorAll('.ka-tr').length).toBe(2);
     });
 });

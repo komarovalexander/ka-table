@@ -1,13 +1,11 @@
+import { act } from '@testing-library/react';
 import { DataType, EditingMode } from '../../enums';
-import Enzyme, { mount } from 'enzyme';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import DetailsRow from './DetailsRow';
 import { IRowProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { renderInto } from '../../../testUtils/renderInto';
 
 const props: IRowProps = {
     childComponents: {},
@@ -29,12 +27,16 @@ const props: IRowProps = {
 it('renders without crashing', () => {
     const element = document.createElement('tbody');
     const root = createRoot(element!);
-    root.render(<DetailsRow {...props} />);
-    root.unmount();
+    act(() => {
+        root.render(<DetailsRow {...props} />);
+    });
+    act(() => {
+        root.unmount();
+    });
 });
 
 it('Should add colSpan to details row', () => {
-    const wrapper = mount(
+    const { container } = renderInto('tbody', (
         <DetailsRow
             {...props}
             childComponents={{
@@ -42,11 +44,10 @@ it('Should add colSpan to details row', () => {
                     content: () => <>Details Row</>,
                 },
             }}
-        />,
-        {
-            attachTo: document.createElement('tbody'),
-        }
-    );
-    expect(wrapper.find('td').props().colSpan).toBe(2);
-    expect(wrapper.find('td').text()).toBe('Details Row');
+        />
+    ));
+    const cells = container.querySelectorAll('td');
+    expect(cells.length).toBe(1);
+    expect(cells[0].colSpan).toBe(2);
+    expect(cells[0].textContent).toBe('Details Row');
 });

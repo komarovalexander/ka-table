@@ -1,13 +1,11 @@
 import { ActionType, DataType } from '../../enums';
-import Enzyme, { mount } from 'enzyme';
+import { act, fireEvent, render } from '@testing-library/react';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import CellEditorDate from './CellEditorDate';
 import { ICellEditorProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-Enzyme.configure({ adapter: new Adapter() });
 const props: ICellEditorProps = {
     column: {
         dataType: DataType.Date,
@@ -30,30 +28,31 @@ describe('CellEditorDate', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-        root.render(<CellEditorDate {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<CellEditorDate {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('should fire RowDataChanged', () => {
-        const newValue = new Date(2020, 1, 2);
-        const wrapper = mount(<CellEditorDate {...props} />);
+        const { container } = render(<CellEditorDate {...props} />);
 
-        wrapper.find('input').props().onChange!({
-            currentTarget: { value: newValue },
-        } as any);
+        fireEvent.change(container.querySelector('input')!, { target: { value: '2020-02-02' } });
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: 'fieldName',
             rowKeyValue: 2,
             type: ActionType.UpdateCellValue,
-            value: new Date(newValue.getTime() + newValue.getTimezoneOffset() * 60000), // https://github.com/komarovalexander/ka-table/issues/279
+            value: new Date(2020, 1, 2), // the date from the input is converted to the local date https://github.com/komarovalexander/ka-table/issues/279
         });
     });
 
     it('should dispatch CloseEditor', () => {
-        const wrapper = mount(<CellEditorDate {...props} />);
+        const { container } = render(<CellEditorDate {...props} />);
 
-        wrapper.find('input').props().onBlur!({} as any);
+        fireEvent.blur(container.querySelector('input')!);
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             type: ActionType.CloseEditor,

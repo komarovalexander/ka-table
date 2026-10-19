@@ -1,13 +1,10 @@
-import Enzyme, { mount } from 'enzyme';
+import { act, fireEvent, render } from '@testing-library/react';
 
 import { ActionType } from '../../enums';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { IPagingSizeProps } from '../../props';
 import PagingSize from './PagingSize';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const props: IPagingSizeProps = {
     childComponents: {},
@@ -17,11 +14,15 @@ const props: IPagingSizeProps = {
 it('renders without crashing', () => {
     const element = document.createElement('div');
     const root = createRoot(element!);
-    root.render(<PagingSize  {...props} />);
-    root.unmount();
+    act(() => {
+        root.render(<PagingSize  {...props} />);
+    });
+    act(() => {
+        root.unmount();
+    });
 });
 it('should render with custom content', () => {
-    const wrapper = mount(
+    const { container } = render(
         <PagingSize
             {...props}
             childComponents={{
@@ -29,15 +30,15 @@ it('should render with custom content', () => {
             }}
         />
     );
-    expect(wrapper.find('.ka-paging-size').text()).toEqual(
+    expect(container.querySelector('.ka-paging-size')!.textContent).toEqual(
         'Custom Paging Size'
     );
 });
 
 it('onClick should dispath UpdatePageSize on click', () => {
     const dispatch = jest.fn();
-    const wrapper = mount(<PagingSize {...props} dispatch={dispatch} />);
-    wrapper.find('.ka-paging-size').first().simulate('click');
+    const { container } = render(<PagingSize {...props} dispatch={dispatch} />);
+    fireEvent.click(container.querySelector('.ka-paging-size')!);
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
         pageSize: 5,

@@ -1,6 +1,7 @@
 The customizable, extendable, lightweight, and fully free React Table Component
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/ka-table/blob/master/LICENSE)
+[![CI](https://github.com/komarovalexander/ka-table/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/komarovalexander/ka-table/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/ka-table.svg?style=flat-square)](https://www.npmjs.com/package/ka-table)
 [![Coverage Status](https://coveralls.io/repos/github/komarovalexander/ka-table/badge.svg?branch=master&service=github)](https://coveralls.io/github/komarovalexander/ka-table?branch=master&service=github)
 

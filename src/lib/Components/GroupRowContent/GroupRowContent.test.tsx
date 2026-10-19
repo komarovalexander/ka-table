@@ -1,15 +1,12 @@
-import Enzyme, { mount } from 'enzyme';
-
 import { ActionType } from '../../enums';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import GroupRowContent from './GroupRowContent';
 import { IGroupRowProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { act, fireEvent } from '@testing-library/react';
+import { renderInto } from '../../../testUtils/renderInto';
 
 const props: IGroupRowProps = {
     childComponents: {},
@@ -26,15 +23,17 @@ describe('GroupRowContent', () => {
     it('renders without crashing', () => {
         const element = document.createElement('tr');
         const root = createRoot(element!);
-        root.render(<GroupRowContent {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<GroupRowContent {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('onClick should change groupsExpanded', () => {
-        const wrapper = mount(<GroupRowContent {...props} />, {
-            attachTo: document.createElement('tr'),
-        });
-        wrapper.find('.ka-icon-group-arrow').simulate('click');
+        const { container } = renderInto('tr', <GroupRowContent {...props} />);
+        fireEvent.click(container.querySelector('.ka-icon-group-arrow')!);
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             groupKey: ['group'],
@@ -51,16 +50,13 @@ describe('GroupRowContent', () => {
                 content: () => <div className='custom-group-cell' />,
             },
         };
-        const wrapper = mount(
+        const { container } = renderInto('tr', (
             <GroupRowContent
                 {...props}
                 childComponents={childComponents}
                 column={column}
-            />,
-            {
-                attachTo: document.createElement('tr'),
-            }
-        );
-        expect(wrapper.find('.custom-group-cell').length).toBe(1);
+            />
+        ));
+        expect(container.querySelectorAll('.custom-group-cell').length).toBe(1);
     });
 });
