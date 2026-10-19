@@ -97,7 +97,13 @@
     "collectCoverageFrom": [
       "src/lib/Components/**/*.{ts,tsx}",
       "src/lib/Utils/*.ts"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^react-router-dom$": "<rootDir>/node_modules/react-router-dom/dist/index.js",
+      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js",
+      "^date-fns$": "<rootDir>/node_modules/date-fns/index.cjs",
+      "^date-fns/(.*)$": "<rootDir>/node_modules/date-fns/$1.cjs"
+    }
   },
   "keywords": [
     "datagrid",
