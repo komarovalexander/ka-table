@@ -9,9 +9,7 @@ import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isSortingEnabled } from '../../Utils/SortUtils';
 import { updateSortDirection } from '../../actionCreators';
-
-const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+import { useIsomorphicLayoutEffect } from '../../Utils/EffectUtils';
 
 const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
     const {
