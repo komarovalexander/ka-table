@@ -1,12 +1,8 @@
 import { DataType, EditingMode } from '../../enums';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import CellComponent from './CellComponent';
-import Enzyme from 'enzyme';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const props: any = {
     childComponents: {},

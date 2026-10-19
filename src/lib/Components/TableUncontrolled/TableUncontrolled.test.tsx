@@ -1,12 +1,9 @@
-import Adapter from '@cfaester/enzyme-adapter-react-18';
-import Enzyme from 'enzyme';
 import React from 'react';
 import { TableUncontrolled } from './TableUncontrolled';
 import { act } from '@testing-library/react';
 import { createRoot } from 'react-dom/client';
 import { useTable } from '../../hooks/UseTable';
 
-Enzyme.configure({ adapter: new Adapter() });
 jest.useFakeTimers();
 
 const props: any = {

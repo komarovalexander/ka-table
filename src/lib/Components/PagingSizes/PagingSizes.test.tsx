@@ -1,12 +1,8 @@
-import Enzyme, { mount } from 'enzyme';
-
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { IPagingProps } from '../../props';
 import PagingSizes from './PagingSizes';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { act, render } from '@testing-library/react';
 
 const props: IPagingProps = {
     pageSize: 2,
@@ -23,12 +19,15 @@ beforeEach(() => {
 it('renders without crashing', () => {
     const element = document.createElement('div');
     const root = createRoot(element!);
-    root.render(<PagingSizes  {...props} />);
-    root.unmount();
+    act(() => {
+        root.render(<PagingSizes  {...props} />);
+    });
+    act(() => {
+        root.unmount();
+    });
     expect(props.dispatch).toHaveBeenCalledTimes(0);
 });
 it('should be rendered without PagingSizes', () => {
-    const wrapper = mount(<PagingSizes {...props} childComponents={{ pagingSizes: { content: () => (<>Custom Paging Sizes</>) }}} />);
-    expect(wrapper.find('.ka-paging-sizes').text()).toEqual('Custom Paging Sizes');
+    const { container } = render(<PagingSizes {...props} childComponents={{ pagingSizes: { content: () => (<>Custom Paging Sizes</>) }}} />);
+    expect(container.querySelector('.ka-paging-sizes')!.textContent).toEqual('Custom Paging Sizes');
 });
-

@@ -1,13 +1,8 @@
-import Enzyme, { mount } from 'enzyme';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
-
 import CellEditorValidation from './CellEditorValidationMessage';
 import { ICellEditorValidationMessageProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-
-Enzyme.configure({ adapter: new Adapter() });
+import { act, render } from '@testing-library/react';
 
 const props: ICellEditorValidationMessageProps = {
     message: '',
@@ -16,13 +11,16 @@ const props: ICellEditorValidationMessageProps = {
 it('renders without crashing', () => {
     const element = document.createElement('td');
     const root = createRoot(element!);
-    root.render(<CellEditorValidation {...props} />);
-    root.unmount();
+    act(() => {
+        root.render(<CellEditorValidation {...props} />);
+    });
+    act(() => {
+        root.unmount();
+    });
 });
 
 it('should match validation message', () => {
     const message = 'Age must be greater than 8';
-    const wrapper = mount(<CellEditorValidation message={message} />);
-    const container = wrapper.find('.ka-validation-message');
-    expect(container.text()).toEqual(message);
+    const { container } = render(<CellEditorValidation message={message} />);
+    expect(container.querySelector('.ka-validation-message')!.textContent).toEqual(message);
 });

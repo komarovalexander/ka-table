@@ -1,12 +1,9 @@
-import Enzyme, { mount, shallow } from 'enzyme';
+import { act, fireEvent, render } from '@testing-library/react';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import HeadCellResize from './HeadCellResize';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import simulant from 'simulant';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const props = {
     column: {
@@ -24,24 +21,29 @@ describe('HeadCellResize', () => {
     it('renders without crashing', () => {
         const element = document.createElement('div');
         const root = createRoot(element!);
-        root.render(<HeadCellResize  {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<HeadCellResize  {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('should handle onMouseDown correctly', () => {
-        const wrapper = mount(<HeadCellResize {...props} />);
-        const preventDefault = jest.fn();
-        wrapper.simulate('mousedown', { preventDefault });
-        expect(preventDefault).toHaveBeenCalledTimes(1);
+        const { container } = render(<HeadCellResize {...props} />);
+        const isDefaultAllowed = fireEvent.mouseDown(container.querySelector('.ka-thead-cell-resize')!, { screenX: 100 });
+        expect(isDefaultAllowed).toBe(false);
         expect(props.dispatch).toHaveBeenCalledTimes(0);
-        simulant.fire(document.body, 'mousemove');
+        simulant.fire(document.body, 'mousemove', { screenX: 120 });
         expect(props.dispatch).toHaveBeenCalledTimes(1);
-        simulant.fire(document.body, 'mouseup');
+        expect(props.dispatch).toHaveBeenLastCalledWith({ columnKey: 'column1', type: 'ResizeColumn', width: 120 });
+        simulant.fire(document.body, 'mouseup', { screenX: 130 });
         expect(props.dispatch).toHaveBeenCalledTimes(2);
+        expect(props.dispatch).toHaveBeenLastCalledWith({ columnKey: 'column1', type: 'ResizeColumn', width: 130 });
     });
 
     it('should use parentWidth for resizing', () => {
-        const wrapper = shallow(
+        const { container } = render(
             <HeadCellResize {...props} column={{
                 key: 'column1',
                 style: {
@@ -49,14 +51,15 @@ describe('HeadCellResize', () => {
                 }
             }} />
         );
-        wrapper.simulate('mousedown', { preventDefault: () => {}, screenX: 80, currentTarget: { parentElement : { offsetWidth: 80 } } });
+        Object.defineProperty(container, 'offsetWidth', { configurable: true, value: 80 });
+        fireEvent.mouseDown(container.querySelector('.ka-thead-cell-resize')!, { screenX: 80 });
         simulant.fire(document.body, 'mouseup', { screenX: 90 });
         expect(props.dispatch.mock.calls[0]).toEqual([{columnKey: 'column1', type: 'ResizeColumn', width: 90}]);
     });
 
     it('should use column.width for resizing', () => {
-        const wrapper = shallow(<HeadCellResize {...props} />);
-        wrapper.simulate('mousedown', { preventDefault: () => {}, screenX: 150 });
+        const { container } = render(<HeadCellResize {...props} />);
+        fireEvent.mouseDown(container.querySelector('.ka-thead-cell-resize')!, { screenX: 150 });
         simulant.fire(document.body, 'mouseup', { screenX: 160 });
         expect(props.dispatch.mock.calls[0]).toEqual([{columnKey: 'column1', type: 'ResizeColumn', width: 110}]);
     });

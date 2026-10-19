@@ -1,13 +1,11 @@
+import { act } from '@testing-library/react';
 import { DataType, EditingMode } from '../../enums';
-import Enzyme, { mount, shallow } from 'enzyme';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import DataRow from './DataRow';
 import { IRowProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { renderInto } from '../../../testUtils/renderInto';
 
 const props: IRowProps = {
     childComponents: {},
@@ -35,33 +33,34 @@ describe('DataRow', () => {
     it('renders without crashing', () => {
         const element = document.createElement('tbody');
         const root = createRoot(element!);
-        root.render(<DataRow {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<DataRow {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('renders with draggable', () => {
-        const component = shallow(<DataRow {...props} rowReordering={true} />);
-        expect(component.props().draggable).toBeTruthy();
+        const { container } = renderInto('tbody', <DataRow {...props} rowReordering={true} />);
+        expect(container.querySelector('tr')!.getAttribute('draggable')).toBe('true');
     });
 
     it('renders without draggable', () => {
-        const component = shallow(<DataRow {...props} />);
-        expect(component.props().draggable).toBeFalsy();
+        const { container } = renderInto('tbody', <DataRow {...props} />);
+        expect(container.querySelector('tr')!.getAttribute('draggable')).toBeNull();
     });
 
     it('overrides default ref', () => {
         const ref = jest.fn();
-        mount(
+        renderInto('tbody', (
             <DataRow
                 {...props}
                 childComponents={{
                     dataRow: { elementAttributes: () => ({ ref }) },
                 }}
-            />,
-            {
-                attachTo: document.createElement('tbody'),
-            }
-        );
+            />
+        ));
         expect(ref).toHaveBeenCalled();
     });
 });

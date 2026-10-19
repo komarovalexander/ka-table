@@ -1,12 +1,8 @@
-import Enzyme, { mount } from 'enzyme';
-
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { IPagingProps } from '../../props';
 import Paging from './Paging';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { act, render } from '@testing-library/react';
 
 const props: IPagingProps = {
     childComponents: {},
@@ -19,23 +15,27 @@ const props: IPagingProps = {
 it('renders without crashing', () => {
     const element = document.createElement('div');
     const root = createRoot(element!);
-    root.render(<Paging  {...props} />);
-    root.unmount();
+    act(() => {
+        root.render(<Paging  {...props} />);
+    });
+    act(() => {
+        root.unmount();
+    });
 });
 it('should be rendered with PagingSizes', () => {
-    const wrapper = mount(<Paging {...props} pageSizes={[5, 10, 15]} />);
-    expect(wrapper.find('.ka-paging-sizes').exists()).toBeTruthy();
+    const { container } = render(<Paging {...props} pageSizes={[5, 10, 15]} />);
+    expect(container.querySelector('.ka-paging-sizes')).not.toBeNull();
 });
 it('should be rendered without PagingSizes', () => {
-    const wrapper = mount(<Paging {...props} pageSizes={undefined} />);
-    expect(wrapper.find('.ka-paging-sizes').exists()).toBeFalsy();
+    const { container } = render(<Paging {...props} pageSizes={undefined} />);
+    expect(container.querySelector('.ka-paging-sizes')).toBeNull();
 });
 it('should render with custom content', () => {
-    const wrapper = mount(
+    const { container } = render(
         <Paging
             {...props}
             childComponents={{ paging: { content: () => <>Custom Paging</> } }}
         />
     );
-    expect(wrapper.find('.ka-paging').text()).toEqual('Custom Paging');
+    expect(container.querySelector('.ka-paging')!.textContent).toEqual('Custom Paging');
 });
