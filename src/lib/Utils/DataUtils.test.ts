@@ -93,6 +93,36 @@ describe('DataUtils', () => {
 
             expect(getValueByField(data, 'c')).toBeUndefined();
         });
+        it('returns undefined if a parent value is null', () => {
+            const data = {
+                b: null,
+            };
+
+            expect(getValueByField(data, 'b.c')).toBeUndefined();
+        });
+        it('returns undefined if a parent value is a primitive', () => {
+            const data = {
+                b: 1,
+            };
+
+            expect(getValueByField(data, 'b.c')).toBeUndefined();
+        });
+        it('returns undefined if rowData is undefined', () => {
+            expect(getValueByField(undefined, 'b.c')).toBeUndefined();
+        });
+        it('does not read other fields of the row', () => {
+            const otherFieldGetter = jest.fn();
+            const data = {
+                b: 1,
+                get c() {
+                    otherFieldGetter();
+                    return 2;
+                },
+            };
+
+            expect(getValueByField(data, 'b')).toBe(1);
+            expect(otherFieldGetter).not.toHaveBeenCalled();
+        });
         it('one item path', () => {
             const data = {
                 b: 1,

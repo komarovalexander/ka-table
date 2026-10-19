@@ -35,17 +35,15 @@ export const getValueByColumn = (rowData: any, column: Column) => {
 };
 
 export const getValueByField = (rowData: any, field: Field) => {
-    let o = { ...rowData };
+    let value = rowData;
     const names = getFieldParts(field);
     for (let i = 0, n = names.length; i < n; ++i) {
-        const k = names[i];
-        if (k in o) {
-            o = o[k];
-        } else {
-            return;
+        if (value == null) {
+            return undefined;
         }
+        value = value[names[i]];
     }
-    return o;
+    return value;
 };
 
 const replaceValueForField = (rowData: any, field: Field, newValue: any, fieldParents?: Field[]): any => {
