@@ -10,6 +10,7 @@ import GroupRow from '../GroupRow/GroupRow';
 import { GroupSummaryRow } from '../GroupSummaryRow/GroupSummaryRow';
 import { ITableBodyProps } from '../../props';
 import { MemoizedRowsContext } from './MemoizedRowsContext';
+import { getRowKeyValues } from '../../Utils/NavigationUtils';
 
 export interface IRowsProps extends ITableBodyProps {
     onFirstRowRendered: (firstRowRef: RefObject<HTMLElement | null>) => any;
@@ -36,11 +37,13 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
         detailsRows = emptyArray,
         dispatch,
         editableCells,
+        focused,
         format,
         groupedColumns,
         groups = emptyArray,
         groupsExpanded = emptyArray,
         isFirstRowOdd,
+        keyboardNavigation,
         onFirstRowRendered,
         treeGroupsExpanded,
         rowKeyField,
@@ -59,6 +62,19 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     const detailsRowsSet = useMemo(() => new Set(detailsRows), [detailsRows]);
     const expandedGroupKeys = useMemo(() => new Set(groupsExpanded.map((groupKey) => JSON.stringify(groupKey))), [groupsExpanded]);
     const editableCellsByRow = useMemo(() => groupEditableCellsByRow(editableCells), [editableCells]);
+    // with the keyboard navigation the first cell gets the focus by Tab while the focused cell is not shown
+    const focusedCell = useMemo(() => {
+        const cell = focused?.cell;
+        if (!keyboardNavigation) {
+            return cell;
+        }
+        const rowKeyValues = getRowKeyValues(data, rowKeyField);
+        const isCellShown = cell && rowKeyValues.includes(cell.rowKeyValue) && columns.some((c) => c.key === cell.columnKey);
+        if (isCellShown || !rowKeyValues.length || !columns.length) {
+            return isCellShown ? cell : undefined;
+        }
+        return { columnKey: columns[0].key, rowKeyValue: rowKeyValues[0] };
+    }, [focused, keyboardNavigation, data, rowKeyField, columns]);
 
     const firstRowRef = useRef<HTMLElement>(null);
     useEffect(() => {
@@ -112,6 +128,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                             dispatch={dispatch}
                             editableCells={props.editableCells}
                             editingMode={props.editingMode}
+                            focusedColumnKey={focusedCell && focusedCell.rowKeyValue === rowKeyValue ? focusedCell.columnKey : undefined}
                             isTreeGroup={isTreeGroup}
                             isTreeExpanded={isTreeExpanded}
                             treeDeep={isTreeRow === true ? d.treeDeep : undefined}

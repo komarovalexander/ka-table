@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-import defaultOptions from '../../defaultOptions';
-import { ICellProps } from '../../props';
-import { getElementCustomization } from '../../Utils/ComponentUtils';
 import CellEditor from '../CellEditor/CellEditor';
 import CellText from '../CellText/CellText';
+import { ICellProps } from '../../props';
+import defaultOptions from '../../defaultOptions';
+import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { useCellKeyboardNavigation } from '../../hooks/UseKeyboardNavigation';
 
 const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
     const {
@@ -15,12 +16,27 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
         isEditableCell,
     } = props;
 
+    const keyboardNavigation = useCellKeyboardNavigation(props);
     const { elementAttributes, content } = getElementCustomization({
         className: `${defaultOptions.css.cell} ${treeDeep != null ? defaultOptions.css.treeCell : ''}`,
-        style
+        style,
+        ...(keyboardNavigation && { tabIndex: keyboardNavigation.tabIndex, onFocus: keyboardNavigation.onFocus }),
     }, props, childComponents.cell);
+    // a ref of the customization (elementAttributes) is kept
+    const customRef = (elementAttributes as any).ref;
+    const elementRef = keyboardNavigation?.elementRef;
+    const mergedRef = React.useCallback((element: HTMLTableCellElement | null) => {
+        if (elementRef) {
+            elementRef.current = element;
+        }
+        if (typeof customRef === 'function') {
+            customRef(element);
+        } else if (customRef) {
+            customRef.current = element;
+        }
+    }, [elementRef, customRef]);
     return (
-        <td {...elementAttributes}>
+        <td {...elementAttributes} ref={elementRef && customRef ? mergedRef : elementRef || customRef}>
             {treeDeep ? Array(treeDeep).fill(undefined).map((_, index) => <div key={index} className={defaultOptions.css.treeCellEmptySpace} />) : null}
             {content ||
         (

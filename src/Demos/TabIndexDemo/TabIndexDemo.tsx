@@ -35,6 +35,8 @@ const TabIndexDemo = () => {
                 data={dataArray}
                 rowKeyField={'id'}
                 sortingMode={SortingMode.Single}
+                // the demo moves the focus between the cells by Tab instead of the keyboard navigation of the table
+                keyboardNavigation={false}
                 childComponents={{
                     // the headers are sorted by their buttons: Tab moves the focus to them, Enter sorts
                     cell: {

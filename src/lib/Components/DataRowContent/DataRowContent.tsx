@@ -18,6 +18,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
     treeDeep,
     dispatch,
     editingMode,
+    focusedColumnKey,
     format,
     isDetailsRowShown,
     isSelectedRow,
@@ -71,6 +72,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
                         hasEditorValue={editableCell && editableCell.hasOwnProperty('editorValue')}
                         isDetailsRowShown={isDetailsRowShown}
                         isEditableCell={!!editableCell}
+                        isFocused={focusedColumnKey === column.key}
                         isSelectedRow={isSelectedRow}
                         key={column.key}
                         rowData={rowData}

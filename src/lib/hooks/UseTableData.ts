@@ -12,7 +12,9 @@ export interface ITableData {
     columns: Column[];
     groupColumnsCount: number;
     groupedColumns: Column[];
-    // the rows of the current page: filtered, sorted, grouped
+    // the rows of all pages: filtered, sorted, grouped
+    dataWithoutPaging: any[];
+    // the rows of the current page
     groupedData: any[];
     pagesCount: number;
 }
@@ -52,8 +54,8 @@ export const useTableDataCalculation = (props: ITableProps, enabled: boolean = t
     const pagesCount = React.useMemo(() => dataWithoutPaging ? getPagesCount(dataWithoutPaging, paging) : 1, [dataWithoutPaging, paging]);
     const preparedColumns = React.useMemo(() => getGroupedAndVisibleColumns(columns, groups), [columns, groups]);
     return React.useMemo(
-        () => groupedData && { ...preparedColumns, groupedData, pagesCount },
-        [groupedData, pagesCount, preparedColumns]
+        () => groupedData && { ...preparedColumns, dataWithoutPaging: dataWithoutPaging!, groupedData, pagesCount },
+        [dataWithoutPaging, groupedData, pagesCount, preparedColumns]
     );
 };
 

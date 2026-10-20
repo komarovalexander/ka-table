@@ -54,6 +54,8 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
             selectedRows={column.headerFilterValues}
             filter={() => column.headerFilterSearch}
             rowKeyField={'value'}
+            // the checkboxes of the values get the focus by Tab in the popup
+            keyboardNavigation={false}
             childComponents={{
                 headRow: {
                     elementAttributes: () => ({ style: { display: 'none' } })

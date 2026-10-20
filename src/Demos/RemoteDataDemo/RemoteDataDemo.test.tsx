@@ -1,10 +1,7 @@
 import React from 'react';
 import RemoteDataDemo from './RemoteDataDemo';
-import { createRoot } from 'react-dom/client';
+import { render } from '@testing-library/react';
 
 it('renders without crashing', () => {
-    const div = document.createElement('div');
-    const root = createRoot(div!);
-    root.render(<RemoteDataDemo />);
-    root.unmount();
+    render(<RemoteDataDemo />);
 });

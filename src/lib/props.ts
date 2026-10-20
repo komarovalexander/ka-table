@@ -2,6 +2,7 @@ import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from '
 import { DispatchFunc, Field, FormatFunc, NoData, ValidationFunc } from './types';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 
+import { Focused } from './Models/Focused';
 import { GroupPanelSettings } from './Models/GroupPanelSettings';
 import { GroupedColumn } from './Models/GroupedColumn';
 import { IRowsProps } from './Components/Rows/Rows';
@@ -32,6 +33,8 @@ export interface IColGroupProps {
 interface IRowCommonProps<TData= any> {
     childComponents: ChildComponents;
     columns: Column[];
+    // the column of the focused cell (focused.cell) when it is in the row
+    focusedColumnKey?: string;
     treeDeep?: number;
     treeExpandButtonColumnKey?: string;
     dispatch: DispatchFunc;
@@ -59,6 +62,11 @@ export interface ICellProps<TData= any> {
     hasEditorValue?: any;
     isDetailsRowShown: boolean;
     isEditableCell: boolean;
+    /**
+     * The cell is focused (focused.cell). With the keyboard navigation it is the cell which gets the focus by Tab:
+     * the first cell is focused while focused.cell is not set or is not shown
+     */
+    isFocused?: boolean;
     isSelectedRow: boolean;
     rowData: TData;
     rowKeyField: string;
@@ -190,11 +198,13 @@ export interface ITableBodyProps<TData= any> {
     dispatch: DispatchFunc;
     editableCells: EditableCell[];
     editingMode: EditingMode;
+    focused?: Focused;
     format?: FormatFunc;
     groupColumnsCount: number;
     groupedColumns: Column[];
     groups?: Group[];
     groupsExpanded?: any[][];
+    keyboardNavigation?: boolean;
     memoizedRows?: boolean;
     oddEvenRows?: boolean;
     rowKeyField: string;

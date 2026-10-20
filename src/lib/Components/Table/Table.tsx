@@ -45,6 +45,13 @@ export interface ITableProps<TData= any> {
     groups?: Group[];
     groupsExpanded?: any[][];
     height?: number | string;
+    /**
+     * Navigation by the cells with the keyboard (the grid pattern of WAI-ARIA), enabled by default: the table is a single stop of Tab,
+     * arrows move the focus between the cells (with Ctrl to the last one), Home and End to the first and the last cell
+     * of the row (with Ctrl of the page), PageUp and PageDown change the page, Enter and F2 open the editor.
+     * The focused cell is kept in focused.cell. false turns the navigation off, e.g. for an own handling of the keys.
+     */
+    keyboardNavigation?: boolean;
     loading?: ILoadingProps;
     /**
      * Rows and their cells are re-rendered only when their own props change, which is much faster for big tables.

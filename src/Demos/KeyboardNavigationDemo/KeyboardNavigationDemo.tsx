@@ -1,6 +1,6 @@
 import './KeyboardNavigation.scss';
 
-import { DataType, Table, useTable } from '../../lib';
+import { DataType, Table } from '../../lib';
 import { EditingMode, SortingMode } from '../../lib/enums';
 
 import React from 'react';
@@ -16,12 +16,15 @@ const dataArray = Array(100).fill(undefined).map(
 );
 
 const KeyboardNavigationDemo = () => {
-    const table = useTable();
     return (
         <div className='keyboard-navigation-demo'>
+            <p style={{ fontSize: 12 }}>
+                <i>Tab</i> moves the focus into the table, <i>arrows</i> move it between the cells (with <i>Ctrl</i> to the last one),&nbsp;
+                <i>Home</i> and <i>End</i> to the first and the last cell of the row (with <i>Ctrl</i> of the page),&nbsp;
+                <i>PageUp</i> and <i>PageDown</i> change the page, <i>Enter</i> and <i>F2</i> edit the cell, <i>Esc</i> cancels editing.
+            </p>
             <Table
-                table={table}
-                columns= {[
+                columns={[
                     { key: 'column1', title: 'Column 1', dataType: DataType.String },
                     { key: 'column2', title: 'Column 2', dataType: DataType.String },
                     { key: 'column3', title: 'Column 3', dataType: DataType.String },
@@ -31,63 +34,17 @@ const KeyboardNavigationDemo = () => {
                 rowKeyField={'id'}
                 sortingMode={SortingMode.Single}
                 editingMode={EditingMode.Cell}
-                paging= {{
+                paging={{
                     enabled: true,
                     pageIndex: 0,
                     pageSize: 10,
                 }}
-                focused= {{
+                // the keyboard navigation is enabled by default, Tab moves the focus to this cell
+                focused={{
                     cell: {
                         columnKey: 'column4',
                         rowKeyValue: 2
                     }
-                }}
-                childComponents={{
-                    cell: {
-                        elementAttributes: ({column, rowKeyValue, isEditableCell}) => {
-                            if (isEditableCell) return undefined;
-
-                            const cell = { columnKey: column.key, rowKeyValue }
-                            const isFocused = cell.columnKey === table.props.focused?.cell?.columnKey
-                && cell.rowKeyValue === table.props.focused?.cell?.rowKeyValue;
-                            return {
-                                tabIndex: 0,
-                                ref: (ref: any) => isFocused && ref?.focus(),
-                                onKeyUp: (e) => {
-                                    switch (e.keyCode){
-                                    case 39: table.moveFocusedRight({ end: e.ctrlKey }); break;
-                                    case 37: table.moveFocusedLeft({ end: e.ctrlKey }); break;
-                                    case 38: table.moveFocusedUp({ end: e.ctrlKey }); break;
-                                    case 40: table.moveFocusedDown({ end: e.ctrlKey }); break;
-                                    case 13:
-                                        table.openEditor(cell.rowKeyValue, cell.columnKey);
-                                        table.setFocused({ cellEditorInput: cell });
-                                        e.stopPropagation();
-                                        break;
-                                    }
-                                },
-                                onFocus: () => !isFocused &&  table.setFocused({ cell: { columnKey: column.key, rowKeyValue } }),
-                                onKeyDown: (e) => e.keyCode !== 9 && e.preventDefault(),
-                                onBlur: () => isFocused && table.clearFocused()
-                            }
-                        },
-                    },
-                    cellEditorInput: {
-                        elementAttributes: ({column, rowKeyValue}) => {
-                            const isFocused = column.key === table.props.focused?.cellEditorInput?.columnKey
-                && rowKeyValue === table.props.focused?.cellEditorInput?.rowKeyValue;
-                            const cell = { columnKey: column.key, rowKeyValue };
-                            return {
-                                ref: (ref: any) => isFocused && ref?.focus(),
-                                onKeyUp: (e) => e.keyCode === 13 && table.setFocused({ cell }),
-                                onBlur: (e, {baseFunc}) => {
-                                    baseFunc();
-                                    table.clearFocused()
-                                },
-                                onFocus: () => !isFocused && table.setFocused({ cell: { columnKey: column.key, rowKeyValue } }),
-                            }
-                        },
-                    },
                 }}
             />
         </div>
