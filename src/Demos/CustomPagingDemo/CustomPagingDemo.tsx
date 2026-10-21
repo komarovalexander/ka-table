@@ -18,7 +18,7 @@ const dataArray = Array(180).fill(undefined).map(
 
 const PageSizeSelector = ({ pageSize, pageSizes, dispatch }: IPagingProps) =>  (
     <>
-    Page Size:
+        Page Size:
         <select
             className='form-control'
             value={pageSize}
@@ -34,7 +34,7 @@ const PageSizeSelector = ({ pageSize, pageSizes, dispatch }: IPagingProps) =>  (
 
 const PagesSelector = ({ pageIndex, pagesCount, dispatch }: IPagingProps) =>  (
     <>
-    Page Number:
+        Page Number:
         <select
             className='form-control'
             value={pageIndex}

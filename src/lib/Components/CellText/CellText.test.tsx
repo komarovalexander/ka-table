@@ -13,7 +13,7 @@ const props: ICellTextProps = {
         key: 'columnField',
         title: 'Field',
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     editingMode: EditingMode.Cell,
     field: 'columnField',
     isSelectedRow: false,
@@ -23,7 +23,7 @@ const props: ICellTextProps = {
     value: 'columnFieldValue',
 } as any;
 
-afterEach(() => jest.clearAllMocks());
+afterEach(() => vi.clearAllMocks());
 
 describe('CellText', () => {
     it('renders without crashing', () => {

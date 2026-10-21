@@ -1,31 +1,31 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`sortColumns 1`] = `
-Array [
-  Object {
+[
+  {
     "key": "4",
     "sortDirection": "descend",
   },
-  Object {
+  {
     "key": "7",
     "sortDirection": "descend",
   },
-  Object {
+  {
     "key": "1",
     "sortDirection": "ascend",
     "sortIndex": 1,
   },
-  Object {
+  {
     "key": "2",
     "sortDirection": "descend",
     "sortIndex": 2,
   },
-  Object {
+  {
     "key": "3",
     "sortDirection": "descend",
     "sortIndex": 3,
   },
-  Object {
+  {
     "key": "9",
     "sortDirection": "descend",
     "sortIndex": 9,
@@ -33,132 +33,132 @@ Array [
 ]
 `;
 
-exports[`sortData Custom logic 1`] = `
-Array [
-  Object {
+exports[`sortData > Custom logic 1`] = `
+[
+  {
     "column": 3,
     "id": 5,
   },
-  Object {
+  {
     "column": 3,
     "id": 4,
   },
-  Object {
+  {
     "column": 3,
     "id": 2,
   },
-  Object {
+  {
     "column": 1,
     "id": 1,
   },
-  Object {
+  {
     "column": null,
     "id": 6,
   },
-  Object {
+  {
     "column": 2,
     "id": 3,
   },
-  Object {
+  {
     "column": null,
     "id": 7,
   },
 ]
 `;
 
-exports[`sortData should be sorted by Ascend 1`] = `
-Array [
-  Object {
+exports[`sortData > should be sorted by Ascend 1`] = `
+[
+  {
     "column": null,
     "id": 6,
   },
-  Object {
+  {
     "column": null,
     "id": 7,
   },
-  Object {
+  {
     "column": 1,
     "id": 1,
   },
-  Object {
+  {
     "column": 2,
     "id": 3,
   },
-  Object {
+  {
     "column": 3,
     "id": 2,
   },
-  Object {
+  {
     "column": 3,
     "id": 4,
   },
-  Object {
+  {
     "column": 3,
     "id": 5,
   },
 ]
 `;
 
-exports[`sortData should be sorted by Descend 1`] = `
-Array [
-  Object {
+exports[`sortData > should be sorted by Descend 1`] = `
+[
+  {
     "column": 3,
     "id": 2,
   },
-  Object {
+  {
     "column": 3,
     "id": 4,
   },
-  Object {
+  {
     "column": 3,
     "id": 5,
   },
-  Object {
+  {
     "column": 2,
     "id": 3,
   },
-  Object {
+  {
     "column": 1,
     "id": 1,
   },
-  Object {
+  {
     "column": null,
     "id": 6,
   },
-  Object {
+  {
     "column": null,
     "id": 7,
   },
 ]
 `;
 
-exports[`sortData strings should be case insensitive 1`] = `
-Array [
-  Object {
+exports[`sortData > strings > should be case insensitive 1`] = `
+[
+  {
     "column": "cC",
     "id": 4,
   },
-  Object {
+  {
     "column": "Bb",
     "id": 3,
   },
-  Object {
+  {
     "column": "aa",
     "id": 5,
   },
-  Object {
+  {
     "column": "A",
     "id": 1,
   },
-  Object {
+  {
     "column": "a",
     "id": 2,
   },
-  Object {
+  {
     "column": null,
     "id": 6,
   },
-  Object {
+  {
     "column": null,
     "id": 7,
   },

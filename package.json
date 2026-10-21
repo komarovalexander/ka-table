@@ -4,16 +4,49 @@
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table/#/overview",
-  "dependencies": {
+  "peerDependencies": {
+    "react": "^16.8.3 || ^17.0.0-0 || ^18.0.0-0 || ^19.0.0-0"
+  },
+  "engines": {
+    "node": "^22.18.0 || ^24.11.0 || >=26.0.0"
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "typecheck": "tsc --noEmit",
+    "dist": "tsdown",
+    "pack": "tsdown && cd dist && npm pack"
+  },
+  "devDependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@eslint/js": "^10.0.1",
     "@mui/material": "^7.0.2",
     "@mui/x-date-pickers": "^8.1.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/lodash.orderby": "^4.6.7",
+    "@types/node": "22.14.1",
     "@types/react": "19.1.2",
     "@types/react-csv": "^1.1.10",
-    "@types/react-redux": "^7.1.34",
+    "@types/react-dom": "19.1.2",
+    "@types/react-highlight": "^0.12.2",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitest/coverage-v8": "^5.0.5",
+    "axe-core": "=4.7.0",
     "bootstrap": "5.3.5",
     "date-fns": "^4.1.0",
+    "eslint": "^10.13.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "gh-pages": "^6.3.0",
+    "jsdom": "^29.0.0",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
     "lodash.orderby": "^4.6.0",
@@ -21,89 +54,20 @@
     "react": "19.1.0",
     "react-csv": "^2.0.3",
     "react-dom": "19.1.0",
-    "react-query": "^3.39.3",
-    "react-redux": "^9.2.0",
-    "react-to-print": "^3.0.6"
-  },
-  "peerDependencies": {
-    "react": "^16.8.3 || ^17.0.0-0 || ^18.0.0-0 || ^19.0.0-0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:all": "react-scripts test --watchAll",
-    "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "eject": "react-scripts eject",
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
-    "typecheck": "tsc --noEmit",
-    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "dist": "tsc --declaration --jsx react --esModuleInterop true --outDir dist src/lib/index.ts && gulp build",
-    "pack": "gulp build && cd dist && npm pack && cd ..",
-    "compile": "tsc src/lib/index.ts --jsx react --esModuleInterop true --outDir dist --declaration true --skipLibCheck true --target es5 && gulp compile"
-  },
-  "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "import/no-anonymous-default-export": "off"
-    }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/react": "^16.3.0",
-    "@types/jest": "29.5.14",
-    "@types/lodash.orderby": "^4.6.7",
-    "@types/node": "22.14.1",
-    "@types/react-dom": "19.1.2",
-    "@types/react-highlight": "^0.12.2",
-    "@types/react-router-dom": "^5.1.7",
-    "@types/simulant": "^0.2.0",
-    "@typescript-eslint/eslint-plugin-tslint": "^7.0.2",
-    "axe-core": "=4.7.0",
-    "coveralls": "^3.0.11",
-    "eslint-plugin-jsdoc": "^50.6.10",
-    "eslint-plugin-prefer-arrow": "^1.2.3",
-    "gh-pages": "^6.3.0",
-    "gulp": "^4.0.2",
-    "gulp-file": "^0.4.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-sass": "^6.0.1",
-    "jsonfile": "^6.0.1",
     "react-filter-control": "^2.2.0",
     "react-ga": "^3.3.1",
     "react-highlight": "^0.15.0",
+    "react-query": "^3.39.3",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.2",
-    "react-scripts": "^5.0.1",
+    "react-to-print": "^3.0.6",
+    "redux": "^4.2.1",
     "sass": "^1.87.0",
-    "simulant": "^0.2.2",
-    "tslint": "^6.1.0",
-    "typescript": "~5.8.3"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/lib/Components/**/*.{ts,tsx}",
-      "src/lib/Utils/*.ts"
-    ],
-    "moduleNameMapper": {
-      "^react-router-dom$": "<rootDir>/node_modules/react-router-dom/dist/index.js",
-      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js",
-      "^date-fns$": "<rootDir>/node_modules/date-fns/index.cjs",
-      "^date-fns/(.*)$": "<rootDir>/node_modules/date-fns/$1.cjs"
-    }
+    "tsdown": "^0.23.1",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.72.0",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5"
   },
   "keywords": [
     "datagrid",

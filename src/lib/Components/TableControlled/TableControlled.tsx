@@ -49,6 +49,7 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
 
     React.useEffect(() => {
         dispatch({ type: ActionType.ComponentDidMount });
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- dispatched once, when the table is mounted
     }, []);
 
     React.useEffect(() => {

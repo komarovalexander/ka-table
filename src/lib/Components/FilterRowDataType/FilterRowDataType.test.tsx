@@ -10,7 +10,7 @@ const props: IFilterRowEditorProps = {
         key: 'fieldName',
         title: 'Field',
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     field: 'fieldName',
 } as any;
 

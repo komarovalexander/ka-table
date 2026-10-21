@@ -27,5 +27,4 @@ yarn-debug.log*
 yarn-error.log*
 
 /docs
-public/demos/
 /dist

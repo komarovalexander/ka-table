@@ -36,7 +36,7 @@ it('should render with custom content', () => {
 });
 
 it('onClick should dispath UpdatePageSize on click', () => {
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     const { container } = render(<PagingSize {...props} dispatch={dispatch} />);
     fireEvent.click(container.querySelector('.ka-paging-size')!);
     expect(dispatch).toHaveBeenCalledTimes(1);

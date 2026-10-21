@@ -9,7 +9,7 @@ import { createRoot } from 'react-dom/client';
 
 const props: IHeaderFilterButtonProps = {
     column: new Column(),
-    dispatch: jest.fn()
+    dispatch: vi.fn()
 };
 
 it('renders without crashing', () => {

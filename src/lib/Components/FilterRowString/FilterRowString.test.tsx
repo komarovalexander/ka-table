@@ -11,7 +11,7 @@ const props: any = {
         key: 'columnField',
         title: 'Field',
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     isSelectedRow: true,
     rowData: { column: 1 },
     rowKeyField: '',

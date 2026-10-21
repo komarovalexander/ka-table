@@ -23,13 +23,13 @@ describe('CellUtils', () => {
     });
     describe('getMouseMove', () => {
         it('default', () => {
-            const dispatch = jest.fn();
+            const dispatch = vi.fn();
             const mouseMoveEvent = getMouseMove(40, 50, 100, 'column1', dispatch);
             mouseMoveEvent({ screenX: 20 } as any);
             expect(dispatch).toHaveBeenCalledWith({type: 'ResizeColumn', columnKey: 'column1', width: 50});
         });
         it('skip', () => {
-            const dispatch = jest.fn();
+            const dispatch = vi.fn();
             const mouseMoveEvent = getMouseMove(40, 40, 0, 'column1', dispatch);
             mouseMoveEvent({ screenX: 40 } as any);
             expect(dispatch).toHaveBeenCalledTimes(0);

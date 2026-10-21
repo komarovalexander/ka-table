@@ -1,189 +1,189 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`GroupUtils convertToFlat complex structure 1`] = `
-Array [
-  Object {
+exports[`GroupUtils > convertToFlat > complex structure 1`] = `
+[
+  {
     "groupItems": Map {
-      "Cat" => Array [
-        Object {
+      "Cat" => [
+        {
           "country": "France",
           "name": "Simba",
           "type": "Cat",
         },
-        Object {
+        {
           "country": "France",
           "name": "Kas",
           "type": "Cat",
         },
       ],
-      "Dog" => Array [
-        Object {
+      "Dog" => [
+        {
           "country": "France",
           "name": "Slimu",
           "type": "Dog",
         },
-        Object {
+        {
           "country": "France",
           "name": "Rex",
           "type": "Dog",
         },
       ],
     },
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "France",
     ],
     "value": "France",
   },
-  Object {
-    "groupItems": Array [
-      Object {
+  {
+    "groupItems": [
+      {
         "country": "France",
         "name": "Simba",
         "type": "Cat",
       },
-      Object {
+      {
         "country": "France",
         "name": "Kas",
         "type": "Cat",
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "France",
       "Cat",
     ],
     "value": "Cat",
   },
-  Object {
+  {
     "country": "France",
     "name": "Simba",
     "type": "Cat",
   },
-  Object {
+  {
     "country": "France",
     "name": "Kas",
     "type": "Cat",
   },
-  Object {
-    "groupItems": Array [
-      Object {
+  {
+    "groupItems": [
+      {
         "country": "France",
         "name": "Slimu",
         "type": "Dog",
       },
-      Object {
+      {
         "country": "France",
         "name": "Rex",
         "type": "Dog",
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "France",
       "Dog",
     ],
     "value": "Dog",
   },
-  Object {
+  {
     "country": "France",
     "name": "Slimu",
     "type": "Dog",
   },
-  Object {
+  {
     "country": "France",
     "name": "Rex",
     "type": "Dog",
   },
-  Object {
+  {
     "groupItems": Map {
-      "Cat" => Array [
-        Object {
+      "Cat" => [
+        {
           "country": "Brazil",
           "name": "Simba",
           "type": "Cat",
         },
-        Object {
+        {
           "country": "Brazil",
           "name": "Kas",
           "type": "Cat",
         },
       ],
-      "Dog" => Array [
-        Object {
+      "Dog" => [
+        {
           "country": "Brazil",
           "name": "Slimu",
           "type": "Dog",
         },
-        Object {
+        {
           "country": "Brazil",
           "name": "Rex",
           "type": "Dog",
         },
       ],
     },
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "Brazil",
     ],
     "value": "Brazil",
   },
-  Object {
-    "groupItems": Array [
-      Object {
+  {
+    "groupItems": [
+      {
         "country": "Brazil",
         "name": "Simba",
         "type": "Cat",
       },
-      Object {
+      {
         "country": "Brazil",
         "name": "Kas",
         "type": "Cat",
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "Brazil",
       "Cat",
     ],
     "value": "Cat",
   },
-  Object {
+  {
     "country": "Brazil",
     "name": "Simba",
     "type": "Cat",
   },
-  Object {
+  {
     "country": "Brazil",
     "name": "Kas",
     "type": "Cat",
   },
-  Object {
-    "groupItems": Array [
-      Object {
+  {
+    "groupItems": [
+      {
         "country": "Brazil",
         "name": "Slimu",
         "type": "Dog",
       },
-      Object {
+      {
         "country": "Brazil",
         "name": "Rex",
         "type": "Dog",
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "Brazil",
       "Dog",
     ],
     "value": "Dog",
   },
-  Object {
+  {
     "country": "Brazil",
     "name": "Slimu",
     "type": "Dog",
   },
-  Object {
+  {
     "country": "Brazil",
     "name": "Rex",
     "type": "Dog",
@@ -191,40 +191,40 @@ Array [
 ]
 `;
 
-exports[`GroupUtils convertToFlat inner group 1`] = `
-Array [
-  Object {
+exports[`GroupUtils > convertToFlat > inner group 1`] = `
+[
+  {
     "groupItems": Map {
-      "Cat" => Array [
-        Object {
+      "Cat" => [
+        {
           "country": "France",
           "name": "Simba",
           "type": "Cat",
         },
       ],
     },
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "France",
     ],
     "value": "France",
   },
-  Object {
-    "groupItems": Array [
-      Object {
+  {
+    "groupItems": [
+      {
         "country": "France",
         "name": "Simba",
         "type": "Cat",
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "France",
       "Cat",
     ],
     "value": "Cat",
   },
-  Object {
+  {
     "country": "France",
     "name": "Simba",
     "type": "Cat",
@@ -232,149 +232,149 @@ Array [
 ]
 `;
 
-exports[`GroupUtils convertToFlat inner group with summart 1`] = `
-Array [
-  Object {
+exports[`GroupUtils > convertToFlat > inner group with summart 1`] = `
+[
+  {
     "groupItems": Map {
-      "Cat" => Array [
-        Object {
+      "Cat" => [
+        {
           "country": "France",
           "name": "Simba",
           "type": "Cat",
         },
-        Object {
-          "groupData": Array [
-            Object {
+        {
+          "groupData": [
+            {
               "country": "France",
               "name": "Simba",
               "type": "Cat",
             },
           ],
           "groupIndex": 0,
-          "groupSummaryMark": Object {},
-          "key": Array [
-            Array [
+          "groupSummaryMark": {},
+          "key": [
+            [
               "France",
               "Cat",
             ],
-            "--: + summary--\\\\",
+            "--: + summary--\\",
           ],
         },
       ],
-      Object {} => Object {
-        "groupData": Array [
-          Object {
+      {} => {
+        "groupData": [
+          {
             "country": "France",
             "name": "Simba",
             "type": "Cat",
           },
         ],
         "groupIndex": 0,
-        "groupSummaryMark": Object {},
-        "key": Array [
-          Array [
+        "groupSummaryMark": {},
+        "key": [
+          [
             "France",
             "Cat",
           ],
-          "--: + summary--\\\\",
+          "--: + summary--\\",
         ],
       },
     },
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "France",
     ],
     "value": "France",
   },
-  Object {
-    "groupItems": Array [
-      Object {
+  {
+    "groupItems": [
+      {
         "country": "France",
         "name": "Simba",
         "type": "Cat",
       },
-      Object {
-        "groupData": Array [
-          Object {
+      {
+        "groupData": [
+          {
             "country": "France",
             "name": "Simba",
             "type": "Cat",
           },
         ],
         "groupIndex": 0,
-        "groupSummaryMark": Object {},
-        "key": Array [
-          Array [
+        "groupSummaryMark": {},
+        "key": [
+          [
             "France",
             "Cat",
           ],
-          "--: + summary--\\\\",
+          "--: + summary--\\",
         ],
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "France",
       "Cat",
     ],
     "value": "Cat",
   },
-  Object {
+  {
     "country": "France",
     "name": "Simba",
     "type": "Cat",
   },
-  Object {
-    "groupData": Array [
-      Object {
+  {
+    "groupData": [
+      {
         "country": "France",
         "name": "Simba",
         "type": "Cat",
       },
     ],
     "groupIndex": 0,
-    "groupSummaryMark": Object {},
-    "key": Array [
-      Array [
+    "groupSummaryMark": {},
+    "key": [
+      [
         "France",
         "Cat",
       ],
-      "--: + summary--\\\\",
+      "--: + summary--\\",
     ],
   },
-  Object {
-    "groupData": Array [
-      Object {
+  {
+    "groupData": [
+      {
         "country": "France",
         "name": "Simba",
         "type": "Cat",
       },
     ],
     "groupIndex": 0,
-    "groupSummaryMark": Object {},
-    "key": Array [
-      Array [
+    "groupSummaryMark": {},
+    "key": [
+      [
         "France",
         "Cat",
       ],
-      "--: + summary--\\\\",
+      "--: + summary--\\",
     ],
   },
 ]
 `;
 
-exports[`GroupUtils convertToFlat simple - group items 1`] = `
-Array [
-  Object {
-    "groupItems": Array [
-      Object {
+exports[`GroupUtils > convertToFlat > simple - group items 1`] = `
+[
+  {
+    "groupItems": [
+      {
         "country": "France",
         "name": "Simba",
         "type": "Cat",
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "France",
     ],
     "value": "France",
@@ -382,23 +382,23 @@ Array [
 ]
 `;
 
-exports[`GroupUtils convertToFlat simple 1`] = `
-Array [
-  Object {
-    "groupItems": Array [
-      Object {
+exports[`GroupUtils > convertToFlat > simple 1`] = `
+[
+  {
+    "groupItems": [
+      {
         "country": "France",
         "name": "Simba",
         "type": "Cat",
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "France",
     ],
     "value": "France",
   },
-  Object {
+  {
     "country": "France",
     "name": "Simba",
     "type": "Cat",
@@ -406,23 +406,23 @@ Array [
 ]
 `;
 
-exports[`GroupUtils getGroupedStructure basic 1`] = `
+exports[`GroupUtils > getGroupedStructure > basic 1`] = `
 Map {
   "Czech Republic" => Map {
-    "Cat" => Array [
-      Object {
+    "Cat" => [
+      {
         "country": "Czech Republic",
         "name": "Kas",
         "type": "Cat",
       },
-      Object {
+      {
         "country": "Czech Republic",
         "name": "Hash",
         "type": "Cat",
       },
     ],
-    "Dog" => Array [
-      Object {
+    "Dog" => [
+      {
         "country": "Czech Republic",
         "name": "Beethoven",
         "type": "Dog",
@@ -430,8 +430,8 @@ Map {
     ],
   },
   "Montenegro" => Map {
-    "Dog" => Array [
-      Object {
+    "Dog" => [
+      {
         "country": "Montenegro",
         "name": "Rex",
         "type": "Dog",
@@ -439,8 +439,8 @@ Map {
     ],
   },
   "France" => Map {
-    "Cat" => Array [
-      Object {
+    "Cat" => [
+      {
         "country": "France",
         "name": "Simba",
         "type": "Cat",
@@ -450,250 +450,250 @@ Map {
 }
 `;
 
-exports[`GroupUtils getGroupedStructure expanded couple (skip Czech Republic) 1`] = `
+exports[`GroupUtils > getGroupedStructure > expanded couple (skip Czech Republic) 1`] = `
 Map {
-  "Czech Republic" => Array [],
+  "Czech Republic" => [],
   "Montenegro" => Map {
-    "Dog" => Array [],
+    "Dog" => [],
   },
-  "France" => Array [],
+  "France" => [],
 }
 `;
 
-exports[`GroupUtils getGroupedStructure expanded couple 1`] = `
+exports[`GroupUtils > getGroupedStructure > expanded couple 1`] = `
 Map {
   "Czech Republic" => Map {
-    "Cat" => Array [
-      Object {
+    "Cat" => [
+      {
         "country": "Czech Republic",
         "name": "Kas",
         "type": "Cat",
       },
-      Object {
+      {
         "country": "Czech Republic",
         "name": "Hash",
         "type": "Cat",
       },
     ],
-    "Dog" => Array [],
+    "Dog" => [],
   },
   "Montenegro" => Map {
-    "Dog" => Array [],
+    "Dog" => [],
   },
-  "France" => Array [],
+  "France" => [],
 }
 `;
 
-exports[`GroupUtils getGroupedStructure expanded root 1`] = `
+exports[`GroupUtils > getGroupedStructure > expanded root 1`] = `
 Map {
   "Czech Republic" => Map {
-    "Cat" => Array [],
-    "Dog" => Array [],
+    "Cat" => [],
+    "Dog" => [],
   },
-  "Montenegro" => Array [],
-  "France" => Array [],
+  "Montenegro" => [],
+  "France" => [],
 }
 `;
 
-exports[`GroupUtils getGroupedStructure expanded second 1`] = `
+exports[`GroupUtils > getGroupedStructure > expanded second 1`] = `
 Map {
   "Czech Republic" => Map {
-    "Cat" => Array [
-      Object {
+    "Cat" => [
+      {
         "country": "Czech Republic",
         "name": "Kas",
         "type": "Cat",
       },
-      Object {
+      {
         "country": "Czech Republic",
         "name": "Hash",
         "type": "Cat",
       },
     ],
-    "Dog" => Array [],
+    "Dog" => [],
   },
-  "Montenegro" => Array [],
-  "France" => Array [],
+  "Montenegro" => [],
+  "France" => [],
 }
 `;
 
-exports[`GroupUtils getGroupedStructure returns summary 1`] = `
+exports[`GroupUtils > getGroupedStructure > returns summary 1`] = `
 Map {
   "Czech Republic" => Map {
-    "Cat" => Array [
-      Object {
+    "Cat" => [
+      {
         "country": "Czech Republic",
         "name": "Kas",
         "type": "Cat",
       },
-      Object {
+      {
         "country": "Czech Republic",
         "name": "Hash",
         "type": "Cat",
       },
-      Object {
-        "groupData": Array [
-          Object {
+      {
+        "groupData": [
+          {
             "country": "Czech Republic",
             "name": "Kas",
             "type": "Cat",
           },
-          Object {
+          {
             "country": "Czech Republic",
             "name": "Hash",
             "type": "Cat",
           },
         ],
         "groupIndex": 1,
-        "groupSummaryMark": Object {},
-        "key": "[[\\"Czech Republic\\",\\"Cat\\"],\\"--:+summary--\\"]",
+        "groupSummaryMark": {},
+        "key": "[["Czech Republic","Cat"],"--:+summary--"]",
       },
     ],
-    "Dog" => Array [
-      Object {
+    "Dog" => [
+      {
         "country": "Czech Republic",
         "name": "Beethoven",
         "type": "Dog",
       },
-      Object {
-        "groupData": Array [
-          Object {
+      {
+        "groupData": [
+          {
             "country": "Czech Republic",
             "name": "Beethoven",
             "type": "Dog",
           },
         ],
         "groupIndex": 1,
-        "groupSummaryMark": Object {},
-        "key": "[[\\"Czech Republic\\",\\"Dog\\"],\\"--:+summary--\\"]",
+        "groupSummaryMark": {},
+        "key": "[["Czech Republic","Dog"],"--:+summary--"]",
       },
     ],
-    Object {} => Object {
-      "groupData": Array [
-        Object {
+    {} => {
+      "groupData": [
+        {
           "country": "Czech Republic",
           "name": "Kas",
           "type": "Cat",
         },
-        Object {
+        {
           "country": "Czech Republic",
           "name": "Beethoven",
           "type": "Dog",
         },
-        Object {
+        {
           "country": "Czech Republic",
           "name": "Hash",
           "type": "Cat",
         },
       ],
       "groupIndex": 0,
-      "groupSummaryMark": Object {},
-      "key": "[[\\"Czech Republic\\"],\\"--:+summary--\\"]",
+      "groupSummaryMark": {},
+      "key": "[["Czech Republic"],"--:+summary--"]",
     },
   },
   "Montenegro" => Map {
-    "Dog" => Array [
-      Object {
+    "Dog" => [
+      {
         "country": "Montenegro",
         "name": "Rex",
         "type": "Dog",
       },
-      Object {
-        "groupData": Array [
-          Object {
+      {
+        "groupData": [
+          {
             "country": "Montenegro",
             "name": "Rex",
             "type": "Dog",
           },
         ],
         "groupIndex": 1,
-        "groupSummaryMark": Object {},
-        "key": "[[\\"Montenegro\\",\\"Dog\\"],\\"--:+summary--\\"]",
+        "groupSummaryMark": {},
+        "key": "[["Montenegro","Dog"],"--:+summary--"]",
       },
     ],
-    Object {} => Object {
-      "groupData": Array [
-        Object {
+    {} => {
+      "groupData": [
+        {
           "country": "Montenegro",
           "name": "Rex",
           "type": "Dog",
         },
       ],
       "groupIndex": 0,
-      "groupSummaryMark": Object {},
-      "key": "[[\\"Montenegro\\"],\\"--:+summary--\\"]",
+      "groupSummaryMark": {},
+      "key": "[["Montenegro"],"--:+summary--"]",
     },
   },
   "France" => Map {
-    "Cat" => Array [
-      Object {
+    "Cat" => [
+      {
         "country": "France",
         "name": "Simba",
         "type": "Cat",
       },
-      Object {
-        "groupData": Array [
-          Object {
+      {
+        "groupData": [
+          {
             "country": "France",
             "name": "Simba",
             "type": "Cat",
           },
         ],
         "groupIndex": 1,
-        "groupSummaryMark": Object {},
-        "key": "[[\\"France\\",\\"Cat\\"],\\"--:+summary--\\"]",
+        "groupSummaryMark": {},
+        "key": "[["France","Cat"],"--:+summary--"]",
       },
     ],
-    Object {} => Object {
-      "groupData": Array [
-        Object {
+    {} => {
+      "groupData": [
+        {
           "country": "France",
           "name": "Simba",
           "type": "Cat",
         },
       ],
       "groupIndex": 0,
-      "groupSummaryMark": Object {},
-      "key": "[[\\"France\\"],\\"--:+summary--\\"]",
+      "groupSummaryMark": {},
+      "key": "[["France"],"--:+summary--"]",
     },
   },
 }
 `;
 
-exports[`GroupUtils getGroupedStructure should not expand second 1`] = `
+exports[`GroupUtils > getGroupedStructure > should not expand second 1`] = `
 Map {
-  "Czech Republic" => Array [],
-  "Montenegro" => Array [],
-  "France" => Array [],
+  "Czech Republic" => [],
+  "Montenegro" => [],
+  "France" => [],
 }
 `;
 
-exports[`GroupUtils groupBy 1`] = `
+exports[`GroupUtils > groupBy 1`] = `
 Map {
-  "Cat" => Array [
-    Object {
+  "Cat" => [
+    {
       "country": "Czech Republic",
       "name": "Kas",
       "type": "Cat",
     },
-    Object {
+    {
       "country": "France",
       "name": "Simba",
       "type": "Cat",
     },
-    Object {
+    {
       "country": "Czech Republic",
       "name": "Hash",
       "type": "Cat",
     },
   ],
-  "Dog" => Array [
-    Object {
+  "Dog" => [
+    {
       "country": "Montenegro",
       "name": "Rex",
       "type": "Dog",
     },
-    Object {
+    {
       "country": "Czech Republic",
       "name": "Beethoven",
       "type": "Dog",
@@ -702,9 +702,9 @@ Map {
 }
 `;
 
-exports[`GroupUtils groupBy empty 1`] = `
+exports[`GroupUtils > groupBy empty 1`] = `
 Map {
-  "Cat" => Array [],
-  "Dog" => Array [],
+  "Cat" => [],
+  "Dog" => [],
 }
 `;

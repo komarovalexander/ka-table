@@ -147,7 +147,7 @@ describe('kaReducer does not mutate the previous state', () => {
             try {
                 kaReducer(state, action);
             } catch (error) {
-                throw new Error(`${stateName} state: ${(error as Error).message}`);
+                throw new Error(`${stateName} state: ${(error as Error).message}`, { cause: error });
             }
         });
     });

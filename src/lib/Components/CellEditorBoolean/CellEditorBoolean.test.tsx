@@ -12,7 +12,7 @@ const props: ICellEditorProps = {
         key: 'fieldName',
         title: 'Field',
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     field: 'fieldName',
     isSelectedRow: false,
     rowData: { fieldName: 'columnFieldValue', id: 2 },
@@ -22,7 +22,7 @@ const props: ICellEditorProps = {
 } as any;
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 });
 
 describe('CellEditorBoolean', () => {

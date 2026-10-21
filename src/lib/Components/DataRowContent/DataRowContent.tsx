@@ -50,7 +50,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
         <>
             {columns.map((column, index) => {
                 const editableCell = getEditableCell(column, rowEditableCells);
-                const hasEditorValue = editableCell && editableCell.hasOwnProperty('editorValue');
+                const hasEditorValue = editableCell && Object.prototype.hasOwnProperty.call(editableCell, 'editorValue');
                 const editorValue = editableCell && editableCell.editorValue;
                 const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
                 const isTreeColumn = treeExpandButtonColumnKey ? treeExpandButtonColumnKey === column.key : index === 0;
@@ -69,7 +69,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
                         editorValue={editorValue}
                         field={getField(column)}
                         format={format}
-                        hasEditorValue={editableCell && editableCell.hasOwnProperty('editorValue')}
+                        hasEditorValue={editableCell && Object.prototype.hasOwnProperty.call(editableCell, 'editorValue')}
                         isDetailsRowShown={isDetailsRowShown}
                         isEditableCell={!!editableCell}
                         isFocused={focusedColumnKey === column.key}

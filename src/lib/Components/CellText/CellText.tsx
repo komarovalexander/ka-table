@@ -19,8 +19,8 @@ const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
     } = props;
 
     const formattedValue =
-    (format && format({ column, value, rowData  }))
-    || value?.toString();
+        (format && format({ column, value, rowData  }))
+        || value?.toString();
 
     const { elementAttributes, content } = getElementCustomization({
         className: defaultOptions.css.cellText,

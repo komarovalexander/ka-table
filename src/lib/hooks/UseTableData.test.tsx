@@ -86,7 +86,7 @@ describe('useTableData', () => {
     });
 
     it('processes the data once for the table and the paging, and only when it is needed', () => {
-        const getData = jest.spyOn(PropsUtils, 'getData');
+        const getData = vi.spyOn(PropsUtils, 'getData');
         let table: ITableInstance;
         const TableWithPaging = () => {
             table = useTable();

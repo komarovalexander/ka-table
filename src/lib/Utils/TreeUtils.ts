@@ -48,7 +48,6 @@ export const restoreFilteredData = ({
     originalData,
     rowKeyField,
     treeGroupKeyField,
-    treeGroupsExpanded
 }: {
     data: any[],
     originalData: any[],

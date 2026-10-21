@@ -54,13 +54,13 @@ const SelectionSingleDemo = () => {
             {selectedData && (
                 <div className='info'>
                     <div>
-            Selected: {selectedData.name} ({selectedData.company.name})
+                        Selected: {selectedData.name} ({selectedData.company.name})
                         <button
                             onClick={() => {
                                 table.deselectAllRows();
                             }}
                         >
-              Deselect
+                            Deselect
                         </button>
                     </div>
                 </div>

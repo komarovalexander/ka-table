@@ -12,7 +12,7 @@ const props: IFilterRowEditorProps = {
         key: 'fieldName',
         title: 'Field',
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
 } as any;
 
 describe('FliterRowDate', () => {

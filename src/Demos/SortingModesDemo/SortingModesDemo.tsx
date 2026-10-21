@@ -37,7 +37,7 @@ const SortingModesDemo = () => {
     };
     return (
         <>
-      sortingMode:
+            sortingMode:
             <select
                 value={tableProps.sortingMode}
                 onChange={(e) => changeTableProps({ ...tablePropsInit, sortingMode: e.target.value as any })}
@@ -58,7 +58,7 @@ const SortingModesDemo = () => {
             </div>
             <div style={{fontSize: 12}}>
                 <b>'*Remote' sorting</b> modes do not sort data, it should be done outside of the grid,
-          see <a href='#/remote-data-editing'>remote data editing demo</a> for details
+                see <a href='#/remote-data-editing'>remote data editing demo</a> for details
             </div>
         </>
     );

@@ -19,7 +19,7 @@ const LoadingDemo = () => {
     return (
         <>
             <button
-                onClick={(e) => {
+                onClick={() => {
                     setLoading(!loading);
                 }}
                 className='top-element'

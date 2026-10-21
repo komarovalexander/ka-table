@@ -8,7 +8,7 @@ let props: IFilterRowProps;
 beforeEach(() => {
     props = {
         columns: [],
-        dispatch: jest.fn(),
+        dispatch: vi.fn(),
         groupColumnsCount: 0,
     } as any;
 });

@@ -1,11 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Virtualize getVirtualized itemHeight 40 1`] = `
-Object {
+exports[`Virtualize > getVirtualized > itemHeight 40 1`] = `
+{
   "beginHeight": 0,
   "endHeight": 3600,
   "isFirstVisibleRowOdd": undefined,
-  "virtualizedData": Array [
+  "virtualizedData": [
     0,
     1,
     2,
@@ -20,12 +20,12 @@ Object {
 }
 `;
 
-exports[`Virtualize getVirtualized scrollTop 0 1`] = `
-Object {
+exports[`Virtualize > getVirtualized > scrollTop 0 1`] = `
+{
   "beginHeight": 0,
   "endHeight": 900,
   "isFirstVisibleRowOdd": undefined,
-  "virtualizedData": Array [
+  "virtualizedData": [
     0,
     1,
     2,
@@ -40,12 +40,12 @@ Object {
 }
 `;
 
-exports[`Virtualize getVirtualized scrollTop 100 1`] = `
-Object {
+exports[`Virtualize > getVirtualized > scrollTop 100 1`] = `
+{
   "beginHeight": 90,
   "endHeight": 810,
   "isFirstVisibleRowOdd": undefined,
-  "virtualizedData": Array [
+  "virtualizedData": [
     9,
     10,
     11,
@@ -60,12 +60,12 @@ Object {
 }
 `;
 
-exports[`Virtualize getVirtualized scrollTop 100 bottomInvisibleCount 1`] = `
-Object {
+exports[`Virtualize > getVirtualized > scrollTop 100 bottomInvisibleCount 1`] = `
+{
   "beginHeight": 90,
   "endHeight": 760,
   "isFirstVisibleRowOdd": undefined,
-  "virtualizedData": Array [
+  "virtualizedData": [
     9,
     10,
     11,
@@ -85,12 +85,12 @@ Object {
 }
 `;
 
-exports[`Virtualize getVirtualized scrollTop 900 1`] = `
-Object {
+exports[`Virtualize > getVirtualized > scrollTop 900 1`] = `
+{
   "beginHeight": 890,
   "endHeight": 10,
   "isFirstVisibleRowOdd": undefined,
-  "virtualizedData": Array [
+  "virtualizedData": [
     89,
     90,
     91,
@@ -105,12 +105,12 @@ Object {
 }
 `;
 
-exports[`Virtualize getVirtualized scrollTop 900 topInvisibleCount 1`] = `
-Object {
+exports[`Virtualize > getVirtualized > scrollTop 900 topInvisibleCount 1`] = `
+{
   "beginHeight": 790,
   "endHeight": 10,
   "isFirstVisibleRowOdd": undefined,
-  "virtualizedData": Array [
+  "virtualizedData": [
     79,
     80,
     81,
@@ -135,12 +135,12 @@ Object {
 }
 `;
 
-exports[`Virtualize getVirtualized with new row 1`] = `
-Object {
+exports[`Virtualize > getVirtualized > with new row 1`] = `
+{
   "beginHeight": 80,
   "endHeight": 810,
   "isFirstVisibleRowOdd": undefined,
-  "virtualizedData": Array [
+  "virtualizedData": [
     9,
     10,
     11,

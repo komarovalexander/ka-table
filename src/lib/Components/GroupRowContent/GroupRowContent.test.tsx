@@ -12,7 +12,7 @@ const props: IGroupRowProps = {
     childComponents: {},
     column: { key: 'field' },
     contentColSpan: 0,
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     groupIndex: 0,
     groupKey: ['group'],
     isExpanded: false,

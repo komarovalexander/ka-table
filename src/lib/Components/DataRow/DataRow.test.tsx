@@ -26,7 +26,7 @@ const props: IRowProps = {
 } as any;
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 });
 
 describe('DataRow', () => {
@@ -52,7 +52,7 @@ describe('DataRow', () => {
     });
 
     it('overrides default ref', () => {
-        const ref = jest.fn();
+        const ref = vi.fn();
         renderInto('tbody', (
             <DataRow
                 {...props}

@@ -640,7 +640,7 @@ describe('kaReducer', () => {
             expect(newState.editableCells).toMatchSnapshot();
         });
         it('should use editor value', () => {
-            const validationCalls = jest.fn();
+            const validationCalls = vi.fn();
             const intialState: ITableProps = {
                 columns: [{
                     key: 'id'
@@ -678,7 +678,7 @@ describe('kaReducer', () => {
             expect(newState.editableCells).toMatchSnapshot();
         });
         it('uses column.field to get the value of a cell without editor value', () => {
-            const validation = jest.fn();
+            const validation = vi.fn();
             kaReducer({
                 columns: [{ key: 'name', field: 'user.name' }],
                 data: [{ id: 1, user: { name: 'Mike' } }],

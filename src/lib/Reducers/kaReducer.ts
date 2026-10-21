@@ -346,16 +346,18 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         const newSelectedRows = selectedRows.filter((s) => !rowsKeyValues.has(s));
         return { ...props, selectedRows: newSelectedRows };
     }
-    case ActionType.UpdateSortDirection:
+    case ActionType.UpdateSortDirection: {
         const sortedColumns = getUpdatedSortedColumns(columns, action.columnKey, sortingMode);
         return { ...props, columns: sortedColumns };
+    }
     case ActionType.UpdateVirtualScrolling:
         return { ...props, virtualScrolling: action.virtualScrolling };
     case ActionType.UpdateData:
         return { ...props, data: action.data };
-    case ActionType.ScrollTable:
+    case ActionType.ScrollTable: {
         const scrollTop = action.scrollTop;
         return { ...props, ...{ virtualScrolling: { ...virtualScrolling, scrollTop } } };
+    }
     case ActionType.UpdateGroupsExpanded: {
         let currentGroupsExpanded = groupsExpanded;
         if (!currentGroupsExpanded) {
@@ -391,7 +393,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     case ActionType.SaveAllEditors: {
         const newData = [...data];
         editableCells?.forEach(editableCell => {
-            if (editableCell.hasOwnProperty('editorValue')) {
+            if (Object.prototype.hasOwnProperty.call(editableCell, 'editorValue')) {
                 const rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === editableCell.rowKeyValue);
                 if (rowIndex !== -1) {
                     const column = columns.find((c) => c.key === editableCell.columnKey)!;
@@ -408,7 +410,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         let updatedRowData = data.find((d) => getValueByField(d, rowKeyField) === rowEditorKeyValue);
         const rowEditableCells = editableCells.filter(
             editableCell => editableCell.rowKeyValue === rowEditorKeyValue
-                    && (isNewRow || editableCell.hasOwnProperty('editorValue')));
+                    && (isNewRow || Object.prototype.hasOwnProperty.call(editableCell, 'editorValue')));
         if (isNewRow ? !rowEditableCells.length : !updatedRowData) {
             // the new row is not shown or the row is not in data: there is nothing to save
             return props;

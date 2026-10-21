@@ -12,7 +12,7 @@ const props: ICellEditorProps = {
         key: 'fieldName',
         title: 'Field',
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     field: 'fieldName',
     isSelectedRow: true,
     rowData: { fieldName: new Date(2020, 0, 2), id: 2 },
@@ -21,7 +21,7 @@ const props: ICellEditorProps = {
 } as any;
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 });
 
 describe('CellEditorDate', () => {

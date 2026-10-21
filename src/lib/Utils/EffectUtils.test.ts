@@ -3,9 +3,9 @@ import { addEscEnterKeyEffect, getEventListenerEffect } from './EffectUtils';
 
 describe('EffectUtils', () => {
     it('getEventListenerEffect', () => {
-        const handler: jest.Mock<any, any> = jest.fn();
-        const addEventListenerMock: jest.Mock<any, any> = jest.fn();
-        const removeEventListenerMock: jest.Mock<any, any> = jest.fn();
+        const handler = vi.fn();
+        const addEventListenerMock = vi.fn();
+        const removeEventListenerMock = vi.fn();
 
         window.addEventListener = addEventListenerMock;
         window.removeEventListener = removeEventListenerMock;
@@ -22,10 +22,10 @@ describe('EffectUtils', () => {
     });
 
     it('addEscEnterKeyEffect', () => {
-        const escKeyHandler: jest.Mock<any, any> = jest.fn();
-        const enterKeyHandler: jest.Mock<any, any> = jest.fn();
+        const escKeyHandler = vi.fn();
+        const enterKeyHandler = vi.fn();
         let keyPressFunc: any;
-        const addEventListenerMock: jest.Mock<any, any> = jest.fn((event, fn) => {
+        const addEventListenerMock = vi.fn((event, fn) => {
             keyPressFunc = fn;
         });
         window.addEventListener = addEventListenerMock;

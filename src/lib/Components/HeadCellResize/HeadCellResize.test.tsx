@@ -3,14 +3,13 @@ import { act, fireEvent, render } from '@testing-library/react';
 import HeadCellResize from './HeadCellResize';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import simulant from 'simulant';
 
 const props = {
     column: {
         key: 'column1',
         width: 100
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     childComponents: {}
 };
 
@@ -34,10 +33,10 @@ describe('HeadCellResize', () => {
         const isDefaultAllowed = fireEvent.mouseDown(container.querySelector('.ka-thead-cell-resize')!, { screenX: 100 });
         expect(isDefaultAllowed).toBe(false);
         expect(props.dispatch).toHaveBeenCalledTimes(0);
-        simulant.fire(document.body, 'mousemove', { screenX: 120 });
+        fireEvent.mouseMove(document.body, { screenX: 120 });
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenLastCalledWith({ columnKey: 'column1', type: 'ResizeColumn', width: 120 });
-        simulant.fire(document.body, 'mouseup', { screenX: 130 });
+        fireEvent.mouseUp(document.body, { screenX: 130 });
         expect(props.dispatch).toHaveBeenCalledTimes(2);
         expect(props.dispatch).toHaveBeenLastCalledWith({ columnKey: 'column1', type: 'ResizeColumn', width: 130 });
     });
@@ -53,14 +52,14 @@ describe('HeadCellResize', () => {
         );
         Object.defineProperty(container, 'offsetWidth', { configurable: true, value: 80 });
         fireEvent.mouseDown(container.querySelector('.ka-thead-cell-resize')!, { screenX: 80 });
-        simulant.fire(document.body, 'mouseup', { screenX: 90 });
+        fireEvent.mouseUp(document.body, { screenX: 90 });
         expect(props.dispatch.mock.calls[0]).toEqual([{columnKey: 'column1', type: 'ResizeColumn', width: 90}]);
     });
 
     it('should use column.width for resizing', () => {
         const { container } = render(<HeadCellResize {...props} />);
         fireEvent.mouseDown(container.querySelector('.ka-thead-cell-resize')!, { screenX: 150 });
-        simulant.fire(document.body, 'mouseup', { screenX: 160 });
+        fireEvent.mouseUp(document.body, { screenX: 160 });
         expect(props.dispatch.mock.calls[0]).toEqual([{columnKey: 'column1', type: 'ResizeColumn', width: 110}]);
     });
 });

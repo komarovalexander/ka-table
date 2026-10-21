@@ -49,6 +49,6 @@ export const filterGroupAnd = (data: any[], items: any[]): any[]  => {
     }, data);
 };
 
-export const filterData = (data: any[] , filterValue: any): any[]  => {
+export const filterData = (data: any[], filterValue: any): any[] => {
     return filterGroup(data, filterValue.groupName, filterValue.items);
 };

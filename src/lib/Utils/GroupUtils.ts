@@ -22,7 +22,7 @@ const getGroupSummary = (groupData: any[], key: any, groupIndex: any) => ({ grou
 
 export const updateExpandedGroups = (groupsExpanded: any[][], groupKey: any[]): any[][] => {
     const newGroupsExpanded =
-    groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(groupKey));
+        groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(groupKey));
     if (newGroupsExpanded.length === groupsExpanded.length) {
         newGroupsExpanded.push(groupKey);
     }

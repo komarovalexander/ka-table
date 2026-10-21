@@ -15,7 +15,7 @@ beforeEach(() => {
             key: 'fieldName',
             title: 'Field',
         },
-        dispatch: jest.fn(),
+        dispatch: vi.fn(),
         field: 'fieldName',
         isSelectedRow: true,
         rowData: { column: 1 },

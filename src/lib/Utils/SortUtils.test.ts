@@ -62,7 +62,7 @@ describe('sortData', () => {
     it('Custom logic', () => {
         const newData = sortData(columns, data, ({ column }) => {
             if (column.key === 'column') {
-                return (a: any, b: any) => a === 3 ? -1 : 0;
+                return (a: any) => a === 3 ? -1 : 0;
             }
         });
         expect(newData).toMatchSnapshot();

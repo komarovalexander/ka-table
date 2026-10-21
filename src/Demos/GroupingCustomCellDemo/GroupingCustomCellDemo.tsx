@@ -44,9 +44,10 @@ const GroupingCustomCellDemo = () => {
                     content: (props) => {
                         switch (props.column.key){
                         case 'type':
-                        case 'country':
+                        case 'country': {
                             const folder = props.column.key === 'type' ? 'animals' : 'flags';
                             return <img height='30px' src={`static/icons/${folder}/${props.groupKey[props.groupIndex].toLowerCase().replace(' ', '_')}.svg`} alt={props.groupKey[0]} />;
+                        }
                         }
                     }
                 }

@@ -242,7 +242,7 @@ describe('GroupUtils', () => {
             const result = getGroupText(
                 'Group Text',
                 { key: 'column1', title: 'Column Title' },
-                ({column, value}) => undefined
+                () => undefined
             );
             expect(result).toEqual('Column Title: Group Text');
         });
@@ -253,7 +253,7 @@ describe('GroupUtils', () => {
                 ({column, value, rowData }) => `Column: ${column.title}, Value: ${value}, rowData: ${JSON.stringify(rowData)}`,
                 [{ id: 'hello'}, {id: 'im robot'}],
             );
-            expect(result).toEqual('Column: Column Title, Value: Group Text, rowData: {\"id\":\"hello\"}');
+            expect(result).toEqual('Column: Column Title, Value: Group Text, rowData: {"id":"hello"}');
         });
     });
 

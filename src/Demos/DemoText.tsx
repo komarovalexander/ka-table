@@ -7,12 +7,14 @@ interface IDemoTextProps {
     demoFileName: string;
 }
 
+// the source code of the demos, each one is loaded when its demo is opened
+const demoSources = import.meta.glob<string>('./*/*Demo.tsx', { query: '?raw', import: 'default' });
+
 const DemoText: React.FunctionComponent<IDemoTextProps> = ({ demoFileName }) => {
     const [text, changeText]: [string, any] = useState('');
     useEffect(() => {
-        fetch(`demos/${demoFileName}/${demoFileName}.tsx?c=7`)
-            .then((res) => res.text())
-            .then((fileText) => changeText(fileText));
+        demoSources[`./${demoFileName}/${demoFileName}.tsx`]?.()
+            .then((source) => changeText(source.replace(/\.\.\/\.\.\/lib/g, 'ka-table')));
     }, [demoFileName]);
     return (
         <Highlight className='language-typescript'>

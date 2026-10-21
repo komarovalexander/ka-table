@@ -15,7 +15,7 @@ const props: IGroupRowProps = {
         dataType: DataType.String,
     },
     contentColSpan: 2,
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     groupIndex: 0,
     groupKey: ['group'],
     isExpanded: true,

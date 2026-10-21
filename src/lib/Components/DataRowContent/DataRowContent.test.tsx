@@ -37,7 +37,7 @@ describe('DataRowContent', () => {
         });
     });
     it('click by first row dispatches action', () => {
-        const dispatch = jest.fn();
+        const dispatch = vi.fn();
         const { container } = renderInto('tr', <DataRowContent {...props} dispatch={dispatch} isTreeGroup={true} />);
         expect(dispatch).toHaveBeenCalledTimes(0);
         fireEvent.click(container.querySelector('.ka-icon-tree-arrow')!);

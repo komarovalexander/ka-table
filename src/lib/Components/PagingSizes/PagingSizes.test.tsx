@@ -8,12 +8,12 @@ const props: IPagingProps = {
     pageSize: 2,
     pageIndex: 2,
     enabled: true,
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     childComponents: {}
 };
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 });
 
 it('renders without crashing', () => {

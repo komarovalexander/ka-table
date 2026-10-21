@@ -7,7 +7,7 @@ or create an issue on github in any form
 
 2) Create a branch from the <code>master</code> branch with your feature or bug fix
 
-3) <code>yarn</code>
+3) <code>yarn</code> (Node.js 22.18+ or 24.11+)
 
 4)
 to run app: <code>yarn start</code>

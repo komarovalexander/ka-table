@@ -15,7 +15,7 @@ const tableProps: any = {
         { column: 1, column2: 2, id: 1 },
         { column: 12, column2: 22, id: 2 },
     ],
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     rowKeyField: 'id',
 };
 
@@ -31,7 +31,7 @@ it('renders without crashing', () => {
 });
 
 it('should dispatch single action and clear it', () => {
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     const props = {
         ...tableProps,
         singleAction: loadData(),
@@ -54,7 +54,7 @@ it('should dispatch single action and clear it', () => {
 });
 
 it('should not dispatch in case of single action is undefined', () => {
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     const props = {
         ...tableProps,
         singleAction: undefined,

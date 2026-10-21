@@ -41,7 +41,7 @@ const CustomEditor = ({
 };
 
 const CustomLookupEditor = ({
-    column, dispatch, rowKeyValue, value,
+    column, rowKeyValue, value,
 }: ICellEditorProps) => {
     const table = useTableInstance();
     const [editorValue, setValue] = useState(value);

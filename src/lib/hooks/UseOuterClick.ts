@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const useOuterClick = (callback: () => void) => {
-    const callbackRef = React.useRef((event: MouseEvent) => { });
+    const callbackRef = React.useRef<(event: MouseEvent) => void>(() => { });
     const innerRef = React.useRef<HTMLDivElement>(document.createElement('div'));
 
     React.useEffect(() => {

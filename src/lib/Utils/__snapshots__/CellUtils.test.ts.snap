@@ -1,25 +1,25 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CellUtils CellHandlers addItemToEditableCells 1`] = `
-Array [
-  Object {
+exports[`CellUtils > CellHandlers > addItemToEditableCells 1`] = `
+[
+  {
     "columnKey": "column",
     "rowKeyValue": 1,
   },
-  Object {
+  {
     "columnKey": "column2",
     "rowKeyValue": 2,
   },
 ]
 `;
 
-exports[`CellUtils CellHandlers removeItemFromEditableCells 1`] = `
-Array [
-  Object {
+exports[`CellUtils > CellHandlers > removeItemFromEditableCells 1`] = `
+[
+  {
     "columnKey": "column",
     "rowKeyValue": 1,
   },
-  Object {
+  {
     "columnKey": "column",
     "rowKeyValue": 2,
   },

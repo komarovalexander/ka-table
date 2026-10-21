@@ -12,7 +12,7 @@ export function getElementCustomization<T = HTMLElement>(
     childElementAttributes: AllHTMLAttributes<T>,
     props: any,
     childComponent?: ChildComponent<any>,
-) : ElementCustomization<T> {
+): ElementCustomization<T> {
     const elementAttributes = extendProps<T>(childElementAttributes, props, childComponent);
     const content = childComponent && childComponent.content && childComponent.content(props);
 

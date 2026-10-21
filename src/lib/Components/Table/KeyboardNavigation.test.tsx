@@ -127,7 +127,7 @@ describe('keyboardNavigation', () => {
         const { focusCell, getCell, getFocusedText, press, table } = setup({ editingMode: EditingMode.Cell });
         focusCell('name 1');
         // the editor closes on the keyup of Enter which comes to the window
-        const windowKeyUp = jest.fn();
+        const windowKeyUp = vi.fn();
         window.addEventListener('keyup', windowKeyUp);
         press('Enter');
         window.removeEventListener('keyup', windowKeyUp);

@@ -39,8 +39,8 @@ const ResponsiveDemo = () => {
             />
             <br />
             <div>
-        Based on the <a href='https://codepen.io/andornagy/pen/EVXpbR' target='_blank' rel='noopener noreferrer'>example</a>.
-        But notice that ka-table can be used with any adaptive approach of HTML tables.</div>
+                Based on the <a href='https://codepen.io/andornagy/pen/EVXpbR' target='_blank' rel='noopener noreferrer'>example</a>.
+                But notice that ka-table can be used with any adaptive approach of HTML tables.</div>
         </div>
     );
 };

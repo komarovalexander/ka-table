@@ -18,7 +18,7 @@ const PagingDemo = () => {
 
     return (
         <>
-      Paging position: <select
+            Paging position: <select
                 defaultValue={PagingPosition.Bottom}
                 onChange={(e) => table.changeProps({ ...table.props, paging: { ...table.props.paging, position: e.target.value as any }})}
                 style={{marginBottom: 20}}>

@@ -139,7 +139,7 @@ const HeaderFilterLogicDemo = () => {
                             return `(${rowData.value})`;
                         }
                         if (column.key === 'departments_isSelected'){
-                            return<></>;
+                            return <></>;
                         }
                     }
                 },

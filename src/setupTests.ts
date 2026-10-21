@@ -1,8 +1,2 @@
-import { TextDecoder, TextEncoder } from 'util';
-
-import React from 'react';
-
-// react-router v7 uses TextEncoder, which is missing in the jsdom environment of react-scripts
-Object.assign(global, { TextDecoder, TextEncoder });
-
+// jsdom has no canvas, which the export and print demos use
 HTMLCanvasElement.prototype.getContext = () => null;

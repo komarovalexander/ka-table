@@ -10,13 +10,13 @@ const props: IPagingProps = {
     pageIndex: 2,
     pagesCount: 3,
     enabled: true,
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     childComponents: {}
 };
 
 describe('PagingPages', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it('renders without crashing', () => {

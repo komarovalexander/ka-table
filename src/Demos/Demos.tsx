@@ -200,7 +200,7 @@ const Demos: React.FC = () => {
                                     target='_blank'
                                     onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex'); }}>
                                     <img src='static/icons/link.svg' alt='' />
-                  Developed by Alexander Komarov
+                                    Developed by Alexander Komarov
                                 </a>
                             </div>
                             <div>
@@ -209,7 +209,7 @@ const Demos: React.FC = () => {
                                     target='_blank'
                                     onMouseDown={() => { trackEvent('click', 'developed_by', 'Daria'); }}>
                                     <img src='static/icons/link.svg' alt='' />
-                  UI Design by Daria Komarova
+                                    UI Design by Daria Komarova
                                 </a>
                             </div>
                         </div>
@@ -227,12 +227,12 @@ const Demos: React.FC = () => {
                 <footer>
                     <h3>Provide your feedback</h3>
                     <div>
-            if you like it - click the star in this repo: <a href='https://github.com/komarovalexander/ka-table'>https://github.com/komarovalexander/ka-table</a><br />
-            if you found any issue or have any idea what to add/improve - feel free to create an issue: <a href='https://github.com/komarovalexander/ka-table/issues'>https://github.com/komarovalexander/ka-table/issues</a><br />
+                        if you like it - click the star in this repo: <a href='https://github.com/komarovalexander/ka-table'>https://github.com/komarovalexander/ka-table</a><br />
+                        if you found any issue or have any idea what to add/improve - feel free to create an issue: <a href='https://github.com/komarovalexander/ka-table/issues'>https://github.com/komarovalexander/ka-table/issues</a><br />
                         <br />
-            you also can reach the <a href='https://github.com/komarovalexander' onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex (bottom)'); }}>developer</a> by this email: sanrkom@gmail.com
+                        you also can reach the <a href='https://github.com/komarovalexander' onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex (bottom)'); }}>developer</a> by this email: sanrkom@gmail.com
                         <br />
-            Thanks for collaboration!
+                        Thanks for collaboration!
                     </div>
                 </footer>
             </div>

@@ -1,94 +1,94 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`kaReducer InsertRow insert after row with id=2 1`] = `
-Array [
-  Object {
+exports[`kaReducer > InsertRow > insert after row with id=2 1`] = `
+[
+  {
     "id": 1,
     "val": 102,
   },
-  Object {
+  {
     "id": 2,
     "val": 10,
   },
-  Object {
+  {
     "id": 4,
     "val": 40,
   },
-  Object {
+  {
     "id": 3,
     "val": 10,
   },
 ]
 `;
 
-exports[`kaReducer InsertRow insert before row with id=2 1`] = `
-Array [
-  Object {
+exports[`kaReducer > InsertRow > insert before row with id=2 1`] = `
+[
+  {
     "id": 1,
     "val": 102,
   },
-  Object {
+  {
     "id": 3,
     "val": 30,
   },
-  Object {
+  {
     "id": 2,
     "val": 10,
   },
 ]
 `;
 
-exports[`kaReducer InsertRow insert to 0 position by default 1`] = `
-Array [
-  Object {
+exports[`kaReducer > InsertRow > insert to 0 position by default 1`] = `
+[
+  {
     "id": 3,
     "val": 30,
   },
-  Object {
+  {
     "id": 1,
     "val": 102,
   },
-  Object {
+  {
     "id": 2,
     "val": 10,
   },
 ]
 `;
 
-exports[`kaReducer InsertRow insert to last position for after mode 1`] = `
-Array [
-  Object {
+exports[`kaReducer > InsertRow > insert to last position for after mode 1`] = `
+[
+  {
     "id": 1,
     "val": 102,
   },
-  Object {
+  {
     "id": 2,
     "val": 10,
   },
-  Object {
+  {
     "id": 3,
     "val": 10,
   },
-  Object {
+  {
     "id": 4,
     "val": 40,
   },
 ]
 `;
 
-exports[`kaReducer ReorderColumns default 1`] = `
-Object {
-  "columns": Array [
-    Object {
+exports[`kaReducer > ReorderColumns > default 1`] = `
+{
+  "columns": [
+    {
       "key": "2",
     },
-    Object {
+    {
       "key": "3",
     },
-    Object {
+    {
       "key": "1",
     },
-    Object {
+    {
       "key": "4",
     },
   ],
@@ -96,19 +96,19 @@ Object {
 }
 `;
 
-exports[`kaReducer ReorderRows default 1`] = `
-Object {
-  "data": Array [
-    Object {
+exports[`kaReducer > ReorderRows > default 1`] = `
+{
+  "data": [
+    {
       "id": 2,
     },
-    Object {
+    {
       "id": 3,
     },
-    Object {
+    {
       "id": 1,
     },
-    Object {
+    {
       "id": 4,
     },
   ],
@@ -116,26 +116,26 @@ Object {
 }
 `;
 
-exports[`kaReducer ReorderRows inner keys 1`] = `
-Object {
-  "data": Array [
-    Object {
-      "a": Object {
+exports[`kaReducer > ReorderRows > inner keys 1`] = `
+{
+  "data": [
+    {
+      "a": {
         "id": 2,
       },
     },
-    Object {
-      "a": Object {
+    {
+      "a": {
         "id": 3,
       },
     },
-    Object {
-      "a": Object {
+    {
+      "a": {
         "id": 1,
       },
     },
-    Object {
-      "a": Object {
+    {
+      "a": {
         "id": 4,
       },
     },
@@ -144,14 +144,14 @@ Object {
 }
 `;
 
-exports[`kaReducer ResizeColumn has a col in settings 1`] = `
-Array [
-  Object {
+exports[`kaReducer > ResizeColumn > has a col in settings 1`] = `
+[
+  {
     "key": "id",
   },
-  Object {
-    "colGroup": Object {
-      "style": Object {
+  {
+    "colGroup": {
+      "style": {
         "width": 200,
       },
     },
@@ -161,13 +161,13 @@ Array [
 ]
 `;
 
-exports[`kaReducer ResizeColumn has a col.width in settings 1`] = `
-Array [
-  Object {
+exports[`kaReducer > ResizeColumn > has a col.width in settings 1`] = `
+[
+  {
     "key": "id",
   },
-  Object {
-    "colGroup": Object {
+  {
+    "colGroup": {
       "width": 200,
     },
     "key": "name",
@@ -176,68 +176,68 @@ Array [
 ]
 `;
 
-exports[`kaReducer ResizeColumn has a width in settings 1`] = `
-Array [
-  Object {
+exports[`kaReducer > ResizeColumn > has a width in settings 1`] = `
+[
+  {
     "key": "id",
   },
-  Object {
+  {
     "key": "name",
     "width": 200,
   },
 ]
 `;
 
-exports[`kaReducer ResizeColumn has styles only 1`] = `
-Array [
-  Object {
+exports[`kaReducer > ResizeColumn > has styles only 1`] = `
+[
+  {
     "key": "id",
   },
-  Object {
+  {
     "key": "name",
-    "style": Object {
+    "style": {
       "width": 200,
     },
   },
 ]
 `;
 
-exports[`kaReducer SelectRowsRange default 1`] = `
-Array [
+exports[`kaReducer > SelectRowsRange > default 1`] = `
+[
   2,
   3,
   4,
 ]
 `;
 
-exports[`kaReducer SelectRowsRange revert set 1`] = `
-Array [
+exports[`kaReducer > SelectRowsRange > revert set 1`] = `
+[
   2,
   3,
   4,
 ]
 `;
 
-exports[`kaReducer SelectRowsRange rowKeyValueTo is not specified 1`] = `
-Array [
+exports[`kaReducer > SelectRowsRange > rowKeyValueTo is not specified 1`] = `
+[
   2,
 ]
 `;
 
-exports[`kaReducer SetSingleAction 1`] = `
-Object {
+exports[`kaReducer > SetSingleAction 1`] = `
+{
   "type": "LoadData",
 }
 `;
 
-exports[`kaReducer Validate should use editor value 1`] = `
-Array [
-  Object {
+exports[`kaReducer > Validate > should use editor value 1`] = `
+[
+  {
     "columnKey": "val",
     "rowKeyValue": 1,
     "validationMessage": "value should be less than 100",
   },
-  Object {
+  {
     "columnKey": "val",
     "editorValue": 103,
     "rowKeyValue": 2,
@@ -246,14 +246,14 @@ Array [
 ]
 `;
 
-exports[`kaReducer Validate validates values 1`] = `
-Array [
-  Object {
+exports[`kaReducer > Validate > validates values 1`] = `
+[
+  {
     "columnKey": "val",
     "rowKeyValue": 1,
     "validationMessage": "value should be less than 100",
   },
-  Object {
+  {
     "columnKey": "val",
     "rowKeyValue": 2,
     "validationMessage": undefined,

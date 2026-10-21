@@ -11,11 +11,11 @@ type AddParameters<T, I> = T extends (e: infer E) => void ? (
     (e: E, extendedEvent: AttributeTableData<I>) => void
 ) : T;
 type WithExtraParameters<T, I> = {
-    [P in keyof T ] : AddParameters<T[P], I>;
+    [P in keyof T]: AddParameters<T[P], I>;
 };
-type ElementAttributes<T> = React.AllHTMLAttributes<HTMLElement>;
+type ElementAttributes = React.AllHTMLAttributes<HTMLElement>;
 
-export type ChildAttributesItem<T> = WithExtraParameters<ElementAttributes<T>, T> & { ref?: any };
+export type ChildAttributesItem<T> = WithExtraParameters<ElementAttributes, T> & { ref?: any };
 export type DispatchFunc = (action: any) => void;
 export type CustomReducerFunc = (nextState: ITableProps, action: any, prevState: ITableProps) => ITableProps;
 export type OnDispatchFunc = (action: any, tableProps: ITableProps, prevState: ITableProps) => void;

@@ -18,7 +18,7 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
         format
     } = props;
     let headerFilterValues: string[] | undefined;
-    headerFilterValues = column?.headerFilterListItems ? column?.headerFilterListItems({ data }) : data?.map((item, i) => {
+    headerFilterValues = column?.headerFilterListItems ? column?.headerFilterListItems({ data }) : data?.map((item) => {
         const value = getValueByColumn(item, column);
 
         const formattedValue =
@@ -27,7 +27,7 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
         return formattedValue;
     });
     headerFilterValues = Array.from(new Set(headerFilterValues));
-    const headerFilterValuesData: HeaderFilterItem[] = headerFilterValues?.map((value, i) => ({ value, isSelected: !!column.headerFilterValues && column.headerFilterValues.includes(value) }));
+    const headerFilterValuesData: HeaderFilterItem[] = headerFilterValues?.map((value) => ({ value, isSelected: !!column.headerFilterValues && column.headerFilterValues.includes(value) }));
     const selectedColumnKey = `${column.key}_isSelected`;
     const table = useTable({
         onDispatch: (action) => {

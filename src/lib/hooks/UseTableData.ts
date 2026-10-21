@@ -48,6 +48,7 @@ export const useTableDataCalculation = (props: ITableProps, enabled: boolean = t
     const { columns, groups, paging } = props;
     const dataWithoutPaging = React.useMemo(
         () => enabled ? getData({ ...props, paging: undefined }) : undefined,
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- the props which getData uses
         [enabled, ...getDataDependencies(props)]
     );
     const groupedData = React.useMemo(() => dataWithoutPaging && getPageData(dataWithoutPaging, paging), [dataWithoutPaging, paging]);

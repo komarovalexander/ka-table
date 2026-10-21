@@ -15,7 +15,7 @@ const props: any = {
         { column: 1, column2: 2, id: 1 },
         { column: 12, column2: 22, id: 2 },
     ],
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     editableCells: [],
     editingMode: EditingMode.None,
     groupColumnsCount: 0,
@@ -24,7 +24,7 @@ const props: any = {
     selectedRows: [],
 };
 
-afterEach(() => jest.clearAllMocks());
+afterEach(() => vi.clearAllMocks());
 
 describe('TableBody', () => {
     it('renders without crashing', () => {

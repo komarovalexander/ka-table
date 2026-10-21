@@ -58,7 +58,7 @@ const InsertRowDemo = () => {
                                         };
                                         table.insertRow(newRow, { rowKeyValue: props.rowKeyValue })
                                     }}>
-                    Insert Row Before
+                                        Insert Row Before
                                     </button>
                                 );
                             }
@@ -72,7 +72,7 @@ const InsertRowDemo = () => {
                                         };
                                         table.insertRow(newRow, { rowKeyValue: props.rowKeyValue, insertRowPosition: InsertRowPosition.after })
                                     }}>
-                    Insert Row After
+                                        Insert Row After
                                     </button>
                                 );
                             }

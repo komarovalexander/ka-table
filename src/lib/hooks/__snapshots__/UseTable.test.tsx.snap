@@ -1,42 +1,42 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UseTable customReducer 1`] = `
-Array [
-  Object {
-    "columns": Array [
-      Object {
+exports[`UseTable > customReducer 1`] = `
+[
+  {
+    "columns": [
+      {
         "key": "id",
       },
     ],
-    "data": Array [],
+    "data": [],
     "rowKeyField": "id",
   },
-  Object {
+  {
     "type": "CUSTOM_ACTION",
   },
-  Object {
-    "columns": Array [
-      Object {
+  {
+    "columns": [
+      {
         "key": "id",
       },
     ],
-    "data": Array [],
+    "data": [],
     "rowKeyField": "id",
   },
 ]
 `;
 
-exports[`UseTable customReducer 2`] = `
-Object {
+exports[`UseTable > customReducer 2`] = `
+{
   "type": "return",
-  "value": Object {
-    "columns": Array [
-      Object {
+  "value": {
+    "columns": [
+      {
         "key": "id",
       },
     ],
-    "data": Array [
-      Object {
+    "data": [
+      {
         "id": 2,
       },
     ],

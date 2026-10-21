@@ -22,7 +22,7 @@ it('renders without crashing', () => {
 });
 
 it('onClick should dispath UpdatePageIndex on click', () => {
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     const { container } = render(
         <PagingIndex {...props} pageIndex={2} dispatch={dispatch} />
     );

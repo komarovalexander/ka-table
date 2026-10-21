@@ -5,11 +5,11 @@ import { act, render, renderHook } from '@testing-library/react';
 import { getTable, useTable } from './UseTable';
 import { selectRow } from '../actionCreators';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe('UseTable', () => {
     it('customReducer', () => {
-        const customReducer = jest.fn().mockImplementation((state, action) => {
+        const customReducer = vi.fn().mockImplementation((state, action) => {
             if (action.type === 'CUSTOM_ACTION'){
                 return {...state, data: [{id : 2}]}
             }
@@ -23,7 +23,7 @@ describe('UseTable', () => {
         act(() => {
             table.dispatch({ type: 'CUSTOM_ACTION' });
         });
-        jest.runAllTimers();
+        vi.runAllTimers();
         expect(customReducer).toHaveBeenCalledTimes(2);
         expect(customReducer.mock.calls[1]).toMatchSnapshot();
         expect(customReducer.mock.results[1]).toMatchSnapshot();
@@ -35,9 +35,9 @@ describe('UseTable', () => {
         expect(result.current).toBe(table);
     });
     it('uses the latest callbacks', () => {
-        const onDispatch1 = jest.fn();
-        const onDispatch2 = jest.fn();
-        const customReducer = jest.fn();
+        const onDispatch1 = vi.fn();
+        const onDispatch2 = vi.fn();
+        const customReducer = vi.fn();
         const { result, rerender } = renderHook(({ onDispatch }) => useTable({ onDispatch, customReducer }), {
             initialProps: { onDispatch: onDispatch1 },
         });
@@ -47,7 +47,7 @@ describe('UseTable', () => {
     });
     it('methods can be called without the table object', () => {
         const { result } = renderHook(() => useTable());
-        const dispatch = jest.fn();
+        const dispatch = vi.fn();
         result.current.dispatch = dispatch;
         const { selectRow: selectRowMethod } = result.current;
         selectRowMethod(1);
@@ -55,7 +55,7 @@ describe('UseTable', () => {
     });
     it('getTable creates a table outside of components', () => {
         const table = getTable();
-        const dispatch = jest.fn();
+        const dispatch = vi.fn();
         table.dispatch = dispatch;
         table.selectRow(1);
         expect(dispatch).toHaveBeenCalledWith(selectRow(1));

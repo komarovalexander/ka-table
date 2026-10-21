@@ -25,8 +25,8 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
             const itemHeight = firstRowRef.current.offsetHeight || 40;
             const rootElement: any = firstRowRef.current.closest(`.${defaultOptions.css.root}`);
             const tbodyHeight =
-          (rootElement && rootElement.offsetHeight)
-          || 600;
+                (rootElement && rootElement.offsetHeight)
+                || 600;
             const newVirtualScrolling = {
                 itemHeight,
                 tbodyHeight,

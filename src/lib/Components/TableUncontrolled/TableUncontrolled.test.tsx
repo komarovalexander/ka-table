@@ -8,7 +8,7 @@ import { createRoot } from 'react-dom/client';
 import { useTable } from '../../hooks/UseTable';
 import { useTableInstance } from '../../hooks/UseTableInstance';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 const props: any = {
     columns: [
@@ -19,7 +19,7 @@ const props: any = {
         { column: 1, column2: 2, id: 1 },
         { column: 12, column2: 22, id: 2 },
     ],
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     rowKeyField: 'id',
 };
 
@@ -34,7 +34,7 @@ it('renders without crashing', () => {
     });
 });
 
-const tableDispatchMock = jest.fn();
+const tableDispatchMock = vi.fn();
 const TableControlledWrapper = (wrapperProps: any) => {
     const table = useTable(({ onDispatch: tableDispatchMock }));
     return <TableUncontrolled table={table} {...wrapperProps} />
@@ -47,7 +47,7 @@ it('renders with table', () => {
     act(() => {
         root.render(<TableControlledWrapper {...props} childComponents={{}}/>);
     });
-    jest.runAllTimers();
+    vi.runAllTimers();
     expect(tableDispatchMock.mock.calls).toHaveLength(1);
     expect(tableDispatchMock.mock.calls[0][1]).not.toHaveProperty('childComponents');
 
@@ -100,7 +100,7 @@ describe('controlled props', () => {
 });
 
 it('calls onDispatch once per action in StrictMode', () => {
-    const onDispatch = jest.fn();
+    const onDispatch = vi.fn();
     let table: ITableInstance;
     const TableWithOnDispatch = () => {
         table = useTable({ onDispatch });
@@ -108,7 +108,7 @@ it('calls onDispatch once per action in StrictMode', () => {
     };
     render(<React.StrictMode><TableWithOnDispatch /></React.StrictMode>);
     act(() => table.selectRow(1));
-    jest.runAllTimers();
+    vi.runAllTimers();
     expect(onDispatch.mock.calls.filter(([action]) => action.type === ActionType.SelectRow)).toHaveLength(1);
 });
 

@@ -44,7 +44,7 @@ const PagingPages: React.FunctionComponent<IPagingProps> = (props) => {
               )
                     }
                     {
-                        centerPages.map((value, index) => {
+                        centerPages.map((value) => {
                             return (
                                 <PagingIndex {...props} pageIndex={value} isActive={pageIndex === value} key={value} text={value + 1}/>
                             );

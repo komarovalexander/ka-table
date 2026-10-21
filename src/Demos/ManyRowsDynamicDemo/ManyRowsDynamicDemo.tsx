@@ -31,9 +31,9 @@ const useDynamicRowsOptions = () => {
     };
     const totalHeight = Object.keys(renderedRowSizes).reduce((sum, key) => sum + parseFloat(renderedRowSizes[key] || 0), 0);
     estimatedItemSize =
-    estimatedItemSize === 40 && Object.keys(renderedRowSizes).length
-        ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length)
-        : estimatedItemSize;
+        estimatedItemSize === 40 && Object.keys(renderedRowSizes).length
+            ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length)
+            : estimatedItemSize;
     return {
         addRowHeight,
         itemHeight: (rowKeyField: string) => (rowData: any) => renderedRowSizes[rowData[rowKeyField]] || estimatedItemSize,
@@ -43,7 +43,7 @@ const useDynamicRowsOptions = () => {
 const ManyRowsDynamicDemo = () => {
     const { itemHeight, addRowHeight } = useDynamicRowsOptions();
     const table = useTable({
-        customReducer: (nextState, action, prevState) => {
+        customReducer: (nextState) => {
             if (nextState.virtualScrolling) nextState.virtualScrolling.itemHeight = itemHeight('id');
             return nextState;
         }

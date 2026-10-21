@@ -81,7 +81,7 @@ describe('CellUtils', () => {
     });
     describe('getCellEditorDispatchHandler', () => {
         it('transform UpdateEditorValue to UpdateCellValue', () => {
-            const dispatch = jest.fn();
+            const dispatch = vi.fn();
             const dispatchHandler = getCellEditorDispatchHandler(dispatch);
             dispatchHandler(updateEditorValue(1, 'column', 2));
             expect(dispatch).toHaveBeenCalledWith({
@@ -93,7 +93,7 @@ describe('CellUtils', () => {
         });
 
         it('pass action to dispatch', () => {
-            const dispatch = jest.fn();
+            const dispatch = vi.fn();
             const dispathcHandler = getCellEditorDispatchHandler(dispatch);
             const action = closeEditor(1, 'column');
             dispathcHandler(action);
@@ -135,7 +135,7 @@ describe('CellUtils', () => {
 });
 
 it('should dispatch the action', () => {
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     const popupPosition: PopupPosition = {
         x: 0,
         y: 0
@@ -159,13 +159,13 @@ describe('checkPopupPosition', () => {
     };
 
     it('dispatches the popup position', () => {
-        const dispatch = jest.fn();
+        const dispatch = vi.fn();
         checkPopupPosition({ key: 'name', isHeaderFilterPopupShown: true }, { current: createHeadCellContent() }, dispatch);
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenCalledWith(updatePopupPosition({ x: 0, y: 0 }));
     });
     it('does not dispatch if the position is not changed', () => {
-        const dispatch = jest.fn();
+        const dispatch = vi.fn();
         checkPopupPosition({
             headerFilterPopupPosition: { x: 0, y: 0 },
             isHeaderFilterPopupShown: true,
@@ -174,7 +174,7 @@ describe('checkPopupPosition', () => {
         expect(dispatch).not.toHaveBeenCalled();
     });
     it('does not dispatch if the popup is not shown', () => {
-        const dispatch = jest.fn();
+        const dispatch = vi.fn();
         checkPopupPosition({ key: 'name' }, { current: createHeadCellContent() }, dispatch);
         expect(dispatch).not.toHaveBeenCalled();
     });

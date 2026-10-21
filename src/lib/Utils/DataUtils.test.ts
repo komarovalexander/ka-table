@@ -111,7 +111,7 @@ describe('DataUtils', () => {
             expect(getValueByField(undefined, 'b.c')).toBeUndefined();
         });
         it('does not read other fields of the row', () => {
-            const otherFieldGetter = jest.fn();
+            const otherFieldGetter = vi.fn();
             const data = {
                 b: 1,
                 get c() {

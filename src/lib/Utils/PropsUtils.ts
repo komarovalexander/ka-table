@@ -35,7 +35,7 @@ export function mergeProps<T = HTMLElement>(
     dispatch: DispatchFunc): React.AllHTMLAttributes<T> {
     const customPropsWithEvents: any = {};
     for (const prop in childCustomAttributes) {
-        if (childCustomAttributes.hasOwnProperty(prop)) {
+        if (Object.prototype.hasOwnProperty.call(childCustomAttributes, prop)) {
             const propName = prop as string;
             const propValue: any = (childCustomAttributes as any)[propName];
             const baseFunc = (childElementAttributes as any)[propName] || emptyFunc;
@@ -94,8 +94,7 @@ const getDataWithoutPaging =  (props: ITableProps) => {
     const {
         data = [],
     } = props;
-    let resultData = [...data];
-    resultData = filterAndSearchData(props);
+    let resultData = filterAndSearchData(props);
     if (!isRemoteSorting(sortingMode)) {
         resultData = sortData(columns, resultData, sort);
     }

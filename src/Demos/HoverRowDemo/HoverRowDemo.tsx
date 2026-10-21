@@ -5,10 +5,6 @@ import React, { useState } from 'react';
 
 import dataArray from './data';
 
-const ROW_MOUSE_ENTER = 'ROW_MOUSE_ENTER';
-const ROW_MOUSE_LEAVE = 'ROW_MOUSE_LEAVE';
-
-
 const HoverRowDemo = () => {
     const [hoveredItem, setHoveredItem] = useState<typeof dataArray[number]>();
     return (
@@ -60,7 +56,7 @@ const HoverRowDemo = () => {
             />
             { hoveredItem && (
                 <div className='info'>
-          Hovered: {hoveredItem.name} ({hoveredItem.company.name})
+                    Hovered: {hoveredItem.name} ({hoveredItem.company.name})
                 </div>
             )}
         </div>

@@ -53,7 +53,7 @@ export const getRowsWithGroupedColumns = (columns: Column[], groupedColumns: Gro
     });
     rows.forEach((row, index) => {
         row.forEach((c: GroupedColumnResult) => {
-            c.rowSpan = index === c.columnChainLength - 1 ? rows.length - c.columnChainLength + 1 : 1 ;
+            c.rowSpan = index === c.columnChainLength - 1 ? rows.length - c.columnChainLength + 1 : 1;
         });
     });
     return rows;

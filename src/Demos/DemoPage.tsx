@@ -28,7 +28,7 @@ const getDemoPage = (demo: Demo) => {
                                 onMouseDown={() => { trackEvent('click', 'ts_example', demo.path); }}
                                 rel='noopener noreferrer'
                                 target='_blank'>
-                  Open in Online Editor
+                                Open in Online Editor
                             </a>
                         </div>
                         <DemoText demoFileName={demo.fileName}/>

@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`FilterUtils filterData IsEmpty for date 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > filterData > IsEmpty for date 1`] = `
+[
+  {
     "date": null,
     "id": 5,
     "name": "Marshall Bruce",
@@ -12,37 +12,37 @@ Array [
 ]
 `;
 
-exports[`FilterUtils filterData IsNotEmpty for date 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > filterData > IsNotEmpty for date 1`] = `
+[
+  {
     "date": 2021-12-20T09:00:00.000Z,
     "id": 1,
     "name": "Mike Wazowski",
     "passed": true,
     "score": 80,
   },
-  Object {
+  {
     "date": 2021-12-20T13:00:00.000Z,
     "id": 2,
     "name": "Billi Bob",
     "passed": false,
     "score": 55,
   },
-  Object {
+  {
     "date": 2021-11-20T13:00:00.000Z,
     "id": 3,
     "name": "Tom Williams",
     "passed": false,
     "score": 45,
   },
-  Object {
+  {
     "date": 2021-12-19T13:00:00.000Z,
     "id": 4,
     "name": "Kurt Cobain",
     "passed": true,
     "score": 75,
   },
-  Object {
+  {
     "date": 2021-12-17T13:00:00.000Z,
     "id": 6,
     "name": "Sunny Fox",
@@ -52,16 +52,16 @@ Array [
 ]
 `;
 
-exports[`FilterUtils filterData by date 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > filterData > by date 1`] = `
+[
+  {
     "date": 2021-12-20T09:00:00.000Z,
     "id": 1,
     "name": "Mike Wazowski",
     "passed": true,
     "score": 80,
   },
-  Object {
+  {
     "date": 2021-12-20T13:00:00.000Z,
     "id": 2,
     "name": "Billi Bob",
@@ -71,9 +71,9 @@ Array [
 ]
 `;
 
-exports[`FilterUtils filterData custom column filter 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > filterData > custom column filter 1`] = `
+[
+  {
     "date": 2021-11-20T13:00:00.000Z,
     "id": 3,
     "name": "Tom Williams",
@@ -83,37 +83,37 @@ Array [
 ]
 `;
 
-exports[`FilterUtils filterData custom filter 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > filterData > custom filter 1`] = `
+[
+  {
     "date": 2021-12-20T09:00:00.000Z,
     "id": 1,
     "name": "Mike Wazowski",
     "passed": true,
     "score": 80,
   },
-  Object {
+  {
     "date": 2021-12-20T13:00:00.000Z,
     "id": 2,
     "name": "Billi Bob",
     "passed": false,
     "score": 55,
   },
-  Object {
+  {
     "date": 2021-12-19T13:00:00.000Z,
     "id": 4,
     "name": "Kurt Cobain",
     "passed": true,
     "score": 75,
   },
-  Object {
+  {
     "date": null,
     "id": 5,
     "name": "Marshall Bruce",
     "passed": true,
     "score": 77,
   },
-  Object {
+  {
     "date": 2021-12-17T13:00:00.000Z,
     "id": 6,
     "name": "Sunny Fox",
@@ -123,9 +123,9 @@ Array [
 ]
 `;
 
-exports[`FilterUtils filterData custom filter: column with data type = "date" should not change filterRowValue 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > filterData > custom filter: column with data type = "date" should not change filterRowValue 1`] = `
+[
+  {
     "date": 2021-12-20T09:00:00.000Z,
     "id": 1,
     "name": "Mike Wazowski",
@@ -135,9 +135,9 @@ Array [
 ]
 `;
 
-exports[`FilterUtils filterData one item 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > filterData > one item 1`] = `
+[
+  {
     "date": 2021-12-20T13:00:00.000Z,
     "id": 2,
     "name": "Billi Bob",
@@ -147,32 +147,32 @@ Array [
 ]
 `;
 
-exports[`FilterUtils filterData two item 1`] = `Array []`;
+exports[`FilterUtils > filterData > two item 1`] = `[]`;
 
-exports[`FilterUtils getRowEditableCells should return required cells from table EditableCells 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > getRowEditableCells should return required cells from table EditableCells 1`] = `
+[
+  {
     "columnKey": "10",
     "rowKeyValue": 10,
   },
 ]
 `;
 
-exports[`FilterUtils searchData by boolean 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > searchData > by boolean 1`] = `
+[
+  {
     "id": 1,
     "name": "Mike Wazowski",
     "passed": true,
     "score": 80,
   },
-  Object {
+  {
     "id": 4,
     "name": "Kurt Cobain",
     "passed": true,
     "score": 75,
   },
-  Object {
+  {
     "id": 5,
     "name": "Marshall Bruce",
     "passed": true,
@@ -181,9 +181,9 @@ Array [
 ]
 `;
 
-exports[`FilterUtils searchData by string 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > searchData > by string 1`] = `
+[
+  {
     "id": 1,
     "name": "Mike Wazowski",
     "passed": true,
@@ -192,27 +192,27 @@ Array [
 ]
 `;
 
-exports[`FilterUtils searchData should add item only once 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > searchData > should add item only once 1`] = `
+[
+  {
     "id": 2,
     "name": "Billi Bob",
     "passed": false,
     "score": 55,
   },
-  Object {
+  {
     "id": 3,
     "name": "Tom Williams",
     "passed": false,
     "score": 45,
   },
-  Object {
+  {
     "id": 6,
     "name": "Sunny Fox",
     "passed": false,
     "score": 33,
   },
-  Object {
+  {
     "id": 7,
     "name": "Falsey False",
     "passed": false,
@@ -221,21 +221,21 @@ Array [
 ]
 `;
 
-exports[`FilterUtils searchData should find value by search handler 1`] = `
-Array [
-  Object {
+exports[`FilterUtils > searchData > should find value by search handler 1`] = `
+[
+  {
     "id": 1,
     "name": "Mike Wazowski",
     "passed": true,
     "score": 80,
   },
-  Object {
+  {
     "id": 4,
     "name": "Kurt Cobain",
     "passed": true,
     "score": 75,
   },
-  Object {
+  {
     "id": 5,
     "name": "Marshall Bruce",
     "passed": true,
@@ -244,4 +244,4 @@ Array [
 ]
 `;
 
-exports[`FilterUtils searchData should not find value by search handler 1`] = `Array []`;
+exports[`FilterUtils > searchData > should not find value by search handler 1`] = `[]`;

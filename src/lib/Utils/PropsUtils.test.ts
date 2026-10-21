@@ -47,7 +47,7 @@ describe('PropsUtils', () => {
         } as any;
 
         const childCustomAttributes: ChildAttributesItem<any> = {
-            onClick: jest.fn(),
+            onClick: vi.fn(),
         };
         const props = mergeProps(
             childElementAttributes,
@@ -180,8 +180,8 @@ describe('getData', () => {
 describe('getDraggableProps', () => {
     const key = 1;
     const actionType = 'test_action';
-    const dispatch = jest.fn();
-    const actionCreator = jest.fn();
+    const dispatch = vi.fn();
+    const actionCreator = vi.fn();
     const draggedClass = 'draggedClassTest';
     const dragOverClass = 'dragOverClassTest';
     let event: any;
@@ -191,18 +191,18 @@ describe('getDraggableProps', () => {
         actionCreator.mockReturnValue({ type: actionType });
         event = {
             dataTransfer: {
-                setData: jest.fn(),
-                getData: jest.fn().mockReturnValue(2),
+                setData: vi.fn(),
+                getData: vi.fn().mockReturnValue(2),
                 effectAllowed: '',
             },
             currentTarget: {
                 classList: {
-                    add: jest.fn(),
-                    contains: jest.fn(),
-                    remove: jest.fn(),
+                    add: vi.fn(),
+                    contains: vi.fn(),
+                    remove: vi.fn(),
                 },
             },
-            preventDefault: jest.fn(),
+            preventDefault: vi.fn(),
         };
     });
     it('should be draggable', () => {
@@ -322,8 +322,8 @@ describe('getDraggableProps', () => {
 
 describe('groupPanelOnDrop', () => {
     it('default', () => {
-        const dispatch = jest.fn();
-        const getEventData = jest.fn().mockReturnValue('"someColumnKey"');
+        const dispatch = vi.fn();
+        const getEventData = vi.fn().mockReturnValue('"someColumnKey"');
         groupPanelOnDrop({ dataTransfer: { getData: getEventData }} as any, dispatch);
         expect(getEventData).toHaveBeenCalledWith('ka-draggableKeyValue');
         expect(dispatch).toHaveBeenCalledWith({
@@ -332,8 +332,8 @@ describe('groupPanelOnDrop', () => {
         });
     });
     it('shouldNot execute dispatch', () => {
-        const dispatch = jest.fn();
-        const getEventData = jest.fn().mockReturnValue('');
+        const dispatch = vi.fn();
+        const getEventData = vi.fn().mockReturnValue('');
         groupPanelOnDrop({ dataTransfer: { getData: getEventData }} as any, dispatch);
         expect(getEventData).toHaveBeenCalledWith('ka-draggableKeyValue');
         expect(dispatch).toHaveBeenCalledTimes(0);

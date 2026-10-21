@@ -12,7 +12,7 @@ const props: IHeadCellProps = {
     column: {
         key: 'fieldTest',
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     sortingMode: SortingMode.Single,
 };
 

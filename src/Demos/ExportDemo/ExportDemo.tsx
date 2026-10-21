@@ -34,7 +34,7 @@ const ExportDemo = () => {
                     filename='ka-table.data.csv'
                     enclosingCharacter={''}
                     separator={';'}>
-          Download .csv
+                    Download .csv
                 </CSVLink>
             </div>
             <Table

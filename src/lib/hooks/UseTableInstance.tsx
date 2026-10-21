@@ -5,7 +5,6 @@ import { useContext } from 'react';
 export const useTableInstance = (): ITableInstance => {
     const context = useContext(TableInstanceContext);
     if (!context?.changeProps) {
-    // eslint-disable-next-line
         console.warn(
             'useTableInstance warning: ka-table is not initialized, instanse is empty because: table is not rendered yet OR controlled mode is used'
         );

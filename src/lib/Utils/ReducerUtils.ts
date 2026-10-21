@@ -15,12 +15,12 @@ export const getValidatedEditableCells = ({
     columns: Column[],
     rowKeyField: string,
     validation?: ValidationFunc
-}) : EditableCell[] => {
+}): EditableCell[] => {
     return editableCells.map(cell => {
         const column = columns.find((c) => c.key === cell.columnKey)!;
         const updatedRowData = data?.find((d) => getValueByField(d, rowKeyField) === cell.rowKeyValue);
         let value = cell.editorValue;
-        if (!cell.hasOwnProperty('editorValue')) {
+        if (!Object.prototype.hasOwnProperty.call(cell, 'editorValue')) {
             value = column ? getValueByColumn(updatedRowData, column) : getValueByField(updatedRowData, cell.columnKey);
         }
         return {
