@@ -226,6 +226,28 @@ describe('kaReducer', () => {
             const result: ITableProps = kaReducer(state, saveRowEditors(5));
             expect(result).toBe(state);
         });
+        it('validates the row with all its edited values', () => {
+            const state: ITableProps = {
+                columns: [{ key: 'start' }, { key: 'end' }],
+                data: [{ id: 1, start: 5, end: 10 }],
+                editableCells: [
+                    { rowKeyValue: 1, columnKey: 'start', editorValue: 20 },
+                    { rowKeyValue: 1, columnKey: 'end', editorValue: 25 },
+                ],
+                rowKeyField: 'id',
+                validation: ({ column, value, rowData }) => (column.key === 'start' && value > rowData.end ? 'start > end' : undefined),
+            };
+            expect(kaReducer(state, saveRowEditors(1, { validate: true })).data).toEqual([{ id: 1, start: 20, end: 25 }]);
+            const invalid: ITableProps = kaReducer({
+                ...state,
+                editableCells: [{ rowKeyValue: 1, columnKey: 'start', editorValue: 30 }, { rowKeyValue: 1, columnKey: 'end', editorValue: 25 }],
+            }, saveRowEditors(1, { validate: true }));
+            expect(invalid.data).toEqual(state.data);
+            expect(invalid.editableCells).toEqual([
+                { rowKeyValue: 1, columnKey: 'start', editorValue: 30, validationMessage: 'start > end' },
+                { rowKeyValue: 1, columnKey: 'end', editorValue: 25, validationMessage: undefined },
+            ]);
+        });
     });
     describe('SaveNewRow', () => {
         it('sets a nested rowKeyField of the new row', () => {
@@ -237,6 +259,26 @@ describe('kaReducer', () => {
             }, saveNewRow(2));
             expect(result.data).toEqual([{ meta: { id: 2 }, name: 'b' }, { meta: { id: 1 }, name: 'a' }]);
             expect(result.editableCells).toEqual([]);
+        });
+        it('validates the new row with its edited values', () => {
+            const state: ITableProps = {
+                columns: [{ key: 'start' }, { key: 'end' }],
+                data: [],
+                editableCells: [
+                    { rowKeyValue: newRowId, columnKey: 'start', editorValue: 1 },
+                    { rowKeyValue: newRowId, columnKey: 'end', editorValue: 2 },
+                ],
+                rowKeyField: 'id',
+                // rowData is the new row: it is not in the data yet
+                validation: ({ column, value, rowData }) => (column.key === 'start' && value > rowData.end ? 'start > end' : undefined),
+            };
+            expect(kaReducer(state, saveNewRow(5, { validate: true })).data).toEqual([{ id: 5, start: 1, end: 2 }]);
+            const invalid: ITableProps = kaReducer({
+                ...state,
+                editableCells: [{ rowKeyValue: newRowId, columnKey: 'start', editorValue: 3 }, { rowKeyValue: newRowId, columnKey: 'end', editorValue: 2 }],
+            }, saveNewRow(5, { validate: true }));
+            expect(invalid.data).toEqual([]);
+            expect(invalid.editableCells![0].validationMessage).toBe('start > end');
         });
         it('does nothing if the new row is not shown', () => {
             const intialState: ITableProps = {
@@ -670,6 +712,18 @@ describe('kaReducer', () => {
         });
     });
     describe('Validate', () => {
+        it('validation gets the row with the values of all its editors', () => {
+            const validation = vi.fn();
+            kaReducer({
+                columns: [{ key: 'start' }, { key: 'end' }],
+                data: [{ id: 1, start: 5, end: 10 }],
+                editableCells: [{ rowKeyValue: 1, columnKey: 'start', editorValue: 20 }, { rowKeyValue: 1, columnKey: 'end' }],
+                rowKeyField: 'id',
+                validation,
+            }, validate());
+            expect(validation).toHaveBeenCalledWith({ column: { key: 'start' }, rowData: { id: 1, start: 20, end: 10 }, value: 20 });
+            expect(validation).toHaveBeenCalledWith({ column: { key: 'end' }, rowData: { id: 1, start: 20, end: 10 }, value: 10 });
+        });
         it('validates values', () => {
             const intialState: ITableProps = {
                 columns: [{

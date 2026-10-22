@@ -42,7 +42,6 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         treeGroupsExpanded,
         rowKeyField,
         selectedRows = [],
-        validation,
         sortingMode = SortingMode.None,
         virtualScrolling,
     } = props;
@@ -427,19 +426,10 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
             return props;
         }
         if (action.validate && !isValid({ ...props, editableCells: rowEditableCells })) {
+            const validatedRowEditableCells = getValidatedEditableCells({ ...props, editableCells: rowEditableCells });
             const validatedEditableCells = editableCells.map(cell => {
-                if (!rowEditableCells.includes(cell)) {
-                    return cell;
-                }
-                const column = columns.find((c) => c.key === cell.columnKey)!;
-                return {
-                    ...cell,
-                    validationMessage: validation && validation({
-                        column,
-                        value: cell.editorValue,
-                        rowData: updatedRowData
-                    })
-                };
+                const index = rowEditableCells.indexOf(cell);
+                return index === -1 ? cell : validatedRowEditableCells[index];
             });
             return { ...props, editableCells: validatedEditableCells };
         }
