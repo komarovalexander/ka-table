@@ -17,6 +17,8 @@ type ElementAttributes = React.AllHTMLAttributes<HTMLElement>;
 
 export type ChildAttributesItem<T> = WithExtraParameters<ElementAttributes, T> & { ref?: any };
 export type DispatchFunc = (action: any) => void;
+// the kinds of the items dragged by a table: a row is dropped only on the rows, a column on the columns and on the group panel
+export type DraggableKind = 'row' | 'column';
 export type CustomReducerFunc = (nextState: ITableProps, action: any, prevState: ITableProps) => ITableProps;
 export type OnDispatchFunc = (action: any, tableProps: ITableProps, prevState: ITableProps) => void;
 export type ControlledPropsKeys = (keyof ITableProps)[];

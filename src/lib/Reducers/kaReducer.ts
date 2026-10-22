@@ -165,8 +165,11 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, groups: newGroups?.length ? newGroups : undefined }
     }
     case ActionType.GroupColumn: {
-        const newGroups = [...props?.groups || [], { columnKey: action.columnKey }];
-        return { ...props, groups: newGroups?.length ? newGroups : undefined }
+        // a column which is not in the table or is grouped already is not grouped
+        if (!columns?.some((c) => c.key === action.columnKey) || props.groups?.some((g) => g.columnKey === action.columnKey)) {
+            return props;
+        }
+        return { ...props, groups: [...props.groups || [], { columnKey: action.columnKey }] };
     }
     case ActionType.ResizeColumn: {
         const { columnKey, width } = action;

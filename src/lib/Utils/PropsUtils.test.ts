@@ -22,7 +22,7 @@ import {
 
 import { AllHTMLAttributes } from 'react';
 import { ChildAttributesItem } from '../types';
-import { Column } from '../models';
+import { AttributeTableData, Column } from '../models';
 import { ICellProps } from '../props';
 import { ITableProps } from '../';
 import { isPagingShown } from './PagingUtils';
@@ -178,85 +178,91 @@ describe('getData', () => {
 });
 
 describe('getDraggableProps', () => {
+    type DraggableOptions = Parameters<typeof getDraggableProps>[0];
+    type DragHandlerName = 'onDragStart' | 'onDragEnd' | 'onDragEnter' | 'onDragLeave' | 'onDragOver' | 'onDrop';
     const key = 1;
     const actionType = 'test_action';
     const dispatch = vi.fn();
     const actionCreator = vi.fn();
     const draggedClass = 'draggedClassTest';
     const dragOverClass = 'dragOverClassTest';
-    let event: any;
+    const table = {};
+    const extendedEvent = new AttributeTableData<unknown>();
+    // the data of the drag is kept between the events, as in a browser
+    const createDataTransfer = () => {
+        const data: Record<string, string> = {};
+        return {
+            effectAllowed: '',
+            setData: vi.fn((type: string, value: string) => { data[type.toLowerCase()] = value; }),
+            getData: (type: string) => data[type.toLowerCase()] || '',
+            get types() { return Object.keys(data); },
+        };
+    };
+    let dataTransfer = createDataTransfer();
+    // the fields of an event of an element of the table which are used by the handlers
+    const createEvent = (tableElement: object = table) => ({
+        dataTransfer,
+        currentTarget: {
+            classList: {
+                add: vi.fn(),
+                contains: vi.fn(),
+                remove: vi.fn(),
+            },
+            closest: () => tableElement,
+        },
+        preventDefault: vi.fn(),
+    });
+    let event = createEvent();
+    const getProps = (options: Partial<DraggableOptions> = {}) => getDraggableProps({
+        key,
+        dispatch,
+        actionCreator,
+        draggedClass,
+        dragOverClass,
+        hasReordering: true,
+        kind: 'row',
+        ...options,
+    });
+    const toDragEvent = (eventMock: ReturnType<typeof createEvent>) => eventMock as unknown as React.DragEvent<HTMLElement>;
+    // calls the handler of the item with the event
+    const fire = (props: ReturnType<typeof getDraggableProps>, name: DragHandlerName, eventMock = event) => {
+        props[name]?.(toDragEvent(eventMock), extendedEvent);
+    };
+    // the item with the key 2 is dragged
+    const startDrag = (options: Partial<DraggableOptions> = {}, tableElement: object = table) => {
+        fire(getProps({ key: 2, ...options }), 'onDragStart', createEvent(tableElement));
+    };
     beforeEach(() => {
         dispatch.mockClear();
         actionCreator.mockClear();
         actionCreator.mockReturnValue({ type: actionType });
-        event = {
-            dataTransfer: {
-                setData: vi.fn(),
-                getData: vi.fn().mockReturnValue(2),
-                effectAllowed: '',
-            },
-            currentTarget: {
-                classList: {
-                    add: vi.fn(),
-                    contains: vi.fn(),
-                    remove: vi.fn(),
-                },
-            },
-            preventDefault: vi.fn(),
-        };
+        dataTransfer = createDataTransfer();
+        event = createEvent();
+    });
+    afterEach(() => {
+        fire(getProps(), 'onDragEnd', createEvent());
     });
     it('should be draggable', () => {
-        const result = getDraggableProps({
-            key,
-            dispatch,
-            actionCreator,
-            draggedClass,
-            dragOverClass,
-            hasReordering: true
-        });
-        expect(result.draggable).toBeTruthy();
+        expect(getProps().draggable).toBeTruthy();
     });
     it('onDragStart', () => {
-        const result = getDraggableProps({
-            key,
-            dispatch,
-            actionCreator,
-            draggedClass,
-            dragOverClass,
-            hasReordering: true
-        });
-        result.onDragStart!(event, {} as any);
-        expect(event.dataTransfer.setData).toHaveBeenCalledWith(
+        fire(getProps(), 'onDragStart');
+        expect(dataTransfer.setData).toHaveBeenCalledWith(
             'ka-draggableKeyValue',
             '1'
         );
         expect(event.currentTarget.classList.add).toHaveBeenCalledWith(draggedClass);
-        expect(event.dataTransfer.effectAllowed).toEqual('move');
+        expect(dataTransfer.effectAllowed).toEqual('move');
     });
     it('onDragEnd', () => {
-        const result = getDraggableProps({
-            key,
-            dispatch,
-            actionCreator,
-            draggedClass,
-            dragOverClass,
-            hasReordering: true
-        });
-        result.onDragEnd!(event, {} as any);
+        fire(getProps(), 'onDragEnd');
         expect(event.currentTarget.classList.remove).toHaveBeenCalledWith(
             draggedClass
         );
     });
     it('onDrop', () => {
-        const result = getDraggableProps({
-            key,
-            dispatch,
-            actionCreator,
-            draggedClass,
-            dragOverClass,
-            hasReordering: true
-        });
-        result.onDrop!(event, {} as any);
+        startDrag();
+        fire(getProps(), 'onDrop');
         expect(event.currentTarget.classList.remove).toHaveBeenCalledWith(
             dragOverClass
         );
@@ -264,79 +270,95 @@ describe('getDraggableProps', () => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenCalledWith({ type: actionType });
     });
+    it('onDrop of an item of another kind or another table', () => {
+        startDrag({ kind: 'column' });
+        fire(getProps(), 'onDrop');
+        startDrag({}, {});
+        fire(getProps(), 'onDrop');
+        expect(dispatch).toHaveBeenCalledTimes(0);
+    });
+    it('onDrop of an item which is not dragged by a table', () => {
+        startDrag();
+        fire(getProps(), 'onDragEnd', createEvent());
+        fire(getProps(), 'onDrop');
+        // a file or a text is dragged after the item, its data doesn't contain the key
+        startDrag();
+        dataTransfer = createDataTransfer();
+        fire(getProps(), 'onDrop', createEvent());
+        expect(dispatch).toHaveBeenCalledTimes(0);
+    });
+    it('the items without a kind are dropped on the items without a kind', () => {
+        startDrag({ kind: undefined });
+        fire(getProps(), 'onDrop');
+        expect(dispatch).toHaveBeenCalledTimes(0);
+        fire(getProps({ kind: undefined }), 'onDrop');
+        expect(actionCreator).toHaveBeenCalledWith(2, 1);
+    });
     it('onDragEnter', () => {
-        const result = getDraggableProps({
-            key,
-            dispatch,
-            actionCreator,
-            draggedClass,
-            dragOverClass,
-            hasReordering: true
-        });
+        startDrag();
+        const result = getProps();
         event.currentTarget.classList.contains.mockReturnValue(true);
-        result.onDragEnter!(event, {} as any);
+        fire(result, 'onDragEnter');
         expect(event.currentTarget.classList.add).toHaveBeenCalledTimes(0);
         event.currentTarget.classList.contains.mockReturnValue(false);
-        result.onDragEnter!(event, {} as any);
+        fire(result, 'onDragEnter');
         expect(event.currentTarget.classList.add).toHaveBeenCalledTimes(1);
         expect(event.currentTarget.classList.add).toHaveBeenCalledWith(dragOverClass);
         expect(event.preventDefault).toHaveBeenCalledTimes(2);
     });
+    it('onDragEnter and onDragOver of an item of another kind', () => {
+        startDrag({ kind: 'column' });
+        const result = getProps();
+        fire(result, 'onDragEnter');
+        fire(result, 'onDragOver');
+        // the item can't be dropped here
+        expect(event.currentTarget.classList.add).toHaveBeenCalledTimes(0);
+        expect(event.preventDefault).toHaveBeenCalledTimes(0);
+    });
     it('onDragLeave', () => {
-        const result = getDraggableProps({
-            key,
-            dispatch,
-            actionCreator,
-            draggedClass,
-            dragOverClass,
-            hasReordering: true
-        });
-        result.onDragEnter!(event, {} as any);
-        result.onDragEnter!(event, {} as any);
-        result.onDragLeave!(event, {} as any);
+        startDrag();
+        const result = getProps();
+        fire(result, 'onDragEnter');
+        fire(result, 'onDragEnter');
+        fire(result, 'onDragLeave');
         expect(event.currentTarget.classList.remove).toHaveBeenCalledTimes(0);
-        result.onDragLeave!(event, {} as any);
+        fire(result, 'onDragLeave');
         expect(event.currentTarget.classList.remove).toHaveBeenCalledWith(
             dragOverClass
         );
     });
     it('onDragOver', () => {
-        const result = getDraggableProps({
-            key,
-            dispatch,
-            actionCreator,
-            draggedClass,
-            dragOverClass,
-            hasReordering: true
-        });
+        startDrag();
+        const result = getProps();
         event.currentTarget.classList.contains.mockReturnValue(true);
-        result.onDragOver!(event, {} as any);
+        fire(result, 'onDragOver');
         expect(event.currentTarget.classList.add).toHaveBeenCalledTimes(0);
         event.currentTarget.classList.contains.mockReturnValue(false);
-        result.onDragOver!(event, {} as any);
+        fire(result, 'onDragOver');
         expect(event.currentTarget.classList.add).toHaveBeenCalledTimes(1);
         expect(event.currentTarget.classList.add).toHaveBeenCalledWith(dragOverClass);
         expect(event.preventDefault).toHaveBeenCalledTimes(2);
     });
-});
 
-describe('groupPanelOnDrop', () => {
-    it('default', () => {
-        const dispatch = vi.fn();
-        const getEventData = vi.fn().mockReturnValue('"someColumnKey"');
-        groupPanelOnDrop({ dataTransfer: { getData: getEventData }} as any, dispatch);
-        expect(getEventData).toHaveBeenCalledWith('ka-draggableKeyValue');
-        expect(dispatch).toHaveBeenCalledWith({
-            columnKey: 'someColumnKey',
-            type: 'GroupColumn'
+    describe('groupPanelOnDrop', () => {
+        it('groups the dragged column', () => {
+            startDrag({ key: 'someColumnKey', kind: 'column' });
+            groupPanelOnDrop(toDragEvent(event), dispatch);
+            expect(dispatch).toHaveBeenCalledWith({
+                columnKey: 'someColumnKey',
+                type: 'GroupColumn'
+            });
         });
-    });
-    it('shouldNot execute dispatch', () => {
-        const dispatch = vi.fn();
-        const getEventData = vi.fn().mockReturnValue('');
-        groupPanelOnDrop({ dataTransfer: { getData: getEventData }} as any, dispatch);
-        expect(getEventData).toHaveBeenCalledWith('ka-draggableKeyValue');
-        expect(dispatch).toHaveBeenCalledTimes(0);
+        it('does not group a dragged row', () => {
+            startDrag();
+            groupPanelOnDrop(toDragEvent(event), dispatch);
+            expect(dispatch).toHaveBeenCalledTimes(0);
+        });
+        it('does not group a column of another table', () => {
+            startDrag({ key: 'someColumnKey', kind: 'column' }, {});
+            groupPanelOnDrop(toDragEvent(event), dispatch);
+            expect(dispatch).toHaveBeenCalledTimes(0);
+        });
     });
 });
 

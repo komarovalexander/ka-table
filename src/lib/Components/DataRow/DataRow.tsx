@@ -29,7 +29,8 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
             actionCreator: reorderRows,
             draggedClass: defaultOptions.css.draggedRow,
             dragOverClass: defaultOptions.css.dragOverRow,
-            hasReordering: true
+            hasReordering: true,
+            kind: 'row',
         });
         dataRow = addElementAttributes(reorderedRowProps, props, dataRow);
     }

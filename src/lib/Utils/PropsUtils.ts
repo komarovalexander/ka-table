@@ -1,4 +1,4 @@
-import { ChildAttributesItem, DispatchFunc } from '../types';
+import { ChildAttributesItem, DispatchFunc, DraggableKind } from '../types';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 
@@ -7,6 +7,7 @@ import { ChildComponent } from '../Models/ChildComponent';
 import { Column } from '../models';
 import { ITableProps } from '../';
 import { SortingMode } from '../enums';
+import defaultOptions from '../defaultOptions';
 import { filterAndSearchData } from './FilterUtils';
 import { getGroupedAndVisibleColumns, getGroupedData } from './GroupUtils';
 import { getTreeData } from './TreeUtils';
@@ -151,11 +152,40 @@ export const prepareTableOptions = (props: ITableProps) => {
     };
 };
 
+const draggableDataType = 'ka-draggableKeyValue';
+
+interface DraggedItem {
+    key: unknown;
+    kind?: DraggableKind;
+    table: Element | null;
+}
+// the item which is dragged now by a table: rows and columns of all the tables use the same type of the data
+let draggedItem: DraggedItem | undefined;
+
+const getTableElement = (element: Element): Element | null => element.closest?.(`.${defaultOptions.css.root}`) || null;
+
+// the dragged item if it is of the kind and from the table of the element
+const getDraggedItem = (event: React.DragEvent, kind?: DraggableKind): DraggedItem | undefined => (
+    draggedItem
+    && draggedItem.kind === kind
+    // the item dragged by a table, not a file or a text which is dragged after that
+    && Array.from(event.dataTransfer?.types || []).some((type) => type.toLowerCase() === draggableDataType.toLowerCase())
+    && draggedItem.table === getTableElement(event.currentTarget)
+        ? draggedItem
+        : undefined
+);
+
+/**
+ * Checks that the dragged item is of the kind (rows or columns) and from the table of the element,
+ * so a row dropped on a header cell or on the group panel, or an item of another table, changes nothing.
+ */
+export const isDraggedItemOfKind = (event: React.DragEvent, kind?: DraggableKind): boolean => !!getDraggedItem(event, kind);
+
 export const groupPanelOnDrop = (event: React.DragEvent, dispatch: DispatchFunc) => {
-    const draggableKeyValueData = event.dataTransfer?.getData('ka-draggableKeyValue');
-    if (draggableKeyValueData){
-        const draggableKeyValue = JSON.parse(draggableKeyValueData);
-        dispatch(groupColumn(draggableKeyValue));
+    const columnKey = getDraggedItem(event, 'column')?.key;
+    // the keys of the columns are strings
+    if (typeof columnKey === 'string') {
+        dispatch(groupColumn(columnKey));
     }
 };
 
@@ -165,18 +195,24 @@ export const getDraggableProps = ({
     actionCreator,
     draggedClass,
     dragOverClass,
-    hasReordering
+    hasReordering,
+    kind,
 }: {
     key: any,
     dispatch: DispatchFunc,
     actionCreator: (draggableKeyValue: any, targetKeyValue: any) => any,
     draggedClass: string,
     dragOverClass: string,
-    hasReordering: boolean
+    hasReordering: boolean,
+    // the items are dropped only on the items of the same kind, the items without a kind on the items without a kind
+    kind?: DraggableKind,
 }): ChildAttributesItem<any> => {
     let count: number = 0;
     const reorderingProps: ChildAttributesItem<any> = hasReordering ? {
         onDragEnter: (event) => {
+            if (!isDraggedItemOfKind(event, kind)) {
+                return;
+            }
             count++;
             if (!event.currentTarget.classList.contains(dragOverClass)) {
                 event.currentTarget.classList.add(dragOverClass);
@@ -184,12 +220,18 @@ export const getDraggableProps = ({
             event.preventDefault();
         },
         onDragLeave: (event) => {
+            if (!isDraggedItemOfKind(event, kind)) {
+                return;
+            }
             count--;
             if (count === 0) {
                 event.currentTarget.classList.remove(dragOverClass);
             }
         },
         onDragOver: (event) => {
+            if (!isDraggedItemOfKind(event, kind)) {
+                return;
+            }
             if (!event.currentTarget.classList.contains(dragOverClass)) {
                 event.currentTarget.classList.add(dragOverClass);
             }
@@ -200,19 +242,22 @@ export const getDraggableProps = ({
         draggable: true,
         onDragStart: (event) => {
             count = 0;
-            event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
+            draggedItem = { key, kind, table: getTableElement(event.currentTarget) };
+            event.dataTransfer.setData(draggableDataType, JSON.stringify(key));
             event.currentTarget.classList.add(draggedClass);
             event.dataTransfer.effectAllowed = 'move';
         },
         onDragEnd: (event) => {
             event.currentTarget.classList.remove(draggedClass);
+            draggedItem = undefined;
         },
         onDrop: (event) => {
+            // dragleave doesn't follow the drop
+            count = 0;
             event.currentTarget.classList.remove(dragOverClass);
-            const keyDataTransfer = event.dataTransfer.getData('ka-draggableKeyValue')
-            if (hasReordering && keyDataTransfer){
-                const draggableKeyValue = JSON.parse(keyDataTransfer);
-                dispatch(actionCreator(draggableKeyValue, key));
+            const item = getDraggedItem(event, kind);
+            if (hasReordering && item) {
+                dispatch(actionCreator(item.key, key));
             }
         },
         ...reorderingProps

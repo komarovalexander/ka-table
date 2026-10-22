@@ -37,7 +37,8 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
             actionCreator: reorderColumns,
             draggedClass: defaultOptions.css.draggedColumn,
             dragOverClass: defaultOptions.css.dragOverColumn,
-            hasReordering: !!columnReordering
+            hasReordering: !!columnReordering,
+            kind: 'column',
         });
         headCell = addElementAttributes(reorderedRowProps, props, headCell);
     }

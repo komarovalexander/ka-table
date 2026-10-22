@@ -67,15 +67,22 @@ export const replaceValue = (rowData: any, column: Column, newValue: any) => {
 };
 
 
+// the data is not changed when the moved item or the target item is not in it
 export const reorderDataByIndex = (data: any[], getKey: (d: any) => any, keyValue: any, targetIndex: number) => {
-    const moved = data.find(d => getKey(d) === keyValue);
+    const movedIndex = data.findIndex(d => getKey(d) === keyValue);
+    if (movedIndex === -1) {
+        return data;
+    }
     const newData = data.filter(d => getKey(d) !== keyValue);
-    newData.splice(targetIndex, 0, moved);
+    newData.splice(targetIndex, 0, data[movedIndex]);
     return newData;
 };
 
 export const insertBefore = (data: any[], getKey: (d: any) => any, keyValue: any, targetKeyValue: any) => {
     let targetIndex = data.findIndex(d => getKey(d) === targetKeyValue);
+    if (targetIndex === -1) {
+        return data;
+    }
     const moved = data.findIndex(d => getKey(d) === keyValue);
     if (moved < targetIndex){
         targetIndex = targetIndex - 1;
@@ -85,7 +92,7 @@ export const insertBefore = (data: any[], getKey: (d: any) => any, keyValue: any
 
 export const reorderData = (data: any[], getKey: (d: any) => any, keyValue: any, targetKeyValue: any) => {
     const targetIndex = data.findIndex(d => getKey(d) === targetKeyValue);
-    return reorderDataByIndex(data, getKey, keyValue, targetIndex);
+    return targetIndex === -1 ? data : reorderDataByIndex(data, getKey, keyValue, targetIndex);
 };
 
 export const checkIndexOdd = (index: number) => {

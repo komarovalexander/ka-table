@@ -4,6 +4,8 @@ import {
     getValueByColumn,
     getValueByField,
     insertBefore,
+    reorderData,
+    reorderDataByIndex,
     replaceValue,
 } from './DataUtils';
 
@@ -292,6 +294,21 @@ describe('DataUtils', () => {
         it('default', () => {
             expect(insertBefore([{key: 1}, {key: 2}, {key: 3}], (item) => item.key, 3, 2)).toEqual([{key: 1}, {key: 3}, {key: 2}]);
             expect(insertBefore([{key: 1}, {key: 2}, {key: 3}], (item) => item.key, 1, 3)).toEqual([{key: 2}, {key: 1}, {key: 3}]);
+        });
+    });
+    describe('the keys which are not in the data', () => {
+        const data = [{key: 1}, {key: 2}, {key: 3}];
+        const getKey = (item: { key: number }) => item.key;
+        it('do not change the data', () => {
+            expect(insertBefore(data, getKey, 4, 2)).toBe(data);
+            expect(insertBefore(data, getKey, 1, 4)).toBe(data);
+            expect(reorderData(data, getKey, 4, 2)).toBe(data);
+            expect(reorderData(data, getKey, 1, 4)).toBe(data);
+            expect(reorderDataByIndex(data, getKey, 4, 0)).toBe(data);
+        });
+        it('the known keys are moved', () => {
+            expect(reorderData(data, getKey, 1, 3)).toEqual([{key: 2}, {key: 3}, {key: 1}]);
+            expect(reorderDataByIndex(data, getKey, 3, 0)).toEqual([{key: 3}, {key: 1}, {key: 2}]);
         });
     });
 });

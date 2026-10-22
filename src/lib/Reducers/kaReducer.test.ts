@@ -1,11 +1,11 @@
 import { ITableProps } from '../';
 import {
     clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
-    deselectRow, deselectRows, insertRow, loadData, openAllEditors, reorderColumns, reorderRows, resizeColumn,
-    saveAllEditors, saveNewRow, saveRowEditors, selectAllFilteredRows, selectAllRows, selectAllVisibleRows,
-    selectRow, selectRows, selectRowsRange, selectSingleRow, setSingleAction, updateCellValue, updateData,
-    updateEditorValue, updateHeaderFilterValues, updatePopupPosition, updateRow, updateTreeGroupsExpanded,
-    validate,
+    deselectRow, deselectRows, groupColumn, insertRow, loadData, moveColumnBefore, moveColumnToIndex, openAllEditors,
+    reorderColumns, reorderRows, resizeColumn, saveAllEditors, saveNewRow, saveRowEditors, selectAllFilteredRows,
+    selectAllRows, selectAllVisibleRows, selectRow, selectRows, selectRowsRange, selectSingleRow, setSingleAction,
+    updateCellValue, updateData, updateEditorValue, updateHeaderFilterValues, updatePopupPosition, updateRow,
+    updateTreeGroupsExpanded, validate,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName, InsertRowPosition } from '../enums';
 import { deepFreeze } from '../../testUtils/deepFreeze';
@@ -306,6 +306,33 @@ describe('kaReducer', () => {
             const result = kaReducer(intialState, reorderColumns('1', '3'));
             expect(result).toMatchSnapshot();
         });
+        it('does not change the columns when a column is not in them', () => {
+            const intialState = {
+                columns: [{ key: '1' }, { key: '2' }],
+                rowKeyField: 'id',
+            };
+            expect(kaReducer(intialState, reorderColumns('unknown', '2')).columns).toEqual(intialState.columns);
+            expect(kaReducer(intialState, reorderColumns('1', 'unknown')).columns).toEqual(intialState.columns);
+            expect(kaReducer(intialState, moveColumnBefore('unknown', '2')).columns).toEqual(intialState.columns);
+            expect(kaReducer(intialState, moveColumnBefore('1', 'unknown')).columns).toEqual(intialState.columns);
+            expect(kaReducer(intialState, moveColumnToIndex('unknown', 0)).columns).toEqual(intialState.columns);
+        });
+    });
+    describe('GroupColumn', () => {
+        const intialState = {
+            columns: [{ key: 'name' }, { key: 'city' }],
+            rowKeyField: 'id',
+        };
+        it('groups a column', () => {
+            const result = kaReducer(intialState, groupColumn('city'));
+            expect(result.groups).toEqual([{ columnKey: 'city' }]);
+            expect(kaReducer(result, groupColumn('name')).groups).toEqual([{ columnKey: 'city' }, { columnKey: 'name' }]);
+        });
+        it('does not group a column which is not in the table or is grouped already', () => {
+            expect(kaReducer(intialState, groupColumn('unknown'))).toEqual(intialState);
+            const grouped = kaReducer(intialState, groupColumn('city'));
+            expect(kaReducer(grouped, groupColumn('city'))).toEqual(grouped);
+        });
     });
     describe('ReorderRows', () => {
         it('default', () => {
@@ -320,6 +347,14 @@ describe('kaReducer', () => {
             };
             const result = kaReducer(intialState, reorderRows(1, 3));
             expect(result).toMatchSnapshot();
+        });
+        it('does not change the data when a row is not in it', () => {
+            const intialState = {
+                data: [{ id: 1 }, { id: 2 }, { id: 3 }],
+                rowKeyField: 'id',
+            };
+            expect(kaReducer(intialState, reorderRows(999, 3)).data).toEqual(intialState.data);
+            expect(kaReducer(intialState, reorderRows(1, 999)).data).toEqual(intialState.data);
         });
         it('inner keys', () => {
             const intialState = {
