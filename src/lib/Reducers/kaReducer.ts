@@ -19,10 +19,16 @@ import { ILoadingProps } from '../props';
 import { ITableProps } from '../index';
 import { filterAndSearchData } from '../Utils/FilterUtils';
 import { getExpandedParents } from '../Utils/TreeUtils';
+import { getPagingWithPageSize } from '../Utils/PagingUtils';
 import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
 import { kaPropsUtils } from '../utils';
 import { newRowId } from '../const';
 import { replaceColumnValue } from '../Utils/ColumnUtils';
+
+// the filtered or found rows are shown from the first page
+const withFirstPage = (props: ITableProps): ITableProps => (
+    props.paging?.pageIndex ? { ...props, paging: { ...props.paging, pageIndex: 0 } } : props
+);
 
 const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     const {
@@ -76,10 +82,10 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
             }
             return { ...c, headerFilterValues: newHeaderFilterValues };
         });
-        return { ...props, columns: newColumns }
+        return withFirstPage({ ...props, columns: newColumns });
     }
     case ActionType.ClearAllFilters: {
-        return { ...props, columns: columns.map((c: Column) => ({ ...c, filterRowValue: undefined, headerFilterValues: undefined })) }
+        return withFirstPage({ ...props, columns: columns.map((c: Column) => ({ ...c, filterRowValue: undefined, headerFilterValues: undefined })) });
     }
     case ActionType.UpdatePopupPosition: {
         const newColumns = columns.map((c: Column) => c.isHeaderFilterPopupShown
@@ -200,7 +206,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, paging: { ...paging, pageIndex: action.pageIndex } };
     }
     case ActionType.UpdatePageSize: {
-        return { ...props, paging: { ...paging, pageSize: action.pageSize } };
+        return { ...props, paging: getPagingWithPageSize(paging, action.pageSize) };
     }
     case ActionType.UpdatePagesCount: {
         return { ...props, paging: { ...paging, pagesCount: action.pagesCount } };
@@ -243,7 +249,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
             replacedOption: 'filterRowValue',
             replacedValue: action.filterRowValue
         });
-        return { ...props, columns: newColumns };
+        return withFirstPage({ ...props, columns: newColumns });
     }
     case ActionType.UpdateHeaderFilterSearchValue: {
         const newColumns = replaceColumnValue({
@@ -261,7 +267,9 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
             replacedOption: 'filterRowOperator',
             replacedValue: action.filterRowOperator
         });
-        return { ...props, columns: newColumns };
+        // the operator changes the shown rows only when the column is filtered
+        const isFiltered = columns.some((c) => c.key === action.columnKey && c.filterRowValue != null);
+        return isFiltered ? withFirstPage({ ...props, columns: newColumns }) : { ...props, columns: newColumns };
     }
     case ActionType.UpdateEditorValue: {
         const editableCellIndex = editableCells.findIndex((c) => c.columnKey === action.columnKey && c.rowKeyValue === action.rowKeyValue);
@@ -301,7 +309,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.Search: {
-        return { ...props, searchText: action.searchText };
+        return withFirstPage({ ...props, searchText: action.searchText });
     }
     case ActionType.SelectSingleRow: {
         const newSelectedRows = [action.rowKeyValue];

@@ -3,6 +3,22 @@ import { PagingOptions } from '../models';
 
 export const centerLength = 5;
 const DEFAULT_PAGE_SIZE = 10;
+const getPageSize = (paging: PagingOptions) => paging.pageSize || DEFAULT_PAGE_SIZE;
+
+/**
+ * The index of the shown page: the last page when the page index is out of the pages,
+ * e.g. after the rows of the last page are filtered or deleted
+ */
+export const getPageIndex = (paging: PagingOptions | undefined, pagesCount: number): number => (
+    Math.max(Math.min(paging?.pageIndex || 0, pagesCount - 1), 0)
+);
+
+// the first row of the shown page stays shown when the size of the pages is changed
+export const getPagingWithPageSize = (paging: PagingOptions | undefined, pageSize: number): PagingOptions => (
+    paging?.pageIndex && pageSize > 0
+        ? { ...paging, pageSize, pageIndex: Math.floor(paging.pageIndex * getPageSize(paging) / pageSize) }
+        : { ...paging, pageSize }
+);
 export const getPagesCount = (data: any[], paging?: PagingOptions): number => {
     if (!paging || !paging.enabled) {
         return 1;
@@ -17,9 +33,8 @@ export const getPageData = (data: any[], paging?: PagingOptions): any[] => {
     if (!paging || !paging.enabled || paging.pagesCount) {
         return data;
     }
-    const pageSize = paging.pageSize || DEFAULT_PAGE_SIZE;
-    const pageIndex = paging.pageIndex || 0;
-    const startIndex = pageSize * pageIndex;
+    const pageSize = getPageSize(paging);
+    const startIndex = pageSize * getPageIndex(paging, Math.ceil(data.length / pageSize));
     return data.slice(startIndex, startIndex + pageSize);
 
 };

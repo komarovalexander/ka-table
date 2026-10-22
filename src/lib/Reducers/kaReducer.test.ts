@@ -1,11 +1,11 @@
 import { ITableProps } from '../';
 import {
-    clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
+    clearAllFilters, clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
     deselectRow, deselectRows, groupColumn, insertRow, loadData, moveColumnBefore, moveColumnToIndex, openAllEditors,
-    reorderColumns, reorderRows, resizeColumn, saveAllEditors, saveNewRow, saveRowEditors, selectAllFilteredRows,
+    reorderColumns, reorderRows, resizeColumn, saveAllEditors, saveNewRow, saveRowEditors, search, selectAllFilteredRows,
     selectAllRows, selectAllVisibleRows, selectRow, selectRows, selectRowsRange, selectSingleRow, setSingleAction,
-    updateCellValue, updateData, updateEditorValue, updateHeaderFilterValues, updatePopupPosition, updateRow,
-    updateTreeGroupsExpanded, validate,
+    updateCellValue, updateData, updateEditorValue, updateFilterRowOperator, updateFilterRowValue, updateHeaderFilterValues,
+    updatePageSize, updatePopupPosition, updateRow, updateTreeGroupsExpanded, validate,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName, InsertRowPosition } from '../enums';
 import { deepFreeze } from '../../testUtils/deepFreeze';
@@ -333,6 +333,36 @@ describe('kaReducer', () => {
             const grouped = kaReducer(intialState, groupColumn('city'));
             expect(kaReducer(grouped, groupColumn('city'))).toEqual(grouped);
         });
+    });
+    describe('the first page is shown after the rows are filtered or searched', () => {
+        const intialState: ITableProps = {
+            columns: [{ key: 'name' }, { key: 'score', filterRowValue: 10 }, { key: 'city' }],
+            data: [],
+            rowKeyField: 'id',
+            paging: { enabled: true, pageIndex: 3, pageSize: 10 },
+        };
+        it.each([
+            ['Search', search('text')],
+            ['UpdateFilterRowValue', updateFilterRowValue('name', 'text')],
+            ['UpdateFilterRowOperator of a filtered column', updateFilterRowOperator('score', FilterOperatorName.LessThan)],
+            ['UpdateHeaderFilterValues', updateHeaderFilterValues('city', 'London', true)],
+            ['ClearAllFilters', clearAllFilters()],
+        ])('%s', (_, action) => {
+            expect(kaReducer(intialState, action).paging).toEqual({ enabled: true, pageIndex: 0, pageSize: 10 });
+        });
+        it('UpdateFilterRowOperator of a column which is not filtered keeps the page', () => {
+            expect(kaReducer(intialState, updateFilterRowOperator('name', FilterOperatorName.Contains)).paging).toBe(intialState.paging);
+        });
+        it('the state without paging is not changed', () => {
+            const state = { ...intialState, paging: undefined };
+            expect(kaReducer(state, search('text'))).toEqual({ ...state, searchText: 'text' });
+        });
+    });
+    it('UpdatePageSize keeps the first row of the page shown', () => {
+        const intialState = {
+            paging: { enabled: true, pageIndex: 4, pageSize: 10 },
+        };
+        expect(kaReducer(intialState, updatePageSize(20)).paging).toEqual({ enabled: true, pageIndex: 2, pageSize: 20 });
     });
     describe('ReorderRows', () => {
         it('default', () => {

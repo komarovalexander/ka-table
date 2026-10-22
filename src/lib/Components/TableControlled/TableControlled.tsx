@@ -11,8 +11,9 @@ import Loading from '../Loading/Loading';
 import Popup from '../HeaderFilterPopup/HeaderFilterPopup';
 import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
-import { clearSingleAction } from '../../actionCreators';
+import { clearSingleAction, updatePageIndex } from '../../actionCreators';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { useIsomorphicLayoutEffect } from '../../Utils/EffectUtils';
 import { isPagingShown } from '../../Utils/PagingUtils';
 
 export interface ITableControlledProps extends ITableProps {
@@ -46,6 +47,16 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) 
 
     // the data is processed once for the table and the paging
     const tableData = useTableDataCalculation(props);
+
+    // the page index is out of the pages when the rows of the last pages are filtered or deleted:
+    // the last page is shown (see getPageData) and its index is set
+    const pageIndex = paging?.enabled ? paging.pageIndex || 0 : 0;
+    const lastPageIndex = Math.max((tableData?.pagesCount || 1) - 1, 0);
+    useIsomorphicLayoutEffect(() => {
+        if (pageIndex > lastPageIndex) {
+            dispatch(updatePageIndex(lastPageIndex));
+        }
+    }, [dispatch, pageIndex, lastPageIndex]);
 
     React.useEffect(() => {
         dispatch({ type: ActionType.ComponentDidMount });

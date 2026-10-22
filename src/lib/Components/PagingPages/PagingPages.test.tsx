@@ -3,7 +3,7 @@ import { IPagingProps } from '../../props';
 import PagingPages from './PagingPages';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { act, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 
 const props: IPagingProps = {
     pageSize: 2,
@@ -31,19 +31,16 @@ describe('PagingPages', () => {
         expect(props.dispatch).toHaveBeenCalledTimes(0);
     });
 
-    it('set page index as 0 in case it out of the pages lenght', () => {
+    it('does not change the page index out of the pages: the table updates it', () => {
         render(<PagingPages {...props} pageIndex={3} />);
+        expect(props.dispatch).toHaveBeenCalledTimes(0);
+    });
+    it('changes the page', () => {
+        const { container } = render(<PagingPages {...props} />);
+        fireEvent.click(container.querySelectorAll('.ka-paging-page-index')[0]);
         expect(props.dispatch).toHaveBeenCalledWith({
             pageIndex: 0,
             type: ActionType.UpdatePageIndex,
         });
-    });
-    it('dont set page index as 0 in case it inside of the pages lenght', () => {
-        render(<PagingPages {...props} pageIndex={2} />);
-        expect(props.dispatch).toHaveBeenCalledTimes(0);
-    });
-    it('dont set page index as 0 in case it equals 0 and pages is empty', () => {
-        render(<PagingPages {...props} pageIndex={0} />);
-        expect(props.dispatch).toHaveBeenCalledTimes(0);
     });
 });
