@@ -1,22 +1,42 @@
-import { getControlledPropsKeys, getPropsToOverride } from './utils';
+import { EditingMode, SortDirection } from '../../enums';
+import { getCallbackProps, getControlledPropsKeys, getPropsToOverride, withCallbacks } from './utils';
 
 import { ITableProps } from '../Table/Table';
-import { SortDirection } from '../../enums';
 
 describe('TableUncontrolled', () => {
-    it('getControlledPropsKeys', () => {
-        expect(getControlledPropsKeys({
-            loading: { enabled: false }
-        } as ITableProps)).toEqual(['searchText', 'loading', 'data', 'columns', 'paging', 'selectedRows']);
-
-        expect(getControlledPropsKeys({
-            loading: { enabled: true }
-        } as ITableProps)).toEqual(['searchText', 'loading']);
-
-        expect(getControlledPropsKeys({
-            loading: { enabled: true },
-            controlledPropsKeys: ['height'],
-        } as ITableProps)).toEqual(['height']);
+    describe('getControlledPropsKeys', () => {
+        const props: ITableProps = {
+            columns: [],
+            data: [],
+            rowKeyField: 'id',
+            editingMode: EditingMode.Cell,
+            format: () => '',
+            loading: { enabled: false },
+        };
+        it('all the props except the functions', () => {
+            expect(getControlledPropsKeys(props)).toEqual(['columns', 'data', 'rowKeyField', 'editingMode', 'loading']);
+        });
+        it('applies data, columns, paging and selectedRows when the loading ends', () => {
+            expect(getControlledPropsKeys({ ...props, loading: { enabled: true }, paging: {}, selectedRows: [] }))
+                .toEqual(['rowKeyField', 'editingMode', 'loading']);
+        });
+        it('the props which the parent does not pass anymore', () => {
+            expect(getControlledPropsKeys(props, { height: 100 })).toEqual(['height', 'columns', 'data', 'rowKeyField', 'editingMode', 'loading']);
+        });
+        it('controlledPropsKeys sets the keys', () => {
+            expect(getControlledPropsKeys({ ...props, controlledPropsKeys: ['height'] })).toEqual(['height']);
+        });
+    });
+    it('getCallbackProps', () => {
+        const format = () => '';
+        const callbacks = getCallbackProps({ columns: [], rowKeyField: 'id', format, search: undefined });
+        expect(Object.keys(callbacks)).toEqual(['format']);
+        expect(callbacks.format).toBe(format);
+    });
+    it('withCallbacks removes the functions which the parent does not pass anymore', () => {
+        const format = () => '';
+        const state: ITableProps = { columns: [], rowKeyField: 'id', format: () => 'old', search: () => true };
+        expect(withCallbacks(state, { format })).toEqual({ columns: [], rowKeyField: 'id', format });
     });
 
     describe('getPropsToOverride', () => {

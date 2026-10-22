@@ -1,10 +1,11 @@
-import { ActionType, SortDirection, SortingMode } from '../../enums';
+import { ActionType, EditingMode, SortDirection, SortingMode } from '../../enums';
 import { ITableInstance, ITableProps, Table } from '../Table/Table';
-import { act, render } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import React from 'react';
 import { TableUncontrolled } from './TableUncontrolled';
 import { createRoot } from 'react-dom/client';
+import { kaPropsUtils } from '../../utils';
 import { useTable } from '../../hooks/UseTable';
 import { useTableInstance } from '../../hooks/UseTableInstance';
 
@@ -97,6 +98,68 @@ describe('controlled props', () => {
         rerender(<TableWithProps paging={{ enabled: true, pageSize: 1 }} />);
         expect(table.props.paging).toEqual({ enabled: true, pageIndex: 1, pageSize: 1 });
     });
+    it('uses the latest functions: the actions and table.props get the current extendedFilter', () => {
+        const { container, rerender } = render(<TableWithProps extendedFilter={(rows) => rows} />);
+        rerender(<TableWithProps extendedFilter={(rows) => rows.filter((row) => row.id === 2)} />);
+        expect(container.querySelector('tbody')!.textContent).toBe('b');
+        expect(kaPropsUtils.getFilteredData(table.props)).toEqual([{ id: 2, name: 'b' }]);
+        act(() => table.selectAllFilteredRows());
+        expect(table.props.selectedRows).toEqual([2]);
+    });
+    it('uses the latest search and validation', () => {
+        const { container, rerender } = render(<TableWithProps searchText='b' search={({ searchText, rowData }) => rowData.name === searchText} />);
+        expect(container.querySelector('tbody')!.textContent).toBe('b');
+        rerender(<TableWithProps searchText='b' search={() => true} />);
+        expect(container.querySelector('tbody')!.textContent).toBe('ab');
+        // the default search when the parent doesn't pass a search anymore
+        rerender(<TableWithProps searchText='b' />);
+        expect(container.querySelector('tbody')!.textContent).toBe('b');
+        expect(table.props.search).toBeUndefined();
+
+        rerender(<TableWithProps validation={() => undefined} />);
+        rerender(<TableWithProps validation={({ value }) => (value ? undefined : 'required')} />);
+        act(() => table.openRowEditors(1));
+        act(() => table.updateEditorValue(1, 'name', ''));
+        act(() => table.saveRowEditors(1, { validate: true }));
+        expect(table.props.editableCells).toEqual([{ columnKey: 'name', rowKeyValue: 1, editorValue: '', validationMessage: 'required' }]);
+    });
+    it('applies the other props which the parent changes', () => {
+        const { container, rerender } = render(<TableWithProps editingMode={EditingMode.None} height={100} />);
+        rerender(<TableWithProps editingMode={EditingMode.Cell} height={200} />);
+        expect((container.querySelector('.ka') as HTMLElement).style.height).toBe('200px');
+        fireEvent.click(screen.getByText('a'));
+        expect(container.querySelector('.ka-cell-editor input')).not.toBeNull();
+    });
+    it('applies data, columns, paging and selectedRows when the loading ends', () => {
+        const { container, rerender } = render(<TableWithProps loading={{ enabled: true }} />);
+        rerender(<TableWithProps loading={{ enabled: true }} data={[{ id: 3, name: 'c' }]} />);
+        expect(table.props.data).toEqual(data);
+        rerender(<TableWithProps loading={{ enabled: false }} data={[{ id: 3, name: 'c' }]} />);
+        expect(container.querySelector('tbody')!.textContent).toBe('c');
+    });
+    it('applies only controlledPropsKeys if they are set', () => {
+        const { rerender } = render(<TableWithProps controlledPropsKeys={['data']} editingMode={EditingMode.None} />);
+        rerender(<TableWithProps controlledPropsKeys={['data']} editingMode={EditingMode.Cell} data={[{ id: 3, name: 'c' }]} />);
+        expect(table.props.editingMode).toBe(EditingMode.None);
+        expect(table.props.data).toEqual([{ id: 3, name: 'c' }]);
+    });
+});
+
+it('applies the props changed while the table with the same instance was not mounted', () => {
+    let table: ITableInstance;
+    const TableWithInstance = ({ shown, rows }: { shown: boolean, rows: { id: number, name: string }[] }) => {
+        table = useTable();
+        return shown ? <Table table={table} rowKeyField='id' columns={[{ key: 'name' }]} data={rows} sortingMode={SortingMode.Single} /> : null;
+    };
+    const oldRows = [{ id: 1, name: 'b' }, { id: 2, name: 'a' }];
+    const newRows = [{ id: 3, name: 'd' }, { id: 4, name: 'c' }];
+    const { container, rerender } = render(<TableWithInstance shown rows={oldRows} />);
+    act(() => table!.updateSortDirection('name'));
+    rerender(<TableWithInstance shown={false} rows={oldRows} />);
+    rerender(<TableWithInstance shown={false} rows={newRows} />);
+    rerender(<TableWithInstance shown rows={newRows} />);
+    // the new data with the sorting of the table
+    expect(container.querySelector('tbody')!.textContent).toBe('cd');
 });
 
 it('calls onDispatch once per action in StrictMode', () => {

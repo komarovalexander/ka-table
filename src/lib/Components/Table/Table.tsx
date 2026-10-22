@@ -29,6 +29,13 @@ export interface ITableProps<TData= any> {
     columnReordering?: boolean;
     columnResizing?: boolean;
     columns: Column<TData>[];
+    /**
+     * The props which the table with its own state (without dispatch) applies when the parent changes them.
+     * By default these are all the props: they are compared by value and the objects are merged by the changed fields,
+     * so the state of the table (sorting, page, widths...) is kept when the parent passes equal props again.
+     * During a loading (loading.enabled) data, columns, paging and selectedRows are applied when the loading ends.
+     * The functions (format, filter, search, sort, validation...) are not the state: the latest ones are always used.
+     */
     controlledPropsKeys?: ControlledPropsKeys;
     data?: TData[];
     detailsRows?: any[];

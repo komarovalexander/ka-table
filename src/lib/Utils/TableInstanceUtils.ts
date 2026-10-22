@@ -1,6 +1,9 @@
-import { ITableInstance } from '../Components/Table/Table';
+import { ITableInstance, ITableProps } from '../Components/Table/Table';
 
 interface ITableInstanceState {
+    // the props of the parent which the table has applied: a table mounted again with the same instance
+    // applies the props which the parent has changed while the table was not mounted
+    appliedProps?: Partial<ITableProps>;
     isRendered: boolean;
     listeners: Set<() => void>;
 }
@@ -22,6 +25,12 @@ export const setTableRendered = (table: ITableInstance) => {
 };
 
 export const isTableRendered = (table: ITableInstance) => getTableInstanceState(table).isRendered;
+
+export const getTableAppliedProps = (table: ITableInstance) => getTableInstanceState(table).appliedProps;
+
+export const setTableAppliedProps = (table: ITableInstance, appliedProps: Partial<ITableProps>) => {
+    getTableInstanceState(table).appliedProps = appliedProps;
+};
 
 export const subscribeToTable = (table: ITableInstance, listener: () => void) => {
     const { listeners } = getTableInstanceState(table);

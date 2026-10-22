@@ -14,6 +14,7 @@ import { getExpandedGroups } from '../../Utils/GroupUtils';
 import { getValueByField } from '../../Utils/DataUtils';
 import { KeyboardNavigationContext, isKeyboardNavigationEnabled, useTableKeyboardNavigation } from '../../hooks/UseKeyboardNavigation';
 import { isVirtualScrollingEnabled } from '../../Utils/Virtualize';
+import { useIsomorphicLayoutEffect } from '../../Utils/EffectUtils';
 import { useTableData } from '../../hooks/UseTableData';
 
 // the same empty values on every render, so memoized children are not re-rendered because of new defaults
@@ -60,7 +61,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
 
     const keyboardNavigation = useTableKeyboardNavigation(props, preparedOptions);
 
-    const tableWrapper = getElementCustomization({
+    const tableWrapper = getElementCustomization<HTMLDivElement>({
         className: defaultOptions.css.tableWrapper,
         onScroll: isVirtualScrollingEnabled(virtualScrolling) ? (event) => {
             dispatch({
@@ -71,6 +72,26 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
         onKeyDown: keyboardNavigation.onKeyDown,
         onKeyUp: keyboardNavigation.onKeyUp,
     }, props, childComponents.tableWrapper);
+    // elementAttributes of childComponents.tableWrapper can set a ref too
+    const { ref: customWrapperRef, ...wrapperAttributes }: React.AllHTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> } = tableWrapper.elementAttributes;
+    const wrapperRef = React.useRef<HTMLDivElement | null>(null);
+    const setWrapperRef = React.useCallback((element: HTMLDivElement | null) => {
+        wrapperRef.current = element;
+        if (typeof customWrapperRef === 'function') {
+            customWrapperRef(element);
+        } else if (customWrapperRef) {
+            customWrapperRef.current = element;
+        }
+    }, [customWrapperRef]);
+
+    // the position of the virtual scrolling of the state is shown when the table is mounted, e.g. mounted again
+    // with the same table instance; then the state follows the scrolling of the element
+    useIsomorphicLayoutEffect(() => {
+        const scrollTop = virtualScrolling?.scrollTop;
+        if (wrapperRef.current && scrollTop && isVirtualScrollingEnabled(virtualScrolling)) {
+            wrapperRef.current.scrollTop = scrollTop;
+        }
+    }, []);
 
     const { elementAttributes, content } = getElementCustomization({
         className: defaultOptions.css.table,
@@ -79,7 +100,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
 
     return (
         <KeyboardNavigationContext.Provider value={keyboardNavigation.navigation}>
-            <div {...tableWrapper.elementAttributes}>
+            <div {...wrapperAttributes} ref={setWrapperRef}>
                 {content || tableWrapper.content || (
                     <table {...elementAttributes}>
                         <ColGroup

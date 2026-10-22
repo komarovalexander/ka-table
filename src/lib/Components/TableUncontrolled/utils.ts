@@ -3,19 +3,45 @@ import { ControlledPropsKeys } from '../../types';
 import { ITableProps } from '../Table/Table';
 import { isDeepEqual } from '../../Utils/CommonUtils';
 
-export const getDefaultControlledPropsKeys = (settings?: { loadingEnabled?: boolean }): ControlledPropsKeys => {
-    return  settings?.loadingEnabled
-        ? ['searchText', 'loading']
-        : ['searchText', 'loading', 'data', 'columns', 'paging', 'selectedRows']
-}
+// the functions are not the state of the table: the latest ones are always used
+const callbackPropsKeys = ['extendedFilter', 'extendedSort', 'filter', 'format', 'search', 'sort', 'validation'] as const;
+const callbackPropsKeysSet = new Set<string>(callbackPropsKeys);
 
-export const getControlledPropsKeys = (props: ITableProps) => {
-    const controlledPropsKeys: ControlledPropsKeys = props.controlledPropsKeys ?
-        props.controlledPropsKeys
-        : getDefaultControlledPropsKeys({ loadingEnabled: props.loading?.enabled });
+// the parent sets them when a remote loading ends: during the loading the table keeps its state
+const loadingPropsKeys: ControlledPropsKeys = ['data', 'columns', 'paging', 'selectedRows'];
 
-    return controlledPropsKeys;
-}
+// the props of the component which are not the state of the table
+const componentPropsKeys = ['childComponents', 'children', 'controlledPropsKeys', 'table'];
+
+/**
+ * The props which are applied when the parent changes them: all the props except the functions.
+ * During a loading (loading.enabled) data, columns, paging and selectedRows are applied when it ends.
+ * props.controlledPropsKeys sets the keys explicitly.
+ */
+export const getControlledPropsKeys = (props: ITableProps, appliedProps: Partial<ITableProps> = {}): ControlledPropsKeys => {
+    if (props.controlledPropsKeys) {
+        return props.controlledPropsKeys;
+    }
+    // the keys of the applied props too: a prop which the parent doesn't pass anymore is applied as undefined
+    const keys = new Set([...Object.keys(appliedProps), ...Object.keys(props)] as ControlledPropsKeys);
+    return [...keys].filter((key) => !componentPropsKeys.includes(key)
+        && !callbackPropsKeysSet.has(key)
+        && !(props.loading?.enabled && loadingPropsKeys.includes(key)));
+};
+
+// the functions which the parent passes
+export const getCallbackProps = (props: ITableProps): Partial<ITableProps> => (
+    Object.fromEntries(callbackPropsKeys.filter((key) => props[key] !== undefined).map((key) => [key, props[key]]))
+);
+
+// the state with the latest functions of the parent: the ones which it doesn't pass anymore are removed
+export const withCallbacks = (state: ITableProps, callbacks: Partial<ITableProps>): ITableProps => {
+    const result = { ...state };
+    callbackPropsKeys.forEach((key) => {
+        delete result[key];
+    });
+    return { ...result, ...callbacks };
+};
 
 export const getControlledProps = (controlledPropsKeys: ControlledPropsKeys, props: ITableProps): Partial<ITableProps> => {
     return controlledPropsKeys.reduce((acc, key) => {
