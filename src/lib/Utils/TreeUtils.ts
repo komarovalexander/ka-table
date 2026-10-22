@@ -57,10 +57,11 @@ export const restoreFilteredData = ({
 }): any[] => {
     let filteredData: any[] = [];
     const treeGroupKeyValues = data.map(d => getValueByField(d, rowKeyField));
+    // without a prototype: the keys like 'constructor' don't find the members of Object
     const dataMap = originalData.reduce((acc, d) => {
         acc[getValueByField(d, rowKeyField)] = d;
         return acc;
-    }, {});
+    }, Object.create(null));
     data.forEach(d => {
         const treeGroupKeyValue = getValueByField(d, treeGroupKeyField);
         if (treeGroupKeyValues.includes(treeGroupKeyValue) || !treeGroupKeyValue){
@@ -82,7 +83,8 @@ const getDataHashAndRootElements = ({
     treeGroupKeyField: any,
     treeGroupsExpanded?: any[][]
 }) => {
-    const dataHash: any = {};
+    // without a prototype: keys like 'constructor' don't find the members of Object (not a Map: the keys 1 and '1' are the same)
+    const dataHash: Record<string, unknown[]> = Object.create(null);
     const rootElements: any[] = [];
     data.forEach(d => {
         const parentRowKeyValue = getValueByField(d, treeGroupKeyField) ?? undefined;

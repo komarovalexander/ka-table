@@ -61,6 +61,16 @@ describe('TreeUtils', () => {
             expect(treeData).toMatchSnapshot();
         });
     });
+    describe('the keys which are the names of the members of Object', () => {
+        it.each(['constructor', 'toString', '__proto__'])('%s', (id) => {
+            const data = [{ id, parentId: null }, { id: 'child', parentId: id }, { id: 'other', parentId: null }];
+            const getRows = (shownData: typeof data) => getTreeData({ data: shownData, originalData: data, rowKeyField: 'id', treeGroupKeyField: 'parentId' })
+                .map((item) => [item.rowData.id, item.treeDeep, item.treeGroupMark === treeGroupMark]);
+            expect(getRows(data)).toEqual([[id, 0, true], ['child', 2, false], ['other', 1, false]]);
+            // the found child restores its parent
+            expect(getRows([data[1]])).toEqual([[id, 0, true], ['child', 2, false]]);
+        });
+    });
     describe('restoreFilteredData', () => {
         it('default', () => {
             const originalData = [
