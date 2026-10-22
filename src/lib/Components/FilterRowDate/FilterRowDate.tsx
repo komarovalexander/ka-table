@@ -1,7 +1,7 @@
 import { IFilterRowEditorProps } from '../../props';
 import React from 'react';
 import defaultOptions from '../../defaultOptions';
-import { getDateInputValue } from '../../Utils/DateUtils';
+import { getDateFromInputValue, getDateInputValue } from '../../Utils/DateUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { updateFilterRowValue } from '../../actionCreators';
 
@@ -20,9 +20,7 @@ const FilterRowDate: React.FunctionComponent<IFilterRowEditorProps> = (props) =>
         type: 'date',
         value: value || '',
         onChange: (event) => {
-            const targetValue = event.currentTarget.value;
-            const filterRowValue = targetValue ? new Date(targetValue) : null;
-            dispatch(updateFilterRowValue(column.key, filterRowValue && new Date(filterRowValue.getTime() + filterRowValue.getTimezoneOffset() * 60000)));
+            dispatch(updateFilterRowValue(column.key, getDateFromInputValue(event.currentTarget.value)));
         }
     }, props, childComponents?.filterRowCellInput);
     return (

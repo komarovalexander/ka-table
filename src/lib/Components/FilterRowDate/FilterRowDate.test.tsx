@@ -27,6 +27,11 @@ describe('FliterRowDate', () => {
         });
     });
 
+    it('shows a date of a JSON (a string)', () => {
+        const { container } = render(<FilterRowDate {...props} column={{ ...props.column, filterRowValue: '2020-01-02' }} />);
+        expect(container.querySelector('input')!.value).toBe('2020-01-02');
+    });
+
     it('should fire UpdateFilterRowValue', () => {
         const column = {
             field: 'name',

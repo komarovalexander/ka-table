@@ -49,6 +49,20 @@ describe('CellEditorDate', () => {
         });
     });
 
+    it('edits a date of a JSON (a string)', () => {
+        const { container } = render(<CellEditorDate {...props} value='2020-01-02' />);
+        const input = container.querySelector('input')!;
+        expect(input.value).toBe('2020-01-02');
+
+        fireEvent.change(input, { target: { value: '2020-02-02' } });
+        expect(props.dispatch).toHaveBeenCalledWith({
+            columnKey: 'fieldName',
+            rowKeyValue: 2,
+            type: ActionType.UpdateCellValue,
+            value: '2020-02-02',
+        });
+    });
+
     it('should dispatch CloseEditor', () => {
         const { container } = render(<CellEditorDate {...props} />);
 
