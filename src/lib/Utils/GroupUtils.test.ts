@@ -8,6 +8,7 @@ import {
     groupDataMark,
     groupSummaryMark,
     isMaxDeep,
+    normalizeKeyForMap,
     updateExpandedGroups,
 } from './GroupUtils';
 
@@ -245,6 +246,25 @@ describe('GroupUtils', () => {
                 () => undefined
             );
             expect(result).toEqual('Column Title: Group Text');
+        });
+        it('format gets the value of the rows: the key of a group of dates is a string', () => {
+            const date = new Date(2021, 10, 8);
+            const result = getGroupText(
+                normalizeKeyForMap(date),
+                { key: 'date', title: 'Date' },
+                ({ value }) => value.toLocaleDateString('en-US'),
+                [{ date }, { date: new Date(2021, 10, 8) }],
+            );
+            expect(result).toEqual('11/8/2021');
+        });
+        it('format gets the value of the rows: the key of a group of objects is a string', () => {
+            const result = getGroupText(
+                normalizeKeyForMap({ name: 'a' }),
+                { key: 'owner', title: 'Owner' },
+                ({ value }) => value.name,
+                [{ owner: { name: 'a' } }],
+            );
+            expect(result).toEqual('a');
         });
         it('format - groupItems', () => {
             const result = getGroupText(

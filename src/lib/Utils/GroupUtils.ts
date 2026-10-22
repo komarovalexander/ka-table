@@ -152,7 +152,11 @@ export const normalizeKeyForMap = (key: any) => {
 export const getGroupMark = () => groupMark;
 
 export const getGroupText = (value: any, column: Column, format?: FormatFunc, groupItems?: any[]) => {
-    const formattedValue = format && format({ column, value, rowData: groupItems?.[0] });
+    const rowData = groupItems?.[0];
+    const rowValue = rowData && column ? getValueByColumn(rowData, column) : undefined;
+    // the value of the group is its key, where dates and objects are strings (see normalizeKeyForMap):
+    // format gets the value of the rows of the group, as in their cells
+    const formattedValue = format && format({ column, value: normalizeKeyForMap(rowValue) === value ? rowValue : value, rowData });
     return formattedValue != null ? formattedValue : `${(column && column.title ? column.title + ': ' : '')}${value}`;
 };
 
