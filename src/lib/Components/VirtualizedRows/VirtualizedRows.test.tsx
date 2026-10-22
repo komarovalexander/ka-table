@@ -1,4 +1,4 @@
-import { EditingMode } from '../../enums';
+import { ActionType, EditingMode } from '../../enums';
 import { ITableBodyProps } from '../../props';
 import React from 'react';
 import VirtualizedRows from './VirtualizedRows';
@@ -31,6 +31,22 @@ it('renders without crashing', () => {
     const root = createRoot(div!);
     act(() => {
         root.render(<VirtualizedRows {...tableProps} />);
+    });
+    act(() => {
+        root.unmount();
+    });
+});
+
+it('sets the measured sizes when the settings have them as undefined', () => {
+    const div = document.createElement('tbody');
+    const root = createRoot(div!);
+    act(() => {
+        root.render(<VirtualizedRows {...tableProps} virtualScrolling={{ enabled: true, itemHeight: undefined, tbodyHeight: undefined }} />);
+    });
+    // jsdom has no layout: the default sizes are used
+    expect(tableProps.dispatch).toHaveBeenCalledWith({
+        type: ActionType.UpdateVirtualScrolling,
+        virtualScrolling: { enabled: true, itemHeight: 40, tbodyHeight: 600 },
     });
     act(() => {
         root.unmount();
