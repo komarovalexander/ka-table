@@ -125,13 +125,18 @@ describe('FilterUtils', () => {
             expect(result).toMatchSnapshot();
         });
 
-        it('should throw an error in case of unknown filterOperator', () => {
+        it('does not filter the column with an unknown filterOperator and warns once', () => {
+            const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
             const columns = [{
                 filterRowOperator: 'unknownOperator',
                 filterRowValue: 'Billi Bob',
                 key: 'name',
             }];
-            expect(() => filterData(data, columns)).toThrow('\'unknownOperator\' has not found in predefinedFilterOperators array, available operators: =, !=, >, <, >=, <=, contains, IsEmpty, IsNotEmpty');
+            expect(filterData(data, columns)).toEqual(data);
+            filterData(data, columns);
+            expect(warn).toHaveBeenCalledTimes(1);
+            expect(warn).toHaveBeenCalledWith('ka-table: the filter operator \'unknownOperator\' is not in predefinedFilterOperators, so the column \'name\' is not filtered. Available operators: =, !=, >, <, >=, <=, contains, IsEmpty, IsNotEmpty');
+            warn.mockRestore();
         });
 
         it('custom column filter', () => {

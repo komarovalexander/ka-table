@@ -59,14 +59,19 @@ export const filterAndSearchData = (props: ITableProps) => {
     return data;
 };
 
+// an unknown operator is reported once: the data is filtered again on every change
+const reportedUnknownOperators = new Set<string>();
+
 const getCompare = (column: Column) => {
     const filterRowOperator = column.filterRowOperator
         || getDefaultOperatorForType(column.dataType || defaultOptions.columnDataType);
     const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
-    if (!filterOperator) {
-        throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
+    if (!filterOperator && !reportedUnknownOperators.has(filterRowOperator)) {
+        // the column is not filtered instead of an error during rendering, which removes the whole table
+        reportedUnknownOperators.add(filterRowOperator);
+        console.warn(`ka-table: the filter operator '${filterRowOperator}' is not in predefinedFilterOperators, so the column '${column.key}' is not filtered. Available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
     }
-    return filterOperator.compare;
+    return filterOperator?.compare;
 };
 
 export const filterData = (data: any[], columns: Column[], filter?: FilterFunc): any[] => {
@@ -80,6 +85,9 @@ export const filterData = (data: any[], columns: Column[], filter?: FilterFunc):
         }
         const customFilter = column.filter || filter?.({ column });
         const compare = customFilter || getCompare(column);
+        if (!compare) {
+            return initialData;
+        }
 
         return initialData.filter((d: any) => {
             let fieldValue = getValueByColumn(d, column);
