@@ -126,7 +126,7 @@ describe('keyboardNavigation', () => {
     it('opens the editor by Enter and F2, the focus returns to the cell when the editor is closed', () => {
         const { focusCell, getCell, getFocusedText, press, table } = setup({ editingMode: EditingMode.Cell });
         focusCell('name 1');
-        // the editor closes on the keyup of Enter which comes to the window
+        // the keyup of Enter which opens the editor doesn't go to the handlers of the page
         const windowKeyUp = vi.fn();
         window.addEventListener('keyup', windowKeyUp);
         press('Enter');

@@ -47,4 +47,21 @@ describe('EffectUtils', () => {
         expect(escKeyHandler.mock.calls.length).toBe(1);
         expect(enterKeyHandler.mock.calls.length).toBe(1);
     });
+
+    it('addEscEnterKeyEffect handles the keys of the target', () => {
+        const escKeyHandler = vi.fn();
+        const enterKeyHandler = vi.fn();
+        const target = document.createElement('tr');
+        const child = target.appendChild(document.createElement('td'));
+        const removeEffect = addEscEnterKeyEffect(escKeyHandler, enterKeyHandler, target);
+
+        child.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', bubbles: true }));
+        target.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+        expect(escKeyHandler).toHaveBeenCalledTimes(1);
+        expect(enterKeyHandler).toHaveBeenCalledTimes(1);
+
+        removeEffect();
+        target.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape' }));
+        expect(escKeyHandler).toHaveBeenCalledTimes(1);
+    });
 });

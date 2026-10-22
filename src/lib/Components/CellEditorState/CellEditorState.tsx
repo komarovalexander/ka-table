@@ -1,5 +1,5 @@
 import { ActionType, EditingMode } from '../../enums';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { closeEditor, updateEditorValue } from '../../actionCreators';
 
 import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
@@ -50,8 +50,12 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
         }
     }, [validationMessage, dispatch, close, column, editorValueState, rowKeyValue, value, isCellEditingMode]);
 
+    const elementRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        return addEscEnterKeyEffect(close, closeHandler);
+        // the keys are handled in the row of the editor: Esc and Enter pressed outside of it (in a search input,
+        // a dialog, another table) don't close the editor, Esc closes all the editors of the row in the row editing
+        const element = elementRef.current;
+        return element ? addEscEnterKeyEffect(close, closeHandler, element.closest('tr') || element) : undefined;
     }, [close, closeHandler]);
 
     const dispatchHandler: DispatchFunc = (action: any) => {
@@ -73,7 +77,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     }};
 
     return (
-        <CellEditorValidation {...stateProps} />
+        <CellEditorValidation {...stateProps} elementRef={elementRef} />
     );
 };
 

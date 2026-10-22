@@ -7,25 +7,28 @@ export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? React.u
 
 /*
   Used inside effects and returned as result from them,
-  it adds listener to esc & enter keys on life cycle of component
+  it adds listener to esc & enter keys of the target (the window by default) on life cycle of component
 */
-export const addEscEnterKeyEffect = (escKeyHandler: () => void, enterKeyHandler: () => void) => {
+export const addEscEnterKeyEffect = (escKeyHandler: () => void, enterKeyHandler: () => void, target: EventTarget = window) => {
     const handleKeyboard = (event: KeyboardEvent) => {
-        if (event.keyCode === KeyboardEnum.Esc) {
+        if (event.key === 'Escape' || event.keyCode === KeyboardEnum.Esc) {
             escKeyHandler();
         }
 
-        if (event.keyCode === KeyboardEnum.Enter) {
+        if (event.key === 'Enter' || event.keyCode === KeyboardEnum.Enter) {
             enterKeyHandler();
         }
     };
-    return getEventListenerEffect('keyup', handleKeyboard);
+    return getEventListenerEffect('keyup', handleKeyboard, target);
 };
 
-export const getEventListenerEffect = (eventName: string, handler: any) => {
-    window.addEventListener(eventName, handler);
+// the handler gets the events of its type, e.g. MouseEvent of mousemove
+export const getEventListenerEffect = <E extends Event>(eventName: string, handler: (event: E) => void, target: EventTarget = window) => {
+    // the listeners of EventTarget are typed with Event
+    const listener = handler as EventListener;
+    target.addEventListener(eventName, listener);
 
     return () => {
-        window.removeEventListener(eventName, handler);
+        target.removeEventListener(eventName, listener);
     };
 };

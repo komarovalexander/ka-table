@@ -5,13 +5,14 @@ import { ICellEditorProps } from '../../props';
 import CellEditorDataType from '../CellEditorDataType/CellEditorDataType';
 import CellEditorValidationMessage from '../CellEditorValidationMessage/CellEditorValidationMessage';
 
-const CellEditorValidation: React.FunctionComponent<ICellEditorProps> = (props) => {
+const CellEditorValidation: React.FunctionComponent<ICellEditorProps & { elementRef?: React.Ref<HTMLDivElement> }> = (props) => {
+    const { elementRef, ...editorProps } = props;
     const {
         validationMessage,
-    } = props;
+    } = editorProps;
     return (
-        <div className={`${validationMessage ? defaultOptions.css.kaCellEditorValidationError : ''}`}>
-            <CellEditorDataType {...props} />
+        <div ref={elementRef} className={`${validationMessage ? defaultOptions.css.kaCellEditorValidationError : ''}`}>
+            <CellEditorDataType {...editorProps} />
             {validationMessage && <CellEditorValidationMessage message={validationMessage} />}
         </div>
     );

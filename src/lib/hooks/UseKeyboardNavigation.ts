@@ -134,8 +134,8 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
         }
     };
 
-    // Enter opens the editor on keyup: the editor is closed by the keyup of Enter which comes to the window,
-    // so the keyup which opens the editor doesn't go further
+    // Enter opens the editor on keyup, as the editors handle Enter on keyup too,
+    // and the keyup which opens the editor doesn't go further to the handlers of the page
     const onKeyUp = (event: React.KeyboardEvent<HTMLElement>) => {
         const cell = navigation.cells.get(event.target as Element);
         if (cell && event.key === 'Enter') {
