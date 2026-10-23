@@ -36,6 +36,10 @@ describe('DataRowContent', () => {
             root.unmount();
         });
     });
+    it('names the tree button by the text of format', () => {
+        const { container } = renderInto('tr', <DataRowContent {...props} isTreeGroup={true} format={() => 0} />);
+        expect(container.querySelector('.ka-icon-tree-arrow')!.getAttribute('aria-label')).toBe('0');
+    });
     it('click by first row dispatches action', () => {
         const dispatch = vi.fn();
         const { container } = renderInto('tr', <DataRowContent {...props} dispatch={dispatch} isTreeGroup={true} />);

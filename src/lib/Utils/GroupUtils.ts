@@ -2,27 +2,48 @@ import { Column } from '../models';
 import { FormatFunc } from '../types';
 import { Group } from '../Models/Group';
 import { GroupPanelSettings } from '../Models/GroupPanelSettings';
-import { getValueByColumn } from './DataUtils';
+import { getValueByColumn, isFormattedValue } from './DataUtils';
 
 export const groupMark = {};
 export const groupSummaryMark = {};
 export const groupDataMark = {};
 
+/**
+ * The groups which group the rows: a disabled group (enabled: false) keeps its settings, e.g. enableSummary,
+ * until its column is grouped again
+ */
+export const getEnabledGroups = (groups?: Group[]): Group[] | undefined => {
+    const enabledGroups = groups?.some((group) => group.enabled === false) ? groups.filter((group) => group.enabled !== false) : groups;
+    return enabledGroups?.length ? enabledGroups : undefined;
+};
+
 // visible columns which are not grouped, and grouped columns
 export const getGroupedAndVisibleColumns = (columns: Column[], groups?: Group[]) => {
-    const isGrouped = (column: Column) => !!groups && groups.some((g) => g.columnKey === column.key);
+    const enabledGroups = getEnabledGroups(groups);
+    const isGrouped = (column: Column) => !!enabledGroups && enabledGroups.some((g) => g.columnKey === column.key);
     return {
         columns: columns.filter((c) => !isGrouped(c) && c.visible !== false),
-        groupColumnsCount: groups ? groups.length : 0,
-        groupedColumns: groups ? columns.filter(isGrouped) : [],
+        groupColumnsCount: enabledGroups ? enabledGroups.length : 0,
+        groupedColumns: enabledGroups ? columns.filter(isGrouped) : [],
     };
 };
 
-const getGroupSummary = (groupData: any[], key: any, groupIndex: any) => ({ groupData, groupSummaryMark, key: JSON.stringify([key, '--:+summary--']), groupIndex });
+// JSON.stringify gives the same "null" for null, undefined, NaN and Infinity, which are different groups
+const groupKeyReplacer = (_key: string, value: unknown) => (
+    value === undefined || (typeof value === 'number' && !Number.isFinite(value)) ? `--:+${value}--` : value
+);
+
+/**
+ * The string of the key of a group (the values of the group and of its parent groups), e.g. for the React key of the group row
+ */
+export const getGroupKeyId = (groupKey: unknown[]): string => JSON.stringify(groupKey, groupKeyReplacer);
+
+const getGroupSummary = (groupData: unknown[], key: unknown[], groupIndex: number) => ({ groupData, groupSummaryMark, key: getGroupKeyId([key, '--:+summary--']), groupIndex });
 
 export const updateExpandedGroups = (groupsExpanded: any[][], groupKey: any[]): any[][] => {
+    const groupKeyId = getGroupKeyId(groupKey);
     const newGroupsExpanded =
-        groupsExpanded.filter((ge) => JSON.stringify(ge) !== JSON.stringify(groupKey));
+        groupsExpanded.filter((ge) => getGroupKeyId(ge) !== groupKeyId);
     if (newGroupsExpanded.length === groupsExpanded.length) {
         newGroupsExpanded.push(groupKey);
     }
@@ -42,11 +63,12 @@ export const getGroupedData = (
     groupsExpanded?: any[]): any[] => {
     const grouped = getGroupedStructure({
         data,
-        groups,
+        groups: getEnabledGroups(groups) || [],
         groupedColumns,
         groupsExpanded
-    }) as Map<any, any>;
-    return convertToFlat(grouped);
+    });
+    // without the groups or their columns the rows are not grouped
+    return grouped ? convertToFlat(grouped) : data;
 };
 
 export const convertToFlat = (grouped: Map<any, any>, key: any[] = []) => {
@@ -86,8 +108,14 @@ export const getGroupedStructure = ({
         const column = groupedColumns && groupedColumns.find((g) => g.key === group.columnKey);
         if (column) {
             const grouped = groupBy(data, (item: any) => getValueByColumn(item, column));
+            // the expanded groups by their values of this level: a Map finds them as the groups (NaN too) without searching the list for every group
+            const groupsExpandedByValue = new Map<unknown, unknown[][]>();
+            groupsExpanded?.forEach((ge) => {
+                const items = groupsExpandedByValue.get(ge[expandedDeep]);
+                items ? items.push(ge) : groupsExpandedByValue.set(ge[expandedDeep], [ge]);
+            });
             grouped.forEach((groupData, key) => {
-                const groupExpandedItems = groupsExpanded && groupsExpanded.filter((ge) => ge[expandedDeep] === key);
+                const groupExpandedItems = groupsExpanded && (groupsExpandedByValue.get(key) || []);
                 const isGroupExpanded = !groupExpandedItems
           || groupExpandedItems.some((ge) => ge.length === expandedDeep + 1);
                 if (isGroupExpanded) {
@@ -109,7 +137,8 @@ export const getGroupedStructure = ({
                         (newStructure as any).groupData = groupData;
                         grouped.set(key, newStructure);
                     } else if (group.enableSummary) {
-                        groupData.push(getGroupSummary([...groupData], fullKey, expandedDeep));
+                        // the summary row follows the rows of the group, but it is not one of its groupItems
+                        grouped.set(key, Object.assign([...groupData, getGroupSummary(groupData, fullKey, expandedDeep)], { groupDataMark, groupData }));
                     }
                 } else {
                     const emptyArray: any = [];
@@ -157,10 +186,11 @@ export const getGroupText = (value: any, column: Column, format?: FormatFunc, gr
     // the value of the group is its key, where dates and objects are strings (see normalizeKeyForMap):
     // format gets the value of the rows of the group, as in their cells
     const formattedValue = format && format({ column, value: normalizeKeyForMap(rowValue) === value ? rowValue : value, rowData });
-    return formattedValue != null ? formattedValue : `${(column && column.title ? column.title + ': ' : '')}${value}`;
+    return isFormattedValue(formattedValue) ? formattedValue : `${(column && column.title ? column.title + ': ' : '')}${value}`;
 };
 
 export const isMaxDeep = (groupPanel: GroupPanelSettings, columns: Column[], groups?: Group[]) => {
     const deep = groupPanel.deep || columns?.length - 1;
-    return groups?.length && (groups?.length >= deep);
+    const enabledGroups = getEnabledGroups(groups);
+    return enabledGroups?.length && (enabledGroups.length >= deep);
 }

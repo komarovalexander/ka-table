@@ -388,19 +388,57 @@ describe('prepareTableOptions', () => {
     });
 });
 
+describe('getData of a tree', () => {
+    it('sorts the found rows together with their parents', () => {
+        const data = [
+            { id: 1, name: 'Alpha', parentId: null },
+            { id: 2, name: 'Zed x', parentId: 1 },
+            { id: 3, name: 'Beta', parentId: null },
+            { id: 4, name: 'Ann x', parentId: 3 },
+        ];
+        const result = getData({
+            columns: [{ key: 'name', sortDirection: SortDirection.Ascend }],
+            data,
+            rowKeyField: 'id',
+            searchText: 'x',
+            treeGroupKeyField: 'parentId',
+        });
+        expect(result.map((item) => item.rowData.name)).toEqual(['Alpha', 'Zed x', 'Beta', 'Ann x']);
+    });
+});
+
+describe('the selection of all the rows', () => {
+    it('is false when no rows are shown', () => {
+        const tableProps: ITableProps = { columns: [{ key: 'name' }], data: [{ id: 1, name: 'a' }], rowKeyField: 'id', searchText: 'zzz', selectedRows: [] };
+        expect(areAllFilteredRowsSelected(tableProps)).toBe(false);
+        expect(areAllVisibleRowsSelected(tableProps)).toBe(false);
+    });
+    it('reads the keys of a tree', () => {
+        const tableProps: ITableProps = {
+            columns: [{ key: 'name' }],
+            data: [{ id: 1, parentId: null }, { id: 2, parentId: 1 }],
+            rowKeyField: 'id',
+            selectedRows: [1],
+            treeGroupKeyField: 'parentId',
+        };
+        expect(areAllVisibleRowsSelected(tableProps)).toBe(false);
+        expect(areAllVisibleRowsSelected({ ...tableProps, selectedRows: [1, 2] })).toBe(true);
+    });
+});
+
 describe('areAllFilteredRowsSelected', () => {
     it('true', () => {
         const tableProps: ITableProps = {
             columns: [
                 {
-                    key: 'test',
+                    key: 'id',
                     filterRowValue: 4,
                     filterRowOperator: FilterOperatorName.LessThanOrEqual,
                 },
             ],
             data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
             selectedRows: [1, 2, 3, 4],
-            rowKeyField: 'test',
+            rowKeyField: 'id',
             paging: {
                 enabled: true,
                 pageSize: 2,
@@ -573,14 +611,14 @@ describe('areAllVisibleRowsSelected', () => {
         const tableProps: ITableProps = {
             columns: [
                 {
-                    key: 'test',
+                    key: 'id',
                     filterRowValue: 4,
                     filterRowOperator: FilterOperatorName.LessThanOrEqual,
                 },
             ],
             data: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }],
             selectedRows: [1, 2, 3, 5],
-            rowKeyField: 'test',
+            rowKeyField: 'id',
             paging: {
                 enabled: true,
                 pageSize: 2,

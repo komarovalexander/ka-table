@@ -6,6 +6,8 @@ import React from 'react';
 import { DataType, Table } from '../../lib';
 import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
 const dataArray = Array(119).fill(undefined).map(
     (_, index) => ({
         column1: index % 2 === 0,
@@ -28,7 +30,7 @@ const CustomThemeDemo: React.FC = () => {
                 ]}
                 format= {({ column, value }) => {
                     if (column.dataType === DataType.Date){
-                        return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value && dateFormat.format(value);
                     }
                 }}
                 paging= {{

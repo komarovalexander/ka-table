@@ -6,6 +6,8 @@ import { closeRowEditors, openRowEditors, saveRowEditors } from '../../lib/actio
 
 import React from 'react';
 
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2021, 10, 8, 10) },
@@ -73,7 +75,7 @@ const EditingDemoRow = () => {
                 ]}
                 format= {({ column, value }) => {
                     if (column.dataType === DataType.Date){
-                        return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value && dateFormat.format(value);
                     }
                 }}
                 data={dataArray}

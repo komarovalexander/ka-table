@@ -56,4 +56,22 @@ describe('CellText', () => {
         fireEvent.click(container.querySelector('.ka-cell-text')!);
         expect(props.dispatch).toHaveBeenCalledTimes(0);
     });
+
+    it.each([
+        [0, '0'],
+        ['', '\u00a0'],
+    ])('shows %j of format instead of the value', (formattedValue, text) => {
+        const { container } = render(<CellText {...props} value={0.4} format={() => formattedValue} />);
+        expect(container.querySelector('.ka-cell-text')!.textContent).toBe(text);
+    });
+
+    it('shows the value 0', () => {
+        const { container } = render(<CellText {...props} value={0} />);
+        expect(container.querySelector('.ka-cell-text')!.textContent).toBe('0');
+    });
+
+    it.each([undefined, null, false])('shows the value when format returns %s (e.g. of condition && text)', (formattedValue) => {
+        const { container } = render(<CellText {...props} value={0.4} format={() => formattedValue} />);
+        expect(container.querySelector('.ka-cell-text')!.textContent).toBe('0.4');
+    });
 });

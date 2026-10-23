@@ -1,6 +1,6 @@
 import React, { RefObject, useEffect, useMemo, useRef } from 'react';
 import { checkIndexOdd, getValueByField } from '../../Utils/DataUtils';
-import { getGroupMark, getGroupText, groupSummaryMark } from '../../Utils/GroupUtils';
+import { getGroupKeyId, getGroupMark, getGroupText, groupSummaryMark } from '../../Utils/GroupUtils';
 import { treeDataMark, treeGroupMark } from '../../Utils/TreeUtils';
 
 import DataAndDetailsRows, { DataAndDetailsRowsMemo } from '../DataAndDetailsRows/DataAndDetailsRows';
@@ -10,7 +10,7 @@ import GroupRow from '../GroupRow/GroupRow';
 import { GroupSummaryRow } from '../GroupSummaryRow/GroupSummaryRow';
 import { ITableBodyProps } from '../../props';
 import { MemoizedRowsContext } from './MemoizedRowsContext';
-import { getRowKeyValues } from '../../Utils/NavigationUtils';
+import { getRowKeyValues } from '../../Utils/RowUtils';
 
 export interface IRowsProps extends ITableBodyProps {
     onFirstRowRendered: (firstRowRef: RefObject<HTMLElement | null>) => any;
@@ -60,7 +60,8 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     // lookups by key instead of searching the arrays for every row
     const selectedRowsSet = useMemo(() => new Set(selectedRows), [selectedRows]);
     const detailsRowsSet = useMemo(() => new Set(detailsRows), [detailsRows]);
-    const expandedGroupKeys = useMemo(() => new Set(groupsExpanded.map((groupKey) => JSON.stringify(groupKey))), [groupsExpanded]);
+    const treeGroupsExpandedSet = useMemo(() => treeGroupsExpanded && new Set(treeGroupsExpanded), [treeGroupsExpanded]);
+    const expandedGroupKeys = useMemo(() => new Set(groupsExpanded.map((groupKey) => getGroupKeyId(groupKey))), [groupsExpanded]);
     const editableCellsByRow = useMemo(() => groupEditableCellsByRow(editableCells), [editableCells]);
     // with the keyboard navigation the first cell gets the focus by Tab while the focused cell is not shown
     const focusedCell = useMemo(() => {
@@ -86,6 +87,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
         <MemoizedRowsContext.Provider value={!!memoizedRows}>
             {data.map((d, index) => {
                 if (d.groupMark === groupMark) {
+                    const groupKeyId = getGroupKeyId(d.key);
                     const groupIndex = d.key.length - 1;
                     const group = groups && groups[groupIndex];
                     const column = group && groupedColumns.find((c) => c.key === group.columnKey)!;
@@ -100,9 +102,9 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                             groupItems={d.groupItems}
                             columns={columns}
                             groupedColumns={groupedColumns}
-                            isExpanded={expandedGroupKeys.has(JSON.stringify(d.key))}
+                            isExpanded={expandedGroupKeys.has(groupKeyId)}
                             text={getGroupText(d.value, column, format, d.groupItems)}
-                            key={JSON.stringify(d.key)}
+                            key={groupKeyId}
                         />
                     );
                 } else if (d.groupSummaryMark === groupSummaryMark) {
@@ -113,7 +115,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                     const isTreeRow = isTreeGroup || isTreeData;
                     const rowData = isTreeRow ? d.rowData : d;
                     const rowKeyValue = getValueByField(rowData, rowKeyField);
-                    const isTreeExpanded = isTreeGroup && (!treeGroupsExpanded || treeGroupsExpanded.includes(rowKeyValue));
+                    const isTreeExpanded = isTreeGroup && (!treeGroupsExpandedSet || treeGroupsExpandedSet.has(rowKeyValue));
                     const isSelectedRow = selectedRowsSet.has(rowKeyValue);
                     const isDetailsRowShown = detailsRowsSet.has(rowKeyValue);
                     const rowEditableCells = editableCellsByRow.get(rowKeyValue) || emptyArray;

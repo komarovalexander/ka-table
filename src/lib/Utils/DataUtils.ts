@@ -1,7 +1,7 @@
 import { getField, getFieldParts, getLastField, getLastFieldParents } from './ColumnUtils';
 
 import { Column } from '../Models/Column';
-import { Field } from '../types';
+import { Field, FormatFunc } from '../types';
 
 export const getParentValue = (rowData: any, fieldParents: Field[]) => {
     const parentValue = fieldParents.reduce((previousValue, currentValue) => {
@@ -32,6 +32,20 @@ export const createObjByFields = (fieldParents: Field[], field: Field, value: an
 
 export const getValueByColumn = (rowData: any, column: Column) => {
     return getValueByField(rowData, getField(column));
+};
+
+// format doesn't format the value when it returns undefined, null or false (e.g. of condition && ...), 0 and '' are formatted values
+export const isFormattedValue = (formattedValue: unknown) => formattedValue != null && formattedValue !== false;
+
+/**
+ * The value which the cell shows: the result of format or, when format doesn't format the value, the value as a string
+ */
+export const getFormattedValue = (value: unknown, column: Column, rowData: unknown, format?: FormatFunc) => {
+    const formattedValue = format?.({ column, value, rowData });
+    if (isFormattedValue(formattedValue)) {
+        return formattedValue;
+    }
+    return value == null ? undefined : String(value);
 };
 
 export const getValueByField = (rowData: any, field: Field) => {

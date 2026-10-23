@@ -8,6 +8,8 @@ import { IFilterRowEditorProps } from '../../lib/props';
 import React from 'react';
 import { kaDateUtils } from '../../lib/utils';
 
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2021, 12, 9) },
@@ -86,18 +88,15 @@ const NumberEditor = ({
 const DateEditor = ({
     column, dispatch,
 }: IFilterRowEditorProps) => {
-    const fieldValue = column.filterRowValue;
-    const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
     return (
         <div>
             <FilterOperators column={column} dispatch={dispatch}/>
             <input
                 type='date'
-                value={value || ''}
+                value={kaDateUtils.getDateInputValue(column.filterRowValue)}
                 onChange={(event) => {
-                    const targetValue = event.currentTarget.value;
-                    const filterRowValue = targetValue ? new Date(targetValue) : null;
-                    dispatch(updateFilterRowValue(column.key, filterRowValue));
+                    // the local date: new Date('YYYY-MM-DD') would be the midnight of UTC, the previous day west of it
+                    dispatch(updateFilterRowValue(column.key, kaDateUtils.getDateFromInputValue(event.currentTarget.value)));
                 }}
             />
         </div>
@@ -142,7 +141,7 @@ const FilterRowCustomEditorDemo = () => {
             editingMode={EditingMode.Cell}
             format= {({ column, value }) => {
                 if (column.dataType === DataType.Date){
-                    return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value && dateFormat.format(value);
                 }
             }}
             filteringMode= {FilteringMode.FilterRow}

@@ -7,6 +7,8 @@ import { ICellTextProps } from '../../lib/props';
 import React from 'react';
 import dataArray from './data';
 
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
 const CustomCell = ({
     column,
     rowKeyValue,
@@ -64,7 +66,7 @@ const CustomCellDemo = () => {
                     return `$${value}`;
                 }
                 if (column.dataType === DataType.Date){
-                    return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value && dateFormat.format(new Date(value));
                 }
             }}
             data={dataArray}

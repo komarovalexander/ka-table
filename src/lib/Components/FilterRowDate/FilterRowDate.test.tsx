@@ -5,6 +5,7 @@ import FilterRowDate from './FilterRowDate';
 import { IFilterRowEditorProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { getDateInputValue } from '../../Utils/DateUtils';
 
 const props: IFilterRowEditorProps = {
     column: {
@@ -30,6 +31,11 @@ describe('FliterRowDate', () => {
     it('shows a date of a JSON (a string)', () => {
         const { container } = render(<FilterRowDate {...props} column={{ ...props.column, filterRowValue: '2020-01-02' }} />);
         expect(container.querySelector('input')!.value).toBe('2020-01-02');
+    });
+
+    it('shows the timestamp 0', () => {
+        const { container } = render(<FilterRowDate {...props} column={{ ...props.column, filterRowValue: 0 }} />);
+        expect(container.querySelector('input')!.value).toBe(getDateInputValue(0));
     });
 
     it('should fire UpdateFilterRowValue', () => {

@@ -1,14 +1,15 @@
 import { ITableProps } from '../';
 import {
     clearAllFilters, clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
-    deselectRow, deselectRows, groupColumn, insertRow, loadData, moveColumnBefore, moveColumnToIndex, openAllEditors,
+    deselectRow, deselectRows, groupColumn, hideColumn, insertRow, loadData, moveColumnBefore, moveColumnToIndex, openAllEditors,
     reorderColumns, reorderRows, resizeColumn, saveAllEditors, saveNewRow, saveRowEditors, search, selectAllFilteredRows,
-    selectAllRows, selectAllVisibleRows, selectRow, selectRows, selectRowsRange, selectSingleRow, setSingleAction,
-    updateCellValue, updateData, updateEditorValue, updateFilterRowOperator, updateFilterRowValue, updateHeaderFilterValues,
-    updatePageSize, updatePopupPosition, updateRow, updateTreeGroupsExpanded, validate,
+    selectAllRows, selectAllVisibleRows, selectRow, selectRows, selectRowsRange, selectSingleRow, setSingleAction, showColumn,
+    ungroupColumn, updateCellValue, updateData, updateEditorValue, updateFilterRowOperator, updateFilterRowValue,
+    updateGroupsExpanded, updateHeaderFilterValues, updatePageSize, updatePopupPosition, updateRow, updateTreeGroupsExpanded, validate,
 } from '../actionCreators';
 import { ActionType, FilterOperatorName, InsertRowPosition } from '../enums';
 import { deepFreeze } from '../../testUtils/deepFreeze';
+import { getData } from '../Utils/PropsUtils';
 import { kaReducer as kaReducerOriginal } from './kaReducer';
 import { newRowId } from '../const';
 
@@ -225,6 +226,13 @@ describe('kaReducer', () => {
             };
             const result: ITableProps = kaReducer(state, saveRowEditors(5));
             expect(result).toBe(state);
+        });
+        it('skips the editors of the columns which are not in the table', () => {
+            const result: ITableProps = kaReducer({
+                ...intialState,
+                editableCells: [{ rowKeyValue: 1, columnKey: 'name', editorValue: 'b' }, { rowKeyValue: 1, columnKey: 'removed', editorValue: 'c' }],
+            }, saveRowEditors(1));
+            expect(result.data).toEqual([{ id: 1, name: 'b' }]);
         });
         it('validates the row with all its edited values', () => {
             const state: ITableProps = {
@@ -894,6 +902,195 @@ describe('kaReducer', () => {
                 insertRowPosition: InsertRowPosition.after
             }));
             expect(newState.data).toMatchSnapshot();
+        });
+    });
+    describe('a key which is not in the table', () => {
+        const intialState: ITableProps = {
+            columns: [{ key: 'id' }, { key: 'name' }],
+            data: [{ id: 1 }, { id: 2 }, { id: 3 }],
+            rowKeyField: 'id',
+        };
+        it.each([
+            ['HideColumn', hideColumn('typo')],
+            ['ShowColumn', showColumn('typo')],
+            ['UpdateFilterRowValue', updateFilterRowValue('typo', 'a')],
+            ['UpdateFilterRowOperator', updateFilterRowOperator('typo', FilterOperatorName.IsEmpty)],
+        ])('%s does not add a column', (_, action) => {
+            expect(kaReducer(intialState, action).columns).toEqual(intialState.columns);
+        });
+        it('InsertRow next to a row which is not in the data inserts the row at the start or at the end', () => {
+            const getIds = (action: ReturnType<typeof insertRow>) => kaReducer(intialState, action).data.map((d: { id: number }) => d.id);
+            expect(getIds(insertRow({ id: 4 }, { rowKeyValue: 99 }))).toEqual([4, 1, 2, 3]);
+            expect(getIds(insertRow({ id: 4 }, { rowKeyValue: 99, insertRowPosition: InsertRowPosition.after }))).toEqual([1, 2, 3, 4]);
+        });
+        it('UpdateCellValue of a row or a column which is not in the table changes nothing', () => {
+            expect(kaReducer(intialState, updateCellValue(99, 'name', 'x'))).toBe(intialState);
+            expect(kaReducer(intialState, updateCellValue(1, 'typo', 'x'))).toBe(intialState);
+        });
+    });
+    describe('DeleteRow removes the key of the row', () => {
+        it('from the selected, the details, the expanded and the edited rows and from the focused cell', () => {
+            const intialState: ITableProps = {
+                columns: [{ key: 'name' }],
+                data: [{ id: 1 }, { id: 2 }],
+                detailsRows: [1, 2],
+                editableCells: [{ rowKeyValue: 1, columnKey: 'name' }, { rowKeyValue: 2, columnKey: 'name' }],
+                focused: { cell: { rowKeyValue: 1, columnKey: 'name' } },
+                rowKeyField: 'id',
+                selectedRows: [1, 2],
+                treeGroupsExpanded: [1, 2],
+            };
+            expect(kaReducer(intialState, deleteRow(1))).toEqual({
+                ...intialState,
+                data: [{ id: 2 }],
+                detailsRows: [2],
+                editableCells: [{ rowKeyValue: 2, columnKey: 'name' }],
+                focused: { cell: undefined },
+                selectedRows: [2],
+                treeGroupsExpanded: [2],
+            });
+        });
+        it('keeps the props without the key', () => {
+            const intialState: ITableProps = { columns: [], data: [{ id: 1 }, { id: 2 }], rowKeyField: 'id', selectedRows: [2] };
+            expect(kaReducer(intialState, deleteRow(1)).selectedRows).toBe(intialState.selectedRows);
+        });
+    });
+    describe('IsEmpty and IsNotEmpty filter without a value', () => {
+        const intialState: ITableProps = {
+            columns: [
+                { key: 'name', filterRowOperator: FilterOperatorName.IsEmpty },
+                { key: 'score', filterRowOperator: FilterOperatorName.MoreThan, filterRowValue: 5 },
+            ],
+            data: [{ id: 1, name: 'a', score: 1 }, { id: 2, name: '', score: 10 }],
+            paging: { enabled: true, pageIndex: 1, pageSize: 1 },
+            rowKeyField: 'id',
+        };
+        it('ClearAllFilters clears their operators', () => {
+            const result: ITableProps = kaReducer(intialState, clearAllFilters());
+            expect(result.columns.map((c) => c.filterRowOperator)).toEqual([undefined, FilterOperatorName.MoreThan]);
+            expect(getData({ ...result, paging: undefined })).toEqual(intialState.data);
+        });
+        it('UpdateFilterRowOperator shows the first page when they are set or changed', () => {
+            const state: ITableProps = { ...intialState, columns: [{ key: 'name' }] };
+            expect(kaReducer(state, updateFilterRowOperator('name', FilterOperatorName.IsNotEmpty)).paging).toEqual({ ...state.paging, pageIndex: 0 });
+            const filtered: ITableProps = { ...intialState, columns: [{ key: 'name', filterRowOperator: FilterOperatorName.IsEmpty }] };
+            expect(kaReducer(filtered, updateFilterRowOperator('name', FilterOperatorName.Contains)).paging).toEqual({ ...state.paging, pageIndex: 0 });
+        });
+    });
+    describe('the keys of the shown rows of a tree and of groups', () => {
+        const treeState: ITableProps = {
+            columns: [{ key: 'name' }],
+            data: [{ id: 1, parentId: null }, { id: 2, parentId: 1 }, { id: 3, parentId: null }],
+            rowKeyField: 'id',
+            treeGroupKeyField: 'parentId',
+        };
+        const groupsState: ITableProps = {
+            columns: [{ key: 'type' }, { key: 'name' }],
+            data: [{ id: 1, type: 'a' }, { id: 2, type: 'b' }],
+            groups: [{ columnKey: 'type' }],
+            rowKeyField: 'id',
+        };
+        it('SelectAllVisibleRows', () => {
+            expect(kaReducer(treeState, selectAllVisibleRows()).selectedRows).toEqual([1, 2, 3]);
+            expect(kaReducer(groupsState, selectAllVisibleRows()).selectedRows).toEqual([1, 2]);
+        });
+        it('DeselectAllVisibleRows', () => {
+            expect(kaReducer({ ...treeState, selectedRows: [1, 2, 5] }, deselectAllVisibleRows()).selectedRows).toEqual([5]);
+        });
+        it('SelectRowsRange', () => {
+            expect(kaReducer(treeState, selectRowsRange(1, 3)).selectedRows).toEqual([1, 2, 3]);
+            expect(kaReducer(groupsState, selectRowsRange(2, 1)).selectedRows).toEqual([1, 2]);
+        });
+    });
+    describe('collapsing with paging and filters', () => {
+        it('UpdateGroupsExpanded keeps the groups of the other pages and the filtered groups expanded', () => {
+            const data = ['A', 'B', 'C', 'D'].flatMap((country, index) => [0, 1, 2].map((i) => ({ id: index * 3 + i, country })));
+            const intialState: ITableProps = {
+                columns: [{ key: 'country', filterRowValue: 'D', filterRowOperator: FilterOperatorName.IsNotEqual }, { key: 'id' }],
+                data,
+                groups: [{ columnKey: 'country' }],
+                paging: { enabled: true, pageSize: 5 },
+                rowKeyField: 'id',
+            };
+            expect(kaReducer(intialState, updateGroupsExpanded(['A'])).groupsExpanded).toEqual([['B'], ['C'], ['D']]);
+        });
+        it('UpdateTreeGroupsExpanded keeps the rows of the other pages and the filtered rows expanded', () => {
+            const data = [1, 2, 3, 4].flatMap((id) => [{ id, parentId: null }, { id: id * 10, parentId: id }]);
+            const intialState: ITableProps = {
+                columns: [{ key: 'id', filterRowValue: 30, filterRowOperator: FilterOperatorName.LessThan }],
+                data,
+                paging: { enabled: true, pageSize: 4 },
+                rowKeyField: 'id',
+                treeGroupKeyField: 'parentId',
+            };
+            expect(kaReducer(intialState, updateTreeGroupsExpanded(1)).treeGroupsExpanded).toEqual([2, 3, 4]);
+        });
+    });
+    describe('editing of the key column', () => {
+        const intialState: ITableProps = {
+            columns: [{ key: 'id' }, { key: 'name' }],
+            data: [{ id: 1, name: 'a' }, { id: 2, name: 'b' }],
+            detailsRows: [1],
+            focused: { cell: { columnKey: 'id', rowKeyValue: 1 } },
+            rowKeyField: 'id',
+            selectedRows: [1, 2],
+        };
+        it('UpdateCellValue replaces the row and moves its key', () => {
+            const result: ITableProps = kaReducer({ ...intialState, editableCells: [{ rowKeyValue: 1, columnKey: 'id' }] }, updateCellValue(1, 'id', 10));
+            expect(result.data).toEqual([{ id: 10, name: 'a' }, { id: 2, name: 'b' }]);
+            expect(result.selectedRows).toEqual([10, 2]);
+            expect(result.detailsRows).toEqual([10]);
+            expect(result.focused).toEqual({ cell: { columnKey: 'id', rowKeyValue: 10 } });
+            // closeEditor which follows updateCellValue in the cell editing has the previous key
+            expect(result.editableCells).toEqual([{ rowKeyValue: 1, columnKey: 'id' }]);
+        });
+        it('UpdateCellValue does not replace the row with the new key', () => {
+            expect(kaReducer(intialState, updateCellValue(1, 'id', 2)).data).toEqual([{ id: 2, name: 'a' }, { id: 2, name: 'b' }]);
+        });
+        it('SaveRowEditors replaces the row and moves its key', () => {
+            const result: ITableProps = kaReducer({
+                ...intialState,
+                editableCells: [{ rowKeyValue: 1, columnKey: 'id', editorValue: 10 }, { rowKeyValue: 1, columnKey: 'name', editorValue: 'c' }],
+            }, saveRowEditors(1));
+            expect(result.data).toEqual([{ id: 10, name: 'c' }, { id: 2, name: 'b' }]);
+            expect(result.selectedRows).toEqual([10, 2]);
+            expect(result.editableCells).toEqual([]);
+        });
+        it('SaveAllEditors saves all the editors of the rows and moves the keys of the editors', () => {
+            const result: ITableProps = kaReducer({
+                ...intialState,
+                editableCells: [
+                    { rowKeyValue: 1, columnKey: 'id', editorValue: 2 },
+                    { rowKeyValue: 1, columnKey: 'name', editorValue: 'c' },
+                    { rowKeyValue: 2, columnKey: 'id', editorValue: 1 },
+                    { rowKeyValue: 2, columnKey: 'name', editorValue: 'd' },
+                ],
+            }, saveAllEditors());
+            // the keys of the rows are swapped
+            expect(result.data).toEqual([{ id: 2, name: 'c' }, { id: 1, name: 'd' }]);
+            expect(result.selectedRows).toEqual([2, 1]);
+            expect(result.detailsRows).toEqual([2]);
+            expect(result.editableCells!.map((cell) => cell.rowKeyValue)).toEqual([2, 2, 1, 1]);
+        });
+    });
+    describe('UngroupColumn and GroupColumn', () => {
+        const intialState: ITableProps = {
+            columns: [{ key: 'type' }, { key: 'name' }, { key: 'city' }],
+            groups: [{ columnKey: 'type', enableSummary: true }, { columnKey: 'city' }],
+            rowKeyField: 'id',
+        };
+        it('keep the settings of a group (#336)', () => {
+            const ungrouped: ITableProps = kaReducer(intialState, ungroupColumn('type'));
+            expect(ungrouped.groups).toEqual([{ columnKey: 'type', enableSummary: true, enabled: false }, { columnKey: 'city' }]);
+            expect(kaReducer(ungrouped, groupColumn('type')).groups).toEqual([{ columnKey: 'city' }, { columnKey: 'type', enableSummary: true }]);
+        });
+        it('remove a group without settings', () => {
+            expect(kaReducer(intialState, ungroupColumn('city')).groups).toEqual([{ columnKey: 'type', enableSummary: true }]);
+            const state: ITableProps = { ...intialState, groups: [{ columnKey: 'type', enableSummary: false }] };
+            expect(kaReducer(state, ungroupColumn('type')).groups).toBeUndefined();
+        });
+        it('enable a disabled group of the props', () => {
+            expect(kaReducer({ ...intialState, groups: [{ columnKey: 'city', enabled: false }] }, groupColumn('city')).groups).toEqual([{ columnKey: 'city' }]);
         });
     });
 });

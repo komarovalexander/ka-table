@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import { ActionType, EditingMode } from '../enums';
-import { getNextColumnKey, getNextRowKeyValue, getRowKeyValue, getRowKeyValues } from '../Utils/NavigationUtils';
+import { getNextColumnKey, getNextRowKeyValue } from '../Utils/NavigationUtils';
+import { getRowKeyValue, getRowKeyValues } from '../Utils/RowUtils';
 import { openEditor, setFocused, updatePageIndex } from '../actionCreators';
 
 import { Cell } from '../Models/Cell';
@@ -171,6 +172,22 @@ export const useCellKeyboardNavigation = (props: ICellProps) => {
             element.focus();
         }
     }, [navigation, isFocused, isEditableCell, column.key, rowKeyValue]);
+
+    useIsomorphicLayoutEffect(() => {
+        const element = elementRef.current;
+        return () => {
+            // the cell is removed with the focus in its editor (e.g. its row gets the key typed in the editor):
+            // the focus goes to the focused cell of the updated table, as from a closed editor
+            if (navigation && element && isEditableCellRef.current && element.contains(document.activeElement)) {
+                const table = element.closest('table');
+                queueMicrotask(() => {
+                    if (isFocusLost()) {
+                        table?.querySelector<HTMLElement>('tbody td[tabindex="0"]')?.focus();
+                    }
+                });
+            }
+        };
+    }, [navigation]);
 
     if (!navigation) {
         return undefined;

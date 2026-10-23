@@ -22,7 +22,7 @@ const emptyArray: any[] = [];
 const emptyChildComponents: ChildComponents = {};
 
 const getAreAllRowsSelected = (data: any[], selectedRows: any[], rowKeyField: string) => {
-    if (selectedRows.length < data.length) {
+    if (!data.length || selectedRows.length < data.length) {
         return false;
     }
     const selectedRowsSet = new Set(selectedRows);

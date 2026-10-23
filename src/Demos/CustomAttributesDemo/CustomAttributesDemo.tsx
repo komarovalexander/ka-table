@@ -3,6 +3,8 @@ import { DataType, Table } from '../../lib';
 import React from 'react';
 import { SortingMode } from '../../lib/enums';
 
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, tryDate: new Date(2021, 10, 9) },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, tryDate: new Date(2021, 10, 8) },
@@ -26,7 +28,7 @@ const CustomAttributesDemo: React.FC = () => {
             ]}
             format= {({ column, value }) => {
                 if (column.dataType === DataType.Date){
-                    return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value && dateFormat.format(value);
                 }
             }}
             paging= {{

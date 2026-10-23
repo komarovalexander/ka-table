@@ -52,25 +52,6 @@ exports[`FilterUtils > filterData > IsNotEmpty for date 1`] = `
 ]
 `;
 
-exports[`FilterUtils > filterData > by date 1`] = `
-[
-  {
-    "date": 2021-12-20T09:00:00.000Z,
-    "id": 1,
-    "name": "Mike Wazowski",
-    "passed": true,
-    "score": 80,
-  },
-  {
-    "date": 2021-12-20T13:00:00.000Z,
-    "id": 2,
-    "name": "Billi Bob",
-    "passed": false,
-    "score": 55,
-  },
-]
-`;
-
 exports[`FilterUtils > filterData > custom column filter 1`] = `
 [
   {

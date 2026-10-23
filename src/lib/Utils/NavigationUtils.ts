@@ -1,33 +1,13 @@
-import { getGroupedAndVisibleColumns, groupMark, groupSummaryMark } from './GroupUtils';
-import { treeDataMark, treeGroupMark } from './TreeUtils';
-
 import { Cell } from '../Models/Cell';
 import { Column } from '../Models/Column';
 import { ITableProps } from '../Components/Table/Table';
 import { getData } from './PropsUtils';
-import { getValueByField } from './DataUtils';
+import { getGroupedAndVisibleColumns } from './GroupUtils';
+import { getRowKeyValues } from './RowUtils';
 
 export interface IMoveFocusedSettings {
     end?: boolean
 }
-
-const hasCells = (row: any) => row.groupMark !== groupMark && row.groupSummaryMark !== groupSummaryMark;
-
-/**
- * The key of a row with cells (a tree row is unwrapped), undefined for group rows and group summary rows
- */
-export const getRowKeyValue = (row: any, rowKeyField: string): any => (
-    hasCells(row)
-        ? getValueByField(row.treeGroupMark === treeGroupMark || row.treeDataMark === treeDataMark ? row.rowData : row, rowKeyField)
-        : undefined
-);
-
-/**
- * The keys of the rows which have cells: group rows and group summary rows are skipped
- */
-export const getRowKeyValues = (data: any[], rowKeyField: string): any[] => data
-    .filter(hasCells)
-    .map((row) => getRowKeyValue(row, rowKeyField));
 
 /**
  * The next item: one item forward or back, or the last or the first item (end).

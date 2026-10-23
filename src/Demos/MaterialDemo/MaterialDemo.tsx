@@ -11,6 +11,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TextField from '@mui/material/TextField';
 import { filterAndSearchData } from '../../lib/Utils/FilterUtils';
 
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
 const dataArray = Array(119)
     .fill(undefined)
     .map((_, index) => ({
@@ -42,7 +44,7 @@ const MaterialDemo = () => {
                 ]}
                 format={({ column, value }) => {
                     if (column.dataType === DataType.Date) {
-                        return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value && dateFormat.format(new Date(value));
                     }
                 }}
                 paging={{

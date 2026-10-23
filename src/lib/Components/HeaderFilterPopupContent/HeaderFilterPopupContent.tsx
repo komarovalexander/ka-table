@@ -5,7 +5,7 @@ import { updateHeaderFilterSearchValue, updateHeaderFilterValues } from '../../a
 
 import CellEditorBoolean from '../CellEditorBoolean/CellEditorBoolean';
 import { IHeaderFilterPopupProps } from '../../props';
-import { getValueByColumn } from '../../Utils/DataUtils';
+import { getFormattedValue, getValueByColumn } from '../../Utils/DataUtils';
 
 type HeaderFilterItem = { value: string; isSelected: boolean; };
 
@@ -18,14 +18,9 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
         format
     } = props;
     let headerFilterValues: string[] | undefined;
-    headerFilterValues = column?.headerFilterListItems ? column?.headerFilterListItems({ data }) : data?.map((item) => {
-        const value = getValueByColumn(item, column);
-
-        const formattedValue =
-            (format && format({ column, value, rowData: item }))
-            || value?.toString();
-        return formattedValue;
-    });
+    headerFilterValues = column?.headerFilterListItems
+        ? column?.headerFilterListItems({ data })
+        : data?.map((item) => getFormattedValue(getValueByColumn(item, column), column, item, format));
     headerFilterValues = Array.from(new Set(headerFilterValues));
     const headerFilterValuesData: HeaderFilterItem[] = headerFilterValues?.map((value) => ({ value, isSelected: !!column.headerFilterValues && column.headerFilterValues.includes(value) }));
     const selectedColumnKey = `${column.key}_isSelected`;

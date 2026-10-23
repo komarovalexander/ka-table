@@ -14,7 +14,7 @@ const FilterRowString: React.FunctionComponent<IFilterRowEditorProps> = (props) 
         className: defaultOptions.css.textInput,
         'aria-label': column.title,
         type: 'search',
-        value: column.filterRowValue || '',
+        value: column.filterRowValue ?? '',
         onChange: (event) => {
             dispatch(updateFilterRowValue(column.key, event.currentTarget.value));
         }

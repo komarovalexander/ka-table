@@ -40,4 +40,9 @@ describe('FilterRowString', () => {
             { type: ActionType.UpdateFilterRowValue, columnKey: 'nameKey', filterRowValue: newValue },
         );
     });
+
+    it('shows the value 0', () => {
+        const { container } = render(<FilterRowString {...props} column={{ ...props.column, filterRowValue: 0 }} />);
+        expect(container.querySelector('input')!.value).toBe('0');
+    });
 });

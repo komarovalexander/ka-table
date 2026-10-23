@@ -4,6 +4,7 @@ import { EditingMode } from '../../enums';
 import { ICellTextProps } from '../../props';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { getFormattedValue } from '../../Utils/DataUtils';
 import { openEditor } from '../../actionCreators';
 
 const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
@@ -18,9 +19,9 @@ const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
         value,
     } = props;
 
-    const formattedValue =
-        (format && format({ column, value, rowData  }))
-        || value?.toString();
+    const formattedValue = getFormattedValue(value, column, rowData, format);
+    // &nbsp; keeps the height of an empty cell, 0 is shown
+    const text = formattedValue || formattedValue === 0 ? formattedValue : <>&nbsp;</>;
 
     const { elementAttributes, content } = getElementCustomization({
         className: defaultOptions.css.cellText,
@@ -32,7 +33,7 @@ const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
     }, props, childComponents.cellText);
 
     return (
-        <div {...elementAttributes}>{content || formattedValue || <>&nbsp;</>}</div>
+        <div {...elementAttributes}>{content || text}</div>
     );
 };
 

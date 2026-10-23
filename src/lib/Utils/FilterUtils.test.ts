@@ -1,14 +1,16 @@
 import { DataType, FilterOperatorName } from '../enums';
+import { FormatFunc, SearchFunc } from '../types';
 import {
+    filterByHeaderFilter,
     filterData,
     getDefaultOperatorForType,
     getRowEditableCells,
+    isFilteredByFilterRow,
     predefinedFilterOperators,
     searchData,
 } from './FilterUtils';
 
 import { Column } from '../Models/Column';
-import { SearchFunc } from '../types';
 
 describe('FilterUtils', () => {
     it('getRowEditableCells should return required cells from table EditableCells', () => {
@@ -47,15 +49,16 @@ describe('FilterUtils', () => {
         });
 
         it('by date', () => {
-            const columnsDate: Column[] = [
-                {
-                    dataType: DataType.Date,
-                    filterRowValue: new Date(Date.UTC(2021, 11, 20, 19, 18, 12)),
-                    key: 'date',
-                },
+            // the local dates: the rows of the local day of the filter are found in any time zone
+            const dates = [
+                { id: 1, date: new Date(2021, 11, 20, 0, 0) },
+                { id: 2, date: new Date(2021, 11, 20, 23, 59) },
+                { id: 3, date: new Date(2021, 11, 19, 23, 59) },
+                { id: 4, date: new Date(2021, 11, 21, 0, 0) },
+                { id: 5, date: null },
             ];
-            const result = filterData(data, columnsDate);
-            expect(result).toMatchSnapshot();
+            const columnsDate: Column[] = [{ dataType: DataType.Date, filterRowValue: new Date(2021, 11, 20, 19, 18, 12), key: 'date' }];
+            expect(filterData(dates, columnsDate).map((d) => d.id)).toEqual([1, 2]);
         });
 
         it('IsEmpty for date', () => {
@@ -284,6 +287,65 @@ describe('FilterUtils', () => {
         it('should find value by search handler', () => {
             const result = searchData(columns, data, 'true', search);
             expect(result).toMatchSnapshot();
+        });
+    });
+
+    describe('searchData finds the shown text', () => {
+        const columns: Column[] = [
+            { key: 'date', dataType: DataType.Date },
+            { key: 'price', dataType: DataType.Number },
+            { key: 'link' },
+            { key: 'secret', visible: false },
+        ];
+        const data = [{ id: 1, date: new Date(2021, 10, 8), price: 1000, link: 'docs', secret: 'hidden' }];
+        const format: FormatFunc = ({ column, value }) => {
+            if (column.key === 'date') {
+                return value.toLocaleDateString('en-US');
+            }
+            if (column.key === 'price') {
+                return `$${value.toFixed(2)}`;
+            }
+            if (column.key === 'link') {
+                // a value which is not a text, e.g. a React element
+                return { element: value };
+            }
+        };
+        it.each([
+            ['11/8/2021', 1],
+            ['GMT', 0],
+            ['$1000.00', 1],
+            ['docs', 1],
+            ['hidden', 0],
+        ])('%s', (searchText, count) => {
+            expect(searchData(columns, data, searchText, undefined, format)).toHaveLength(count);
+        });
+        it('searches the hidden columns only by the search function', () => {
+            const search: SearchFunc = ({ column, rowData, searchText }) => (column.key === 'secret' ? rowData.secret === searchText : undefined);
+            expect(searchData(columns, data, 'hidden', search, format)).toHaveLength(1);
+            expect(searchData(columns, data, 'hid', search, format)).toHaveLength(0);
+        });
+        it('searches the value when format returns false (e.g. of condition && text)', () => {
+            expect(searchData(columns, data, '1000', undefined, ({ column, value }) => column.key === 'date' && value.toLocaleDateString('en-US'))).toHaveLength(1);
+            expect(searchData(columns, data, 'false', undefined, () => false)).toHaveLength(0);
+        });
+    });
+
+    describe('the filters', () => {
+        it('isFilteredByFilterRow', () => {
+            expect(isFilteredByFilterRow({ key: 'a' })).toBe(false);
+            expect(isFilteredByFilterRow({ key: 'a', filterRowValue: '' })).toBe(false);
+            expect(isFilteredByFilterRow({ key: 'a', filterRowValue: 0 })).toBe(true);
+            expect(isFilteredByFilterRow({ key: 'a', filterRowOperator: FilterOperatorName.IsEmpty })).toBe(true);
+            expect(isFilteredByFilterRow({ key: 'a', filterRowOperator: FilterOperatorName.IsNotEmpty })).toBe(true);
+        });
+        it('a date without time is the local date', () => {
+            const columns: Column[] = [{ key: 'date', dataType: DataType.Date, filterRowValue: new Date(2021, 10, 8) }];
+            expect(filterData([{ id: 1, date: '2021-11-08' }, { id: 2, date: '2021-11-09' }], columns).map((d) => d.id)).toEqual([1]);
+        });
+        it('the header filter uses an empty text of format', () => {
+            const columns: Column[] = [{ key: 'score', headerFilterValues: [''] }];
+            const format: FormatFunc = ({ value }) => (value > 0 ? String(value) : '');
+            expect(filterByHeaderFilter([{ id: 1, score: -1 }, { id: 2, score: 2 }], columns, format).map((d) => d.id)).toEqual([1]);
         });
     });
 });

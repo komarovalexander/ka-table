@@ -9,7 +9,7 @@ import defaultOptions from '../../defaultOptions';
 import { buttonAttributes, getAriaLabel } from '../../Utils/AriaUtils';
 import { getEditableCell } from '../../Utils/CellUtils';
 import { getField } from '../../Utils/ColumnUtils';
-import { getValueByColumn } from '../../Utils/DataUtils';
+import { getFormattedValue, getValueByColumn } from '../../Utils/DataUtils';
 import { updateTreeGroupsExpanded } from '../../actionCreators';
 
 const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
@@ -56,7 +56,7 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
                 const isTreeColumn = treeExpandButtonColumnKey ? treeExpandButtonColumnKey === column.key : index === 0;
                 const cellDeep = treeDeep != null && isTreeColumn ? treeDeep : undefined;
                 const treeArrowElement = isTreeGroup && isTreeColumn
-                    ? getTreeArrow(getAriaLabel((format && format({ column, value, rowData })) || value))
+                    ? getTreeArrow(getAriaLabel(getFormattedValue(value, column, rowData, format)))
                     : undefined;
                 return (
                     <Cell

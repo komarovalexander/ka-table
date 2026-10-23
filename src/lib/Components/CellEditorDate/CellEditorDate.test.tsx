@@ -5,6 +5,7 @@ import CellEditorDate from './CellEditorDate';
 import { ICellEditorProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { getDateInputValue } from '../../Utils/DateUtils';
 
 const props: ICellEditorProps = {
     column: {
@@ -61,6 +62,17 @@ describe('CellEditorDate', () => {
             type: ActionType.UpdateCellValue,
             value: '2020-02-02',
         });
+    });
+
+    it('keeps the year which is being typed', () => {
+        const { container } = render(<CellEditorDate {...props} value={new Date(2020, 0, 2)} />);
+        fireEvent.change(container.querySelector('input')!, { target: { value: '0002-11-08' } });
+        expect((vi.mocked(props.dispatch).mock.calls[0][0] as { value: Date }).value.getFullYear()).toBe(2);
+    });
+
+    it('shows the timestamp 0', () => {
+        const { container } = render(<CellEditorDate {...props} value={0} />);
+        expect(container.querySelector('input')!.value).toBe(getDateInputValue(0));
     });
 
     it('should dispatch CloseEditor', () => {

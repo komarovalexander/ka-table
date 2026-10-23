@@ -6,14 +6,18 @@ import { EditableCell } from '../Models/EditableCell';
 import { FilterOperator } from '../Models/FilterOperator';
 import { ITableProps } from '../';
 import defaultOptions from '../defaultOptions';
-import { getValueByColumn } from './DataUtils';
+import { getDate } from './DateUtils';
+import { getFormattedValue, getValueByColumn, isFormattedValue } from './DataUtils';
 import { isEmpty } from './CommonUtils';
 
 export const getRowEditableCells = (rowKeyValue: any, editableCells: EditableCell[]): EditableCell[] => {
     return editableCells.filter((c) => c.rowKeyValue === rowKeyValue);
 };
 
-export const searchData = (columns: Column[], data: any[], searchText: string, search?: SearchFunc): any[] => {
+/**
+ * The rows which show the text: the formatted values are searched by their text, the hidden columns only by the search function
+ */
+export const searchData = <TData>(columns: Column[], data: TData[], searchText: string, search?: SearchFunc, format?: FormatFunc): TData[] => {
     const lowerCaseSearchText = searchText.toLowerCase();
     // a set instead of searching in the found rows for every row of every column
     const found = new Set<any>();
@@ -29,8 +33,14 @@ export const searchData = (columns: Column[], data: any[], searchText: string, s
                 }
                 return;
             }
+            if (c.visible === false) {
+                return;
+            }
             const columnValue = getValueByColumn(item, c);
-            if (columnValue != null && columnValue.toString().toLowerCase().includes(lowerCaseSearchText)) {
+            const formattedValue = format?.({ column: c, value: columnValue, rowData: item });
+            // the value which format doesn't format or formats not as a text (e.g. as an element) is searched by itself
+            const text = isFormattedValue(formattedValue) && typeof formattedValue !== 'object' ? formattedValue : columnValue;
+            if (text != null && text.toString().toLowerCase().includes(lowerCaseSearchText)) {
                 found.add(item);
             }
         });
@@ -52,7 +62,7 @@ export const filterAndSearchData = (props: ITableProps) => {
     } = props;
     data = [...data];
     data = extendedFilter ? extendedFilter(data) : data;
-    data = searchText ? searchData(columns, data, searchText, search) : data;
+    data = searchText ? searchData(columns, data, searchText, search, format) : data;
     data = filterData(data, columns, filter);
     data = filterByHeaderFilter(data, columns, format);
 
@@ -74,13 +84,16 @@ const getCompare = (column: Column) => {
     return filterOperator?.compare;
 };
 
+// IsEmpty and IsNotEmpty filter the rows without a value of the filter
+export const isFilterOperatorWithoutValue = (filterRowOperator?: string) => (
+    filterRowOperator === FilterOperatorName.IsEmpty || filterRowOperator === FilterOperatorName.IsNotEmpty
+);
+
+export const isFilteredByFilterRow = (column: Column) => !isEmpty(column.filterRowValue) || isFilterOperatorWithoutValue(column.filterRowOperator);
+
 export const filterData = (data: any[], columns: Column[], filter?: FilterFunc): any[] => {
     return columns.reduce((initialData, column) => {
-        if (
-            isEmpty(column.filterRowValue)
-            && column.filterRowOperator !== FilterOperatorName.IsEmpty
-            && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
-        ) {
+        if (!isFilteredByFilterRow(column)) {
             return initialData;
         }
         const customFilter = column.filter || filter?.({ column });
@@ -93,8 +106,8 @@ export const filterData = (data: any[], columns: Column[], filter?: FilterFunc):
             let fieldValue = getValueByColumn(d, column);
             let conditionValue = column.filterRowValue;
             if (column.dataType === DataType.Date && !customFilter) {
-                fieldValue = fieldValue == null ? fieldValue : new Date(fieldValue).setHours(0, 0, 0, 0);
-                conditionValue = conditionValue == null ? conditionValue : new Date(conditionValue).setHours(0, 0, 0, 0);
+                fieldValue = fieldValue == null ? fieldValue : getDate(fieldValue).setHours(0, 0, 0, 0);
+                conditionValue = conditionValue == null ? conditionValue : getDate(conditionValue).setHours(0, 0, 0, 0);
             }
             return compare(fieldValue, conditionValue, d);
         });
@@ -158,10 +171,7 @@ export const filterByHeaderFilter = (data: any[], columns: Column[], format?: Fo
             if (column?.filter) {
                 return column.filter(value, column.headerFilterValues, item);
             }
-            const fieldValue =
-                (format && format({ column, value, rowData: item }))
-                || value?.toString();
-            return column.headerFilterValues?.includes(fieldValue);
+            return column.headerFilterValues?.includes(getFormattedValue(value, column, item, format));
         });
     }, data);
 }

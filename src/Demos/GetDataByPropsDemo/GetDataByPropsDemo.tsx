@@ -6,6 +6,8 @@ import { Table, useTable } from '../../lib';
 
 import { kaPropsUtils } from '../../lib/utils';
 
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2019, 10, 8, 10) },
@@ -47,7 +49,7 @@ const GetDataByPropsDemo = () => {
                 editingMode={EditingMode.Cell}
                 format={({ column, value }) => {
                     if (column.dataType === DataType.Date){
-                        return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value && dateFormat.format(value);
                     }
                 }}
                 rowKeyField={'id'}

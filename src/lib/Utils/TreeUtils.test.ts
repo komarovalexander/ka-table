@@ -112,6 +112,33 @@ describe('TreeUtils', () => {
     });
 
 
+    describe('the parents of the rows', () => {
+        type Row = { id: number, parentId: number | null };
+        const getRows = (data: Row[], shownData = data) => getTreeData({ data: shownData, originalData: data, rowKeyField: 'id', treeGroupKeyField: 'parentId' })
+            .map((item) => [item.rowData.id, item.treeDeep, item.treeGroupMark === treeGroupMark]);
+        it('a parent with the key 0', () => {
+            expect(getRows([{ id: 0, parentId: null }, { id: 1, parentId: 0 }])).toEqual([[0, 0, true], [1, 2, false]]);
+        });
+        it('a row whose parent is not in the data is a root', () => {
+            const data = [{ id: 1, parentId: null }, { id: 2, parentId: 99 }];
+            expect(getRows(data)).toEqual([[1, 1, false], [2, 1, false]]);
+            expect(getRows(data, [data[1]])).toEqual([[2, 1, false]]);
+        });
+        it('a row whose parent is the row itself is a root', () => {
+            expect(getRows([{ id: 0, parentId: 0 }, { id: 1, parentId: 0 }, { id: 5, parentId: 5 }])).toEqual([[0, 0, true], [1, 2, false], [5, 1, false]]);
+        });
+        it('a found row with a cycle of its parents', () => {
+            const data = [{ id: 1, parentId: 2 }, { id: 2, parentId: 1 }, { id: 3, parentId: 1 }];
+            expect(() => getRows(data, [data[2]])).not.toThrow();
+        });
+        it('the parents of the found rows keep the order of the data', () => {
+            const data = [{ id: 1, parentId: null }, { id: 2, parentId: null }, { id: 3, parentId: 2 }, { id: 4, parentId: 1 }];
+            expect(getRows(data, [data[2], data[3]]).map(([id]) => id)).toEqual([1, 4, 2, 3]);
+            // the copies of the rows (e.g. of extendedFilter) are ordered by their keys, the new rows follow the data
+            expect(getRows(data, [{ id: 5, parentId: 2 }, { ...data[3] }, { ...data[2] }]).map(([id]) => id)).toEqual([1, 4, 2, 3, 5]);
+        });
+    });
+
     describe('getExpandedParents', () => {
         it('default', () => {
             const data = [

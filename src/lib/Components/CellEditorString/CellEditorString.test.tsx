@@ -61,4 +61,9 @@ describe('CellEditorString', () => {
             rowKeyValue: 1,
         });
     });
+
+    it('shows the value 0', () => {
+        const { container } = render(<CellEditorString {...props} value={0} />);
+        expect(container.querySelector('input')!.value).toBe('0');
+    });
 });

@@ -1,11 +1,16 @@
 import {
     convertToFlat,
+    getEnabledGroups,
     getExpandedGroups,
+    getGroupKeyId,
     getGroupMark,
     getGroupText,
+    getGroupedAndVisibleColumns,
+    getGroupedData,
     getGroupedStructure,
     groupBy,
     groupDataMark,
+    groupMark,
     groupSummaryMark,
     isMaxDeep,
     normalizeKeyForMap,
@@ -266,6 +271,10 @@ describe('GroupUtils', () => {
             );
             expect(result).toEqual('a');
         });
+        it('the text of a format which does not format the value', () => {
+            expect(getGroupText('a', { key: 'type', title: 'Type' }, () => false)).toEqual('Type: a');
+            expect(getGroupText('a', { key: 'type', title: 'Type' }, () => '')).toEqual('');
+        });
         it('format - groupItems', () => {
             const result = getGroupText(
                 'Group Text',
@@ -274,6 +283,51 @@ describe('GroupUtils', () => {
                 [{ id: 'hello'}, {id: 'im robot'}],
             );
             expect(result).toEqual('Column: Column Title, Value: Group Text, rowData: {"id":"hello"}');
+        });
+    });
+
+    describe('a group with a summary', () => {
+        it('has the rows in groupItems, the summary row follows them', () => {
+            const rows = [{ id: 1, type: 'cat' }, { id: 2, type: 'cat' }];
+            const result = getGroupedData(rows, [{ columnKey: 'type', enableSummary: true }], [{ key: 'type' }]);
+            expect(result.map((item) => (item.groupMark === groupMark ? 'group' : item.groupSummaryMark === groupSummaryMark ? 'summary' : item.id)))
+                .toEqual(['group', 1, 2, 'summary']);
+            expect(result[0].groupItems).toEqual(rows);
+            expect(result[3].groupData).toEqual(rows);
+        });
+    });
+
+    describe('the keys of the groups', () => {
+        it('getGroupKeyId is different for null, undefined, NaN and Infinity', () => {
+            const keys = [[null], [undefined], [NaN], [Infinity], [-Infinity], ['null'], [null, undefined], [undefined, null]];
+            expect(new Set(keys.map((key) => getGroupKeyId(key))).size).toBe(keys.length);
+        });
+        it('updateExpandedGroups removes the group of the key only', () => {
+            expect(updateExpandedGroups([[null], [undefined]], [undefined])).toEqual([[null]]);
+        });
+        it('the group of NaN is expanded', () => {
+            const rows = [{ id: 1, n: NaN }, { id: 2, n: 1 }];
+            const result = getGroupedData(rows, [{ columnKey: 'n' }], [{ key: 'n' }], [[NaN]]);
+            expect(result.map((item) => (item.groupMark === groupMark ? `group ${item.value}` : item.id))).toEqual(['group NaN', 1, 'group 1']);
+        });
+    });
+
+    describe('the disabled groups', () => {
+        const disabledGroup: Group = { columnKey: 'type', enabled: false };
+        it('getEnabledGroups', () => {
+            const enabledGroups: Group[] = [{ columnKey: 'name' }];
+            expect(getEnabledGroups([...enabledGroups, disabledGroup])).toEqual(enabledGroups);
+            expect(getEnabledGroups(enabledGroups)).toBe(enabledGroups);
+            expect(getEnabledGroups([disabledGroup])).toBeUndefined();
+            expect(getEnabledGroups([])).toBeUndefined();
+        });
+        it('do not group the rows', () => {
+            const rows = [{ id: 1, type: 'a' }];
+            expect(getGroupedData(rows, [disabledGroup], [{ key: 'type' }])).toEqual(rows);
+            expect(getGroupedData(rows, [], [])).toEqual(rows);
+            expect(getGroupedAndVisibleColumns([{ key: 'type' }, { key: 'name' }], [disabledGroup]))
+                .toEqual({ columns: [{ key: 'type' }, { key: 'name' }], groupColumnsCount: 0, groupedColumns: [] });
+            expect(isMaxDeep({ deep: 1 }, [{ key: 'type' }, { key: 'name' }], [disabledGroup])).toBeFalsy();
         });
     });
 

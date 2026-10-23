@@ -263,16 +263,16 @@ exports[`TreeUtils > getTreeData > default 1`] = `
 exports[`TreeUtils > restoreFilteredData > 2 levels 1`] = `
 [
   {
-    "id": 4,
-    "name": "Level 2 - 2 - 1",
-    "orderCount": 7,
-    "treeGroupId": 9,
-  },
-  {
     "id": 9,
     "name": "Level 1 - 2",
     "orderCount": 7,
     "treeGroupId": null,
+  },
+  {
+    "id": 4,
+    "name": "Level 2 - 2 - 1",
+    "orderCount": 7,
+    "treeGroupId": 9,
   },
   {
     "id": 6,

@@ -3,6 +3,8 @@ import { FilteringMode, SortDirection } from '../../lib/enums';
 
 import React from 'react';
 
+const dateFormat = new Intl.DateTimeFormat(navigator.language || 'en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2024, 10, 9) },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2024, 10, 8) },
@@ -29,7 +31,7 @@ const FilterRowDemo = () => {
             filteringMode={FilteringMode.FilterRow}
             format= {({ column, value }) => {
                 if (column.dataType === DataType.Date){
-                    return value && value.toLocaleDateString(navigator.language || 'en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value && dateFormat.format(value);
                 }
             }}
             rowKeyField={'id'}

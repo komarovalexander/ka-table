@@ -2,10 +2,27 @@
 const dateOnlyFormat = /^\d{4}-\d{2}-\d{2}$/;
 
 /**
- * The value of a date input (YYYY-MM-DD) of the local date. The dates of a JSON (strings) and timestamps are accepted too,
- * the value which is not a date gives ''
+ * The Date of a date, a timestamp or a string of a date: a date without time (YYYY-MM-DD) is the local midnight
  */
-export const getDateInputValue = (date: Date | string | number): string => {
+export const getDate = (value: Date | string | number): Date => {
+    if (typeof value === 'string' && dateOnlyFormat.test(value)) {
+        const [year, month, day] = value.split('-').map((part) => Number(part));
+        const date = new Date(year, month - 1, day);
+        // new Date() takes the years 0-99 as 1900-1999, and a date input has them while a year is typed
+        date.setFullYear(year);
+        return date;
+    }
+    return new Date(value);
+};
+
+/**
+ * The value of a date input (YYYY-MM-DD) of the local date. The dates of a JSON (strings) and timestamps are accepted too,
+ * the value which is not a date (null, undefined, an invalid date) gives ''
+ */
+export const getDateInputValue = (date?: Date | string | number | null): string => {
+    if (date == null) {
+        return '';
+    }
     if (typeof date === 'string' && dateOnlyFormat.test(date)) {
         return date;
     }
@@ -27,8 +44,6 @@ export const getDateFromInputValue = (inputValue: string, previousValue?: unknow
     if (typeof previousValue === 'string') {
         return inputValue;
     }
-    // new Date('YYYY-MM-DD') is the UTC midnight https://github.com/komarovalexander/ka-table/issues/279
-    const utcDate = new Date(inputValue);
-    const date = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
+    const date = getDate(inputValue);
     return typeof previousValue === 'number' ? date.getTime() : date;
 };

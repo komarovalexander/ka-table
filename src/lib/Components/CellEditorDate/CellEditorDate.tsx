@@ -15,13 +15,12 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = (props) => {
         autoFocus,
         childComponents
     } = props;
-    const inputValue = value && getDateInputValue(value);
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: `${defaultOptions.css.dateInput}`,
         'aria-label': column.title,
         autoFocus,
         type: 'date',
-        value: inputValue || '',
+        value: getDateInputValue(value),
         onChange: (event) => {
             // the edited date keeps the type of the value: a string date of a JSON stays a string
             dispatch(updateCellValue(rowKeyValue, column.key, getDateFromInputValue(event.currentTarget.value, value)));

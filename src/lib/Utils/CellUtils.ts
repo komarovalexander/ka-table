@@ -17,8 +17,7 @@ export const getNewRowDataFromEditableCells = (editableCells: EditableCell[], co
     return editableCells.reduce((acc, item) => {
         if (!Object.prototype.hasOwnProperty.call(item, 'editorValue')) return acc;
         const column = getColumn(columns, item.columnKey);
-        acc = replaceValue(acc, column!, item.editorValue);
-        return acc;
+        return column ? replaceValue(acc, column, item.editorValue) : acc;
     }, {});
 };
 

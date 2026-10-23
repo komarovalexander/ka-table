@@ -3,6 +3,8 @@ import { DataType, Table } from '../../lib';
 import { EditingMode } from '../../lib/enums';
 import React from 'react';
 
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2021, 10, 8, 10) },
@@ -27,7 +29,7 @@ const EditingDemo: React.FC = () => {
             ]}
             format= {({ column, value }) => {
                 if (column.dataType === DataType.Date){
-                    return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value && dateFormat.format(new Date(value));
                 }
             }}
             data={dataArray}

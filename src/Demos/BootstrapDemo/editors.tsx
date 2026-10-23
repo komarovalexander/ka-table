@@ -74,18 +74,15 @@ export const NumberEditor: React.FC<IFilterRowEditorProps> = ({
 export const DateEditor: React.FC<IFilterRowEditorProps> = ({
     column, dispatch,
 }) => {
-    const fieldValue = column.filterRowValue;
-    const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
     return (
         <>
             <FilterOperators column={column} dispatch={dispatch}/>
             <input
                 type='date'
-                value={value || ''}
+                value={kaDateUtils.getDateInputValue(column.filterRowValue)}
                 onChange={(event) => {
-                    const targetValue = event.currentTarget.value;
-                    const filterRowValue = targetValue ? new Date(targetValue) : null;
-                    dispatch(updateFilterRowValue(column.key, filterRowValue));
+                    // the local date: new Date('YYYY-MM-DD') would be the midnight of UTC, the previous day west of it
+                    dispatch(updateFilterRowValue(column.key, kaDateUtils.getDateFromInputValue(event.currentTarget.value)));
                 }}
             />
         </>

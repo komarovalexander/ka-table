@@ -13,6 +13,7 @@ import { TablePaging } from '../TablePaging/TablePaging';
 import { TableWrapper } from '../TableWrapper/TableWrapper';
 import { clearSingleAction, updatePageIndex } from '../../actionCreators';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { getEnabledGroups } from '../../Utils/GroupUtils';
 import { useIsomorphicLayoutEffect } from '../../Utils/EffectUtils';
 import { isPagingShown } from '../../Utils/PagingUtils';
 
@@ -23,7 +24,10 @@ export interface ITableControlledProps extends ITableProps {
 
 export const TablePropsContext = React.createContext<ITableProps>({} as ITableProps);
 
-export const TableControlled: React.FunctionComponent<ITableAllProps> = (props) => {
+export const TableControlled: React.FunctionComponent<ITableAllProps> = (tableProps) => {
+    // the components get the enabled groups only: the disabled ones keep their settings in the state for groupColumn
+    const groups = React.useMemo(() => getEnabledGroups(tableProps.groups), [tableProps.groups]);
+    const props = groups === tableProps.groups ? tableProps : { ...tableProps, groups };
     const {
         childComponents,
         columns,

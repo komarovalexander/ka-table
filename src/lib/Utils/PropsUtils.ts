@@ -9,8 +9,9 @@ import { ITableProps } from '../';
 import { SortingMode } from '../enums';
 import defaultOptions from '../defaultOptions';
 import { filterAndSearchData } from './FilterUtils';
-import { getGroupedAndVisibleColumns, getGroupedData } from './GroupUtils';
-import { getTreeData } from './TreeUtils';
+import { getEnabledGroups, getGroupedAndVisibleColumns, getGroupedData } from './GroupUtils';
+import { getTreeData, restoreFilteredData } from './TreeUtils';
+import { getRowKeyValues } from './RowUtils';
 import { getValidatedEditableCells } from './ReducerUtils';
 import { getValueByField } from './DataUtils';
 import { groupColumn } from '../actionCreators';
@@ -68,22 +69,23 @@ export const getFilteredData = (props: ITableProps) => {
     return filterAndSearchData(props);
 }
 
-export const areAllFilteredRowsSelected = (props: ITableProps) => {
-    const { selectedRows = [], rowKeyField } = props;
+// false without rows (e.g. nothing is found), so the checkbox of all the rows is not checked
+const areAllRowsSelected = (rowKeyValues: unknown[], selectedRows: unknown[] = []) => {
     const selectedRowsSet = new Set(selectedRows);
-    return filterAndSearchData(props).every(d => selectedRowsSet.has(getValueByField(d, rowKeyField)))
-}
+    return rowKeyValues.length > 0 && rowKeyValues.every((rowKeyValue) => selectedRowsSet.has(rowKeyValue));
+};
 
-export const areAllVisibleRowsSelected = (props: ITableProps) => {
-    const { selectedRows = [], rowKeyField } = props;
-    const selectedRowsSet = new Set(selectedRows);
-    return getData(props).every(d => selectedRowsSet.has(getValueByField(d, rowKeyField)))
-}
+export const areAllFilteredRowsSelected = (props: ITableProps) => (
+    areAllRowsSelected(filterAndSearchData(props).map((d) => getValueByField(d, props.rowKeyField)), props.selectedRows)
+);
+
+export const areAllVisibleRowsSelected = (props: ITableProps) => (
+    areAllRowsSelected(getRowKeyValues(getData(props), props.rowKeyField), props.selectedRows)
+);
 
 const getDataWithoutPaging =  (props: ITableProps) => {
     const {
         columns,
-        groups,
         groupsExpanded,
         treeGroupKeyField,
         treeGroupsExpanded,
@@ -95,7 +97,12 @@ const getDataWithoutPaging =  (props: ITableProps) => {
     const {
         data = [],
     } = props;
+    const groups = getEnabledGroups(props.groups);
     let resultData = filterAndSearchData(props);
+    if (treeGroupKeyField && resultData.length !== data.length) {
+        // the parents of the found rows are sorted together with them
+        resultData = restoreFilteredData({ data: resultData, originalData: data, rowKeyField, treeGroupKeyField });
+    }
     if (!isRemoteSorting(sortingMode)) {
         resultData = sortData(columns, resultData, sort);
     }
@@ -103,7 +110,7 @@ const getDataWithoutPaging =  (props: ITableProps) => {
 
     const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
     resultData = groups ? getGroupedData(resultData, groups, groupedColumns, groupsExpanded) : resultData;
-    resultData = treeGroupKeyField ? getTreeData({ data: resultData, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: data }) : resultData;
+    resultData = treeGroupKeyField ? getTreeData({ data: resultData, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: resultData }) : resultData;
 
     return resultData;
 };

@@ -66,10 +66,11 @@ describe('TableWrapper', () => {
     });
 
     describe('areAllRowsSelected', () => {
-        const getAreAllRowsSelected = (selectedRows: any[]) => {
+        const getAreAllRowsSelected = (selectedRows: unknown[], data = tableProps.data) => {
             const { container } = render(
                 <TableWrapper
                     {...tableProps}
+                    data={data}
                     selectedRows={selectedRows}
                     childComponents={{
                         headCell: {
@@ -95,6 +96,9 @@ describe('TableWrapper', () => {
         });
         it('is true if selectedRows also contains keys which are not in data', () => {
             expect(getAreAllRowsSelected([1, 2, 3])).toBe(true);
+        });
+        it('is false without rows', () => {
+            expect(getAreAllRowsSelected([], [])).toBe(false);
         });
     });
 

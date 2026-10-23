@@ -11,14 +11,12 @@ const FilterRowDate: React.FunctionComponent<IFilterRowEditorProps> = (props) =>
         dispatch,
         childComponents,
     } = props;
-    const fieldValue = column.filterRowValue;
-    const value = fieldValue && getDateInputValue(fieldValue);
 
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: defaultOptions.css.dateInput,
         'aria-label': column.title,
         type: 'date',
-        value: value || '',
+        value: getDateInputValue(column.filterRowValue),
         onChange: (event) => {
             dispatch(updateFilterRowValue(column.key, getDateFromInputValue(event.currentTarget.value)));
         }

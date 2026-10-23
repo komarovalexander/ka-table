@@ -1,7 +1,6 @@
 import { Column } from '../models';
 import { Field } from '../types';
 import defaultOptions from '../defaultOptions';
-import { getCopyOfArrayAndInsertOrReplaceItem } from './ArrayUtils';
 
 export const getColumn = (columns: Column[], columnKey: string) => columns.find((c) => c.key === columnKey);
 
@@ -39,15 +38,11 @@ export const replaceColumnValue = ({
     replacedOption: string;
     replacedValue: any;
 }) => {
-    const column = columns.find((c) => c.key === columnKey)!;
-    const newColumn = {
-        ...column,
-        [replacedOption]: replacedValue,
-    };
-    const newArray = getCopyOfArrayAndInsertOrReplaceItem(
-        newColumn,
-        'key',
-        columns,
-    );
-    return newArray;
+    const columnIndex = columns.findIndex((c) => c.key === columnKey);
+    if (columnIndex === -1) {
+        return columns;
+    }
+    const newColumns = [...columns];
+    newColumns[columnIndex] = { ...columns[columnIndex], [replacedOption]: replacedValue };
+    return newColumns;
 }

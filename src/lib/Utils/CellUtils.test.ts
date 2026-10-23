@@ -131,6 +131,13 @@ describe('CellUtils', () => {
             ]);
             expect(result).toEqual({ column1: 11, column2: 22 });
         });
+        it('skips the editors of the columns which are not in the table', () => {
+            const editableCells: EditableCell[] = [
+                { columnKey: 'column1', rowKeyValue: 1, editorValue: 11 },
+                { columnKey: 'removed', rowKeyValue: 1, editorValue: 22 },
+            ];
+            expect(getNewRowDataFromEditableCells(editableCells, [{ key: 'column1' }])).toEqual({ column1: 11 });
+        });
     });
 });
 

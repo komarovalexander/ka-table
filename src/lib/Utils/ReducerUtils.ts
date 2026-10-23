@@ -2,6 +2,7 @@ import { ITableProps } from '../';
 import { Column, EditableCell } from '../models';
 import { ValidationFunc } from '../types';
 import { getValueByColumn, getValueByField, replaceValue } from './DataUtils';
+import { getRowKeyValues } from './RowUtils';
 
 const hasEditorValue = (cell: EditableCell) => Object.prototype.hasOwnProperty.call(cell, 'editorValue');
 
@@ -116,9 +117,61 @@ export const addRowKeyValuesToSelectedRows = (selectedRows: any[], rowKeyValues:
 }
 
 export const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKeyField: string) => {
-    const dataKeys = new Set(data.map((d) => getValueByField(d, rowKeyField)));
+    const dataKeys = new Set(getRowKeyValues(data, rowKeyField));
     return selectedRows.filter((rowKeyValue: any) => !dataKeys.has(rowKeyValue));
 }
+
+// the props which keep the keys of the rows besides the data
+const rowKeysProps = ['detailsRows', 'selectedRows', 'treeGroupsExpanded'] as const;
+
+/**
+ * The deleted row is not selected, expanded, edited or focused anymore, so a new row with its key doesn't get its state
+ */
+export const removeRowKey = (props: ITableProps, rowKeyValue: unknown): ITableProps => {
+    const newProps = { ...props };
+    rowKeysProps.forEach((prop) => {
+        const rowKeyValues = props[prop];
+        if (rowKeyValues?.includes(rowKeyValue)) {
+            newProps[prop] = rowKeyValues.filter((value) => value !== rowKeyValue);
+        }
+    });
+    if (props.editableCells?.some((cell) => cell.rowKeyValue === rowKeyValue)) {
+        newProps.editableCells = props.editableCells.filter((cell) => cell.rowKeyValue !== rowKeyValue);
+    }
+    if (props.focused?.cell?.rowKeyValue === rowKeyValue) {
+        newProps.focused = { ...props.focused, cell: undefined };
+    }
+    return newProps;
+};
+
+/**
+ * The rows keep their selection, details, expanded state and focus when their keys are changed (newRowKeys: the previous key
+ * to the new one), withEditableCells keeps their open editors too
+ */
+export const replaceRowKeys = (props: ITableProps, newRowKeys: Map<unknown, unknown>, withEditableCells = false): ITableProps => {
+    const changedRowKeys = new Map([...newRowKeys].filter(([rowKeyValue, newRowKeyValue]) => rowKeyValue !== newRowKeyValue));
+    if (!changedRowKeys.size) {
+        return props;
+    }
+    const getNewRowKey = (rowKeyValue: unknown) => (changedRowKeys.has(rowKeyValue) ? changedRowKeys.get(rowKeyValue) : rowKeyValue);
+    const newProps = { ...props };
+    rowKeysProps.forEach((prop) => {
+        const rowKeyValues = props[prop];
+        if (rowKeyValues?.some((value) => changedRowKeys.has(value))) {
+            newProps[prop] = rowKeyValues.map(getNewRowKey);
+        }
+    });
+    const focusedCell = props.focused?.cell;
+    if (focusedCell && changedRowKeys.has(focusedCell.rowKeyValue)) {
+        newProps.focused = { ...props.focused, cell: { ...focusedCell, rowKeyValue: getNewRowKey(focusedCell.rowKeyValue) } };
+    }
+    if (withEditableCells && props.editableCells?.some((cell) => changedRowKeys.has(cell.rowKeyValue))) {
+        newProps.editableCells = props.editableCells.map((cell) => (
+            changedRowKeys.has(cell.rowKeyValue) ? { ...cell, rowKeyValue: getNewRowKey(cell.rowKeyValue) } : cell
+        ));
+    }
+    return newProps;
+};
 
 export const getUpdatedFocused = (props: ITableProps, action: any, funcToUpdate: any) => {
     if (!props?.focused?.cell) return props;

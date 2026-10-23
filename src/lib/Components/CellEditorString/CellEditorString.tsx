@@ -19,7 +19,7 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = (props) => {
         'aria-label': column.title,
         autoFocus,
         type: 'text',
-        value: value || '',
+        value: value ?? '',
         onChange: (event) => {
             dispatch(updateCellValue(
                 rowKeyValue,
