@@ -45,7 +45,7 @@ const PagingPages: React.FunctionComponent<IPagingProps> = (props) => {
                     { isEndShown &&
               (
                   <>
-                      <PagingIndex {...props} pageIndex={[...centerPages].pop() + 1} isActive={false} text={'...'}/>
+                      <PagingIndex {...props} pageIndex={centerPages[centerPages.length - 1] + 1} isActive={false} text={'...'}/>
                       <PagingIndex {...props} pageIndex={pages[pages.length - 1]} isActive={pageIndex === pages[pages.length - 1]} text={pages[pages.length - 1] + 1}/>
                   </>
               )

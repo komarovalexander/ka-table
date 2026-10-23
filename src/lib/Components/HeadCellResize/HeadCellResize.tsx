@@ -21,9 +21,9 @@ const HeadCellResize: React.FunctionComponent<IHeadCellResizeProps> = (props) =>
     const { elementAttributes, content } = getElementCustomization({
         className: defaultOptions.css.theadCellResize,
         draggable: false,
-        onMouseDown: (mouseDownEvent: any) => {
+        onMouseDown: (mouseDownEvent) => {
             mouseDownEvent.preventDefault();
-            const startX = mouseDownEvent.screenX - (isNumberWidth(currentWidth) ? currentWidth : mouseDownEvent.currentTarget.parentElement.offsetWidth);
+            const startX = mouseDownEvent.screenX - (isNumberWidth(currentWidth) ? currentWidth : mouseDownEvent.currentTarget.parentElement?.offsetWidth || 0);
             const mouseMoveStop = getEventListenerEffect('mousemove', getMouseMove(currentWidth, minWidth, startX, key, dispatch));
             const mouseUpStop = getEventListenerEffect('mouseup', (event: MouseEvent) => {
                 const newWidth = getValidatedWidth(event.screenX - startX, minWidth);

@@ -6,6 +6,9 @@ import { ITableInstance, ITableProps } from '../Components/Table/Table';
 
 const emptyFunc = () => {};
 
+// the action creators by their names: the methods of the instance pass their arguments to them
+const actionCreatorFunctions = actionCreators as Record<string, (...args: unknown[]) => unknown>;
+
 /**
  * Creates a table instance. Use it outside of function components (class components, stores);
  * inside function components use the useTable hook, which keeps the same instance between renders.
@@ -18,10 +21,10 @@ export const getTable = (options?: {
     const { changeProps, onDispatch, customReducer } = options || {};
     const table: ITableInstance = {
         // the methods use the table object itself, not `this`, so they can be passed around as callbacks
-        ...(Object.keys(actionCreators).reduce((acc, key) => {
-            acc[key] = (...args: any[]) => table.dispatch((actionCreators as any)[key](...args));
-            return acc;
-        }, {} as any) as typeof actionCreators),
+        ...(Object.fromEntries(Object.keys(actionCreators).map((key): [string, (...args: unknown[]) => void] => [
+            key,
+            (...args) => table.dispatch(actionCreatorFunctions[key](...args)),
+        ])) as typeof actionCreators),
         props: {} as ITableProps,
         changeProps: changeProps || emptyFunc,
         dispatch: emptyFunc,

@@ -10,19 +10,19 @@ import { getDate } from './DateUtils';
 import { getFormattedValue, getValueByColumn, isFormattedValue } from './DataUtils';
 import { isEmpty } from './CommonUtils';
 
-export const getRowEditableCells = (rowKeyValue: any, editableCells: EditableCell[]): EditableCell[] => {
+export const getRowEditableCells = (rowKeyValue: unknown, editableCells: EditableCell[]): EditableCell[] => {
     return editableCells.filter((c) => c.rowKeyValue === rowKeyValue);
 };
 
 /**
  * The rows which show the text: the formatted values are searched by their text, the hidden columns only by the search function
  */
-export const searchData = <TData>(columns: Column[], data: TData[], searchText: string, search?: SearchFunc, format?: FormatFunc): TData[] => {
+export const searchData = <TData>(columns: Column[], data: TData[], searchText: string, search?: SearchFunc<TData>, format?: FormatFunc<TData>): TData[] => {
     const lowerCaseSearchText = searchText.toLowerCase();
     // a set instead of searching in the found rows for every row of every column
-    const found = new Set<any>();
+    const found = new Set<TData>();
     columns.forEach((c: Column) => {
-        data.forEach((item: any) => {
+        data.forEach((item) => {
             if (found.has(item)) {
                 return;
             }
@@ -91,7 +91,7 @@ export const isFilterOperatorWithoutValue = (filterRowOperator?: string) => (
 
 export const isFilteredByFilterRow = (column: Column) => !isEmpty(column.filterRowValue) || isFilterOperatorWithoutValue(column.filterRowOperator);
 
-export const filterData = (data: any[], columns: Column[], filter?: FilterFunc): any[] => {
+export const filterData = <TData>(data: TData[], columns: Column[], filter?: FilterFunc<TData>): TData[] => {
     return columns.reduce((initialData, column) => {
         if (!isFilteredByFilterRow(column)) {
             return initialData;
@@ -102,7 +102,7 @@ export const filterData = (data: any[], columns: Column[], filter?: FilterFunc):
             return initialData;
         }
 
-        return initialData.filter((d: any) => {
+        return initialData.filter((d) => {
             let fieldValue = getValueByColumn(d, column);
             let conditionValue = column.filterRowValue;
             if (column.dataType === DataType.Date && !customFilter) {
@@ -120,54 +120,54 @@ export const getDefaultOperatorForType = (type: DataType): string => {
 };
 
 export const predefinedFilterOperators: FilterOperator[] = [{
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue, conditionValue) =>
         fieldValue === conditionValue,
     defaultForTypes: [DataType.Boolean, DataType.Number, DataType.Date],
     name: FilterOperatorName.Equal,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue, conditionValue) =>
         fieldValue !== conditionValue,
     name: FilterOperatorName.IsNotEqual,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue, conditionValue) =>
         fieldValue > conditionValue,
     name: FilterOperatorName.MoreThan,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue, conditionValue) =>
         fieldValue < conditionValue,
     name: FilterOperatorName.LessThan,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue, conditionValue) =>
         fieldValue >= conditionValue,
     name: FilterOperatorName.MoreThanOrEqual,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue, conditionValue) =>
         fieldValue <= conditionValue,
     name: FilterOperatorName.LessThanOrEqual,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue, conditionValue) =>
         fieldValue != null && fieldValue.toString().toLowerCase().includes(conditionValue.toString().toLowerCase()),
     defaultForTypes: [DataType.String],
     name: FilterOperatorName.Contains,
 }, {
-    compare: (fieldValue: any) =>
+    compare: (fieldValue) =>
         isEmpty(fieldValue),
     name: FilterOperatorName.IsEmpty,
 }, {
-    compare: (fieldValue: any) =>
+    compare: (fieldValue) =>
         !isEmpty(fieldValue),
     name: FilterOperatorName.IsNotEmpty,
 }];
 
-export const filterByHeaderFilter = (data: any[], columns: Column[], format?: FormatFunc): any[] => {
+export const filterByHeaderFilter = <TData>(data: TData[], columns: Column[], format?: FormatFunc<TData>): TData[] => {
     return columns.reduce((initialData, column) => {
         if (
             isEmpty(column.headerFilterValues)
         ) {
             return initialData;
         }
-        return initialData.filter((item: any) => {
-            const value: any = getValueByColumn(item, column);
+        return initialData.filter((item) => {
+            const value = getValueByColumn(item, column);
             if (column?.filter) {
                 return column.filter(value, column.headerFilterValues, item);
             }

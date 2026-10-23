@@ -34,9 +34,9 @@ export const replaceColumnValue = ({
     replacedValue
 }: {
     columns: Column[],
-    columnKey: any;
+    columnKey: unknown;
     replacedOption: string;
-    replacedValue: any;
+    replacedValue: unknown;
 }) => {
     const columnIndex = columns.findIndex((c) => c.key === columnKey);
     if (columnIndex === -1) {

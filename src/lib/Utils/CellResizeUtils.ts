@@ -1,10 +1,12 @@
+import { CSSProperties } from 'react';
+
 import { resizeColumn } from '../actionCreators';
 import { DispatchFunc } from '../types';
 
 export const isCellResizeShown = (isResizable?: boolean, columnResizing?: boolean): boolean => !!((isResizable !== false) && (columnResizing || isResizable));
 
 export const getMouseMove = (
-    currentWidth: any,
+    currentWidth: number | string | undefined,
     minWidth: number,
     startX: number,
     key: string,
@@ -23,9 +25,9 @@ export const getValidatedWidth = (newWidth: number, minWidth: number) => {
     return newWidth;
 };
 
-export const isNumberWidth = (width: any): boolean => width && typeof width === 'number';
+export const isNumberWidth = (width: unknown): width is number => !!width && typeof width === 'number';
 
-export const getMinWidth = (style: any): number => {
+export const getMinWidth = (style?: CSSProperties): number => {
     let minWidth: number = 20;
     if (!style){ return minWidth; }
 

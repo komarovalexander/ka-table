@@ -18,10 +18,10 @@ import { useIsomorphicLayoutEffect } from '../../Utils/EffectUtils';
 import { useTableData } from '../../hooks/UseTableData';
 
 // the same empty values on every render, so memoized children are not re-rendered because of new defaults
-const emptyArray: any[] = [];
+const emptyArray: never[] = [];
 const emptyChildComponents: ChildComponents = {};
 
-const getAreAllRowsSelected = (data: any[], selectedRows: any[], rowKeyField: string) => {
+const getAreAllRowsSelected = (data: unknown[], selectedRows: unknown[], rowKeyField: string) => {
     if (!data.length || selectedRows.length < data.length) {
         return false;
     }

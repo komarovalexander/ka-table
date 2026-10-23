@@ -1,6 +1,6 @@
-export const isEmpty = (value: any): boolean => (value == null || value.length === 0);
+export const isEmpty = (value: unknown): boolean => (value == null || (value as { length?: unknown }).length === 0);
 
-const isPlainObjectOrArray = (value: any): boolean => {
+const isPlainObjectOrArray = (value: unknown): value is Record<string, unknown> => {
     if (Array.isArray(value)) {
         return true;
     }
@@ -11,7 +11,7 @@ const isPlainObjectOrArray = (value: any): boolean => {
     return prototype === Object.prototype || prototype === null;
 };
 
-const isDeepEqualInner = (a: any, b: any, comparing: Map<any, any>): boolean => {
+const isDeepEqualInner = (a: unknown, b: unknown, comparing: Map<unknown, unknown>): boolean => {
     if (Object.is(a, b)) {
         return true;
     }
@@ -39,4 +39,4 @@ const isDeepEqualInner = (a: any, b: any, comparing: Map<any, any>): boolean => 
 /**
  * Compares plain objects, arrays and dates by value; everything else (functions, class instances) by reference.
  */
-export const isDeepEqual = (a: any, b: any): boolean => isDeepEqualInner(a, b, new Map());
+export const isDeepEqual = (a: unknown, b: unknown): boolean => isDeepEqualInner(a, b, new Map());

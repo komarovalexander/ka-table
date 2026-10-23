@@ -1,7 +1,7 @@
 import React from 'react';
 
 // a value for aria-label: a value rendered as an element doesn't give a text
-export const getAriaLabel = (value: any): string | undefined => (
+export const getAriaLabel = (value: unknown): string | undefined => (
     (typeof value === 'string' && value !== '') || typeof value === 'number' ? `${value}` : undefined
 );
 

@@ -19,7 +19,7 @@ const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = (props)
         type: 'checkbox',
         checked: value || false,
         onChange: (event) => {
-            let filterRowValue: any = event.currentTarget.checked;
+            let filterRowValue: boolean | undefined = event.currentTarget.checked;
             if (value === false) {
                 if (filterRowValue === true) {
                     filterRowValue = undefined;

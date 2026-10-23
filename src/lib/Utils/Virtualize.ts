@@ -5,8 +5,8 @@ export const isVirtualScrollingEnabled = (virtualScrolling?: VirtualScrolling) =
     return virtualScrolling && virtualScrolling.enabled !== false;
 }
 
-export const getVirtualized = (virtualScrolling: VirtualScrolling, data: any[], isNewRowShown?: boolean, oddEvenRows?: boolean) => {
-    const virtualizedData: any[] = [];
+export const getVirtualized = <TData>(virtualScrolling: VirtualScrolling, data: TData[], isNewRowShown?: boolean, oddEvenRows?: boolean) => {
+    const virtualizedData: TData[] = [];
     const { scrollTop = 0, bottomInvisibleCount = 5, topInvisibleCount = 0 } = virtualScrolling;
     let { tbodyHeight = 600 } = virtualScrolling;
     let beginHeight = 0;

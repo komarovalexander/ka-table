@@ -16,14 +16,16 @@ import { getValidatedEditableCells } from './ReducerUtils';
 import { getValueByField } from './DataUtils';
 import { groupColumn } from '../actionCreators';
 
+// childComponent: the customization of the component (ChildComponent<never> takes the customizations of all the components),
+// it gets the props of the component (childProps)
 export function extendProps<T = HTMLElement>(
     childElementAttributes: AllHTMLAttributes<T>,
-    childProps: any,
-    childComponent?: ChildComponent<any>): React.AllHTMLAttributes<T> {
+    childProps: unknown,
+    childComponent?: ChildComponent<never>): React.AllHTMLAttributes<T> {
     let resultProps = childElementAttributes;
-    const childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps);
+    const childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps as never);
     if (childCustomAttributes) {
-        const dispatch: DispatchFunc = childProps.dispatch;
+        const { dispatch } = childProps as { dispatch: DispatchFunc };
         resultProps = mergeProps(childElementAttributes, childProps, childCustomAttributes, dispatch);
     }
     return resultProps;
@@ -32,17 +34,17 @@ export function extendProps<T = HTMLElement>(
 const emptyFunc = () => { };
 export function mergeProps<T = HTMLElement>(
     childElementAttributes: AllHTMLAttributes<T>,
-    childProps: any,
-    childCustomAttributes: ChildAttributesItem<any>,
+    childProps: unknown,
+    childCustomAttributes: ChildAttributesItem<never>,
     dispatch: DispatchFunc): React.AllHTMLAttributes<T> {
-    const customPropsWithEvents: any = {};
+    const customPropsWithEvents: Record<string, (e: unknown) => void> = {};
     for (const prop in childCustomAttributes) {
         if (Object.prototype.hasOwnProperty.call(childCustomAttributes, prop)) {
             const propName = prop as string;
-            const propValue: any = (childCustomAttributes as any)[propName];
-            const baseFunc = (childElementAttributes as any)[propName] || emptyFunc;
+            const propValue: unknown = (childCustomAttributes as Record<string, unknown>)[propName];
+            const baseFunc = (childElementAttributes as Record<string, unknown>)[propName] || emptyFunc;
             if (typeof propValue === 'function') {
-                customPropsWithEvents[prop] = (e: any) => {
+                customPropsWithEvents[prop] = (e) => {
                     propValue(e, {
                         baseFunc,
                         childElementAttributes,
@@ -54,13 +56,14 @@ export function mergeProps<T = HTMLElement>(
         }
     }
 
-    const mergedResult: React.AllHTMLAttributes<T> = {
+    // the event handlers of the customization are replaced by the ones which call them with the extended event
+    const mergedResult = {
         ...childElementAttributes,
         ...childCustomAttributes,
         ...customPropsWithEvents,
         className: `${childElementAttributes.className || ''} ${childCustomAttributes.className || ''}`,
         style: { ...childElementAttributes.style, ...childCustomAttributes.style }
-    };
+    } as React.AllHTMLAttributes<T>;
 
     return mergedResult;
 };
@@ -196,7 +199,7 @@ export const groupPanelOnDrop = (event: React.DragEvent, dispatch: DispatchFunc)
     }
 };
 
-export const getDraggableProps = ({
+export const getDraggableProps = <TKey>({
     key,
     dispatch,
     actionCreator,
@@ -205,17 +208,17 @@ export const getDraggableProps = ({
     hasReordering,
     kind,
 }: {
-    key: any,
+    key: TKey,
     dispatch: DispatchFunc,
-    actionCreator: (draggableKeyValue: any, targetKeyValue: any) => any,
+    actionCreator: (draggableKeyValue: TKey, targetKeyValue: TKey) => unknown,
     draggedClass: string,
     dragOverClass: string,
     hasReordering: boolean,
     // the items are dropped only on the items of the same kind, the items without a kind on the items without a kind
     kind?: DraggableKind,
-}): ChildAttributesItem<any> => {
+}): ChildAttributesItem<unknown> => {
     let count: number = 0;
-    const reorderingProps: ChildAttributesItem<any> = hasReordering ? {
+    const reorderingProps: ChildAttributesItem<unknown> = hasReordering ? {
         onDragEnter: (event) => {
             if (!isDraggedItemOfKind(event, kind)) {
                 return;
@@ -264,7 +267,8 @@ export const getDraggableProps = ({
             event.currentTarget.classList.remove(dragOverClass);
             const item = getDraggedItem(event, kind);
             if (hasReordering && item) {
-                dispatch(actionCreator(item.key, key));
+                // the dragged item is of the same kind and from the same table
+                dispatch(actionCreator(item.key as TKey, key));
             }
         },
         ...reorderingProps

@@ -9,7 +9,7 @@ export interface GroupedColumnResult {
     columns: Column[]
 }
 
-export const getChain = (column: Column | GroupedColumn, groupedColumns: GroupedColumn[], currentChain: (Column | GroupedColumn)[] = []): any[] => {
+export const getChain = (column: Column | GroupedColumn, groupedColumns: GroupedColumn[], currentChain: (Column | GroupedColumn)[] = []): (Column | GroupedColumn)[] => {
     const newChain = [column, ...currentChain];
     const groupedColumn = groupedColumns.find(gc => gc.columnsKeys.includes(column.key));
     if (groupedColumn) {

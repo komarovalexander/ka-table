@@ -17,15 +17,16 @@ const hasCells = (row: ShownRow) => row.groupMark !== groupMark && row.groupSumm
 /**
  * The key of a row with cells (a tree row is unwrapped), undefined for group rows and group summary rows
  */
-export const getRowKeyValue = (row: ShownRow, rowKeyField: string): unknown => (
-    hasCells(row)
-        ? getValueByField(row.treeGroupMark === treeGroupMark || row.treeDataMark === treeDataMark ? row.rowData : row, rowKeyField)
-        : undefined
-);
+export const getRowKeyValue = (row: unknown, rowKeyField: string): unknown => {
+    const shownRow = row as ShownRow;
+    return hasCells(shownRow)
+        ? getValueByField(shownRow.treeGroupMark === treeGroupMark || shownRow.treeDataMark === treeDataMark ? shownRow.rowData : row, rowKeyField)
+        : undefined;
+};
 
 /**
  * The keys of the rows which have cells: group rows and group summary rows are skipped
  */
-export const getRowKeyValues = (data: ShownRow[], rowKeyField: string): unknown[] => data
+export const getRowKeyValues = (data: unknown[], rowKeyField: string): unknown[] => (data as ShownRow[])
     .filter(hasCells)
     .map((row) => getRowKeyValue(row, rowKeyField));

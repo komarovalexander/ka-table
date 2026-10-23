@@ -13,7 +13,7 @@ export interface IMoveFocusedSettings {
  * The next item: one item forward or back, or the last or the first item (end).
  * A missing item goes to the first one forward and stays back
  */
-const getNextItem = (items: any[], current: any, step: 1 | -1, end?: boolean) => {
+const getNextItem = <T>(items: T[], current: T, step: 1 | -1, end?: boolean): T => {
     if (end) {
         const endItem = step > 0 ? items[items.length - 1] : items[0];
         return endItem === undefined ? current : endItem;
@@ -29,7 +29,7 @@ const getNextItem = (items: any[], current: any, step: 1 | -1, end?: boolean) =>
 export const getNextColumnKey = (columns: Column[], columnKey: string, step: 1 | -1, end?: boolean): string =>
     getNextItem(columns.map((c) => c.key), columnKey, step, end);
 
-export const getNextRowKeyValue = (rowKeyValues: any[], rowKeyValue: any, step: 1 | -1, end?: boolean): any =>
+export const getNextRowKeyValue = (rowKeyValues: unknown[], rowKeyValue: unknown, step: 1 | -1, end?: boolean): unknown =>
     getNextItem(rowKeyValues, rowKeyValue, step, end);
 
 // the columns of the cells: hidden and grouped columns are not shown

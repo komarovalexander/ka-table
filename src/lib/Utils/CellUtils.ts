@@ -40,8 +40,8 @@ export const addItemToEditableCells = (
     return getCopyOfArrayAndAddItem(item, editableCells);
 };
 
-export const getCellEditorDispatchHandler = (dispatch: DispatchFunc) => {
-    return (action: any) => {
+export const getCellEditorDispatchHandler = (dispatch: DispatchFunc): DispatchFunc => {
+    return (action) => {
         if (action.type === ActionType.UpdateEditorValue) {
             dispatch(updateCellValue(action.rowKeyValue, action.columnKey, action.value));
         } else {

@@ -19,7 +19,7 @@ export const getPagingWithPageSize = (paging: PagingOptions | undefined, pageSiz
         ? { ...paging, pageSize, pageIndex: Math.floor(paging.pageIndex * getPageSize(paging) / pageSize) }
         : { ...paging, pageSize }
 );
-export const getPagesCount = (data: any[], paging?: PagingOptions): number => {
+export const getPagesCount = (data: unknown[], paging?: PagingOptions): number => {
     if (!paging || !paging.enabled) {
         return 1;
     }
@@ -29,7 +29,8 @@ export const getPagesCount = (data: any[], paging?: PagingOptions): number => {
     return Math.ceil(data.length / ((paging && paging.pageSize) || DEFAULT_PAGE_SIZE));
 };
 
-export const getPageData = (data: any[], paging?: PagingOptions): any[] => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the rows of data typed as any stay any, as before
+export const getPageData = <TData = any>(data: TData[], paging?: PagingOptions): TData[] => {
     if (!paging || !paging.enabled || paging.pagesCount) {
         return data;
     }
@@ -38,7 +39,7 @@ export const getPageData = (data: any[], paging?: PagingOptions): any[] => {
     return data.slice(startIndex, startIndex + pageSize);
 
 };
-export const getPagesForCenter = (pages: number[], isStartShown: boolean, isEndShown: boolean, pageIndex: number): any[] => {
+export const getPagesForCenter = (pages: number[], isStartShown: boolean, isEndShown: boolean, pageIndex: number): number[] => {
     if (isStartShown && !isEndShown){
         return pages.filter(page => (page >= pages.length - centerLength - 1));
     } else if (!isStartShown && isEndShown) {

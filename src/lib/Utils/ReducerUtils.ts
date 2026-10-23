@@ -1,5 +1,7 @@
 import { ITableProps } from '../';
 import { Column, EditableCell } from '../models';
+import { Cell } from '../Models/Cell';
+import { IMoveFocusedSettings } from './NavigationUtils';
 import { ValidationFunc } from '../types';
 import { getValueByColumn, getValueByField, replaceValue } from './DataUtils';
 import { getRowKeyValues } from './RowUtils';
@@ -23,7 +25,7 @@ export const getValidatedEditableCells = ({
     rowKeyField,
     validation
 }: {
-    data?: any[],
+    data?: unknown[],
     editableCells?: EditableCell[],
     columns: Column[],
     rowKeyField: string,
@@ -66,7 +68,7 @@ export const getValidatedEditableCells = ({
     });
 }
 
-export const getEditableCellsByData = (data: any[], rowKeyField: string, columns: Column[]) => {
+export const getEditableCellsByData = (data: unknown[], rowKeyField: string, columns: Column[]) => {
     const editableCells: EditableCell[] = [];
     data?.forEach((rowData) => {
         const rowKeyValue = getValueByField(rowData, rowKeyField);
@@ -79,7 +81,7 @@ export const getEditableCellsByData = (data: any[], rowKeyField: string, columns
     return editableCells;
 }
 
-export const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
+export const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: unknown) => {
     const newEditableCells = [...editableCells];
     columns.forEach(column => {
         if (column.isEditable !== false
@@ -93,7 +95,7 @@ export const addColumnsToRowEditableCells = (editableCells: EditableCell[], colu
     return newEditableCells;
 }
 
-export const insertOrReplaceRow = (data: any[], rowData: any, rowKeyField: string) => {
+export const insertOrReplaceRow = <TData>(data: TData[], rowData: TData, rowKeyField: string): TData[] => {
     const rowKeyValue = getValueByField(rowData, rowKeyField);
     const rowIndex = data.findIndex((d) => getValueByField(d, rowKeyField) === rowKeyValue);
     if (rowIndex === -1) {
@@ -104,7 +106,7 @@ export const insertOrReplaceRow = (data: any[], rowData: any, rowKeyField: strin
     return newData;
 }
 
-export const addRowKeyValuesToSelectedRows = (selectedRows: any[], rowKeyValues: any[]) => {
+export const addRowKeyValuesToSelectedRows = (selectedRows: unknown[], rowKeyValues: unknown[]) => {
     const selectedRowsSet = new Set(selectedRows);
     const newSelectedRows = [...selectedRows];
     rowKeyValues.forEach((rowKeyValue) => {
@@ -116,9 +118,9 @@ export const addRowKeyValuesToSelectedRows = (selectedRows: any[], rowKeyValues:
     return newSelectedRows;
 }
 
-export const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKeyField: string) => {
+export const removeDataKeysFromSelectedRows = (selectedRows: unknown[], data: unknown[], rowKeyField: string) => {
     const dataKeys = new Set(getRowKeyValues(data, rowKeyField));
-    return selectedRows.filter((rowKeyValue: any) => !dataKeys.has(rowKeyValue));
+    return selectedRows.filter((rowKeyValue) => !dataKeys.has(rowKeyValue));
 }
 
 // the props which keep the keys of the rows besides the data
@@ -173,7 +175,11 @@ export const replaceRowKeys = (props: ITableProps, newRowKeys: Map<unknown, unkn
     return newProps;
 };
 
-export const getUpdatedFocused = (props: ITableProps, action: any, funcToUpdate: any) => {
+export const getUpdatedFocused = (
+    props: ITableProps,
+    action: { settings?: IMoveFocusedSettings },
+    funcToUpdate: (cell: Cell, props: ITableProps, settings?: IMoveFocusedSettings) => Cell,
+): ITableProps => {
     if (!props?.focused?.cell) return props;
     const newFocused = { cell: funcToUpdate(props.focused.cell, props, action.settings) };
     return { ...props, focused: newFocused };

@@ -1,3 +1,5 @@
+import * as actionCreators from '../actionCreators';
+
 import { ActionType, InsertRowPosition, SortingMode } from '../enums';
 import {
     addColumnsToRowEditableCells,
@@ -21,6 +23,7 @@ import { getValueByField, insertBefore, reorderData, reorderDataByIndex, replace
 import { Column } from '../models';
 import { ILoadingProps } from '../props';
 import { ITableProps } from '../index';
+import { VirtualScrolling } from '../Models/VirtualScrolling';
 import { getPagingWithPageSize } from '../Utils/PagingUtils';
 import { getRowKeyValues } from '../Utils/RowUtils';
 import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
@@ -33,7 +36,20 @@ const withFirstPage = (props: ITableProps): ITableProps => (
     props.paging?.pageIndex ? { ...props, paging: { ...props.paging, pageIndex: 0 } } : props
 );
 
-const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
+type ActionCreators = typeof actionCreators;
+
+// the action of an action creator: the action creators are named by the types of their actions (deleteRow creates DeleteRow)
+type CreatedAction<K extends keyof ActionCreators> = Omit<ReturnType<ActionCreators[K]>, 'type'> & {
+    type: Capitalize<K> extends keyof typeof ActionType ? (typeof ActionType)[Capitalize<K>] : never;
+};
+
+// the actions of the action creators and the ones which the components of the table dispatch
+type TableAction = { [K in keyof ActionCreators]: CreatedAction<K> }[keyof ActionCreators]
+    | { type: ActionType.ScrollTable; scrollTop: number }
+    | { type: ActionType.UpdateVirtualScrolling; virtualScrolling: VirtualScrolling };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the public type: the users call it with their states and actions, e.g. in their redux reducers
+const kaReducer: any = (props: ITableProps, action: TableAction): ITableProps => {
     const {
         columns,
         data = [],
@@ -80,7 +96,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
                     ? headerFilterValues
                     : [...(headerFilterValues || []), action.item];
             } else {
-                newHeaderFilterValues = headerFilterValues?.filter((value: any) => value !== action.item);
+                newHeaderFilterValues = headerFilterValues?.filter((value) => value !== action.item);
             }
             return { ...c, headerFilterValues: newHeaderFilterValues };
         });
@@ -314,7 +330,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     }
     case ActionType.DeleteRow: {
         const newData = data.filter(
-            (d: any) => getValueByField(d, rowKeyField) !== action.rowKeyValue);
+            (d) => getValueByField(d, rowKeyField) !== action.rowKeyValue);
         return removeRowKey({ ...props, data: newData }, action.rowKeyValue);
     }
     case ActionType.SelectAllRows: {

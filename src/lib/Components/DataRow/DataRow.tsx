@@ -1,9 +1,8 @@
+import { IDataRowProps, IRowProps } from '../../props';
 import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
 
-import { ChildAttributesItem } from '../../types';
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
-import { IRowProps } from '../../props';
 import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getDraggableProps } from '../../Utils/PropsUtils';
@@ -23,7 +22,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
     let dataRow = childComponents.dataRow;
 
     if (rowReordering) {
-        const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps({
+        const reorderedRowProps = getDraggableProps({
             key: rowKeyValue,
             dispatch,
             actionCreator: reorderRows,
@@ -32,7 +31,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
             hasReordering: true,
             kind: 'row',
         });
-        dataRow = addElementAttributes(reorderedRowProps, props, dataRow);
+        dataRow = addElementAttributes<IDataRowProps>(reorderedRowProps, props, dataRow);
     }
 
     const { elementAttributes, content } = getElementCustomization({

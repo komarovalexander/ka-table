@@ -43,26 +43,30 @@ export const withCallbacks = (state: ITableProps, callbacks: Partial<ITableProps
     return { ...result, ...callbacks };
 };
 
+// a generic key lets TypeScript check that the value is of the type of the prop
+const copyProp = <K extends keyof ITableProps>(target: Partial<ITableProps>, props: Partial<ITableProps>, key: K) => {
+    target[key] = props[key];
+};
+
 export const getControlledProps = (controlledPropsKeys: ControlledPropsKeys, props: ITableProps): Partial<ITableProps> => {
-    return controlledPropsKeys.reduce((acc, key) => {
-        acc[key] = props[key];
-        return acc;
-    }, {} as any);
+    const controlledProps: Partial<ITableProps> = {};
+    controlledPropsKeys.forEach((key) => copyProp(controlledProps, props, key));
+    return controlledProps;
 }
 
-const isPlainObject = (value: any) => value != null && typeof value === 'object' && !Array.isArray(value);
+const isPlainObject = (value: unknown): value is object => value != null && typeof value === 'object' && !Array.isArray(value);
 
 /**
  * Applies to the current value only the fields which the parent component has changed (prevValue -> value),
  * so the fields changed inside the table (sorting, width, filters, page index...) are kept.
  */
 export const mergeChangedFields = <T extends object>(prevValue: T, value: T, currentValue: T): T => {
-    const result: any = { ...currentValue };
-    Object.keys(prevValue).concat(Object.keys(value))
+    const result = { ...currentValue };
+    (Object.keys(prevValue).concat(Object.keys(value)) as (keyof T)[])
         .filter((field, index, fields) => fields.indexOf(field) === index)
         .forEach((field) => {
-            const newFieldValue = (value as any)[field];
-            if (!isDeepEqual((prevValue as any)[field], newFieldValue)) {
+            const newFieldValue = value[field];
+            if (!isDeepEqual(prevValue[field], newFieldValue)) {
                 result[field] = newFieldValue;
             }
         });
@@ -89,6 +93,21 @@ export const mergeColumns = (prevColumns: Column[] = [], columns: Column[] = [],
     });
 };
 
+const overrideProp = <K extends keyof ITableProps>(
+    propsToOverride: Partial<ITableProps>,
+    key: K,
+    props: ITableProps,
+    prevProps: Partial<ITableProps>,
+    tableProps: ITableProps
+) => {
+    const value = props[key];
+    const prevValue = prevProps[key];
+    const currentValue = tableProps[key];
+    propsToOverride[key] = isPlainObject(prevValue) && isPlainObject(value) && isPlainObject(currentValue)
+        ? mergeChangedFields<ITableProps[K] & object>(prevValue, value, currentValue)
+        : value;
+};
+
 /**
  * Returns the controlled props which the parent component has changed since they were applied (prevProps),
  * merged with the current state of the table (tableProps).
@@ -100,20 +119,16 @@ export const getPropsToOverride = (
     prevProps: Partial<ITableProps>,
     tableProps: ITableProps
 ): Partial<ITableProps> => {
-    return controlledPropsKeys.reduce((acc, key) => {
-        const value: any = props[key];
-        const prevValue: any = prevProps[key];
-        if (isDeepEqual(prevValue, value)) {
-            return acc;
+    const propsToOverride: Partial<ITableProps> = {};
+    controlledPropsKeys.forEach((key) => {
+        if (isDeepEqual(prevProps[key], props[key])) {
+            return;
         }
-        const currentValue: any = tableProps[key];
         if (key === 'columns') {
-            acc.columns = mergeColumns(prevValue, value, currentValue);
-        } else if (isPlainObject(prevValue) && isPlainObject(value) && isPlainObject(currentValue)) {
-            acc[key] = mergeChangedFields(prevValue, value, currentValue);
+            propsToOverride.columns = mergeColumns(prevProps.columns, props.columns, tableProps.columns);
         } else {
-            acc[key] = value;
+            overrideProp(propsToOverride, key, props, prevProps, tableProps);
         }
-        return acc;
-    }, {} as any);
+    });
+    return propsToOverride;
 }

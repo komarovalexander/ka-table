@@ -22,12 +22,13 @@ export const sortColumns = (columns: Column[]) => {
     });
 }
 
-export const sortData = (columns: Column[], data: any, sort?: SortFunc): any[] => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the rows of data typed as any stay any, as before
+export const sortData = <TData = any>(columns: Column[], data: TData[], sort?: SortFunc): TData[] => {
     const column = columns.find((c) => c.sortDirection);
     if (!column) { return data; }
     const customSort = sort && sort({ column });
     const sortFunc = (
-        customSort && ((rowDataA: any, rowDataB: any) => customSort(getValueByColumn(rowDataA, column), getValueByColumn(rowDataB, column)))
+        customSort && ((rowDataA: TData, rowDataB: TData) => customSort(getValueByColumn(rowDataA, column), getValueByColumn(rowDataB, column)))
     ) || (
         column.sortDirection === SortDirection.Ascend
             ? ascendSort(column)
@@ -38,7 +39,7 @@ export const sortData = (columns: Column[], data: any, sort?: SortFunc): any[] =
 };
 
 const ascendSort = (sortedColumn: Column) => {
-    return (a: any, b: any) => {
+    return (a: unknown, b: unknown) => {
         const aValue = getValueByColumn(a, sortedColumn);
         const bValue = getValueByColumn(b, sortedColumn);
         if (aValue === bValue) {
@@ -56,7 +57,7 @@ const ascendSort = (sortedColumn: Column) => {
 };
 
 const descendSort = (sortedColumn: Column) => {
-    return (a: any, b: any) => {
+    return (a: unknown, b: unknown) => {
         const aValue = getValueByColumn(a, sortedColumn);
         const bValue = getValueByColumn(b, sortedColumn);
         if (aValue === bValue) {

@@ -252,13 +252,7 @@ exports[`GroupUtils > convertToFlat > inner group with summart 1`] = `
           ],
           "groupIndex": 0,
           "groupSummaryMark": {},
-          "key": [
-            [
-              "France",
-              "Cat",
-            ],
-            "--: + summary--\\",
-          ],
+          "key": "[["France","Cat"],"--:+summary--"]",
         },
       ],
       {} => {
@@ -271,13 +265,7 @@ exports[`GroupUtils > convertToFlat > inner group with summart 1`] = `
         ],
         "groupIndex": 0,
         "groupSummaryMark": {},
-        "key": [
-          [
-            "France",
-            "Cat",
-          ],
-          "--: + summary--\\",
-        ],
+        "key": "[["France","Cat"],"--:+summary--"]",
       },
     },
     "groupMark": {},
@@ -303,13 +291,7 @@ exports[`GroupUtils > convertToFlat > inner group with summart 1`] = `
         ],
         "groupIndex": 0,
         "groupSummaryMark": {},
-        "key": [
-          [
-            "France",
-            "Cat",
-          ],
-          "--: + summary--\\",
-        ],
+        "key": "[["France","Cat"],"--:+summary--"]",
       },
     ],
     "groupMark": {},
@@ -334,13 +316,7 @@ exports[`GroupUtils > convertToFlat > inner group with summart 1`] = `
     ],
     "groupIndex": 0,
     "groupSummaryMark": {},
-    "key": [
-      [
-        "France",
-        "Cat",
-      ],
-      "--: + summary--\\",
-    ],
+    "key": "[["France","Cat"],"--:+summary--"]",
   },
   {
     "groupData": [
@@ -352,13 +328,7 @@ exports[`GroupUtils > convertToFlat > inner group with summart 1`] = `
     ],
     "groupIndex": 0,
     "groupSummaryMark": {},
-    "key": [
-      [
-        "France",
-        "Cat",
-      ],
-      "--: + summary--\\",
-    ],
+    "key": "[["France","Cat"],"--:+summary--"]",
   },
 ]
 `;

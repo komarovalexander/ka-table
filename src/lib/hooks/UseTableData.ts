@@ -13,9 +13,9 @@ export interface ITableData {
     groupColumnsCount: number;
     groupedColumns: Column[];
     // the rows of all pages: filtered, sorted, grouped
-    dataWithoutPaging: any[];
+    dataWithoutPaging: unknown[];
     // the rows of the current page
-    groupedData: any[];
+    groupedData: unknown[];
     pagesCount: number;
 }
 

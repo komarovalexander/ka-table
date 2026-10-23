@@ -47,14 +47,14 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
     const { columns } = tableData;
 
     // the virtual scrolling renders only the visible rows: the row of the cell is scrolled to, so the cell is rendered
-    const scrollToRow = (rowKeyValue: any) => {
+    const scrollToRow = (rowKeyValue: unknown) => {
         if (!isVirtualScrollingEnabled(virtualScrolling)) {
             return;
         }
         const { itemHeight, scrollTop = 0, tbodyHeight = 600 } = virtualScrolling!;
-        const getRowHeight = (row: any) => (typeof itemHeight === 'function' ? itemHeight(row) : itemHeight) || 40;
+        const getRowHeight = (row: unknown) => (typeof itemHeight === 'function' ? itemHeight(row) : itemHeight) || 40;
         const rowIndex = tableData.groupedData.findIndex((row) => getRowKeyValue(row, rowKeyField) === rowKeyValue);
-        const rowTop = tableData.groupedData.slice(0, rowIndex).reduce((top, row) => top + getRowHeight(row), 0);
+        const rowTop = tableData.groupedData.slice(0, rowIndex).reduce<number>((top, row) => top + getRowHeight(row), 0);
         const rowHeight = getRowHeight(tableData.groupedData[rowIndex]);
         if (rowTop < scrollTop || rowTop + rowHeight > scrollTop + tbodyHeight) {
             dispatch({ type: ActionType.ScrollTable, scrollTop: rowTop < scrollTop ? rowTop : rowTop + rowHeight - tbodyHeight });

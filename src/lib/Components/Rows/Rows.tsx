@@ -13,15 +13,15 @@ import { MemoizedRowsContext } from './MemoizedRowsContext';
 import { getRowKeyValues } from '../../Utils/RowUtils';
 
 export interface IRowsProps extends ITableBodyProps {
-    onFirstRowRendered: (firstRowRef: RefObject<HTMLElement | null>) => any;
-    treeGroupsExpanded?: any[];
+    onFirstRowRendered: (firstRowRef: RefObject<HTMLElement | null>) => void;
+    treeGroupsExpanded?: unknown[];
     isFirstRowOdd?: boolean;
 }
 
-const emptyArray: any[] = [];
+const emptyArray: never[] = [];
 
 const groupEditableCellsByRow = (editableCells: EditableCell[]) => {
-    const editableCellsByRow = new Map<any, EditableCell[]>();
+    const editableCellsByRow = new Map<unknown, EditableCell[]>();
     editableCells.forEach((cell) => {
         const rowEditableCells = editableCellsByRow.get(cell.rowKeyValue);
         rowEditableCells ? rowEditableCells.push(cell) : editableCellsByRow.set(cell.rowKeyValue, [cell]);
@@ -82,7 +82,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
         onFirstRowRendered(firstRowRef);
     }, [firstRowRef, onFirstRowRendered]);
 
-    let rowRefLink: any = firstRowRef;
+    let rowRefLink: RefObject<HTMLElement | null> | undefined = firstRowRef;
     return (
         <MemoizedRowsContext.Provider value={!!memoizedRows}>
             {data.map((d, index) => {

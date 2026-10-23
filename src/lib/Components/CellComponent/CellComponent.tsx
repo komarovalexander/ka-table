@@ -23,7 +23,7 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
         ...(keyboardNavigation && { tabIndex: keyboardNavigation.tabIndex, onFocus: keyboardNavigation.onFocus }),
     }, props, childComponents.cell);
     // a ref of the customization (elementAttributes) is kept
-    const customRef = (elementAttributes as any).ref;
+    const customRef = (elementAttributes as { ref?: React.Ref<HTMLTableCellElement> }).ref;
     const elementRef = keyboardNavigation?.elementRef;
     const mergedRef = React.useCallback((element: HTMLTableCellElement | null) => {
         if (elementRef) {

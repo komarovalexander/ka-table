@@ -10,8 +10,9 @@ import {
     getGroupedStructure,
     groupBy,
     groupDataMark,
-    groupMark,
     groupSummaryMark,
+    isGroupRow,
+    isGroupSummaryRow,
     isMaxDeep,
     normalizeKeyForMap,
     updateExpandedGroups,
@@ -85,7 +86,7 @@ describe('GroupUtils', () => {
                         ],
                         groupIndex: 0,
                         groupSummaryMark,
-                        key: [['France', 'Cat'], '--: + summary--\\'],
+                        key: getGroupKeyId([['France', 'Cat'], '--:+summary--']),
                     },
                     ]],
                     [groupSummaryMark,
@@ -99,7 +100,7 @@ describe('GroupUtils', () => {
                             ],
                             groupIndex: 0,
                             groupSummaryMark,
-                            key: [['France', 'Cat'], '--: + summary--\\'],
+                            key: getGroupKeyId([['France', 'Cat'], '--:+summary--']),
                         }]
                 ]),
             ]]);
@@ -290,10 +291,11 @@ describe('GroupUtils', () => {
         it('has the rows in groupItems, the summary row follows them', () => {
             const rows = [{ id: 1, type: 'cat' }, { id: 2, type: 'cat' }];
             const result = getGroupedData(rows, [{ columnKey: 'type', enableSummary: true }], [{ key: 'type' }]);
-            expect(result.map((item) => (item.groupMark === groupMark ? 'group' : item.groupSummaryMark === groupSummaryMark ? 'summary' : item.id)))
+            expect(result.map((item) => (isGroupRow(item) ? 'group' : isGroupSummaryRow(item) ? 'summary' : item.id)))
                 .toEqual(['group', 1, 2, 'summary']);
-            expect(result[0].groupItems).toEqual(rows);
-            expect(result[3].groupData).toEqual(rows);
+            const [groupRow, , , summaryRow] = result;
+            expect(isGroupRow(groupRow) && groupRow.groupItems).toEqual(rows);
+            expect(isGroupSummaryRow(summaryRow) && summaryRow.groupData).toEqual(rows);
         });
     });
 
@@ -308,7 +310,7 @@ describe('GroupUtils', () => {
         it('the group of NaN is expanded', () => {
             const rows = [{ id: 1, n: NaN }, { id: 2, n: 1 }];
             const result = getGroupedData(rows, [{ columnKey: 'n' }], [{ key: 'n' }], [[NaN]]);
-            expect(result.map((item) => (item.groupMark === groupMark ? `group ${item.value}` : item.id))).toEqual(['group NaN', 1, 'group 1']);
+            expect(result.map((item) => (isGroupRow(item) ? `group ${item.value}` : isGroupSummaryRow(item) ? 'summary' : item.id))).toEqual(['group NaN', 1, 'group 1']);
         });
     });
 
