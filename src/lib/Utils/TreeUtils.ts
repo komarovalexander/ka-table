@@ -23,21 +23,21 @@ export const getExpandedParents = (treeData: unknown[], rowKeyField: string): un
         .filter(isTreeGroupRow)
         .map((item) => getValueByField(item.rowData, rowKeyField));
 
-const getItemStructure = <TData>(
+// adds the item and its children to the rows of the tree: all the levels are added to one array,
+// push(...rows) of the rows of a level exceeds the limit of the arguments of a function in a big tree
+const addItemStructure = <TData>(
     item: TData,
     dataHash: Record<string, TData[]>,
     rowKeyField: string,
-    treeDeep: number = 0): ShownTreeRow<TData>[] => {
+    rows: ShownTreeRow<TData>[],
+    treeDeep: number = 0): void => {
     const children = dataHash[String(getValueByField(item, rowKeyField))];
     if (!children){
-        return [{ treeDataMark, rowData: item, treeDeep: treeDeep + 1 }];
+        rows.push({ treeDataMark, rowData: item, treeDeep: treeDeep + 1 });
+        return;
     }
-    const result: ShownTreeRow<TData>[] = [{ treeGroupMark, rowData: item, treeDeep }];
-    children.forEach((c) => {
-        const childrenData = getItemStructure(c, dataHash, rowKeyField, treeDeep + 1);
-        result.push(...childrenData);
-    });
-    return result;
+    rows.push({ treeGroupMark, rowData: item, treeDeep });
+    children.forEach((c) => addItemStructure(c, dataHash, rowKeyField, rows, treeDeep + 1));
 };
 
 export const getTreeGroupChain = <TData>(
@@ -170,9 +170,7 @@ export const getTreeData = <TData>({
         treeGroupsExpanded
     });
     const newData: ShownTreeRow<TData>[] = [];
-    rootElements.forEach(d => {
-        newData.push(...getItemStructure(d, dataHash, rowKeyField));
-    });
+    rootElements.forEach(d => addItemStructure(d, dataHash, rowKeyField, newData));
     return newData;
 };
 

@@ -60,6 +60,13 @@ describe('TreeUtils', () => {
             const treeData = getTreeData({ data, rowKeyField: 'id', treeGroupKeyField: 'treeGroupId', originalData });
             expect(treeData).toMatchSnapshot();
         });
+        it('a root with 150000 children', () => {
+            // push(...rows) of the children exceeded the limit of the arguments of a function
+            const data = [{ id: 0, parentId: null }, ...Array.from({ length: 150000 }, (_, index) => ({ id: index + 1, parentId: 0 }))];
+            const treeData = getTreeData({ data, rowKeyField: 'id', treeGroupKeyField: 'parentId', originalData: data });
+            expect(treeData.length).toBe(150001);
+            expect(treeData[150000]).toEqual({ treeDataMark, rowData: { id: 150000, parentId: 0 }, treeDeep: 2 });
+        });
     });
     describe('the keys which are the names of the members of Object', () => {
         it.each(['constructor', 'toString', '__proto__'])('%s', (id) => {
