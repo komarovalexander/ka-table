@@ -10,6 +10,7 @@ import {
     FilterFunc,
     FormatFunc,
     NoData,
+    NoInference,
     OnDispatchFunc,
     SearchFunc,
     SortFunc,
@@ -43,10 +44,15 @@ export interface ITableInstance<TData = unknown> extends ActionMethods {
     customReducer?: CustomReducerFunc<TData>;
 }
 
+/**
+ * The type of the rows (TData) is inferred from data and from the instance of useTable<TData>().
+ * The other props (columns, childComponents, format, search...) get it and don't infer it,
+ * so the ones declared without the type of the rows (e.g. Column[] or FormatFunc) keep the type of data
+ */
 export interface ITableProps<TData = unknown> {
     columnReordering?: boolean;
     columnResizing?: boolean;
-    columns: Column<TData>[];
+    columns: Column<NoInference<TData>>[];
     /**
      * The props which the table with its own state (without dispatch) applies when the parent changes them.
      * By default these are all the props: they are compared by value and the objects are merged by the changed fields,
@@ -59,12 +65,12 @@ export interface ITableProps<TData = unknown> {
     detailsRows?: unknown[];
     editableCells?: EditableCell[];
     editingMode?: EditingMode;
-    extendedFilter?: Bivariant<(data: TData[]) => TData[]>;
-    extendedSort?: Bivariant<(data: TData[], columns: Column<TData>[]) => TData[]>;
-    filter?: FilterFunc<TData>;
+    extendedFilter?: Bivariant<(data: NoInference<TData>[]) => NoInference<TData>[]>;
+    extendedSort?: Bivariant<(data: NoInference<TData>[], columns: Column<NoInference<TData>>[]) => NoInference<TData>[]>;
+    filter?: FilterFunc<NoInference<TData>>;
     filteringMode?: FilteringMode;
     focused?: Focused;
-    format?: FormatFunc<TData>;
+    format?: FormatFunc<NoInference<TData>>;
     groupedColumns?: GroupedColumn[];
     groupPanel?: GroupPanelSettings;
     groups?: Group[];
@@ -91,7 +97,7 @@ export interface ITableProps<TData = unknown> {
     paging?: PagingOptions;
     rowKeyField: string;
     rowReordering?: boolean;
-    search?: SearchFunc<TData>;
+    search?: SearchFunc<NoInference<TData>>;
     searchText?: string;
     selectedRows?: unknown[];
     singleAction?: TableAction | CustomAction;
@@ -100,7 +106,7 @@ export interface ITableProps<TData = unknown> {
     treeExpandButtonColumnKey?: string;
     treeGroupKeyField?: string;
     treeGroupsExpanded?: unknown[];
-    validation?: ValidationFunc<TData>;
+    validation?: ValidationFunc<NoInference<TData>>;
     virtualScrolling?: VirtualScrolling;
     width?: number | string;
 }
@@ -114,9 +120,10 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
 }
 
 export interface IKaTableProps<TData = unknown> extends ITableProps<TData> {
-    childComponents?: ChildComponents<TData>;
+    childComponents?: ChildComponents<NoInference<TData>>;
     dispatch?: DispatchFunc;
-    table?: ITableInstance<TData>;
+    // the instance of useTable() without the type of the rows doesn't change the type of data
+    table?: ITableInstance<TData> | ITableInstance;
 }
 
 export const Table = <TData = unknown>(props: IKaTableProps<TData>) => {

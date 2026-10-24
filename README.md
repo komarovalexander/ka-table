@@ -7,7 +7,9 @@ The customizable, extendable, lightweight, and fully free React Table Component
 
 <a href="http://ka-table.com"><img src="http://ka-table.com/images/logo.svg"/></a>
 
-[Site](http://ka-table.com) | [Demos](https://komarovalexander.github.io/ka-table/#/overview) | [Docs](http://ka-table.com/docs_get_started.html)
+[Site](http://ka-table.com) | [Demos](https://komarovalexander.github.io/ka-table/#/overview) | [Docs](http://ka-table.com/docs_get_started.html) | [Changelog](https://github.com/komarovalexander/ka-table/blob/master/CHANGELOG.md)
+
+Upgrading from 12.x? See the [migration guide](https://github.com/komarovalexander/ka-table/blob/master/MIGRATION.md).
 
 ![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/delete-row.png)
 [Demo link](https://komarovalexander.github.io/ka-table/#/delete-row)

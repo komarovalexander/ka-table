@@ -19,6 +19,12 @@ export type Bivariant<TFunction extends (...args: never[]) => unknown> = {
     bivarianceHack(...args: Parameters<TFunction>): ReturnType<TFunction>;
 }['bivarianceHack'];
 
+/**
+ * A type which TypeScript doesn't infer a type parameter from, as NoInfer of TypeScript 5.4 (the older versions don't have it):
+ * the type of the rows of a table is inferred from data and the instance, the other props are typed by it
+ */
+export type NoInference<T> = [T][T extends unknown ? 0 : never];
+
 type AddParameters<T, I> = T extends (e: infer E) => void ? (
     Bivariant<(e: E, extendedEvent: AttributeTableData<I>) => void>
 ) : T;
