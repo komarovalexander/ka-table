@@ -33,7 +33,7 @@ export default defineConfig([
                 trailingUnderscore: 'forbid',
             }],
             '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
-            '@typescript-eslint/no-explicit-any': 'off',
+            '@typescript-eslint/no-explicit-any': 'error',
             '@typescript-eslint/no-shadow': ['error', { hoist: 'all' }],
             '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
             '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
@@ -87,28 +87,6 @@ export default defineConfig([
             '@stylistic/space-infix-ops': 'error',
             '@stylistic/spaced-comment': ['error', 'always', { markers: ['/'] }],
             '@stylistic/type-annotation-spacing': 'error',
-        },
-    },
-    {
-        // the code of the library uses unknown, generics or the types of the values instead of any
-        files: ['src/lib/**/*.{ts,tsx}'],
-        ignores: ['src/lib/**/*.test.{ts,tsx}'],
-        rules: {
-            '@typescript-eslint/no-explicit-any': 'error',
-        },
-    },
-    {
-        // the public types keep any: the users get the values of the cells, the keys of the rows and the actions as any,
-        // unknown would break their code
-        files: [
-            'src/lib/actionCreators.ts',
-            'src/lib/props.ts',
-            'src/lib/types.ts',
-            'src/lib/Components/Table/Table.tsx',
-            'src/lib/Models/*.ts',
-        ],
-        rules: {
-            '@typescript-eslint/no-explicit-any': 'off',
         },
     },
 ]);

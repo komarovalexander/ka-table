@@ -23,7 +23,7 @@ const dataArray = [
 const CustomLookupEditor = ({
     column, dispatch,
 }: IFilterRowEditorProps) => {
-    const toNullableBoolean = (value: any) => {
+    const toNullableBoolean = (value: string) => {
         switch (value) {
         case 'true': return true;
         case 'false': return false;
@@ -34,7 +34,7 @@ const CustomLookupEditor = ({
         <div>
             <select
                 className='form-control'
-                defaultValue={column.filterRowValue}
+                defaultValue={String(column.filterRowValue ?? '')}
                 onChange={(event) => {
                     dispatch(updateFilterRowValue(column.key, toNullableBoolean(event.currentTarget.value)));
                 }}>
@@ -73,7 +73,7 @@ const NumberEditor = ({
         <div>
             <FilterOperators column={column} dispatch={dispatch}/>
             <input
-                defaultValue={column.filterRowValue}
+                defaultValue={String(column.filterRowValue ?? '')}
                 style={{width: 60}}
                 onChange={(event) => {
                     const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
@@ -141,7 +141,7 @@ const FilterRowCustomEditorDemo = () => {
             editingMode={EditingMode.Cell}
             format= {({ column, value }) => {
                 if (column.dataType === DataType.Date){
-                    return value && dateFormat.format(value);
+                    return value instanceof Date && dateFormat.format(value);
                 }
             }}
             filteringMode= {FilteringMode.FilterRow}

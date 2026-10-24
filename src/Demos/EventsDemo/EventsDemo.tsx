@@ -2,9 +2,9 @@ import './EventsDemo.scss';
 
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 import React, { useState } from 'react';
+import { CustomAction, TableAction } from '../../lib/types';
+import { EventsLog, TableEvent } from './EventsLog';
 import { Table, useTable } from '../../lib';
-
-import { EventsLog } from './EventsLog';
 
 const dataArray = Array(20).fill(undefined).map(
     (_, index) => ({
@@ -18,9 +18,10 @@ const dataArray = Array(20).fill(undefined).map(
 
 
 const EventsDemo = () => {
-    const [events, changeEvents] = useState<any[]>([]);
+    const [events, changeEvents] = useState<TableEvent[]>([]);
     const table = useTable({
-        onDispatch: (action) => {
+        // the actions of the table and the actions of the demo (MY_...)
+        onDispatch: (action: TableAction | CustomAction) => {
             changeEvents((prevValue) => ([{ type: action.type, data: action, date: new Date(), showData: false }, ...prevValue]));
         }
     });
@@ -91,10 +92,8 @@ const EventsDemo = () => {
             />
             <EventsLog
                 events={events}
-                showDataClick={(eventData: any) => {
-                    const newEvents = [...events];
-                    newEvents.find((e) => e.date === eventData.date).showData = true;
-                    changeEvents(newEvents);
+                showDataClick={(eventData) => {
+                    changeEvents(events.map((e) => (e.date === eventData.date ? { ...e, showData: true } : e)));
                 }}
                 clearLog={() => changeEvents([])}/>
         </div>

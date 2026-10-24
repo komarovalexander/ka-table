@@ -9,8 +9,11 @@ const dataArray = Array(200).fill(undefined).map(
         id: index,
     }),
 );
+export type Row = typeof dataArray[number];
+
 const pageSize = 20;
-const get = (pageIndex: number): Promise<any> => {
+// the rows of the page and the index of the next page, -1 when all the rows are loaded
+const get = (pageIndex: number): Promise<{ data: Row[]; pageIndex: number }> => {
     return new Promise((resolve) => {
         setTimeout(() => {
             const data = getPageData(dataArray, {

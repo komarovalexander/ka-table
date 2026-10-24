@@ -2,6 +2,7 @@ import { IFilterRowEditorProps } from '../../props';
 import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { getInputValue } from '../../Utils/DataUtils';
 import { updateFilterRowValue } from '../../actionCreators';
 
 const FilterRowString: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
@@ -14,7 +15,7 @@ const FilterRowString: React.FunctionComponent<IFilterRowEditorProps> = (props) 
         className: defaultOptions.css.textInput,
         'aria-label': column.title,
         type: 'search',
-        value: column.filterRowValue ?? '',
+        value: getInputValue(column.filterRowValue),
         onChange: (event) => {
             dispatch(updateFilterRowValue(column.key, event.currentTarget.value));
         }

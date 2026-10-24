@@ -14,8 +14,11 @@ const dataArray = Array(100).fill(undefined).map(
     }),
 );
 
+// the rows of the page and the count of the pages
+type Page = { data: typeof dataArray; pagesCount: number };
+
 export const useGet = (pageIndexNew?: number) => {
-    return useQuery<any, any>(['useGet', pageIndexNew], () => new Promise((resolve) => {
+    return useQuery(['useGet', pageIndexNew], () => new Promise<Page>((resolve) => {
         setTimeout(() => {
             const paging = {
                 enabled: true,

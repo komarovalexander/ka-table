@@ -12,7 +12,11 @@ export interface ShownTreeRow<TData> {
     treeGroupMark?: typeof treeGroupMark;
 }
 
-const isTreeGroupRow = (row: unknown): row is ShownTreeRow<unknown> => (row as Partial<ShownTreeRow<unknown>>).treeGroupMark === treeGroupMark;
+export const isTreeGroupRow = (row: unknown): row is ShownTreeRow<unknown> => (row as Partial<ShownTreeRow<unknown>>).treeGroupMark === treeGroupMark;
+
+export const isTreeRow = (row: unknown): row is ShownTreeRow<unknown> => (
+    isTreeGroupRow(row) || (row as Partial<ShownTreeRow<unknown>>).treeDataMark === treeDataMark
+);
 
 export const getExpandedParents = (treeData: unknown[], rowKeyField: string): unknown[] =>
     treeData
@@ -24,7 +28,7 @@ const getItemStructure = <TData>(
     dataHash: Record<string, TData[]>,
     rowKeyField: string,
     treeDeep: number = 0): ShownTreeRow<TData>[] => {
-    const children = dataHash[getValueByField(item, rowKeyField)];
+    const children = dataHash[String(getValueByField(item, rowKeyField))];
     if (!children){
         return [{ treeDataMark, rowData: item, treeDeep: treeDeep + 1 }];
     }
@@ -69,7 +73,7 @@ export const restoreFilteredData = <TData>({
     const treeGroupKeyValues = data.map(d => getValueByField(d, rowKeyField));
     // without a prototype: the keys like 'constructor' don't find the members of Object
     const dataMap = originalData.reduce<Record<string, TData>>((acc, d) => {
-        acc[getValueByField(d, rowKeyField)] = d;
+        acc[String(getValueByField(d, rowKeyField))] = d;
         return acc;
     }, Object.create(null));
     const parents: TData[] = [];
@@ -109,28 +113,29 @@ const getDataHashAndRootElements = <TData>({
 }) => {
     // without a prototype: keys like 'constructor' don't find the members of Object (not a Map: the keys 1 and '1' are the same)
     const dataHash: Record<string, TData[]> = Object.create(null);
-    const rowKeyValues = data.map((d) => getValueByField(d, rowKeyField));
+    const rowKeys = data.map((d) => String(getValueByField(d, rowKeyField)));
     const hasRow: Record<string, boolean> = Object.create(null);
-    rowKeyValues.forEach((rowKeyValue) => {
-        hasRow[rowKeyValue] = true;
+    rowKeys.forEach((rowKey) => {
+        hasRow[rowKey] = true;
     });
     const expandedRowKeyValues = treeGroupsExpanded && new Set(treeGroupsExpanded);
     const rootElements: TData[] = [];
     data.forEach((d, index) => {
         const parentRowKeyValue = getValueByField(d, treeGroupKeyField);
+        const parentRowKey = String(parentRowKeyValue);
         const isRoot = parentRowKeyValue == null
             // a row whose parent is not in the data (e.g. it is deleted) or is the row itself is a root instead of a lost row
-            || !hasRow[parentRowKeyValue]
-            || String(parentRowKeyValue) === String(rowKeyValues[index]);
+            || !hasRow[parentRowKey]
+            || parentRowKey === rowKeys[index];
         if (isRoot) {
             rootElements.push(d);
             return;
         }
-        if (!dataHash[parentRowKeyValue]){
-            dataHash[parentRowKeyValue] = [];
+        if (!dataHash[parentRowKey]){
+            dataHash[parentRowKey] = [];
         }
         if (!expandedRowKeyValues || expandedRowKeyValues.has(parentRowKeyValue)) {
-            dataHash[parentRowKeyValue].push(d);
+            dataHash[parentRowKey].push(d);
         }
     });
     return { dataHash, rootElements };

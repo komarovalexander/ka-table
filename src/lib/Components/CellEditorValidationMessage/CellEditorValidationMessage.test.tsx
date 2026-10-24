@@ -6,7 +6,7 @@ import { act, render } from '@testing-library/react';
 
 const props: ICellEditorValidationMessageProps = {
     message: '',
-} as any;
+} as ICellEditorValidationMessageProps;
 
 it('renders without crashing', () => {
     const element = document.createElement('td');

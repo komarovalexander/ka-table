@@ -1,15 +1,16 @@
 import { ActionType, PagingPosition } from '../../enums';
+import { PagingOptions } from '../../models';
 import { act, render } from '@testing-library/react';
 
 import React from 'react';
-import { Table } from './Table';
+import { IKaTableProps, Table } from './Table';
 import { createRoot } from 'react-dom/client';
 import { loadData } from '../../actionCreators';
 
-const tableProps: any = {
+const tableProps: IKaTableProps = {
     columns: [
-        { key: 'column', name: 'Column 1' },
-        { key: 'column2', name: 'Column 2' },
+        { key: 'column' },
+        { key: 'column2' },
     ],
     data: [
         { column: 1, column2: 2, id: 1 },
@@ -75,7 +76,7 @@ it('should not dispatch in case of single action is undefined', () => {
 });
 
 it('Paging position property', () => {
-    const getPagingCount = (paging: any) => render(<Table {...tableProps} paging={paging}/>).container.querySelectorAll('.ka-paging').length;
+    const getPagingCount = (paging: PagingOptions) => render(<Table {...tableProps} paging={paging}/>).container.querySelectorAll('.ka-paging').length;
     expect(getPagingCount({enabled: true, position: PagingPosition.Top})).toBe(1);
     expect(getPagingCount({enabled: true, position: PagingPosition.Bottom})).toBe(1);
     expect(getPagingCount({enabled: true, position: PagingPosition.TopAndBottom})).toBe(2);

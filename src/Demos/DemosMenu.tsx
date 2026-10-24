@@ -9,9 +9,9 @@ import { trackEvent } from './ga';
 interface IDemosMenuProps {
     cases: DemoCase[];
 }
-let timeoutId: any = null;
+let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
-const synonyms: { [value: string]: any[] } = {
+const synonyms: { [value: string]: string[] } = {
     'AlertCellDemo': ['Image', 'Button', 'Btn'],
     'ColumnReorderingDemo': ['Drag'],
     'ColumnSettingsDemo': ['Hide', 'Show', 'Action Creator'],

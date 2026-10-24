@@ -3,8 +3,9 @@ import { DataType, EditingMode } from '../../enums';
 import CellEditor from './CellEditor';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { ICellEditorProps } from '../../props';
 
-const props: any = {
+const props: ICellEditorProps = {
     childComponents: {},
     column: {
         dataType: DataType.String,
@@ -14,10 +15,12 @@ const props: any = {
     dispatch: () => {},
     editingMode: EditingMode.None,
     field: 'column',
+    isDetailsRowShown: false,
     isSelectedRow: true,
     rowData: [{ column: 12, id: 1 }],
     rowKeyField: 'id',
     rowKeyValue: 1,
+    selectedRows: [],
     value: 12,
 };
 

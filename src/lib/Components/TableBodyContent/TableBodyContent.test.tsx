@@ -23,8 +23,9 @@ const props: ITableBodyProps = {
     groupColumnsCount: 0,
     groupedColumns: [],
     rowKeyField: 'id',
+    rowReordering: false,
     selectedRows: [],
-} as any;
+};
 
 describe('TableBodyContent', () => {
     it('renders without crashing', () => {

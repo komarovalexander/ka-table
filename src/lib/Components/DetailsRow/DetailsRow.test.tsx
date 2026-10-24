@@ -16,13 +16,16 @@ const props: IRowProps = {
     dispatch: () => {},
     editableCells: [],
     editingMode: EditingMode.None,
+    isDetailsRowShown: false,
     isSelectedRow: false,
     groupColumnsCount: 0,
     rowData: [{ column: 1, column2: 2 }],
+    rowEditableCells: [],
     rowKeyField: 'column',
     rowKeyValue: 1,
+    rowReordering: false,
     selectedRows: [],
-} as any;
+};
 
 it('renders without crashing', () => {
     const element = document.createElement('tbody');

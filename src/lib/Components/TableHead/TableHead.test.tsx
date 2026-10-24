@@ -1,18 +1,20 @@
+import { FilteringMode, SortingMode } from '../../enums';
 import React from 'react';
 import { TableHead } from './TableHead';
 import { createRoot } from 'react-dom/client';
+import { ITableHeadProps } from '../../props';
 
-const props: any = {
+const props: ITableHeadProps = {
+    areAllRowsSelected: false,
     childComponents: {},
     columns: [
-        { key: 'column', name: 'Column 1' },
-        { key: 'column2', name: 'Column 2' },
+        { key: 'column' },
+        { key: 'column2' },
     ],
-    data: [
-        { column: 1, column2: 2, id: 1 },
-        { column: 12, column2: 22, id: 2 },
-    ],
-    rowKeyField: 'id',
+    dispatch: vi.fn(),
+    filteringMode: FilteringMode.None,
+    groupColumnsCount: 0,
+    sortingMode: SortingMode.None,
 };
 
 it('renders without crashing', () => {

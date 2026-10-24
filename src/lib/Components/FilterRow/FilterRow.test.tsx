@@ -10,7 +10,7 @@ beforeEach(() => {
         columns: [],
         dispatch: vi.fn(),
         groupColumnsCount: 0,
-    } as any;
+    } as IFilterRowProps;
 });
 
 it('renders without crashing', () => {

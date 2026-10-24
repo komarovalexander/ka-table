@@ -8,7 +8,7 @@ import { ICellEditorProps } from '../../lib/props';
 
 const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
-const dataArray: any[] = [
+const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
     { id: 2, name: 'Billi Bob', score: 55, passed: false, nextTry: new Date(2019, 10, 8, 10) },
     { id: 3, name: 'Tom Williams', score: 45, passed: false, nextTry: new Date(2019, 11, 8, 10) },
@@ -24,7 +24,7 @@ const CustomEditor = ({
     const close = () => {
         table.closeEditor(rowKeyValue, column.key);
     };
-    const [editorValue, setValue] = useState(value);
+    const [editorValue, setValue] = useState(value as string);
     return (
         <div className='custom-editor'>
             <input
@@ -46,13 +46,13 @@ const CustomLookupEditor = ({
     column, rowKeyValue, value,
 }: ICellEditorProps) => {
     const table = useTableInstance();
-    const [editorValue, setValue] = useState(value);
+    const [editorValue, setValue] = useState(value as boolean);
     return (
         <div>
             <select
                 className='form-control'
                 autoFocus={true}
-                defaultValue={editorValue}
+                defaultValue={String(editorValue)}
                 onBlur={() => {
                     table.updateCellValue(rowKeyValue, column.key, editorValue);
                     table.closeEditor(rowKeyValue, column.key);
@@ -87,7 +87,7 @@ const CustomEditorDemo: React.FC = () => {
             ]}
             format= {({ column, value }) => {
                 if (column.dataType === DataType.Date){
-                    return value && dateFormat.format(new Date(value));
+                    return value instanceof Date && dateFormat.format(value);
                 }
             }}
             data={dataArray}

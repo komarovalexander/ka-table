@@ -45,13 +45,15 @@ describe('GroupUtils', () => {
 
 
         it('simple - group items', () => {
-            const value: any = []; // value is empty in case of collapsed group
-            value.groupDataMark = groupDataMark;
-            value.groupData = [{
-                country: 'France',
-                name: 'Simba',
-                type: 'Cat',
-            }];
+            // value is empty in case of collapsed group
+            const value = Object.assign([], {
+                groupDataMark,
+                groupData: [{
+                    country: 'France',
+                    name: 'Simba',
+                    type: 'Cat',
+                }],
+            });
             const mappedData = new Map([['France', value]]);
             const result = convertToFlat(mappedData);
             expect(result).toMatchSnapshot();
@@ -160,30 +162,30 @@ describe('GroupUtils', () => {
 
     it('getExpandedGroups', () => {
         const groupRowData: GroupRowData = { key: ['dog'], value: 'Rex', groupMark: getGroupMark() };
-        const groupedData: any[] = [{}, groupRowData, {}];
+        const groupedData: unknown[] = [{}, groupRowData, {}];
         const result = getExpandedGroups(groupedData);
         expect(result).toEqual([['dog']]);
     });
 
     it('updateExpandedGroups add', () => {
-        const groupsExpanded: any[][] = [['cat']];
+        const groupsExpanded: unknown[][] = [['cat']];
         const updated = updateExpandedGroups(groupsExpanded, ['dog']);
         expect(updated).toEqual([['cat'], ['dog']]);
     });
 
     it('updateExpandedGroups remove', () => {
-        const groupsExpanded: any[][] = [['cat']];
+        const groupsExpanded: unknown[][] = [['cat']];
         const updated = updateExpandedGroups(groupsExpanded, ['cat']);
         expect(updated).toEqual([]);
     });
 
     it('groupBy', () => {
-        const result = groupBy(data, (item: any) => item.type);
+        const result = groupBy(data, (item) => item.type);
         expect(result).toMatchSnapshot();
     });
 
     it('groupBy empty', () => {
-        const result = groupBy(data, (item: any) => item.type, true);
+        const result = groupBy(data, (item) => item.type, true);
         expect(result).toMatchSnapshot();
     });
 
@@ -258,7 +260,7 @@ describe('GroupUtils', () => {
             const result = getGroupText(
                 normalizeKeyForMap(date),
                 { key: 'date', title: 'Date' },
-                ({ value }) => value.toLocaleDateString('en-US'),
+                ({ value }) => (value as Date).toLocaleDateString('en-US'),
                 [{ date }, { date: new Date(2021, 10, 8) }],
             );
             expect(result).toEqual('11/8/2021');
@@ -267,7 +269,7 @@ describe('GroupUtils', () => {
             const result = getGroupText(
                 normalizeKeyForMap({ name: 'a' }),
                 { key: 'owner', title: 'Owner' },
-                ({ value }) => value.name,
+                ({ value }) => (value as { name: string }).name,
                 [{ owner: { name: 'a' } }],
             );
             expect(result).toEqual('a');

@@ -4,7 +4,7 @@ import { ITableInstance, ITableProps } from '../Table/Table';
 import { getCallbackProps, getControlledProps, getControlledPropsKeys, getPropsToOverride, withCallbacks } from './utils';
 
 import { ChildComponents } from '../../Models/ChildComponents';
-import { DispatchFunc } from '../../types';
+import { DispatchFunc, TableAction } from '../../types';
 import { TableControlled } from '../TableControlled/TableControlled';
 import { getTableAppliedProps, notifyTableChanged, setTableAppliedProps, setTableRendered } from '../../Utils/TableInstanceUtils';
 
@@ -41,13 +41,15 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsK
         // the state is calculated outside of the setState updater: React calls updaters twice in StrictMode
         const prevState = withCallbacks(tablePropsRef.current, callbacksRef.current);
         const nextStateDefault = kaReducer(prevState, action);
-        const nextState = table.customReducer?.(nextStateDefault, action, prevState) ?? nextStateDefault;
+        // customReducer and onDispatch get the actions of the code which uses the table too: that code adds their types to the parameters
+        const tableAction = action as TableAction;
+        const nextState = table.customReducer?.(nextStateDefault, tableAction, prevState) ?? nextStateDefault;
         // prevState is a new object: the actions which don't change it (e.g. ComponentDidMount) don't render the table again
         if (nextState !== prevState) {
             changeProps(nextState);
         }
         setTimeout(() => {
-            table.onDispatch?.(action, nextState, prevState);
+            table.onDispatch?.(tableAction, nextState, prevState);
         }, 0);
     }, [table, changeProps]);
 

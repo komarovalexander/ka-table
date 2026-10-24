@@ -4,6 +4,7 @@ import { ICellEditorProps } from '../../props';
 import React from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { getInputValue } from '../../Utils/DataUtils';
 
 const CellEditorString: React.FunctionComponent<ICellEditorProps> = (props) => {
     const {
@@ -19,7 +20,7 @@ const CellEditorString: React.FunctionComponent<ICellEditorProps> = (props) => {
         'aria-label': column.title,
         autoFocus,
         type: 'text',
-        value: value ?? '',
+        value: getInputValue(value),
         onChange: (event) => {
             dispatch(updateCellValue(
                 rowKeyValue,

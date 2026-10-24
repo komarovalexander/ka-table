@@ -1,5 +1,3 @@
-import * as actionCreators from '../actionCreators';
-
 import { ActionType, InsertRowPosition, SortingMode } from '../enums';
 import {
     addColumnsToRowEditableCells,
@@ -22,9 +20,10 @@ import { getValueByField, insertBefore, reorderData, reorderDataByIndex, replace
 
 import { Column } from '../models';
 import { ILoadingProps } from '../props';
+import { CustomAction, TableAction } from '../types';
 import { ITableProps } from '../index';
-import { VirtualScrolling } from '../Models/VirtualScrolling';
 import { getPagingWithPageSize } from '../Utils/PagingUtils';
+import { isTableAction } from '../Utils/ActionUtils';
 import { getRowKeyValues } from '../Utils/RowUtils';
 import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
 import { kaPropsUtils } from '../utils';
@@ -36,20 +35,7 @@ const withFirstPage = (props: ITableProps): ITableProps => (
     props.paging?.pageIndex ? { ...props, paging: { ...props.paging, pageIndex: 0 } } : props
 );
 
-type ActionCreators = typeof actionCreators;
-
-// the action of an action creator: the action creators are named by the types of their actions (deleteRow creates DeleteRow)
-type CreatedAction<K extends keyof ActionCreators> = Omit<ReturnType<ActionCreators[K]>, 'type'> & {
-    type: Capitalize<K> extends keyof typeof ActionType ? (typeof ActionType)[Capitalize<K>] : never;
-};
-
-// the actions of the action creators and the ones which the components of the table dispatch
-type TableAction = { [K in keyof ActionCreators]: CreatedAction<K> }[keyof ActionCreators]
-    | { type: ActionType.ScrollTable; scrollTop: number }
-    | { type: ActionType.UpdateVirtualScrolling; virtualScrolling: VirtualScrolling };
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the public type: the users call it with their states and actions, e.g. in their redux reducers
-const kaReducer: any = (props: ITableProps, action: TableAction): ITableProps => {
+const reducer = (props: ITableProps, action: TableAction): ITableProps => {
     const {
         columns,
         data = [],
@@ -525,6 +511,8 @@ const kaReducer: any = (props: ITableProps, action: TableAction): ITableProps =>
     return props;
 };
 
-export {
-    kaReducer,
-};
+// the actions of the code which uses the table don't change the table
+export const kaReducer = <TData>(props: ITableProps<TData>, action: TableAction | CustomAction): ITableProps<TData> => (
+    // the reducer moves and changes the rows of the props and inserts the rows of the actions, which are the rows of the table
+    isTableAction(action) ? reducer(props, action) as ITableProps<TData> : props
+);

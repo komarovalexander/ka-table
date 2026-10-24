@@ -4,8 +4,9 @@ import React from 'react';
 import TableBody from './TableBody';
 import { createRoot } from 'react-dom/client';
 import { renderInto } from '../../../testUtils/renderInto';
+import { ITableBodyProps } from '../../props';
 
-const props: any = {
+const props: ITableBodyProps = {
     childComponents: {},
     columns: [
         { key: 'column', title: 'Column 1' },
@@ -21,6 +22,7 @@ const props: any = {
     groupColumnsCount: 0,
     groupedColumns: [],
     rowKeyField: 'id',
+    rowReordering: false,
     selectedRows: [],
 };
 

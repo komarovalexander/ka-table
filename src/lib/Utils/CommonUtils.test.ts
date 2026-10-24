@@ -29,9 +29,9 @@ describe('CommonUtils', () => {
             expect(isDeepEqual(new Item(), new Item())).toBe(false);
         });
         it('supports circular references', () => {
-            const a: any = { value: 1 };
+            const a: { value: number; self?: unknown } = { value: 1 };
             a.self = a;
-            const b: any = { value: 1 };
+            const b: { value: number; self?: unknown } = { value: 1 };
             b.self = b;
             expect(isDeepEqual(a, b)).toBe(true);
         });

@@ -7,7 +7,7 @@ export const deepFreeze = <T>(value: T): T => {
     if (value !== null && typeof value === 'object' && !Object.isFrozen(value)) {
         Object.freeze(value);
         Object.getOwnPropertyNames(value).forEach((key) => {
-            deepFreeze((value as any)[key]);
+            deepFreeze((value as Record<string, unknown>)[key]);
         });
     }
     return value;

@@ -10,7 +10,7 @@ const props: INewRowProps = {
     dispatch: () => {},
     editableCells: [],
     rowKeyField: '',
-} as any;
+} as INewRowProps;
 
 it('renders without crashing', () => {
     const div = document.createElement('tbody');

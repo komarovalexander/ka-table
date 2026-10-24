@@ -53,7 +53,7 @@ const SortingExtendedDemo: React.FC = () => {
             data={dataArray}
             format= {({ column, value }) => {
                 if (column.key === 'prevScores'){
-                    return value.join();
+                    return (value as number[]).join();
                 }
             }}
             extendedSort={(data, columns) => {

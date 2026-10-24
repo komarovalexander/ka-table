@@ -20,7 +20,7 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = (props) => 
         'aria-label': column.title,
         autoFocus,
         type: 'checkbox',
-        checked: value || false,
+        checked: !!value,
         onChange: (event) => dispatch(updateCellValue(
             rowKeyValue,
             column.key,

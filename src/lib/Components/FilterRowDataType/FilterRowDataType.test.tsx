@@ -12,7 +12,7 @@ const props: IFilterRowEditorProps = {
     },
     dispatch: vi.fn(),
     field: 'fieldName',
-} as any;
+} as IFilterRowEditorProps;
 
 describe('FilterRowBoolean', () => {
     it('renders without crashing', () => {

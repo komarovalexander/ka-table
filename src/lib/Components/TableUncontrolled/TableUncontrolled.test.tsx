@@ -3,7 +3,7 @@ import { ITableInstance, ITableProps, Table } from '../Table/Table';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import React from 'react';
-import { TableUncontrolled } from './TableUncontrolled';
+import { ITableUncontrolledPropsKeys, TableUncontrolled } from './TableUncontrolled';
 import { createRoot } from 'react-dom/client';
 import { kaPropsUtils } from '../../utils';
 import { useTable } from '../../hooks/UseTable';
@@ -11,16 +11,15 @@ import { useTableInstance } from '../../hooks/UseTableInstance';
 
 vi.useFakeTimers();
 
-const props: any = {
+const props: ITableUncontrolledPropsKeys = {
     columns: [
-        { key: 'column', name: 'Column 1' },
-        { key: 'column2', name: 'Column 2' },
+        { key: 'column' },
+        { key: 'column2' },
     ],
     data: [
         { column: 1, column2: 2, id: 1 },
         { column: 12, column2: 22, id: 2 },
     ],
-    dispatch: vi.fn(),
     rowKeyField: 'id',
 };
 
@@ -36,7 +35,7 @@ it('renders without crashing', () => {
 });
 
 const tableDispatchMock = vi.fn();
-const TableControlledWrapper = (wrapperProps: any) => {
+const TableControlledWrapper = (wrapperProps: ITableUncontrolledPropsKeys) => {
     const table = useTable(({ onDispatch: tableDispatchMock }));
     return <TableUncontrolled table={table} {...wrapperProps} />
 }
@@ -59,10 +58,11 @@ it('renders with table', () => {
 
 describe('controlled props', () => {
     const data = [{ id: 1, name: 'a' }, { id: 2, name: 'b' }];
-    let table: ITableInstance;
+    type Row = typeof data[number];
+    let table: ITableInstance<Row>;
     // columns are created on every render, as in the examples of the docs
-    const TableWithProps = (tableProps: Partial<ITableProps>) => {
-        table = useTable();
+    const TableWithProps = (tableProps: Partial<ITableProps<Row>>) => {
+        table = useTable<Row>();
         return <Table table={table} rowKeyField='id' columns={[{ key: 'name' }]} data={data} {...tableProps} />;
     };
 

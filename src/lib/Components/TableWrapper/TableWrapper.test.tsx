@@ -1,26 +1,28 @@
 import { act, fireEvent, render } from '@testing-library/react';
 
 import { ActionType } from '../../enums';
+import { ITableAllProps } from '../Table/Table';
 import React from 'react';
 import { TableWrapper } from './TableWrapper';
 import { createRoot } from 'react-dom/client';
 
-const tableProps: any = {
+const dispatch = vi.fn();
+const tableProps: ITableAllProps = {
     columns: [
-        { key: 'column', name: 'Column 1' },
-        { key: 'column2', name: 'Column 2' },
+        { key: 'column' },
+        { key: 'column2' },
     ],
     data: [
         { column: 1, column2: 2, id: 1 },
         { column: 12, column2: 22, id: 2 },
     ],
-    dispatch: vi.fn(),
+    dispatch,
     rowKeyField: 'id',
 };
 
 describe('TableWrapper', () => {
     beforeEach(() => {
-        tableProps.dispatch.mockClear();
+        dispatch.mockClear();
     });
 
     it('renders without crashing', () => {
@@ -38,7 +40,7 @@ describe('TableWrapper', () => {
         const { container } = render(<TableWrapper {...tableProps} />);
 
         fireEvent.scroll(container.querySelector('.ka-table-wrapper')!, { target: { scrollTop: 11 } });
-        expect(tableProps.dispatch).toHaveBeenCalledTimes(0);
+        expect(dispatch).toHaveBeenCalledTimes(0);
     });
 
     it('should dispatch ScrollTable on scroll in case of virtual scrolling', () => {
@@ -53,8 +55,8 @@ describe('TableWrapper', () => {
         const scrollTop = 11;
 
         fireEvent.scroll(container.querySelector('.ka-table-wrapper')!, { target: { scrollTop } });
-        expect(tableProps.dispatch).toHaveBeenCalledTimes(1);
-        expect(tableProps.dispatch).toHaveBeenCalledWith(
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledWith(
             { type: ActionType.ScrollTable, scrollTop },
         );
     });

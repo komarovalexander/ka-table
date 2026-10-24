@@ -9,7 +9,7 @@ import { createRoot } from 'react-dom/client';
 const props: IPagingSizeProps = {
     childComponents: {},
     value: 5,
-} as any;
+} as IPagingSizeProps;
 
 it('renders without crashing', () => {
     const element = document.createElement('div');

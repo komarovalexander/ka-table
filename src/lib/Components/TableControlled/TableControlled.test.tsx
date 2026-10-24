@@ -1,11 +1,12 @@
 import React from 'react';
 import { TableControlled } from './TableControlled';
 import { createRoot } from 'react-dom/client';
+import { ITableAllProps } from '../Table/Table';
 
-const props: any = {
+const props: ITableAllProps = {
     columns: [
-        { key: 'column', name: 'Column 1' },
-        { key: 'column2', name: 'Column 2' },
+        { key: 'column' },
+        { key: 'column2' },
     ],
     data: [
         { column: 1, column2: 2, id: 1 },

@@ -40,7 +40,7 @@ const SortingModesDemo = () => {
             sortingMode:
             <select
                 value={tableProps.sortingMode}
-                onChange={(e) => changeTableProps({ ...tablePropsInit, sortingMode: e.target.value as any })}
+                onChange={(e) => changeTableProps({ ...tablePropsInit, sortingMode: e.target.value as SortingMode })}
                 style={{marginBottom: 20}}>
                 <option value={SortingMode.Single}>Single</option>
                 <option value={SortingMode.SingleTripleState}>SingleTripleState</option>

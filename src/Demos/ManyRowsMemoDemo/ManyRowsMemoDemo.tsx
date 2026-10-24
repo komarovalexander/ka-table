@@ -2,7 +2,7 @@ import { DataType, Table } from '../../lib';
 
 import React from 'react';
 
-let dataArray: any[];
+let dataArray: { column1: string; column2: string; column3: string; column4: string; id: number }[];
 
 const getDataArray = () => {
     if (!dataArray){

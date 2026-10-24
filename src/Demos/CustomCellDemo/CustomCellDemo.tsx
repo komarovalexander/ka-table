@@ -6,6 +6,7 @@ import { EditingMode } from '../../lib/enums';
 import { ICellTextProps } from '../../lib/props';
 import React from 'react';
 import dataArray from './data';
+import { kaDateUtils } from '../../lib/utils';
 
 const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
@@ -66,7 +67,7 @@ const CustomCellDemo = () => {
                     return `$${value}`;
                 }
                 if (column.dataType === DataType.Date){
-                    return value && dateFormat.format(new Date(value));
+                    return typeof value === 'string' && dateFormat.format(kaDateUtils.getDate(value));
                 }
             }}
             data={dataArray}

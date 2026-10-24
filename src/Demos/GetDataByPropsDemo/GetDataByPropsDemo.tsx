@@ -19,7 +19,7 @@ const dataArray = [
 
 
 const GetDataByPropsDemo = () => {
-    const [printData, setPrintData] = useState<any[]>();
+    const [printData, setPrintData] = useState<unknown[]>();
     const [searchText, setSearchText] = useState<string>();
     const table = useTable();
 
@@ -49,7 +49,7 @@ const GetDataByPropsDemo = () => {
                 editingMode={EditingMode.Cell}
                 format={({ column, value }) => {
                     if (column.dataType === DataType.Date){
-                        return value && dateFormat.format(value);
+                        return value instanceof Date && dateFormat.format(value);
                     }
                 }}
                 rowKeyField={'id'}

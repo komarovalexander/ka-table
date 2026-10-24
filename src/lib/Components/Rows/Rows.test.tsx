@@ -19,7 +19,7 @@ const props: IRowsProps = {
         { key: [1], groupMark: getGroupMark(), value: 1 },
     ],
     dispatch: () => {},
-    format: ({ value }: any) => `formatted: ${value}`,
+    format: ({ value }) => `formatted: ${value}`,
     editableCells: [],
     editingMode: EditingMode.None,
     groupColumnsCount: 1,
@@ -27,8 +27,9 @@ const props: IRowsProps = {
     groups: [{ columnKey: 'column' }],
     onFirstRowRendered: () => {},
     rowKeyField: 'id',
+    rowReordering: false,
     selectedRows: [],
-} as any;
+};
 
 describe('Rows', () => {
     it('renders without crashing', () => {

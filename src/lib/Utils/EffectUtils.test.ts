@@ -24,25 +24,26 @@ describe('EffectUtils', () => {
     it('addEscEnterKeyEffect', () => {
         const escKeyHandler = vi.fn();
         const enterKeyHandler = vi.fn();
-        let keyPressFunc: any;
-        const addEventListenerMock = vi.fn((event, fn) => {
-            keyPressFunc = fn;
+        let keyPressFunc: EventListener = () => {};
+        const addEventListenerMock = vi.fn((event: string, fn: EventListenerOrEventListenerObject) => {
+            // the effect adds a function
+            keyPressFunc = fn as EventListener;
         });
         window.addEventListener = addEventListenerMock;
 
         addEscEnterKeyEffect(escKeyHandler, enterKeyHandler);
 
-        keyPressFunc({ keyCode: KeyboardEnum.Esc });
+        keyPressFunc(new KeyboardEvent('keyup', { keyCode: KeyboardEnum.Esc }));
 
         expect(escKeyHandler.mock.calls.length).toBe(1);
         expect(enterKeyHandler.mock.calls.length).toBe(0);
 
-        keyPressFunc({ keyCode: KeyboardEnum.Enter });
+        keyPressFunc(new KeyboardEvent('keyup', { keyCode: KeyboardEnum.Enter }));
 
         expect(escKeyHandler.mock.calls.length).toBe(1);
         expect(enterKeyHandler.mock.calls.length).toBe(1);
 
-        keyPressFunc({ keyCode: 10 });
+        keyPressFunc(new KeyboardEvent('keyup', { keyCode: 10 }));
 
         expect(escKeyHandler.mock.calls.length).toBe(1);
         expect(enterKeyHandler.mock.calls.length).toBe(1);

@@ -1,7 +1,8 @@
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { ITableProps, Table, kaReducer } from '../../lib';
+import { CustomAction, TableAction } from '../../lib/types';
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import { combineReducers, createStore } from 'redux';
+import { StoreEnhancer, combineReducers, createStore } from 'redux';
 
 import React from 'react';
 
@@ -29,15 +30,19 @@ const initialTableOption: ITableProps = {
 };
 
 const combinedReducer = combineReducers({
-    tablePropsInit: (state = initialTableOption, action) => kaReducer(state, action)
+    tablePropsInit: (state: ITableProps = initialTableOption, action: TableAction | CustomAction) => kaReducer(state, action)
 });
+type State = ReturnType<typeof combinedReducer>;
+
+// the extension of the browser which shows the actions and the states
+const devTools = (window as Window & { __REDUX_DEVTOOLS_EXTENSION__?: () => StoreEnhancer }).__REDUX_DEVTOOLS_EXTENSION__;
 const store = createStore(
     combinedReducer,
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__(),
+    devTools?.(),
 );
 
 const ReduxTableComponent = () => {
-    const tablePropsInit = useSelector((state: any) => state.tablePropsInit);
+    const tablePropsInit = useSelector((state: State) => state.tablePropsInit);
     const dispatch = useDispatch();
     return (
         <Table

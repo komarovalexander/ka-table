@@ -14,7 +14,8 @@ const data = [
 ];
 const columns = [{ key: 'name' }, { key: 'group' }];
 const sortedColumns = [{ key: 'name', sortDirection: SortDirection.Ascend }, { key: 'group' }];
-const baseProps: ITableProps = { columns, data, rowKeyField: 'id' };
+type Row = typeof data[number];
+const baseProps: ITableProps<Row> = { columns, data, rowKeyField: 'id' };
 const dispatch = () => {};
 
 // the attributes are sorted: an attribute added on a re-render goes after the others
@@ -29,7 +30,7 @@ const normalizeHtml = (html: string) => {
     return element.innerHTML;
 };
 
-const getHtml = (props: ITableProps) => {
+const getHtml = (props: ITableProps<Row>) => {
     const { container, unmount } = render(<Table {...props} dispatch={dispatch} />);
     const html = normalizeHtml(container.innerHTML);
     unmount();
@@ -42,7 +43,7 @@ describe('useTableData', () => {
     const filterColumns = [{ key: 'name', filterRowValue: 'b' }, { key: 'group' }];
     const formatColumns = [{ key: 'name', headerFilterValues: ['B'] }, { key: 'group' }];
     // [changed prop, props before, props after]
-    const cases: [string, Partial<ITableProps>, Partial<ITableProps>][] = [
+    const cases: [string, Partial<ITableProps<Row>>, Partial<ITableProps<Row>>][] = [
         ['columns', { sortingMode: SortingMode.Single }, { sortingMode: SortingMode.Single, columns: sortedColumns }],
         ['data', {}, { data: [data[0]] }],
         ['extendedFilter', { extendedFilter: (d) => d }, { extendedFilter: (d) => d.slice(1) }],
@@ -53,9 +54,9 @@ describe('useTableData', () => {
             columns: filterColumns, filter: () => (value, filterRowValue) => value !== filterRowValue,
         }],
         ['format', {
-            columns: formatColumns, format: ({ value }) => value?.toString().toUpperCase(),
+            columns: formatColumns, format: ({ value }) => (value == null ? undefined : String(value).toUpperCase()),
         }, {
-            columns: formatColumns, format: ({ value }) => value,
+            columns: formatColumns, format: ({ value }) => String(value),
         }],
         ['groups', {}, { groups }],
         ['groupsExpanded', { groups, groupsExpanded: [['x'], ['y']] }, { groups, groupsExpanded: [['x']] }],
@@ -65,7 +66,7 @@ describe('useTableData', () => {
         ['sort', {
             columns: sortedColumns, sortingMode: SortingMode.Single,
         }, {
-            columns: sortedColumns, sortingMode: SortingMode.Single, sort: () => (value1, value2) => value1 < value2 ? 1 : -1,
+            columns: sortedColumns, sortingMode: SortingMode.Single, sort: () => (value1: string, value2: string) => value1 < value2 ? 1 : -1,
         }],
         ['sortingMode', { columns: sortedColumns, sortingMode: SortingMode.Single }, { columns: sortedColumns, sortingMode: SortingMode.SingleRemote }],
         ['treeGroupKeyField', {}, { treeGroupKeyField: 'parent' }],
@@ -87,9 +88,9 @@ describe('useTableData', () => {
 
     it('processes the data once for the table and the paging, and only when it is needed', () => {
         const getData = vi.spyOn(PropsUtils, 'getData');
-        let table: ITableInstance;
+        let table: ITableInstance<Row>;
         const TableWithPaging = () => {
-            table = useTable();
+            table = useTable<Row>();
             return (
                 <Table
                     {...baseProps}

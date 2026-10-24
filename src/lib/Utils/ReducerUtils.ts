@@ -59,11 +59,11 @@ export const getValidatedEditableCells = ({
         }
         return {
             ...cell,
-            validationMessage: validation && validation({
+            validationMessage: validation?.({
                 column,
                 rowData,
                 value
-            })
+            }) || undefined
         }
     });
 }

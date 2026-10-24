@@ -29,8 +29,7 @@ export const getPagesCount = (data: unknown[], paging?: PagingOptions): number =
     return Math.ceil(data.length / ((paging && paging.pageSize) || DEFAULT_PAGE_SIZE));
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the rows of data typed as any stay any, as before
-export const getPageData = <TData = any>(data: TData[], paging?: PagingOptions): TData[] => {
+export const getPageData = <TData>(data: TData[], paging?: PagingOptions): TData[] => {
     if (!paging || !paging.enabled || paging.pagesCount) {
         return data;
     }

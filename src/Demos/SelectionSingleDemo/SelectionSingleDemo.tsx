@@ -10,7 +10,7 @@ const SelectionSingleDemo = () => {
     const table = useTable();
     // the component re-renders only when the selected row changes
     const selectedId = useTableSelector(table, (props) => props.selectedRows?.[0]);
-    const selectedData = selectedId && dataArray.find(d => d.id === selectedId);
+    const selectedData = dataArray.find(d => d.id === selectedId);
 
     return (
         <div className='selection-single-demo'>

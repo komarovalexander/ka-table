@@ -23,8 +23,9 @@ const SelectionCell = ({ rowKeyValue, isSelectedRow, selectedRows }: ICellTextPr
         <input
             type='checkbox'
             checked={isSelectedRow}
-            onChange={(event: any) => {
-                if (event.nativeEvent.shiftKey) {
+            onChange={(event) => {
+                // the change of a checkbox is its click
+                if ((event.nativeEvent as MouseEvent).shiftKey) {
                     table.selectRowsRange(rowKeyValue, [...selectedRows].pop());
                 } else if (event.currentTarget.checked) {
                     table.selectRow(rowKeyValue);

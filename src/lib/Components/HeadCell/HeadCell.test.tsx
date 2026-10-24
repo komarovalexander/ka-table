@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 const props: IHeadCellProps = {
     column: new Column(),
     childComponents: {},
-} as any;
+} as IHeadCellProps;
 
 it('renders without crashing', () => {
     const element = document.createElement('tr');

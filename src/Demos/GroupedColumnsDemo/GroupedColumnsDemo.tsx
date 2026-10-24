@@ -16,7 +16,7 @@ const columns: Column[] = Array(15).fill(undefined).map(
 );
 
 const dataArray = Array(30).fill(undefined).map(
-    (_, index) => columns.reduce((previousValue: any, column) => ({
+    (_, index) => columns.reduce<Record<string, string | number>>((previousValue, column) => ({
         ...previousValue,
         [column.key]: `${column.key} row:${index}`
     }), { id: index }),

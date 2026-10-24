@@ -8,14 +8,15 @@ import { useTable } from '../../hooks/UseTable';
 
 const columns = [{ key: 'name', title: 'Name' }, { key: 'city', title: 'City' }];
 const createData = (prefix: string) => [0, 1].map((id) => ({ id, name: `${prefix} name ${id}`, city: `${prefix} city ${id}` }));
+type Row = ReturnType<typeof createData>[number];
 
 const keyUp = (element: Element | Window, key: 'Enter' | 'Escape') => fireEvent.keyUp(element, { key, keyCode: key === 'Enter' ? 13 : 27 });
 
 // a search input and two tables on the page
-const setup = (tableProps: Partial<IKaTableProps> = {}) => {
-    const tables: ITableInstance[] = [];
+const setup = (tableProps: Partial<IKaTableProps<Row>> = {}) => {
+    const tables: ITableInstance<Row>[] = [];
     const TableWithInstance = ({ index }: { index: number }) => {
-        const table = useTable();
+        const table = useTable<Row>();
         tables[index] = table;
         return <Table table={table} columns={columns} data={createData(`table${index}`)} rowKeyField='id' {...tableProps} />;
     };

@@ -42,7 +42,7 @@ const ValidationDemo = () => {
                         }
                     }
                     if (column.key === 'score'){
-                        if (value > 100) {
+                        if ((value as number) > 100) {
                             return 'Value can\'t be more than 100';
                         }
                         if (!value) {

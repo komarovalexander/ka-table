@@ -4,8 +4,9 @@ import { act, fireEvent, render } from '@testing-library/react';
 import FilterRowNumber from './FilterRowNumber';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { IFilterRowEditorProps } from '../../props';
 
-const props: any = {
+const props = {
     column: {
         dataType: DataType.String,
         key: 'columnField',
@@ -13,7 +14,7 @@ const props: any = {
     },
     dispatch: vi.fn(),
     rowData: { column: 1 },
-};
+} as IFilterRowEditorProps;
 
 describe('FilterRowNumber', () => {
     it('renders without crashing', () => {

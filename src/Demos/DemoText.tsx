@@ -11,7 +11,7 @@ interface IDemoTextProps {
 const demoSources = import.meta.glob<string>('./*/*Demo.tsx', { query: '?raw', import: 'default' });
 
 const DemoText: React.FunctionComponent<IDemoTextProps> = ({ demoFileName }) => {
-    const [text, changeText]: [string, any] = useState('');
+    const [text, changeText] = useState('');
     useEffect(() => {
         demoSources[`./${demoFileName}/${demoFileName}.tsx`]?.()
             .then((source) => changeText(source.replace(/\.\.\/\.\.\/lib/g, 'ka-table')));

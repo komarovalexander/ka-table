@@ -12,6 +12,11 @@ interface ShownRow {
     treeGroupMark?: unknown;
 }
 
+// the key of React of a row: a number stays a number, other values are strings, as React makes them
+export const getReactKey = (rowKeyValue: unknown): React.Key | undefined => (
+    rowKeyValue == null ? undefined : typeof rowKeyValue === 'number' ? rowKeyValue : String(rowKeyValue)
+);
+
 const hasCells = (row: ShownRow) => row.groupMark !== groupMark && row.groupSummaryMark !== groupSummaryMark;
 
 /**

@@ -9,7 +9,7 @@ const props: INoDataRowProps = {
     childComponents: {},
     columns: [],
     groupColumnsCount: 0,
-} as any;
+} as INoDataRowProps;
 
 it('renders without crashing', () => {
     const div = document.createElement('tbody');

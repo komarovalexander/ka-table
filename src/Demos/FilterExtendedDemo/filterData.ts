@@ -1,22 +1,28 @@
-const contains = (data: any[], item: any) => {
+// a row of the table: the values by the fields
+type Row = Record<string, string | number | boolean>;
+// the values of the filter control: the groups of the conditions
+type FilterCondition = { field: string; operator: string; value?: string | number };
+type FilterGroup = { groupName: string; items: (FilterGroup | FilterCondition)[] };
+
+const contains = (data: Row, item: FilterCondition) => {
     if (!item.value) { return true; }
-    return data[item.field].toLowerCase().includes(item.value.toLowerCase());
+    return data[item.field].toString().toLowerCase().includes(item.value.toString().toLowerCase());
 };
-const doesNotContain = (data: any[], item: any) => {
+const doesNotContain = (data: Row, item: FilterCondition) => {
     if (!item.value) { return true; }
-    return !data[item.field].toLowerCase().includes(item.value.toLowerCase());
+    return !data[item.field].toString().toLowerCase().includes(item.value.toString().toLowerCase());
 };
-const equals = (data: any[], item: any) => {
+const equals = (data: Row, item: FilterCondition) => {
     if (!item.value) { return true; }
     return data[item.field].toString().toLowerCase() === item.value.toString().toLowerCase();
 };
-const isNotEqual = (data: any[], item: any) => {
+const isNotEqual = (data: Row, item: FilterCondition) => {
     if (!item.value) { return true; }
     return data[item.field].toString().toLowerCase() !== item.value.toString().toLowerCase();
 };
-const more = (data: any[], item: any) => data[item.field] > item.value;
-const less = (data: any[], item: any) => data[item.field] < item.value;
-const filterItem = (data: any[], filter: any) => {
+const more = (data: Row, item: FilterCondition) => item.value != null && data[item.field] > item.value;
+const less = (data: Row, item: FilterCondition) => item.value != null && data[item.field] < item.value;
+const filterItem = (data: Row, filter: FilterCondition) => {
     switch (filter.operator) {
     case 'contains': return contains(data, filter);
     case 'doesNotContain': return doesNotContain(data, filter);
@@ -27,28 +33,29 @@ const filterItem = (data: any[], filter: any) => {
     default: throw Error('unknown operator');
     }
 };
+const isGroup = (item: FilterGroup | FilterCondition): item is FilterGroup => 'items' in item;
 
-const filterGroup = (data: any[], groupName: string, items: any[]): any[] =>
+const filterGroup = <T extends Row>(data: T[], groupName: string, items: (FilterGroup | FilterCondition)[]): T[] =>
     (groupName.toLowerCase() === 'or' ? filterGroupOr(data, items) : filterGroupAnd(data, items));
 
-export const filterGroupOr = (data: any[], items: any[]): any[]  => {
-    const filteredData = items.reduce((initialData: any, item: any) => {
-        if (item.items) {
+export const filterGroupOr = <T extends Row>(data: T[], items: (FilterGroup | FilterCondition)[]): T[]  => {
+    const filteredData = items.reduce<T[]>((initialData, item) => {
+        if (isGroup(item)) {
             const grouped = filterGroup(data, item.groupName, item.items);
-            return initialData.concat(grouped.filter((d: any) => initialData.indexOf(d) < 0));
+            return initialData.concat(grouped.filter((d) => initialData.indexOf(d) < 0));
         }
-        return initialData.concat(data.filter((d: any) => initialData.indexOf(d) < 0 && filterItem(d, item)));
+        return initialData.concat(data.filter((d) => initialData.indexOf(d) < 0 && filterItem(d, item)));
     }, []);
     return data.filter((d) => filteredData.includes(d));
 };
 
-export const filterGroupAnd = (data: any[], items: any[]): any[]  => {
-    return items.reduce((initialData: any[], item: any) => {
-        if (item.items) { return filterGroup(initialData, item.groupName, item.items); }
-        return initialData.filter((d: any[]) => filterItem(d, item));
+export const filterGroupAnd = <T extends Row>(data: T[], items: (FilterGroup | FilterCondition)[]): T[]  => {
+    return items.reduce((initialData, item) => {
+        if (isGroup(item)) { return filterGroup(initialData, item.groupName, item.items); }
+        return initialData.filter((d) => filterItem(d, item));
     }, data);
 };
 
-export const filterData = (data: any[], filterValue: any): any[] => {
+export const filterData = <T extends Row>(data: T[], filterValue: FilterGroup): T[] => {
     return filterGroup(data, filterValue.groupName, filterValue.items);
 };

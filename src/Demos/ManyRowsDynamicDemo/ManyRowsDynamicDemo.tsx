@@ -22,21 +22,22 @@ const dataArray = Array(10000)
     }));
 
 const useDynamicRowsOptions = () => {
-    const [renderedRowSizes] = useState<any>({});
+    // the heights of the rendered rows by their keys
+    const [renderedRowSizes] = useState<Record<string, number>>({});
     let estimatedItemSize = 40;
-    const addRowHeight = (rowKeyValue: any, height?: number) => {
+    const addRowHeight = (rowKeyValue: unknown, height?: number) => {
         if (height) {
-            renderedRowSizes[rowKeyValue] = height;
+            renderedRowSizes[String(rowKeyValue)] = height;
         }
     };
-    const totalHeight = Object.keys(renderedRowSizes).reduce((sum, key) => sum + parseFloat(renderedRowSizes[key] || 0), 0);
+    const totalHeight = Object.keys(renderedRowSizes).reduce((sum, key) => sum + (renderedRowSizes[key] || 0), 0);
     estimatedItemSize =
         estimatedItemSize === 40 && Object.keys(renderedRowSizes).length
             ? Math.floor(totalHeight / Object.keys(renderedRowSizes).length)
             : estimatedItemSize;
     return {
         addRowHeight,
-        itemHeight: (rowKeyField: string) => (rowData: any) => renderedRowSizes[rowData[rowKeyField]] || estimatedItemSize,
+        itemHeight: (rowKeyField: string) => (rowData: Record<string, unknown>) => renderedRowSizes[String(rowData[rowKeyField])] || estimatedItemSize,
     };
 };
 
@@ -65,7 +66,7 @@ const ManyRowsDynamicDemo = () => {
             childComponents={{
                 dataRow: {
                     elementAttributes: ({ rowKeyValue }) => ({
-                        ref: (ref: any) => addRowHeight(rowKeyValue, ref?.offsetHeight),
+                        ref: (ref: HTMLElement | null) => addRowHeight(rowKeyValue, ref?.offsetHeight),
                     }),
                 },
                 tableWrapper: {

@@ -10,7 +10,7 @@ const props: IPagingProps = {
     pageIndex: 1,
     pageSize: 2,
     pagesCount: 2,
-} as any;
+} as IPagingProps;
 
 it('renders without crashing', () => {
     const element = document.createElement('div');

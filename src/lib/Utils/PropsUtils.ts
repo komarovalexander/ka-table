@@ -1,4 +1,4 @@
-import { ChildAttributesItem, DispatchFunc, DraggableKind } from '../types';
+import { ChildAttributesItem, DispatchFunc, DraggableKind, TableAction } from '../types';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 
@@ -68,7 +68,7 @@ export function mergeProps<T = HTMLElement>(
     return mergedResult;
 };
 
-export const getFilteredData = (props: ITableProps) => {
+export const getFilteredData = <TData>(props: ITableProps<TData>): TData[] => {
     return filterAndSearchData(props);
 }
 
@@ -134,7 +134,7 @@ export const isValid = (props: ITableProps) => {
     );
 };
 
-export const getSelectedData = ({ data, selectedRows, rowKeyField }: ITableProps) => {
+export const getSelectedData = <TData>({ data, selectedRows, rowKeyField }: ITableProps<TData>): TData[] => {
     const selectedRowsSet = new Set(selectedRows);
     return data ? data.filter(d => selectedRowsSet.has(getValueByField(d, rowKeyField))) : [];
 };
@@ -210,7 +210,7 @@ export const getDraggableProps = <TKey>({
 }: {
     key: TKey,
     dispatch: DispatchFunc,
-    actionCreator: (draggableKeyValue: TKey, targetKeyValue: TKey) => unknown,
+    actionCreator: (draggableKeyValue: TKey, targetKeyValue: TKey) => TableAction,
     draggedClass: string,
     dragOverClass: string,
     hasReordering: boolean,

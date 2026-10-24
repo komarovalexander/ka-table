@@ -11,12 +11,13 @@ const createData = (count: number) => Array.from({ length: count }, (_, index) =
     id: index, name: `name ${index}`, city: `city ${index}`, group: index < 2 ? 'a' : 'b', parentId: index === 0 ? null : 0,
 }));
 const columns = [{ key: 'name', title: 'Name' }, { key: 'city', title: 'City' }];
+type Row = ReturnType<typeof createData>[number];
 
-const setup = (tableProps: Partial<IKaTableProps> = {}) => {
-    let table: ITableInstance;
-    const props: IKaTableProps = { columns, data: createData(5), rowKeyField: 'id', ...tableProps };
+const setup = (tableProps: Partial<IKaTableProps<Row>> = {}) => {
+    let table: ITableInstance<Row>;
+    const props: IKaTableProps<Row> = { columns, data: createData(5), rowKeyField: 'id', ...tableProps };
     const TableWithInstance = () => {
-        table = useTable();
+        table = useTable<Row>();
         return <Table table={table} {...props} />;
     };
     const result = render(<TableWithInstance />);

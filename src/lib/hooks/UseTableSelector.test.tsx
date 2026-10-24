@@ -10,13 +10,13 @@ const data = [{ id: 1 }, { id: 2 }];
 
 describe('useTableSelector', () => {
     let table: ITableInstance;
-    let renders: any[];
-    const TableWithSelector = ({
+    let renders: unknown[];
+    const TableWithSelector = <T,>({
         selector,
         isEqual,
     }: {
-        selector: (props: ITableProps) => any,
-        isEqual?: (value: any, newValue: any) => boolean,
+        selector: (props: ITableProps) => T,
+        isEqual?: (value: T | undefined, newValue: T | undefined) => boolean,
     }) => {
         table = useTable();
         const selected = useTableSelector(table, selector, isEqual);
@@ -47,7 +47,7 @@ describe('useTableSelector', () => {
         expect(renders.length).toBe(rendersCount);
     });
     it('uses isEqual to compare values', () => {
-        const isShallowEqual = (value: any[], newValue: any[]) => value?.length === newValue?.length
+        const isShallowEqual = (value?: unknown[], newValue?: unknown[]) => !!value && !!newValue && value.length === newValue.length
             && value.every((item, index) => item === newValue[index]);
         render(<TableWithSelector selector={(props) => props.selectedRows || []} isEqual={isShallowEqual} />);
         const rendersCount = renders.length;
@@ -58,7 +58,7 @@ describe('useTableSelector', () => {
     });
     it('works in a component which is rendered before the table', () => {
         const SelectedRow = ({ tableInstance }: { tableInstance: ITableInstance }) => {
-            const selectedRow = useTableSelector(tableInstance, (props) => props.selectedRows?.[0]);
+            const selectedRow = useTableSelector(tableInstance, (props) => props.selectedRows?.[0] as number | undefined);
             return <span className='selected-row'>{selectedRow}</span>;
         };
         const TableWithInfo = () => {

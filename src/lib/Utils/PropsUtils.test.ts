@@ -42,11 +42,17 @@ describe('PropsUtils', () => {
             dispatch,
             editingMode: EditingMode.Cell,
             field: 'column',
+            isDetailsRowShown: false,
+            isEditableCell: false,
+            isSelectedRow: false,
             rowData: { column: 1, column2: 2, id: 0 },
             rowKeyField: 'id',
-        } as any;
+            rowKeyValue: 0,
+            selectedRows: [],
+            value: 1,
+        };
 
-        const childCustomAttributes: ChildAttributesItem<any> = {
+        const childCustomAttributes: ChildAttributesItem<ICellProps> = {
             onClick: vi.fn(),
         };
         const props = mergeProps(
@@ -55,7 +61,7 @@ describe('PropsUtils', () => {
             childCustomAttributes,
             dispatch
         );
-        const e: any = { name: 'eventName' };
+        const e = { name: 'eventName' } as unknown as React.MouseEvent<HTMLElement>;
         props.onClick!(e);
         expect(childCustomAttributes.onClick).toHaveBeenCalledTimes(1);
         expect(childCustomAttributes.onClick).toHaveBeenCalledWith(e, {
@@ -77,7 +83,7 @@ describe('getData', () => {
             column4: `column:4 row:${index}`,
             id: index,
         }));
-    const props: ITableProps = {
+    const props: ITableProps<typeof dataArray[number]> = {
         data: dataArray,
         columns: [
             { key: 'column1', title: 'Column 1', dataType: DataType.String },
@@ -124,7 +130,7 @@ describe('getData', () => {
     it('get data by extendedFilter', () => {
         const result = getData({
             ...props,
-            extendedFilter: (data) => data.filter((i) => i.id === 1),
+            extendedFilter: (data: typeof dataArray) => data.filter((i) => i.id === 1),
         });
         expect(result).toMatchSnapshot();
     });
@@ -403,7 +409,7 @@ describe('getData of a tree', () => {
             searchText: 'x',
             treeGroupKeyField: 'parentId',
         });
-        expect(result.map((item) => item.rowData.name)).toEqual(['Alpha', 'Zed x', 'Beta', 'Ann x']);
+        expect(result.map((item) => (item as { rowData: { name: string } }).rowData.name)).toEqual(['Alpha', 'Zed x', 'Beta', 'Ann x']);
     });
 });
 
@@ -798,7 +804,7 @@ describe('isValid', () => {
                 ...tableProps,
                 editableCells: [{ rowKeyValue: 1, columnKey: 'column1' }],
                 validation: ({ value }) =>
-                    value > 10 ? 'should be less than 10' : '',
+                    (value as number) > 10 ? 'should be less than 10' : '',
             })
         ).toBeFalsy();
     });
@@ -810,7 +816,7 @@ describe('isValid', () => {
                     { rowKeyValue: 1, editorValue: 9, columnKey: 'column1' },
                 ],
                 validation: ({ value }) =>
-                    value > 10 ? 'should be less than 10' : '',
+                    (value as number) > 10 ? 'should be less than 10' : '',
             })
         ).toBeTruthy();
     });

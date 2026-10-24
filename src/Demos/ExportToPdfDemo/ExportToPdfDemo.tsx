@@ -17,10 +17,10 @@ const dataArray = Array(2000).fill(undefined).map(
 
 const ExportToPdfDemo: React.FC = () => {
     const table = useTable();
-    const exportClick = (orientation?: any) => {
-        const doc: any = new jsPDF(orientation);
+    const exportClick = (orientation?: 'portrait' | 'landscape') => {
+        const doc = new jsPDF(orientation);
         const head = [table.props.columns.map(c => c.title!)];
-        const body = table.props.data!.map(d => table.props.columns.map(c => getValueByColumn(d, c)));
+        const body = table.props.data!.map(d => table.props.columns.map(c => String(getValueByColumn(d, c) ?? '')));
 
         autoTable(doc, {
             margin: 1,

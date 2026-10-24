@@ -43,7 +43,7 @@ const HeaderFilterDemo = () => {
             filteringMode={FilteringMode.HeaderFilter}
             format= {({ column, value }) => {
                 if (column.dataType === DataType.Date) {
-                    return value && dateFormat.format(new Date(value));
+                    return value instanceof Date && dateFormat.format(value);
                 }
             }}
             rowKeyField={'id'}

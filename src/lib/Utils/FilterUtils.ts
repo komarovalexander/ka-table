@@ -8,6 +8,7 @@ import { ITableProps } from '../';
 import defaultOptions from '../defaultOptions';
 import { getDate } from './DateUtils';
 import { getFormattedValue, getValueByColumn, isFormattedValue } from './DataUtils';
+import { ReactNode } from 'react';
 import { isEmpty } from './CommonUtils';
 
 export const getRowEditableCells = (rowKeyValue: unknown, editableCells: EditableCell[]): EditableCell[] => {
@@ -48,7 +49,7 @@ export const searchData = <TData>(columns: Column[], data: TData[], searchText: 
     return data.filter(d => found.has(d));
 };
 
-export const filterAndSearchData = (props: ITableProps) => {
+export const filterAndSearchData = <TData>(props: ITableProps<TData>): TData[] => {
     const {
         extendedFilter,
         searchText,
@@ -119,6 +120,9 @@ export const getDefaultOperatorForType = (type: DataType): string => {
     return (filterOperator && filterOperator.name) || '=';
 };
 
+// the values which the operators compare as JavaScript does: numbers, strings in the alphabetical order, dates by their time
+type ComparedValue = string | number | Date;
+
 export const predefinedFilterOperators: FilterOperator[] = [{
     compare: (fieldValue, conditionValue) =>
         fieldValue === conditionValue,
@@ -129,24 +133,24 @@ export const predefinedFilterOperators: FilterOperator[] = [{
         fieldValue !== conditionValue,
     name: FilterOperatorName.IsNotEqual,
 }, {
-    compare: (fieldValue, conditionValue) =>
+    compare: (fieldValue: ComparedValue, conditionValue: ComparedValue) =>
         fieldValue > conditionValue,
     name: FilterOperatorName.MoreThan,
 }, {
-    compare: (fieldValue, conditionValue) =>
+    compare: (fieldValue: ComparedValue, conditionValue: ComparedValue) =>
         fieldValue < conditionValue,
     name: FilterOperatorName.LessThan,
 }, {
-    compare: (fieldValue, conditionValue) =>
+    compare: (fieldValue: ComparedValue, conditionValue: ComparedValue) =>
         fieldValue >= conditionValue,
     name: FilterOperatorName.MoreThanOrEqual,
 }, {
-    compare: (fieldValue, conditionValue) =>
+    compare: (fieldValue: ComparedValue, conditionValue: ComparedValue) =>
         fieldValue <= conditionValue,
     name: FilterOperatorName.LessThanOrEqual,
 }, {
     compare: (fieldValue, conditionValue) =>
-        fieldValue != null && fieldValue.toString().toLowerCase().includes(conditionValue.toString().toLowerCase()),
+        fieldValue != null && fieldValue.toString().toLowerCase().includes(String(conditionValue).toLowerCase()),
     defaultForTypes: [DataType.String],
     name: FilterOperatorName.Contains,
 }, {
@@ -171,8 +175,17 @@ export const filterByHeaderFilter = <TData>(data: TData[], columns: Column[], fo
             if (column?.filter) {
                 return column.filter(value, column.headerFilterValues, item);
             }
-            return column.headerFilterValues?.includes(getFormattedValue(value, column, item, format));
+            return column.headerFilterValues?.includes(getHeaderFilterText(value, column, item, format));
         });
     }, data);
 }
+
+/**
+ * The text of the value in the header filter: the text of format, the value itself when format doesn't format it as a text (e.g. as an element)
+ */
+export const getHeaderFilterText = (value: unknown, column: Column, rowData: unknown, format?: FormatFunc): string => {
+    const formattedValue: ReactNode = getFormattedValue(value, column, rowData, format);
+    const text = typeof formattedValue === 'string' || typeof formattedValue === 'number' ? formattedValue : value;
+    return text == null ? '' : String(text);
+};
 

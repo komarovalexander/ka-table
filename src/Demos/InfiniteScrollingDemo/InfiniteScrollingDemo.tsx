@@ -1,16 +1,19 @@
 import { DataType, Table, useTable } from '../../lib';
 import React, { useState } from 'react';
+import serverEmulator, { Row } from './serverEmulator';
 
-import serverEmulator from './serverEmulator';
+import { TableAction } from '../../lib/types';
 
 const LOAD_MORE_DATA = 'LOAD_MORE_DATA';
+// the action of the demo, onDispatch gets it with the actions of the table
+type LoadMoreDataAction = { type: typeof LOAD_MORE_DATA };
 
 const InfiniteScrollingDemo = () => {
     const [pageIndex, changePageIndex] = useState(0);
-    const [data, changeData] = useState<any[]>([]);
+    const [data, changeData] = useState<Row[]>([]);
 
     const table = useTable({
-        onDispatch: async (action) => {
+        onDispatch: async (action: TableAction | LoadMoreDataAction) => {
             if (pageIndex !== -1) {
                 if (action.type === LOAD_MORE_DATA) {
                     table.showLoading();

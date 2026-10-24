@@ -1,7 +1,21 @@
 import React from 'react';
 
-export const EventsLog: React.FC<any> = ({ events, showDataClick, clearLog }) => {
-    const eventsLog: any[] = events.map((e: any) => {
+// an action which the table dispatched
+export interface TableEvent {
+    data: unknown;
+    date: Date;
+    showData: boolean;
+    type: string;
+}
+
+interface IEventsLogProps {
+    clearLog: () => void;
+    events: TableEvent[];
+    showDataClick: (event: { date: Date }) => void;
+}
+
+export const EventsLog: React.FC<IEventsLogProps> = ({ events, showDataClick, clearLog }) => {
+    const eventsLog = events.map((e) => {
         const time = e.date.toLocaleTimeString();
         const milliseconds = e.date.getMilliseconds();
         return {
@@ -24,7 +38,7 @@ export const EventsLog: React.FC<any> = ({ events, showDataClick, clearLog }) =>
     return (
         <>
             <button className='events-clear' onClick={clearLog}>Clear log</button>
-            <div className='events'>{eventsLog.map((e: any, i: number) =>
+            <div className='events'>{eventsLog.map((e, i) =>
                 (
                     <div key={i}>
                         <span className={`type ${e.type.startsWith('MY_') ? 'custom' : ''}`}>{e.type}</span> {

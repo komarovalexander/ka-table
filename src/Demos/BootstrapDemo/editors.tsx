@@ -9,7 +9,7 @@ import { kaDateUtils } from '../../lib/utils';
 export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
     column, dispatch,
 }) => {
-    const toNullableBoolean = (value: any) => {
+    const toNullableBoolean = (value: string) => {
         switch (value) {
         case 'true': return true;
         case 'false': return false;
@@ -20,7 +20,7 @@ export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
         <>
             <select
                 className='form-control'
-                defaultValue={column.filterRowValue}
+                defaultValue={String(column.filterRowValue ?? '')}
                 style={{width: 100}}
                 onChange={(event) => {
                     dispatch(updateFilterRowValue(column.key, toNullableBoolean(event.currentTarget.value)));
@@ -59,7 +59,7 @@ export const NumberEditor: React.FC<IFilterRowEditorProps> = ({
         <>
             <FilterOperators column={column} dispatch={dispatch}/>
             <input
-                defaultValue={column.filterRowValue}
+                defaultValue={String(column.filterRowValue ?? '')}
                 style={{width: 100}}
                 onChange={(event) => {
                     const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;

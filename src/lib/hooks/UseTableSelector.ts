@@ -14,9 +14,9 @@ import { useIsomorphicLayoutEffect } from '../Utils/EffectUtils';
  * @param isEqual compares the previous and the new value (Object.is by default),
  * use it if the selector returns a new object or array every time
  */
-export const useTableSelector = <T>(
-    table: ITableInstance,
-    selector: (props: ITableProps) => T,
+export const useTableSelector = <T, TData = unknown>(
+    table: ITableInstance<TData>,
+    selector: (props: ITableProps<TData>) => T,
     isEqual: (value: T | undefined, newValue: T | undefined) => boolean = Object.is
 ): T | undefined => {
     const [, forceRender] = React.useReducer((count: number) => count + 1, 0);

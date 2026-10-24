@@ -25,13 +25,13 @@ describe('CellUtils', () => {
         it('default', () => {
             const dispatch = vi.fn();
             const mouseMoveEvent = getMouseMove(40, 50, 100, 'column1', dispatch);
-            mouseMoveEvent({ screenX: 20 } as any);
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 20 }));
             expect(dispatch).toHaveBeenCalledWith({type: 'ResizeColumn', columnKey: 'column1', width: 50});
         });
         it('skip', () => {
             const dispatch = vi.fn();
             const mouseMoveEvent = getMouseMove(40, 40, 0, 'column1', dispatch);
-            mouseMoveEvent({ screenX: 40 } as any);
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 40 }));
             expect(dispatch).toHaveBeenCalledTimes(0);
         });
     });

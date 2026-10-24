@@ -6,6 +6,7 @@ import { DispatchFunc } from '../types';
 import { PopupPosition } from '../Models/PopupPosition';
 import { getColumn } from './ColumnUtils';
 import { getCopyOfArrayAndAddItem } from './ArrayUtils';
+import { isTableAction } from './ActionUtils';
 import { newRowId } from '../const';
 import { replaceValue } from './DataUtils';
 
@@ -42,7 +43,7 @@ export const addItemToEditableCells = (
 
 export const getCellEditorDispatchHandler = (dispatch: DispatchFunc): DispatchFunc => {
     return (action) => {
-        if (action.type === ActionType.UpdateEditorValue) {
+        if (isTableAction(action) && action.type === ActionType.UpdateEditorValue) {
             dispatch(updateCellValue(action.rowKeyValue, action.columnKey, action.value));
         } else {
             dispatch(action);

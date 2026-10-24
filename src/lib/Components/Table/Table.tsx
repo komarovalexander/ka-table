@@ -1,7 +1,21 @@
 import * as React from 'react';
 import * as actionCreators from '../../actionCreators';
 
-import { ControlledPropsKeys, CustomReducerFunc, DispatchFunc, FilterFunc, FormatFunc, NoData, OnDispatchFunc, SearchFunc, SortFunc, ValidationFunc } from '../../types';
+import {
+    Bivariant,
+    ControlledPropsKeys,
+    CustomAction,
+    CustomReducerFunc,
+    DispatchFunc,
+    FilterFunc,
+    FormatFunc,
+    NoData,
+    OnDispatchFunc,
+    SearchFunc,
+    SortFunc,
+    TableAction,
+    ValidationFunc,
+} from '../../types';
 import { EditableCell, PagingOptions } from '../../models';
 import { EditingMode, FilteringMode, SortingMode } from '../../enums';
 
@@ -17,15 +31,19 @@ import { TableUncontrolled } from '../TableUncontrolled/TableUncontrolled';
 import { VirtualScrolling } from '../../Models/VirtualScrolling';
 
 type ActionCreators = typeof actionCreators;
-export interface ITableInstance extends ActionCreators {
-    props: ITableProps;
-    changeProps: React.Dispatch<React.SetStateAction<ITableProps>>;
-    onDispatch: OnDispatchFunc;
+// the methods of the instance dispatch the actions of the action creators
+type ActionMethods = { [K in keyof ActionCreators]: (...args: Parameters<ActionCreators[K]>) => void };
+
+export interface ITableInstance<TData = unknown> extends ActionMethods {
+    props: ITableProps<TData>;
+    // a method with a bivariant function: the instance of a table of the rows of a type is an instance of a table
+    changeProps(value: ITableProps<TData> | Bivariant<(prevState: ITableProps<TData>) => ITableProps<TData>>): void;
+    onDispatch: OnDispatchFunc<TData>;
     dispatch: DispatchFunc;
-    customReducer?: CustomReducerFunc;
+    customReducer?: CustomReducerFunc<TData>;
 }
 
-export interface ITableProps<TData= any> {
+export interface ITableProps<TData = unknown> {
     columnReordering?: boolean;
     columnResizing?: boolean;
     columns: Column<TData>[];
@@ -38,11 +56,11 @@ export interface ITableProps<TData= any> {
      */
     controlledPropsKeys?: ControlledPropsKeys;
     data?: TData[];
-    detailsRows?: any[];
+    detailsRows?: unknown[];
     editableCells?: EditableCell[];
     editingMode?: EditingMode;
-    extendedFilter?: (data: TData[]) => TData[];
-    extendedSort?: (data: TData[], columns: Column[]) => TData[];
+    extendedFilter?: Bivariant<(data: TData[]) => TData[]>;
+    extendedSort?: Bivariant<(data: TData[], columns: Column<TData>[]) => TData[]>;
     filter?: FilterFunc<TData>;
     filteringMode?: FilteringMode;
     focused?: Focused;
@@ -50,7 +68,7 @@ export interface ITableProps<TData= any> {
     groupedColumns?: GroupedColumn[];
     groupPanel?: GroupPanelSettings;
     groups?: Group[];
-    groupsExpanded?: any[][];
+    groupsExpanded?: unknown[][];
     height?: number | string;
     /**
      * Navigation by the cells with the keyboard (the grid pattern of WAI-ARIA), enabled by default: the table is a single stop of Tab,
@@ -75,13 +93,13 @@ export interface ITableProps<TData= any> {
     rowReordering?: boolean;
     search?: SearchFunc<TData>;
     searchText?: string;
-    selectedRows?: any[];
-    singleAction?: any;
+    selectedRows?: unknown[];
+    singleAction?: TableAction | CustomAction;
     sort?: SortFunc;
     sortingMode?: SortingMode;
     treeExpandButtonColumnKey?: string;
     treeGroupKeyField?: string;
-    treeGroupsExpanded?: any[];
+    treeGroupsExpanded?: unknown[];
     validation?: ValidationFunc<TData>;
     virtualScrolling?: VirtualScrolling;
     width?: number | string;
@@ -95,13 +113,13 @@ export interface ITableAllProps extends ITableEvents, ITableProps {
     childComponents?: ChildComponents;
 }
 
-export interface IKaTableProps<TData= any> extends ITableProps<TData> {
+export interface IKaTableProps<TData = unknown> extends ITableProps<TData> {
     childComponents?: ChildComponents<TData>;
     dispatch?: DispatchFunc;
-    table?: ITableInstance;
+    table?: ITableInstance<TData>;
 }
 
-export const Table = <TData= any>(props: IKaTableProps<TData>) => {
+export const Table = <TData = unknown>(props: IKaTableProps<TData>) => {
     const { dispatch } = props;
 
     return dispatch ? (

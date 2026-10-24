@@ -31,7 +31,7 @@ const FilterRowDemo = () => {
             filteringMode={FilteringMode.FilterRow}
             format= {({ column, value }) => {
                 if (column.dataType === DataType.Date){
-                    return value && dateFormat.format(value);
+                    return value instanceof Date && dateFormat.format(value);
                 }
             }}
             rowKeyField={'id'}

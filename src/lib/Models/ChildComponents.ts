@@ -29,9 +29,10 @@ import {
 } from '../props';
 
 import { ChildComponent } from './ChildComponent';
+import { HeaderFilterItem } from './HeaderFilterItem';
 import { ITableProps } from '../';
 
-export class ChildComponents<TData= any> {
+export class ChildComponents<TData = unknown> {
     public cell?: ChildComponent<ICellProps<TData>>;
     public cellEditor?: ChildComponent<ICellEditorProps<TData>>;
     public cellEditorInput?: ChildComponent<ICellEditorProps<TData>>;
@@ -54,9 +55,9 @@ export class ChildComponents<TData= any> {
     public headCellResize?: ChildComponent<IHeadCellResizeProps>;
     public headerFilterButton?: ChildComponent<IHeaderFilterButtonProps>;
     public headerFilterPopupContent?: ChildComponent<IPopupContentProps<TData>>;
-    public headerFilterPopupRow?: ChildComponent<IDataRowProps>;
+    public headerFilterPopupRow?: ChildComponent<IDataRowProps<HeaderFilterItem>>;
     public headerFilterPopupSearchInput?: ChildComponent<IFilterRowEditorProps>;
-    public headerFilterPopupTextCell?: ChildComponent<ICellProps>;
+    public headerFilterPopupTextCell?: ChildComponent<ICellProps<HeaderFilterItem>>;
     public headRow?: ChildComponent<IHeadRowProps>;
     public loading?: ChildComponent<ILoadingProps>;
     public noDataCell?: ChildComponent<INoDataRowProps>;

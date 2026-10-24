@@ -86,7 +86,7 @@ const NullableCellDataDemo = () => {
                         return value == null ? '-' : `$${value}`;
                     }
                     if (column.dataType === DataType.Date){
-                        return value && dateFormat.format(new Date(value));
+                        return typeof value === 'string' && dateFormat.format(kaDateUtils.getDate(value));
                     }
                 }}
                 filteringMode={FilteringMode.FilterRow}

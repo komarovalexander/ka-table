@@ -12,6 +12,7 @@ const dataArray = Array(10).fill(undefined).map(
         id: index,
     }),
 );
+type Row = typeof dataArray[number];
 
 const DetailsButton = ({
     rowKeyValue,
@@ -27,7 +28,7 @@ const DetailsButton = ({
     );
 };
 
-const DetailsRow: React.FC<IDataRowProps> = ({
+const DetailsRow: React.FC<IDataRowProps<Row>> = ({
     rowData,
 }) => {
     return (

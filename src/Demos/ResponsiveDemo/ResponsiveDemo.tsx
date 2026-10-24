@@ -31,9 +31,10 @@ const ResponsiveDemo = () => {
                 rowKeyField={'id'}
                 childComponents={{
                     cell: {
+                        // the data attributes are not in the types of the attributes of the elements
                         elementAttributes: ({ column }) => ({
                             'data-column': column.title
-                        } as any)
+                        } as React.HTMLAttributes<HTMLElement>)
                     }
                 }}
             />

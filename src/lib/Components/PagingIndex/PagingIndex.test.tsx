@@ -8,7 +8,7 @@ import { createRoot } from 'react-dom/client';
 
 const props: IPagingIndexProps = {
     childComponents: {},
-} as any;
+} as IPagingIndexProps;
 
 it('renders without crashing', () => {
     const element = document.createElement('div');

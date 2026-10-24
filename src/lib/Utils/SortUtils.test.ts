@@ -10,7 +10,7 @@ import {
 
 import { Column } from '../Models/Column';
 
-const data: any[] = [
+const data = [
     { column: 1, id: 1 },
     { column: null, id: 6 },
     { column: 3, id: 2 },
@@ -28,7 +28,7 @@ const columns: Column[] = [
 describe('sortData', () => {
     describe('strings', () => {
         it('should be case insensitive', () => {
-            const stringData: any[] = [
+            const stringData = [
                 { column: 'A', id: 1 },
                 { column: null, id: 6 },
                 { column: 'a', id: 2 },
@@ -62,7 +62,7 @@ describe('sortData', () => {
     it('Custom logic', () => {
         const newData = sortData(columns, data, ({ column }) => {
             if (column.key === 'column') {
-                return (a: any) => a === 3 ? -1 : 0;
+                return (a: unknown) => a === 3 ? -1 : 0;
             }
         });
         expect(newData).toMatchSnapshot();

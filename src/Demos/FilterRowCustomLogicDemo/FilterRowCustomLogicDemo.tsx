@@ -49,7 +49,7 @@ const FilterRowCustomLogicDemo: React.FC = () => {
             data={dataArray}
             format= {({ column, value }) => {
                 if (column.key === 'prevScores'){
-                    return value.join();
+                    return (value as number[]).join();
                 }
             }}
             filteringMode={FilteringMode.FilterRow}

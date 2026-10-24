@@ -14,12 +14,14 @@ const props: ICellEditorProps = {
     dispatch: () => {},
     editingMode: EditingMode.None,
     field: 'column',
+    isDetailsRowShown: false,
     isSelectedRow: true,
     rowData: [{ column: 12, id: 1 }],
     rowKeyField: 'id',
     rowKeyValue: 1,
+    selectedRows: [],
     value: 12,
-} as any;
+};
 
 it('renders without crashing', () => {
     const element = document.createElement('td');

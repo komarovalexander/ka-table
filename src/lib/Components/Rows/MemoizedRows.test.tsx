@@ -48,7 +48,7 @@ describe('memoizedRows', () => {
     });
     it('keeps the rows memoized without customizations', () => {
         let formattedCells = 0;
-        const format = ({ value }: { value: any }) => {
+        const format = ({ value }: { value: unknown }) => {
             formattedCells++;
             return `${value}`;
         };

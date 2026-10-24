@@ -16,12 +16,14 @@ const props: ICellTextProps = {
     dispatch: vi.fn(),
     editingMode: EditingMode.Cell,
     field: 'columnField',
+    isDetailsRowShown: false,
     isSelectedRow: false,
     rowData: { columnField: 'columnFieldValue', id: 1 },
     rowKeyField: 'id',
     rowKeyValue: 1,
+    selectedRows: [],
     value: 'columnFieldValue',
-} as any;
+};
 
 afterEach(() => vi.clearAllMocks());
 

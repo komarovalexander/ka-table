@@ -4,10 +4,10 @@ import { ActionType, FilteringMode, Table, useTable, } from '../..';
 import { updateHeaderFilterSearchValue, updateHeaderFilterValues } from '../../actionCreators';
 
 import CellEditorBoolean from '../CellEditorBoolean/CellEditorBoolean';
+import { HeaderFilterItem } from '../../Models/HeaderFilterItem';
 import { IHeaderFilterPopupProps } from '../../props';
-import { getFormattedValue, getValueByColumn } from '../../Utils/DataUtils';
-
-type HeaderFilterItem = { value: string; isSelected: boolean; };
+import { getHeaderFilterText } from '../../Utils/FilterUtils';
+import { getValueByColumn } from '../../Utils/DataUtils';
 
 const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
     const {
@@ -20,19 +20,20 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
     let headerFilterValues: string[] | undefined;
     headerFilterValues = column?.headerFilterListItems
         ? column?.headerFilterListItems({ data })
-        : data?.map((item) => getFormattedValue(getValueByColumn(item, column), column, item, format));
+        : data?.map((item) => getHeaderFilterText(getValueByColumn(item, column), column, item, format));
     headerFilterValues = Array.from(new Set(headerFilterValues));
     const headerFilterValuesData: HeaderFilterItem[] = headerFilterValues?.map((value) => ({ value, isSelected: !!column.headerFilterValues && column.headerFilterValues.includes(value) }));
     const selectedColumnKey = `${column.key}_isSelected`;
-    const table = useTable({
+    const table = useTable<HeaderFilterItem>({
         onDispatch: (action) => {
             if (action.type === ActionType.UpdateFilterRowValue) {
-                dispatch(updateHeaderFilterSearchValue(action.columnKey, action.filterRowValue));
+                // the value of the search input
+                dispatch(updateHeaderFilterSearchValue(action.columnKey, typeof action.filterRowValue === 'string' ? action.filterRowValue : ''));
             }
         }
     });
     return (
-        <Table
+        <Table<HeaderFilterItem>
             table={table}
             columns={[
                 { key: selectedColumnKey, field: 'isSelected', width: 35, isFilterable: false },
@@ -79,8 +80,9 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                     ...childComponents?.headerFilterPopupTextCell,
                     elementAttributes: (componentProps) => ({
                         onClick: () => {
-                            const isSelect = !column?.headerFilterValues?.includes(componentProps?.rowKeyValue);
-                            dispatch(updateHeaderFilterValues(column.key, componentProps?.rowKeyValue, isSelect));
+                            const { value } = componentProps.rowData;
+                            const isSelect = !column?.headerFilterValues?.includes(value);
+                            dispatch(updateHeaderFilterValues(column.key, value, isSelect));
                         },
                         ...childComponents?.headerFilterPopupTextCell?.elementAttributes?.(componentProps)
                     }),

@@ -3,7 +3,7 @@ import { Cell } from '../Models/Cell';
 import { getDownCell, getLeftCell, getRightCell, getUpCell } from './NavigationUtils';
 
 describe('NavigationUtils', () => {
-    const props: ITableProps = {
+    const props: ITableProps<{ id: number; column1: number; column2: number; column3: number }> = {
         rowKeyField: 'id',
         columns: [{ key: 'column1' }, { key: 'column2' }, { key: 'column3' }],
         data: [

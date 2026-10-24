@@ -14,7 +14,7 @@ const props: IFilterRowEditorProps = {
         title: 'Field',
     },
     dispatch: vi.fn(),
-} as any;
+} as IFilterRowEditorProps;
 
 describe('FliterRowDate', () => {
     it('renders without crashing', () => {

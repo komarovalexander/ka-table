@@ -21,8 +21,9 @@ const tableProps: ITableBodyProps = {
     groupColumnsCount: 0,
     groupedColumns: [],
     rowKeyField: 'id',
+    rowReordering: false,
     selectedRows: [],
-} as any;
+};
 
 beforeEach(() => vi.clearAllMocks());
 

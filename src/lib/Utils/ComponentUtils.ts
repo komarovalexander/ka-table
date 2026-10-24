@@ -16,7 +16,8 @@ export function getElementCustomization<T = HTMLElement>(
     childComponent?: ChildComponent<never>,
 ): ElementCustomization<T> {
     const elementAttributes = extendProps<T>(childElementAttributes, props, childComponent);
-    const content = childComponent && childComponent.content && childComponent.content(props as never);
+    // the content returns what a function component returns: React renders a promise too
+    const content = childComponent?.content?.(props as never) as React.ReactNode;
 
     return {
         content,

@@ -20,7 +20,7 @@ const props: IGroupRowProps = {
     groupKey: ['group'],
     isExpanded: true,
     text: '',
-} as any;
+} as IGroupRowProps;
 
 describe('GroupRow', () => {
     it('renders without crashing', () => {

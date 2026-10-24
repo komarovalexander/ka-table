@@ -1,5 +1,5 @@
 export class DemoCase {
-    public demoComponent!: any;
+    public demoComponent!: () => React.ReactNode;
     public name!: string;
     public path!: string;
     public title!: string;

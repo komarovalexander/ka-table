@@ -11,7 +11,7 @@ const props: IFilterRowEditorProps = {
         key: 'columnField',
         title: 'Field',
     },
-} as any;
+} as IFilterRowEditorProps;
 
 it('renders without crashing', () => {
     const element = document.createElement('tr');

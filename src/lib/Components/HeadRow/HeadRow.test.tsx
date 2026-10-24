@@ -4,14 +4,15 @@ import HeaderRow from './HeadRow';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { renderInto } from '../../../testUtils/renderInto';
+import { IHeadRowProps } from '../../props';
 
-const props: any = {
+const props = {
     childComponents: {},
     columns: [
         { key: 'column', title: 'Column 1', dataType: DataType.String },
         { key: 'column2', title: 'Column 2', dataType: DataType.String },
     ],
-};
+} as IHeadRowProps;
 
 it('renders without crashing', () => {
     const element = document.createElement('thead');

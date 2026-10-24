@@ -66,7 +66,7 @@ const HeaderFilterLogicDemo = () => {
                 {
                     key: 'score',
                     isHeaderFilterSearchable: true,
-                    headerFilterSearchValue: 33,
+                    headerFilterSearchValue: '33',
                     title: 'Score', dataType: DataType.Number
                 },
                 {
@@ -95,7 +95,7 @@ const HeaderFilterLogicDemo = () => {
                     },
                     headerFilterListItems: ({ data }) => {
                         const departments = data?.reduce<{ name: string, id: number }[]>((acc, item) => [...acc, ...(item.departments || [])], []);
-                        const departmentsList = departments?.filter((item: any, index) => {
+                        const departmentsList = departments?.filter((item, index) => {
                             return departments?.findIndex(i => i.id === item.id) === index;
                         }).map(x => x.name) || [];
                         departmentsList?.unshift('Department is unspecified');
@@ -108,10 +108,10 @@ const HeaderFilterLogicDemo = () => {
             filteringMode={FilteringMode.HeaderFilter}
             format={({ column, value }) => {
                 if (column.dataType === DataType.Date) {
-                    return value && dateFormat.format(new Date(value));
+                    return value instanceof Date && dateFormat.format(value);
                 }
                 if (column.key === 'departments') {
-                    return value?.map((d: any) => d.name).join(', ');
+                    return (value as { name: string }[] | undefined)?.map((d) => d.name).join(', ');
                 }
             }}
             rowKeyField={'id'}

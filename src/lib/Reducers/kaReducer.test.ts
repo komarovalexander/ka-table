@@ -1,3 +1,4 @@
+import { CustomAction, TableAction } from '../types';
 import { ITableProps } from '../';
 import {
     clearAllFilters, clearSingleAction, deleteRow, deselectAllFilteredRows, deselectAllRows, deselectAllVisibleRows,
@@ -13,8 +14,11 @@ import { getData } from '../Utils/PropsUtils';
 import { kaReducer as kaReducerOriginal } from './kaReducer';
 import { newRowId } from '../const';
 
-// The state is deeply frozen in every test: a reducer which mutates the previous state throws a TypeError
-const kaReducer = (state: any, action: any): any => kaReducerOriginal(deepFreeze(state), action);
+// The state is deeply frozen in every test: a reducer which mutates the previous state throws a TypeError.
+// The state of a test can have only the props which the action uses
+const kaReducer = <TData>(state: Partial<ITableProps<TData>>, action: TableAction | CustomAction): ITableProps<TData> => (
+    kaReducerOriginal(deepFreeze(state) as ITableProps<TData>, action)
+);
 
 describe('kaReducer', () => {
     describe('UpdateTreeGroupsExpanded ', () => {
@@ -235,7 +239,7 @@ describe('kaReducer', () => {
             expect(result.data).toEqual([{ id: 1, name: 'b' }]);
         });
         it('validates the row with all its edited values', () => {
-            const state: ITableProps = {
+            const state: ITableProps<{ id: number; start: number; end: number }> = {
                 columns: [{ key: 'start' }, { key: 'end' }],
                 data: [{ id: 1, start: 5, end: 10 }],
                 editableCells: [
@@ -243,7 +247,7 @@ describe('kaReducer', () => {
                     { rowKeyValue: 1, columnKey: 'end', editorValue: 25 },
                 ],
                 rowKeyField: 'id',
-                validation: ({ column, value, rowData }) => (column.key === 'start' && value > rowData.end ? 'start > end' : undefined),
+                validation: ({ column, value, rowData }) => (column.key === 'start' && (value as number) > rowData.end ? 'start > end' : undefined),
             };
             expect(kaReducer(state, saveRowEditors(1, { validate: true })).data).toEqual([{ id: 1, start: 20, end: 25 }]);
             const invalid: ITableProps = kaReducer({
@@ -269,7 +273,7 @@ describe('kaReducer', () => {
             expect(result.editableCells).toEqual([]);
         });
         it('validates the new row with its edited values', () => {
-            const state: ITableProps = {
+            const state: ITableProps<{ id: number; start: number; end: number }> = {
                 columns: [{ key: 'start' }, { key: 'end' }],
                 data: [],
                 editableCells: [
@@ -278,7 +282,7 @@ describe('kaReducer', () => {
                 ],
                 rowKeyField: 'id',
                 // rowData is the new row: it is not in the data yet
-                validation: ({ column, value, rowData }) => (column.key === 'start' && value > rowData.end ? 'start > end' : undefined),
+                validation: ({ column, value, rowData }) => (column.key === 'start' && (value as number) > rowData.end ? 'start > end' : undefined),
             };
             expect(kaReducer(state, saveNewRow(5, { validate: true })).data).toEqual([{ id: 5, start: 1, end: 2 }]);
             const invalid: ITableProps = kaReducer({
@@ -604,8 +608,8 @@ describe('kaReducer', () => {
             }
         };
         const newState = kaReducer(intialState, { type: ActionType.ShowLoading });
-        expect(newState.loading.enabled).toEqual(true);
-        expect(newState.loading.text).toEqual('test');
+        expect(newState.loading?.enabled).toEqual(true);
+        expect(newState.loading?.text).toEqual('test');
     });
     it('ShowLoading - change text', () => {
         const intialState = {
@@ -615,8 +619,8 @@ describe('kaReducer', () => {
             }
         };
         const newState = kaReducer(intialState, { type: ActionType.ShowLoading, text: '2' });
-        expect(newState.loading.enabled).toEqual(true);
-        expect(newState.loading.text).toEqual('2');
+        expect(newState.loading?.enabled).toEqual(true);
+        expect(newState.loading?.text).toEqual('2');
     });
     it('HideLoading', () => {
         const intialState = {
@@ -626,8 +630,8 @@ describe('kaReducer', () => {
             }
         };
         const newState = kaReducer(intialState, { type: ActionType.HideLoading });
-        expect(newState.loading.enabled).toEqual(false);
-        expect(newState.loading.text).toEqual('test');
+        expect(newState.loading?.enabled).toEqual(false);
+        expect(newState.loading?.text).toEqual('test');
     });
     it('HideLoading', () => {
         const intialState = {
@@ -637,8 +641,8 @@ describe('kaReducer', () => {
             }
         };
         const newState = kaReducer(intialState, { type: ActionType.HideLoading });
-        expect(newState.loading.enabled).toEqual(false);
-        expect(newState.loading.text).toEqual('test');
+        expect(newState.loading?.enabled).toEqual(false);
+        expect(newState.loading?.text).toEqual('test');
     });
     it('UpdatePageIndex', () => {
         const intialState = {
@@ -648,8 +652,8 @@ describe('kaReducer', () => {
             }
         };
         const newState = kaReducer(intialState, { type: ActionType.UpdatePageIndex, pageIndex: 5 });
-        expect(newState.paging.enabled).toEqual(true);
-        expect(newState.paging.pageIndex).toEqual(5);
+        expect(newState.paging?.enabled).toEqual(true);
+        expect(newState.paging?.pageIndex).toEqual(5);
     });
     it('SetSingleAction', () => {
         const intialState = {};
@@ -758,7 +762,7 @@ describe('kaReducer', () => {
                     columnKey: 'val',
                 }],
                 validation: ({ value }) => {
-                    if (value > 100){
+                    if ((value as number) > 100){
                         return 'value should be less than 100';
                     }
                 }
@@ -795,7 +799,7 @@ describe('kaReducer', () => {
                 }],
                 validation: ({ value }) => {
                     validationCalls(value);
-                    if (value > 100){
+                    if ((value as number) > 100){
                         return 'value should be less than 100';
                     }
                 }
@@ -905,7 +909,7 @@ describe('kaReducer', () => {
         });
     });
     describe('a key which is not in the table', () => {
-        const intialState: ITableProps = {
+        const intialState: ITableProps<{ id: number }> = {
             columns: [{ key: 'id' }, { key: 'name' }],
             data: [{ id: 1 }, { id: 2 }, { id: 3 }],
             rowKeyField: 'id',
@@ -919,7 +923,7 @@ describe('kaReducer', () => {
             expect(kaReducer(intialState, action).columns).toEqual(intialState.columns);
         });
         it('InsertRow next to a row which is not in the data inserts the row at the start or at the end', () => {
-            const getIds = (action: ReturnType<typeof insertRow>) => kaReducer(intialState, action).data.map((d: { id: number }) => d.id);
+            const getIds = (action: ReturnType<typeof insertRow>) => kaReducer(intialState, action).data?.map((d) => d.id);
             expect(getIds(insertRow({ id: 4 }, { rowKeyValue: 99 }))).toEqual([4, 1, 2, 3]);
             expect(getIds(insertRow({ id: 4 }, { rowKeyValue: 99, insertRowPosition: InsertRowPosition.after }))).toEqual([1, 2, 3, 4]);
         });

@@ -22,8 +22,7 @@ export const sortColumns = (columns: Column[]) => {
     });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the rows of data typed as any stay any, as before
-export const sortData = <TData = any>(columns: Column[], data: TData[], sort?: SortFunc): TData[] => {
+export const sortData = <TData>(columns: Column[], data: TData[], sort?: SortFunc): TData[] => {
     const column = columns.find((c) => c.sortDirection);
     if (!column) { return data; }
     const customSort = sort && sort({ column });

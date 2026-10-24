@@ -1,4 +1,4 @@
-import { ActionType, DataType } from '../../enums';
+import { ActionType, DataType, EditingMode } from '../../enums';
 import { act, fireEvent, render } from '@testing-library/react';
 
 import FilterRowBoolean from './FilterRowBoolean';
@@ -16,11 +16,16 @@ beforeEach(() => {
             title: 'Field',
         },
         dispatch: vi.fn(),
+        editingMode: EditingMode.None,
         field: 'fieldName',
+        isDetailsRowShown: false,
         isSelectedRow: true,
         rowData: { column: 1 },
         rowKeyField: '',
-    } as any;
+        rowKeyValue: undefined,
+        selectedRows: [],
+        value: undefined,
+    };
 });
 
 describe('FilterRowBoolean', () => {

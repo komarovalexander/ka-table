@@ -44,7 +44,7 @@ const MaterialDemo = () => {
                 ]}
                 format={({ column, value }) => {
                     if (column.dataType === DataType.Date) {
-                        return value && dateFormat.format(new Date(value));
+                        return value instanceof Date && dateFormat.format(value);
                     }
                 }}
                 paging={{
@@ -68,7 +68,7 @@ const MaterialDemo = () => {
                                 return (
                                     <Checkbox
                                         style={{ marginLeft: -12 }}
-                                        checked={column.filterRowValue || false}
+                                        checked={column.filterRowValue === true}
                                         indeterminate={column.filterRowValue == null}
                                         onChange={(e, checked?: boolean) => {
                                             if (column.filterRowValue === false) {
@@ -108,8 +108,8 @@ const MaterialDemo = () => {
                                 return (
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                                         <DatePicker
-                                            value={column.filterRowValue ?? null}
-                                            onChange={(value: any) => {
+                                            value={(column.filterRowValue as Date | undefined) ?? null}
+                                            onChange={(value) => {
                                                 table.updateFilterRowValue(column.key, value);
                                             }}
                                             slotProps={{ textField: { size: 'small' } }}

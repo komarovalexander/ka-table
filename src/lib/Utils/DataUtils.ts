@@ -33,6 +33,9 @@ export const getValueByColumn = (rowData: unknown, column: Column) => {
     return getValueByField(rowData, getField(column));
 };
 
+// the value of a text or a number input: a number stays a number, so a number input keeps the typed text, e.g. '1.'
+export const getInputValue = (value: unknown): string | number => (typeof value === 'number' ? value : value == null ? '' : String(value));
+
 // format doesn't format the value when it returns undefined, null or false (e.g. of condition && ...), 0 and '' are formatted values
 export const isFormattedValue = (formattedValue: unknown) => formattedValue != null && formattedValue !== false;
 
@@ -47,8 +50,7 @@ export const getFormattedValue = (value: unknown, column: Column, rowData: unkno
     return value == null ? undefined : String(value);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the values of the cells are any for the users, as in the props of the components
-export const getValueByField = (rowData: unknown, field: Field): any => {
+export const getValueByField = (rowData: unknown, field: Field): unknown => {
     let value = rowData;
     const names = getFieldParts(field);
     for (let i = 0, n = names.length; i < n; ++i) {

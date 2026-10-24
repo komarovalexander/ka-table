@@ -1,4 +1,4 @@
-import { ActionType, DataType } from '../../enums';
+import { ActionType, DataType, EditingMode } from '../../enums';
 import { act, fireEvent, render } from '@testing-library/react';
 
 import CellEditorNumber from './CellEditorNumber';
@@ -16,12 +16,16 @@ beforeEach(() => {
             title: 'Field',
         },
         dispatch: vi.fn(),
+        editingMode: EditingMode.None,
         field: 'fieldName',
+        isDetailsRowShown: false,
         isSelectedRow: true,
         rowData: { fieldName: 1, id: 1 },
         rowKeyField: 'id',
         rowKeyValue: 1,
-    } as any;
+        selectedRows: [],
+        value: undefined,
+    };
 });
 
 describe('CellEditorNumber', () => {

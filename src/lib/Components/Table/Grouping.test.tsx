@@ -22,7 +22,7 @@ describe('grouping', () => {
                 rowKeyField='id'
                 groups={[{ columnKey: 'date' }]}
                 // the format of the demos which works only with dates
-                format={({ column, value }) => (column.dataType === DataType.Date ? value && value.toLocaleDateString('en-US') : undefined)}
+                format={({ column, value }) => (column.dataType === DataType.Date ? (value as Date | undefined)?.toLocaleDateString('en-US') : undefined)}
             />
         );
         expect(getGroupRows(container)).toEqual(['11/8/2021', '11/9/2021']);

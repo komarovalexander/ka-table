@@ -3,6 +3,7 @@ import * as actionCreators from '../actionCreators';
 import { ActionType, InsertRowPosition, SortDirection, SortingMode } from '../enums';
 
 import { ITableProps } from '../';
+import { TableAction } from '../types';
 import { deepFreeze } from '../../testUtils/deepFreeze';
 import { kaReducer } from './kaReducer';
 import { newRowId } from '../const';
@@ -80,13 +81,13 @@ const actionCreatorsArgs: { [K in keyof ActionCreators]: Parameters<ActionCreato
     validate: [[]],
 };
 
-const otherActions = [
+const otherActions: TableAction[] = [
     { type: ActionType.ComponentDidMount },
     { type: ActionType.ScrollTable, scrollTop: 10 },
     { type: ActionType.UpdateVirtualScrolling, virtualScrolling: { enabled: true, scrollTop: 5 } },
 ];
 
-const validation = ({ value }: { value: any }) => value === '' ? 'required' : undefined;
+const validation = ({ value }: { value: unknown }) => value === '' ? 'required' : undefined;
 
 const createState = (): ITableProps => ({
     columns: [{
@@ -131,13 +132,17 @@ const states: [string, () => ITableProps][] = [
     ['tree without treeGroupsExpanded', () => ({ ...createState(), treeGroupKeyField: 'parentId' })],
 ];
 
-const actions: [string, any][] = [
-    ...Object.keys(actionCreatorsArgs).flatMap((actionCreatorName) =>
-        (actionCreatorsArgs as any)[actionCreatorName].map((args: any[]): [string, any] => [
+// the action creators and their arguments by their names
+const actionCreatorFunctions = actionCreators as Record<string, (...args: unknown[]) => TableAction>;
+const argsByActionCreator: Record<string, unknown[][]> = actionCreatorsArgs;
+
+const actions: [string, TableAction][] = [
+    ...Object.keys(argsByActionCreator).flatMap((actionCreatorName) =>
+        argsByActionCreator[actionCreatorName].map((args): [string, TableAction] => [
             `${actionCreatorName}(${args.map((arg) => JSON.stringify(arg)).join(', ')})`,
-            (actionCreators as any)[actionCreatorName](...args),
+            actionCreatorFunctions[actionCreatorName](...args),
         ])),
-    ...otherActions.map((action): [string, any] => [action.type, action]),
+    ...otherActions.map((action): [string, TableAction] => [action.type, action]),
 ];
 
 describe('kaReducer does not mutate the previous state', () => {

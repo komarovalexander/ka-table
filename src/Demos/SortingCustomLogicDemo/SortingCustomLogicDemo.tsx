@@ -46,12 +46,12 @@ const SortingCustomLogicDemo: React.FC = () => {
             data={dataArray}
             format= {({ column, value }) => {
                 if (column.key === 'prevScores'){
-                    return value.join();
+                    return (value as number[]).join();
                 }
             }}
             sort={({ column }) => {
                 if (column.key === 'prevScores'){
-                    return (a, b) => a[0] === b[0]
+                    return (a: number[], b: number[]) => a[0] === b[0]
                         ? 0
                         : a[0] < b[0]
                             ? column.sortDirection === SortDirection.Ascend ? -1 : 1

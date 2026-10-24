@@ -1,5 +1,5 @@
 import CellEditorState from './CellEditorState';
-import { DataType } from '../../enums';
+import { DataType, EditingMode } from '../../enums';
 import { ICellEditorProps } from '../../props';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -11,11 +11,16 @@ const props: ICellEditorProps = {
         title: 'Field',
     },
     dispatch: () => {},
+    editingMode: EditingMode.None,
+    field: 'columnField',
+    isDetailsRowShown: false,
     isSelectedRow: true,
-    onValueChange: () => {},
     rowData: { column: 1 },
     rowKeyField: '',
-} as any;
+    rowKeyValue: undefined,
+    selectedRows: [],
+    value: undefined,
+};
 
 it('renders without crashing', () => {
     const element = document.createElement('td');

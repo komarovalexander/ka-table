@@ -1,4 +1,4 @@
-import { ActionType, DataType } from '../../enums';
+import { ActionType, DataType, EditingMode } from '../../enums';
 import { act, fireEvent, render } from '@testing-library/react';
 
 import CellEditorBoolean from './CellEditorBoolean';
@@ -13,13 +13,16 @@ const props: ICellEditorProps = {
         title: 'Field',
     },
     dispatch: vi.fn(),
+    editingMode: EditingMode.None,
     field: 'fieldName',
+    isDetailsRowShown: false,
     isSelectedRow: false,
     rowData: { fieldName: 'columnFieldValue', id: 2 },
     rowKeyField: 'id',
     rowKeyValue: 2,
+    selectedRows: [],
     value: 'columnFieldValue',
-} as any;
+};
 
 beforeEach(() => {
     vi.clearAllMocks();

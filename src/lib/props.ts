@@ -30,7 +30,7 @@ export interface IColGroupProps {
     groupColumnsCount: number;
 }
 
-interface IRowCommonProps<TData= any> {
+interface IRowCommonProps<TData = unknown> {
     childComponents: ChildComponents;
     columns: Column[];
     // the column of the focused cell (focused.cell) when it is in the row
@@ -45,21 +45,21 @@ interface IRowCommonProps<TData= any> {
     isTreeGroup?: boolean;
     rowData: TData;
     rowKeyField: string;
-    rowKeyValue: any;
-    selectedRows: any[];
+    rowKeyValue: unknown;
+    selectedRows: unknown[];
 }
 
-export interface ICellProps<TData= any> {
-    treeArrowElement?: any;
+export interface ICellProps<TData = unknown> {
+    treeArrowElement?: React.ReactNode;
     childComponents: ChildComponents;
     column: Column;
     treeDeep?: number;
     dispatch: DispatchFunc;
     editingMode: EditingMode;
-    editorValue?: any;
+    editorValue?: unknown;
     field: Field;
     format?: FormatFunc;
-    hasEditorValue?: any;
+    hasEditorValue?: boolean;
     isDetailsRowShown: boolean;
     isEditableCell: boolean;
     /**
@@ -70,11 +70,11 @@ export interface ICellProps<TData= any> {
     isSelectedRow: boolean;
     rowData: TData;
     rowKeyField: string;
-    rowKeyValue: any;
-    selectedRows: any[];
+    rowKeyValue: unknown;
+    selectedRows: unknown[];
     validation?: ValidationFunc;
     validationMessage?: string;
-    value: any;
+    value: unknown;
 }
 
 export interface IFilterRowEditorProps {
@@ -83,23 +83,23 @@ export interface IFilterRowEditorProps {
     dispatch: DispatchFunc;
 }
 
-export interface ICellEditorProps<TData= any> extends IFilterRowEditorProps {
+export interface ICellEditorProps<TData = unknown> extends IFilterRowEditorProps {
     autoFocus?: boolean;
     editingMode: EditingMode;
-    editorValue?: any;
+    editorValue?: unknown;
     field: Field;
     isDetailsRowShown: boolean;
     isSelectedRow: boolean;
     rowData: TData;
     rowKeyField: string;
-    rowKeyValue: any;
-    value: any;
-    selectedRows: any[];
+    rowKeyValue: unknown;
+    value: unknown;
+    selectedRows: unknown[];
     validationMessage?: string;
     validation?: ValidationFunc;
 }
 
-export interface ICellTextProps<TData= any> {
+export interface ICellTextProps<TData = unknown> {
     childComponents: ChildComponents;
     column: Column;
     dispatch: DispatchFunc;
@@ -110,12 +110,12 @@ export interface ICellTextProps<TData= any> {
     isSelectedRow: boolean;
     rowData: TData;
     rowKeyField: string;
-    rowKeyValue: any;
-    selectedRows: any[];
-    value: any;
+    rowKeyValue: unknown;
+    selectedRows: unknown[];
+    value: unknown;
 }
 
-export interface IDataRowProps<TData= any> extends IRowCommonProps<TData> {
+export interface IDataRowProps<TData = unknown> extends IRowCommonProps<TData> {
     format?: FormatFunc;
     validation?: ValidationFunc;
     isDetailsRowShown: boolean;
@@ -123,7 +123,7 @@ export interface IDataRowProps<TData= any> extends IRowCommonProps<TData> {
     rowEditableCells: EditableCell[];
 }
 
-export interface IGroupRowProps<TData= any> {
+export interface IGroupRowProps<TData = unknown> {
     childComponents: ChildComponents;
     column: Column;
     columns?: Column[];
@@ -131,18 +131,18 @@ export interface IGroupRowProps<TData= any> {
     contentColSpan: number;
     dispatch: DispatchFunc;
     groupIndex: number;
-    groupKey: any[];
+    groupKey: unknown[];
     isExpanded: boolean;
-    text: string;
+    text: React.ReactNode;
     groupItems?: TData[];
 }
 
-export interface IGroupSummaryRowProps<TData= any> extends IRowsProps {
+export interface IGroupSummaryRowProps<TData = unknown> extends IRowsProps {
     groupData: TData[];
     groupIndex: number;
 }
 
-export interface IGroupSummaryCellProps<TData= any> extends IGroupSummaryRowProps<TData> {
+export interface IGroupSummaryCellProps<TData = unknown> extends IGroupSummaryRowProps<TData> {
     column: Column;
 }
 
@@ -189,12 +189,12 @@ export interface ITableHeadProps {
     sortingMode: SortingMode;
 }
 
-export interface ITableBodyProps<TData= any> {
+export interface ITableBodyProps<TData = unknown> {
     childComponents: ChildComponents;
     columns: Column[];
     data: TData[];
     loading?: ILoadingProps;
-    detailsRows?: any[];
+    detailsRows?: unknown[];
     dispatch: DispatchFunc;
     editableCells: EditableCell[];
     editingMode: EditingMode;
@@ -203,26 +203,26 @@ export interface ITableBodyProps<TData= any> {
     groupColumnsCount: number;
     groupedColumns: Column[];
     groups?: Group[];
-    groupsExpanded?: any[][];
+    groupsExpanded?: unknown[][];
     keyboardNavigation?: boolean;
     memoizedRows?: boolean;
     oddEvenRows?: boolean;
     rowKeyField: string;
     rowReordering: boolean;
-    selectedRows: any[];
+    selectedRows: unknown[];
     noData?: NoData;
     validation?: ValidationFunc;
     virtualScrolling?: VirtualScrolling;
     treeExpandButtonColumnKey?: string;
 }
 
-export interface ITableFootProps<TData= any> extends ITableAllProps {
+export interface ITableFootProps<TData = unknown> extends ITableAllProps {
     data: TData[];
     groupColumnsCount: number;
 }
-export interface ISummaryRowProps<TData= any> extends ITableFootProps<TData> {
+export interface ISummaryRowProps<TData = unknown> extends ITableFootProps<TData> {
 }
-export interface ISummaryCellProps<TData= any> extends ISummaryRowProps<TData> {
+export interface ISummaryCellProps<TData = unknown> extends ISummaryRowProps<TData> {
     column: Column;
 }
 
@@ -245,7 +245,7 @@ export interface IRowProps extends IRowCommonProps {
     isSelectedRow: boolean;
     rowEditableCells: EditableCell[],
     rowReordering: boolean;
-    trRef?: any;
+    trRef?: React.Ref<HTMLTableRowElement>;
     validation?: ValidationFunc;
 }
 
@@ -314,10 +314,10 @@ export interface IPagingSizeProps extends IPagingProps {
 export interface IPagingIndexProps extends IPagingProps {
     isActive: boolean;
     pageIndex: number;
-    text: any;
+    text: string | number;
 }
 
-export interface IPopupContentProps<TData= any> {
+export interface IPopupContentProps<TData = unknown> {
     column: Column;
     childComponents?: ChildComponents;
     data?: TData[];
@@ -328,14 +328,14 @@ export interface IPopupContentProps<TData= any> {
 export interface IPopupContentItemProps {
     column: Column;
     childComponents?: ChildComponents;
-    item?: any;
+    item?: unknown;
     dispatch: DispatchFunc;
 }
 
 export interface IHeaderFilterPopupProps {
     column: Column;
     childComponents?: ChildComponents;
-    data?: any[];
+    data?: unknown[];
     dispatch: DispatchFunc;
     format?: FormatFunc;
 }

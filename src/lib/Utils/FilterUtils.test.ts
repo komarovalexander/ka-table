@@ -11,6 +11,7 @@ import {
 } from './FilterUtils';
 
 import { Column } from '../Models/Column';
+import { createElement } from 'react';
 
 describe('FilterUtils', () => {
     it('getRowEditableCells should return required cells from table EditableCells', () => {
@@ -31,7 +32,7 @@ describe('FilterUtils', () => {
     });
 
     describe('filterData', () => {
-        const data: any[] = [
+        const data = [
             { id: 1, name: 'Mike Wazowski', score: 80, passed: true, date: new Date(Date.UTC(2021, 11, 20, 9)) },
             { id: 2, name: 'Billi Bob', score: 55, passed: false, date: new Date(Date.UTC(2021, 11, 20, 13)) },
             { id: 3, name: 'Tom Williams', score: 45, passed: false, date: new Date(Date.UTC(2021, 10, 20, 13)) },
@@ -120,7 +121,7 @@ describe('FilterUtils', () => {
             }];
             const result = filterData(data, columns, ({ column }) => {
                 if (column.key === 'date'){
-                    return (value, filterValue) => {
+                    return (value: unknown, filterValue: string[]) => {
                         return filterValue[0] === 'date 1' && value === data[0].date
                     };
                 }
@@ -147,7 +148,7 @@ describe('FilterUtils', () => {
                 dataType: DataType.Number,
                 filterRowValue: 45,
                 key: 'score',
-                filter: (value: any, filterValue: any) => value === filterValue,
+                filter: (value: unknown, filterValue: unknown) => value === filterValue,
             }];
             const result = filterData(data, columns);
             expect(result).toMatchSnapshot();
@@ -235,7 +236,7 @@ describe('FilterUtils', () => {
     });
 
     describe('searchData', () => {
-        const search: SearchFunc = ({ searchText, rowData, column }) => {
+        const search: SearchFunc<{ passed: boolean }> = ({ searchText, rowData, column }) => {
             if (column.key === 'passed')
                 return (searchText === 'false' && !rowData.passed) || (searchText === 'true' && rowData.passed);
         };
@@ -248,7 +249,7 @@ describe('FilterUtils', () => {
                 title: 'Passed',
             },
         ];
-        const data: any[] = [
+        const data = [
             { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
             { id: 2, name: 'Billi Bob', score: 55, passed: false },
             { id: 3, name: 'Tom Williams', score: 45, passed: false },
@@ -300,14 +301,14 @@ describe('FilterUtils', () => {
         const data = [{ id: 1, date: new Date(2021, 10, 8), price: 1000, link: 'docs', secret: 'hidden' }];
         const format: FormatFunc = ({ column, value }) => {
             if (column.key === 'date') {
-                return value.toLocaleDateString('en-US');
+                return (value as Date).toLocaleDateString('en-US');
             }
             if (column.key === 'price') {
-                return `$${value.toFixed(2)}`;
+                return `$${(value as number).toFixed(2)}`;
             }
             if (column.key === 'link') {
-                // a value which is not a text, e.g. a React element
-                return { element: value };
+                // a value which is not a text
+                return createElement('a', { href: String(value) });
             }
         };
         it.each([
@@ -320,12 +321,12 @@ describe('FilterUtils', () => {
             expect(searchData(columns, data, searchText, undefined, format)).toHaveLength(count);
         });
         it('searches the hidden columns only by the search function', () => {
-            const search: SearchFunc = ({ column, rowData, searchText }) => (column.key === 'secret' ? rowData.secret === searchText : undefined);
+            const search: SearchFunc<{ secret: string }> = ({ column, rowData, searchText }) => (column.key === 'secret' ? rowData.secret === searchText : undefined);
             expect(searchData(columns, data, 'hidden', search, format)).toHaveLength(1);
             expect(searchData(columns, data, 'hid', search, format)).toHaveLength(0);
         });
         it('searches the value when format returns false (e.g. of condition && text)', () => {
-            expect(searchData(columns, data, '1000', undefined, ({ column, value }) => column.key === 'date' && value.toLocaleDateString('en-US'))).toHaveLength(1);
+            expect(searchData(columns, data, '1000', undefined, ({ column, value }) => column.key === 'date' && (value as Date).toLocaleDateString('en-US'))).toHaveLength(1);
             expect(searchData(columns, data, 'false', undefined, () => false)).toHaveLength(0);
         });
     });
@@ -344,8 +345,9 @@ describe('FilterUtils', () => {
         });
         it('the header filter uses an empty text of format', () => {
             const columns: Column[] = [{ key: 'score', headerFilterValues: [''] }];
-            const format: FormatFunc = ({ value }) => (value > 0 ? String(value) : '');
-            expect(filterByHeaderFilter([{ id: 1, score: -1 }, { id: 2, score: 2 }], columns, format).map((d) => d.id)).toEqual([1]);
+            const data = [{ id: 1, score: -1 }, { id: 2, score: 2 }];
+            const format: FormatFunc<typeof data[number]> = ({ value }) => ((value as number) > 0 ? String(value) : '');
+            expect(filterByHeaderFilter(data, columns, format).map((d) => d.id)).toEqual([1]);
         });
     });
 });

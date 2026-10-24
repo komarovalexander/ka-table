@@ -20,7 +20,7 @@ const ColumnSettings = ({ columns, onChange }: { columns: ITableProps['columns']
     const settingsTable = useTable({
         onDispatch: (action) => {
             if (action.type === ActionType.UpdateCellValue) {
-                onChange(action.rowKeyValue, action.value);
+                onChange(action.rowKeyValue as string, action.value as boolean);
             }
         },
     });

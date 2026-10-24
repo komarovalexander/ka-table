@@ -1,7 +1,8 @@
 import React, { RefObject, useEffect, useMemo, useRef } from 'react';
 import { checkIndexOdd, getValueByField } from '../../Utils/DataUtils';
-import { getGroupKeyId, getGroupMark, getGroupText, groupSummaryMark } from '../../Utils/GroupUtils';
-import { treeDataMark, treeGroupMark } from '../../Utils/TreeUtils';
+import { getGroupKeyId, getGroupText, isGroupRow, isGroupSummaryRow } from '../../Utils/GroupUtils';
+import { getReactKey, getRowKeyValues } from '../../Utils/RowUtils';
+import { isTreeGroupRow, isTreeRow } from '../../Utils/TreeUtils';
 
 import DataAndDetailsRows, { DataAndDetailsRowsMemo } from '../DataAndDetailsRows/DataAndDetailsRows';
 
@@ -10,7 +11,6 @@ import GroupRow from '../GroupRow/GroupRow';
 import { GroupSummaryRow } from '../GroupSummaryRow/GroupSummaryRow';
 import { ITableBodyProps } from '../../props';
 import { MemoizedRowsContext } from './MemoizedRowsContext';
-import { getRowKeyValues } from '../../Utils/RowUtils';
 
 export interface IRowsProps extends ITableBodyProps {
     onFirstRowRendered: (firstRowRef: RefObject<HTMLElement | null>) => void;
@@ -54,7 +54,6 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
         oddEvenRows,
         memoizedRows,
     } = props;
-    const groupMark = getGroupMark();
     const RowComponent = memoizedRows ? DataAndDetailsRowsMemo : DataAndDetailsRows;
 
     // lookups by key instead of searching the arrays for every row
@@ -77,16 +76,16 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
         return { columnKey: columns[0].key, rowKeyValue: rowKeyValues[0] };
     }, [focused, keyboardNavigation, data, rowKeyField, columns]);
 
-    const firstRowRef = useRef<HTMLElement>(null);
+    const firstRowRef = useRef<HTMLTableRowElement>(null);
     useEffect(() => {
         onFirstRowRendered(firstRowRef);
     }, [firstRowRef, onFirstRowRendered]);
 
-    let rowRefLink: RefObject<HTMLElement | null> | undefined = firstRowRef;
+    let rowRefLink: RefObject<HTMLTableRowElement | null> | undefined = firstRowRef;
     return (
         <MemoizedRowsContext.Provider value={!!memoizedRows}>
             {data.map((d, index) => {
-                if (d.groupMark === groupMark) {
+                if (isGroupRow(d)) {
                     const groupKeyId = getGroupKeyId(d.key);
                     const groupIndex = d.key.length - 1;
                     const group = groups && groups[groupIndex];
@@ -107,13 +106,12 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                             key={groupKeyId}
                         />
                     );
-                } else if (d.groupSummaryMark === groupSummaryMark) {
+                } else if (isGroupSummaryRow(d)) {
                     return <GroupSummaryRow {...props} groupData={d.groupData} key={d.key} groupIndex={d.groupIndex} />;
                 } else {
-                    const isTreeGroup = d.treeGroupMark === treeGroupMark;
-                    const isTreeData =  d.treeDataMark === treeDataMark;
-                    const isTreeRow = isTreeGroup || isTreeData;
-                    const rowData = isTreeRow ? d.rowData : d;
+                    const isTreeGroup = isTreeGroupRow(d);
+                    const treeRow = isTreeRow(d) ? d : undefined;
+                    const rowData = treeRow ? treeRow.rowData : d;
                     const rowKeyValue = getValueByField(rowData, rowKeyField);
                     const isTreeExpanded = isTreeGroup && (!treeGroupsExpandedSet || treeGroupsExpandedSet.has(rowKeyValue));
                     const isSelectedRow = selectedRowsSet.has(rowKeyValue);
@@ -133,13 +131,13 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                             focusedColumnKey={focusedCell && focusedCell.rowKeyValue === rowKeyValue ? focusedCell.columnKey : undefined}
                             isTreeGroup={isTreeGroup}
                             isTreeExpanded={isTreeExpanded}
-                            treeDeep={isTreeRow === true ? d.treeDeep : undefined}
+                            treeDeep={treeRow?.treeDeep}
                             treeExpandButtonColumnKey={treeExpandButtonColumnKey}
                             format={format}
                             groupColumnsCount={props.groupColumnsCount}
                             isDetailsRowShown={isDetailsRowShown}
                             isSelectedRow={isSelectedRow}
-                            key={rowKeyValue}
+                            key={getReactKey(rowKeyValue)}
                             rowData={rowData}
                             rowEditableCells={rowEditableCells}
                             rowKeyField={props.rowKeyField}

@@ -46,7 +46,7 @@ const GroupingCustomCellDemo = () => {
                         case 'type':
                         case 'country': {
                             const folder = props.column.key === 'type' ? 'animals' : 'flags';
-                            return <img height='30px' src={`static/icons/${folder}/${props.groupKey[props.groupIndex].toLowerCase().replace(' ', '_')}.svg`} alt={props.groupKey[0]} />;
+                            return <img height='30px' src={`static/icons/${folder}/${String(props.groupKey[props.groupIndex]).toLowerCase().replace(' ', '_')}.svg`} alt={String(props.groupKey[0])} />;
                         }
                         }
                     }

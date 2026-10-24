@@ -5,8 +5,10 @@ import { fireEvent, render, within } from '@testing-library/react';
 
 import { useTable } from '../../hooks/UseTable';
 
+type Row = { id: number; name: string; city: string };
+
 const columns = [{ key: 'name', title: 'Name' }, { key: 'city', title: 'City' }];
-const createProps = (prefix: string, firstId: number): IKaTableProps => ({
+const createProps = (prefix: string, firstId: number): IKaTableProps<Row> => ({
     columns,
     data: [0, 1, 2].map((index) => ({ id: firstId + index, name: `${prefix} name ${index}`, city: `${prefix} city ${index}` })),
     rowKeyField: 'id',
@@ -47,9 +49,9 @@ const drag = (item: Element, target: Element) => {
 };
 
 const setup = () => {
-    const tables: ITableInstance[] = [];
+    const tables: ITableInstance<Row>[] = [];
     const TableWithInstance = ({ index }: { index: number }) => {
-        const table = useTable();
+        const table = useTable<Row>();
         tables[index] = table;
         return <Table table={table} {...tablesProps[index]} />;
     };

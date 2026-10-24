@@ -3,7 +3,7 @@ import { getVirtualized, isVirtualScrollingEnabled } from './Virtualize';
 import { VirtualScrolling } from '../Models/VirtualScrolling';
 
 describe('Virtualize', () => {
-    const data: any[] = new Array(100).fill(0).map((_, index) => index);
+    const data: number[] = new Array(100).fill(0).map((_, index) => index);
     describe('getVirtualized', () => {
         it('scrollTop 0', () => {
             const virtualScrolling: VirtualScrolling = {
