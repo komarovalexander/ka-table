@@ -48,7 +48,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "gh-pages": "^6.3.0",
     "jsdom": "^29.0.0",
-    "jspdf": "^3.0.1",
+    "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.2",
     "lodash.orderby": "^4.6.0",
     "lorem-ipsum": "^2.0.3",
