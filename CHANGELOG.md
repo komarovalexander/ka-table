@@ -30,6 +30,7 @@
 - The reducer doesn't mutate the previous state (`UpdateHeaderFilterValues`, `SaveRowEditors` with validation, `ResizeColumn`).
 - Selection: no duplicate keys in `selectedRows`, `selectRowsRange` with the key `0` or with a row which is not found, `areAllRowsSelected` checks every row and is `false` without rows.
 - Trees: rows with keys like `'constructor'`, a parent with the key `0`, a row whose parent is not in the data or is the row itself is a root, the found rows keep their parents in the order of the data and stay sorted.
+- A tree with more than about 110 000 shown rows under one root doesn't throw `RangeError: Maximum call stack size exceeded`.
 - Groups: grouping by a date column with `format`, different groups for `null` and `undefined`, `groupItems` of a group with a summary contain only its rows, the summary of a group which is grouped again (#336).
 - Editing: validation gets the row with all its edited values (also of a new row) and reads the value by `column.field`, nested `rowKeyField`, `openAllEditors` skips the columns which are not editable, Esc and Enter of a cell editor are handled only in its row, the string editor shows `0`, `updateCellValue` and `insertRow` with a key which is not in the data.
 - Dates: the date editor and the date filter accept the dates of a JSON (strings) and timestamps, the date filter doesn't depend on the time zone.
