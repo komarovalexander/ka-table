@@ -66,3 +66,25 @@ describe('the scrolling position', () => {
         expect(ref.current).toBe(container.querySelector('.ka-table-wrapper'));
     });
 });
+
+describe('virtual scrolling with enabled: false', () => {
+    it('shows all the rows and does not measure them', async () => {
+        const onDispatch = vi.fn();
+        const TableWithInstance = () => {
+            const table = useTable({ onDispatch });
+            return (
+                <Table
+                    table={table}
+                    columns={[{ key: 'name', title: 'Name' }]}
+                    data={Array.from({ length: 100 }, (_, id) => ({ id, name: `name ${id}` }))}
+                    rowKeyField='id'
+                    virtualScrolling={{ enabled: false }}
+                />
+            );
+        };
+        const { container } = render(<TableWithInstance />);
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        expect(container.querySelectorAll('tbody tr.ka-row').length).toBe(100);
+        expect(onDispatch.mock.calls.filter(([action]) => action.type === ActionType.UpdateVirtualScrolling).length).toBe(0);
+    });
+});

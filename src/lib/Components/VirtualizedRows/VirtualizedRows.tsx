@@ -5,7 +5,7 @@ import { ITableBodyProps } from '../../props';
 import Rows from '../Rows/Rows';
 import defaultOptions from '../../defaultOptions';
 import { getNewRowEditableCells } from '../../Utils/CellUtils';
-import { getVirtualized } from '../../Utils/Virtualize';
+import { getVirtualized, isVirtualScrollingEnabled } from '../../Utils/Virtualize';
 
 const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
     const {
@@ -15,22 +15,24 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
         editableCells,
         oddEvenRows,
     } = props;
+    // virtualScrolling with enabled: false shows all the rows
+    const enabledVirtualScrolling = isVirtualScrollingEnabled(virtualScrolling) ? virtualScrolling : undefined;
 
     const onFirstRowRendered = (firstRowRef: RefObject<HTMLElement | null>) => {
         if (firstRowRef
       && firstRowRef.current
-      && (virtualScrolling
-      && (!virtualScrolling.itemHeight
-      || !virtualScrolling.tbodyHeight))) {
+      && (enabledVirtualScrolling
+      && (!enabledVirtualScrolling.itemHeight
+      || !enabledVirtualScrolling.tbodyHeight))) {
             const itemHeight = firstRowRef.current.offsetHeight || 40;
             const rootElement = firstRowRef.current.closest<HTMLElement>(`.${defaultOptions.css.root}`);
             const tbodyHeight =
                 (rootElement && rootElement.offsetHeight)
                 || 600;
             const newVirtualScrolling = {
-                ...virtualScrolling,
-                itemHeight: virtualScrolling.itemHeight || itemHeight,
-                tbodyHeight: virtualScrolling.tbodyHeight || tbodyHeight,
+                ...enabledVirtualScrolling,
+                itemHeight: enabledVirtualScrolling.itemHeight || itemHeight,
+                tbodyHeight: enabledVirtualScrolling.tbodyHeight || tbodyHeight,
             };
             dispatch({ type: ActionType.UpdateVirtualScrolling, virtualScrolling: newVirtualScrolling });
         }
@@ -39,9 +41,9 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
     let virtualizedData = data;
     let virtualized;
     let isFirstVisibleRowOdd;
-    if (virtualScrolling) {
+    if (enabledVirtualScrolling) {
         const isNewRowShown = !!getNewRowEditableCells(editableCells)?.length;
-        virtualized = getVirtualized(virtualScrolling, virtualizedData, isNewRowShown, oddEvenRows);
+        virtualized = getVirtualized(enabledVirtualScrolling, virtualizedData, isNewRowShown, oddEvenRows);
         virtualizedData = virtualized.virtualizedData;
         isFirstVisibleRowOdd = virtualized.isFirstVisibleRowOdd;
     }

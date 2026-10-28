@@ -34,7 +34,7 @@
 - Dates: the date editor and the date filter accept the dates of a JSON (strings) and timestamps, the date filter doesn't depend on the time zone.
 - An unknown filter operator logs a warning instead of breaking the table.
 - The page index stays inside the pages.
-- `virtualScrolling` with `itemHeight: undefined` doesn't hang the page.
+- `virtualScrolling` with `itemHeight: undefined` doesn't hang the page, with `enabled: false` it shows all the rows.
 - Drag and drop: rows and columns are dropped only on the items of the same kind and table.
 - A nested field whose parent is `null` or a primitive gives `undefined` instead of throwing.
 - The position of the header filter popup.
