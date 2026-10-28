@@ -91,16 +91,82 @@ describe('keyboardNavigation', () => {
         expect(getCell('city 3').tabIndex).toBe(0);
         expect(getCell('name 0').tabIndex).toBe(-1);
     });
-    it('skips hidden columns and group rows', () => {
-        const { focusCell, getFocusedText, press } = setup({
+    it('skips hidden columns and moves through the group rows', () => {
+        const { container, focusCell, getFocusedText, press, table } = setup({
             columns: [{ key: 'name' }, { key: 'id', visible: false }, { key: 'city' }, { key: 'group' }],
             groups: [{ columnKey: 'group' }],
         });
+        const getTabStops = () => container.querySelectorAll('tbody [tabindex="0"]');
+        // the first row is a group row
+        expect(Array.from(getTabStops()).map((element) => element.textContent)).toEqual(['a']);
         focusCell('name 1');
         press('ArrowRight');
         expect(getFocusedText()).toBe('city 1');
         press('ArrowDown');
+        expect(getFocusedText()).toBe('b');
+        expect(table().props.focused).toEqual({ group: ['b'] });
+        expect(getTabStops().length).toBe(1);
+        // the focus returns to the column of the last focused cell
+        press('ArrowDown');
         expect(getFocusedText()).toBe('city 2');
+        press('ArrowUp');
+        press('ArrowUp');
+        expect(getFocusedText()).toBe('city 1');
+    });
+    it('expands and collapses a group row by Enter, Space and the arrows Left and Right', () => {
+        const { container, focusCell, getFocusedText, press } = setup({ columns: [...columns, { key: 'group' }], groups: [{ columnKey: 'group' }] });
+        const getRowsCount = () => container.querySelectorAll('tbody tr.ka-row').length;
+        // the button is not a stop of Tab, the cell tells the state of the group
+        expect(container.querySelector('.ka-icon-group-arrow')!.getAttribute('tabindex')).toBeNull();
+        focusCell('a');
+        expect(getFocusedText()).toBe('a');
+        press('ArrowLeft');
+        expect(getRowsCount()).toBe(3);
+        expect(document.activeElement!.getAttribute('aria-expanded')).toBe('false');
+        press('ArrowLeft');
+        expect(getRowsCount()).toBe(3);
+        press('ArrowRight');
+        expect(getRowsCount()).toBe(5);
+        press('Enter');
+        expect(getRowsCount()).toBe(3);
+        press(' ');
+        expect(getRowsCount()).toBe(5);
+        expect(getFocusedText()).toBe('a');
+        press('End');
+        expect(getFocusedText()).toBe('a');
+        press('End', { ctrlKey: true });
+        expect(getFocusedText()).toBe('name 4');
+        press('Home', { ctrlKey: true });
+        expect(getFocusedText()).toBe('name 0');
+    });
+    it('expands and collapses a tree row by Enter and Space on the cell of its arrow, F2 opens its editor', () => {
+        const { container, focusCell, getFocusedText, press, table } = setup({ editingMode: EditingMode.Cell, treeGroupKeyField: 'parentId' });
+        const getRowsCount = () => container.querySelectorAll('tbody tr.ka-row').length;
+        expect(container.querySelector('table')!.getAttribute('role')).toBe('treegrid');
+        expect(container.querySelectorAll('tbody [tabindex="0"]').length).toBe(1);
+        focusCell('name 0');
+        press('Enter');
+        expect(getRowsCount()).toBe(1);
+        expect(getFocusedText()).toBe('name 0');
+        press(' ');
+        expect(getRowsCount()).toBe(5);
+        // Enter opens the editor of a cell without the arrow
+        press('ArrowRight');
+        press('Enter');
+        expect(table().props.editableCells!.map((cell) => [cell.columnKey, cell.rowKeyValue])).toEqual([['city', 0]]);
+        fireEvent.keyUp(document.activeElement!, { key: 'Escape', keyCode: 27 });
+        press('ArrowLeft');
+        press('F2');
+        expect(table().props.editableCells!.map((cell) => [cell.columnKey, cell.rowKeyValue])).toEqual([['name', 0]]);
+    });
+    it('tells the levels of the rows of a tree and the states of the rows with children', () => {
+        const { container } = setup({ treeGroupKeyField: 'parentId' });
+        const rows = Array.from(container.querySelectorAll('tbody tr.ka-row'));
+        expect(rows.map((row) => [row.getAttribute('aria-level'), row.getAttribute('aria-expanded')])).toEqual([
+            ['1', 'true'], ['2', null], ['2', null], ['2', null], ['2', null],
+        ]);
+        // the arrow is not a stop of Tab
+        expect(container.querySelector('.ka-icon-tree-arrow')!.getAttribute('tabindex')).toBeNull();
     });
     it('moves through the rows of a tree', () => {
         const { focusCell, getFocusedText, press } = setup({ treeGroupKeyField: 'parentId' });

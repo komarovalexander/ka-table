@@ -62,18 +62,26 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     const treeGroupsExpandedSet = useMemo(() => treeGroupsExpanded && new Set(treeGroupsExpanded), [treeGroupsExpanded]);
     const expandedGroupKeys = useMemo(() => new Set(groupsExpanded.map((groupKey) => getGroupKeyId(groupKey))), [groupsExpanded]);
     const editableCellsByRow = useMemo(() => groupEditableCellsByRow(editableCells), [editableCells]);
-    // with the keyboard navigation the first cell gets the focus by Tab while the focused cell is not shown
-    const focusedCell = useMemo(() => {
+    // with the keyboard navigation the first row gets the focus by Tab while the focused cell or group row is not shown
+    const { focusedCell, focusedGroupKeyId } = useMemo(() => {
         const cell = focused?.cell;
         if (!keyboardNavigation) {
-            return cell;
+            return { focusedCell: cell };
+        }
+        const groupKeyIds = data.filter(isGroupRow).map((row) => getGroupKeyId(row.key));
+        const groupKeyId = focused?.group && getGroupKeyId(focused.group);
+        if (groupKeyId && groupKeyIds.includes(groupKeyId)) {
+            return { focusedGroupKeyId: groupKeyId };
         }
         const rowKeyValues = getRowKeyValues(data, rowKeyField);
-        const isCellShown = cell && rowKeyValues.includes(cell.rowKeyValue) && columns.some((c) => c.key === cell.columnKey);
-        if (isCellShown || !rowKeyValues.length || !columns.length) {
-            return isCellShown ? cell : undefined;
+        if (cell && rowKeyValues.includes(cell.rowKeyValue) && columns.some((c) => c.key === cell.columnKey)) {
+            return { focusedCell: cell };
         }
-        return { columnKey: columns[0].key, rowKeyValue: rowKeyValues[0] };
+        const firstRow = data.find((row) => !isGroupSummaryRow(row));
+        if (firstRow && isGroupRow(firstRow)) {
+            return { focusedGroupKeyId: getGroupKeyId(firstRow.key) };
+        }
+        return rowKeyValues.length && columns.length ? { focusedCell: { columnKey: columns[0].key, rowKeyValue: rowKeyValues[0] } } : {};
     }, [focused, keyboardNavigation, data, rowKeyField, columns]);
 
     const firstRowRef = useRef<HTMLTableRowElement>(null);
@@ -102,6 +110,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                             columns={columns}
                             groupedColumns={groupedColumns}
                             isExpanded={expandedGroupKeys.has(groupKeyId)}
+                            isFocused={focusedGroupKeyId === groupKeyId}
                             text={getGroupText(d.value, column, format, d.groupItems)}
                             key={groupKeyId}
                         />

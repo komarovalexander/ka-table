@@ -40,6 +40,16 @@ describe('Table accessibility', () => {
     });
     it('expands groups from the keyboard', () => {
         const { container } = render(<Table {...tableProps} groups={[{ columnKey: 'country' }]} />);
+        const groupCell = screen.getByText('Country: USA').closest('td')!;
+        expect(groupCell.getAttribute('aria-expanded')).toBe('true');
+
+        act(() => groupCell.focus());
+        pressSpace(groupCell);
+        expect(groupCell.getAttribute('aria-expanded')).toBe('false');
+        expect(getRowsText(container)).not.toContain('Mike');
+    });
+    it('expands groups by their buttons without the keyboard navigation', () => {
+        const { container } = render(<Table {...tableProps} groups={[{ columnKey: 'country' }]} keyboardNavigation={false} />);
         const groupButton = screen.getByRole('button', { name: 'Country: USA' });
         expect(groupButton.getAttribute('aria-expanded')).toBe('true');
 
@@ -49,6 +59,17 @@ describe('Table accessibility', () => {
     });
     it('expands tree rows from the keyboard', () => {
         const { container } = render(<Table {...tableProps} treeGroupKeyField='parent' />);
+        const treeCell = screen.getByText('Mike').closest('td')!;
+        const treeRow = treeCell.closest('tr')!;
+        expect(treeRow.getAttribute('aria-expanded')).toBe('true');
+
+        act(() => treeCell.focus());
+        pressSpace(treeCell);
+        expect(treeRow.getAttribute('aria-expanded')).toBe('false');
+        expect(getRowsText(container).join()).not.toContain('Tom');
+    });
+    it('expands tree rows by their buttons without the keyboard navigation', () => {
+        const { container } = render(<Table {...tableProps} treeGroupKeyField='parent' keyboardNavigation={false} />);
         const treeButton = screen.getByRole('button', { name: 'Mike' });
         expect(treeButton.getAttribute('aria-expanded')).toBe('true');
 

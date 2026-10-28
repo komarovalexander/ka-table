@@ -77,10 +77,12 @@ export interface ITableProps<TData = unknown> {
     groupsExpanded?: unknown[][];
     height?: number | string;
     /**
-     * Navigation by the cells with the keyboard (the grid pattern of WAI-ARIA), enabled by default: the table is a single stop of Tab,
-     * arrows move the focus between the cells (with Ctrl to the last one), Home and End to the first and the last cell
-     * of the row (with Ctrl of the page), PageUp and PageDown change the page, Enter and F2 open the editor.
-     * The focused cell is kept in focused.cell. false turns the navigation off, e.g. for an own handling of the keys.
+     * Navigation by the cells with the keyboard (the grid pattern of WAI-ARIA, treegrid for a tree), enabled by default:
+     * the table is a single stop of Tab, arrows move the focus between the cells (with Ctrl to the last one), Home and End
+     * to the first and the last cell of the row (with Ctrl of the page), PageUp and PageDown change the page, Enter and F2 open the editor.
+     * Group rows get the focus as rows: Enter, Space and the arrows Left and Right expand and collapse them.
+     * Enter and Space on the cell of the arrow of a tree row expand and collapse it (F2 opens the editor of this cell).
+     * The focus is kept in focused.cell (focused.group for a group row). false turns the navigation off, e.g. for an own handling of the keys.
      */
     keyboardNavigation?: boolean;
     loading?: ILoadingProps;

@@ -14,8 +14,8 @@
 
 ### Added
 
-- `keyboardNavigation` prop: the navigation by the cells of the WAI-ARIA grid pattern, the focused cell is kept in `focused.cell`.
-- Keyboard and screen reader support of sorting, groups, the tree, paging, the group panel and the header filter: ARIA roles, states and names, the focus stays in the header filter popup and returns from it by Esc.
+- `keyboardNavigation` prop: the navigation by the cells of the WAI-ARIA grid pattern (treegrid for a tree), the focused cell is kept in `focused.cell`, a focused group row in `focused.group`. The group rows get the focus as rows, Enter, Space and the arrows Left and Right expand and collapse them; Enter and Space expand and collapse a tree row on the cell of its arrow.
+- Keyboard and screen reader support of sorting, groups, the tree, paging, the group panel and the header filter: ARIA roles, states and names, the rows of a tree tell their level, the focus stays in the header filter popup and returns from it by Esc.
 - `useTableSelector(table, selector, isEqual?)`: re-renders a component only when the selected part of the state of the table changes.
 - `memoizedRows` prop: rows and cells are re-rendered only when their own props change.
 - Typed instance and actions: `useTable<TData>()`, `useTableInstance<TData>()`, `ITableInstance<TData>`, `TableAction` and `CustomAction`, the `HeaderFilterItem` model.

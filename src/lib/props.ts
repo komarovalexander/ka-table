@@ -133,6 +133,8 @@ export interface IGroupRowProps<TData = unknown> {
     groupIndex: number;
     groupKey: unknown[];
     isExpanded: boolean;
+    // the group row is focused by the keyboard navigation
+    isFocused?: boolean;
     text: React.ReactNode;
     groupItems?: TData[];
 }

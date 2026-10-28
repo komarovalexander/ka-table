@@ -95,7 +95,7 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
 
     const { elementAttributes, content } = getElementCustomization({
         className: defaultOptions.css.table,
-        role: isKeyboardNavigationEnabled(props) ? 'grid' : undefined,
+        role: isKeyboardNavigationEnabled(props) ? (props.treeGroupKeyField ? 'treegrid' : 'grid') : undefined,
     }, props, childComponents.table);
 
     return (

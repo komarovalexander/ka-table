@@ -19,14 +19,18 @@ The table is a WAI-ARIA grid (`role="grid"`) with a single Tab stop:
 - Tab focuses a cell, the arrows move the focus between the cells (with Ctrl or Cmd to the last one), Home and End go to the first and the last cell of the row (with Ctrl or Cmd of the page);
 - PageUp and PageDown change the page if `paging` is enabled;
 - Enter and F2 open the editor of the cell if `editingMode` is `EditingMode.Cell`, the focus returns to the cell when the editor is closed;
+- the group rows get the focus as rows: Enter, Space and the arrows Left and Right expand and collapse them;
+- Enter and Space on the cell with the arrow of a tree row expand and collapse it, F2 opens the editor of this cell;
 - the keys pressed in the editors and in other elements inside the cells are not handled.
 
-The focused cell is stored in `focused.cell`: focusing a cell (by a click or Tab) dispatches `SetFocused`. So:
+The expand buttons of the groups and the arrows of the tree are not Tab stops: the keys of their cells expand and collapse the rows. A table with a tree is a WAI-ARIA treegrid, its rows tell their level and state (`aria-level`, `aria-expanded`).
+
+The focused cell is stored in `focused.cell` (a focused group row in `focused.group`): focusing a cell (by a click or Tab) dispatches `SetFocused`. So:
 
 - `customReducer`, `onDispatch` and the `dispatch` of a controlled table get `SetFocused` actions. A controlled table has to pass them to `kaReducer` as all the other actions, otherwise the focus doesn't move;
 - the browser draws its focus outline around a cell focused by the keyboard. Style `.ka-cell:focus-visible` if it doesn't fit your theme.
 
-To keep the behavior of 12.x, turn the navigation off:
+To keep the behavior of 12.x, turn the navigation off (the expand buttons of the groups and the tree are Tab stops of their own then):
 
 ```tsx
 <Table {...tableProps} keyboardNavigation={false} />
