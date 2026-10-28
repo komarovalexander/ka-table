@@ -1,6 +1,7 @@
 {
   "name": "ka-table",
   "version": "13.0.0",
+  "private": true,
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
   "homepage": "https://komarovalexander.github.io/ka-table/#/overview",
