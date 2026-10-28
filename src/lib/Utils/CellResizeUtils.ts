@@ -27,13 +27,7 @@ export const getValidatedWidth = (newWidth: number, minWidth: number) => {
 
 export const isNumberWidth = (width: unknown): width is number => !!width && typeof width === 'number';
 
-export const getMinWidth = (style?: CSSProperties): number => {
-    let minWidth: number = 20;
-    if (!style){ return minWidth; }
-
-    const styleMinWidth = style.minWidth;
-    if (isNumberWidth(styleMinWidth)){
-        minWidth = styleMinWidth;
-    }
-    return minWidth;
-};
+// the minimal width of a column: the first minWidth in pixels of the styles (style, then colGroup.style), 20 without it
+export const getMinWidth = (...styles: (CSSProperties | undefined)[]): number => (
+    styles.map((style) => style?.minWidth).find(isNumberWidth) ?? 20
+);

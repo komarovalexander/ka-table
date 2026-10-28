@@ -62,4 +62,13 @@ describe('HeadCellResize', () => {
         fireEvent.mouseUp(document.body, { screenX: 160 });
         expect(props.dispatch.mock.calls[0]).toEqual([{columnKey: 'column1', type: 'ResizeColumn', width: 110}]);
     });
+
+    it('keeps the min width of colGroup.style', () => {
+        const { container } = render(<HeadCellResize {...props} column={{ key: 'column1', width: 200, colGroup: { style: { minWidth: 100 } } }} />);
+        fireEvent.mouseDown(container.querySelector('.ka-thead-cell-resize')!, { screenX: 300 });
+        fireEvent.mouseMove(document.body, { screenX: 150 });
+        expect(props.dispatch).toHaveBeenLastCalledWith({ columnKey: 'column1', type: 'ResizeColumn', width: 100 });
+        fireEvent.mouseUp(document.body, { screenX: 150 });
+        expect(props.dispatch).toHaveBeenLastCalledWith({ columnKey: 'column1', type: 'ResizeColumn', width: 100 });
+    });
 });

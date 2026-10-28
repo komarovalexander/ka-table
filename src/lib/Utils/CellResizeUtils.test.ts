@@ -12,6 +12,11 @@ describe('CellUtils', () => {
         it('should skip minWidth in case of percents', () => {
             expect(getMinWidth({ minWidth: '100%' })).toBe(20);
         });
+        it('takes minWidth of the next style when the first one has none (style, colGroup.style)', () => {
+            expect(getMinWidth({}, { minWidth: 100 })).toBe(100);
+            expect(getMinWidth(undefined, { minWidth: 100 })).toBe(100);
+            expect(getMinWidth({ minWidth: 50 }, { minWidth: 100 })).toBe(50);
+        });
     });
     describe('getValidatedWidth', () => {
         it('newWidth less than minWidth', () => {

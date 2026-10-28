@@ -35,6 +35,7 @@
 - An unknown filter operator logs a warning instead of breaking the table.
 - The page index stays inside the pages.
 - `virtualScrolling` with `itemHeight: undefined` doesn't hang the page, with `enabled: false` it shows all the rows.
+- The column resize keeps the `minWidth` of `colGroup.style`.
 - Drag and drop: rows and columns are dropped only on the items of the same kind and table.
 - A nested field whose parent is `null` or a primitive gives `undefined` instead of throwing.
 - The position of the header filter popup.

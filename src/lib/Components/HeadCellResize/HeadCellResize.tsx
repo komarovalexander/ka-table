@@ -15,7 +15,7 @@ const HeadCellResize: React.FunctionComponent<IHeadCellResizeProps> = (props) =>
         dispatch,
         childComponents
     } = props;
-    const minWidth = getMinWidth(style) || getMinWidth(colGroup?.style);
+    const minWidth = getMinWidth(style, colGroup?.style);
     const currentWidth = width || colGroup?.width || colGroup?.style?.width || style?.width;
 
     const { elementAttributes, content } = getElementCustomization({
