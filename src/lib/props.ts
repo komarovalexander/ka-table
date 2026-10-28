@@ -96,6 +96,8 @@ export interface ICellEditorProps<TData = unknown> extends IFilterRowEditorProps
     value: unknown;
     selectedRows: unknown[];
     validationMessage?: string;
+    // the id of the shown validation message: the editor refers to it by aria-describedby
+    validationMessageId?: string;
     validation?: ValidationFunc;
 }
 
@@ -270,6 +272,7 @@ export interface IEmptyCellProps {
 }
 
 export interface ICellEditorValidationMessageProps {
+    id?: string;
     message: string;
 }
 

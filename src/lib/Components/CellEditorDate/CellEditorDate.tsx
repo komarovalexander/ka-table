@@ -13,11 +13,15 @@ const CellEditorDate: React.FunctionComponent<ICellEditorProps> = (props) => {
         value,
         rowKeyValue,
         autoFocus,
-        childComponents
+        childComponents,
+        validationMessage,
+        validationMessageId,
     } = props;
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: `${defaultOptions.css.dateInput}`,
         'aria-label': column.title,
+        'aria-invalid': validationMessage ? true : undefined,
+        'aria-describedby': validationMessageId,
         autoFocus,
         type: 'date',
         value: getDateInputValue(value),

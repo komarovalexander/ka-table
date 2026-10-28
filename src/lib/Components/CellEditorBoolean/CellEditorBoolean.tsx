@@ -13,11 +13,15 @@ const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = (props) => 
         value,
         rowKeyValue,
         autoFocus,
-        childComponents
+        childComponents,
+        validationMessage,
+        validationMessageId,
     } = props;
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: `${defaultOptions.css.checkbox}`,
         'aria-label': column.title,
+        'aria-invalid': validationMessage ? true : undefined,
+        'aria-describedby': validationMessageId,
         autoFocus,
         type: 'checkbox',
         checked: !!value,
