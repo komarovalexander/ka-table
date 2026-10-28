@@ -150,7 +150,7 @@ onDispatch: (action) => {
 },
 ```
 
-`dispatch` also accepts the actions of your own code (`CustomAction`: a `type` and any other fields). Add their type to the parameter of `customReducer` and `onDispatch`:
+`dispatch` also accepts the actions of your own code (`CustomAction`: a `type` and any other fields). A table action has to be complete: `dispatch({ type: ActionType.DeleteRow })` is an error, `dispatch(deleteRow(1))` and `dispatch({ type: ActionType.DeleteRow, rowKeyValue: 1 })` are not. `updateData`, `insertRow` and `updateRow` take the rows of the table, and `kaReducer` returns `ITableProps` of that type. Add the type of your own actions to the parameter of `customReducer` and `onDispatch`:
 
 ```tsx
 interface ResetSearchAction { type: 'RESET_SEARCH' }
