@@ -1,5 +1,5 @@
-// open TS Example or JS Example to see how to override styles
-import './CustomThemeDemo.scss';
+// the theme is defined by overriding ka-table CSS variables, see dark.css
+import './dark.css';
 
 import React from 'react';
 

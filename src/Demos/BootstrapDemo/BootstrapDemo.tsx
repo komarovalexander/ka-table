@@ -1,4 +1,5 @@
-import './BootstrapDemo.scss';
+import 'bootstrap/dist/css/bootstrap.css';
+import './BootstrapDemo.css';
 
 import { CustomLookupEditor, DateEditor, NumberEditor } from './editors';
 import { DataType, Table } from '../../lib';
@@ -76,7 +77,7 @@ const BootstrapDemo = () => {
                     },
                     cellEditorInput: {
                         elementAttributes: ({column}) => ({
-                            className: column.dataType === DataType.Boolean ? 'form-check-input' : undefined
+                            className: column.dataType === DataType.Boolean ? 'form-check-input' : 'form-control'
                         }),
                     },
                     pagingIndex: {

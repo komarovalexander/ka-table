@@ -1,4 +1,4 @@
-import './EditingRowDemo.scss';
+import './EditingRowDemo.css';
 
 import { DataType, Table } from '../../lib';
 import { ICellEditorProps, ICellTextProps } from '../../lib/props';

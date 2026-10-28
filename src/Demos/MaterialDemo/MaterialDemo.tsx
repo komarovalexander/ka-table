@@ -1,4 +1,4 @@
-import './MaterialDemo.scss';
+import './MaterialDemo.css';
 
 import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';

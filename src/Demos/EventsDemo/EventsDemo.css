@@ -1,0 +1,38 @@
+.events-demo .events-clear {
+  margin-top: 20px;
+}
+
+.events-demo .events {
+  margin: 20px 0 0 0;
+  max-height: 550px;
+  overflow: auto;
+  background-color: white;
+}
+
+.events-demo .events > div {
+  padding: 5px;
+  border: 1px solid #d1d5d7;
+  border-width: 1px 0 0 0;
+}
+
+.events-demo .events > div:last-child {
+  border-width: 1px 0;
+}
+
+.events-demo .events > div .time {
+  color: #888;
+  font-size: 12px;
+}
+
+.events-demo .events > div .milliseconds {
+  color: #aaa;
+  font-size: 10px;
+}
+
+.events-demo .events > div .type {
+  color: #00f;
+}
+
+.events-demo .events > div .type.custom {
+  color: rgb(170, 82, 0);
+}

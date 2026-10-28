@@ -1,0 +1,10 @@
+.custom-paging-demo .ka .ka-paging-sizes,
+.custom-paging-demo .ka .ka-paging-pages {
+  margin: 10px;
+  color: #777;
+}
+
+.custom-paging-demo .ka .ka-paging-sizes .form-control,
+.custom-paging-demo .ka .ka-paging-pages .form-control {
+  margin-left: 5px;
+}

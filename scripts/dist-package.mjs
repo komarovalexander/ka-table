@@ -1,5 +1,4 @@
 import { copyFileSync, readFileSync, writeFileSync } from 'node:fs';
-import { compile } from 'sass';
 
 const writeJson = (file, value) => writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
 
@@ -15,8 +14,7 @@ const entry = (path) => ({
  * (see tsdown.config.mts). The package is published from dist/.
  */
 export const completePackage = () => {
-    writeFileSync('dist/style.css', compile('src/lib/style.scss').css);
-    for (const file of ['src/lib/style.scss', 'src/lib/_default_theme.scss', 'README.md', 'LICENSE']) {
+    for (const file of ['src/lib/style.css', 'README.md', 'LICENSE']) {
         copyFileSync(file, `dist/${file.split('/').pop()}`);
     }
 
@@ -29,12 +27,10 @@ export const completePackage = () => {
         homepage,
         main: './index.js',
         types: './index.d.ts',
-        sideEffects: ['*.css', '*.scss'],
+        sideEffects: ['*.css'],
         exports: {
             '.': entry('index'),
             './style.css': './style.css',
-            './style.scss': './style.scss',
-            './_default_theme.scss': './_default_theme.scss',
             './package.json': './package.json',
             './*.js': entry('*'),
             './*': entry('*'),

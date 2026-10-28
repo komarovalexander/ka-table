@@ -1,4 +1,4 @@
-import './Demos.scss';
+import './Demos.css';
 
 import React, { useState } from 'react';
 

@@ -1,4 +1,4 @@
-import './DeleteRowDemo.scss';
+import './DeleteRowDemo.css';
 
 import { DataType, Table } from '../../lib';
 

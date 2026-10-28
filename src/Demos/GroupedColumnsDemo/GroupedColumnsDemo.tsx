@@ -1,4 +1,4 @@
-import './GroupedColumnsDemo.scss';
+import './GroupedColumnsDemo.css';
 
 import { DataType, Table } from '../../lib';
 

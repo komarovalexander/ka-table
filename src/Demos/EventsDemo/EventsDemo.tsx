@@ -1,4 +1,4 @@
-import './EventsDemo.scss';
+import './EventsDemo.css';
 
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 import React, { useState } from 'react';

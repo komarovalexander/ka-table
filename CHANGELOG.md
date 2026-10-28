@@ -11,6 +11,7 @@
 - The types have no `any`: the values of the cells and the keys of the rows are `unknown`, the actions are `TableAction`, the type of the rows is inferred from `data`. [Details](./MIGRATION.md#3-values-are-unknown-instead-of-any)
 - Fixes of the data processing change some results: the search uses the text of `format` and the visible columns only, ungrouping keeps a group with settings as `enabled: false`, collapsing keeps the groups of the other pages expanded, and more. [Details](./MIGRATION.md#4-fixes-of-the-data-processing-change-some-results)
 - The package is built for ES2019 (12.x was built for ES5) and contains ES modules chosen by `exports`. [Details](./MIGRATION.md#5-the-package-is-built-for-es2019-and-has-exports)
+- `style.css` is plain CSS with custom properties (`--ka-*`), a theme overrides them; the package has no Sass files, `ka-table/style.scss` and `ka-table/_default_theme.scss` can't be imported. [Details](./MIGRATION.md#6-the-theme-is-plain-css-with-custom-properties)
 
 ### Added
 
@@ -23,6 +24,7 @@
 - `Group.enabled`: a disabled group keeps its settings until its column is grouped again.
 - `kaDateUtils.getDate`, `kaDateUtils.getDateFromInputValue`, `kaPagingUtils.getPageIndex` and `kaPagingUtils.getPagingWithPageSize`.
 - ES modules in `esm/` and `sideEffects` for tree shaking.
+- CSS custom properties of the default theme (`--ka-*`, listed in the readme): the hover colours of the rows and the cells, the sticky offsets of the header calculated from `--ka-header-cell-height`.
 
 ### Fixed
 

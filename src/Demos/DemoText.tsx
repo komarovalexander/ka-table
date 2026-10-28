@@ -1,4 +1,4 @@
-import './DemoPage.scss';
+import './DemoPage.css';
 
 import React, { useEffect, useState } from 'react';
 import Highlight from 'react-highlight';

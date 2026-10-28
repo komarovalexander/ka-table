@@ -63,7 +63,6 @@
     "react-router-dom": "^7.5.2",
     "react-to-print": "^3.0.6",
     "redux": "^4.2.1",
-    "sass": "^1.87.0",
     "tsdown": "^0.23.1",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.72.0",

@@ -1,4 +1,4 @@
-import './CustomPagingDemo.scss';
+import './CustomPagingDemo.css';
 
 import { DataType, Table } from '../../lib';
 import { updatePageIndex, updatePageSize } from '../../lib/actionCreators';

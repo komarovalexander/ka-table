@@ -1,0 +1,6 @@
+.column-resizing-demo .ka-thead-cell-content,
+.column-resizing-demo .ka-cell-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,4 +1,4 @@
-import './AlertCellDemo.scss';
+import './AlertCellDemo.css';
 
 import { DataType, Table } from '../../lib';
 

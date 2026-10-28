@@ -1,4 +1,4 @@
-import './CustomEditorDemo.scss';
+import './CustomEditorDemo.css';
 
 import { DataType, Table, useTableInstance } from '../../lib';
 import React, { useState } from 'react';

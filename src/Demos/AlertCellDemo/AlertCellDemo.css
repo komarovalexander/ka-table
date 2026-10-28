@@ -1,9 +1,10 @@
-.delete-row-column-button {
+.alert-cell-button {
   cursor: pointer;
   opacity: 0.75;
   display: inline-block;
   vertical-align: middle;
-  &:hover{
-    opacity: 1;
-  }
+}
+
+.alert-cell-button:hover {
+  opacity: 1;
 }

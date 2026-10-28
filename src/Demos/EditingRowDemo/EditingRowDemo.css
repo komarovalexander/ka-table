@@ -1,0 +1,14 @@
+.editing-row-demo .edit-cell-button,
+.editing-row-demo .buttons {
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.editing-row-demo .edit-cell-button {
+  opacity: 0.8;
+}
+
+.editing-row-demo .save-cell-button {
+  margin-right: 15px;
+}

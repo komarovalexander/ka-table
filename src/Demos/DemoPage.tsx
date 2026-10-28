@@ -1,4 +1,7 @@
-import './DemoPage.scss';
+import './DemoPage.css';
+// scoped to .enable-ka-styles and .print-content by the scopedCss plugin (vite.config.mts)
+import '../lib/style.css';
+import 'highlight.js/styles/vs.css';
 
 import { CollapsedIcon } from '../lib/Icons/CollapsedIcon';
 import Demo from './Demo';
@@ -6,7 +9,7 @@ import DemoText from './DemoText';
 import React from 'react';
 import { trackEvent } from './ga';
 
-const kaStylesDisabled = ['BootstrapDemo', 'CustomThemeDemo'];
+const kaStylesDisabled = ['BootstrapDemo'];
 const getDemoPage = (demo: Demo) => {
     return () => {
         return (

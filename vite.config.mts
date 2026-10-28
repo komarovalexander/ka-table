@@ -2,24 +2,25 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
+import { scopedCss } from './scripts/scoped-css.mjs';
+
 // the demo site (yarn start, yarn build) and the tests (yarn test)
 export default defineConfig({
     base: '/ka-table/',
-    plugins: [react()],
+    plugins: [
+        react(),
+        // the styles which the demos import globally, but which must apply only inside their demos
+        scopedCss({
+            'src/lib/style.css': ['.enable-ka-styles', '.print-content'],
+            'bootstrap/dist/css/bootstrap.css': ['.bootstrap-demo'],
+        }),
+    ],
     server: {
         port: 3000,
         open: true,
     },
     build: {
         outDir: 'build',
-    },
-    css: {
-        preprocessorOptions: {
-            scss: {
-                // the demo styles and bootstrap still use @import and the global and color functions of Sass
-                silenceDeprecations: ['import', 'global-builtin', 'color-functions'],
-            },
-        },
     },
     test: {
         environment: 'jsdom',

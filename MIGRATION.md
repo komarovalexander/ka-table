@@ -2,15 +2,16 @@
 
 ## From 12.x to 13.0.0
 
-Five changes of 13.0.0 can break code written for 12.x:
+Six changes of 13.0.0 can break code written for 12.x:
 
 1. [Keyboard navigation is enabled by default](#1-keyboard-navigation-is-enabled-by-default)
 2. [A table without dispatch applies the props which the parent changes](#2-a-table-without-dispatch-applies-the-props-which-the-parent-changes)
 3. [Values are unknown instead of any](#3-values-are-unknown-instead-of-any)
 4. [Fixes of the data processing change some results](#4-fixes-of-the-data-processing-change-some-results)
 5. [The package is built for ES2019 and has exports](#5-the-package-is-built-for-es2019-and-has-exports)
+6. [The theme is plain CSS with custom properties](#6-the-theme-is-plain-css-with-custom-properties)
 
-Sections 1, 2, 4 and 5 are about the behavior, section 3 is about TypeScript only. All the changes are listed in the [changelog](./CHANGELOG.md).
+Sections 1, 2, 4 and 5 are about the behavior, section 3 is about TypeScript only, section 6 is about the styles. All the changes are listed in the [changelog](./CHANGELOG.md).
 
 ### 1. Keyboard navigation is enabled by default
 
@@ -209,5 +210,32 @@ table.dispatch({ type: 'RESET_SEARCH' });
 ### 5. The package is built for ES2019 and has exports
 
 - The code is compiled for ES2019 (12.x was compiled for ES5). To support older browsers, transpile `ka-table` in `node_modules` with your bundler.
-- The CommonJS modules are in the root of the package as in 12.x, the ES modules are in `esm/`, and `exports` chooses them for `require` and `import`. `exports` lists the package (`ka-table`), its modules (`ka-table/enums`, `ka-table/utils`, `ka-table/Components/...`) and the styles (`ka-table/style.css`, `ka-table/style.scss`, `ka-table/_default_theme.scss`); other files of the package can't be imported.
+- The CommonJS modules are in the root of the package as in 12.x, the ES modules are in `esm/`, and `exports` chooses them for `require` and `import`. `exports` lists the package (`ka-table`), its modules (`ka-table/enums`, `ka-table/utils`, `ka-table/Components/...`) and the styles (`ka-table/style.css`); other files of the package can't be imported.
 - Use one module format in an application: `import` and `require` load two copies of the package, which don't see the contexts and the instances of each other.
+
+### 6. The theme is plain CSS with custom properties
+
+`ka-table/style.css` is written by hand (12.x compiled it from `style.scss`): every colour and size of the default theme is a CSS custom property declared on the root element of the table (`.ka`), and the package has no Sass files anymore, so `ka-table/style.scss` and `ka-table/_default_theme.scss` can't be imported. The properties with their defaults are listed in the [readme](./README.md#theming).
+
+- A theme which imported `style.scss` with its own `$ka-*` variables becomes a rule which overrides the `--ka-*` properties with the same names (`$ka-thead-color` → `--ka-thead-color`), for every table (`.ka { ... }`) or for the tables inside a container (`.my-wrapper .ka { ... }`). The rule has to match `.ka` itself: a property set only on an ancestor (`:root`, `html[data-theme="dark"]`) is overridden by the defaults of the table.
+
+  ```scss
+  // 12.x
+  @use 'ka-table/style' with ($ka-background-color: #2c2c2c, $ka-thead-color: #c5c5c5);
+  ```
+
+  ```css
+  /* 13.0.0 */
+  @import 'ka-table/style.css';
+
+  .ka {
+    --ka-background-color: #2c2c2c;
+    --ka-thead-color: #c5c5c5;
+  }
+  ```
+
+- The colours which Sass derived from other variables are separate properties, set them too in a theme which changes the base colours: `--ka-sort-icon-color`, `--ka-header-filter-button-icon-color` and `--ka-group-panel-cell-remove-color` (12.x derived them from `$ka-thead-color`), `--ka-selected-border-color` and `--ka-column-resize-border-color` (from `$ka-border-color`), `--ka-loading-background-color-medium` and `--ka-loading-background-color-light` (from `$ka-loading-background-color-base`).
+- `--ka-cell-hover-background-color` and `--ka-row-hover-background-color` (`null` in 12.x, which drew no hover) are painted as an overlay above the background of the row: a translucent colour blends with the zebra and the selection colours instead of replacing them.
+- The editors and the filter inputs (`.ka-input`) get `background-color: white` and `color: currentColor` (the text colour of the cell); 12.x left the colours of the browser.
+- The sticky offsets of the header rows are calculated from `--ka-header-cell-height`.
+- The [Custom Theme demo](https://komarovalexander.github.io/ka-table/#/custom-theme) is a dark theme of one container.

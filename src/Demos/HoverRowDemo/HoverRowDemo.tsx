@@ -1,4 +1,4 @@
-import './HoverRowDemo.scss';
+import './HoverRowDemo.css';
 
 import { DataType, Table } from '../../lib';
 import React, { useState } from 'react';

@@ -1,4 +1,4 @@
-import './PrintDemo.scss';
+import './PrintDemo.css';
 
 import { DataType, Table } from '../../lib';
 import React, { useRef } from 'react';

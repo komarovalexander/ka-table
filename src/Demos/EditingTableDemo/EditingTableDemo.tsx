@@ -1,4 +1,4 @@
-import './EditingTableDemo.scss';
+import './EditingTableDemo.css';
 
 import { DataType, Table, useTable } from '../../lib';
 import React, { useState } from 'react';

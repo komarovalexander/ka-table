@@ -1,4 +1,4 @@
-import './Demos.scss';
+import './Demos.css';
 
 import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { initializeGA, trackEvent, trackPage } from './ga';
@@ -94,7 +94,7 @@ const demos: Demo[] = [
     new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo', 'https://stackblitz.com/edit/table-custom-editor-js', 'https://stackblitz.com/edit/table-custom-editor-ts', 'Editing'),
     new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo', 'https://stackblitz.com/edit/table-custom-header-cell-js', 'https://stackblitz.com/edit/table-custom-header-cell-ts', 'Customization'),
     new Demo(CustomPagingDemo, '/custom-paging', 'Custom Paging', 'CustomPagingDemo', 'https://stackblitz.com/edit/table-custom-paging-js', 'https://stackblitz.com/edit/table-custom-paging-ts', 'Customization'),
-    new Demo(CustomThemeDemo, '/custom-theme', 'Custom Theme', 'CustomThemeDemo', 'https://stackblitz.com/edit/table-custom-theme-js', 'https://stackblitz.com/edit/table-custom-theme-ts', 'Themes', 'dark.scss'),
+    new Demo(CustomThemeDemo, '/custom-theme', 'Custom Theme', 'CustomThemeDemo', 'https://stackblitz.com/edit/table-custom-theme-js', 'https://stackblitz.com/edit/table-custom-theme-ts', 'Themes', 'dark.css'),
     new Demo(DeleteRowDemo, '/delete-row', 'Delete Row', 'DeleteRowDemo', 'https://stackblitz.com/edit/table-delete-row-js', 'https://stackblitz.com/edit/table-delete-row-ts', 'Editing'),
     new Demo(DetailsRowDemo, '/details-row', 'Details Row', 'DetailsRowDemo', 'https://stackblitz.com/edit/table-details-row-js', 'https://stackblitz.com/edit/table-details-row-ts', 'Rows'),
     new Demo(EditingDemo, '/editing', 'Editing - Cell', 'EditingDemo', 'https://stackblitz.com/edit/table-editing-js', 'https://stackblitz.com/edit/table-editing-ts', 'Editing'),

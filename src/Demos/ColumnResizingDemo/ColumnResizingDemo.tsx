@@ -1,4 +1,4 @@
-import './ColumnResizingDemo.scss';
+import './ColumnResizingDemo.css';
 
 import React from 'react';
 

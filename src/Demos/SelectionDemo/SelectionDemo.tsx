@@ -1,4 +1,4 @@
-import './SelectionDemo.scss';
+import './SelectionDemo.css';
 
 import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
 import { Table, useTableInstance } from '../../lib';

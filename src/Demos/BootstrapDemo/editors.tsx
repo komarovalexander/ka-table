@@ -19,7 +19,7 @@ export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
     return (
         <>
             <select
-                className='form-control'
+                className='form-select'
                 defaultValue={String(column.filterRowValue ?? '')}
                 style={{width: 100}}
                 onChange={(event) => {
@@ -38,7 +38,7 @@ const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
 }) => {
     return (
         <select
-            className='form-control'
+            className='form-select'
             defaultValue={column.filterRowOperator}
             onChange={(event) => {
                 dispatch(updateFilterRowOperator(column.key, event.currentTarget.value));
@@ -59,6 +59,7 @@ export const NumberEditor: React.FC<IFilterRowEditorProps> = ({
         <>
             <FilterOperators column={column} dispatch={dispatch}/>
             <input
+                className='form-control'
                 defaultValue={String(column.filterRowValue ?? '')}
                 style={{width: 100}}
                 onChange={(event) => {
@@ -78,6 +79,7 @@ export const DateEditor: React.FC<IFilterRowEditorProps> = ({
         <>
             <FilterOperators column={column} dispatch={dispatch}/>
             <input
+                className='form-control'
                 type='date'
                 value={kaDateUtils.getDateInputValue(column.filterRowValue)}
                 onChange={(event) => {

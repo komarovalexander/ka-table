@@ -1,0 +1,550 @@
+/*
+ * ka-table default theme.
+ *
+ * Every colour and size below is a CSS custom property declared on the root
+ * element of the table (.ka), so a theme is a plain CSS rule that overrides
+ * the properties you need - for every table or for the tables inside a container:
+ *
+ *   .ka {
+ *     --ka-thead-background-color: #1b1b1b;
+ *   }
+ *
+ *   .my-dark-section .ka {
+ *     --ka-background-color: #2c2c2c;
+ *     --ka-color-base: #fefefe;
+ *   }
+ *
+ * The rule has to match .ka itself: a property set only on an ancestor
+ * (`:root { ... }`, `html[data-theme="dark"] { ... }`) is overridden by the
+ * defaults declared here.
+ */
+
+.ka {
+  /* base */
+  --ka-background-color: white;
+  --ka-border-color: #F9FBFC;
+  --ka-color-base: #353C44;
+  --ka-font-size: 14px;
+
+  /* header */
+  --ka-thead-background-color: #F1F5F7;
+  --ka-thead-color: #646D76;
+  --ka-thead-cell-padding: 15px 20px;
+  --ka-header-cell-height: 47px;
+  --ka-sort-icon-color: #586068;
+  --ka-header-filter-button-icon-color: #41474D;
+  --ka-column-resize-border-color: #D7E4EB;
+
+  /* cells & rows */
+  --ka-cell-padding: 8px 20px;
+  --ka-cell-line-height: 29px;
+  --ka-cell-hover-background-color: transparent;
+  --ka-row-border-size: 2px;
+  --ka-row-hover-background-color: transparent;
+  --ka-selected-background-color: #F7FcFd;
+  --ka-selected-border-color: #E1EBF0;
+
+  /* grouping */
+  --ka-group-row-background-color: #F9FBFC;
+  --ka-group-row-border-color: white;
+  --ka-group-row-border-size: 1px;
+  --ka-group-cell-padding: 8px 10px;
+  --ka-group-panel-text-color: #747D86;
+  --ka-group-panel-cell-remove-color: #A6ADB4;
+
+  /* editors & filters */
+  --ka-input-background-color: white;
+  --ka-input-border-color: #747D86;
+  --ka-input-color: currentColor;
+  --ka-input-validation-background-color: #FFE7E7;
+  --ka-validation-background-color: #FF0C0C;
+  --ka-validation-color: white;
+  --ka-validation-message-font-size: 12px;
+  --ka-validation-message-padding: 0 10px;
+  --ka-filter-row-cell-padding: 0 20px 15px 20px;
+  --ka-summary-cell-padding: 12px 20px;
+
+  /* icons */
+  --ka-icon-font-size: 10px;
+
+  /* loading */
+  --ka-loading-backdrop-color: #ffffff88;
+  --ka-loading-background-color-base: rgb(116, 125, 134);
+  --ka-loading-background-color-medium: rgba(116, 125, 134, 0.4);
+  --ka-loading-background-color-light: rgba(116, 125, 134, 0.2);
+
+  /* paging */
+  --ka-paging-index-active-background-color: #F1F5F7;
+  --ka-paging-index-active-color: #747D86;
+  --ka-paging-pages-margin: 0;
+  --ka-paging-pages-padding: 0 10px;
+
+  /* popup (header filter) */
+  --ka-popup-background-color: white;
+  --ka-popup-color: #747D86;
+  --ka-popup-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+
+  overflow: hidden;
+  background-color: var(--ka-background-color);
+  font-size: var(--ka-font-size);
+  display: flex;
+  flex-direction: column;
+}
+
+.ka-table-wrapper {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.ka-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.ka-thead-background {
+  background-color: var(--ka-thead-background-color);
+}
+
+.ka-thead-cell-height {
+  box-sizing: border-box;
+  height: var(--ka-header-cell-height);
+}
+
+.ka-thead-fixed {
+  position: sticky;
+}
+
+.ka-thead-row:nth-child(1) .ka-thead-fixed {
+  top: 0;
+}
+
+.ka-thead-row:nth-child(2) .ka-thead-fixed {
+  top: calc(var(--ka-header-cell-height) * 1);
+}
+
+.ka-thead-row:nth-child(3) .ka-thead-fixed {
+  top: calc(var(--ka-header-cell-height) * 2);
+}
+
+.ka-thead-row:nth-child(4) .ka-thead-fixed {
+  top: calc(var(--ka-header-cell-height) * 3);
+}
+
+.ka-thead-row:nth-child(5) .ka-thead-fixed {
+  top: calc(var(--ka-header-cell-height) * 4);
+}
+
+.ka-thead-row:nth-child(6) .ka-thead-fixed {
+  top: calc(var(--ka-header-cell-height) * 5);
+}
+
+.ka-thead-cell {
+  padding: var(--ka-thead-cell-padding);
+  color: var(--ka-thead-color);
+}
+
+.ka-thead-cell-wrapper {
+  display: flex;
+}
+
+.ka-thead-cell-content-wrapper {
+  width: 100%;
+}
+
+.ka-thead-cell-content {
+  width: 100%;
+}
+
+.ka-tbody {
+  height: 100%;
+}
+
+.ka-thead-cell,
+.ka-cell {
+  text-align: left;
+}
+
+.ka-cell {
+  padding: var(--ka-cell-padding);
+  line-height: var(--ka-cell-line-height);
+  color: var(--ka-cell-color, var(--ka-color-base));
+}
+
+/* hover colours are painted as an overlay, so semi-transparent values
+   blend with the row background (zebra / selection) instead of replacing it */
+.ka-cell:hover {
+  background-image: linear-gradient(var(--ka-cell-hover-background-color), var(--ka-cell-hover-background-color));
+}
+
+.ka-tree-cell {
+  display: flex;
+}
+
+.ka-icon {
+  font-weight: 100;
+  font-size: var(--ka-icon-font-size);
+  font-family: 'icons';
+}
+
+.ka-input {
+  max-width: 100%;
+  background-color: var(--ka-input-background-color);
+  border: 1px solid var(--ka-input-border-color);
+  color: var(--ka-input-color);
+}
+
+.ka-cell-editor-validation-error .ka-input {
+  background: var(--ka-input-validation-background-color);
+  border: 1px solid var(--ka-validation-background-color);
+}
+
+.ka-validation-message-container {
+  position: absolute;
+}
+
+.ka-validation-message {
+  font-size: var(--ka-validation-message-font-size);
+  color: var(--ka-validation-color);
+  background-color: var(--ka-validation-background-color);
+  padding: var(--ka-validation-message-padding);
+  max-width: 200px;
+}
+
+.ka-empty-cell {
+  width: 40px;
+  min-width: 40px;
+}
+
+.ka-tree-empty-space {
+  width: 20px;
+  min-width: 20px;
+}
+
+.ka-tr {
+  width: 100%;
+}
+
+.ka-no-data-row {
+  height: 100px;
+  text-align: center;
+}
+
+.ka-row {
+  box-sizing: border-box;
+  border-bottom: var(--ka-row-border-size) solid var(--ka-border-color);
+  border-top: var(--ka-row-border-size) solid var(--ka-border-color);
+}
+
+.ka-even {
+  background-color: var(--ka-border-color);
+}
+
+.ka-row:hover {
+  background-image: linear-gradient(var(--ka-row-hover-background-color), var(--ka-row-hover-background-color));
+}
+
+.ka-dragged-row {
+  opacity: 0.5;
+}
+
+.ka-drag-over-row {
+  box-shadow: inset 0 7px 0px -4px var(--ka-selected-border-color);
+}
+
+.ka-dragged-row ~ .ka-drag-over-row {
+  box-shadow: inset 0 -7px 0px -4px var(--ka-selected-border-color);
+}
+
+.ka-drag-over-column {
+  box-shadow: inset 7px 0 0px -4px var(--ka-selected-border-color);
+}
+
+.ka-dragged-column ~ .ka-drag-over-column {
+  box-shadow: inset -7px 0 0px -4px var(--ka-selected-border-color);
+}
+
+.ka-row-selected {
+  background-color: var(--ka-selected-background-color);
+}
+
+.ka-group-row {
+  background-color: var(--ka-group-row-background-color);
+  box-sizing: border-box;
+  border-bottom: var(--ka-group-row-border-size) solid var(--ka-group-row-border-color);
+  border-top: var(--ka-group-row-border-size) solid var(--ka-group-row-border-color);
+}
+
+.ka-group-cell {
+  padding: var(--ka-group-cell-padding);
+}
+
+.ka-group-cell-content {
+  display: flex;
+  align-items: center;
+}
+
+.ka-icon-group-arrow {
+  padding: 7px 5px 7px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.ka-group-panel {
+  display: flex;
+}
+
+.ka-group-panel-cell {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-left: 15px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.ka-group-panel-cell-remove {
+  cursor: pointer;
+  color: var(--ka-group-panel-cell-remove-color);
+  display: flex;
+  fill: currentColor;
+}
+
+.ka-group-panel-text {
+  color: var(--ka-group-panel-text-color);
+  margin: 30px 20px;
+}
+
+.ka-icon-tree-arrow {
+  padding: 0 10px 0 10px;
+  margin-left: -10px;
+  cursor: pointer;
+}
+
+.ka-icon-sort {
+  margin-left: 3px;
+}
+
+.ka-icon-sort-arrow-up {
+  color: var(--ka-sort-icon-color);
+  fill: currentColor;
+  position: relative;
+  top: 1px;
+}
+
+.ka-icon-sort-arrow-down {
+  color: var(--ka-sort-icon-color);
+  fill: currentColor;
+  position: relative;
+  top: 1px;
+}
+
+.ka-pointer {
+  cursor: pointer;
+}
+
+.ka-filter-row-cell {
+  padding: var(--ka-filter-row-cell-padding);
+}
+
+.ka-loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--ka-loading-backdrop-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.ka-loading-active {
+  position: relative;
+}
+
+.ka-loading-icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: ka-loading-animation 1s linear infinite alternate;
+  position: relative;
+  left: -20px;
+}
+
+.ka-thead-cell-resize {
+  user-select: none;
+  width: 2px;
+  cursor: col-resize;
+  background-color: var(--ka-column-resize-border-color);
+  position: relative;
+  left: 19px;
+}
+
+.ka-thead-cell-resize:active:after {
+  content: "";
+  display: block;
+  position: fixed;
+  cursor: col-resize;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ka-thead-background {
+  z-index: 1;
+}
+
+.ka-summary-cell {
+  padding: var(--ka-summary-cell-padding);
+}
+
+@keyframes ka-loading-animation {
+  0% {
+    background-color: var(--ka-loading-background-color-base);
+    box-shadow: 20px 0px 0px 0px var(--ka-loading-background-color-light),
+      40px 0px 0px 0px var(--ka-loading-background-color-light);
+  }
+
+  25% {
+    background-color: var(--ka-loading-background-color-medium);
+    box-shadow: 20px 0px 0px 0px var(--ka-loading-background-color-base),
+      40px 0px 0px 0px var(--ka-loading-background-color-light);
+  }
+
+  75% {
+    background-color: var(--ka-loading-background-color-medium);
+    box-shadow: 20px 0px 0px 0px var(--ka-loading-background-color-light),
+      40px 0px 0px 0px var(--ka-loading-background-color-base);
+  }
+
+  100% {
+    box-shadow: none;
+  }
+}
+
+.ka-loading-text {
+  margin-top: 15px;
+  color: var(--ka-color-base);
+}
+
+.ka-paging-sizes-active {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ka-paging-pages,
+.ka-paging-sizes {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  padding: var(--ka-paging-pages-padding);
+  margin: var(--ka-paging-pages-margin);
+}
+
+.ka-paging-pages {
+  justify-content: flex-end;
+}
+
+.ka-paging-page-index,
+.ka-paging-size {
+  cursor: pointer;
+  padding: 5px;
+  margin: 10px 5px;
+  min-width: 18px;
+  border-radius: 50%;
+  text-align: center;
+  color: var(--ka-paging-index-color, var(--ka-thead-color));
+  user-select: none;
+}
+
+.ka-paging-page-index-active,
+.ka-paging-size-active {
+  background-color: var(--ka-paging-index-active-background-color);
+  font-weight: bold;
+  color: var(--ka-paging-index-active-color);
+}
+
+.ka-popup {
+  background-color: var(--ka-popup-background-color);
+  border: 1px solid var(--ka-border-color);
+  border-radius: 6px;
+  box-sizing: border-box;
+  box-shadow: var(--ka-popup-box-shadow);
+  color: var(--ka-popup-color);
+  position: absolute;
+  text-align: center;
+  width: 245px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.ka-header-filter-button-icon {
+  font-size: 16px;
+  position: absolute;
+  padding: 0 3px;
+  color: var(--ka-header-filter-button-icon-color);
+  fill: currentColor;
+}
+
+.ka-header-filter-button {
+  position: relative;
+}
+
+/* the button itself has no size (its icon is positioned absolutely), so the focus is shown on the icon */
+.ka-header-filter-button:focus-visible {
+  outline: none;
+}
+
+.ka-header-filter-button:focus-visible .ka-header-filter-button-icon {
+  outline: auto;
+}
+
+.ka-header-filter-button-has-value {
+  font-weight: bold;
+}
+
+.ka-header-filter-table {
+  box-shadow: none;
+}
+
+.ka-header-filter-table .ka-table-wrapper {
+  max-height: 325px;
+}
+
+.ka-header-filter-table .ka-thead-background {
+  background: var(--ka-background-color);
+}
+
+.ka-header-filter-table .ka-cell {
+  padding: 3px 10px;
+}
+
+.ka-header-filter-table .ka-cell-text {
+  display: flex;
+  align-items: center;
+}
+
+.ka-header-filter-table .ka-filter-row-cell {
+  padding: 10px;
+}
+
+.ka-header-filter-table .ka-row {
+  cursor: pointer;
+}
+
+.ka-header-filter-table input[type='checkbox'] {
+  cursor: pointer;
+}
+
+.ka-header-filter-table .ka-input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding: 3px 5px;
+  margin: 0;
+}

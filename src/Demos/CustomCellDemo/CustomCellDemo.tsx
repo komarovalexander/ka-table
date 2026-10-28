@@ -1,4 +1,4 @@
-import './CustomCellDemo.scss';
+import './CustomCellDemo.css';
 
 import { DataType, Table, useTableInstance } from '../../lib';
 

@@ -1,4 +1,4 @@
-import './AddRowDemo.scss';
+import './AddRowDemo.css';
 
 import { DataType, Table, useTableInstance } from '../../lib';
 

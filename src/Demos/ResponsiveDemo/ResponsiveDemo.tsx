@@ -1,5 +1,5 @@
 // open TS Example or JS Example to see how to override styles
-import './ResponsiveDemo.scss';
+import './ResponsiveDemo.css';
 
 import { DataType, Table } from '../../lib';
 

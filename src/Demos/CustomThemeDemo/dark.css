@@ -1,0 +1,19 @@
+/* A theme is a rule which overrides the CSS custom properties of ka-table on the table (.ka) */
+.custom-theme-demo .ka {
+  --ka-background-color: #2c2c2c;
+  --ka-border-color: #4d4d4d;
+  --ka-color-base: #fefefe;
+  --ka-thead-background-color: #1b1b1b;
+  --ka-thead-color: #c5c5c5;
+  --ka-selected-background-color: #3c3c3c;
+  --ka-selected-border-color: #3b3b3b;
+  --ka-cell-hover-background-color: rgba(255, 255, 255, 0.2);
+  --ka-row-hover-background-color: rgba(255, 255, 255, 0.1);
+  --ka-input-background-color: #2c2c2c;
+  --ka-input-border-color: #4d4d4d;
+  --ka-input-color: #fefefe;
+  --ka-sort-icon-color: #b8b8b8;
+  --ka-header-filter-button-icon-color: #9f9f9f;
+  --ka-column-resize-border-color: #343434;
+  --ka-group-panel-cell-remove-color: #ffffff;
+}

@@ -1,4 +1,4 @@
-import './SelectionSingleDemo.scss';
+import './SelectionSingleDemo.css';
 
 import { DataType, Table, useTable, useTableSelector } from '../../lib';
 
