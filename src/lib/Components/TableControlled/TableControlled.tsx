@@ -62,13 +62,24 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (tablePr
         }
     }, [dispatch, pageIndex, lastPageIndex]);
 
+    // StrictMode runs the effects of a mounted component twice in the development mode: the table is mounted once
+    const isMountDispatchedRef = React.useRef(false);
     React.useEffect(() => {
-        dispatch({ type: ActionType.ComponentDidMount });
+        if (!isMountDispatchedRef.current) {
+            isMountDispatchedRef.current = true;
+            dispatch({ type: ActionType.ComponentDidMount });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps -- dispatched once, when the table is mounted
     }, []);
 
+    // singleAction is dispatched once: StrictMode runs the effect twice before the action is cleared,
+    // and the same action can be set again after it is cleared
+    const dispatchedSingleActionRef = React.useRef<ITableProps['singleAction']>(undefined);
     React.useEffect(() => {
-        if (singleAction) {
+        if (!singleAction) {
+            dispatchedSingleActionRef.current = undefined;
+        } else if (singleAction !== dispatchedSingleActionRef.current) {
+            dispatchedSingleActionRef.current = singleAction;
             dispatch(singleAction);
             dispatch(clearSingleAction());
         }
