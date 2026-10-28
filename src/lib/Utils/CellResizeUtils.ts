@@ -5,17 +5,24 @@ import { DispatchFunc } from '../types';
 
 export const isCellResizeShown = (isResizable?: boolean, columnResizing?: boolean): boolean => !!((isResizable !== false) && (columnResizing || isResizable));
 
+/**
+ * The handler of the moves of the mouse while a column is resized: ResizeColumn is dispatched only when the width changes,
+ * not for every move (e.g. a vertical one or a move at the min width)
+ */
 export const getMouseMove = (
     currentWidth: number | string | undefined,
     minWidth: number,
     startX: number,
     key: string,
-    dispatch: DispatchFunc) => (event: MouseEvent) => {
-    let newWidth = event.screenX - startX;
-    if (newWidth !== currentWidth){
-        newWidth = getValidatedWidth(newWidth, minWidth);
-        dispatch(resizeColumn(key, newWidth));
-    }
+    dispatch: DispatchFunc) => {
+    let lastWidth = currentWidth;
+    return (event: MouseEvent) => {
+        const newWidth = getValidatedWidth(event.screenX - startX, minWidth);
+        if (newWidth !== lastWidth) {
+            lastWidth = newWidth;
+            dispatch(resizeColumn(key, newWidth));
+        }
+    };
 };
 
 export const getValidatedWidth = (newWidth: number, minWidth: number) => {

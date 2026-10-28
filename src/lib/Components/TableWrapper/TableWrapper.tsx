@@ -4,6 +4,7 @@ import { ActionType, EditingMode, FilteringMode, SortingMode } from '../../enums
 
 import { ChildComponents } from '../../Models/ChildComponents';
 import { ColGroup } from '../ColGroup/ColGroup';
+import { ColumnResizeContext } from '../HeadCellResize/ColumnResizeContext';
 import { ITableAllProps } from '../..';
 import TableBody from '../TableBody/TableBody';
 import { TableFoot } from '../TableFoot/TableFoot';
@@ -49,6 +50,8 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
         rowKeyField,
     } = props;
     const preparedOptions = useTableData(props);
+    // true while a column is resized by the mouse (HeadCellResize): the rows are rendered with the new widths when the resize ends
+    const columnResizeRef = React.useRef(false);
     const groupsExpanded = React.useMemo(
         () => groups && !props.groupsExpanded ? getExpandedGroups(preparedOptions.groupedData) : props.groupsExpanded,
         [groups, props.groupsExpanded, preparedOptions.groupedData]
@@ -107,22 +110,27 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
                             columns={preparedOptions.columns}
                             groupColumnsCount={preparedOptions.groupColumnsCount}
                         />
-                        {(!noData?.hideHeader || !!data.length) && <TableHead
-                            {...props}
-                            areAllRowsSelected={areAllRowsSelected}
-                            childComponents={childComponents}
-                            columnReordering={columnReordering}
-                            columnResizing={columnResizing}
-                            columns={preparedOptions.columns}
-                            dispatch={dispatch}
-                            filteringMode={filteringMode}
-                            groupColumnsCount={preparedOptions.groupColumnsCount}
-                            groupPanel={groupPanel}
-                            sortingMode={sortingMode}
-                        />}
+                        {(!noData?.hideHeader || !!data.length) && (
+                            <ColumnResizeContext.Provider value={columnResizeRef}>
+                                <TableHead
+                                    {...props}
+                                    areAllRowsSelected={areAllRowsSelected}
+                                    childComponents={childComponents}
+                                    columnReordering={columnReordering}
+                                    columnResizing={columnResizing}
+                                    columns={preparedOptions.columns}
+                                    dispatch={dispatch}
+                                    filteringMode={filteringMode}
+                                    groupColumnsCount={preparedOptions.groupColumnsCount}
+                                    groupPanel={groupPanel}
+                                    sortingMode={sortingMode}
+                                />
+                            </ColumnResizeContext.Provider>
+                        )}
                         <TableBody
                             {...props}
                             childComponents={childComponents}
+                            columnResizeRef={columnResizeRef}
                             columns={preparedOptions.columns}
                             data={preparedOptions.groupedData}
                             editableCells={editableCells}

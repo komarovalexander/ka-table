@@ -51,6 +51,12 @@ export interface ITableInstance<TData = unknown> extends ActionMethods {
  */
 export interface ITableProps<TData = unknown> {
     columnReordering?: boolean;
+    /**
+     * The columns are resized by the mouse. While a column is resized, the rows are not processed and rendered again:
+     * they don't use the widths, and they are rendered with the new width when the mouse is released.
+     * A controlled table doesn't render the rows only if the props which the parent passes keep their references
+     * between its renders (dispatch, childComponents, format...), as with memoizedRows
+     */
     columnResizing?: boolean;
     columns: Column<NoInference<TData>>[];
     /**

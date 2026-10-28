@@ -113,4 +113,27 @@ describe('useTableData', () => {
         expect(getData).toHaveBeenCalledTimes(2);
         getData.mockRestore();
     });
+
+    it('doesn\'t process the data again when the widths of the columns or their header filter popups change', () => {
+        const getData = vi.spyOn(PropsUtils, 'getData');
+        // the header filter popup shows its values with a table of its own
+        const getCallsOfTable = () => getData.mock.calls.filter(([props]) => props.data === data).length;
+        let table: ITableInstance<Row>;
+        const TableWithInstance = () => {
+            table = useTable<Row>();
+            return <Table {...baseProps} table={table} />;
+        };
+        render(<TableWithInstance />);
+        expect(getCallsOfTable()).toBe(1);
+
+        act(() => table.resizeColumn('name', 200));
+        act(() => table.updateHeaderFilterPopupState('name', true));
+        act(() => table.updatePopupPosition({ x: 10, y: 20 }));
+        act(() => table.updateHeaderFilterSearchValue('name', 'a'));
+        expect(getCallsOfTable()).toBe(1);
+
+        act(() => table.updateHeaderFilterValues('name', 'a', true));
+        expect(getCallsOfTable()).toBe(2);
+        getData.mockRestore();
+    });
 });

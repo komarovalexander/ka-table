@@ -195,6 +195,8 @@ export interface ITableHeadProps {
 
 export interface ITableBodyProps<TData = unknown> {
     childComponents: ChildComponents;
+    // current is true while a column is resized by the mouse: the rows are rendered with the new widths when the resize ends
+    columnResizeRef?: { current: boolean };
     columns: Column[];
     data: TData[];
     loading?: ILoadingProps;

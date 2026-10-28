@@ -52,6 +52,7 @@
 - The values of the fields are read without copying the row: `getData()` of 10 000 rows with search, sorting and paging takes ~9 ms instead of ~125 ms.
 - Filtering, sorting and grouping are calculated again only when the props which they use change: selection, editing and scrolling don't process the data again, a page change only slices it.
 - `validate()` and saving all the editors find the rows by their keys instead of searching the data for every cell.
+- A resize of a column doesn't process the rows again and doesn't render them while the mouse moves: `ResizeColumn` is dispatched only when the width changes, and the rows are rendered with the new width when the mouse is released (#475). Opening the header filter popup and typing into its search don't process the rows again either.
 
 ## 12.0.3
 

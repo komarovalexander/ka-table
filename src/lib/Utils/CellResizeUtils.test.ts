@@ -39,6 +39,18 @@ describe('CellUtils', () => {
             mouseMoveEvent(new MouseEvent('mousemove', { screenX: 40 }));
             expect(dispatch).toHaveBeenCalledTimes(0);
         });
+        it('dispatches only a new width: not for the vertical moves and not again at the min width', () => {
+            const dispatch = vi.fn();
+            const mouseMoveEvent = getMouseMove(100, 50, 0, 'column1', dispatch);
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 120 }));
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 120 }));
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 40 }));
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 30 }));
+            expect(dispatch.mock.calls).toEqual([
+                [{ type: 'ResizeColumn', columnKey: 'column1', width: 120 }],
+                [{ type: 'ResizeColumn', columnKey: 'column1', width: 50 }],
+            ]);
+        });
     });
 
     it('isCellResizeShown', () => {
