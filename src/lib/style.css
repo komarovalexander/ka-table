@@ -266,6 +266,14 @@
   box-shadow: inset -7px 0 0px -4px var(--ka-selected-border-color);
 }
 
+/* a long press of a touch drags a row or a column: it doesn't select the text */
+@media (hover: none) and (pointer: coarse) {
+  .ka [draggable='true'] {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
 .ka-row-selected {
   background-color: var(--ka-selected-background-color);
 }

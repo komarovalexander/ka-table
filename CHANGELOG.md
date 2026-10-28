@@ -43,6 +43,7 @@
 - The column resize keeps the `minWidth` of `colGroup.style`.
 - `ComponentDidMount` and `singleAction` are dispatched once in StrictMode (the development mode).
 - Drag and drop: rows and columns are dropped only on the items of the same kind and table.
+- Drag and drop by touches in the browsers which don't support it (e.g. Firefox and Samsung Internet for Android): a long press drags a row or a column, the page is scrolled as before (#328).
 - A nested field whose parent is `null` or a primitive gives `undefined` instead of throwing.
 - The position of the header filter popup.
 

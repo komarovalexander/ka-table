@@ -16,6 +16,7 @@ import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getEnabledGroups } from '../../Utils/GroupUtils';
 import { useIsomorphicLayoutEffect } from '../../Utils/EffectUtils';
 import { isPagingShown } from '../../Utils/PagingUtils';
+import { startTouchDrag } from '../../Utils/TouchDragUtils';
 
 export interface ITableControlledProps extends ITableProps {
     childComponents?: ChildComponents;
@@ -30,6 +31,7 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (tablePr
     const props = groups === tableProps.groups ? tableProps : { ...tableProps, groups };
     const {
         childComponents,
+        columnReordering,
         columns,
         dispatch,
         data,
@@ -37,6 +39,7 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (tablePr
         groupPanel,
         height,
         loading,
+        rowReordering,
         width,
         paging,
         singleAction
@@ -45,7 +48,9 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (tablePr
     const kaCss = isLoadingActive ? 'ka ka-loading-active' : 'ka';
 
     const { elementAttributes, content: rootDivContent } = getElementCustomization({
-        className: kaCss
+        className: kaCss,
+        // the rows and the columns are dragged by a touch in the browsers without the drag and drop by touches
+        onTouchStart: rowReordering || columnReordering || groupPanel?.enabled ? startTouchDrag : undefined,
     }, props, childComponents?.rootDiv);
     elementAttributes.style = { width, height, ...elementAttributes.style }
 
