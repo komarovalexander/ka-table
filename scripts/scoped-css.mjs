@@ -1,11 +1,14 @@
 /*
  * Scopes a stylesheet to a selector, without dependencies.
  *
- * scopeCss() prepends the prefixes to every selector of a stylesheet; ':root'
- * (and ':host') become the prefix itself, so the custom properties declared on
- * :root are declared on the scope element instead. Nested at-rules (@media,
- * @supports, @layer, ...) are processed recursively; @keyframes, @font-face and
- * the like are copied verbatim.
+ * scopeCss() prepends the prefixes to every selector of a stylesheet as
+ * :where(prefix), which limits where the rules match without changing their
+ * specificity, so the themes and the demos override the scoped styles exactly
+ * as they override the unscoped ones in an application. ':root' (and ':host')
+ * become the prefix itself, so the custom properties declared on :root are
+ * declared on the scope element instead. Nested at-rules (@media, @supports,
+ * @layer, ...) are processed recursively; @keyframes, @font-face and the like
+ * are copied verbatim.
  *
  * scopedCss() is the Vite plugin of the demo site (see vite.config.mts): the
  * stylesheets listed by their path are scoped when they are imported, as the
@@ -103,7 +106,8 @@ const scopeSelectorList = (selectorList, prefixes, rootSelectors) => {
             return;
         }
         prefixes.forEach((prefix) => {
-            const result = rootSelectors.includes(selector) ? prefix : `${prefix} ${selector}`;
+            const scope = `:where(${prefix})`;
+            const result = rootSelectors.includes(selector) ? scope : `${scope} ${selector}`;
             if (!scoped.includes(result)) {
                 scoped.push(result);
             }
@@ -115,7 +119,7 @@ const scopeSelectorList = (selectorList, prefixes, rootSelectors) => {
 /**
  * Prepends `prefixes` to every selector of `css`.
  * @param {string} css the stylesheet
- * @param {string[]} prefixes the scope selectors, e.g. ['.my-scope']
+ * @param {string[]} prefixes the scope selectors, e.g. ['.my-scope'] (used as :where(.my-scope))
  * @param {string[]} rootSelectors the selectors which become the prefix itself
  */
 export const scopeCss = (css, prefixes, rootSelectors = [':root', ':host']) => {

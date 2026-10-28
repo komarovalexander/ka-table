@@ -98,6 +98,23 @@ The rule has to match `.ka` itself: a property set only on an ancestor (`:root {
 
 [Custom theme demo](https://komarovalexander.github.io/ka-table/#/custom-theme)
 
+### Dark theme
+
+`ka-table/themes/dark.css` is such a rule for the class `ka-dark`: add the class to an ancestor of the table (e.g. `<body class="ka-dark">`) or to the table itself (`childComponents.rootDiv`). It also sets `color-scheme: dark`, so the native inputs of the editors and the filters are dark too.
+
+```js
+import 'ka-table/style.css';
+import 'ka-table/themes/dark.css';
+```
+
+```tsx
+<div className='ka-dark'>
+  <Table {...tableProps} />
+</div>
+```
+
+[Dark theme demo](https://komarovalexander.github.io/ka-table/#/dark-theme)
+
 | Property | Default | Used for |
 | --- | --- | --- |
 | `--ka-background-color` | `white` | background of the table |

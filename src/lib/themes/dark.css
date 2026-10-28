@@ -1,0 +1,60 @@
+/*
+ * ka-table dark theme: overrides the custom properties of style.css.
+ *
+ *   import 'ka-table/style.css';
+ *   import 'ka-table/themes/dark.css';
+ *
+ * Add the class ka-dark to an ancestor of the table (e.g. <body class="ka-dark">)
+ * or to the table itself (childComponents.rootDiv). color-scheme: dark makes the
+ * native inputs of the editors and the filters dark too.
+ */
+
+.ka-dark .ka,
+.ka.ka-dark {
+  color-scheme: dark;
+
+  /* base */
+  --ka-background-color: #1e2227;
+  --ka-border-color: #272c32;
+  --ka-color-base: #e4e9ee;
+
+  /* header */
+  --ka-thead-background-color: #171a1e;
+  --ka-thead-color: #a3adb7;
+  --ka-sort-icon-color: #b5bec7;
+  --ka-header-filter-button-icon-color: #cfd6dd;
+  --ka-column-resize-border-color: #343b43;
+
+  /* cells & rows */
+  --ka-row-hover-background-color: rgba(255, 255, 255, 0.05);
+  --ka-selected-background-color: #263141;
+  --ka-selected-border-color: #3b4a5e;
+
+  /* grouping */
+  --ka-group-row-background-color: #23282e;
+  --ka-group-row-border-color: #1e2227;
+  --ka-group-panel-text-color: #8a95a1;
+  --ka-group-panel-cell-remove-color: #8a95a1;
+
+  /* editors & filters */
+  --ka-input-background-color: #171a1e;
+  --ka-input-border-color: #46505b;
+  --ka-input-color: #e4e9ee;
+  --ka-input-validation-background-color: #3a2326;
+  --ka-validation-background-color: #d64550;
+
+  /* loading */
+  --ka-loading-backdrop-color: rgba(30, 34, 39, 0.6);
+  --ka-loading-background-color-base: rgb(163, 173, 183);
+  --ka-loading-background-color-medium: rgba(163, 173, 183, 0.4);
+  --ka-loading-background-color-light: rgba(163, 173, 183, 0.2);
+
+  /* paging */
+  --ka-paging-index-active-background-color: #2d343c;
+  --ka-paging-index-active-color: #e4e9ee;
+
+  /* popup (header filter) */
+  --ka-popup-background-color: #23282e;
+  --ka-popup-color: #c7cfd7;
+  --ka-popup-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}

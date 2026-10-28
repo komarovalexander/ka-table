@@ -1,5 +1,5 @@
-// the theme is defined by overriding ka-table CSS variables, see dark.css
-import './dark.css';
+// the theme is a set of overridden ka-table CSS variables, see custom-theme.css
+import './custom-theme.css';
 
 import React from 'react';
 

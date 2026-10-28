@@ -9,7 +9,8 @@ export default class Demo {
         public tsLink: string = '',
         public group: string = '',
         public linkfile: string = '') {
-        this.jsLink = jsLink + '?file=' + (this.linkfile || 'Demo.js');
-        this.tsLink = tsLink + '?file=' + (this.linkfile || 'Demo.tsx');
+        // a demo without an online editor keeps the empty links
+        this.jsLink = jsLink && `${jsLink}?file=${this.linkfile || 'Demo.js'}`;
+        this.tsLink = tsLink && `${tsLink}?file=${this.linkfile || 'Demo.tsx'}`;
     }
 }

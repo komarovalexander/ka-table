@@ -1,0 +1,22 @@
+/* A theme is a rule which overrides the CSS custom properties of ka-table on the table (.ka):
+   here a brand colour of the header and compact rows */
+.custom-theme-demo .ka {
+  --ka-thead-background-color: #455880;
+  --ka-thead-color: #ffffff;
+  --ka-sort-icon-color: #dfe6f3;
+  --ka-header-filter-button-icon-color: #ffffff;
+  --ka-column-resize-border-color: #6c7ea3;
+  --ka-header-cell-height: 40px;
+  --ka-thead-cell-padding: 12px 16px;
+  --ka-cell-padding: 4px 16px;
+  --ka-cell-line-height: 26px;
+  --ka-filter-row-cell-padding: 0 16px 10px 16px;
+  --ka-border-color: #e8edf5;
+  --ka-row-hover-background-color: rgba(69, 88, 128, 0.06);
+  --ka-selected-background-color: #eef2ff;
+  --ka-selected-border-color: #c3cdee;
+  --ka-input-border-color: #b7c2d9;
+  --ka-paging-index-color: #646d76;
+  --ka-paging-index-active-background-color: #455880;
+  --ka-paging-index-active-color: #ffffff;
+}

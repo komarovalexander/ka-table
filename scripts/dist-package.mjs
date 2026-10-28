@@ -1,4 +1,4 @@
-import { copyFileSync, readFileSync, writeFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 
 const writeJson = (file, value) => writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
 
@@ -17,6 +17,8 @@ export const completePackage = () => {
     for (const file of ['src/lib/style.css', 'README.md', 'LICENSE']) {
         copyFileSync(file, `dist/${file.split('/').pop()}`);
     }
+    mkdirSync('dist/themes', { recursive: true });
+    copyFileSync('src/lib/themes/dark.css', 'dist/themes/dark.css');
 
     const { name, version, license, repository, homepage, peerDependencies, keywords } = JSON.parse(readFileSync('package.json', 'utf8'));
     writeJson('dist/package.json', {
@@ -31,6 +33,7 @@ export const completePackage = () => {
         exports: {
             '.': entry('index'),
             './style.css': './style.css',
+            './themes/dark.css': './themes/dark.css',
             './package.json': './package.json',
             './*.js': entry('*'),
             './*': entry('*'),

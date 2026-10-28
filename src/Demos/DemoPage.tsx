@@ -26,13 +26,15 @@ const getDemoPage = (demo: Demo) => {
                 <div className='code'>
                     <div className='code-content'>
                         <div className='editor-links'>
-                            <a className='editor-link editor-link-ts'
-                                href={demo.tsLink}
-                                onMouseDown={() => { trackEvent('click', 'ts_example', demo.path); }}
-                                rel='noopener noreferrer'
-                                target='_blank'>
-                                Open in Online Editor
-                            </a>
+                            {demo.tsLink && (
+                                <a className='editor-link editor-link-ts'
+                                    href={demo.tsLink}
+                                    onMouseDown={() => { trackEvent('click', 'ts_example', demo.path); }}
+                                    rel='noopener noreferrer'
+                                    target='_blank'>
+                                    Open in Online Editor
+                                </a>
+                            )}
                         </div>
                         <DemoText demoFileName={demo.fileName}/>
 

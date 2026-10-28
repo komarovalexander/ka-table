@@ -86,6 +86,7 @@
 
   overflow: hidden;
   background-color: var(--ka-background-color);
+  color: var(--ka-color-base);
   font-size: var(--ka-font-size);
   display: flex;
   flex-direction: column;
@@ -289,6 +290,7 @@
   padding: 7px 5px 7px 10px;
   margin-right: 5px;
   cursor: pointer;
+  fill: currentColor;
 }
 
 .ka-group-panel {
@@ -320,6 +322,7 @@
   padding: 0 10px 0 10px;
   margin-left: -10px;
   cursor: pointer;
+  fill: currentColor;
 }
 
 .ka-icon-sort {

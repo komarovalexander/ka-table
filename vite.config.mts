@@ -9,7 +9,7 @@ export default defineConfig({
     base: '/ka-table/',
     plugins: [
         react(),
-        // the styles which the demos import globally, but which must apply only inside their demos
+        // the library styles apply only in the demos which use them (the Bootstrap demo doesn't), bootstrap.css only in its demo
         scopedCss({
             'src/lib/style.css': ['.enable-ka-styles', '.print-content'],
             'bootstrap/dist/css/bootstrap.css': ['.bootstrap-demo'],
