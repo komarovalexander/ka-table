@@ -4,6 +4,8 @@ import { ChildComponents, Column } from '../../models';
 import { ITableInstance, Table, useTable } from '../..';
 import { act, render } from '@testing-library/react';
 
+import { SortDirection, SortingMode } from '../../enums';
+
 import { FormatFunc } from '../../types';
 
 // the types are checked by tsc (yarn typecheck), the tests render the same tables
@@ -96,6 +98,22 @@ describe('the type of the rows', () => {
         );
         expect(getCellTexts(container)).toEqual(['TOM']);
         expect(container.querySelectorAll('.name-text').length).toBe(1);
+    });
+
+    it('is the type of the rows of the comparator of sort', () => {
+        const { container } = render(
+            <Table
+                columns={[{ key: 'name', title: 'Name', sortDirection: SortDirection.Ascend }]}
+                data={data}
+                rowKeyField='id'
+                sortingMode={SortingMode.Single}
+                sort={() => (_valueA, _valueB, rowDataA, rowDataB) => {
+                    expectTypeOf(rowDataA).toEqualTypeOf<Row>();
+                    return rowDataB.id - rowDataA.id;
+                }}
+            />
+        );
+        expect(getCellTexts(container)).toEqual(['kitty', 'tom']);
     });
 
     it('of the instance has to be the type of data', () => {

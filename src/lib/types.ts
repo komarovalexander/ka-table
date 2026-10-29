@@ -69,6 +69,11 @@ export type ControlledPropsKeys = (keyof ITableProps)[];
 export type Field = string;
 export type FormatFunc<TData = unknown> = Bivariant<(props: { value: unknown, column: Column<TData>, rowData?: TData; }) => React.ReactNode>;
 export type FilterFunc<TData = unknown> = Bivariant<(props: { column: Column<TData> }) => Bivariant<(value: unknown, filterRowValue: unknown, rowData?: TData) => boolean> | void>;
-export type SortFunc = (props: { column: Column }) => Bivariant<(value1: unknown, value2: unknown) => 0 | 1 | -1> | void;
+/**
+ * Gets the comparator of the sorted column, undefined sorts it by the values. The comparator gets the values and the rows
+ * (e.g. to compare by other fields) and returns a negative number, 0 or a positive number, as the one of Array.prototype.sort.
+ * It sorts in the direction of the column (column.sortDirection)
+ */
+export type SortFunc<TData = unknown> = Bivariant<(props: { column: Column<TData> }) => Bivariant<(valueA: unknown, valueB: unknown, rowDataA: TData, rowDataB: TData) => number> | void>;
 export type SearchFunc<TData = unknown> = Bivariant<(props: { searchText: string, rowData: TData, column: Column<TData> }) => boolean | void>;
 export type ValidationFunc<TData = unknown> = Bivariant<(props: { value: unknown, rowData: TData, column: Column<TData> }) => string | void>;

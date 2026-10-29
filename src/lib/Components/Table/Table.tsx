@@ -109,7 +109,7 @@ export interface ITableProps<TData = unknown> {
     searchText?: string;
     selectedRows?: unknown[];
     singleAction?: TableAction | CustomAction;
-    sort?: SortFunc;
+    sort?: SortFunc<NoInference<TData>>;
     sortingMode?: SortingMode;
     treeExpandButtonColumnKey?: string;
     treeGroupKeyField?: string;

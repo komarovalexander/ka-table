@@ -22,12 +22,13 @@ export const sortColumns = (columns: Column[]) => {
     });
 }
 
-export const sortData = <TData>(columns: Column[], data: TData[], sort?: SortFunc): TData[] => {
+export const sortData = <TData>(columns: Column[], data: TData[], sort?: SortFunc<TData>): TData[] => {
     const column = columns.find((c) => c.sortDirection);
     if (!column) { return data; }
     const customSort = sort && sort({ column });
     const sortFunc = (
-        customSort && ((rowDataA: TData, rowDataB: TData) => customSort(getValueByColumn(rowDataA, column), getValueByColumn(rowDataB, column)))
+        // the comparator gets the rows too
+        customSort && ((rowDataA: TData, rowDataB: TData) => customSort(getValueByColumn(rowDataA, column), getValueByColumn(rowDataB, column), rowDataA, rowDataB))
     ) || (
         column.sortDirection === SortDirection.Ascend
             ? ascendSort(column)
