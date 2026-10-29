@@ -14,6 +14,7 @@ import { getRowKeyValue } from '../Utils/RowUtils';
 import { isTreeGroupRow } from '../Utils/TreeUtils';
 import { getScrollLeftToColumn, isHorizontalVirtualScrollingEnabled, isVirtualScrollingEnabled } from '../Utils/Virtualize';
 import { useIsomorphicLayoutEffect } from '../Utils/EffectUtils';
+import { focusCell } from '../Utils/FocusUtils';
 
 export interface IKeyboardNavigation {
     // the cells of the table by their elements: the keys pressed on them are handled by the table
@@ -319,7 +320,7 @@ export const useCellKeyboardNavigation = (props: ICellProps) => {
         navigation.cells.set(element, { columnKey: column.key, rowKeyValue });
         if (isFocused && (navigation.focusRequestRef.current || (isEditorClosed && isFocusLost()))) {
             navigation.focusRequestRef.current = false;
-            element.focus();
+            focusCell(element);
         }
     }, [navigation, isFocused, isEditableCell, column.key, rowKeyValue]);
 
@@ -371,7 +372,7 @@ export const useGroupKeyboardNavigation = (props: IGroupRowProps) => {
         navigation.groups.set(element, groupKey);
         if (isFocused && navigation.focusRequestRef.current) {
             navigation.focusRequestRef.current = false;
-            element.focus();
+            focusCell(element);
         }
     }, [navigation, isFocused, groupKey]);
 

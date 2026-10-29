@@ -15,7 +15,7 @@
 
 ### Added
 
-- `keyboardNavigation` prop: the navigation by the cells of the WAI-ARIA grid pattern (treegrid for a tree), the focused cell is kept in `focused.cell`, a focused group row in `focused.group`. The group rows get the focus as rows, Enter, Space and the arrows Left and Right expand and collapse them; Enter and Space expand and collapse a tree row on the cell of its arrow.
+- `keyboardNavigation` prop: the navigation by the cells of the WAI-ARIA grid pattern (treegrid for a tree), the focused cell is kept in `focused.cell`, a focused group row in `focused.group`. The group rows get the focus as rows, Enter, Space and the arrows Left and Right expand and collapse them; Enter and Space expand and collapse a tree row on the cell of its arrow. The cell which becomes focused is scrolled out from under the sticky header and the fixed columns.
 - Keyboard and screen reader support of sorting, groups, the tree, paging, the group panel and the header filter: ARIA roles, states and names, the rows of a tree tell their level, the focus stays in the header filter popup and returns from it by Esc.
 - The validation messages are announced and describe their editors (`aria-invalid`, `aria-describedby`, `role="alert"`), the editors get the id of the message as `validationMessageId`.
 - `useTableSelector(table, selector, isEqual?)`: re-renders a component only when the selected part of the state of the table changes.
