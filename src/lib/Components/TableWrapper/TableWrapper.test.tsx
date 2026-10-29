@@ -61,6 +61,19 @@ describe('TableWrapper', () => {
         );
     });
 
+    it('does not dispatch ScrollTable when the table is scrolled horizontally (#495)', () => {
+        const { container, rerender } = render(<TableWrapper {...tableProps} virtualScrolling={{ itemHeight: 10, tbodyHeight: 100 }} />);
+        const wrapper = container.querySelector('.ka-table-wrapper')!;
+        fireEvent.scroll(wrapper, { target: { scrollLeft: 100 } });
+        expect(dispatch).toHaveBeenCalledTimes(0);
+
+        rerender(<TableWrapper {...tableProps} virtualScrolling={{ itemHeight: 10, tbodyHeight: 100, scrollTop: 11 }} />);
+        fireEvent.scroll(wrapper, { target: { scrollTop: 11, scrollLeft: 200 } });
+        expect(dispatch).toHaveBeenCalledTimes(0);
+        fireEvent.scroll(wrapper, { target: { scrollTop: 21 } });
+        expect(dispatch).toHaveBeenCalledWith({ type: ActionType.ScrollTable, scrollTop: 21 });
+    });
+
     it('does not have table foot by default', () => {
         const { container } = render(<TableWrapper {...tableProps} />);
 

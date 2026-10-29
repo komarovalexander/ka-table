@@ -463,6 +463,10 @@ describe('kaReducer', () => {
         };
         const newState = kaReducer(intialState, { type: ActionType.ScrollTable, scrollTop });
         expect(newState).toEqual({ ...intialState, virtualScrolling: { scrollTop } });
+        // the columns are scrolled too with virtualScrolling.horizontal, scrollLeft is kept when it is not passed
+        const scrolledState = kaReducer(newState, { type: ActionType.ScrollTable, scrollTop, scrollLeft: 300 });
+        expect(scrolledState.virtualScrolling).toEqual({ scrollTop, scrollLeft: 300 });
+        expect(kaReducer(scrolledState, { type: ActionType.ScrollTable, scrollTop: 20 }).virtualScrolling).toEqual({ scrollTop: 20, scrollLeft: 300 });
     });
     it('SelectAllRows', () => {
         const intialState = {

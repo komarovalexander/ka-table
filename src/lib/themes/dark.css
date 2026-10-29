@@ -29,6 +29,7 @@
   --ka-row-hover-background-color: rgba(255, 255, 255, 0.05);
   --ka-selected-background-color: #263141;
   --ka-selected-border-color: #3b4a5e;
+  --ka-fixed-column-shadow-color: rgba(0, 0, 0, 0.6);
 
   /* grouping */
   --ka-group-row-background-color: #23282e;

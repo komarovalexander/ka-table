@@ -3,6 +3,7 @@ import { checkIndexOdd, getValueByField } from '../../Utils/DataUtils';
 import { getGroupKeyId, getGroupText, isGroupRow, isGroupSummaryRow } from '../../Utils/GroupUtils';
 import { getReactKey, getRowKeyValues } from '../../Utils/RowUtils';
 import { isTreeChildRow, isTreeGroupRow, isTreeRow } from '../../Utils/TreeUtils';
+import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 
 import DataAndDetailsRows, { DataAndDetailsRowsMemo } from '../DataAndDetailsRows/DataAndDetailsRows';
 
@@ -75,14 +76,16 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
             return { focusedGroupKeyId: groupKeyId };
         }
         const rowKeyValues = getRowKeyValues(data, rowKeyField);
-        if (cell && rowKeyValues.includes(cell.rowKeyValue) && columns.some((c) => c.key === cell.columnKey)) {
+        // the rendered columns (virtualScrolling.horizontal renders spacers in place of the other ones)
+        const cellColumns = columns.filter((c) => !isVirtualColumnSpacer(c));
+        if (cell && rowKeyValues.includes(cell.rowKeyValue) && cellColumns.some((c) => c.key === cell.columnKey)) {
             return { focusedCell: cell };
         }
         const firstRow = data.find((row) => !isGroupSummaryRow(row));
         if (firstRow && isGroupRow(firstRow)) {
             return { focusedGroupKeyId: getGroupKeyId(firstRow.key) };
         }
-        return rowKeyValues.length && columns.length ? { focusedCell: { columnKey: columns[0].key, rowKeyValue: rowKeyValues[0] } } : {};
+        return rowKeyValues.length && cellColumns.length ? { focusedCell: { columnKey: cellColumns[0].key, rowKeyValue: rowKeyValues[0] } } : {};
     }, [focused, keyboardNavigation, data, rowKeyField, columns]);
 
     const firstRowRef = useRef<HTMLTableRowElement>(null);

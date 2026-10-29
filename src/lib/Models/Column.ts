@@ -12,6 +12,9 @@ export class Column<TData = unknown> {
     public filter?: Bivariant<(value: unknown, filterValue: unknown, rowData?: TData) => boolean>;
     public filterRowOperator?: string;
     public filterRowValue?: unknown;
+    // the cells of the column stick to the left or the right edge when the table is scrolled horizontally, after the other
+    // fixed columns of the edge (the offsets are the numeric widths of these columns); the virtual scrolling always renders them
+    public fixed?: 'left' | 'right';
     public headerFilterListItems?: Bivariant<(props: { data?: TData[] }) => string[]>;
     public headerFilterPopupPosition?: PopupPosition;
     public headerFilterSearch?: (value: string, searchValue: string, rowData?: HeaderFilterItem) => boolean;

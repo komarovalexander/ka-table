@@ -10,6 +10,7 @@ const columns: Column[] = Array(100).fill(undefined).map(
         width: 190,
         title: 'Column ' + index,
         type: DataType.String,
+        fixed: index === 0 ? 'left' : undefined,
     }),
 );
 
@@ -28,6 +29,13 @@ const ManyColumnsDemo = () => {
             editingMode={EditingMode.Cell}
             rowKeyField={'id'}
             sortingMode={SortingMode.Single}
+            // only the visible rows and columns are rendered
+            virtualScrolling={{ enabled: true, horizontal: true }}
+            childComponents={{
+                tableWrapper: {
+                    elementAttributes: () => ({ style: { maxHeight: 600 } })
+                }
+            }}
         />
     );
 };

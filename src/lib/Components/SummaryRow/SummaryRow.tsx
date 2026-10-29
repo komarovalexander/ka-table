@@ -3,8 +3,10 @@ import * as React from 'react';
 import EmptyCells from '../EmptyCells/EmptyCells';
 import { ISummaryRowProps } from '../../props';
 import { SummaryCell } from '../SummaryCell/SummaryCell';
+import VirtualColumnSpacer from '../VirtualColumnSpacer/VirtualColumnSpacer';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 
 export const SummaryRow: React.FunctionComponent<ISummaryRowProps> = (props) => {
     const {
@@ -20,7 +22,9 @@ export const SummaryRow: React.FunctionComponent<ISummaryRowProps> = (props) => 
             {content || (
                 <>
                     <EmptyCells count={groupColumnsCount} childComponents={childComponents}/>
-                    {columns.map((column) => <SummaryCell key={column.key} {...props} column={column}/>)}
+                    {columns.map((column) => (isVirtualColumnSpacer(column)
+                        ? <VirtualColumnSpacer key={column.key} />
+                        : <SummaryCell key={column.key} {...props} column={column}/>))}
                 </>
             )}
         </tr>

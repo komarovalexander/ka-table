@@ -43,7 +43,7 @@ type ActionCreators = typeof actionCreators;
 // the actions of the table: the ones of the action creators and the ones which the components of the table dispatch
 export type TableAction = ReturnType<ActionCreators[keyof ActionCreators]>
     | { type: ActionType.ComponentDidMount }
-    | { type: ActionType.ScrollTable; scrollTop: number }
+    | { type: ActionType.ScrollTable; scrollTop: number; scrollLeft?: number }
     | { type: ActionType.UpdateVirtualScrolling; virtualScrolling: VirtualScrolling };
 
 // an action of the code which uses the table: customReducer and onDispatch get it with the actions of the table

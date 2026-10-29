@@ -392,8 +392,8 @@ const reducer = (props: ITableProps, action: TableAction): ITableProps => {
     case ActionType.UpdateData:
         return { ...props, data: action.data };
     case ActionType.ScrollTable: {
-        const scrollTop = action.scrollTop;
-        return { ...props, ...{ virtualScrolling: { ...virtualScrolling, scrollTop } } };
+        const { scrollLeft, scrollTop } = action;
+        return { ...props, ...{ virtualScrolling: { ...virtualScrolling, scrollTop, ...(scrollLeft !== undefined && { scrollLeft }) } } };
     }
     case ActionType.UpdateGroupsExpanded: {
         let currentGroupsExpanded = groupsExpanded;

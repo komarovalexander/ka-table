@@ -3,6 +3,8 @@ import * as React from 'react';
 import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
 
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
+import { getFixedColumnClassName } from '../../Utils/ColumnUtils';
+import { useAriaColIndex } from '../TableWrapper/ColumnIndexesContext';
 import HeadCellResize from '../HeadCellResize/HeadCellResize';
 import { IHeadCellProps } from '../../props';
 import defaultOptions from '../../defaultOptions';
@@ -43,8 +45,10 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
         headCell = addElementAttributes(reorderedRowProps, props, headCell);
     }
 
+    const ariaColIndex = useAriaColIndex(key);
     const { elementAttributes, content } = getElementCustomization({
-        className: getHeadCellClassName(sortingMode, isGrouped),
+        className: getHeadCellClassName(sortingMode, isGrouped) + getFixedColumnClassName(column),
+        'aria-colindex': ariaColIndex,
         'aria-sort': getAriaSort(sortingMode, column),
         colSpan,
         rowSpan,

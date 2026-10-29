@@ -1,4 +1,9 @@
-import { getVirtualized, isVirtualScrollingEnabled } from './Virtualize';
+import {
+    getRenderedColumnsRange, getScrollLeftToColumn, getVirtualized, getVirtualizedColumns, isHorizontalVirtualScrollingEnabled,
+    isVirtualColumnSpacer, isVirtualScrollingEnabled,
+} from './Virtualize';
+
+import { Column } from '../Models/Column';
 
 import { VirtualScrolling } from '../Models/VirtualScrolling';
 import { getTreeData } from './TreeUtils';
@@ -118,5 +123,44 @@ describe('Virtualize', () => {
         expect(isVirtualScrollingEnabled({})).toBeTruthy();
         expect(isVirtualScrollingEnabled({ enabled: true })).toBeTruthy();
         expect(isVirtualScrollingEnabled({ enabled: false })).toBeFalsy();
+    });
+
+    describe('the virtual scrolling of the columns (#495)', () => {
+        // 20 columns of 100px, 400px are visible
+        const columns: Column[] = Array.from({ length: 20 }, (_, index) => ({ key: `c${index}`, width: 100 }));
+        const virtualScrolling = { horizontal: true, tableWidth: 400 };
+        const getKeys = (virtualizedColumns: Column[]) => virtualizedColumns.map((column) => (
+            isVirtualColumnSpacer(column) ? `spacer ${column.width}` : column.key
+        ));
+        it('isHorizontalVirtualScrollingEnabled', () => {
+            expect(isHorizontalVirtualScrollingEnabled({ horizontal: true })).toBe(true);
+            expect(isHorizontalVirtualScrollingEnabled({ enabled: false, horizontal: true })).toBe(false);
+            expect(isHorizontalVirtualScrollingEnabled({ enabled: true })).toBe(false);
+            expect(isHorizontalVirtualScrollingEnabled()).toBe(false);
+        });
+        it('getRenderedColumnsRange: the visible columns and 2 columns around them', () => {
+            expect(getRenderedColumnsRange(columns, virtualScrolling)).toEqual({ first: 0, last: 5 });
+            expect(getRenderedColumnsRange(columns, { ...virtualScrolling, scrollLeft: 1050 })).toEqual({ first: 8, last: 16 });
+            expect(getRenderedColumnsRange(columns, virtualScrolling, 1600)).toEqual({ first: 14, last: 19 });
+            expect(getRenderedColumnsRange(columns, { ...virtualScrolling, leftInvisibleCount: 0, rightInvisibleCount: 1 }, 1000)).toEqual({ first: 10, last: 14 });
+            // scrolled further than the columns
+            expect(getRenderedColumnsRange(columns, virtualScrolling, 5000)).toEqual({ first: 17, last: 19 });
+        });
+        it('getVirtualizedColumns: the spacers have the width of the columns which they replace', () => {
+            expect(getKeys(getVirtualizedColumns(columns, { first: 8, last: 10 }))).toEqual(['spacer 800', 'c8', 'c9', 'c10', 'spacer 900']);
+            expect(getKeys(getVirtualizedColumns(columns, { first: 0, last: 19 }))).toEqual(columns.map((column) => column.key));
+        });
+        it('getVirtualizedColumns renders the fixed columns and the columns without a numeric width', () => {
+            const otherColumns = columns.map((column, index) => (
+                index === 0 ? { ...column, fixed: 'left' as const } : index === 3 ? { ...column, width: '10%' } : column
+            ));
+            expect(getKeys(getVirtualizedColumns(otherColumns, { first: 8, last: 9 }))).toEqual(['c0', 'spacer 200', 'c3', 'spacer 400', 'c8', 'c9', 'spacer 1000']);
+        });
+        it('getScrollLeftToColumn: the scrollLeft which shows the column', () => {
+            expect(getScrollLeftToColumn(columns, 'c2', virtualScrolling)).toBeUndefined();
+            expect(getScrollLeftToColumn(columns, 'c6', virtualScrolling)).toBe(300);
+            expect(getScrollLeftToColumn(columns, 'c1', { ...virtualScrolling, scrollLeft: 500 })).toBe(100);
+            expect(getScrollLeftToColumn([{ ...columns[0], fixed: 'left' }, ...columns.slice(1)], 'c0', { ...virtualScrolling, scrollLeft: 500 })).toBeUndefined();
+        });
     });
 });

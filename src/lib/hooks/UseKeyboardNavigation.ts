@@ -12,7 +12,7 @@ import { ITableData } from './UseTableData';
 import { getPageData } from '../Utils/PagingUtils';
 import { getRowKeyValue } from '../Utils/RowUtils';
 import { isTreeGroupRow } from '../Utils/TreeUtils';
-import { isVirtualScrollingEnabled } from '../Utils/Virtualize';
+import { getScrollLeftToColumn, isHorizontalVirtualScrollingEnabled, isVirtualScrollingEnabled } from '../Utils/Virtualize';
 import { useIsomorphicLayoutEffect } from '../Utils/EffectUtils';
 
 export interface IKeyboardNavigation {
@@ -73,8 +73,8 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
     // the column of a row with cells which gets the focus: the column of the last focused cell or the first one
     const getColumnKey = (columnKey?: string) => (columns.some((c) => c.key === columnKey) ? columnKey! : columns[0]?.key);
 
-    // the virtual scrolling renders only the visible rows: the row is scrolled to, so its cells are rendered
-    const scrollToRow = (navigationRow: INavigationRow) => {
+    // the virtual scrolling renders only the visible rows and columns: the row and the column are scrolled to, so the cell is rendered
+    const scrollToRow = (navigationRow: INavigationRow, columnKey?: string) => {
         if (!isVirtualScrollingEnabled(virtualScrolling)) {
             return;
         }
@@ -85,8 +85,17 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
             : !isGroupRow(row) && getRowKeyValue(row, rowKeyField) === navigationRow.rowKeyValue));
         const rowTop = tableData.groupedData.slice(0, rowIndex).reduce<number>((top, row) => top + getRowHeight(row), 0);
         const rowHeight = getRowHeight(tableData.groupedData[rowIndex]);
-        if (rowTop < scrollTop || rowTop + rowHeight > scrollTop + tbodyHeight) {
-            dispatch({ type: ActionType.ScrollTable, scrollTop: rowTop < scrollTop ? rowTop : rowTop + rowHeight - tbodyHeight });
+        const isRowHidden = rowTop < scrollTop || rowTop + rowHeight > scrollTop + tbodyHeight;
+        // virtualScrolling.horizontal, which renders all the columns with the grouped columns of the header
+        const scrollLeft = columnKey !== undefined && isHorizontalVirtualScrollingEnabled(virtualScrolling) && !props.groupedColumns?.length
+            ? getScrollLeftToColumn(columns, columnKey, virtualScrolling!)
+            : undefined;
+        if (isRowHidden || scrollLeft !== undefined) {
+            dispatch({
+                type: ActionType.ScrollTable,
+                scrollTop: !isRowHidden ? scrollTop : rowTop < scrollTop ? rowTop : rowTop + rowHeight - tbodyHeight,
+                ...(scrollLeft !== undefined && { scrollLeft }),
+            });
         }
     };
 
@@ -126,10 +135,11 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
     // the focus moves to a group row or to the cell of the column of the last focused cell
     const focusRow = (row: INavigationRow) => {
         navigation.focusRequestRef.current = true;
+        const columnKey = getColumnKey(navigation.columnKeyRef.current);
         dispatch(setFocused(row.groupKey
             ? { group: row.groupKey }
-            : { cell: { columnKey: getColumnKey(navigation.columnKeyRef.current), rowKeyValue: row.rowKeyValue } }));
-        scrollToRow(row);
+            : { cell: { columnKey, rowKeyValue: row.rowKeyValue } }));
+        scrollToRow(row, row.groupKey ? undefined : columnKey);
     };
 
     const moveVertically = (row: INavigationRow, event: React.KeyboardEvent) => {
@@ -256,7 +266,7 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
             navigation.focusRequestRef.current = true;
             navigation.columnKeyRef.current = targetCell.columnKey;
             dispatch(setFocused({ cell: targetCell }));
-            scrollToRow({ rowKeyValue: targetCell.rowKeyValue });
+            scrollToRow({ rowKeyValue: targetCell.rowKeyValue }, targetCell.columnKey);
         }
     };
 

@@ -24,6 +24,8 @@
 - `Group.enabled`: a disabled group keeps its settings until its column is grouped again.
 - `sort`: the comparator gets the rows (`(valueA, valueB, rowDataA, rowDataB)`) and returns any number, e.g. `Intl.Collator().compare` or `(a, b) => a - b` (#477).
 - `oddEvenRows="treeRoots"`: a root of a tree and all its children get the class of the root (`ka-odd` or `ka-even`), also with virtual scrolling (#479).
+- `column.fixed`: `'left'` or `'right'` makes the column stick to the edge of the table when it is scrolled horizontally, after the other fixed columns of the edge (#495).
+- `virtualScrolling.horizontal`: only the visible columns are rendered, and the fixed ones and the ones without a numeric `width`; spacers keep the width of the table. `tableWidth` is measured, `leftInvisibleCount` and `rightInvisibleCount` render the columns around the visible ones. With 500 columns a table is mounted in ~50 ms instead of ~350 ms and is scrolled to other rows in ~4 ms instead of ~130 ms (#495).
 - `kaDateUtils.getDate`, `kaDateUtils.getDateFromInputValue`, `kaPagingUtils.getPageIndex` and `kaPagingUtils.getPagingWithPageSize`.
 - ES modules in `esm/` and `sideEffects` for tree shaking.
 - CSS custom properties of the default theme (`--ka-*`, listed in the readme): the hover colours of the rows and the cells, the sticky offsets of the header calculated from `--ka-header-cell-height`.
@@ -55,6 +57,7 @@
 - Filtering, sorting and grouping are calculated again only when the props which they use change: selection, editing and scrolling don't process the data again, a page change only slices it.
 - `validate()` and saving all the editors find the rows by their keys instead of searching the data for every cell.
 - A resize of a column doesn't process the rows again and doesn't render them while the mouse moves: `ResizeColumn` is dispatched only when the width changes, and the rows are rendered with the new width when the mouse is released (#475). Opening the header filter popup and typing into its search don't process the rows again either.
+- A horizontal scrolling of a table with virtual scrolling doesn't render the rows again: `ScrollTable` is dispatched only when `scrollTop` changes, or other columns become visible with `virtualScrolling.horizontal` (#495). With 200 columns a scroll event took ~35 ms.
 
 ## 12.0.3
 

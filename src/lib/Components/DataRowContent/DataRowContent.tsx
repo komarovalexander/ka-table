@@ -6,11 +6,13 @@ import { IDataRowProps } from '../../props';
 import { KeyboardNavigationContext } from '../../hooks/UseKeyboardNavigation';
 import { MemoizedRowsContext } from '../Rows/MemoizedRowsContext';
 import React from 'react';
+import VirtualColumnSpacer from '../VirtualColumnSpacer/VirtualColumnSpacer';
 import defaultOptions from '../../defaultOptions';
 import { buttonAttributes, getAriaLabel } from '../../Utils/AriaUtils';
 import { getEditableCell } from '../../Utils/CellUtils';
 import { getField } from '../../Utils/ColumnUtils';
 import { getFormattedValue, getValueByColumn } from '../../Utils/DataUtils';
+import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 import { updateTreeGroupsExpanded } from '../../actionCreators';
 
 const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
@@ -54,6 +56,9 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
     return (
         <>
             {columns.map((column, index) => {
+                if (isVirtualColumnSpacer(column)) {
+                    return <VirtualColumnSpacer key={column.key} />;
+                }
                 const editableCell = getEditableCell(column, rowEditableCells);
                 const hasEditorValue = editableCell && Object.prototype.hasOwnProperty.call(editableCell, 'editorValue');
                 const editorValue = editableCell && editableCell.editorValue;

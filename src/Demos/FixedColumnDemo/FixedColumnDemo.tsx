@@ -10,6 +10,8 @@ const columns: Column[] = Array(20).fill(undefined).map(
         width: 150,
         title: 'Column ' + index,
         type: DataType.String,
+        // the first column sticks to the left edge, the last one to the right edge
+        fixed: index === 0 ? 'left' : index === 19 ? 'right' : undefined,
     }),
 );
 
@@ -22,43 +24,13 @@ const dataArray = Array(30).fill(undefined).map(
 
 const FixedColumnDemo = () => {
     return (
-        <div className='fixed-column-demo'>
-            <Table
-                columns={columns}
-                data={dataArray}
-                editingMode={EditingMode.Cell}
-                rowKeyField={'id'}
-                sortingMode={SortingMode.Single}
-                childComponents={{
-                    headCell: {
-                        elementAttributes: (props) => {
-                            if (props.column.key === 'column0'){
-                                return { style: {
-                                    ...props.column.style,
-                                    position: 'sticky',
-                                    left: 0,
-                                    zIndex: 10,
-                                }
-                                }
-                            }
-                        }
-                    },
-                    cell: {
-                        elementAttributes: (props) => {
-                            if (props.column.key === 'column0'){
-                                return { style: {
-                                    ...props.column.style,
-                                    position: 'sticky',
-                                    left: 0,
-                                    backgroundColor: '#eee',
-                                }
-                                }
-                            }
-                        }
-                    }
-                }}
-            />
-        </div>
+        <Table
+            columns={columns}
+            data={dataArray}
+            editingMode={EditingMode.Cell}
+            rowKeyField={'id'}
+            sortingMode={SortingMode.Single}
+        />
     );
 };
 

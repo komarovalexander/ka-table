@@ -2,8 +2,10 @@ import EmptyCells from '../EmptyCells/EmptyCells';
 import HeadCell from '../HeadCell/HeadCell';
 import { IHeadRowProps } from '../../props';
 import React from 'react';
+import VirtualColumnSpacer from '../VirtualColumnSpacer/VirtualColumnSpacer';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 
 const HeadRow: React.FunctionComponent<IHeadRowProps> = (props) => {
     const {
@@ -30,6 +32,9 @@ const HeadRow: React.FunctionComponent<IHeadRowProps> = (props) => {
                 <EmptyCells count={groupColumnsCount} isTh={true} dispatch={dispatch} childComponents={childComponents} />
                 {
                     columns.map((column) => {
+                        if (isVirtualColumnSpacer(column)) {
+                            return <VirtualColumnSpacer key={column.key} isHead={true} />;
+                        }
                         return (
                             <HeadCell
                                 areAllRowsSelected={areAllRowsSelected}

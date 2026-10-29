@@ -43,6 +43,7 @@
   --ka-row-hover-background-color: transparent;
   --ka-selected-background-color: #F7FcFd;
   --ka-selected-border-color: #E1EBF0;
+  --ka-fixed-column-shadow-color: rgba(0, 0, 0, 0.12);
 
   /* grouping */
   --ka-group-row-background-color: #F9FBFC;
@@ -238,6 +239,11 @@
   border-top: var(--ka-row-border-size) solid var(--ka-border-color);
 }
 
+/* column.fixed: the rows are opaque, so their fixed cells can take their backgrounds */
+:where(.ka-table-fixed-columns) .ka-row {
+  background-color: var(--ka-background-color);
+}
+
 .ka-even {
   background-color: var(--ka-border-color);
 }
@@ -276,6 +282,71 @@
 
 .ka-row-selected {
   background-color: var(--ka-selected-background-color);
+}
+
+/* column.fixed: the cells stick to the edge of the table, their background covers the cells scrolled under them */
+.ka-fixed-left,
+.ka-fixed-right {
+  position: sticky;
+}
+
+.ka-thead-cell.ka-fixed-left,
+.ka-thead-cell.ka-fixed-right {
+  z-index: 2;
+}
+
+/* the fixed cells take the backgrounds of their rows: the zebra, the selection and the hover */
+.ka-row > .ka-fixed-left,
+.ka-row > .ka-fixed-right {
+  background: inherit;
+}
+
+.ka-summary-row > .ka-fixed-left,
+.ka-summary-row > .ka-fixed-right,
+.ka-group-summary-row > .ka-fixed-left,
+.ka-group-summary-row > .ka-fixed-right {
+  background-color: var(--ka-background-color);
+}
+
+/* the hover of the cell above the hover of the row, as on the other cells */
+.ka-row:hover > .ka-fixed-left:hover,
+.ka-row:hover > .ka-fixed-right:hover {
+  background-image: linear-gradient(var(--ka-cell-hover-background-color), var(--ka-cell-hover-background-color)),
+    linear-gradient(var(--ka-row-hover-background-color), var(--ka-row-hover-background-color));
+}
+
+/* the shadow of the fixed columns over the columns scrolled under them (not the ones of a table inside a cell) */
+.ka-fixed-left-last::after,
+.ka-fixed-right-first::after {
+  content: '';
+  position: absolute;
+  /* over the halves of the borders of the rows, so the shadows of the rows meet */
+  top: calc(var(--ka-row-border-size) / -2);
+  bottom: calc(var(--ka-row-border-size) / -2);
+  width: 10px;
+  pointer-events: none;
+  transition: box-shadow 0.3s;
+}
+
+.ka-fixed-left-last::after {
+  right: -10px;
+}
+
+.ka-fixed-right-first::after {
+  left: -10px;
+}
+
+.ka-table-overflow-left > * > tr > .ka-fixed-left-last::after {
+  box-shadow: inset 10px 0 8px -8px var(--ka-fixed-column-shadow-color);
+}
+
+.ka-table-overflow-right > * > tr > .ka-fixed-right-first::after {
+  box-shadow: inset -10px 0 8px -8px var(--ka-fixed-column-shadow-color);
+}
+
+/* virtualScrolling.horizontal: a cell in place of the columns which are not rendered */
+.ka-virtual-column-spacer {
+  padding: 0;
 }
 
 .ka-group-row {

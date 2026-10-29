@@ -136,6 +136,7 @@ import 'ka-table/themes/dark.css';
 | `--ka-row-hover-background-color` | `transparent` | overlay of the hovered row |
 | `--ka-selected-background-color` | `#F7FcFd` | selected rows |
 | `--ka-selected-border-color` | `#E1EBF0` | drop target of the drag and drop |
+| `--ka-fixed-column-shadow-color` | `rgba(0, 0, 0, 0.12)` | shadow of the fixed columns (`column.fixed`) over the columns scrolled under them |
 | `--ka-group-row-background-color` | `#F9FBFC` | background of the group rows |
 | `--ka-group-row-border-color` | `white` | borders of the group rows |
 | `--ka-group-row-border-size` | `1px` | width of the borders of the group rows |

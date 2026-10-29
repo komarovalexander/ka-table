@@ -30,6 +30,36 @@ describe('virtual scrolling', () => {
     });
 });
 
+describe('a horizontal scrolling with virtual scrolling (#495)', () => {
+    it('does not render the rows again', () => {
+        const onDispatch = vi.fn();
+        const renderCellText = vi.fn(({ value }: { value: unknown }) => String(value));
+        const TableWithInstance = () => {
+            const table = useTable({ onDispatch });
+            return (
+                <Table
+                    table={table}
+                    columns={Array.from({ length: 20 }, (_, index) => ({ key: `column${index}`, width: 100 }))}
+                    data={Array.from({ length: 100 }, (_, id) => ({ id, column0: `row ${id}` }))}
+                    rowKeyField='id'
+                    virtualScrolling={{ enabled: true, itemHeight: 40, tbodyHeight: 200 }}
+                    childComponents={{ cellText: { content: renderCellText } }}
+                />
+            );
+        };
+        const { container } = render(<TableWithInstance />);
+        const wrapper = container.querySelector('.ka-table-wrapper')!;
+        const renderedCellsCount = renderCellText.mock.calls.length;
+        fireEvent.scroll(wrapper, { target: { scrollLeft: 300 } });
+        fireEvent.scroll(wrapper, { target: { scrollLeft: 600 } });
+        expect(renderCellText.mock.calls.length).toBe(renderedCellsCount);
+
+        // a vertical scrolling renders the next rows
+        fireEvent.scroll(wrapper, { target: { scrollTop: 400 } });
+        expect(container.querySelector('tbody tr.ka-row')!.textContent).toContain('row 9');
+    });
+});
+
 describe('the scrolling position', () => {
     const rows = Array.from({ length: 100 }, (_, id) => ({ id, name: `name ${id}` }));
     it('is shown when the table is mounted again with the same instance', () => {

@@ -5,6 +5,8 @@ import CellText from '../CellText/CellText';
 import { ICellProps } from '../../props';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { getFixedColumnClassName } from '../../Utils/ColumnUtils';
+import { useAriaColIndex } from '../TableWrapper/ColumnIndexesContext';
 import { useCellKeyboardNavigation } from '../../hooks/UseKeyboardNavigation';
 
 const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
@@ -12,13 +14,16 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
         treeDeep,
         treeArrowElement,
         childComponents,
+        column,
         column: { style },
         isEditableCell,
     } = props;
 
     const keyboardNavigation = useCellKeyboardNavigation(props);
+    const ariaColIndex = useAriaColIndex(column.key);
     const { elementAttributes, content } = getElementCustomization({
-        className: `${defaultOptions.css.cell} ${treeDeep != null ? defaultOptions.css.treeCell : ''}`,
+        className: `${defaultOptions.css.cell} ${treeDeep != null ? defaultOptions.css.treeCell : ''}${getFixedColumnClassName(column)}`,
+        'aria-colindex': ariaColIndex,
         style,
         ...(keyboardNavigation && { tabIndex: keyboardNavigation.tabIndex, onFocus: keyboardNavigation.onFocus }),
     }, props, childComponents.cell);

@@ -4,6 +4,51 @@ import defaultOptions from '../defaultOptions';
 
 export const getColumn = (columns: Column[], columnKey: string) => columns.find((c) => c.key === columnKey);
 
+// the width in pixels which the fixed columns and the virtual scrolling of the columns calculate with
+export const getColumnWidth = (column: Column): number | undefined => (typeof column.width === 'number' ? column.width : undefined);
+
+// the fixed columns next to the scrolled ones (the last one of the left edge and the first one of the right edge) show the shadow
+const edgeFixedColumns = new WeakSet<Column>();
+
+// column.fixed: the offset of a fixed column is the width of the fixed columns between it and its edge
+export const getColumnsWithFixedStyle = (columns: Column[]): Column[] => {
+    if (!columns.some((column) => column.fixed)) {
+        return columns;
+    }
+    const offsets = new Map<Column, number>();
+    const addOffsets = (edgeColumns: Column[], fixed: Column['fixed']) => edgeColumns.reduce((offset, column) => {
+        if (column.fixed !== fixed) {
+            return offset;
+        }
+        offsets.set(column, offset);
+        return offset + (getColumnWidth(column) || 0);
+    }, 0);
+    addOffsets(columns, 'left');
+    addOffsets([...columns].reverse(), 'right');
+    const lastLeftColumn = columns.filter((column) => column.fixed === 'left').pop();
+    const firstRightColumn = columns.find((column) => column.fixed === 'right');
+    return columns.map((column) => {
+        if (!offsets.has(column)) {
+            return column;
+        }
+        // the offset of the style of the column is kept
+        const fixedColumn = { ...column, style: { [column.fixed!]: offsets.get(column), ...column.style } };
+        if (column === lastLeftColumn || column === firstRightColumn) {
+            edgeFixedColumns.add(fixedColumn);
+        }
+        return fixedColumn;
+    });
+};
+
+export const getFixedColumnClassName = (column: Column) => {
+    if (column.fixed !== 'left' && column.fixed !== 'right') {
+        return '';
+    }
+    const { fixedLeft, fixedLeftLast, fixedRight, fixedRightFirst } = defaultOptions.css;
+    const isLeft = column.fixed === 'left';
+    return ` ${isLeft ? fixedLeft : fixedRight}${edgeFixedColumns.has(column) ? ` ${isLeft ? fixedLeftLast : fixedRightFirst}` : ''}`;
+};
+
 export const getField = (column: Column): Field => {
     return column.field || column.key;
 };

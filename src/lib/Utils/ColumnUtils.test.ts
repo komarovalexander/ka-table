@@ -1,4 +1,6 @@
-import { areColumnsSameForRows, getColumn, getField, getFieldParts, getLastField, getLastFieldParents } from './ColumnUtils';
+import {
+    areColumnsSameForRows, getColumn, getColumnsWithFixedStyle, getField, getFieldParts, getFixedColumnClassName, getLastField, getLastFieldParents,
+} from './ColumnUtils';
 
 import { SortDirection } from '../enums';
 import defaultOptions from '../defaultOptions';
@@ -101,6 +103,37 @@ describe('ColumnUtils', () => {
             expect(areColumnsSameForRows(columns, [columns[1], columns[0]], true)).toBe(false);
             expect(areColumnsSameForRows(columns, [columns[0]], true)).toBe(false);
             expect(areColumnsSameForRows(columns, [...columns], false)).toBe(true);
+        });
+    });
+
+    describe('the fixed columns (#495)', () => {
+        it('getColumnsWithFixedStyle: the offsets are the widths of the fixed columns between the column and its edge', () => {
+            const columns = getColumnsWithFixedStyle([
+                { key: 'a', width: 100, fixed: 'left' },
+                { key: 'b', width: 50, fixed: 'left', style: { color: 'red' } },
+                { key: 'c', width: 200 },
+                { key: 'd', width: 80, fixed: 'right' },
+                { key: 'e', width: 60, fixed: 'right' },
+            ]);
+            expect(columns.map((column) => column.style)).toEqual([{ left: 0 }, { left: 100, color: 'red' }, undefined, { right: 60 }, { right: 0 }]);
+        });
+        it('getColumnsWithFixedStyle keeps the offset of the style and the columns without fixed ones', () => {
+            const columns = [{ key: 'a', width: 100 }, { key: 'b' }];
+            expect(getColumnsWithFixedStyle(columns)).toBe(columns);
+            expect(getColumnsWithFixedStyle([{ key: 'a', fixed: 'left', style: { left: 40 } }])[0].style).toEqual({ left: 40 });
+        });
+        it('getFixedColumnClassName', () => {
+            expect(getFixedColumnClassName({ key: 'a', fixed: 'left' })).toBe(' ka-fixed-left');
+            expect(getFixedColumnClassName({ key: 'a', fixed: 'right' })).toBe(' ka-fixed-right');
+            expect(getFixedColumnClassName({ key: 'a' })).toBe('');
+        });
+        it('getFixedColumnClassName: the fixed columns next to the scrolled ones show the shadow', () => {
+            const columns = getColumnsWithFixedStyle([
+                { key: 'a', fixed: 'left' }, { key: 'b', fixed: 'left' }, { key: 'c' }, { key: 'd', fixed: 'right' }, { key: 'e', fixed: 'right' },
+            ]);
+            expect(columns.map(getFixedColumnClassName)).toEqual([
+                ' ka-fixed-left', ' ka-fixed-left ka-fixed-left-last', '', ' ka-fixed-right ka-fixed-right-first', ' ka-fixed-right',
+            ]);
         });
     });
 });
