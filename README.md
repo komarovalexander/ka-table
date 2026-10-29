@@ -133,9 +133,10 @@ import 'ka-table/themes/dark.css';
 | `--ka-cell-line-height` | `29px` | line height of the cells |
 | `--ka-cell-hover-background-color` | `transparent` | overlay of the hovered cell |
 | `--ka-row-border-size` | `2px` | width of the borders of the rows |
-| `--ka-row-hover-background-color` | `transparent` | overlay of the hovered row |
-| `--ka-selected-background-color` | `#F7FcFd` | selected rows |
+| `--ka-row-hover-background-color` | `rgba(69, 88, 128, 0.05)` | overlay of the hovered row |
+| `--ka-selected-background-color` | `#EAF1FB` | selected rows |
 | `--ka-selected-border-color` | `#E1EBF0` | drop target of the drag and drop |
+| `--ka-focus-color` | `#8795A3` | ring of the cell focused by the keyboard |
 | `--ka-fixed-column-shadow-color` | `rgba(0, 0, 0, 0.12)` | shadow of the fixed columns (`column.fixed`) over the columns scrolled under them |
 | `--ka-group-row-background-color` | `#F9FBFC` | background of the group rows |
 | `--ka-group-row-border-color` | `white` | borders of the group rows |
@@ -159,8 +160,8 @@ import 'ka-table/themes/dark.css';
 | `--ka-loading-background-color-medium` | `rgba(116, 125, 134, 0.4)` | dots of the loading (animation) |
 | `--ka-loading-background-color-light` | `rgba(116, 125, 134, 0.2)` | dots of the loading (animation) |
 | `--ka-paging-index-color` | `var(--ka-thead-color)` | page numbers |
-| `--ka-paging-index-active-background-color` | `#F1F5F7` | background of the active page |
-| `--ka-paging-index-active-color` | `#747D86` | text of the active page |
+| `--ka-paging-index-active-background-color` | `#E4EAEF` | background of the active page |
+| `--ka-paging-index-active-color` | `#353C44` | text of the active page |
 | `--ka-paging-pages-margin` | `0` | margin of the paging |
 | `--ka-paging-pages-padding` | `0 10px` | padding of the paging |
 | `--ka-popup-background-color` | `white` | background of the header filter popup |

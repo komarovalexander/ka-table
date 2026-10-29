@@ -29,7 +29,7 @@ The expand buttons of the groups and the arrows of the tree are not Tab stops: t
 The focused cell is stored in `focused.cell` (a focused group row in `focused.group`): focusing a cell (by a click or Tab) dispatches `SetFocused`. So:
 
 - `customReducer`, `onDispatch` and the `dispatch` of a controlled table get `SetFocused` actions. A controlled table has to pass them to `kaReducer` as all the other actions, otherwise the focus doesn't move;
-- the browser draws its focus outline around a cell focused by the keyboard. Style `.ka-cell:focus-visible` if it doesn't fit your theme.
+- the cell focused by the keyboard gets a ring of `--ka-focus-color` (`.ka-cell:focus-visible`), set the property if the colour doesn't fit your theme.
 
 To keep the behavior of 12.x, turn the navigation off (the expand buttons of the groups and the tree are Tab stops of their own then):
 
@@ -235,7 +235,7 @@ table.dispatch({ type: 'RESET_SEARCH' });
   ```
 
 - The colours which Sass derived from other variables are separate properties, set them too in a theme which changes the base colours: `--ka-sort-icon-color`, `--ka-header-filter-button-icon-color` and `--ka-group-panel-cell-remove-color` (12.x derived them from `$ka-thead-color`), `--ka-selected-border-color` and `--ka-column-resize-border-color` (from `$ka-border-color`), `--ka-loading-background-color-medium` and `--ka-loading-background-color-light` (from `$ka-loading-background-color-base`).
-- `--ka-cell-hover-background-color` and `--ka-row-hover-background-color` (`null` in 12.x, which drew no hover) are painted as an overlay above the background of the row: a translucent colour blends with the zebra and the selection colours instead of replacing them.
+- `--ka-cell-hover-background-color` and `--ka-row-hover-background-color` (`null` in 12.x, which drew no hover) are painted as an overlay above the background of the row: a translucent colour blends with the zebra and the selection colours instead of replacing them. The rows get a hover colour by default (`rgba(69, 88, 128, 0.05)`, set `transparent` to turn it off), the selected rows (`#EAF1FB`) and the active page of the paging (`#E4EAEF` with the text of `--ka-color-base`) are easier to tell from the other ones.
 - The editors and the filter inputs (`.ka-input`) get `background-color: white` and `color: currentColor` (the text colour of the cell); 12.x left the colours of the browser. `.ka` sets `color: var(--ka-color-base)`, so the group panel, the group rows and the no-data row don't inherit the text colour of the page anymore, and the arrows of the groups and the tree are drawn with the text colour (`fill: currentColor`) instead of black.
 - The sticky offsets of the header rows are calculated from `--ka-header-cell-height`.
 - The package has a dark theme: `ka-table/themes/dark.css`, applied by the class `ka-dark` on the table or an ancestor ([demo](https://komarovalexander.github.io/ka-table/#/dark-theme)). The [Custom Theme demo](https://komarovalexander.github.io/ka-table/#/custom-theme) overrides the properties of one container.

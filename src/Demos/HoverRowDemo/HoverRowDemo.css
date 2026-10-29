@@ -2,10 +2,6 @@
   cursor: pointer;
 }
 
-.hover-row-demo .ka-row:hover {
-  background-color: #F7FcFd;
-}
-
 .hover-row-demo .info {
   margin-top: 20px;
   margin-left: 20px;

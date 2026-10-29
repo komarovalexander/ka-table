@@ -1,5 +1,3 @@
-import './KeyboardNavigation.css';
-
 import { DataType, Table } from '../../lib';
 import { EditingMode, SortingMode } from '../../lib/enums';
 

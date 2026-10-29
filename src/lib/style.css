@@ -40,10 +40,11 @@
   --ka-cell-line-height: 29px;
   --ka-cell-hover-background-color: transparent;
   --ka-row-border-size: 2px;
-  --ka-row-hover-background-color: transparent;
-  --ka-selected-background-color: #F7FcFd;
+  --ka-row-hover-background-color: rgba(69, 88, 128, 0.05);
+  --ka-selected-background-color: #EAF1FB;
   --ka-selected-border-color: #E1EBF0;
   --ka-fixed-column-shadow-color: rgba(0, 0, 0, 0.12);
+  --ka-focus-color: #8795A3;
 
   /* grouping */
   --ka-group-row-background-color: #F9FBFC;
@@ -75,8 +76,8 @@
   --ka-loading-background-color-light: rgba(116, 125, 134, 0.2);
 
   /* paging */
-  --ka-paging-index-active-background-color: #F1F5F7;
-  --ka-paging-index-active-color: #747D86;
+  --ka-paging-index-active-background-color: #E4EAEF;
+  --ka-paging-index-active-color: #353C44;
   --ka-paging-pages-margin: 0;
   --ka-paging-pages-padding: 0 10px;
 
@@ -282,6 +283,13 @@
 
 .ka-row-selected {
   background-color: var(--ka-selected-background-color);
+}
+
+/* the cell (or the group row) focused by the keyboard; the ring is inside the cell, so the wrapper doesn't clip it */
+.ka-cell:focus-visible,
+.ka-group-cell:focus-visible {
+  outline: 2px solid var(--ka-focus-color);
+  outline-offset: -2px;
 }
 
 /* column.fixed: the cells stick to the edge of the table, their background covers the cells scrolled under them */
