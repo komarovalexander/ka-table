@@ -285,11 +285,22 @@
   background-color: var(--ka-selected-background-color);
 }
 
-/* the cell (or the group row) focused by the keyboard; the ring is inside the cell, so the wrapper doesn't clip it */
+/* the cell (or the group row) focused by the keyboard: a ring inside the cell, so the wrapper doesn't clip it.
+   It is a shadow, not an outline: outlines are painted above the fixed columns, so the ring of a cell
+   scrolled under them would show through */
 .ka-cell:focus-visible,
 .ka-group-cell:focus-visible {
-  outline: 2px solid var(--ka-focus-color);
-  outline-offset: -2px;
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--ka-focus-color);
+}
+
+/* the high contrast mode of Windows drops the shadows, the outline is kept there */
+@media (forced-colors: active) {
+  .ka-cell:focus-visible,
+  .ka-group-cell:focus-visible {
+    outline: 2px solid CanvasText;
+    outline-offset: -2px;
+  }
 }
 
 /* column.fixed: the cells stick to the edge of the table, their background covers the cells scrolled under them */
