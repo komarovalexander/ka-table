@@ -118,7 +118,7 @@ import 'ka-table/themes/dark.css';
 | Property | Default | Used for |
 | --- | --- | --- |
 | `--ka-background-color` | `white` | background of the table |
-| `--ka-border-color` | `#F9FBFC` | borders of the rows, `.ka-even` rows, border of the popup |
+| `--ka-border-color` | `#F3F6F9` | borders of the rows, `.ka-even` rows, border of the popup |
 | `--ka-color-base` | `#353C44` | text |
 | `--ka-font-size` | `14px` | font size of the table |
 | `--ka-thead-background-color` | `#F1F5F7` | background of the header |

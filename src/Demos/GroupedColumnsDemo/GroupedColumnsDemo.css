@@ -1,7 +1,7 @@
 .group-header-column-demo .ka-thead-grouped-cell {
-  box-shadow: inset 0px 0px 0px 1px #F9FBFC;
+  box-shadow: inset 0px 0px 0px 1px var(--ka-border-color);
 }
 
 .group-header-column-demo .ka-cell {
-  border: 1px solid #F9FBFC;
+  border: 1px solid var(--ka-border-color);
 }
