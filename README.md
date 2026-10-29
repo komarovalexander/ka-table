@@ -147,8 +147,8 @@ import 'ka-table/themes/dark.css';
 | `--ka-input-background-color` | `white` | background of the editors and the filter inputs |
 | `--ka-input-border-color` | `#747D86` | border of the editors and the filter inputs |
 | `--ka-input-color` | `currentColor` | text of the editors and the filter inputs |
-| `--ka-input-validation-background-color` | `#FFE7E7` | background of an invalid editor |
-| `--ka-validation-background-color` | `#FF0C0C` | background of the validation message, border of an invalid editor |
+| `--ka-input-validation-background-color` | `#FDF2F2` | background of an invalid editor |
+| `--ka-validation-background-color` | `#D64550` | background of the validation message, border of an invalid editor |
 | `--ka-validation-color` | `white` | text of the validation message |
 | `--ka-validation-message-font-size` | `12px` | font size of the validation message |
 | `--ka-validation-message-padding` | `0 10px` | padding of the validation message |

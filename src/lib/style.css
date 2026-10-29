@@ -58,8 +58,8 @@
   --ka-input-background-color: white;
   --ka-input-border-color: #747D86;
   --ka-input-color: currentColor;
-  --ka-input-validation-background-color: #FFE7E7;
-  --ka-validation-background-color: #FF0C0C;
+  --ka-input-validation-background-color: #FDF2F2;
+  --ka-validation-background-color: #D64550;
   --ka-validation-color: white;
   --ka-validation-message-font-size: 12px;
   --ka-validation-message-padding: 0 10px;
@@ -191,27 +191,63 @@
   font-family: 'icons';
 }
 
+/* the native inputs of the editors, the filter row and the search of the header filter;
+   as high as the line of the cell, so a row doesn't grow when its editor opens */
 .ka-input {
+  box-sizing: border-box;
   max-width: 100%;
+  height: var(--ka-cell-line-height);
+  padding: 0 10px;
+  margin: 0;
   background-color: var(--ka-input-background-color);
   border: 1px solid var(--ka-input-border-color);
+  border-radius: 4px;
   color: var(--ka-input-color);
+  font: inherit;
+}
+
+.ka-input:focus-visible {
+  outline: 1px solid var(--ka-focus-color);
+  outline-offset: -1px;
+  border-color: var(--ka-focus-color);
+}
+
+.ka-input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  vertical-align: middle;
+  accent-color: var(--ka-focus-color);
+}
+
+.ka-input[type='checkbox']:focus-visible {
+  outline-offset: 1px;
+}
+
+/* the editor takes the whole cell */
+.ka-cell-editor .ka-input:not([type='checkbox']),
+.ka-filter-row-cell .ka-input:not([type='checkbox']) {
+  width: 100%;
 }
 
 .ka-cell-editor-validation-error .ka-input {
   background: var(--ka-input-validation-background-color);
-  border: 1px solid var(--ka-validation-background-color);
+  border-color: var(--ka-validation-background-color);
 }
 
 .ka-validation-message-container {
   position: absolute;
+  z-index: 1;
 }
 
 .ka-validation-message {
   font-size: var(--ka-validation-message-font-size);
+  line-height: 20px;
   color: var(--ka-validation-color);
   background-color: var(--ka-validation-background-color);
   padding: var(--ka-validation-message-padding);
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   max-width: 200px;
 }
 
@@ -640,12 +676,4 @@
 
 .ka-header-filter-table input[type='checkbox'] {
   cursor: pointer;
-}
-
-.ka-header-filter-table .ka-input {
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 3px;
-  padding: 3px 5px;
-  margin: 0;
 }
