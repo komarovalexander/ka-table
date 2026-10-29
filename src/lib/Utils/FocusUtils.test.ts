@@ -7,7 +7,10 @@ describe('FocusUtils', () => {
         document.body.innerHTML = `
             <div class="ka-table-wrapper">
                 <table>
-                    <thead><tr><th style="position: sticky">Header</th></tr></thead>
+                    <thead>
+                        <tr><th style="position: sticky">Header</th></tr>
+                        <tr><td style="position: sticky">Filter</td></tr>
+                    </thead>
                     <tbody>
                         <tr>
                             <td class="ka-fixed-left" style="position: sticky">fixed left</td>
@@ -26,7 +29,10 @@ describe('FocusUtils', () => {
         const rect = (left: number, top: number, width: number, height: number) => () =>
             ({ left, top, width, height, right: left + width, bottom: top + height } as DOMRect);
         wrapper.getBoundingClientRect = rect(0, 0, 300, 200);
-        document.querySelector('thead')!.getBoundingClientRect = rect(0, 0, 300, 40);
+        // the sticky cells of the header stay at the top of the scrollport, thead is scrolled with the table
+        document.querySelector('thead')!.getBoundingClientRect = () => rect(0, -wrapper.scrollTop, 300, 40)();
+        document.querySelector('thead th')!.getBoundingClientRect = rect(0, 0, 300, 25);
+        document.querySelector('thead td')!.getBoundingClientRect = rect(0, 25, 300, 15);
         document.querySelector('.ka-fixed-left')!.getBoundingClientRect = rect(0, 40, 100, 40);
         document.querySelector('.ka-fixed-right')!.getBoundingClientRect = rect(250, 40, 50, 40);
         // the rects of the cells depend on the scrolling of the wrapper
@@ -39,6 +45,9 @@ describe('FocusUtils', () => {
     describe('getVisibleArea', () => {
         it('is the scrollport without the sticky header and the fixed columns of the row', () => {
             const { wrapper, cell, group } = layout();
+            expect(getVisibleArea(wrapper, cell)).toEqual({ top: 40, left: 100, right: 250, bottom: 200 });
+            // the header is sticky: the area is the same when the table is scrolled
+            wrapper.scrollTop = 500;
             expect(getVisibleArea(wrapper, cell)).toEqual({ top: 40, left: 100, right: 250, bottom: 200 });
             // the group row has no fixed cells
             expect(getVisibleArea(wrapper, group)).toEqual({ top: 40, left: 0, right: 300, bottom: 200 });

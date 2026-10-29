@@ -14,10 +14,13 @@ export const getVisibleArea = (wrapper: HTMLElement, cell: HTMLTableCellElement)
         right: wrapperRect.left + wrapper.clientLeft + wrapper.clientWidth,
         bottom: wrapperRect.top + wrapper.clientTop + wrapper.clientHeight,
     };
-    const thead = cell.closest('table')?.tHead;
-    if (thead && isSticky(thead.querySelector('th'))) {
-        area.top = Math.max(area.top, thead.getBoundingClientRect().bottom);
-    }
+    // the sticky cells of the header stay at the top of the scrollport while thead itself is scrolled away:
+    // the covered area ends at the bottom of the lowest sticky cell (there can be several header rows)
+    Array.from(cell.closest('table')?.tHead?.querySelectorAll('th, td') ?? []).forEach((headerCell) => {
+        if (isSticky(headerCell)) {
+            area.top = Math.max(area.top, headerCell.getBoundingClientRect().bottom);
+        }
+    });
     Array.from(cell.parentElement?.children ?? []).forEach((sibling) => {
         if (sibling === cell || !isSticky(sibling)) {
             return;
