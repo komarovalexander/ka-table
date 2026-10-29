@@ -212,7 +212,7 @@ export interface ITableBodyProps<TData = unknown> {
     groupsExpanded?: unknown[][];
     keyboardNavigation?: boolean;
     memoizedRows?: boolean;
-    oddEvenRows?: boolean;
+    oddEvenRows?: boolean | 'treeRoots';
     rowKeyField: string;
     rowReordering: boolean;
     selectedRows: unknown[];

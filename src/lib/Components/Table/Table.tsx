@@ -101,7 +101,11 @@ export interface ITableProps<TData = unknown> {
      */
     memoizedRows?: boolean;
     noData?: NoData,
-    oddEvenRows?: boolean;
+    /**
+     * The rows get the classes ka-odd and ka-even in turn, counted from the first row of the page, also with the virtual scrolling.
+     * 'treeRoots': a root of a tree and all its children get the class of the root, the stripes change at the roots only
+     */
+    oddEvenRows?: boolean | 'treeRoots';
     paging?: PagingOptions;
     rowKeyField: string;
     rowReordering?: boolean;

@@ -2,7 +2,7 @@ import React, { RefObject, useEffect, useMemo, useRef } from 'react';
 import { checkIndexOdd, getValueByField } from '../../Utils/DataUtils';
 import { getGroupKeyId, getGroupText, isGroupRow, isGroupSummaryRow } from '../../Utils/GroupUtils';
 import { getReactKey, getRowKeyValues } from '../../Utils/RowUtils';
-import { isTreeGroupRow, isTreeRow } from '../../Utils/TreeUtils';
+import { isTreeChildRow, isTreeGroupRow, isTreeRow } from '../../Utils/TreeUtils';
 
 import DataAndDetailsRows, { DataAndDetailsRowsMemo } from '../DataAndDetailsRows/DataAndDetailsRows';
 
@@ -15,6 +15,7 @@ import { MemoizedRowsContext } from './MemoizedRowsContext';
 export interface IRowsProps extends ITableBodyProps {
     onFirstRowRendered: (firstRowRef: RefObject<HTMLElement | null>) => void;
     treeGroupsExpanded?: unknown[];
+    // the index of the stripe of the first row is odd (it gets ka-even): the virtual scrolling doesn't render the rows above it
     isFirstRowOdd?: boolean;
 }
 
@@ -90,9 +91,15 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     }, [firstRowRef, onFirstRowRendered]);
 
     let rowRefLink: RefObject<HTMLTableRowElement | null> | undefined = firstRowRef;
+    // oddEvenRows: every row starts a stripe, with 'treeRoots' a child of a tree gets the stripe of its root
+    const isTreeRootsStripe = oddEvenRows === 'treeRoots';
+    let stripeIndex = isFirstRowOdd ? 1 : 0;
     return (
         <MemoizedRowsContext.Provider value={!!memoizedRows}>
             {data.map((d, index) => {
+                if (index > 0 && !(isTreeRootsStripe && isTreeChildRow(d))) {
+                    stripeIndex++;
+                }
                 if (isGroupRow(d)) {
                     const groupKeyId = getGroupKeyId(d.key);
                     const groupIndex = d.key.length - 1;
@@ -126,9 +133,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                     const isSelectedRow = selectedRowsSet.has(rowKeyValue);
                     const isDetailsRowShown = detailsRowsSet.has(rowKeyValue);
                     const rowEditableCells = editableCellsByRow.get(rowKeyValue) || emptyArray;
-                    const isOdd = oddEvenRows
-                        ? isFirstRowOdd ? checkIndexOdd(index) : !checkIndexOdd(index)
-                        : undefined;
+                    const isOdd = oddEvenRows ? !checkIndexOdd(stripeIndex) : undefined;
                     const dataRow = (
                         <RowComponent
                             isOdd={isOdd}

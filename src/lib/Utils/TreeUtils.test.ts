@@ -1,5 +1,5 @@
 import {
-    getExpandedParents, getTreeData, restoreFilteredData, treeDataMark, treeGroupMark,
+    getExpandedParents, getTreeData, getTreeRowLevel, isTreeChildRow, restoreFilteredData, treeDataMark, treeGroupMark,
 } from './TreeUtils';
 
 describe('TreeUtils', () => {
@@ -143,6 +143,19 @@ describe('TreeUtils', () => {
             expect(getRows(data, [data[2], data[3]]).map(([id]) => id)).toEqual([1, 4, 2, 3]);
             // the copies of the rows (e.g. of extendedFilter) are ordered by their keys, the new rows follow the data
             expect(getRows(data, [{ id: 5, parentId: 2 }, { ...data[3] }, { ...data[2] }]).map(([id]) => id)).toEqual([1, 4, 2, 3, 5]);
+        });
+    });
+
+    describe('the levels of the rows', () => {
+        // a root without children, a root with a child which has a child
+        const data = [{ id: 1, parentId: null }, { id: 2, parentId: null }, { id: 3, parentId: 2 }, { id: 4, parentId: 3 }];
+        const treeData = getTreeData({ data, originalData: data, rowKeyField: 'id', treeGroupKeyField: 'parentId' });
+        it('getTreeRowLevel', () => {
+            expect(treeData.map((row) => getTreeRowLevel(row))).toEqual([1, 1, 2, 3]);
+        });
+        it('isTreeChildRow', () => {
+            expect(treeData.map((row) => isTreeChildRow(row))).toEqual([false, false, true, true]);
+            expect(isTreeChildRow(data[3])).toBe(false);
         });
     });
 

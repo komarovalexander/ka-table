@@ -22,6 +22,8 @@
 - `memoizedRows` prop: rows and cells are re-rendered only when their own props change.
 - Typed instance and actions: `useTable<TData>()`, `useTableInstance<TData>()`, `ITableInstance<TData>`, `TableAction` and `CustomAction`, the `HeaderFilterItem` model.
 - `Group.enabled`: a disabled group keeps its settings until its column is grouped again.
+- `sort`: the comparator gets the rows (`(valueA, valueB, rowDataA, rowDataB)`) and returns any number, e.g. `Intl.Collator().compare` or `(a, b) => a - b` (#477).
+- `oddEvenRows="treeRoots"`: a root of a tree and all its children get the class of the root (`ka-odd` or `ka-even`), also with virtual scrolling (#479).
 - `kaDateUtils.getDate`, `kaDateUtils.getDateFromInputValue`, `kaPagingUtils.getPageIndex` and `kaPagingUtils.getPagingWithPageSize`.
 - ES modules in `esm/` and `sideEffects` for tree shaking.
 - CSS custom properties of the default theme (`--ka-*`, listed in the readme): the hover colours of the rows and the cells, the sticky offsets of the header calculated from `--ka-header-cell-height`.

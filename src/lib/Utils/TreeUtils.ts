@@ -18,6 +18,12 @@ export const isTreeRow = (row: unknown): row is ShownTreeRow<unknown> => (
     isTreeGroupRow(row) || (row as Partial<ShownTreeRow<unknown>>).treeDataMark === treeDataMark
 );
 
+// the level of a row from 1 (aria-level): a row without children has the treeDeep of the next level, as it is indented for the missing arrow
+export const getTreeRowLevel = (row: ShownTreeRow<unknown>): number => row.treeDeep + (isTreeGroupRow(row) ? 1 : 0);
+
+// a row of the tree which is not a root
+export const isTreeChildRow = (row: unknown): boolean => isTreeRow(row) && getTreeRowLevel(row) > 1;
+
 export const getExpandedParents = (treeData: unknown[], rowKeyField: string): unknown[] =>
     treeData
         .filter(isTreeGroupRow)
