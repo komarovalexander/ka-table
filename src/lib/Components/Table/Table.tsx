@@ -1,4 +1,4 @@
-import * as actionCreators from '../../actionCreators';
+import * as actionCreators from '../../Namespaces/actionCreators';
 
 import {
     Bivariant,

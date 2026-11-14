@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import * as actionCreators from '../actionCreators';
+import * as actionCreators from '../Namespaces/actionCreators';
 
 import { CustomReducerFunc, OnDispatchFunc, TableAction } from '../types';
 import { ITableInstance, ITableProps } from '../Components/Table/Table';

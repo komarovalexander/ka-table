@@ -1,5 +1,5 @@
 import { AllHTMLAttributes, ReactNode } from 'react';
-import * as actionCreators from './actionCreators';
+import * as actionCreators from './Namespaces/actionCreators';
 
 import { AttributeTableData, Column } from './models';
 
