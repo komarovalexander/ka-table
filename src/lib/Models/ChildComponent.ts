@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 
 import { Bivariant, ChildAttributesItem } from '../types';
 
@@ -6,5 +6,5 @@ import { Bivariant, ChildAttributesItem } from '../types';
 export class ChildComponent<TProps> {
     public elementAttributes?: Bivariant<(props: PropsWithChildren<TProps>) => ChildAttributesItem<TProps> | void>;
     // a function component can be the content, so the content returns what a function component returns
-    public content?: Bivariant<(props: PropsWithChildren<TProps>) => React.ReactNode | Promise<React.ReactNode>>;
+    public content?: Bivariant<(props: PropsWithChildren<TProps>) => ReactNode | Promise<ReactNode>>;
 }

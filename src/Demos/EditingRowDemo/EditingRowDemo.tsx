@@ -4,8 +4,6 @@ import { DataType, Table } from '../../lib';
 import { ICellEditorProps, ICellTextProps } from '../../lib/props';
 import { closeRowEditors, openRowEditors, saveRowEditors } from '../../lib/actionCreators';
 
-import React from 'react';
-
 const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = [

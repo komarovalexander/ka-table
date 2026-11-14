@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as actionCreators from '../../actionCreators';
 
 import {

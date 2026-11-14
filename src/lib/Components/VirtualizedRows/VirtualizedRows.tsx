@@ -1,4 +1,4 @@
-import React, { RefObject } from 'react';
+import { FunctionComponent, RefObject } from 'react';
 
 import { ActionType } from '../../enums';
 import { ITableBodyProps } from '../../props';
@@ -7,7 +7,7 @@ import defaultOptions from '../../defaultOptions';
 import { getNewRowEditableCells } from '../../Utils/CellUtils';
 import { defaultTableWidth, getVirtualized, isVirtualScrollingEnabled } from '../../Utils/Virtualize';
 
-const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
+const VirtualizedRows: FunctionComponent<ITableBodyProps> = (props) => {
     const {
         data,
         dispatch,

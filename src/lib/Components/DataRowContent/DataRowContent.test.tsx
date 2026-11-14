@@ -2,7 +2,6 @@ import { DataType, EditingMode } from '../../enums';
 
 import DataRowContent from './DataRowContent';
 import { IDataRowProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { act, fireEvent } from '@testing-library/react';
 import { renderInto } from '../../../testUtils/renderInto';

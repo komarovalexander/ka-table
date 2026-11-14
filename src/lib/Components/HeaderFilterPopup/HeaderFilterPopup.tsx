@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC, KeyboardEvent, useEffect, useRef } from 'react';
 
 import HeaderFilterPopupContent from '../HeaderFilterPopupContent/HeaderFilterPopupContent';
 import { IHeaderFilterPopupProps } from '../../props';
@@ -7,7 +7,7 @@ import { getFocusableElements } from '../../Utils/AriaUtils';
 import { updateHeaderFilterPopupState } from '../../actionCreators';
 import { useOuterClick } from '../../hooks/UseOuterClick';
 
-const HeaderFilterPopup: React.FC<IHeaderFilterPopupProps> = (props) => {
+const HeaderFilterPopup: FC<IHeaderFilterPopupProps> = (props) => {
     const {
         column,
         dispatch,
@@ -19,13 +19,13 @@ const HeaderFilterPopup: React.FC<IHeaderFilterPopupProps> = (props) => {
     });
 
     // the element which opened the popup gets the focus back when the popup is closed by Esc
-    const openerRef = React.useRef<HTMLElement | null>(null);
-    React.useEffect(() => {
+    const openerRef = useRef<HTMLElement | null>(null);
+    useEffect(() => {
         openerRef.current = document.activeElement as HTMLElement | null;
         getFocusableElements(refToElement.current)[0]?.focus({ preventScroll: true });
     }, [refToElement]);
 
-    const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'Escape') {
             event.stopPropagation();
             dispatch(updateHeaderFilterPopupState(column.key, false));

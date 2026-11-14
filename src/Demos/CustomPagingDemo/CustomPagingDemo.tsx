@@ -4,7 +4,6 @@ import { DataType, Table } from '../../lib';
 import { updatePageIndex, updatePageSize } from '../../lib/actionCreators';
 
 import { IPagingProps } from '../../lib/props';
-import React from 'react';
 
 const dataArray = Array(180).fill(undefined).map(
     (_, index) => ({

@@ -1,6 +1,5 @@
 import FilterRow from './FilterRow';
 import { IFilterRowProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 let props: IFilterRowProps;

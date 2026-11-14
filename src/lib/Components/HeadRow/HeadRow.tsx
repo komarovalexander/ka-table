@@ -1,13 +1,13 @@
 import EmptyCells from '../EmptyCells/EmptyCells';
 import HeadCell from '../HeadCell/HeadCell';
 import { IHeadRowProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import VirtualColumnSpacer from '../VirtualColumnSpacer/VirtualColumnSpacer';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 
-const HeadRow: React.FunctionComponent<IHeadRowProps> = (props) => {
+const HeadRow: FunctionComponent<IHeadRowProps> = (props) => {
     const {
         areAllRowsSelected,
         childComponents,

@@ -6,7 +6,6 @@ import 'highlight.js/styles/vs.css';
 import { CollapsedIcon } from '../lib/Icons/CollapsedIcon';
 import Demo from './Demo';
 import DemoText from './DemoText';
-import React from 'react';
 import { trackEvent } from './ga';
 
 const kaStylesDisabled = ['BootstrapDemo'];

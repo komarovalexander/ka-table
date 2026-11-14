@@ -1,3 +1,4 @@
+import { Key } from 'react';
 import { groupMark, groupSummaryMark } from './GroupUtils';
 import { treeDataMark, treeGroupMark } from './TreeUtils';
 
@@ -13,7 +14,7 @@ interface ShownRow {
 }
 
 // the key of React of a row: a number stays a number, other values are strings, as React makes them
-export const getReactKey = (rowKeyValue: unknown): React.Key | undefined => (
+export const getReactKey = (rowKeyValue: unknown): Key | undefined => (
     rowKeyValue == null ? undefined : typeof rowKeyValue === 'number' ? rowKeyValue : String(rowKeyValue)
 );
 

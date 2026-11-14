@@ -1,3 +1,4 @@
+import { MutableRefObject } from 'react';
 import { ActionType, EditingMode } from '../enums';
 import { Column, EditableCell } from '../models';
 import { updateCellValue, updatePopupPosition } from '../actionCreators';
@@ -58,7 +59,7 @@ export const removeItemFromEditableCells = (
 
 export const checkPopupPosition = (
     column: Column,
-    refToElement: React.MutableRefObject<HTMLDivElement | null>,
+    refToElement: MutableRefObject<HTMLDivElement | null>,
     dispatch: DispatchFunc,
 ) => {
     const element = refToElement.current;

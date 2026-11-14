@@ -1,7 +1,7 @@
 import './CustomEditorDemo.css';
 
 import { DataType, Table, useTableInstance } from '../../lib';
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 
 import { EditingMode } from '../../lib/enums';
 import { ICellEditorProps } from '../../lib/props';
@@ -67,7 +67,7 @@ const CustomLookupEditor = ({
     );
 };
 
-const CustomEditorDemo: React.FC = () => {
+const CustomEditorDemo: FC = () => {
     return (
         <Table
             columns= {[

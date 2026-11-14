@@ -3,7 +3,6 @@ import { act, fireEvent, render } from '@testing-library/react';
 
 import CellEditorDate from './CellEditorDate';
 import { ICellEditorProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { getDateInputValue } from '../../Utils/DateUtils';
 

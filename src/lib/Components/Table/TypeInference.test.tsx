@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { ChildComponents, Column } from '../../models';
 import { ITableInstance, Table, useTable } from '../..';
 import { act, render } from '@testing-library/react';

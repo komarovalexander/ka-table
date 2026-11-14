@@ -1,6 +1,6 @@
 import '../../lib/themes/dark.css';
 
-import React from 'react';
+import { FC } from 'react';
 
 import { DataType, Table } from '../../lib';
 import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
@@ -18,7 +18,7 @@ const dataArray = Array(119).fill(undefined).map(
 );
 
 // the dark theme is applied by the ka-dark class on the table or on any of its ancestors
-const DarkThemeDemo: React.FC = () => {
+const DarkThemeDemo: FC = () => {
     return (
         <div className='ka-dark'>
             <Table

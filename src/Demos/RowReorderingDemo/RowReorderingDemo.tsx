@@ -1,7 +1,6 @@
 import { DataType, Table } from '../../lib';
 
 import { EditingMode } from '../../lib/enums';
-import React from 'react';
 
 const dataArray = Array(10).fill(undefined).map(
     (_, index) => ({

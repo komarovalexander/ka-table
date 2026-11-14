@@ -1,7 +1,6 @@
 import { DataType, Table } from '../../lib';
 import { SortDirection, SortingMode } from '../../lib/enums';
 
-import React from 'react';
 import defaultOptions from '../../lib/defaultOptions';
 
 const dataArray = [

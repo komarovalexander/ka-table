@@ -1,6 +1,6 @@
 import { ActionType } from '../../enums';
 import { ITableAllProps } from '../Table/Table';
-import React from 'react';
+import { StrictMode } from 'react';
 import { TableControlled } from './TableControlled';
 import { createRoot } from 'react-dom/client';
 import { insertRow } from '../../actionCreators';
@@ -30,20 +30,20 @@ it('renders without crashing', () => {
 describe('StrictMode', () => {
     it('dispatches ComponentDidMount once', () => {
         const dispatch = vi.fn();
-        render(<React.StrictMode><TableControlled {...props} dispatch={dispatch} /></React.StrictMode>);
+        render(<StrictMode><TableControlled {...props} dispatch={dispatch} /></StrictMode>);
         expect(dispatch.mock.calls.filter(([action]) => action.type === ActionType.ComponentDidMount)).toHaveLength(1);
     });
     it('dispatches singleAction once, and again when it is set again after it is cleared', () => {
         const dispatch = vi.fn();
         const singleAction = insertRow({ column: 3, column2: 4, id: 3 });
         const getInserts = () => dispatch.mock.calls.filter(([action]) => action.type === ActionType.InsertRow).length;
-        const { rerender } = render(<React.StrictMode><TableControlled {...props} dispatch={dispatch} singleAction={singleAction} /></React.StrictMode>);
+        const { rerender } = render(<StrictMode><TableControlled {...props} dispatch={dispatch} singleAction={singleAction} /></StrictMode>);
         expect(getInserts()).toBe(1);
         // the parent renders the table again before singleAction is cleared
-        rerender(<React.StrictMode><TableControlled {...props} dispatch={dispatch} singleAction={singleAction} /></React.StrictMode>);
+        rerender(<StrictMode><TableControlled {...props} dispatch={dispatch} singleAction={singleAction} /></StrictMode>);
         expect(getInserts()).toBe(1);
-        rerender(<React.StrictMode><TableControlled {...props} dispatch={dispatch} /></React.StrictMode>);
-        rerender(<React.StrictMode><TableControlled {...props} dispatch={dispatch} singleAction={singleAction} /></React.StrictMode>);
+        rerender(<StrictMode><TableControlled {...props} dispatch={dispatch} /></StrictMode>);
+        rerender(<StrictMode><TableControlled {...props} dispatch={dispatch} singleAction={singleAction} /></StrictMode>);
         expect(getInserts()).toBe(2);
     });
 });

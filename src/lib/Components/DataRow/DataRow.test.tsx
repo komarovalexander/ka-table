@@ -3,7 +3,6 @@ import { DataType, EditingMode } from '../../enums';
 
 import DataRow from './DataRow';
 import { IRowProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { renderInto } from '../../../testUtils/renderInto';
 

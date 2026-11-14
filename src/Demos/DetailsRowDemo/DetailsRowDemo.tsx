@@ -1,7 +1,7 @@
 import { DataType, Table, useTableInstance } from '../../lib';
 import { ICellTextProps, IDataRowProps } from '../../lib/props';
 
-import React from 'react';
+import { FC } from 'react';
 
 const dataArray = Array(10).fill(undefined).map(
     (_, index) => ({
@@ -28,7 +28,7 @@ const DetailsButton = ({
     );
 };
 
-const DetailsRow: React.FC<IDataRowProps<Row>> = ({
+const DetailsRow: FC<IDataRowProps<Row>> = ({
     rowData,
 }) => {
     return (
@@ -42,7 +42,7 @@ const DetailsRow: React.FC<IDataRowProps<Row>> = ({
     );
 };
 
-const DetailsRowDemo: React.FC = () => {
+const DetailsRowDemo: FC = () => {
     return (
         <Table
             columns= {[

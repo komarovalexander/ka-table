@@ -1,6 +1,5 @@
 import CellEditorValidation from './CellEditorValidationMessage';
 import { ICellEditorValidationMessageProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { act, render } from '@testing-library/react';
 

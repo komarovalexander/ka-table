@@ -1,7 +1,6 @@
 import { DataType, EditingMode } from '../../enums';
 
 import CellComponent from './CellComponent';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ICellProps } from '../../props';
 

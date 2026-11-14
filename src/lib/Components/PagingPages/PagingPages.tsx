@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import { centerLength, getPagesArrayBySize, getPagesForCenter } from '../../Utils/PagingUtils';
 
@@ -7,7 +7,7 @@ import PagingIndex from '../PagingIndex/PagingIndex';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-const PagingPages: React.FunctionComponent<IPagingProps> = (props) => {
+const PagingPages: FunctionComponent<IPagingProps> = (props) => {
     const {
         childComponents,
         pagesCount,

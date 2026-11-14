@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent, memo } from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { ITableBodyProps } from '../../props';
@@ -6,7 +6,7 @@ import { areColumnsSameForRows } from '../../Utils/ColumnUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import TableBodyContent from '../TableBodyContent/TableBodyContent';
 
-const TableBodyComponent: React.FunctionComponent<ITableBodyProps> = (props) => {
+const TableBodyComponent: FunctionComponent<ITableBodyProps> = (props) => {
     const {
         childComponents,
     } = props;
@@ -37,6 +37,6 @@ const areBodyPropsSame = (prevProps: ITableBodyProps, nextProps: ITableBodyProps
         : prevProps[field] === nextProps[field]));
 };
 
-const TableBody = React.memo(TableBodyComponent, areBodyPropsSame);
+const TableBody = memo(TableBodyComponent, areBodyPropsSame);
 
 export default TableBody;

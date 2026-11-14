@@ -1,6 +1,5 @@
 import { ILoadingProps } from '../../props';
 import Loading from './Loading';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: ILoadingProps = {

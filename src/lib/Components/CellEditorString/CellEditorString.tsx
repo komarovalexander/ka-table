@@ -1,12 +1,12 @@
 import { closeEditor, updateCellValue } from '../../actionCreators';
 
 import { ICellEditorProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getInputValue } from '../../Utils/DataUtils';
 
-const CellEditorString: React.FunctionComponent<ICellEditorProps> = (props) => {
+const CellEditorString: FunctionComponent<ICellEditorProps> = (props) => {
     const {
         column,
         dispatch,

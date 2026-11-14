@@ -1,7 +1,7 @@
 // the theme is a set of overridden ka-table CSS variables, see custom-theme.css
 import './custom-theme.css';
 
-import React from 'react';
+import { FC } from 'react';
 
 import { DataType, Table } from '../../lib';
 import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
@@ -18,7 +18,7 @@ const dataArray = Array(119).fill(undefined).map(
     }),
 );
 
-const CustomThemeDemo: React.FC = () => {
+const CustomThemeDemo: FC = () => {
     return (
         <div className='custom-theme-demo'>
             <Table

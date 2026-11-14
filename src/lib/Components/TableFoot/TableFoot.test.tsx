@@ -1,4 +1,3 @@
-import React from 'react';
 import { TableFoot } from './TableFoot';
 import { createRoot } from 'react-dom/client';
 import { ITableFootProps } from '../../props';

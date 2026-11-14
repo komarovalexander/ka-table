@@ -1,7 +1,7 @@
 import { DataType, Table } from '../../lib';
 import { SortDirection, SortingMode } from '../../lib/enums';
 
-import React from 'react';
+import { FC } from 'react';
 import orderBy from 'lodash.orderby';
 
 const dataArray = [
@@ -13,7 +13,7 @@ const dataArray = [
     { id: 6, name: 'Sunny Fox', score: 33, passed: false, faculty: 'Mathematics', comment: 'It was just a bad day :)' },
 ];
 
-const SortingExtendedDemo: React.FC = () => {
+const SortingExtendedDemo: FC = () => {
     return (
         <Table
             columns= {[

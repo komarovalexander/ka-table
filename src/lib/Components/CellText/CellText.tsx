@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import { EditingMode } from '../../enums';
 import { ICellTextProps } from '../../props';
@@ -7,7 +7,7 @@ import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getFormattedValue } from '../../Utils/DataUtils';
 import { openEditor } from '../../actionCreators';
 
-const CellText: React.FunctionComponent<ICellTextProps> = (props) => {
+const CellText: FunctionComponent<ICellTextProps> = (props) => {
     const {
         childComponents,
         column,

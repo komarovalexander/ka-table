@@ -4,7 +4,6 @@ import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
 import { Table, useTableInstance } from '../../lib';
 
 import { ICellTextProps } from '../../lib/props';
-import React from 'react';
 import { kaPropsUtils } from '../../lib/utils';
 
 const dataArray = Array(64)

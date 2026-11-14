@@ -3,7 +3,6 @@ import { act, fireEvent, render } from '@testing-library/react';
 import { ActionType } from '../../enums';
 import { IPagingIndexProps } from '../../props';
 import PagingIndex from './PagingIndex';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: IPagingIndexProps = {

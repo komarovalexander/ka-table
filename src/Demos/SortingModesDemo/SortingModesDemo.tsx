@@ -1,6 +1,6 @@
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
 import { ITableProps, Table, kaReducer } from '../../lib';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { DispatchFunc } from '../../lib/types';
 import { getSortedColumns } from '../../lib/Utils/PropsUtils';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC } from 'react';
 
 import { ActionType, FilteringMode, Table, useTable, } from '../..';
 import { updateHeaderFilterSearchValue, updateHeaderFilterValues } from '../../actionCreators';
@@ -9,7 +9,7 @@ import { IHeaderFilterPopupProps } from '../../props';
 import { getHeaderFilterText } from '../../Utils/FilterUtils';
 import { getValueByColumn } from '../../Utils/DataUtils';
 
-const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
+const HeaderFilterPopupContent: FC<IHeaderFilterPopupProps> = (props) => {
     const {
         column,
         childComponents,

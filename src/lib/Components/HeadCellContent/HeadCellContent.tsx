@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent, useRef } from 'react';
 
 import { FilteringMode } from '../../enums';
 import HeaderFilterButton from '../HeaderFilterButton/HeaderFilterButton';
@@ -12,7 +12,7 @@ import { isSortingEnabled } from '../../Utils/SortUtils';
 import { updateSortDirection } from '../../actionCreators';
 import { useIsomorphicLayoutEffect } from '../../Utils/EffectUtils';
 
-const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
+const HeadCellContent: FunctionComponent<IHeadCellProps> = (props) => {
     const {
         column,
         dispatch,
@@ -31,7 +31,7 @@ const HeadCellContent: React.FunctionComponent<IHeadCellProps> = (props) => {
     }, props, childComponents.headCellContent);
 
 
-    const refToElement = React.useRef<HTMLDivElement>(null);
+    const refToElement = useRef<HTMLDivElement>(null);
     useIsomorphicLayoutEffect(() => {
         checkPopupPosition(column, refToElement, dispatch);
     }, [column, dispatch]);

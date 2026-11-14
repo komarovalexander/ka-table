@@ -1,3 +1,4 @@
+import { AllHTMLAttributes, ReactNode } from 'react';
 import * as actionCreators from './actionCreators';
 
 import { AttributeTableData, Column } from './models';
@@ -31,7 +32,7 @@ type AddParameters<T, I> = T extends (e: infer E) => void ? (
 type WithExtraParameters<T, I> = {
     [P in keyof T]: AddParameters<T[P], I>;
 };
-type ElementAttributes = React.AllHTMLAttributes<HTMLElement>;
+type ElementAttributes = AllHTMLAttributes<HTMLElement>;
 
 // a ref of an element of every type: a callback or an object
 export type ElementRef = ((element: never) => void) | { current: unknown } | null;
@@ -67,7 +68,7 @@ export type CustomReducerFunc<TData = unknown> = Bivariant<(nextState: ITablePro
 export type OnDispatchFunc<TData = unknown> = Bivariant<(action: TableAction, tableProps: ITableProps<TData>, prevState: ITableProps<TData>) => void>;
 export type ControlledPropsKeys = (keyof ITableProps)[];
 export type Field = string;
-export type FormatFunc<TData = unknown> = Bivariant<(props: { value: unknown, column: Column<TData>, rowData?: TData; }) => React.ReactNode>;
+export type FormatFunc<TData = unknown> = Bivariant<(props: { value: unknown, column: Column<TData>, rowData?: TData; }) => ReactNode>;
 export type FilterFunc<TData = unknown> = Bivariant<(props: { column: Column<TData> }) => Bivariant<(value: unknown, filterRowValue: unknown, rowData?: TData) => boolean> | void>;
 /**
  * Gets the comparator of the sorted column, undefined sorts it by the values. The comparator gets the values and the rows

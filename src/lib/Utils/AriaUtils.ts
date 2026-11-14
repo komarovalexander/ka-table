@@ -1,4 +1,4 @@
-import React from 'react';
+import { KeyboardEvent } from 'react';
 
 // a value for aria-label: a value rendered as an element doesn't give a text
 export const getAriaLabel = (value: unknown): string | undefined => (
@@ -13,7 +13,7 @@ export const getAriaLabel = (value: unknown): string | undefined => (
 export const buttonAttributes = {
     role: 'button',
     tabIndex: 0,
-    onKeyDown: (event: React.KeyboardEvent<HTMLElement>) => {
+    onKeyDown: (event: KeyboardEvent<HTMLElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
             event.currentTarget.click();
@@ -22,23 +22,13 @@ export const buttonAttributes = {
             event.preventDefault();
         }
     },
-    onKeyUp: (event: React.KeyboardEvent<HTMLElement>) => {
+    onKeyUp: (event: KeyboardEvent<HTMLElement>) => {
         if (event.key === ' ') {
             event.preventDefault();
             event.currentTarget.click();
         }
     },
 };
-
-let lastIdIndex = 0;
-// an id without React.useId (React 16 and 17): a counter
-const useCounterId = (): string => React.useState(() => `ka-id-${++lastIdIndex}`)[0];
-
-/**
- * A unique id for the aria attributes (aria-describedby...): React.useId keeps the ids of the server rendering,
- * the versions of React without it get a counter
- */
-export const useAriaId: () => string = (React as { useId?: () => string }).useId || useCounterId;
 
 const focusableSelector = [
     'a[href]',

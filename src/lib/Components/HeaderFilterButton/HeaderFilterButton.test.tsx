@@ -4,7 +4,6 @@ import { ActionType } from '../../enums';
 import { Column } from '../../models';
 import HeaderFilterButton from './HeaderFilterButton';
 import { IHeaderFilterButtonProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: IHeaderFilterButtonProps = {

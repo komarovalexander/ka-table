@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC, SyntheticEvent } from 'react';
 
 import { FilterIcon } from '../../Icons/FilterIcon';
 import { IHeaderFilterButtonProps } from '../../props';
@@ -6,7 +6,7 @@ import { buttonAttributes } from '../../Utils/AriaUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { updateHeaderFilterPopupState } from '../../actionCreators';
 
-const HeaderFilterButton: React.FC<IHeaderFilterButtonProps> = (props) => {
+const HeaderFilterButton: FC<IHeaderFilterButtonProps> = (props) => {
     const { childComponents, column, dispatch } = props;
     const { elementAttributes, content } = getElementCustomization({
         className: `ka-header-filter-button ${column.headerFilterValues?.length ? 'ka-header-filter-button-has-value' : ''}`,
@@ -14,7 +14,7 @@ const HeaderFilterButton: React.FC<IHeaderFilterButtonProps> = (props) => {
         'aria-expanded': !!column.isHeaderFilterPopupShown,
         'aria-haspopup': 'dialog',
         'aria-label': `Filter ${column.title || column.key}`,
-        onClick: (event: React.SyntheticEvent<HTMLSpanElement>) => {
+        onClick: (event: SyntheticEvent<HTMLSpanElement>) => {
             event.stopPropagation();
             dispatch(updateHeaderFilterPopupState(column.key, !column.isHeaderFilterPopupShown))
         }

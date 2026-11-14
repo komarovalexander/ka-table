@@ -1,5 +1,4 @@
 import Popup from './HeaderFilterPopup';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { IHeaderFilterPopupProps } from '../../props';
 

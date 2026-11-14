@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 
 import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
 import { Column } from '../../lib/models';
@@ -6,7 +6,7 @@ import { IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 import { kaDateUtils } from '../../lib/utils';
 
-export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
+export const CustomLookupEditor: FC<IFilterRowEditorProps> = ({
     column, dispatch,
 }) => {
     const toNullableBoolean = (value: string) => {
@@ -33,7 +33,7 @@ export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
     );
 };
 
-const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
+const FilterOperators: FC<{ column: Column; dispatch: DispatchFunc }> = ({
     column, dispatch,
 }) => {
     return (
@@ -52,7 +52,7 @@ const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
     );
 };
 
-export const NumberEditor: React.FC<IFilterRowEditorProps> = ({
+export const NumberEditor: FC<IFilterRowEditorProps> = ({
     column, dispatch,
 }) => {
     return (
@@ -72,7 +72,7 @@ export const NumberEditor: React.FC<IFilterRowEditorProps> = ({
     );
 };
 
-export const DateEditor: React.FC<IFilterRowEditorProps> = ({
+export const DateEditor: FC<IFilterRowEditorProps> = ({
     column, dispatch,
 }) => {
     return (

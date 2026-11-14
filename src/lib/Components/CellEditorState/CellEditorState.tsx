@@ -1,5 +1,5 @@
 import { ActionType, EditingMode } from '../../enums';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
 import { closeEditor, updateEditorValue } from '../../actionCreators';
 
 import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
@@ -10,7 +10,7 @@ import { getValidationValue } from '../../Utils/Validation';
 import { newRowId } from '../../const';
 import { replaceValue } from '../../Utils/DataUtils';
 
-const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
+const CellEditorState: FunctionComponent<ICellEditorProps> = (props) => {
     const {
         column,
         dispatch,

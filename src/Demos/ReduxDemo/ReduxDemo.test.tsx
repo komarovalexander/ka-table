@@ -1,4 +1,3 @@
-import React from 'react';
 import ReduxDemo from './ReduxDemo';
 import { render } from '@testing-library/react';
 

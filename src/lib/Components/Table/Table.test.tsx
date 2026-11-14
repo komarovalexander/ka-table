@@ -2,7 +2,6 @@ import { ActionType, PagingPosition } from '../../enums';
 import { PagingOptions } from '../../models';
 import { act, render } from '@testing-library/react';
 
-import React from 'react';
 import { IKaTableProps, Table } from './Table';
 import { createRoot } from 'react-dom/client';
 import { loadData } from '../../actionCreators';

@@ -1,6 +1,6 @@
 import { DataType, Table, useTable } from '../../lib';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { ActionType } from '../../lib/enums';
 import { useGet } from './serverEmulator';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext, FunctionComponent, useEffect, useMemo, useRef } from 'react';
 
 import { ActionType, PagingPosition } from '../../enums';
 import { ITableAllProps, ITableProps } from '../Table/Table';
@@ -23,11 +23,11 @@ export interface ITableControlledProps extends ITableProps {
     dispatch: DispatchFunc;
 }
 
-export const TablePropsContext = React.createContext<ITableProps>({} as ITableProps);
+export const TablePropsContext = createContext<ITableProps>({} as ITableProps);
 
-export const TableControlled: React.FunctionComponent<ITableAllProps> = (tableProps) => {
+export const TableControlled: FunctionComponent<ITableAllProps> = (tableProps) => {
     // the components get the enabled groups only: the disabled ones keep their settings in the state for groupColumn
-    const groups = React.useMemo(() => getEnabledGroups(tableProps.groups), [tableProps.groups]);
+    const groups = useMemo(() => getEnabledGroups(tableProps.groups), [tableProps.groups]);
     const props = groups === tableProps.groups ? tableProps : { ...tableProps, groups };
     const {
         childComponents,
@@ -68,8 +68,8 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (tablePr
     }, [dispatch, pageIndex, lastPageIndex]);
 
     // StrictMode runs the effects of a mounted component twice in the development mode: the table is mounted once
-    const isMountDispatchedRef = React.useRef(false);
-    React.useEffect(() => {
+    const isMountDispatchedRef = useRef(false);
+    useEffect(() => {
         if (!isMountDispatchedRef.current) {
             isMountDispatchedRef.current = true;
             dispatch({ type: ActionType.ComponentDidMount });
@@ -79,8 +79,8 @@ export const TableControlled: React.FunctionComponent<ITableAllProps> = (tablePr
 
     // singleAction is dispatched once: StrictMode runs the effect twice before the action is cleared,
     // and the same action can be set again after it is cleared
-    const dispatchedSingleActionRef = React.useRef<ITableProps['singleAction']>(undefined);
-    React.useEffect(() => {
+    const dispatchedSingleActionRef = useRef<ITableProps['singleAction']>(undefined);
+    useEffect(() => {
         if (!singleAction) {
             dispatchedSingleActionRef.current = undefined;
         } else if (singleAction !== dispatchedSingleActionRef.current) {

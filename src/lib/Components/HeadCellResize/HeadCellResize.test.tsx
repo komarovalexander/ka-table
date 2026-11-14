@@ -1,7 +1,6 @@
 import { act, fireEvent, render } from '@testing-library/react';
 
 import HeadCellResize from './HeadCellResize';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props = {

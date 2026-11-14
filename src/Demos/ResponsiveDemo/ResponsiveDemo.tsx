@@ -4,7 +4,7 @@ import './ResponsiveDemo.css';
 import { DataType, Table } from '../../lib';
 
 import { EditingMode } from '../../lib/enums';
-import React from 'react';
+import { HTMLAttributes } from 'react';
 
 const dataArray = Array(10).fill(undefined).map(
     (_, index) => ({
@@ -34,7 +34,7 @@ const ResponsiveDemo = () => {
                         // the data attributes are not in the types of the attributes of the elements
                         elementAttributes: ({ column }) => ({
                             'data-column': column.title
-                        } as React.HTMLAttributes<HTMLElement>)
+                        } as HTMLAttributes<HTMLElement>)
                     }
                 }}
             />

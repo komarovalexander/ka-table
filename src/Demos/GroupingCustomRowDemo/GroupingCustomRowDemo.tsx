@@ -2,7 +2,7 @@ import { DataType, Table } from '../../lib';
 
 import EmptyCells from '../../lib/Components/EmptyCells/EmptyCells';
 import { IGroupRowProps } from '../../lib/props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import { updateGroupsExpanded } from '../../lib/actionCreators';
 
 const dataArray = [
@@ -13,7 +13,7 @@ const dataArray = [
     { id: 5, type: 'Cat', name: 'Hash', country: 'Czech Republic', age: 8 },
 ];
 
-const GroupRow: React.FunctionComponent<IGroupRowProps> = ({
+const GroupRow: FunctionComponent<IGroupRowProps> = ({
     contentColSpan,
     groupIndex,
     isExpanded,

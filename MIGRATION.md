@@ -2,7 +2,7 @@
 
 ## From 12.x to 13.0.0
 
-Six changes of 13.0.0 can break code written for 12.x:
+Seven changes of 13.0.0 can break code written for 12.x:
 
 1. [Keyboard navigation is enabled by default](#1-keyboard-navigation-is-enabled-by-default)
 2. [A table without dispatch applies the props which the parent changes](#2-a-table-without-dispatch-applies-the-props-which-the-parent-changes)
@@ -10,8 +10,9 @@ Six changes of 13.0.0 can break code written for 12.x:
 4. [Fixes of the data processing change some results](#4-fixes-of-the-data-processing-change-some-results)
 5. [The package is built for ES2019 and has exports](#5-the-package-is-built-for-es2019-and-has-exports)
 6. [The theme is plain CSS with custom properties](#6-the-theme-is-plain-css-with-custom-properties)
+7. [React 18 or 19 is required](#7-react-18-or-19-is-required)
 
-Sections 1, 2, 4 and 5 are about the behavior, section 3 is about TypeScript only, section 6 is about the styles. All the changes are listed in the [changelog](./CHANGELOG.md).
+Sections 1, 2, 4 and 5 are about the behavior, section 3 is about TypeScript only, section 6 is about the styles, section 7 is about the version of React. All the changes are listed in the [changelog](./CHANGELOG.md).
 
 ### 1. Keyboard navigation is enabled by default
 
@@ -239,3 +240,9 @@ table.dispatch({ type: 'RESET_SEARCH' });
 - The editors and the filter inputs (`.ka-input`) are styled: as high as the line of the cell (`--ka-cell-line-height`), the font of the table, a 4px radius, a focus ring of `--ka-focus-color`, the whole width of the cell, 16px checkboxes with `accent-color`; the validation message has a radius and a shadow, the validation colours are softer (`#D64550`, `#FDF2F2`). 12.x set only the border and left the rest to the browser. `.ka` sets `color: var(--ka-color-base)`, so the group panel, the group rows and the no-data row don't inherit the text colour of the page anymore, and the arrows of the groups and the tree are drawn with the text colour (`fill: currentColor`) instead of black.
 - The sticky offsets of the header rows are calculated from `--ka-header-cell-height`.
 - The package has a dark theme: `ka-table/themes/dark.css`, applied by the class `ka-dark` on the table or an ancestor ([demo](https://komarovalexander.github.io/ka-table/#/dark-theme)). The [Custom Theme demo](https://komarovalexander.github.io/ka-table/#/custom-theme) overrides the properties of one container.
+
+### 7. React 18 or 19 is required
+
+`peerDependencies` of the package is `react@^18 || ^19` (12.x supported React 16.8 and 17 too). An application with React 16 or 17 stays on ka-table 12.x until React is updated.
+
+The package is compiled with the automatic JSX runtime: besides `react` it imports `react/jsx-runtime`, which matters for import maps and for aliases of `react` (e.g. Preact).

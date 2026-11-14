@@ -1,5 +1,4 @@
 import { ColGroup } from './ColGroup';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { IColGroupProps } from '../../props';
 

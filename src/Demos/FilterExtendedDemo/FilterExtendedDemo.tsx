@@ -1,5 +1,5 @@
 import { DataType, Table } from '../../lib';
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 
 import { EditingMode } from '../../lib/enums';
 import FilterControl from 'react-filter-control';
@@ -83,7 +83,7 @@ const filter: IFilterControlFilterValue = {
     ],
 };
 
-const FilterExtendedDemo: React.FC = () => {
+const FilterExtendedDemo: FC = () => {
     const [filterValue, changeFilter] = useState(filter);
     const onFilterChanged = (newFilterValue: IFilterControlFilterValue) => {
         changeFilter(newFilterValue);

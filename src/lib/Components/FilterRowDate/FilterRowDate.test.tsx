@@ -3,7 +3,6 @@ import { act, fireEvent, render } from '@testing-library/react';
 
 import FilterRowDate from './FilterRowDate';
 import { IFilterRowEditorProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { getDateInputValue } from '../../Utils/DateUtils';
 

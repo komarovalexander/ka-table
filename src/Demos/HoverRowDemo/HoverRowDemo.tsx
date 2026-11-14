@@ -1,7 +1,7 @@
 import './HoverRowDemo.css';
 
 import { DataType, Table } from '../../lib';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import dataArray from './data';
 

@@ -1,6 +1,5 @@
 import { act } from '@testing-library/react';
 import { EditingMode } from '../../enums';
-import React from 'react';
 import TableBody from './TableBody';
 import { createRoot } from 'react-dom/client';
 import { renderInto } from '../../../testUtils/renderInto';

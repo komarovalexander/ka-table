@@ -1,7 +1,6 @@
 import { DataType, Table } from '../../lib';
 
 import { EditingMode } from '../../lib/enums';
-import React from 'react';
 
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },

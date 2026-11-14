@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useMemo, useRef } from 'react';
+import { FunctionComponent, RefObject, useEffect, useMemo, useRef } from 'react';
 import { checkIndexOdd, getValueByField } from '../../Utils/DataUtils';
 import { getGroupKeyId, getGroupText, isGroupRow, isGroupSummaryRow } from '../../Utils/GroupUtils';
 import { getReactKey, getRowKeyValues } from '../../Utils/RowUtils';
@@ -31,7 +31,7 @@ const groupEditableCellsByRow = (editableCells: EditableCell[]) => {
     return editableCellsByRow;
 };
 
-const Rows: React.FunctionComponent<IRowsProps> = (props) => {
+const Rows: FunctionComponent<IRowsProps> = (props) => {
     const {
         childComponents,
         columns,

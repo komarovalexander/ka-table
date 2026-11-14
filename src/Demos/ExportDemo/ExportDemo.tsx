@@ -1,6 +1,5 @@
 import { CSVLink } from 'react-csv';
 import { DataType } from '../../lib/enums';
-import React from 'react';
 import { Table } from '../../lib';
 
 const dataArray = Array(7).fill(undefined).map(

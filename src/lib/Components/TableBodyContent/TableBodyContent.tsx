@@ -1,4 +1,4 @@
-import React from 'react';
+import { FunctionComponent } from 'react';
 
 import { ITableBodyProps } from '../../props';
 import { getNewRowEditableCells } from '../../Utils/CellUtils';
@@ -6,7 +6,7 @@ import NewRow from '../NewRow/NewRow';
 import NoDataRow from '../NoDataRow/NoDataRow';
 import VirtualizedRows from '../VirtualizedRows/VirtualizedRows';
 
-const TableBodyContent: React.FunctionComponent<ITableBodyProps> = (props) => {
+const TableBodyContent: FunctionComponent<ITableBodyProps> = (props) => {
     const {
         childComponents,
         columns,

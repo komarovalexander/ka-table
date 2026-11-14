@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import { CrossIcon } from '../../Icons/CrossIcon';
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
@@ -10,7 +10,7 @@ import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getHeadCellClassName } from '../../Utils/HeadRowUtils';
 import { ungroupColumn } from '../../actionCreators';
 
-export const GroupPanelCell: React.FunctionComponent<IGroupPanelCellProps> = (props) => {
+export const GroupPanelCell: FunctionComponent<IGroupPanelCellProps> = (props) => {
     const {
         column,
         dispatch,

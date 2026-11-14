@@ -1,6 +1,5 @@
 import { ActionType, EditingMode } from '../../enums';
 import { ITableBodyProps } from '../../props';
-import React from 'react';
 import VirtualizedRows from './VirtualizedRows';
 import { act } from '@testing-library/react';
 import { createRoot } from 'react-dom/client';

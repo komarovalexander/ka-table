@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createRef } from 'react';
 
 import { ITableInstance, Table } from '../..';
 import { fireEvent, render } from '@testing-library/react';
@@ -84,7 +84,7 @@ describe('the scrolling position', () => {
         expect(container.querySelector('.ka-table-wrapper')!.scrollTop).toBe(2000);
     });
     it('keeps the ref of the customization of the wrapper', () => {
-        const ref = React.createRef<HTMLDivElement>();
+        const ref = createRef<HTMLDivElement>();
         const { container } = render(
             <Table
                 columns={[{ key: 'name', title: 'Name' }]}

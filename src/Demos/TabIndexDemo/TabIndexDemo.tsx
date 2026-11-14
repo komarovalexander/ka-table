@@ -2,7 +2,6 @@ import { DataType, Table } from '../../lib';
 import { openEditor } from '../../lib/actionCreators';
 
 import CellEditorString from '../../lib/Components/CellEditorString/CellEditorString';
-import React from 'react';
 import { SortingMode } from '../../lib/enums';
 import useKaFocusRef from './hook';
 

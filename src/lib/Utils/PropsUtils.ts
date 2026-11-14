@@ -2,7 +2,7 @@ import { ChildAttributesItem, DispatchFunc, DraggableKind, TableAction } from '.
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 
-import { AllHTMLAttributes } from 'react';
+import { AllHTMLAttributes, DragEvent } from 'react';
 import { ChildComponent } from '../Models/ChildComponent';
 import { Column } from '../models';
 import { ITableProps } from '../';
@@ -21,7 +21,7 @@ import { groupColumn } from '../actionCreators';
 export function extendProps<T = HTMLElement>(
     childElementAttributes: AllHTMLAttributes<T>,
     childProps: unknown,
-    childComponent?: ChildComponent<never>): React.AllHTMLAttributes<T> {
+    childComponent?: ChildComponent<never>): AllHTMLAttributes<T> {
     let resultProps = childElementAttributes;
     const childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps as never);
     if (childCustomAttributes) {
@@ -36,7 +36,7 @@ export function mergeProps<T = HTMLElement>(
     childElementAttributes: AllHTMLAttributes<T>,
     childProps: unknown,
     childCustomAttributes: ChildAttributesItem<never>,
-    dispatch: DispatchFunc): React.AllHTMLAttributes<T> {
+    dispatch: DispatchFunc): AllHTMLAttributes<T> {
     const customPropsWithEvents: Record<string, (e: unknown) => void> = {};
     for (const prop in childCustomAttributes) {
         if (Object.prototype.hasOwnProperty.call(childCustomAttributes, prop)) {
@@ -63,7 +63,7 @@ export function mergeProps<T = HTMLElement>(
         ...customPropsWithEvents,
         className: `${childElementAttributes.className || ''} ${childCustomAttributes.className || ''}`,
         style: { ...childElementAttributes.style, ...childCustomAttributes.style }
-    } as React.AllHTMLAttributes<T>;
+    } as AllHTMLAttributes<T>;
 
     return mergedResult;
 };
@@ -167,7 +167,9 @@ const draggableDataType = 'ka-draggableKeyValue';
 interface DraggedItem {
     key: unknown;
     kind?: DraggableKind;
-    table: Element | null;
+    // weak: dragend doesn't come when the dragged element is removed during the drag (the column dropped on the group panel,
+    // the row scrolled away by the virtual scrolling), the item stays until the next drag and mustn't keep the removed table
+    table?: WeakRef<Element>;
 }
 // the item which is dragged now by a table: rows and columns of all the tables use the same type of the data
 let draggedItem: DraggedItem | undefined;
@@ -175,12 +177,12 @@ let draggedItem: DraggedItem | undefined;
 const getTableElement = (element: Element): Element | null => element.closest?.(`.${defaultOptions.css.root}`) || null;
 
 // the dragged item if it is of the kind and from the table of the element
-const getDraggedItem = (event: React.DragEvent, kind?: DraggableKind): DraggedItem | undefined => (
+const getDraggedItem = (event: DragEvent, kind?: DraggableKind): DraggedItem | undefined => (
     draggedItem
     && draggedItem.kind === kind
     // the item dragged by a table, not a file or a text which is dragged after that
     && Array.from(event.dataTransfer?.types || []).some((type) => type.toLowerCase() === draggableDataType.toLowerCase())
-    && draggedItem.table === getTableElement(event.currentTarget)
+    && draggedItem.table?.deref() === (getTableElement(event.currentTarget) ?? undefined)
         ? draggedItem
         : undefined
 );
@@ -189,13 +191,18 @@ const getDraggedItem = (event: React.DragEvent, kind?: DraggableKind): DraggedIt
  * Checks that the dragged item is of the kind (rows or columns) and from the table of the element,
  * so a row dropped on a header cell or on the group panel, or an item of another table, changes nothing.
  */
-export const isDraggedItemOfKind = (event: React.DragEvent, kind?: DraggableKind): boolean => !!getDraggedItem(event, kind);
+export const isDraggedItemOfKind = (event: DragEvent, kind?: DraggableKind): boolean => !!getDraggedItem(event, kind);
 
-export const groupPanelOnDrop = (event: React.DragEvent, dispatch: DispatchFunc) => {
-    const columnKey = getDraggedItem(event, 'column')?.key;
+export const groupPanelOnDrop = (event: DragEvent, dispatch: DispatchFunc) => {
+    const item = getDraggedItem(event, 'column');
+    if (!item) {
+        return;
+    }
+    // the drop ends the drag: the grouped column is removed from the header before dragend, which then doesn't come
+    draggedItem = undefined;
     // the keys of the columns are strings
-    if (typeof columnKey === 'string') {
-        dispatch(groupColumn(columnKey));
+    if (typeof item.key === 'string') {
+        dispatch(groupColumn(item.key));
     }
 };
 
@@ -252,7 +259,8 @@ export const getDraggableProps = <TKey>({
         draggable: true,
         onDragStart: (event) => {
             count = 0;
-            draggedItem = { key, kind, table: getTableElement(event.currentTarget) };
+            const table = getTableElement(event.currentTarget);
+            draggedItem = { key, kind, table: table ? new WeakRef(table) : undefined };
             event.dataTransfer.setData(draggableDataType, JSON.stringify(key));
             event.currentTarget.classList.add(draggedClass);
             event.dataTransfer.effectAllowed = 'move';
@@ -266,6 +274,10 @@ export const getDraggableProps = <TKey>({
             count = 0;
             event.currentTarget.classList.remove(dragOverClass);
             const item = getDraggedItem(event, kind);
+            if (item) {
+                // the drop ends the drag: dragend doesn't come if the dragged element has been removed (e.g. by the virtual scrolling)
+                draggedItem = undefined;
+            }
             if (hasReordering && item) {
                 // the dragged item is of the same kind and from the same table
                 dispatch(actionCreator(item.key as TKey, key));

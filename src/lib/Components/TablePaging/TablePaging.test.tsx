@@ -1,4 +1,3 @@
-import React from 'react';
 import { TablePaging } from './TablePaging';
 import { createRoot } from 'react-dom/client';
 import { ITableAllProps } from '../Table/Table';

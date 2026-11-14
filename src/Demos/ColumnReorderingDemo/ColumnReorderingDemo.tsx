@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 
 import { DataType, Table } from '../../lib';
 import { Column } from '../../lib/models';
@@ -19,7 +19,7 @@ const dataArray = Array(30).fill(undefined).map(
     }, { id: index }),
 );
 
-const ColumnReorderingDemo: React.FC = () => {
+const ColumnReorderingDemo: FC = () => {
 
     return (
         <Table

@@ -4,7 +4,6 @@ import { DataType, Table, useTableInstance } from '../../lib';
 
 import { EditingMode } from '../../lib/enums';
 import { ICellTextProps } from '../../lib/props';
-import React from 'react';
 import dataArray from './data';
 import { kaDateUtils } from '../../lib/utils';
 

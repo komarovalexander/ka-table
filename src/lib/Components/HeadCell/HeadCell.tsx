@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
 
@@ -14,7 +14,7 @@ import { getHeadCellClassName } from '../../Utils/HeadRowUtils';
 import { isCellResizeShown } from '../../Utils/CellResizeUtils';
 import { reorderColumns } from '../../actionCreators';
 
-const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
+const HeadCell: FunctionComponent<IHeadCellProps> = (props) => {
     const {
         childComponents,
         colSpan,

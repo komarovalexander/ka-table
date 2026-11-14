@@ -20,7 +20,7 @@ import {
     prepareTableOptions,
 } from './PropsUtils';
 
-import { AllHTMLAttributes } from 'react';
+import { AllHTMLAttributes, DragEvent, MouseEvent } from 'react';
 import { ChildAttributesItem } from '../types';
 import { AttributeTableData, Column } from '../models';
 import { ICellProps } from '../props';
@@ -61,7 +61,7 @@ describe('PropsUtils', () => {
             childCustomAttributes,
             dispatch
         );
-        const e = { name: 'eventName' } as unknown as React.MouseEvent<HTMLElement>;
+        const e = { name: 'eventName' } as unknown as MouseEvent<HTMLElement>;
         props.onClick!(e);
         expect(childCustomAttributes.onClick).toHaveBeenCalledTimes(1);
         expect(childCustomAttributes.onClick).toHaveBeenCalledWith(e, {
@@ -229,7 +229,7 @@ describe('getDraggableProps', () => {
         kind: 'row',
         ...options,
     });
-    const toDragEvent = (eventMock: ReturnType<typeof createEvent>) => eventMock as unknown as React.DragEvent<HTMLElement>;
+    const toDragEvent = (eventMock: ReturnType<typeof createEvent>) => eventMock as unknown as DragEvent<HTMLElement>;
     // calls the handler of the item with the event
     const fire = (props: ReturnType<typeof getDraggableProps>, name: DragHandlerName, eventMock = event) => {
         props[name]?.(toDragEvent(eventMock), extendedEvent);

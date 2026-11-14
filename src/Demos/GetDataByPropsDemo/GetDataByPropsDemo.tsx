@@ -1,7 +1,7 @@
 import './GetDataByPropsDemo.css';
 
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Table, useTable } from '../../lib';
 
 import { kaPropsUtils } from '../../lib/utils';

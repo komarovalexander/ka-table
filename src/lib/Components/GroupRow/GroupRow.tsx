@@ -1,11 +1,11 @@
-import React from 'react';
+import { FunctionComponent } from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { IGroupRowProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import GroupRowContent from '../GroupRowContent/GroupRowContent';
 
-const GroupRow: React.FunctionComponent<IGroupRowProps> = (props) => {
+const GroupRow: FunctionComponent<IGroupRowProps> = (props) => {
     const {
         childComponents
     } = props;

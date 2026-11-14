@@ -2,7 +2,6 @@ import { DataType, EditingMode } from '../../enums';
 
 import CellEditorDataType from './CellEditorDataType';
 import { ICellEditorProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: ICellEditorProps = {

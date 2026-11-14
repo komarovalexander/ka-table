@@ -5,7 +5,6 @@ import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionC
 import { Column } from '../../lib/models';
 import { DispatchFunc } from '../../lib/types';
 import { IFilterRowEditorProps } from '../../lib/props';
-import React from 'react';
 import { kaDateUtils } from '../../lib/utils';
 
 const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });

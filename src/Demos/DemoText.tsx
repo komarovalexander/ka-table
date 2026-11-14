@@ -1,6 +1,6 @@
 import './DemoPage.css';
 
-import React, { useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import Highlight from 'react-highlight';
 
 interface IDemoTextProps {
@@ -10,7 +10,7 @@ interface IDemoTextProps {
 // the source code of the demos, each one is loaded when its demo is opened
 const demoSources = import.meta.glob<string>('./*/*Demo.tsx', { query: '?raw', import: 'default' });
 
-const DemoText: React.FunctionComponent<IDemoTextProps> = ({ demoFileName }) => {
+const DemoText: FunctionComponent<IDemoTextProps> = ({ demoFileName }) => {
     const [text, changeText] = useState('');
     useEffect(() => {
         demoSources[`./${demoFileName}/${demoFileName}.tsx`]?.()

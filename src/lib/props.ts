@@ -1,3 +1,4 @@
+import { ReactNode, Ref } from 'react';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
 import { DispatchFunc, Field, FormatFunc, NoData, ValidationFunc } from './types';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
@@ -50,7 +51,7 @@ interface IRowCommonProps<TData = unknown> {
 }
 
 export interface ICellProps<TData = unknown> {
-    treeArrowElement?: React.ReactNode;
+    treeArrowElement?: ReactNode;
     childComponents: ChildComponents;
     column: Column;
     treeDeep?: number;
@@ -137,7 +138,7 @@ export interface IGroupRowProps<TData = unknown> {
     isExpanded: boolean;
     // the group row is focused by the keyboard navigation
     isFocused?: boolean;
-    text: React.ReactNode;
+    text: ReactNode;
     groupItems?: TData[];
 }
 
@@ -251,7 +252,7 @@ export interface IRowProps extends IRowCommonProps {
     isSelectedRow: boolean;
     rowEditableCells: EditableCell[],
     rowReordering: boolean;
-    trRef?: React.Ref<HTMLTableRowElement>;
+    trRef?: Ref<HTMLTableRowElement>;
     validation?: ValidationFunc;
 }
 

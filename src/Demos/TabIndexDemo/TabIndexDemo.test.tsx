@@ -1,4 +1,3 @@
-import React from 'react';
 import TabIndexDemo from './TabIndexDemo';
 import { render } from '@testing-library/react';
 

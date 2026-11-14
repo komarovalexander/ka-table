@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import FilterRowDataType from '../FilterRowDataType/FilterRowDataType';
 import { IFilterRowEditorProps } from '../../props';
@@ -7,7 +7,7 @@ import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getFixedColumnClassName } from '../../Utils/ColumnUtils';
 import { useAriaColIndex } from '../TableWrapper/ColumnIndexesContext';
 
-const FilterCell: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
+const FilterCell: FunctionComponent<IFilterRowEditorProps> = (props) => {
     const {
         childComponents,
         column,

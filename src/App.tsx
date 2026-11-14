@@ -1,10 +1,10 @@
 import './App.css';
 
-import React from 'react';
+import { FC } from 'react';
 
 import Demos from './Demos/Demos';
 
-const App: React.FC = () => {
+const App: FC = () => {
     return (
         <Demos />
     );

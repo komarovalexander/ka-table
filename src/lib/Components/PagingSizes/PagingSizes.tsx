@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import defaultOptions from '../../defaultOptions';
 import { IPagingProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import PagingSizeItem from '../PagingSize/PagingSize';
 
-const PagingSizes: React.FunctionComponent<IPagingProps> = (props) => {
+const PagingSizes: FunctionComponent<IPagingProps> = (props) => {
     const {
         childComponents,
         pageSizes = [],

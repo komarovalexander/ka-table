@@ -2,7 +2,6 @@ import { ActionType, DataType } from '../../enums';
 import { act, fireEvent, render } from '@testing-library/react';
 
 import FilterRowString from './FilterRowString';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { IFilterRowEditorProps } from '../../props';
 

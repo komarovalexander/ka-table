@@ -1,12 +1,12 @@
 import { closeEditor, updateCellValue } from '../../actionCreators';
 
 import { ICellEditorProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getDateFromInputValue, getDateInputValue } from '../../Utils/DateUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-const CellEditorDate: React.FunctionComponent<ICellEditorProps> = (props) => {
+const CellEditorDate: FunctionComponent<ICellEditorProps> = (props) => {
     const {
         column,
         dispatch,

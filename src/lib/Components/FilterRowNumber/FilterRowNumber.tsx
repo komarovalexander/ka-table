@@ -1,11 +1,11 @@
 import { IFilterRowEditorProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { getInputValue } from '../../Utils/DataUtils';
 import { updateFilterRowValue } from '../../actionCreators';
 
-const FilterRowNumber: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
+const FilterRowNumber: FunctionComponent<IFilterRowEditorProps> = (props) => {
     const {
         column,
         dispatch,

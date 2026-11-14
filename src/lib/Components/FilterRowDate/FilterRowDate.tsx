@@ -1,11 +1,11 @@
 import { IFilterRowEditorProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getDateFromInputValue, getDateInputValue } from '../../Utils/DateUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { updateFilterRowValue } from '../../actionCreators';
 
-const FilterRowDate: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
+const FilterRowDate: FunctionComponent<IFilterRowEditorProps> = (props) => {
     const {
         column,
         dispatch,

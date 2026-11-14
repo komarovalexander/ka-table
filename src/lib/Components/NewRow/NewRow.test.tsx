@@ -1,6 +1,5 @@
 import { INewRowProps } from '../../props';
 import NewRow from './NewRow';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: INewRowProps = {

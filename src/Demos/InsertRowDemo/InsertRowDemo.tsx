@@ -1,8 +1,6 @@
 import { DataType, Table, useTable } from '../../lib';
 import { EditingMode, InsertRowPosition } from '../../lib/enums';
 
-import React from 'react';
-
 const dataArray = Array(7).fill(undefined).map(
     (_, index) => ({
         column1: `column:1 rowId:${index}`,

@@ -1,8 +1,8 @@
-import React from 'react';
+import { FunctionComponent } from 'react';
 
 import { ICellEditorValidationMessageProps } from '../../props';
 
-const CellEditorValidationMessage: React.FunctionComponent<ICellEditorValidationMessageProps> = (props) => {
+const CellEditorValidationMessage: FunctionComponent<ICellEditorValidationMessageProps> = (props) => {
     const { id, message } = props;
 
     return (

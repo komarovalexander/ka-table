@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { DataType } from '../../lib/enums';
 import { Table } from '../../lib';

@@ -1,7 +1,7 @@
 import './Demos.css';
 
 import MenuItems, { MenuItem } from './MenuItems';
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 
 import { DemoCase } from './DemoCase';
 import { trackEvent } from './ga';
@@ -39,7 +39,7 @@ const synonyms: { [value: string]: string[] } = {
     'ManyRowsDemo': ['odd', 'many']
 };
 
-const DemosMenu: React.FC<IDemosMenuProps> = ({ cases }) => {
+const DemosMenu: FC<IDemosMenuProps> = ({ cases }) => {
     const [search, changeSearch] = useState('');
     const filteredCases = search ? cases.filter((c) => {
         return c.title.toLowerCase().includes(search.toLowerCase())

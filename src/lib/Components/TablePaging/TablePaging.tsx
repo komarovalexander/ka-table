@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import { ITableAllProps } from '../..';
 import Paging from '../Paging/Paging';
 import { getPageIndex } from '../../Utils/PagingUtils';
 import { useTableData } from '../../hooks/UseTableData';
 
-export const TablePaging: React.FunctionComponent<ITableAllProps> = (props) => {
+export const TablePaging: FunctionComponent<ITableAllProps> = (props) => {
     const {
         childComponents = {},
         dispatch,

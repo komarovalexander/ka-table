@@ -4,8 +4,6 @@ import { CustomAction, TableAction } from '../../lib/types';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { StoreEnhancer, combineReducers, createStore } from 'redux';
 
-import React from 'react';
-
 const dataArray = Array(30).fill(undefined).map(
     (_, index) => ({
         column1: `column:1 row:${index}`,

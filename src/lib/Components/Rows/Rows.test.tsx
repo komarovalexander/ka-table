@@ -2,7 +2,6 @@ import { act } from '@testing-library/react';
 import Rows, { IRowsProps } from './Rows';
 
 import { EditingMode } from '../../enums';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { getGroupMark } from '../../Utils/GroupUtils';
 import { renderInto } from '../../../testUtils/renderInto';

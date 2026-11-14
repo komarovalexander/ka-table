@@ -1,8 +1,6 @@
 import { DataType, Table } from '../../lib';
 import { FilteringMode, SortDirection } from '../../lib/enums';
 
-import React from 'react';
-
 const dateFormat = new Intl.DateTimeFormat(navigator.language || 'en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = [

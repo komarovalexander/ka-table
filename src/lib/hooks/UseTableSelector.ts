@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useReducer, useRef } from 'react';
 
 import { ITableInstance, ITableProps } from '../Components/Table/Table';
 import { isTableRendered, subscribeToTable } from '../Utils/TableInstanceUtils';
@@ -19,10 +19,10 @@ export const useTableSelector = <T, TData = unknown>(
     selector: (props: ITableProps<TData>) => T,
     isEqual: (value: T | undefined, newValue: T | undefined) => boolean = Object.is
 ): T | undefined => {
-    const [, forceRender] = React.useReducer((count: number) => count + 1, 0);
+    const [, forceRender] = useReducer((count: number) => count + 1, 0);
     const selected = isTableRendered(table) ? selector(table.props) : undefined;
 
-    const latest = React.useRef({ isEqual, selected, selector });
+    const latest = useRef({ isEqual, selected, selector });
     useIsomorphicLayoutEffect(() => {
         latest.current = { isEqual, selected, selector };
     });

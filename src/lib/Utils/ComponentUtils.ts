@@ -1,12 +1,12 @@
-import React, { AllHTMLAttributes } from 'react';
+import { AllHTMLAttributes, ReactNode } from 'react';
 
 import { ChildComponent } from '../Models/ChildComponent';
 import { ChildAttributesItem } from '../types';
 import { extendProps } from './PropsUtils';
 
 class ElementCustomization<T = HTMLElement> {
-    content?: React.ReactNode;
-    elementAttributes!: React.AllHTMLAttributes<T>;
+    content?: ReactNode;
+    elementAttributes!: AllHTMLAttributes<T>;
 }
 // childComponent: the customization of the component (ChildComponent<never> takes the customizations of all the components),
 // it gets the props of the component
@@ -17,7 +17,7 @@ export function getElementCustomization<T = HTMLElement>(
 ): ElementCustomization<T> {
     const elementAttributes = extendProps<T>(childElementAttributes, props, childComponent);
     // the content returns what a function component returns: React renders a promise too
-    const content = childComponent?.content?.(props as never) as React.ReactNode;
+    const content = childComponent?.content?.(props as never) as ReactNode;
 
     return {
         content,

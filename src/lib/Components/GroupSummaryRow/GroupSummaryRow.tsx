@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import EmptyCells from '../EmptyCells/EmptyCells';
 import { GroupSummaryCell } from '../GroupSummaryCell/GroupSummaryCell';
@@ -8,7 +8,7 @@ import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 
-export const GroupSummaryRow: React.FunctionComponent<IGroupSummaryRowProps> = (props) => {
+export const GroupSummaryRow: FunctionComponent<IGroupSummaryRowProps> = (props) => {
     const {
         childComponents,
         columns,

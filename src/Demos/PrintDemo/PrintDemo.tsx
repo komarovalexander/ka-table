@@ -1,7 +1,7 @@
 import './PrintDemo.css';
 
 import { DataType, Table } from '../../lib';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 
 const dataArray = Array(180).fill(undefined).map(

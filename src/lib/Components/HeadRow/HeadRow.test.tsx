@@ -1,7 +1,6 @@
 import { act } from '@testing-library/react';
 import { DataType } from '../../enums';
 import HeaderRow from './HeadRow';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { renderInto } from '../../../testUtils/renderInto';
 import { IHeadRowProps } from '../../props';

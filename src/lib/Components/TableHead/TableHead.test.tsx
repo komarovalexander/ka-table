@@ -1,5 +1,4 @@
 import { FilteringMode, SortingMode } from '../../enums';
-import React from 'react';
 import { TableHead } from './TableHead';
 import { createRoot } from 'react-dom/client';
 import { ITableHeadProps } from '../../props';

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { FilteringMode, SortDirection, SortingMode } from '../../enums';
 import { IKaTableProps, Table } from '../..';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';

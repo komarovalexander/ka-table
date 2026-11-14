@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import * as actionCreators from '../actionCreators';
 
 import { CustomReducerFunc, OnDispatchFunc, TableAction } from '../types';
@@ -14,7 +14,7 @@ const actionCreatorFunctions = actionCreators as Record<string, (...args: unknow
  * inside function components use the useTable hook, which keeps the same instance between renders.
  */
 export const getTable = <TData = unknown>(options?: {
-    changeProps?: React.Dispatch<React.SetStateAction<ITableProps<TData>>>;
+    changeProps?: Dispatch<SetStateAction<ITableProps<TData>>>;
     onDispatch?: OnDispatchFunc<TData>;
     customReducer?: CustomReducerFunc<TData>;
 }): ITableInstance<TData> => {
@@ -38,7 +38,7 @@ export const useTable = <TData = unknown>(options?: {
     onDispatch?: OnDispatchFunc<TData>;
     customReducer?: CustomReducerFunc<TData>;
 }): ITableInstance<TData> => {
-    const [table] = React.useState(() => getTable<TData>(options));
+    const [table] = useState(() => getTable<TData>(options));
     // the instance stays the same, the callbacks are always the latest ones
     table.onDispatch = options?.onDispatch || emptyFunc;
     table.customReducer = options?.customReducer;

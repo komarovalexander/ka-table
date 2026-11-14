@@ -1,7 +1,8 @@
+import { ElementType } from 'react';
 
 export default class Demo {
     constructor(
-        public component: React.ElementType,
+        public component: ElementType,
         public path: string,
         public title: string,
         public fileName: string,

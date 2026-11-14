@@ -1,5 +1,5 @@
-import React from 'react';
-export const CollapsedIcon = (props: React.SVGProps<SVGSVGElement>) => {
+import { SVGProps } from 'react';
+export const CollapsedIcon = (props: SVGProps<SVGSVGElement>) => {
     return (
         <svg aria-hidden='true' {...props} xmlns='http://www.w3.org/2000/svg' viewBox='0 -150 1024 1024'  width='10' height='10'>
             <g>

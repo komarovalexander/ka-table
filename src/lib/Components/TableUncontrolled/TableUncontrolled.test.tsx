@@ -2,7 +2,7 @@ import { ActionType, EditingMode, SortDirection, SortingMode } from '../../enums
 import { ITableInstance, ITableProps, Table } from '../Table/Table';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
-import React from 'react';
+import { StrictMode } from 'react';
 import { ITableUncontrolledPropsKeys, TableUncontrolled } from './TableUncontrolled';
 import { createRoot } from 'react-dom/client';
 import { kaPropsUtils } from '../../utils';
@@ -169,7 +169,7 @@ it('calls onDispatch once per action in StrictMode', () => {
         table = useTable({ onDispatch });
         return <Table table={table} rowKeyField='id' columns={[{ key: 'id' }]} data={[{ id: 1 }]} />;
     };
-    render(<React.StrictMode><TableWithOnDispatch /></React.StrictMode>);
+    render(<StrictMode><TableWithOnDispatch /></StrictMode>);
     act(() => table.selectRow(1));
     vi.runAllTimers();
     expect(onDispatch.mock.calls.filter(([action]) => action.type === ActionType.SelectRow)).toHaveLength(1);

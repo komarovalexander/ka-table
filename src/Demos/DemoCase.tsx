@@ -1,5 +1,7 @@
+import { ReactNode } from 'react';
+
 export class DemoCase {
-    public demoComponent!: () => React.ReactNode;
+    public demoComponent!: () => ReactNode;
     public name!: string;
     public path!: string;
     public title!: string;

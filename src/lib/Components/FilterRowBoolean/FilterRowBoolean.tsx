@@ -1,11 +1,11 @@
 import { IFilterRowEditorProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isEmpty } from '../../Utils/CommonUtils';
 import { updateFilterRowValue } from '../../actionCreators';
 
-const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
+const FilterRowBoolean: FunctionComponent<IFilterRowEditorProps> = (props) => {
     const {
         column,
         dispatch,

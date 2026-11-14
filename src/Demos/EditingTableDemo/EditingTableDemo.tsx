@@ -1,7 +1,7 @@
 import './EditingTableDemo.css';
 
 import { DataType, Table, useTable } from '../../lib';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { kaPropsUtils } from '../../lib/utils';
 import { openAllEditors } from '../../lib/actionCreators';

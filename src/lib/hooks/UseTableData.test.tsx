@@ -1,5 +1,4 @@
 import * as PropsUtils from '../Utils/PropsUtils';
-import * as React from 'react';
 
 import { ITableInstance, ITableProps, Table } from '..';
 import { PagingPosition, SortDirection, SortingMode } from '../enums';

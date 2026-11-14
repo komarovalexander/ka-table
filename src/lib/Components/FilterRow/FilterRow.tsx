@@ -1,12 +1,12 @@
 import EmptyCells from '../EmptyCells/EmptyCells';
 import FilterCell from '../FilterCell/FilterCell';
 import { IFilterRowProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import VirtualColumnSpacer from '../VirtualColumnSpacer/VirtualColumnSpacer';
 import defaultOptions from '../../defaultOptions';
 import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 
-const FilterRow: React.FunctionComponent<IFilterRowProps> = ({
+const FilterRow: FunctionComponent<IFilterRowProps> = ({
     childComponents,
     columns,
     dispatch,

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { FilteringMode } from '../../enums';
 import { Table } from '../..';
 import { fireEvent, render } from '@testing-library/react';

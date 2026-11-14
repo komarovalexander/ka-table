@@ -1,11 +1,11 @@
 import DataRow from '../DataRow/DataRow';
 import { EditingMode } from '../../enums';
 import { INewRowProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import { getNewRowDataFromEditableCells } from '../../Utils/CellUtils';
 import { newRowId } from '../../const';
 
-const NewRow: React.FunctionComponent<INewRowProps> = ({
+const NewRow: FunctionComponent<INewRowProps> = ({
     childComponents,
     columns,
     dispatch,

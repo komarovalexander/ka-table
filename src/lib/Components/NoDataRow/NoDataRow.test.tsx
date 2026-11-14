@@ -1,7 +1,6 @@
 import { act } from '@testing-library/react';
 import { INoDataRowProps } from '../../props';
 import NoDataRow from './NoDataRow';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { renderInto } from '../../../testUtils/renderInto';
 

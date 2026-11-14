@@ -1,4 +1,3 @@
-import React from 'react';
 import { SummaryCell } from './SummaryCell';
 import { createRoot } from 'react-dom/client';
 import { ISummaryCellProps } from '../../props';

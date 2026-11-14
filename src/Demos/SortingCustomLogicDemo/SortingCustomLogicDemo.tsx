@@ -1,7 +1,7 @@
 import { DataType, Table } from '../../lib';
 import { SortDirection, SortingMode } from '../../lib/enums';
 
-import React from 'react';
+import { FC } from 'react';
 
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, prevScores: [59, 65, 70], passed: true },
@@ -13,7 +13,7 @@ const dataArray = [
     { id: 7, name: 'Alex Brzowsky', score: 48, prevScores: [50, 47, 43], passed: false },
 ];
 
-const SortingCustomLogicDemo: React.FC = () => {
+const SortingCustomLogicDemo: FC = () => {
     return (
         <Table
             columns= {[

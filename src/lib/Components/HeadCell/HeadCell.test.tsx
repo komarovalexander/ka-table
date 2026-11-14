@@ -1,7 +1,6 @@
 import { Column } from '../../Models/Column';
 import HeaderCell from './HeadCell';
 import { IHeadCellProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: IHeadCellProps = {

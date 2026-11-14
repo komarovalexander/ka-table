@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { TouchEvent as ReactTouchEvent } from 'react';
 
 // the time of the press of a touch which starts dragging, ms: the drag and drop of a browser which supports touches starts earlier
 const pressTime = 600;
@@ -30,13 +30,16 @@ const createDataTransfer = () => {
  * A touch which moves before the end of the press scrolls the page; the drag and drop of the browser (Safari for iOS,
  * Chrome for Android) starts before the end of the press, then the touch is not handled.
  */
-export const startTouchDrag = (touchStartEvent: React.TouchEvent<HTMLElement>) => {
+export const startTouchDrag = (touchStartEvent: ReactTouchEvent<HTMLElement>) => {
     const root = touchStartEvent.currentTarget;
     const source = (touchStartEvent.target as Element).closest?.('[draggable="true"]');
     if (touchStartEvent.touches.length !== 1 || !source || !root.contains(source)) {
         return;
     }
     const { clientX: startX, clientY: startY } = touchStartEvent.touches[0];
+    // the touch events are fired at the element where the touch started, also when it is removed from the document (e.g. the row
+    // is removed by an update of the data): then they don't bubble to document, so they are listened on this element
+    const touchTarget = touchStartEvent.target as Element;
     const dataTransfer = createDataTransfer();
     let isPressed = false;
     let isDragged = false;
@@ -121,15 +124,15 @@ export const startTouchDrag = (touchStartEvent: React.TouchEvent<HTMLElement>) =
 
     const stop = () => {
         clearTimeout(timer);
-        document.removeEventListener('touchmove', onTouchMove);
-        document.removeEventListener('touchend', onTouchEnd);
-        document.removeEventListener('touchcancel', onTouchCancel);
+        touchTarget.removeEventListener('touchmove', onTouchMove as EventListener);
+        touchTarget.removeEventListener('touchend', onTouchEnd as EventListener);
+        touchTarget.removeEventListener('touchcancel', onTouchCancel);
         source.removeEventListener('dragstart', onDragStart);
         source.removeEventListener('contextmenu', onContextMenu);
     };
-    document.addEventListener('touchmove', onTouchMove, { passive: false });
-    document.addEventListener('touchend', onTouchEnd, { passive: false });
-    document.addEventListener('touchcancel', onTouchCancel);
+    touchTarget.addEventListener('touchmove', onTouchMove as EventListener, { passive: false });
+    touchTarget.addEventListener('touchend', onTouchEnd as EventListener, { passive: false });
+    touchTarget.addEventListener('touchcancel', onTouchCancel);
     source.addEventListener('dragstart', onDragStart);
     source.addEventListener('contextmenu', onContextMenu);
 };

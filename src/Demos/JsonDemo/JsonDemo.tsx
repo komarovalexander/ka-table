@@ -1,6 +1,6 @@
 import { ActionType, SortDirection, SortingMode } from '../../lib/enums';
 import { DataType, Table, useTable } from '../../lib';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const JsonDemo = () => {
     const [data, setData] = useState();

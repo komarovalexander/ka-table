@@ -1,5 +1,5 @@
-import React from 'react';
-export const CrossIcon = (props: React.SVGProps<SVGSVGElement>) => {
+import { SVGProps } from 'react';
+export const CrossIcon = (props: SVGProps<SVGSVGElement>) => {
     return (
         <svg aria-hidden='true' {...props} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512.021 512.021'  width='13' height='13'>
             <g>

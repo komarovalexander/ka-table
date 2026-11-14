@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 
 // an action which the table dispatched
 export interface TableEvent {
@@ -14,7 +14,7 @@ interface IEventsLogProps {
     showDataClick: (event: { date: Date }) => void;
 }
 
-export const EventsLog: React.FC<IEventsLogProps> = ({ events, showDataClick, clearLog }) => {
+export const EventsLog: FC<IEventsLogProps> = ({ events, showDataClick, clearLog }) => {
     const eventsLog = events.map((e) => {
         const time = e.date.toLocaleTimeString();
         const milliseconds = e.date.getMilliseconds();

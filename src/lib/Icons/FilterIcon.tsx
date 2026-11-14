@@ -1,5 +1,5 @@
-import React from 'react';
-export const FilterIcon = (props: React.SVGProps<SVGSVGElement>) => {
+import { SVGProps } from 'react';
+export const FilterIcon = (props: SVGProps<SVGSVGElement>) => {
     return (
         <svg aria-hidden='true' style={{transform: 'rotate(180deg) scale(-1, 1)'}} {...props} xmlns='http://www.w3.org/2000/svg' viewBox='0 -150 1024 1024'  width='16' height='17'>
             <g>

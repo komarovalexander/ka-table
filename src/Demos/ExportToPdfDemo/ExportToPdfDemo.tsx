@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -15,7 +15,7 @@ const dataArray = Array(2000).fill(undefined).map(
     }),
 );
 
-const ExportToPdfDemo: React.FC = () => {
+const ExportToPdfDemo: FC = () => {
     const table = useTable();
     const exportClick = (orientation?: 'portrait' | 'landscape') => {
         const doc = new jsPDF(orientation);

@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 import { KeyboardEnum } from '../enums';
 
 // useLayoutEffect warns during server rendering
-export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 /*
   Used inside effects and returned as result from them,

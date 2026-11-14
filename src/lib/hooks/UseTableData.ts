@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext, useContext, useMemo, useRef } from 'react';
 
 import { getPageData, getPagesCount } from '../Utils/PagingUtils';
 
@@ -20,7 +20,7 @@ export interface ITableData {
     pagesCount: number;
 }
 
-export const TableDataContext = React.createContext<ITableData | undefined>(undefined);
+export const TableDataContext = createContext<ITableData | undefined>(undefined);
 
 // all the props which getData uses, except paging; columnsForRows: the columns which change when the rows change
 const getDataDependencies = (props: ITableProps, columnsForRows: Column[]) => [
@@ -43,7 +43,7 @@ const getDataDependencies = (props: ITableProps, columnsForRows: Column[]) => [
 
 // the columns of the last calculation while the columns change only the way they are shown (their widths, the header filter popup)
 const useColumnsForRows = (columns: Column[]): Column[] => {
-    const columnsRef = React.useRef(columns);
+    const columnsRef = useRef(columns);
     if (columnsRef.current !== columns && !areColumnsSameForRows(columnsRef.current, columns, true)) {
         columnsRef.current = columns;
     }
@@ -58,15 +58,15 @@ const useColumnsForRows = (columns: Column[]): Column[] => {
 export const useTableDataCalculation = (props: ITableProps, enabled: boolean = true): ITableData | undefined => {
     const { columns, groups, paging } = props;
     const columnsForRows = useColumnsForRows(columns);
-    const dataWithoutPaging = React.useMemo(
+    const dataWithoutPaging = useMemo(
         () => enabled ? getData({ ...props, paging: undefined }) : undefined,
         // eslint-disable-next-line react-hooks/exhaustive-deps -- the props which getData uses
         [enabled, ...getDataDependencies(props, columnsForRows)]
     );
-    const groupedData = React.useMemo(() => dataWithoutPaging && getPageData(dataWithoutPaging, paging), [dataWithoutPaging, paging]);
-    const pagesCount = React.useMemo(() => dataWithoutPaging ? getPagesCount(dataWithoutPaging, paging) : 1, [dataWithoutPaging, paging]);
-    const preparedColumns = React.useMemo(() => getGroupedAndVisibleColumns(columns, groups), [columns, groups]);
-    return React.useMemo(
+    const groupedData = useMemo(() => dataWithoutPaging && getPageData(dataWithoutPaging, paging), [dataWithoutPaging, paging]);
+    const pagesCount = useMemo(() => dataWithoutPaging ? getPagesCount(dataWithoutPaging, paging) : 1, [dataWithoutPaging, paging]);
+    const preparedColumns = useMemo(() => getGroupedAndVisibleColumns(columns, groups), [columns, groups]);
+    return useMemo(
         () => groupedData && { ...preparedColumns, dataWithoutPaging: dataWithoutPaging!, groupedData, pagesCount },
         [dataWithoutPaging, groupedData, pagesCount, preparedColumns]
     );
@@ -76,7 +76,7 @@ export const useTableDataCalculation = (props: ITableProps, enabled: boolean = t
  * Returns the data calculated by the table (TableControlled), or calculates it if the component is used separately.
  */
 export const useTableData = (props: ITableProps): ITableData => {
-    const tableData = React.useContext(TableDataContext);
+    const tableData = useContext(TableDataContext);
     const ownTableData = useTableDataCalculation(props, !tableData);
     return (tableData || ownTableData)!;
 };

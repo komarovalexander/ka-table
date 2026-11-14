@@ -1,6 +1,6 @@
 import { DataType, Table, useTableInstance } from '../../lib';
 import { EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { IFilterRowEditorProps } from '../../lib/props';
 import dataArray from './data';

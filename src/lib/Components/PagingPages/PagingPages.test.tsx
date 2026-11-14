@@ -1,7 +1,6 @@
 import { ActionType } from '../../enums';
 import { IPagingProps } from '../../props';
 import PagingPages from './PagingPages';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { act, fireEvent, render } from '@testing-library/react';
 

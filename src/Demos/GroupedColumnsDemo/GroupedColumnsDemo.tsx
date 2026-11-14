@@ -3,7 +3,6 @@ import './GroupedColumnsDemo.css';
 import { DataType, Table } from '../../lib';
 
 import { Column } from '../../lib/models';
-import React from 'react';
 import { SortingMode } from '../../lib/enums';
 
 const columns: Column[] = Array(15).fill(undefined).map(

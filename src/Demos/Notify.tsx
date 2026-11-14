@@ -1,9 +1,9 @@
 
-import React from 'react';
+import { FC, useState } from 'react';
 
-const Notify: React.FC = () => {
+const Notify: FC = () => {
     const isShown = localStorage.getItem('notify') !== '1';
-    const [shown, changeShown] = React.useState(isShown);
+    const [shown, changeShown] = useState(isShown);
     if (!shown) return <></>;
     return (
         <div style={{

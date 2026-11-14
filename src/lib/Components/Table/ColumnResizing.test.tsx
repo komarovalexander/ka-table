@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 
 import { IKaTableProps, ITableInstance, ITableProps, Table } from '../..';
 import { act, fireEvent, render } from '@testing-library/react';
@@ -115,7 +115,7 @@ describe('ColumnResizing', () => {
             return String(value1) > String(value2) ? 1 : -1;
         };
         const ControlledTable = () => {
-            const [tableProps, setTableProps] = React.useState<ITableProps<Row>>({ columns, data, rowKeyField: 'id', sortingMode: SortingMode.Single });
+            const [tableProps, setTableProps] = useState<ITableProps<Row>>({ columns, data, rowKeyField: 'id', sortingMode: SortingMode.Single });
             const dispatch: DispatchFunc = (action) => setTableProps((prevState) => kaReducer(prevState, action));
             return <Table {...tableProps} columnResizing sort={sort} dispatch={dispatch} />;
         };

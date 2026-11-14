@@ -5,8 +5,6 @@ import { CustomLookupEditor, DateEditor, NumberEditor } from './editors';
 import { DataType, Table } from '../../lib';
 import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 
-import React from 'react';
-
 const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = Array(119).fill(undefined).map(

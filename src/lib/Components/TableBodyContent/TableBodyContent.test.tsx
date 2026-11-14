@@ -1,7 +1,6 @@
 import { act } from '@testing-library/react';
 import { EditingMode } from '../../enums';
 import { ITableBodyProps } from '../../props';
-import React from 'react';
 import TableBodyContent from './TableBodyContent';
 import { createRoot } from 'react-dom/client';
 import { newRowId } from '../../const';

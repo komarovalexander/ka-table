@@ -1,6 +1,6 @@
 import { DataType, Table } from '../../lib';
 
-import React from 'react';
+import { FC } from 'react';
 import { SortingMode } from '../../lib/enums';
 
 const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
@@ -17,7 +17,7 @@ const dataArray = [
     { id: 9, name: 'Treme Watson', score: 61, passed: true, tryDate: new Date(2022, 10, 9) },
 ];
 
-const CustomAttributesDemo: React.FC = () => {
+const CustomAttributesDemo: FC = () => {
     return (
         <Table
             columns= {[

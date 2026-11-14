@@ -1,8 +1,6 @@
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 import { Table, useTable } from '../../lib';
 
-import React from 'react';
-
 const initDataArray = [
     { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
     { id: 2, type: 'Dog', name: 'Rex', country: 'Montenegro', age: 6 },

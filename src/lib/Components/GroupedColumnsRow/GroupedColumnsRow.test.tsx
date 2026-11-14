@@ -1,5 +1,4 @@
 import { GroupedColumnsRow } from './GroupedColumnsRow'
-import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { IHeadRowProps } from '../../props'
 import { SortingMode } from '../../enums'

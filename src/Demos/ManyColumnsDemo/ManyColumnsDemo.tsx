@@ -2,7 +2,6 @@ import { DataType, Table } from '../../lib';
 import { EditingMode, SortingMode } from '../../lib/enums';
 
 import { Column } from '../../lib/models';
-import React from 'react';
 
 const columns: Column[] = Array(500).fill(undefined).map(
     (_, index) => ({

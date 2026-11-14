@@ -3,7 +3,6 @@ import { act, fireEvent, render } from '@testing-library/react';
 
 import CellEditorNumber from './CellEditorNumber';
 import { ICellEditorProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 let props: ICellEditorProps;

@@ -6,7 +6,6 @@ import { Table, useTable } from '../../lib';
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import Checkbox from '@mui/material/Checkbox';
-import React from 'react';
 import TablePagination from '@mui/material/TablePagination';
 import TextField from '@mui/material/TextField';
 import { filterAndSearchData } from '../../lib/Utils/FilterUtils';

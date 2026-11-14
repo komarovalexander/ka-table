@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent, memo, Ref, useCallback } from 'react';
 
 import CellEditor from '../CellEditor/CellEditor';
 import CellText from '../CellText/CellText';
@@ -9,7 +9,7 @@ import { getFixedColumnClassName } from '../../Utils/ColumnUtils';
 import { useAriaColIndex } from '../TableWrapper/ColumnIndexesContext';
 import { useCellKeyboardNavigation } from '../../hooks/UseKeyboardNavigation';
 
-const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
+const CellComponent: FunctionComponent<ICellProps> = (props) => {
     const {
         treeDeep,
         treeArrowElement,
@@ -28,9 +28,9 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
         ...(keyboardNavigation && { tabIndex: keyboardNavigation.tabIndex, onFocus: keyboardNavigation.onFocus }),
     }, props, childComponents.cell);
     // a ref of the customization (elementAttributes) is kept
-    const customRef = (elementAttributes as { ref?: React.Ref<HTMLTableCellElement> }).ref;
+    const customRef = (elementAttributes as { ref?: Ref<HTMLTableCellElement> }).ref;
     const elementRef = keyboardNavigation?.elementRef;
-    const mergedRef = React.useCallback((element: HTMLTableCellElement | null) => {
+    const mergedRef = useCallback((element: HTMLTableCellElement | null) => {
         if (elementRef) {
             elementRef.current = element;
         }
@@ -62,6 +62,6 @@ const CellComponent: React.FunctionComponent<ICellProps> = (props) => {
     );
 };
 
-export const CellComponentMemo = React.memo(CellComponent);
+export const CellComponentMemo = memo(CellComponent);
 
 export default CellComponent;

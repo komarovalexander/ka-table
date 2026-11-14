@@ -58,7 +58,7 @@ import NullableCellDataDemo from './NullableCellDataDemo/NullableCellDataDemo';
 import OverviewDemo from './OverviewDemo/OverviewDemo';
 import PagingDemo from './PagingDemo/PagingDemo';
 import PrintDemo from './PrintDemo/PrintDemo';
-import React from 'react';
+import { FC, useEffect } from 'react';
 import ReduxDemo from './ReduxDemo/ReduxDemo';
 import RemoteDataDemo from './RemoteDataDemo/RemoteDataDemo';
 import RemoteDataEditingDemo from './RemoteDataEditingDemo/RemoteDataEditingDemo';
@@ -155,7 +155,7 @@ const demos: Demo[] = [
 const PageRoute = ({ c }: { c: DemoCase }) => {
     const location = useLocation();
 
-    React.useEffect(() => {
+    useEffect(() => {
         trackPage(location?.pathname);
     }, [location?.pathname]);
     return <>{c.demoComponent()}</>;
@@ -171,7 +171,7 @@ const cases: DemoCase[] = demos.map((d: Demo) => {
     });
 });
 
-const Demos: React.FC = () => {
+const Demos: FC = () => {
     return (
         <HashRouter>
             <div className='demos-search-back' />

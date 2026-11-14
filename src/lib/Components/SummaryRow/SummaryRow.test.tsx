@@ -1,4 +1,3 @@
-import React from 'react';
 import { SummaryRow } from './SummaryRow';
 import { createRoot } from 'react-dom/client';
 import { ISummaryRowProps } from '../../props';

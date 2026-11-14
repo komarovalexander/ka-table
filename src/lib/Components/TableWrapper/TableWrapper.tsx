@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { AllHTMLAttributes, FunctionComponent, Ref, useCallback, useMemo, useRef, useState } from 'react';
 
 import { ActionType, EditingMode, FilteringMode, SortingMode } from '../../enums';
 
@@ -34,7 +34,7 @@ const getAreAllRowsSelected = (data: unknown[], selectedRows: unknown[], rowKeyF
     return data.every((d) => selectedRowsSet.has(getValueByField(d, rowKeyField)));
 };
 
-export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => {
+export const TableWrapper: FunctionComponent<ITableAllProps> = (props) => {
     const {
         childComponents = emptyChildComponents,
         columnReordering,
@@ -55,11 +55,11 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
     } = props;
     const preparedOptions = useTableData(props);
     // column.fixed: the offsets of the sticky cells
-    const columns = React.useMemo(() => getColumnsWithFixedStyle(preparedOptions.columns), [preparedOptions.columns]);
-    const hasFixedColumns = React.useMemo(() => columns.some((column) => column.fixed), [columns]);
+    const columns = useMemo(() => getColumnsWithFixedStyle(preparedOptions.columns), [preparedOptions.columns]);
+    const hasFixedColumns = useMemo(() => columns.some((column) => column.fixed), [columns]);
     // the columns are scrolled under the fixed columns of the edge: these fixed columns show a shadow
-    const [overflow, setOverflow] = React.useState({ left: false, right: false });
-    const updateOverflow = React.useCallback((element: HTMLElement) => {
+    const [overflow, setOverflow] = useState({ left: false, right: false });
+    const updateOverflow = useCallback((element: HTMLElement) => {
         const left = element.scrollLeft > 0;
         const right = element.scrollLeft + element.clientWidth < element.scrollWidth - 1;
         setOverflow((current) => (current.left === left && current.right === right ? current : { left, right }));
@@ -69,25 +69,25 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
     const columnsRange = isHorizontalVirtualScrolling ? getRenderedColumnsRange(columns, virtualScrolling!) : undefined;
     const firstColumnIndex = columnsRange?.first ?? 0;
     const lastColumnIndex = columnsRange?.last ?? 0;
-    const renderedColumns = React.useMemo(
+    const renderedColumns = useMemo(
         () => (isHorizontalVirtualScrolling ? getVirtualizedColumns(columns, { first: firstColumnIndex, last: lastColumnIndex }) : columns),
         [isHorizontalVirtualScrolling, columns, firstColumnIndex, lastColumnIndex]
     );
     // the cells tell their columns (aria-colindex) when not all of them are rendered
-    const columnIndexes = React.useMemo(
+    const columnIndexes = useMemo(
         () => (isHorizontalVirtualScrolling
             ? new Map(columns.map((column, index) => [column.key, preparedOptions.groupColumnsCount + index + 1]))
             : undefined),
         [isHorizontalVirtualScrolling, columns, preparedOptions.groupColumnsCount]
     );
     // true while a column is resized by the mouse (HeadCellResize): the rows are rendered with the new widths when the resize ends
-    const columnResizeRef = React.useRef(false);
-    const groupsExpanded = React.useMemo(
+    const columnResizeRef = useRef(false);
+    const groupsExpanded = useMemo(
         () => groups && !props.groupsExpanded ? getExpandedGroups(preparedOptions.groupedData) : props.groupsExpanded,
         [groups, props.groupsExpanded, preparedOptions.groupedData]
     );
 
-    const areAllRowsSelected = React.useMemo(
+    const areAllRowsSelected = useMemo(
         () => getAreAllRowsSelected(data, selectedRows, rowKeyField),
         [data, selectedRows, rowKeyField]
     );
@@ -120,9 +120,9 @@ export const TableWrapper: React.FunctionComponent<ITableAllProps> = (props) => 
         onKeyUp: keyboardNavigation.onKeyUp,
     }, props, childComponents.tableWrapper);
     // elementAttributes of childComponents.tableWrapper can set a ref too
-    const { ref: customWrapperRef, ...wrapperAttributes }: React.AllHTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> } = tableWrapper.elementAttributes;
-    const wrapperRef = React.useRef<HTMLDivElement | null>(null);
-    const setWrapperRef = React.useCallback((element: HTMLDivElement | null) => {
+    const { ref: customWrapperRef, ...wrapperAttributes }: AllHTMLAttributes<HTMLDivElement> & { ref?: Ref<HTMLDivElement> } = tableWrapper.elementAttributes;
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
+    const setWrapperRef = useCallback((element: HTMLDivElement | null) => {
         wrapperRef.current = element;
         if (typeof customWrapperRef === 'function') {
             customWrapperRef(element);

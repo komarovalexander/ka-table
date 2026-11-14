@@ -3,7 +3,6 @@ import { ChildComponents } from '../../Models/ChildComponents';
 import { Column } from '../../Models/Column';
 import GroupRowContent from './GroupRowContent';
 import { IGroupRowProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { act, fireEvent } from '@testing-library/react';
 import { renderInto } from '../../../testUtils/renderInto';

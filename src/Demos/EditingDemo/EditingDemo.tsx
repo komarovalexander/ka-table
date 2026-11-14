@@ -1,7 +1,7 @@
 import { DataType, Table } from '../../lib';
 
 import { EditingMode } from '../../lib/enums';
-import React from 'react';
+import { FC } from 'react';
 
 const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
@@ -14,7 +14,7 @@ const dataArray = [
     { id: 6, name: 'Sunny Fox', score: 33, passed: false, nextTry: new Date(2021, 10, 9, 10) },
 ];
 
-const EditingDemo: React.FC = () => {
+const EditingDemo: FC = () => {
     return (
         <Table
             columns= {[

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import EmptyCells from '../EmptyCells/EmptyCells';
 import { ISummaryRowProps } from '../../props';
@@ -8,7 +8,7 @@ import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 
-export const SummaryRow: React.FunctionComponent<ISummaryRowProps> = (props) => {
+export const SummaryRow: FunctionComponent<ISummaryRowProps> = (props) => {
     const {
         childComponents,
         columns,

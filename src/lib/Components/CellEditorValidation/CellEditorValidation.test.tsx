@@ -2,7 +2,6 @@ import { DataType, EditingMode } from '../../enums';
 
 import CellEditorValidation from './CellEditorValidation';
 import { ICellEditorProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { render } from '@testing-library/react';
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext, KeyboardEvent, useContext, useMemo, useRef, useState } from 'react';
 
 import { ActionType, EditingMode } from '../enums';
 import { ICellProps, IGroupRowProps } from '../props';
@@ -40,7 +40,7 @@ const getNavigationRows = (data: unknown[], rowKeyField: string): INavigationRow
 
 const isSameGroup = (groupKey: unknown[], otherGroupKey: unknown[]) => getGroupKeyId(groupKey) === getGroupKeyId(otherGroupKey);
 
-export const KeyboardNavigationContext = React.createContext<IKeyboardNavigation | undefined>(undefined);
+export const KeyboardNavigationContext = createContext<IKeyboardNavigation | undefined>(undefined);
 
 const isSameCell = (cell: Cell, otherCell: Cell) => cell.columnKey === otherCell.columnKey && cell.rowKeyValue === otherCell.rowKeyValue;
 
@@ -56,17 +56,17 @@ export const isKeyboardNavigationEnabled = (props: { keyboardNavigation?: boolea
 export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITableData) => {
     const { dispatch, editingMode, groupsExpanded, paging, rowKeyField, treeExpandButtonColumnKey, treeGroupKeyField, virtualScrolling } = props;
     const keyboardNavigation = isKeyboardNavigationEnabled(props);
-    const [navigation] = React.useState<IKeyboardNavigation>(() => ({
+    const [navigation] = useState<IKeyboardNavigation>(() => ({
         cells: new WeakMap(),
         groups: new WeakMap(),
         focusRequestRef: { current: false },
         columnKeyRef: {},
     }));
-    const navigationRows = React.useMemo(
+    const navigationRows = useMemo(
         () => keyboardNavigation ? getNavigationRows(tableData.groupedData, rowKeyField) : [],
         [keyboardNavigation, tableData.groupedData, rowKeyField]
     );
-    const rowKeyValues = React.useMemo(() => navigationRows.filter((row) => !row.groupKey).map((row) => row.rowKeyValue), [navigationRows]);
+    const rowKeyValues = useMemo(() => navigationRows.filter((row) => !row.groupKey).map((row) => row.rowKeyValue), [navigationRows]);
     if (!keyboardNavigation) {
         return {};
     }
@@ -143,7 +143,7 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
         scrollToRow(row, row.groupKey ? undefined : columnKey);
     };
 
-    const moveVertically = (row: INavigationRow, event: React.KeyboardEvent) => {
+    const moveVertically = (row: INavigationRow, event: KeyboardEvent) => {
         event.preventDefault();
         const nextRow = getNextRow(row, event.key === 'ArrowDown' ? 1 : -1, event.ctrlKey || event.metaKey);
         if (nextRow && !isSameRow(nextRow, row)) {
@@ -151,7 +151,7 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
         }
     };
 
-    const getTargetCell = (event: React.KeyboardEvent, cell: Cell): Cell | undefined => {
+    const getTargetCell = (event: KeyboardEvent, cell: Cell): Cell | undefined => {
         const end = event.ctrlKey || event.metaKey;
         switch (event.key) {
         case 'ArrowRight':
@@ -191,7 +191,7 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
 
     // a group row: the arrows Up and Down move the focus, Left and Right collapse and expand the group,
     // Space (on keyup with Enter) toggles it, Home and End with Ctrl go to the first and the last row, PageUp and PageDown change the page
-    const onGroupKeyDown = (event: React.KeyboardEvent<HTMLElement>, groupKey: unknown[]) => {
+    const onGroupKeyDown = (event: KeyboardEvent<HTMLElement>, groupKey: unknown[]) => {
         switch (event.key) {
         case 'ArrowDown':
         case 'ArrowUp':
@@ -227,7 +227,7 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
         }
     };
 
-    const onKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    const onKeyDown = (event: KeyboardEvent<HTMLElement>) => {
         // keys pressed in an editor or another element inside a cell are not handled
         const groupKey = navigation.groups.get(event.target as Element);
         if (groupKey) {
@@ -274,7 +274,7 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
     // Enter opens the editor on keyup, as the editors handle Enter on keyup too,
     // and the keyup which opens the editor doesn't go further to the handlers of the page.
     // Enter and Space toggle a group row and a tree row on the cell of its arrow (F2 opens the editor of this cell)
-    const onKeyUp = (event: React.KeyboardEvent<HTMLElement>) => {
+    const onKeyUp = (event: KeyboardEvent<HTMLElement>) => {
         const groupKey = navigation.groups.get(event.target as Element);
         if (groupKey) {
             if (event.key === 'Enter' || event.key === ' ') {
@@ -305,10 +305,10 @@ export const useTableKeyboardNavigation = (props: ITableAllProps, tableData: ITa
  * or returns to the cell from its closed editor
  */
 export const useCellKeyboardNavigation = (props: ICellProps) => {
-    const navigation = React.useContext(KeyboardNavigationContext);
+    const navigation = useContext(KeyboardNavigationContext);
     const { column, dispatch, isEditableCell, isFocused, rowKeyValue } = props;
-    const elementRef = React.useRef<HTMLTableCellElement | null>(null);
-    const isEditableCellRef = React.useRef(isEditableCell);
+    const elementRef = useRef<HTMLTableCellElement | null>(null);
+    const isEditableCellRef = useRef(isEditableCell);
 
     useIsomorphicLayoutEffect(() => {
         const isEditorClosed = isEditableCellRef.current && !isEditableCell;
@@ -360,9 +360,9 @@ export const useCellKeyboardNavigation = (props: ICellProps) => {
  * the group row gets the focus by the arrows Up and Down as the rows with cells, its keys expand and collapse it
  */
 export const useGroupKeyboardNavigation = (props: IGroupRowProps) => {
-    const navigation = React.useContext(KeyboardNavigationContext);
+    const navigation = useContext(KeyboardNavigationContext);
     const { dispatch, groupKey, isFocused } = props;
-    const elementRef = React.useRef<HTMLTableCellElement | null>(null);
+    const elementRef = useRef<HTMLTableCellElement | null>(null);
 
     useIsomorphicLayoutEffect(() => {
         const element = elementRef.current;

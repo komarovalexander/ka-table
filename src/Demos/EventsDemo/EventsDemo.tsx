@@ -1,7 +1,7 @@
 import './EventsDemo.css';
 
 import { DataType, EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CustomAction, TableAction } from '../../lib/types';
 import { EventsLog, TableEvent } from './EventsLog';
 import { Table, useTable } from '../../lib';

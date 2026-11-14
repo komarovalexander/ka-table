@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { ITableInstance, ITableProps, Table } from '..';
 import { act, render } from '@testing-library/react';
 

@@ -5,7 +5,7 @@ import { ExpandedIcon } from '../../Icons/ExpandedIcon';
 import { IDataRowProps } from '../../props';
 import { KeyboardNavigationContext } from '../../hooks/UseKeyboardNavigation';
 import { MemoizedRowsContext } from '../Rows/MemoizedRowsContext';
-import React from 'react';
+import { FunctionComponent, useContext } from 'react';
 import VirtualColumnSpacer from '../VirtualColumnSpacer/VirtualColumnSpacer';
 import defaultOptions from '../../defaultOptions';
 import { buttonAttributes, getAriaLabel } from '../../Utils/AriaUtils';
@@ -15,7 +15,7 @@ import { getFormattedValue, getValueByColumn } from '../../Utils/DataUtils';
 import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 import { updateTreeGroupsExpanded } from '../../actionCreators';
 
-const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
+const DataRowContent: FunctionComponent<IDataRowProps> = ({
     childComponents,
     columns,
     treeDeep,
@@ -35,10 +35,10 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
     validation,
     treeExpandButtonColumnKey
 }) => {
-    const Cell = React.useContext(MemoizedRowsContext) ? CellComponentMemo : CellComponent;
+    const Cell = useContext(MemoizedRowsContext) ? CellComponentMemo : CellComponent;
     // with the keyboard navigation the cell gets the focus, its keys toggle the row and the row tells its state (treegrid),
     // otherwise the arrow is a button named by the text of its cell, aria-expanded tells its state
-    const navigation = React.useContext(KeyboardNavigationContext);
+    const navigation = useContext(KeyboardNavigationContext);
     const getTreeArrow = (label?: string) => (
         <div
             className='ka-icon-tree-arrow'

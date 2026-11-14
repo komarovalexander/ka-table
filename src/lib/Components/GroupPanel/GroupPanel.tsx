@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import { GroupPanelCell } from '../GroupPanelCell/GroupPanelCell';
 import { IGroupPanelProps } from '../../props';
@@ -7,7 +7,7 @@ import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { groupPanelOnDrop, isDraggedItemOfKind } from '../../Utils/PropsUtils';
 import { isMaxDeep } from '../../Utils/GroupUtils';
 
-export const GroupPanel: React.FunctionComponent<IGroupPanelProps> = (props) => {
+export const GroupPanel: FunctionComponent<IGroupPanelProps> = (props) => {
     const {
         columns,
         groups,

@@ -1,5 +1,5 @@
 import { DataType, Table, useTable } from '../../lib';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import serverEmulator, { Row } from './serverEmulator';
 
 import { TableAction } from '../../lib/types';

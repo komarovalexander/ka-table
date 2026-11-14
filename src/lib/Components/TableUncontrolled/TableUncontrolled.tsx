@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext, FunctionComponent, SetStateAction, useCallback, useRef, useState } from 'react';
 
 import { ITableInstance, ITableProps } from '../Table/Table';
 import { getCallbackProps, getControlledProps, getControlledPropsKeys, getPropsToOverride, withCallbacks } from './utils';
@@ -17,27 +17,27 @@ export interface ITableUncontrolledPropsKeys extends ITableProps {
     table?: ITableInstance;
 }
 
-export const TableInstanceContext = React.createContext<ITableInstance>({} as ITableInstance);
+export const TableInstanceContext = createContext<ITableInstance>({} as ITableInstance);
 
-export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsKeys> = (props) => {
+export const TableUncontrolled: FunctionComponent<ITableUncontrolledPropsKeys> = (props) => {
     const { table: tableFromProps, childComponents, ...tablePropsControlled } = props;
-    const [ownTable] = React.useState(() => getTable());
+    const [ownTable] = useState(() => getTable());
     const table = tableFromProps || ownTable;
 
-    const [tableProps, setTableProps] = React.useState<ITableProps>(() => ({ ...tablePropsControlled, ...table.props }));
+    const [tableProps, setTableProps] = useState<ITableProps>(() => ({ ...tablePropsControlled, ...table.props }));
     // the latest state: several actions dispatched in a row are applied one after another before the next render
-    const tablePropsRef = React.useRef(tableProps);
+    const tablePropsRef = useRef(tableProps);
     // the functions are not the state of the table: the latest ones are used for rendering, by the reducer and in table.props
     const callbacks = getCallbackProps(props);
-    const callbacksRef = React.useRef(callbacks);
+    const callbacksRef = useRef(callbacks);
     callbacksRef.current = callbacks;
 
-    const changeProps = React.useCallback((value: React.SetStateAction<ITableProps>) => {
+    const changeProps = useCallback((value: SetStateAction<ITableProps>) => {
         tablePropsRef.current = typeof value === 'function' ? value(withCallbacks(tablePropsRef.current, callbacksRef.current)) : value;
         setTableProps(tablePropsRef.current);
     }, []);
 
-    const dispatch: DispatchFunc = React.useCallback((action) => {
+    const dispatch: DispatchFunc = useCallback((action) => {
         // the state is calculated outside of the setState updater: React calls updaters twice in StrictMode
         const prevState = withCallbacks(tablePropsRef.current, callbacksRef.current);
         const nextStateDefault = kaReducer(prevState, action);
@@ -55,7 +55,7 @@ export const TableUncontrolled: React.FunctionComponent<ITableUncontrolledPropsK
 
     // the props are applied when the parent component changes them, not on every render (see getControlledPropsKeys).
     // The instance keeps them: a table mounted again with the same instance applies the props changed meanwhile
-    const [appliedProps, setAppliedProps] = React.useState<Partial<ITableProps>>(() => getTableAppliedProps(table) || props);
+    const [appliedProps, setAppliedProps] = useState<Partial<ITableProps>>(() => getTableAppliedProps(table) || props);
     setTableAppliedProps(table, appliedProps);
     const controlledPropsKeys = getControlledPropsKeys(props, appliedProps);
     const propsToOverride = getPropsToOverride(controlledPropsKeys, props, appliedProps, tablePropsRef.current);

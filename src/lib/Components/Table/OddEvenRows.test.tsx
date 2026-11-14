@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { IKaTableProps, Table } from '../..';
 import { fireEvent, render } from '@testing-library/react';
 

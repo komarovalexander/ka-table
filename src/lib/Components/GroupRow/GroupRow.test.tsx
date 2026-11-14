@@ -2,7 +2,6 @@ import { act } from '@testing-library/react';
 import { DataType } from '../../enums';
 import GroupRow from './GroupRow';
 import { IGroupRowProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { renderInto } from '../../../testUtils/renderInto';
 

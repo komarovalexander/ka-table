@@ -4,12 +4,12 @@ import { addElementAttributes, getElementCustomization } from '../../Utils/Compo
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
 import { KeyboardNavigationContext } from '../../hooks/UseKeyboardNavigation';
-import React from 'react';
+import { FunctionComponent, useContext } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getDraggableProps } from '../../Utils/PropsUtils';
 import { reorderRows } from '../../actionCreators';
 
-const DataRow: React.FunctionComponent<IRowProps> = (props) => {
+const DataRow: FunctionComponent<IRowProps> = (props) => {
     const {
         dispatch,
         groupColumnsCount,
@@ -25,7 +25,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
     } = props;
     let dataRow = childComponents.dataRow;
     // the rows of a tree with the keyboard navigation (treegrid): their level from 1 and the state of the rows with children
-    const isTreeGridRow = !!React.useContext(KeyboardNavigationContext) && treeDeep != null;
+    const isTreeGridRow = !!useContext(KeyboardNavigationContext) && treeDeep != null;
 
     if (rowReordering) {
         const reorderedRowProps = getDraggableProps({

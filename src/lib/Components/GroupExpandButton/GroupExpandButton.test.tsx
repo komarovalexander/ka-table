@@ -1,6 +1,5 @@
 import GroupExpandButton from './GroupExpandButton';
 import { IGroupRowProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: IGroupRowProps = {

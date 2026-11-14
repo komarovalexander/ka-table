@@ -2,7 +2,6 @@ import { act, fireEvent, render } from '@testing-library/react';
 
 import { ActionType } from '../../enums';
 import { ITableAllProps } from '../Table/Table';
-import React from 'react';
 import { TableWrapper } from './TableWrapper';
 import { createRoot } from 'react-dom/client';
 

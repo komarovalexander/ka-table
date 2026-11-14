@@ -1,4 +1,3 @@
-import React from 'react';
 import RemoteDataEditingDemo from './RemoteDataEditingDemo';
 import { render } from '@testing-library/react';
 

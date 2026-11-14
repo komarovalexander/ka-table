@@ -1,6 +1,6 @@
 import './ColumnResizingDemo.css';
 
-import React from 'react';
+import { FC } from 'react';
 
 import { DataType, Table } from '../../lib';
 import { EditingMode, SortingMode } from '../../lib/enums';
@@ -23,7 +23,7 @@ const dataArray = Array(30).fill(undefined).map(
     }, { id: index }),
 );
 
-const ColumnResizingDemo: React.FC = () => {
+const ColumnResizingDemo: FC = () => {
 
     return (
         <div className='column-resizing-demo'>

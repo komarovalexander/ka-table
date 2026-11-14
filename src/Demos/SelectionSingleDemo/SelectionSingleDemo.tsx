@@ -2,8 +2,6 @@ import './SelectionSingleDemo.css';
 
 import { DataType, Table, useTable, useTableSelector } from '../../lib';
 
-import React from 'react';
-
 import dataArray from './data';
 
 const SelectionSingleDemo = () => {

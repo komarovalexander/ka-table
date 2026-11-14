@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { IKaTableProps, ITableInstance, Table } from '../..';
 import { fireEvent, render, within } from '@testing-library/react';
 
@@ -80,16 +78,17 @@ const mockElementFromPoint = (element: Element) => {
 /**
  * Drags the item to the target by a touch: a long press, a move over the target and the end of the touch.
  * Returns whether the item and the target are highlighted during the drag and whether the move doesn't scroll the page.
+ * As in a browser, the events of the touch are fired at the element where it started.
  */
 const touchDrag = (item: Element, target: Element) => {
     const restoreElementFromPoint = mockElementFromPoint(target);
     try {
         fireEvent.touchStart(item, { touches: [{ clientX: 10, clientY: 10 }] });
         vi.advanceTimersByTime(600);
-        const isScrollPrevented = !fireEvent.touchMove(document, { touches: [{ clientX: 10, clientY: 60 }] });
+        const isScrollPrevented = !fireEvent.touchMove(item, { touches: [{ clientX: 10, clientY: 60 }] });
         const isDragged = /ka-dragged/.test(item.className);
         const isHighlighted = /ka-drag-over/.test(target.className);
-        fireEvent.touchEnd(document, { touches: [] });
+        fireEvent.touchEnd(item, { touches: [] });
         return { isDragged, isHighlighted, isScrollPrevented };
     } finally {
         restoreElementFromPoint();
@@ -206,22 +205,24 @@ describe('drag and drop by a touch', () => {
     it('scrolls the page when the touch moves before the end of the long press', () => {
         const { first } = setup();
         const restoreElementFromPoint = mockElementFromPoint(first.row('first name 2'));
-        fireEvent.touchStart(first.row('first name 0'), { touches: [{ clientX: 10, clientY: 10 }] });
+        const item = first.row('first name 0');
+        fireEvent.touchStart(item, { touches: [{ clientX: 10, clientY: 10 }] });
         vi.advanceTimersByTime(100);
-        expect(fireEvent.touchMove(document, { touches: [{ clientX: 10, clientY: 40 }] })).toBe(true);
+        expect(fireEvent.touchMove(item, { touches: [{ clientX: 10, clientY: 40 }] })).toBe(true);
         vi.advanceTimersByTime(600);
-        expect(fireEvent.touchMove(document, { touches: [{ clientX: 10, clientY: 60 }] })).toBe(true);
-        fireEvent.touchEnd(document, { touches: [] });
+        expect(fireEvent.touchMove(item, { touches: [{ clientX: 10, clientY: 60 }] })).toBe(true);
+        fireEvent.touchEnd(item, { touches: [] });
         restoreElementFromPoint();
         expect(first.rowKeys()).toEqual([0, 1, 2]);
         expect(getHighlightedElements()).toHaveLength(0);
     });
     it('does not drag the row when the touch ends after the long press without a move', () => {
         const { first } = setup();
-        fireEvent.touchStart(first.row('first name 0'), { touches: [{ clientX: 10, clientY: 10 }] });
+        const item = first.row('first name 0');
+        fireEvent.touchStart(item, { touches: [{ clientX: 10, clientY: 10 }] });
         vi.advanceTimersByTime(600);
         // the touch clicks the row as usual
-        expect(fireEvent.touchEnd(document, { touches: [] })).toBe(true);
+        expect(fireEvent.touchEnd(item, { touches: [] })).toBe(true);
         expect(getHighlightedElements()).toHaveLength(0);
     });
     it('leaves the touch to the drag and drop of the browser', () => {
@@ -232,9 +233,9 @@ describe('drag and drop by a touch', () => {
         // the browser starts dragging the row itself before the end of the long press
         fireEvent.dragStart(item, { dataTransfer: createDataTransfer() });
         vi.advanceTimersByTime(600);
-        expect(fireEvent.touchMove(document, { touches: [{ clientX: 10, clientY: 60 }] })).toBe(true);
+        expect(fireEvent.touchMove(item, { touches: [{ clientX: 10, clientY: 60 }] })).toBe(true);
         expect(first.row('first name 2').classList.contains('ka-drag-over-row')).toBe(false);
-        fireEvent.touchEnd(document, { touches: [] });
+        fireEvent.touchEnd(item, { touches: [] });
         fireEvent.dragEnd(item, { dataTransfer: createDataTransfer() });
         restoreElementFromPoint();
         expect(first.rowKeys()).toEqual([0, 1, 2]);
@@ -242,11 +243,12 @@ describe('drag and drop by a touch', () => {
     it('cancels the drag when the touch is cancelled', () => {
         const { first } = setup();
         const restoreElementFromPoint = mockElementFromPoint(first.row('first name 2'));
-        fireEvent.touchStart(first.row('first name 0'), { touches: [{ clientX: 10, clientY: 10 }] });
+        const item = first.row('first name 0');
+        fireEvent.touchStart(item, { touches: [{ clientX: 10, clientY: 10 }] });
         vi.advanceTimersByTime(600);
-        fireEvent.touchMove(document, { touches: [{ clientX: 10, clientY: 60 }] });
+        fireEvent.touchMove(item, { touches: [{ clientX: 10, clientY: 60 }] });
         expect(first.row('first name 2').classList.contains('ka-drag-over-row')).toBe(true);
-        fireEvent.touchCancel(document, { touches: [] });
+        fireEvent.touchCancel(item, { touches: [] });
         restoreElementFromPoint();
         expect(first.rowKeys()).toEqual([0, 1, 2]);
         expect(getHighlightedElements()).toHaveLength(0);

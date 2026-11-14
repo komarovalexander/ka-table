@@ -2,7 +2,7 @@ import { DataType, Table } from '../../lib';
 
 import FilterRowNumber from '../../lib/Components/FilterRowNumber/FilterRowNumber';
 import { FilteringMode } from '../../lib/enums';
-import React from 'react';
+import { FC } from 'react';
 
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, prevScores: [60, 65, 70], passed: true, nextTry: new Date(2021, 10, 9) },
@@ -14,7 +14,7 @@ const dataArray = [
     { id: 7, name: 'Alex Brzowsky', score: 48, prevScores: [50, 47, 43], passed: false, nextTry: new Date(2021, 11, 11) },
 ];
 
-const FilterRowCustomLogicDemo: React.FC = () => {
+const FilterRowCustomLogicDemo: FC = () => {
     return (
         <Table
             columns= {[

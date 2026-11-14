@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import EmptyCells from '../EmptyCells/EmptyCells';
 import { IColGroupProps } from '../../props';
 
-export const ColGroup: React.FunctionComponent<IColGroupProps> = ({ columns, groupColumnsCount }) => {
+export const ColGroup: FunctionComponent<IColGroupProps> = ({ columns, groupColumnsCount }) => {
     return (
         <colgroup>
             <EmptyCells count={groupColumnsCount} isColGroup={true}/>

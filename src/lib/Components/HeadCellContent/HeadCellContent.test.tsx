@@ -3,7 +3,6 @@ import { act, fireEvent, render } from '@testing-library/react';
 
 import HeadCellContent from './HeadCellContent';
 import { IHeadCellProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: IHeadCellProps = {
