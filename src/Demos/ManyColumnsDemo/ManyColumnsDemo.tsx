@@ -4,28 +4,37 @@ import { EditingMode, SortingMode } from '../../lib/enums';
 import { Column } from '../../lib/models';
 import React from 'react';
 
-const columns: Column[] = Array(100).fill(undefined).map(
+const columns: Column[] = Array(500).fill(undefined).map(
     (_, index) => ({
         key: 'column' + index,
         width: 190,
         title: 'Column ' + index,
-        type: DataType.String,
+        dataType: DataType.String,
+        // the first column stays at the left edge while the others are scrolled
         fixed: index === 0 ? 'left' : undefined,
     }),
 );
 
-const dataArray = Array(30).fill(undefined).map(
-    (_, index) => columns.reduce<Record<string, string | number>>((previousValue, currentValue) => {
-        previousValue[currentValue.key] = `${currentValue.key} row:${index}`;
-        return previousValue;
-    }, { id: index }),
-);
+let dataArray: Record<string, string | number>[];
+
+// 2 000 rows of 500 columns (a million cells) are created when the demo is opened
+const getDataArray = () => {
+    if (!dataArray) {
+        dataArray = Array(2000).fill(undefined).map(
+            (_, index) => columns.reduce<Record<string, string | number>>((previousValue, currentValue) => {
+                previousValue[currentValue.key] = `${currentValue.key} row:${index}`;
+                return previousValue;
+            }, { id: index }),
+        );
+    }
+    return dataArray;
+};
 
 const ManyColumnsDemo = () => {
     return (
         <Table
             columns={columns}
-            data={dataArray}
+            data={getDataArray()}
             editingMode={EditingMode.Cell}
             rowKeyField={'id'}
             sortingMode={SortingMode.Single}
