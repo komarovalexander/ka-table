@@ -1,0 +1,103 @@
+var e=`import './SelectionDemo.css';
+
+import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
+import { Table, useTableInstance } from '../../lib';
+
+import { ICellTextProps } from '../../lib/props';
+import { kaPropsUtils } from '../../lib/utils';
+
+const dataArray = Array(64)
+    .fill(undefined)
+    .map((_, index) => ({
+        column1: \`column:1 row:\${index}\`,
+        column2: \`column:2 row:\${index}\`,
+        column3: \`column:3 row:\${index}\`,
+        column4: \`column:4 row:\${index}\`,
+        id: index,
+    }));
+
+const SelectionCell = ({ rowKeyValue, isSelectedRow, selectedRows }: ICellTextProps) => {
+    const table = useTableInstance();
+    return (
+        <input
+            type='checkbox'
+            checked={isSelectedRow}
+            onChange={(event) => {
+                // the change of a checkbox is its click
+                if ((event.nativeEvent as MouseEvent).shiftKey) {
+                    table.selectRowsRange(rowKeyValue, [...selectedRows].pop());
+                } else if (event.currentTarget.checked) {
+                    table.selectRow(rowKeyValue);
+                } else {
+                    table.deselectRow(rowKeyValue);
+                }
+            }}
+        />
+    );
+};
+
+const SelectionHeader = () => {
+    const table = useTableInstance();
+    const areAllRowsSelected = kaPropsUtils.areAllFilteredRowsSelected(table.props);
+
+    return (
+        <input
+            type='checkbox'
+            checked={areAllRowsSelected}
+            onChange={(event) => {
+                if (event.currentTarget.checked) {
+                    table.selectAllFilteredRows(); // also available: selectAllVisibleRows(), selectAllRows()
+                } else {
+                    table.deselectAllFilteredRows(); // also available: deselectAllVisibleRows(), deselectAllRows()
+                }
+            }}
+        />
+    );
+};
+
+const SelectionDemo = () => {
+    return (
+        <div className='selection-demo'>
+            <Table
+                columns={[
+                    {
+                        key: 'selection-cell',
+                        isFilterable: false,
+                        width: 50
+                    },
+                    { key: 'column1', title: 'Column 1', dataType: DataType.String },
+                    { key: 'column2', title: 'Column 2', dataType: DataType.String },
+                    { key: 'column3', title: 'Column 3', dataType: DataType.String },
+                    { key: 'column4', title: 'Column 4', dataType: DataType.String },
+                ]}
+                paging={{
+                    enabled: true,
+                }}
+                data={dataArray}
+                rowKeyField={'id'}
+                selectedRows={[3, 5]}
+                sortingMode={SortingMode.Single}
+                filteringMode={FilteringMode.FilterRow}
+                childComponents={{
+                    cellText: {
+                        content: (props) => {
+                            if (props.column.key === 'selection-cell') {
+                                return <SelectionCell {...props} />;
+                            }
+                        },
+                    },
+                    headCell: {
+                        content: (props) => {
+                            if (props.column.key === 'selection-cell') {
+                                return <SelectionHeader />;
+                            }
+                        },
+                    },
+                }}
+            />
+        </div>
+    );
+};
+
+export default SelectionDemo;
+`;export{e as default};

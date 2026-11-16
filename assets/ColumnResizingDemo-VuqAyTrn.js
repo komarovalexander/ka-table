@@ -1,0 +1,43 @@
+var e=`import './ColumnResizingDemo.css';
+
+import { FC } from 'react';
+
+import { DataType, Table } from '../../lib';
+import { EditingMode, SortingMode } from '../../lib/enums';
+import { Column } from '../../lib/models';
+
+const columns: Column[] = Array(15).fill(undefined).map(
+    (_, index) => ({
+        key: 'column' + index,
+        colGroup: { style: { minWidth: 100 }},
+        width: 200,
+        title: 'Column ' + index,
+        type: DataType.String,
+    }),
+);
+
+const dataArray = Array(30).fill(undefined).map(
+    (_, index) => columns.reduce<Record<string, string | number>>((previousValue, currentValue) => {
+        previousValue[currentValue.key] = \`\${currentValue.key} row:\${index}\`;
+        return previousValue;
+    }, { id: index }),
+);
+
+const ColumnResizingDemo: FC = () => {
+
+    return (
+        <div className='column-resizing-demo'>
+            <Table
+                sortingMode={SortingMode.Single}
+                rowKeyField={'id'}
+                editingMode={EditingMode.Cell}
+                data={dataArray}
+                columns={columns}
+                columnResizing={true}
+            />
+        </div>
+    );
+};
+
+export default ColumnResizingDemo;
+`;export{e as default};

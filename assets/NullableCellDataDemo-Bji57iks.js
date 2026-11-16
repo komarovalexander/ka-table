@@ -1,0 +1,113 @@
+var e=`import { DataType, Table, useTableInstance } from '../../lib';
+import { EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
+import { useState } from 'react';
+
+import { IFilterRowEditorProps } from '../../lib/props';
+import dataArray from './data';
+import { kaDateUtils } from '../../lib/utils';
+
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
+const CustomDateFilterEditor = ({
+    column,
+}: IFilterRowEditorProps) => {
+    const table = useTableInstance();
+    return (
+        <div>
+            <>Less than: </>
+            <input
+                type='date'
+                value={kaDateUtils.getDateInputValue(column.filterRowValue)}
+                onChange={(event) => {
+                    // the local date: new Date('YYYY-MM-DD') would be the midnight of UTC, the previous day west of it
+                    table.updateFilterRowValue(column.key, kaDateUtils.getDateFromInputValue(event.currentTarget.value));
+                }}
+            />
+        </div>
+    );
+};
+
+const NullableCellDataDemo = () => {
+    const [searchText, setSearchText] = useState('i');
+    return (
+        <>
+            <input type='search' value={searchText} onChange={(event) => {
+                setSearchText(event.currentTarget.value);
+            }} className='top-element'/>
+            <Table
+                columns= {[
+                    {
+                        dataType: DataType.String,
+                        key: 'representative.name',
+                        width: 150,
+                        title: 'Representative',
+                    },
+                    {
+                        dataType: DataType.Boolean,
+                        key: 'company.hasLoyalProgram',
+                        title: 'Loyal Program',
+                    },
+                    {
+                        dataType: DataType.String,
+                        filterRowValue: 'e',
+                        key: 'product.name',
+                        width: 110,
+                        title: 'Product',
+                    },
+                    {
+                        dataType: DataType.Number,
+                        key: 'product.price',
+                        sortDirection: SortDirection.Ascend,
+                        width: 110,
+                        style: {
+                            textAlign: 'right',
+                        },
+                        title: 'Product Price',
+                    },
+                    {
+                        dataType: DataType.Date,
+                        filterRowOperator: '<',
+                        filterRowValue: new Date(2015, 1, 2),
+                        key: 'firstDealDate',
+                        width: 190,
+                        style: {
+                            textAlign: 'center',
+                        },
+                        title: 'First Deal Date',
+                    },
+                ]}
+                data={dataArray}
+                editingMode={EditingMode.Cell}
+                format= {({ column, value }) => {
+                    if (column.key === 'company.hasLoyalProgram'){
+                        return \`Loyal program: \${ value == null ? 'Unspecified' : (value ? 'Yes' : 'No')}\`;
+                    }
+                    if (column.key === 'price'){
+                        return value == null ? '-' : \`$\${value}\`;
+                    }
+                    if (column.dataType === DataType.Date){
+                        return typeof value === 'string' && dateFormat.format(kaDateUtils.getDate(value));
+                    }
+                }}
+                filteringMode={FilteringMode.FilterRow}
+                groups={[{ columnKey: 'company.hasLoyalProgram' }]}
+                groupsExpanded={[[true]]}
+                rowKeyField={'id'}
+                searchText={searchText}
+                sortingMode={SortingMode.Single}
+                childComponents={{
+                    filterRowCell: {
+                        content: (props) => {
+                            switch (props.column.key){
+                            case 'firstDealDate': return <CustomDateFilterEditor {...props}/>;
+                            }
+                        }
+                    }
+                }}
+            />
+        </>
+    );
+};
+
+export default NullableCellDataDemo;
+`;export{e as default};

@@ -1,0 +1,103 @@
+var e=`import 'bootstrap/dist/css/bootstrap.css';
+import './BootstrapDemo.css';
+
+import { CustomLookupEditor, DateEditor, NumberEditor } from './editors';
+import { DataType, Table } from '../../lib';
+import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
+
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
+const dataArray = Array(119).fill(undefined).map(
+    (_, index) => ({
+        column1: index % 2 === 0,
+        column2: \`column:2 row:\${index}\`,
+        column3: index % 5,
+        column4: new Date(2022, 11, index),
+        id: index,
+    }),
+);
+
+const BootstrapDemo = () => {
+    return (
+        <div className='bootstrap-demo'>
+            <Table
+                columns={[
+                    { key: 'column1', title: 'Column 1', dataType: DataType.Boolean, style: {minWidth: 130}   },
+                    { key: 'column2', title: 'Column 2', dataType: DataType.String, style: {width: 240} },
+                    { key: 'column3', title: 'Column 3', dataType: DataType.Number, filterRowOperator: '>', style: {width: 230}  },
+                    { key: 'column4', title: 'Column 4', dataType: DataType.Date, filterRowOperator: '<', style: {minWidth: 100} },
+                ]}
+                format= {({ column, value }) => {
+                    if (column.dataType === DataType.Date){
+                        return value instanceof Date && dateFormat.format(value);
+                    }
+                }}
+                paging= {{
+                    enabled: true,
+                    pageSize: 7,
+                    pageIndex: 0
+                }}
+                data={dataArray}
+                editingMode={EditingMode.Cell}
+                rowKeyField={'id'}
+                sortingMode={SortingMode.Single}
+                filteringMode={FilteringMode.FilterRow}
+
+                // bootstrap overrides for child components
+                childComponents={{
+                    table: {
+                        elementAttributes: () => ({
+                            className: 'table table-striped table-hover table-bordered table-primary'
+                        })
+                    },
+                    tableHead: {
+                        elementAttributes: () => ({
+                            className: 'thead-dark'
+                        })
+                    },
+                    noDataRow: {
+                        content: () => 'No Data Found'
+                    },
+                    filterRowCell: {
+                        content: (props) => {
+                            const getEditor = () => {
+                                switch (props.column.key){
+                                case 'column1': return <CustomLookupEditor {...props}/>;
+                                case 'column2': return <></>;
+                                case 'column3': return <NumberEditor {...props}/>;
+                                case 'column4': return <DateEditor {...props}/>;
+                                }
+                            }
+                            return (
+                                <div className='d-flex'>{getEditor()}</div>
+                            )
+                        }
+                    },
+                    cellEditorInput: {
+                        elementAttributes: ({column}) => ({
+                            className: column.dataType === DataType.Boolean ? 'form-check-input' : 'form-control'
+                        }),
+                    },
+                    pagingIndex: {
+                        elementAttributes: ({ isActive }) => ({
+                            className: \`page-item \${(isActive ? 'active' : '')}\`
+                        }),
+                        content: ({ text, isActive }) => (
+                            <button type='button' className={\`page-link \${(isActive ? 'active' : '')}\`} aria-current={isActive ? 'page' : undefined}>
+                                {text}
+                            </button>
+                        )
+                    },
+                    pagingPages: {
+                        elementAttributes: () => ({
+                            className: 'pagination'
+                        }),
+                    }
+                }}
+            />
+        </div>
+    );
+};
+
+export default BootstrapDemo;
+`;export{e as default};
