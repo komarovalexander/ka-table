@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useInsertionEffect, useState } from 'react';
 import * as actionCreators from '../Namespaces/actionCreators';
 
 import { CustomReducerFunc, OnDispatchFunc, TableAction } from '../types';
@@ -39,8 +39,13 @@ export const useTable = <TData = unknown>(options?: {
     customReducer?: CustomReducerFunc<TData>;
 }): ITableInstance<TData> => {
     const [table] = useState(() => getTable<TData>(options));
-    // the instance stays the same, the callbacks are always the latest ones
-    table.onDispatch = options?.onDispatch || emptyFunc;
-    table.customReducer = options?.customReducer;
+    // the instance stays the same, the callbacks are the latest ones of a committed render:
+    // React can discard a render, and the actions of the table must not get its callbacks
+    const onDispatch = options?.onDispatch || emptyFunc;
+    const customReducer = options?.customReducer;
+    useInsertionEffect(() => {
+        table.onDispatch = onDispatch;
+        table.customReducer = customReducer;
+    });
     return table;
 };

@@ -2,6 +2,8 @@ import { ITableInstance, Table } from '..';
 import { act, render, renderHook } from '@testing-library/react';
 import { getTable, useTable } from './UseTable';
 import { selectRow } from '../actionCreators';
+import { ActionType } from '../enums';
+import { startTransition, Suspense, useState } from 'react';
 
 vi.useFakeTimers();
 
@@ -42,6 +44,49 @@ describe('UseTable', () => {
         rerender({ onDispatch: onDispatch2 });
         expect(result.current.onDispatch).toBe(onDispatch2);
         expect(result.current.customReducer).toBe(customReducer);
+    });
+    it('does not use the callbacks of a render which React discards', () => {
+        const reducerValues: string[] = [];
+        const dispatchValues: string[] = [];
+        let table: ITableInstance;
+        let setParentState: (state: { value: string, isSuspended: boolean }) => void;
+        const loading = new Promise<void>(() => {});
+        // suspends the transition: React discards its render, in which the callbacks get the new value
+        const Suspender = ({ isSuspended }: { isSuspended: boolean }) => {
+            if (isSuspended) {
+                throw loading;
+            }
+            return null;
+        };
+        const Parent = () => {
+            const [state, setState] = useState({ value: 'committed', isSuspended: false });
+            setParentState = setState;
+            table = useTable({
+                customReducer: (nextState, action) => {
+                    if (action.type === ActionType.SelectRow) {
+                        reducerValues.push(state.value);
+                    }
+                    return nextState;
+                },
+                onDispatch: (action) => {
+                    if (action.type === ActionType.SelectRow) {
+                        dispatchValues.push(state.value);
+                    }
+                },
+            });
+            return (
+                <Suspense fallback='loading'>
+                    <Table table={table} rowKeyField='id' columns={[{ key: 'id'}]} data={[{ id: 1 }]}/>
+                    <Suspender isSuspended={state.isSuspended} />
+                </Suspense>
+            );
+        };
+        render(<Parent />);
+        act(() => startTransition(() => setParentState({ value: 'discarded', isSuspended: true })));
+        act(() => table.selectRow(1));
+        vi.runAllTimers();
+        expect(reducerValues).toEqual(['committed']);
+        expect(dispatchValues).toEqual(['committed']);
     });
     it('methods can be called without the table object', () => {
         const { result } = renderHook(() => useTable());
