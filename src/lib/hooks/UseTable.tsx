@@ -34,6 +34,9 @@ export const getTable = <TData = unknown>(options?: {
     return table;
 };
 
+/**
+ * Returns a value to pass to `table` property of the component
+ */
 export const useTable = <TData = unknown>(options?: {
     onDispatch?: OnDispatchFunc<TData>;
     customReducer?: CustomReducerFunc<TData>;

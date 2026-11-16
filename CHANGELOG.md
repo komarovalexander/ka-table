@@ -51,6 +51,8 @@
 - Drag and drop by touches in the browsers which don't support it (e.g. Firefox and Samsung Internet for Android): a long press drags a row or a column, the page is scrolled as before (#328).
 - A nested field whose parent is `null` or a primitive gives `undefined` instead of throwing.
 - The position of the header filter popup.
+- `moveFocusedRight()` can be called without settings, as `moveFocusedLeft()`, `moveFocusedUp()` and `moveFocusedDown()`.
+- The `loading` prop is typed as `LoadingSettings` (`enabled` and `text`, in `ka-table/types`): it had `childComponents` of the props of the loading component, which the table doesn't take from this prop.
 
 ### Performance
 

@@ -36,7 +36,7 @@ const actionCreatorsArgs: { [K in keyof ActionCreators]: Parameters<ActionCreato
     moveColumnToIndex: [['id', 2]],
     moveFocusedDown: [[], [{ end: true }]],
     moveFocusedLeft: [[], [{ end: true }]],
-    moveFocusedRight: [[{}], [{ end: true }]],
+    moveFocusedRight: [[], [{ end: true }]],
     moveFocusedUp: [[], [{ end: true }]],
     openAllEditors: [[]],
     openEditor: [[3, 'name']],

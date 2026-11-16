@@ -13,6 +13,20 @@ export interface NoData {
 }
 
 /**
+ * The loading indicator of the table (the loading prop)
+ */
+export interface LoadingSettings {
+    /**
+     * Shows the loading indicator
+     */
+    enabled?: boolean;
+    /**
+     * The text of the loading indicator
+     */
+    text?: string;
+}
+
+/**
  * A function whose parameters are checked bivariantly, as the ones of the event handlers of React:
  * the functions for the rows of a type (e.g. format of ITableProps<Row>) are the functions of a table, whose rows are unknown inside
  */

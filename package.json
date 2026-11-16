@@ -20,6 +20,8 @@
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "typecheck": "tsc --noEmit",
+    "docs": "node scripts/docs/generate-docs.mjs",
+    "docs:check": "node scripts/docs/generate-docs.mjs --check",
     "dist": "tsdown",
     "pack": "tsdown && cd dist && npm pack"
   },

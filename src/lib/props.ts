@@ -1,6 +1,6 @@
 import { ReactNode, Ref } from 'react';
 import { ChildComponents, Column, EditableCell, Group, VirtualScrolling } from './models';
-import { DispatchFunc, Field, FormatFunc, NoData, ValidationFunc } from './types';
+import { DispatchFunc, Field, FormatFunc, LoadingSettings, NoData, ValidationFunc } from './types';
 import { EditingMode, FilteringMode, SortingMode } from './enums';
 
 import { Focused } from './Models/Focused';
@@ -174,7 +174,7 @@ export interface IHeadCellProps {
 
 export interface INoDataRowProps {
     childComponents: ChildComponents;
-    loading?: ILoadingProps;
+    loading?: LoadingSettings;
     columns: Column[];
     groupColumnsCount: number;
     noData?: NoData;
@@ -200,7 +200,7 @@ export interface ITableBodyProps<TData = unknown> {
     columnResizeRef?: { current: boolean };
     columns: Column[];
     data: TData[];
-    loading?: ILoadingProps;
+    loading?: LoadingSettings;
     detailsRows?: unknown[];
     dispatch: DispatchFunc;
     editableCells: EditableCell[];
@@ -300,10 +300,9 @@ export interface IHeadRowProps {
     sortingMode: SortingMode;
 }
 
-export interface ILoadingProps {
+// the props of the loading component: the settings of the loading prop and the child components of the table
+export interface ILoadingProps extends LoadingSettings {
     childComponents?: ChildComponents;
-    enabled?: boolean;
-    text?: string;
 }
 
 export interface IPagingProps {

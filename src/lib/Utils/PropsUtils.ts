@@ -68,6 +68,9 @@ export function mergeProps<T = HTMLElement>(
     return mergedResult;
 };
 
+/**
+ * Obtains filtered data
+ */
 export const getFilteredData = <TData>(props: ITableProps<TData>): TData[] => {
     return filterAndSearchData(props);
 }
@@ -78,10 +81,16 @@ const areAllRowsSelected = (rowKeyValues: unknown[], selectedRows: unknown[] = [
     return rowKeyValues.length > 0 && rowKeyValues.every((rowKeyValue) => selectedRowsSet.has(rowKeyValue));
 };
 
+/**
+ * Returns true if all filtered rows are selected
+ */
 export const areAllFilteredRowsSelected = (props: ITableProps) => (
     areAllRowsSelected(filterAndSearchData(props).map((d) => getValueByField(d, props.rowKeyField)), props.selectedRows)
 );
 
+/**
+ * Returns true if all visible rows are selected
+ */
 export const areAllVisibleRowsSelected = (props: ITableProps) => (
     areAllRowsSelected(getRowKeyValues(getData(props), props.rowKeyField), props.selectedRows)
 );
@@ -118,6 +127,10 @@ const getDataWithoutPaging =  (props: ITableProps) => {
     return resultData;
 };
 
+/**
+ * Obtains sorted, filtered, grouped, paged data for table according to current props
+ * @see {@link https://komarovalexander.github.io/ka-table/#/get-data-by-props | Get Data By Props}
+ */
 export const getData = (props: ITableProps) => {
     const {
         paging
@@ -128,17 +141,27 @@ export const getData = (props: ITableProps) => {
     return resultData;
 };
 
+/**
+ * Returns true if the open editors have no validation errors
+ */
 export const isValid = (props: ITableProps) => {
     return (
         !props.validation || !getValidatedEditableCells(props).some(cell => cell.validationMessage)
     );
 };
 
+/**
+ * Obtains selected data for table according to current props
+ * @see {@link https://komarovalexander.github.io/ka-table/#/selection-single | Selection - Single}
+ */
 export const getSelectedData = <TData>({ data, selectedRows, rowKeyField }: ITableProps<TData>): TData[] => {
     const selectedRowsSet = new Set(selectedRows);
     return data ? data.filter(d => selectedRowsSet.has(getValueByField(d, rowKeyField))) : [];
 };
 
+/**
+ * Returns array of columns with sortDirection only, and they are sorted by sortIndex (if it is set)
+ */
 export const getSortedColumns = (props: ITableProps): Column[] => {
     return sortColumns(props.columns);
 };

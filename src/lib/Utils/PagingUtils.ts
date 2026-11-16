@@ -13,7 +13,9 @@ export const getPageIndex = (paging: PagingOptions | undefined, pagesCount: numb
     Math.max(Math.min(paging?.pageIndex || 0, pagesCount - 1), 0)
 );
 
-// the first row of the shown page stays shown when the size of the pages is changed
+/**
+ * The paging with the new size of the pages: the first row of the shown page stays shown
+ */
 export const getPagingWithPageSize = (paging: PagingOptions | undefined, pageSize: number): PagingOptions => (
     paging?.pageIndex && pageSize > 0
         ? { ...paging, pageSize, pageIndex: Math.floor(paging.pageIndex * getPageSize(paging) / pageSize) }

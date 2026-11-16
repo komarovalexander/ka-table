@@ -19,8 +19,7 @@ import { getExpandedParents, getTreeData } from '../Utils/TreeUtils';
 import { getValueByField, insertBefore, reorderData, reorderDataByIndex, replaceValue } from '../Utils/DataUtils';
 
 import { Column } from '../models';
-import { ILoadingProps } from '../props';
-import { CustomAction, TableAction } from '../types';
+import { CustomAction, LoadingSettings, TableAction } from '../types';
 import { ITableProps } from '../index';
 import { getPagingWithPageSize } from '../Utils/PagingUtils';
 import { isTableAction } from '../Utils/ActionUtils';
@@ -235,7 +234,7 @@ const reducer = (props: ITableProps, action: TableAction): ITableProps => {
         return { ...props, loading: { ...loading, enabled: false } };
     }
     case ActionType.ShowLoading: {
-        const newLoading: ILoadingProps = { ...loading, enabled: true };
+        const newLoading: LoadingSettings = { ...loading, enabled: true };
         if (action.text !== undefined) {
             newLoading.text = action.text;
         }

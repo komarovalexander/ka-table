@@ -171,6 +171,7 @@ table.dispatch({ type: 'RESET_SEARCH' });
 - `ChildComponent`: `content` returns a `ReactNode`, `elementAttributes` returns the attributes of an element (`ref` is a ref of an element).
 - `IGroupRowProps.text` is a `ReactNode`: it is the result of `format`, which can be an element.
 - `headerFilterPopupRow` and `headerFilterPopupTextCell` get the items of the header filter as `rowData` (`HeaderFilterItem`: `{ value: string, isSelected: boolean }`).
+- `loading`: `LoadingSettings` (`enabled`, `text`) instead of `ILoadingProps`, which stays the props of the loading component (`childComponents.loading`).
 
 ### 4. Fixes of the data processing change some results
 

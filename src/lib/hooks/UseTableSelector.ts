@@ -13,6 +13,7 @@ import { useIsomorphicLayoutEffect } from '../Utils/EffectUtils';
  * @param selector gets the value from the table props
  * @param isEqual compares the previous and the new value (Object.is by default),
  * use it if the selector returns a new object or array every time
+ * @see {@link https://komarovalexander.github.io/ka-table/#/selection-single | Selection - Single}
  */
 export const useTableSelector = <T, TData = unknown>(
     table: ITableInstance<TData>,
