@@ -1,18 +1,36 @@
-The customizable, extendable, lightweight, and fully free React Table Component
+Fully free React data grid: sorting, filtering, grouping, tree data, editing and virtual scrolling built in, every part customizable.
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/ka-table/blob/master/LICENSE)
 [![CI](https://github.com/komarovalexander/ka-table/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/komarovalexander/ka-table/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/ka-table.svg?style=flat-square)](https://www.npmjs.com/package/ka-table)
 [![Coverage Status](https://coveralls.io/repos/github/komarovalexander/ka-table/badge.svg?branch=master&service=github)](https://coveralls.io/github/komarovalexander/ka-table?branch=master&service=github)
 
-<a href="http://ka-table.com"><img src="http://ka-table.com/images/logo.svg"/></a>
+<a href="https://ka-table.com"><img src="https://ka-table.com/images/logo.svg"/></a>
 
-[Site](http://ka-table.com) | [Demos](https://komarovalexander.github.io/ka-table/#/overview) | [Docs](http://ka-table.com/docs_get_started.html) | [Changelog](https://github.com/komarovalexander/ka-table/blob/master/CHANGELOG.md)
+[Site](https://ka-table.com) | [Demos](https://komarovalexander.github.io/ka-table/#/overview) | [Docs](https://ka-table.com/docs_get_started.html) | [Changelog](https://github.com/komarovalexander/ka-table/blob/master/CHANGELOG.md)
 
 Upgrading from 12.x? See the [migration guide](https://github.com/komarovalexander/ka-table/blob/master/MIGRATION.md).
 
 ![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/delete-row.png)
 [Demo link](https://komarovalexander.github.io/ka-table/#/delete-row)
+
+## Why ka-table
+
+- **Everything is free.** Grouping with summaries, tree data, fixed columns, virtual scrolling of rows and columns: all of it is in the MIT package, there is no paid edition.
+- **Ready to use, open to change.** The table works with its default look, and every part of it (cells, editors, rows, the header, filters, paging...) can get your content, attributes and event handlers through `childComponents`.
+- **The state is yours.** The state of the table is plain props, and every change is an action. The table can keep the state itself: `useTable` gives its actions as methods (`table.selectRow(1)`), `customReducer` and `onDispatch` see every action. Or keep the state in Redux, in the URL or on a server and apply the actions with `kaReducer`.
+- **Typed.** The type of the rows is inferred from `data`, the values of the cells and the keys of the rows are `unknown` instead of `any`.
+- **Accessible.** The table is a WAI-ARIA grid with a single Tab stop: the arrows move the focus between the cells, Enter and F2 open the editors. Sorting, groups, the tree, paging and the header filter have ARIA roles, states and names.
+- **No dependencies.** Only React 18 or 19. The styles are plain CSS with custom properties, a dark theme is included.
+
+## Features
+
+- **Data:** [sorting](https://komarovalexander.github.io/ka-table/#/sorting) by one or [several columns](https://komarovalexander.github.io/ka-table/#/sorting-extended), [filter row](https://komarovalexander.github.io/ka-table/#/filter-row), [header filter](https://komarovalexander.github.io/ka-table/#/header-filter), [search](https://komarovalexander.github.io/ka-table/#/search), [grouping](https://komarovalexander.github.io/ka-table/#/grouping) with [summaries](https://komarovalexander.github.io/ka-table/#/grouping-summary), [tree data](https://komarovalexander.github.io/ka-table/#/tree-mode), [paging](https://komarovalexander.github.io/ka-table/#/paging), [remote data](https://komarovalexander.github.io/ka-table/#/remote-data)
+- **Editing:** [cells](https://komarovalexander.github.io/ka-table/#/editing), [rows](https://komarovalexander.github.io/ka-table/#/editing-row) or [the whole table](https://komarovalexander.github.io/ka-table/#/editing-table), [validation](https://komarovalexander.github.io/ka-table/#/validation), [new rows](https://komarovalexander.github.io/ka-table/#/add-row), [custom editors](https://komarovalexander.github.io/ka-table/#/custom-editor)
+- **Rows and columns:** [selection](https://komarovalexander.github.io/ka-table/#/selection), [details rows](https://komarovalexander.github.io/ka-table/#/details-row), [summary row](https://komarovalexander.github.io/ka-table/#/summary), [resizing of columns](https://komarovalexander.github.io/ka-table/#/column-resizing), reordering of [columns](https://komarovalexander.github.io/ka-table/#/column-reordering) and [rows](https://komarovalexander.github.io/ka-table/#/row-reordering) by mouse and touch, [fixed columns](https://komarovalexander.github.io/ka-table/#/fixed-column), [multi-level header](https://komarovalexander.github.io/ka-table/#/grouped-columns)
+- **Big data:** virtual scrolling of [rows](https://komarovalexander.github.io/ka-table/#/many-rows) and [columns](https://komarovalexander.github.io/ka-table/#/many-columns), [memoized rows](https://komarovalexander.github.io/ka-table/#/many-rows-memo), [infinite scrolling](https://komarovalexander.github.io/ka-table/#/infinite-scrolling)
+- **Look:** custom [cells](https://komarovalexander.github.io/ka-table/#/custom-cell), [rows](https://komarovalexander.github.io/ka-table/#/custom-data-row) and [header cells](https://komarovalexander.github.io/ka-table/#/custom-header-cell), [your own theme](https://komarovalexander.github.io/ka-table/#/custom-theme), [dark theme](https://komarovalexander.github.io/ka-table/#/dark-theme), [Bootstrap](https://komarovalexander.github.io/ka-table/#/bootstrap) and [Material UI](https://komarovalexander.github.io/ka-table/#/material)
+- **More:** [keyboard navigation](https://komarovalexander.github.io/ka-table/#/keyboard-navigation), [Redux](https://komarovalexander.github.io/ka-table/#/redux), [state storing](https://komarovalexander.github.io/ka-table/#/state-storing), export to [CSV](https://komarovalexander.github.io/ka-table/#/export) and [PDF](https://komarovalexander.github.io/ka-table/#/export-pdf) and [printing](https://komarovalexander.github.io/ka-table/#/print) with other libraries
 
 ## Installation
 
