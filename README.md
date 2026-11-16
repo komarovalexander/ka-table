@@ -46,6 +46,14 @@ yarn
 yarn add ka-table
 ```
 
+## AI coding agents
+
+The package has `AGENTS.md`: short notes for coding agents (Claude Code, Codex, Cursor, Copilot...) about the installed version: the rules of the API, the imports, where the docs and the examples are. Agents seldom open the files of the packages by themselves, so point to it from the `AGENTS.md` or `CLAUDE.md` of your project:
+
+```text
+Before writing or changing ka-table code, read node_modules/ka-table/AGENTS.md.
+```
+
 ## Usage
 
 ### Basic example

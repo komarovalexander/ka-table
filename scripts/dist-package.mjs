@@ -10,11 +10,13 @@ const entry = (path) => ({
 });
 
 /**
- * Adds the styles, the readme, the license and package.json to the package which tsdown builds into dist/
+ * Adds the styles, the readme, AGENTS.md, the license and package.json to the package which tsdown builds into dist/
  * (see tsdown.config.mts). The package is published from dist/.
+ * AGENTS.md is for the agents which use the package, so in the repository it is in scripts/package/:
+ * an AGENTS.md in the root would be read by the agents which work on ka-table itself.
  */
 export const completePackage = () => {
-    for (const file of ['src/lib/style.css', 'README.md', 'LICENSE']) {
+    for (const file of ['src/lib/style.css', 'README.md', 'LICENSE', 'scripts/package/AGENTS.md']) {
         copyFileSync(file, `dist/${file.split('/').pop()}`);
     }
     mkdirSync('dist/themes', { recursive: true });

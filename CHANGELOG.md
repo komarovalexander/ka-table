@@ -31,6 +31,7 @@
 - ES modules in `esm/` and `sideEffects` for tree shaking.
 - CSS custom properties of the default theme (`--ka-*`, listed in the readme): the hover colours of the rows and the cells, the sticky offsets of the header calculated from `--ka-header-cell-height`.
 - A dark theme: `ka-table/themes/dark.css`, applied by the class `ka-dark` on the table or an ancestor.
+- `AGENTS.md` in the package: notes for AI coding agents about this version (the rules of the API, the imports, where the docs and the examples are). The readme shows the line which points an agent of a project to it.
 
 ### Fixed
 
