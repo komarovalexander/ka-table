@@ -1,15 +1,15 @@
-import * as React from 'react';
+import { FC } from 'react';
 
 import { ActionType, FilteringMode, Table, useTable, } from '../..';
 import { updateHeaderFilterSearchValue, updateHeaderFilterValues } from '../../actionCreators';
 
 import CellEditorBoolean from '../CellEditorBoolean/CellEditorBoolean';
+import { HeaderFilterItem } from '../../Models/HeaderFilterItem';
 import { IHeaderFilterPopupProps } from '../../props';
+import { getHeaderFilterText } from '../../Utils/FilterUtils';
 import { getValueByColumn } from '../../Utils/DataUtils';
 
-type HeaderFilterItem = { value: string; isSelected: boolean; };
-
-const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
+const HeaderFilterPopupContent: FC<IHeaderFilterPopupProps> = (props) => {
     const {
         column,
         childComponents,
@@ -18,32 +18,30 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
         format
     } = props;
     let headerFilterValues: string[] | undefined;
-    headerFilterValues = column?.headerFilterListItems ? column?.headerFilterListItems({ data }) : data?.map((item, i) => {
-        const value = getValueByColumn(item, column);
-
-        const formattedValue =
-            (format && format({ column, value, rowData: item }))
-            || value?.toString();
-        return formattedValue;
-    });
+    headerFilterValues = column?.headerFilterListItems
+        ? column?.headerFilterListItems({ data })
+        : data?.map((item) => getHeaderFilterText(getValueByColumn(item, column), column, item, format));
     headerFilterValues = Array.from(new Set(headerFilterValues));
-    const headerFilterValuesData: HeaderFilterItem[] = headerFilterValues?.map((value, i) => ({ value, isSelected: !!column.headerFilterValues && column.headerFilterValues.includes(value) }));
+    const headerFilterValuesData: HeaderFilterItem[] = headerFilterValues?.map((value) => ({ value, isSelected: !!column.headerFilterValues && column.headerFilterValues.includes(value) }));
     const selectedColumnKey = `${column.key}_isSelected`;
-    const table = useTable({
+    const table = useTable<HeaderFilterItem>({
         onDispatch: (action) => {
             if (action.type === ActionType.UpdateFilterRowValue) {
-                dispatch(updateHeaderFilterSearchValue(action.columnKey, action.filterRowValue));
+                // the value of the search input
+                dispatch(updateHeaderFilterSearchValue(action.columnKey, typeof action.filterRowValue === 'string' ? action.filterRowValue : ''));
             }
         }
     });
     return (
-        <Table
+        <Table<HeaderFilterItem>
             table={table}
             columns={[
                 { key: selectedColumnKey, field: 'isSelected', width: 35, isFilterable: false },
                 {
                     key: column.key,
                     field: 'value',
+                    // the header is hidden, the title names the search input
+                    title: column.title,
                     style: { textAlign: 'left' },
                     filterRowValue: column.headerFilterSearchValue
                 }]}
@@ -52,9 +50,15 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
             selectedRows={column.headerFilterValues}
             filter={() => column.headerFilterSearch}
             rowKeyField={'value'}
+            // the checkboxes of the values get the focus by Tab in the popup
+            keyboardNavigation={false}
             childComponents={{
                 headRow: {
                     elementAttributes: () => ({ style: { display: 'none' } })
+                },
+                headCell: {
+                    // the id (the column key) is already used by the header cell of the table
+                    elementAttributes: () => ({ id: undefined })
                 },
                 filterRowCell: {
                     elementAttributes: ({ column: filterRowColumn }) => ({
@@ -76,11 +80,15 @@ const HeaderFilterPopupContent: React.FC<IHeaderFilterPopupProps> = (props) => {
                     ...childComponents?.headerFilterPopupTextCell,
                     elementAttributes: (componentProps) => ({
                         onClick: () => {
-                            const isSelect = !column?.headerFilterValues?.includes(componentProps?.rowKeyValue);
-                            dispatch(updateHeaderFilterValues(column.key, componentProps?.rowKeyValue, isSelect));
+                            const { value } = componentProps.rowData;
+                            const isSelect = !column?.headerFilterValues?.includes(value);
+                            dispatch(updateHeaderFilterValues(column.key, value, isSelect));
                         },
                         ...childComponents?.headerFilterPopupTextCell?.elementAttributes?.(componentProps)
                     }),
+                },
+                cellEditorInput: {
+                    elementAttributes: ({ rowData }) => ({ 'aria-label': rowData?.value }),
                 },
                 cellText: {
                     content: (componentProps) => {

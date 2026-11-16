@@ -1,6 +1,5 @@
 import FilterRow from './FilterRow';
 import { IFilterRowProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 let props: IFilterRowProps;
@@ -8,9 +7,9 @@ let props: IFilterRowProps;
 beforeEach(() => {
     props = {
         columns: [],
-        dispatch: jest.fn(),
+        dispatch: vi.fn(),
         groupColumnsCount: 0,
-    } as any;
+    } as IFilterRowProps;
 });
 
 it('renders without crashing', () => {

@@ -1,11 +1,11 @@
 import { IFilterRowEditorProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isEmpty } from '../../Utils/CommonUtils';
 import { updateFilterRowValue } from '../../actionCreators';
 
-const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
+const FilterRowBoolean: FunctionComponent<IFilterRowEditorProps> = (props) => {
     const {
         column,
         dispatch,
@@ -15,10 +15,11 @@ const FilterRowBoolean: React.FunctionComponent<IFilterRowEditorProps> = (props)
 
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: defaultOptions.css.checkbox,
+        'aria-label': column.title,
         type: 'checkbox',
-        checked: value || false,
+        checked: !!value,
         onChange: (event) => {
-            let filterRowValue: any = event.currentTarget.checked;
+            let filterRowValue: boolean | undefined = event.currentTarget.checked;
             if (value === false) {
                 if (filterRowValue === true) {
                     filterRowValue = undefined;

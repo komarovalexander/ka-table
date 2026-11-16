@@ -1,0 +1,303 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+@font-face {
+  font-family: 'Nunito Sans ExtraBold';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local('Nunito Sans ExtraBold'), local('NunitoSans-ExtraBold'), url(https://fonts.gstatic.com/s/nunitosans/v5/pe03MImSLYBIv1o4X1M8cc8aBc5tU1E.woff2) format('woff2');
+}
+
+#root {
+  position: relative;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 1350px;
+}
+
+.demos-search-back {
+  z-index: -1;
+  background-image: url(https://komarovalexander.github.io/ka-table/static/images/background.svg);
+  background-position: center bottom;
+  height: 680px;
+  position: absolute;
+  width: 100%;
+  background-repeat: no-repeat;
+}
+
+.demos {
+  color: #353C44;
+  font-family: 'Roboto', 'Helvetica Neue Light', 'Open Sans', Helvetica;
+}
+
+/* header */
+
+.demos .header {
+  background-color: #EDF2FD;
+  justify-content: space-between;
+  display: flex;
+}
+
+.demos .header .logo-container,
+.demos .header .links {
+  padding: 20px 40px;
+  height: 28px;
+  display: flex;
+}
+
+.demos .header .logo-container a,
+.demos .header .links a {
+  line-height: 27px;
+  vertical-align: middle;
+  display: flex;
+}
+
+.demos .header .logo-container a.logo,
+.demos .header .links a.logo {
+  width: 140px;
+  position: relative;
+  top: -4px;
+}
+
+.demos .header .logo-container b,
+.demos .header .logo-container a,
+.demos .header .links b,
+.demos .header .links a {
+  margin-right: 10px;
+}
+
+.demos .header .links a {
+  font-size: 18px;
+  line-height: 123.8%;
+  letter-spacing: 0.05em;
+  color: #455880;
+  margin-right: 60px;
+  display: block;
+  outline: none;
+  text-decoration: none;
+  font-family: 'Nunito Sans ExtraBold', sans-serif, 'Nunito Sans', 'Helvetica Neue Light', 'Open Sans', Helvetica;
+}
+
+.demos .header .links a.active {
+  text-decoration: underline;
+}
+
+/* body: menu */
+
+.demos .body {
+  display: flex;
+}
+
+.demos .body nav.demo-menu {
+  width: 320px;
+  box-sizing: border-box;
+}
+
+.demos .body nav.demo-menu .menu-ul {
+  padding: 0;
+  margin: 0;
+  background: #fffB;
+}
+
+.demos .body nav.demo-menu .resources-icons {
+  padding: 40px 0 0 40px;
+  height: 28px;
+  display: flex;
+}
+
+.demos .body nav.demo-menu .resources-icons a {
+  line-height: 27px;
+  vertical-align: middle;
+  display: flex;
+}
+
+.demos .body nav.demo-menu .resources-icons b,
+.demos .body nav.demo-menu .resources-icons a {
+  margin-right: 10px;
+}
+
+.demos .body nav.demo-menu .menu-search {
+  padding: 15px 40px;
+  width: 100%;
+  background: #fff5;
+  border: none;
+  outline-color: #455880;
+}
+
+.demos .body nav.demo-menu .menu-search:focus {
+  background: white;
+}
+
+.demos .body nav.demo-menu ul {
+  list-style-type: none;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.demos .body nav.demo-menu ul .inner-menu {
+  margin-left: 20px;
+}
+
+.demos .body nav.demo-menu ul a,
+.demos .body nav.demo-menu ul .group {
+  cursor: pointer;
+  color: #53585B;
+  display: block;
+  font-size: 16px;
+  padding: 7px 0 7px 40px;
+  text-decoration: none;
+}
+
+.demos .body nav.demo-menu ul a .menu-button,
+.demos .body nav.demo-menu ul .group .menu-button {
+  position: relative;
+  height: 20px;
+  display: flex;
+}
+
+.demos .body nav.demo-menu ul a .menu-button .menu-icon,
+.demos .body nav.demo-menu ul .group .menu-button .menu-icon {
+  opacity: 0.6;
+  width: 40px;
+}
+
+.demos .body nav.demo-menu ul a .menu-button .menu-icon img,
+.demos .body nav.demo-menu ul .group .menu-button .menu-icon img {
+  width: 18px;
+  padding: 2px;
+}
+
+.demos .body nav.demo-menu ul a .menu-button .group-icon,
+.demos .body nav.demo-menu ul .group .menu-button .group-icon {
+  position: absolute;
+  left: -35px;
+  top: -5px;
+}
+
+.demos .body nav.demo-menu ul a .menu-button .new-badge,
+.demos .body nav.demo-menu ul a .menu-button .upd-badge,
+.demos .body nav.demo-menu ul .group .menu-button .new-badge,
+.demos .body nav.demo-menu ul .group .menu-button .upd-badge {
+  position: relative;
+  left: 20px;
+  padding: 0 7px;
+  background: rgba(118, 74, 188, 0.64);
+  color: white;
+  border-radius: 12px;
+}
+
+.demos .body nav.demo-menu ul a .menu-button .upd-badge,
+.demos .body nav.demo-menu ul .group .menu-button .upd-badge {
+  background: #61DAFB99;
+}
+
+.demos .body nav.demo-menu ul a.active,
+.demos .body nav.demo-menu ul .group.active {
+  background-color: #f1f5f7;
+  padding-left: 36px;
+  border-left: 4px solid #353C44;
+  color: #353C44;
+}
+
+.demos .body nav.demo-menu ul a.active .menu-button,
+.demos .body nav.demo-menu ul .group.active .menu-button {
+  position: relative;
+}
+
+.demos .body nav.demo-menu ul a.active .menu-button .menu-icon,
+.demos .body nav.demo-menu ul .group.active .menu-button .menu-icon {
+  opacity: 1;
+}
+
+.demos .body nav.demo-menu .developers-links {
+  margin: 20px 0 0 40px;
+  font-size: 12px;
+  line-height: 25px;
+}
+
+.demos .body nav.demo-menu .developers-links img {
+  height: 12px;
+  margin-right: 10px;
+}
+
+.demos .body nav.demo-menu .developers-links a,
+.demos .body nav.demo-menu .developers-links a:visited {
+  color: #666A6F;
+}
+
+/* footer */
+
+.demos footer {
+  margin-top: 40px;
+  background-color: #EDF2FD;
+  padding: 20px 40px;
+}
+
+/* main */
+
+.demos main {
+  width: calc(100% - 320px);
+  box-sizing: border-box;
+}
+
+.demos main .simulator-content {
+  background: transparent;
+  padding: 6px 80px 50px;
+  min-height: 350px;
+}
+
+.demos main .simulator-content h1 {
+  margin: 0 0 15px 20px;
+  font-size: 22px;
+}
+
+.demos main .code-content {
+  border: 1px solid #53585B22;
+  min-height: 600px;
+}
+
+.demos main .code-content pre {
+  margin: 0;
+  padding: 20px;
+}
+
+.demos main .editor-links {
+  text-align: right;
+  font-size: 14px;
+  color: #666A6F;
+  background-color: #EDF2FD;
+  padding: 20px;
+}
+
+.demos main .code {
+  padding: 20px 80px;
+}
+
+.ka-table-wrapper {
+  max-height: 600px;
+}
+
+@media (max-width: 1500px) {
+  .demos nav.demo-menu {
+    width: 280px;
+  }
+
+  .demos main {
+    width: calc(100% - 280px);
+  }
+
+  .demos main .simulator-content {
+    padding: 6px 40px 50px;
+  }
+
+  .demos main .simulator-content h1 {
+    margin: 0 0 15px 20px;
+  }
+
+  .demos main .code {
+    padding: 20px 40px;
+  }
+}

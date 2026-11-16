@@ -1,17 +1,20 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
 
 import HeadCellContent from '../HeadCellContent/HeadCellContent';
+import { getFixedColumnClassName } from '../../Utils/ColumnUtils';
+import { useAriaColIndex } from '../TableWrapper/ColumnIndexesContext';
 import HeadCellResize from '../HeadCellResize/HeadCellResize';
 import { IHeadCellProps } from '../../props';
 import defaultOptions from '../../defaultOptions';
 import { getDraggableProps } from '../../Utils/PropsUtils';
+import { getAriaSort } from '../../Utils/SortUtils';
 import { getHeadCellClassName } from '../../Utils/HeadRowUtils';
 import { isCellResizeShown } from '../../Utils/CellResizeUtils';
 import { reorderColumns } from '../../actionCreators';
 
-const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
+const HeadCell: FunctionComponent<IHeadCellProps> = (props) => {
     const {
         childComponents,
         colSpan,
@@ -36,13 +39,17 @@ const HeadCell: React.FunctionComponent<IHeadCellProps> = (props) => {
             actionCreator: reorderColumns,
             draggedClass: defaultOptions.css.draggedColumn,
             dragOverClass: defaultOptions.css.dragOverColumn,
-            hasReordering: !!columnReordering
+            hasReordering: !!columnReordering,
+            kind: 'column',
         });
         headCell = addElementAttributes(reorderedRowProps, props, headCell);
     }
 
+    const ariaColIndex = useAriaColIndex(key);
     const { elementAttributes, content } = getElementCustomization({
-        className: getHeadCellClassName(sortingMode, isGrouped),
+        className: getHeadCellClassName(sortingMode, isGrouped) + getFixedColumnClassName(column),
+        'aria-colindex': ariaColIndex,
+        'aria-sort': getAriaSort(sortingMode, column),
         colSpan,
         rowSpan,
         scope: 'col',

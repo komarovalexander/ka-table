@@ -1,14 +1,10 @@
 import { DataType, EditingMode } from '../../enums';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import CellComponent from './CellComponent';
-import Enzyme from 'enzyme';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { ICellProps } from '../../props';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-const props: any = {
+const props: ICellProps = {
     childComponents: {},
     column: {
         dataType: DataType.String,
@@ -17,12 +13,17 @@ const props: any = {
     },
     dispatch: () => {},
     editingMode: EditingMode.None,
+    field: 'columnField',
+    isDetailsRowShown: false,
     isEditableCell: false,
     isSelectedRow: false,
     rowData: {
         column: 1,
     },
     rowKeyField: '1',
+    rowKeyValue: undefined,
+    selectedRows: [],
+    value: undefined,
 };
 
 it('renders without crashing', () => {

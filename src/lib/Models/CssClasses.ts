@@ -20,6 +20,9 @@ export class CssClasses {
     public rowSelected = 'ka-row-selected';
     public tableWrapper = 'ka-table-wrapper';
     public table = 'ka-table';
+    public tableFixedColumns = 'ka-table-fixed-columns';
+    public tableOverflowLeft = 'ka-table-overflow-left';
+    public tableOverflowRight = 'ka-table-overflow-right';
     public tbody = 'ka-tbody';
     public tfoot = 'ka-tfoot';
     public thead = 'ka-thead';
@@ -38,6 +41,11 @@ export class CssClasses {
     public dragOverRow = 'ka-drag-over-row';
     public draggedColumn = 'ka-dragged-column';
     public dragOverColumn = 'ka-drag-over-column';
+    public fixedLeft = 'ka-fixed-left';
+    public fixedLeftLast = 'ka-fixed-left-last';
+    public fixedRight = 'ka-fixed-right';
+    public fixedRightFirst = 'ka-fixed-right-first';
+    public virtualColumnSpacer = 'ka-virtual-column-spacer';
 
     public paging = 'ka-paging';
     public pagingPages = 'ka-paging-pages';

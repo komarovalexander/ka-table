@@ -1,25 +1,21 @@
 import { ActionType, PagingPosition } from '../../enums';
-import Enzyme, { mount } from 'enzyme';
+import { PagingOptions } from '../../models';
+import { act, render } from '@testing-library/react';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
-import React from 'react';
-import { Table } from './Table';
-import { act } from '@testing-library/react';
+import { IKaTableProps, Table } from './Table';
 import { createRoot } from 'react-dom/client';
 import { loadData } from '../../actionCreators';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-const tableProps: any = {
+const tableProps: IKaTableProps = {
     columns: [
-        { key: 'column', name: 'Column 1' },
-        { key: 'column2', name: 'Column 2' },
+        { key: 'column' },
+        { key: 'column2' },
     ],
     data: [
         { column: 1, column2: 2, id: 1 },
         { column: 12, column2: 22, id: 2 },
     ],
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     rowKeyField: 'id',
 };
 
@@ -35,7 +31,7 @@ it('renders without crashing', () => {
 });
 
 it('should dispatch single action and clear it', () => {
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     const props = {
         ...tableProps,
         singleAction: loadData(),
@@ -58,7 +54,7 @@ it('should dispatch single action and clear it', () => {
 });
 
 it('should not dispatch in case of single action is undefined', () => {
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     const props = {
         ...tableProps,
         singleAction: undefined,
@@ -79,8 +75,9 @@ it('should not dispatch in case of single action is undefined', () => {
 });
 
 it('Paging position property', () => {
-    expect(mount(<Table {...tableProps} paging={{enabled: true, position: PagingPosition.Top}}/>).find('.ka-paging').length).toBe(1)
-    expect(mount(<Table {...tableProps} paging={{enabled: true, position: PagingPosition.Bottom}}/>).find('.ka-paging').length).toBe(1)
-    expect(mount(<Table {...tableProps} paging={{enabled: true, position: PagingPosition.TopAndBottom}}/>).find('.ka-paging').length).toBe(2);
-    expect(mount(<Table {...tableProps} paging={{enabled: false, position: PagingPosition.TopAndBottom}}/>).find('.ka-paging').length).toBe(0);
+    const getPagingCount = (paging: PagingOptions) => render(<Table {...tableProps} paging={paging}/>).container.querySelectorAll('.ka-paging').length;
+    expect(getPagingCount({enabled: true, position: PagingPosition.Top})).toBe(1);
+    expect(getPagingCount({enabled: true, position: PagingPosition.Bottom})).toBe(1);
+    expect(getPagingCount({enabled: true, position: PagingPosition.TopAndBottom})).toBe(2);
+    expect(getPagingCount({enabled: false, position: PagingPosition.TopAndBottom})).toBe(0);
 });

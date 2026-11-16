@@ -1,5 +1,5 @@
 import { ActionType, EditingMode } from '../../enums';
-import React, { useCallback, useEffect, useState } from 'react';
+import { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
 import { closeEditor, updateEditorValue } from '../../actionCreators';
 
 import CellEditorValidation from '../CellEditorValidation/CellEditorValidation';
@@ -10,7 +10,7 @@ import { getValidationValue } from '../../Utils/Validation';
 import { newRowId } from '../../const';
 import { replaceValue } from '../../Utils/DataUtils';
 
-const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
+const CellEditorState: FunctionComponent<ICellEditorProps> = (props) => {
     const {
         column,
         dispatch,
@@ -29,10 +29,10 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     validationMessage = rowKeyValue === newRowId || isCellEditingMode || validationMessage
         ? getValidationValue(editorValueState, rowDataState, column, validation) || ''
         : validationMessage;
-    const onValueStateChange = (action: any): void => {
-        const newRowValue = replaceValue(rowData, column, action.value);
+    const onValueStateChange = (newValue: unknown): void => {
+        const newRowValue = replaceValue(rowData, column, newValue);
         changeRowData(newRowValue);
-        changeEditorValue(action.value);
+        changeEditorValue(newValue);
     };
 
     const close = useCallback(() => {
@@ -50,15 +50,19 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
         }
     }, [validationMessage, dispatch, close, column, editorValueState, rowKeyValue, value, isCellEditingMode]);
 
+    const elementRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        return addEscEnterKeyEffect(close, closeHandler);
+        // the keys are handled in the row of the editor: Esc and Enter pressed outside of it (in a search input,
+        // a dialog, another table) don't close the editor, Esc closes all the editors of the row in the row editing
+        const element = elementRef.current;
+        return element ? addEscEnterKeyEffect(close, closeHandler, element.closest('tr') || element) : undefined;
     }, [close, closeHandler]);
 
-    const dispatchHandler: DispatchFunc = (action: any) => {
+    const dispatchHandler: DispatchFunc = (action) => {
         if (action.type === ActionType.CloseEditor) {
             closeHandler();
         } else if (action.type === ActionType.UpdateCellValue) {
-            onValueStateChange(action);
+            onValueStateChange(action.value);
         } else {
             dispatch(action);
         }
@@ -73,7 +77,7 @@ const CellEditorState: React.FunctionComponent<ICellEditorProps> = (props) => {
     }};
 
     return (
-        <CellEditorValidation {...stateProps} />
+        <CellEditorValidation {...stateProps} elementRef={elementRef} />
     );
 };
 

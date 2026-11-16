@@ -1,6 +1,5 @@
 import EmptyCells from './EmptyCells';
 import { IEmptyCellsProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: IEmptyCellsProps = {

@@ -6,35 +6,50 @@ import { EditableCell } from '../Models/EditableCell';
 import { FilterOperator } from '../Models/FilterOperator';
 import { ITableProps } from '../';
 import defaultOptions from '../defaultOptions';
-import { getValueByColumn } from './DataUtils';
+import { getDate } from './DateUtils';
+import { getFormattedValue, getValueByColumn, isFormattedValue } from './DataUtils';
+import { ReactNode } from 'react';
 import { isEmpty } from './CommonUtils';
 
-export const getRowEditableCells = (rowKeyValue: any, editableCells: EditableCell[]): EditableCell[] => {
+export const getRowEditableCells = (rowKeyValue: unknown, editableCells: EditableCell[]): EditableCell[] => {
     return editableCells.filter((c) => c.rowKeyValue === rowKeyValue);
 };
 
-export const searchData = (columns: Column[], data: any[], searchText: string, search?: SearchFunc): any[] => {
-    const searched = columns.reduce((initialData: any[], c: Column) => {
-        const filterFunction = (item: any) => {
-            if (initialData.indexOf(item) >= 0) {
-                return false;
+/**
+ * The rows which show the text: the formatted values are searched by their text, the hidden columns only by the search function
+ */
+export const searchData = <TData>(columns: Column[], data: TData[], searchText: string, search?: SearchFunc<TData>, format?: FormatFunc<TData>): TData[] => {
+    const lowerCaseSearchText = searchText.toLowerCase();
+    // a set instead of searching in the found rows for every row of every column
+    const found = new Set<TData>();
+    columns.forEach((c: Column) => {
+        data.forEach((item) => {
+            if (found.has(item)) {
+                return;
             }
             const searchContent = search && search({ column: c, searchText, rowData: item });
             if (searchContent != null) {
-                return searchContent;
+                if (searchContent) {
+                    found.add(item);
+                }
+                return;
+            }
+            if (c.visible === false) {
+                return;
             }
             const columnValue = getValueByColumn(item, c);
-            if (columnValue == null) {
-                return false;
+            const formattedValue = format?.({ column: c, value: columnValue, rowData: item });
+            // the value which format doesn't format or formats not as a text (e.g. as an element) is searched by itself
+            const text = isFormattedValue(formattedValue) && typeof formattedValue !== 'object' ? formattedValue : columnValue;
+            if (text != null && text.toString().toLowerCase().includes(lowerCaseSearchText)) {
+                found.add(item);
             }
-            return columnValue.toString().toLowerCase().includes(searchText.toLowerCase());
-        };
-        return initialData.concat(data.filter(filterFunction));
-    }, []);
-    return data.filter(d => searched.indexOf(d) >= 0);
+        });
+    });
+    return data.filter(d => found.has(d));
 };
 
-export const filterAndSearchData = (props: ITableProps) => {
+export const filterAndSearchData = <TData>(props: ITableProps<TData>): TData[] => {
     const {
         extendedFilter,
         searchText,
@@ -48,41 +63,52 @@ export const filterAndSearchData = (props: ITableProps) => {
     } = props;
     data = [...data];
     data = extendedFilter ? extendedFilter(data) : data;
-    data = searchText ? searchData(columns, data, searchText, search) : data;
+    data = searchText ? searchData(columns, data, searchText, search, format) : data;
     data = filterData(data, columns, filter);
     data = filterByHeaderFilter(data, columns, format);
 
     return data;
 };
 
+// an unknown operator is reported once: the data is filtered again on every change
+const reportedUnknownOperators = new Set<string>();
+
 const getCompare = (column: Column) => {
     const filterRowOperator = column.filterRowOperator
         || getDefaultOperatorForType(column.dataType || defaultOptions.columnDataType);
     const filterOperator = predefinedFilterOperators.find((fo) => filterRowOperator === fo.name);
-    if (!filterOperator) {
-        throw new Error(`'${column.filterRowOperator}' has not found in predefinedFilterOperators array, available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
+    if (!filterOperator && !reportedUnknownOperators.has(filterRowOperator)) {
+        // the column is not filtered instead of an error during rendering, which removes the whole table
+        reportedUnknownOperators.add(filterRowOperator);
+        console.warn(`ka-table: the filter operator '${filterRowOperator}' is not in predefinedFilterOperators, so the column '${column.key}' is not filtered. Available operators: ${predefinedFilterOperators.map((o) => o.name).join(', ')}`);
     }
-    return filterOperator.compare;
+    return filterOperator?.compare;
 };
 
-export const filterData = (data: any[], columns: Column[], filter?: FilterFunc): any[] => {
+// IsEmpty and IsNotEmpty filter the rows without a value of the filter
+export const isFilterOperatorWithoutValue = (filterRowOperator?: string) => (
+    filterRowOperator === FilterOperatorName.IsEmpty || filterRowOperator === FilterOperatorName.IsNotEmpty
+);
+
+export const isFilteredByFilterRow = (column: Column) => !isEmpty(column.filterRowValue) || isFilterOperatorWithoutValue(column.filterRowOperator);
+
+export const filterData = <TData>(data: TData[], columns: Column[], filter?: FilterFunc<TData>): TData[] => {
     return columns.reduce((initialData, column) => {
-        if (
-            isEmpty(column.filterRowValue)
-            && column.filterRowOperator !== FilterOperatorName.IsEmpty
-            && column.filterRowOperator !== FilterOperatorName.IsNotEmpty
-        ) {
+        if (!isFilteredByFilterRow(column)) {
             return initialData;
         }
         const customFilter = column.filter || filter?.({ column });
         const compare = customFilter || getCompare(column);
+        if (!compare) {
+            return initialData;
+        }
 
-        return initialData.filter((d: any) => {
+        return initialData.filter((d) => {
             let fieldValue = getValueByColumn(d, column);
             let conditionValue = column.filterRowValue;
             if (column.dataType === DataType.Date && !customFilter) {
-                fieldValue = fieldValue == null ? fieldValue : new Date(fieldValue).setHours(0, 0, 0, 0);
-                conditionValue = conditionValue == null ? conditionValue : new Date(conditionValue).setHours(0, 0, 0, 0);
+                fieldValue = fieldValue == null ? fieldValue : getDate(fieldValue).setHours(0, 0, 0, 0);
+                conditionValue = conditionValue == null ? conditionValue : getDate(conditionValue).setHours(0, 0, 0, 0);
             }
             return compare(fieldValue, conditionValue, d);
         });
@@ -94,63 +120,72 @@ export const getDefaultOperatorForType = (type: DataType): string => {
     return (filterOperator && filterOperator.name) || '=';
 };
 
+// the values which the operators compare as JavaScript does: numbers, strings in the alphabetical order, dates by their time
+type ComparedValue = string | number | Date;
+
 export const predefinedFilterOperators: FilterOperator[] = [{
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue, conditionValue) =>
         fieldValue === conditionValue,
     defaultForTypes: [DataType.Boolean, DataType.Number, DataType.Date],
     name: FilterOperatorName.Equal,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue, conditionValue) =>
         fieldValue !== conditionValue,
     name: FilterOperatorName.IsNotEqual,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue: ComparedValue, conditionValue: ComparedValue) =>
         fieldValue > conditionValue,
     name: FilterOperatorName.MoreThan,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue: ComparedValue, conditionValue: ComparedValue) =>
         fieldValue < conditionValue,
     name: FilterOperatorName.LessThan,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue: ComparedValue, conditionValue: ComparedValue) =>
         fieldValue >= conditionValue,
     name: FilterOperatorName.MoreThanOrEqual,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
+    compare: (fieldValue: ComparedValue, conditionValue: ComparedValue) =>
         fieldValue <= conditionValue,
     name: FilterOperatorName.LessThanOrEqual,
 }, {
-    compare: (fieldValue: any, conditionValue: any) =>
-        fieldValue != null && fieldValue.toString().toLowerCase().includes(conditionValue.toString().toLowerCase()),
+    compare: (fieldValue, conditionValue) =>
+        fieldValue != null && fieldValue.toString().toLowerCase().includes(String(conditionValue).toLowerCase()),
     defaultForTypes: [DataType.String],
     name: FilterOperatorName.Contains,
 }, {
-    compare: (fieldValue: any) =>
+    compare: (fieldValue) =>
         isEmpty(fieldValue),
     name: FilterOperatorName.IsEmpty,
 }, {
-    compare: (fieldValue: any) =>
+    compare: (fieldValue) =>
         !isEmpty(fieldValue),
     name: FilterOperatorName.IsNotEmpty,
 }];
 
-export const filterByHeaderFilter = (data: any[], columns: Column[], format?: FormatFunc): any[] => {
+export const filterByHeaderFilter = <TData>(data: TData[], columns: Column[], format?: FormatFunc<TData>): TData[] => {
     return columns.reduce((initialData, column) => {
         if (
             isEmpty(column.headerFilterValues)
         ) {
             return initialData;
         }
-        return initialData.filter((item: any) => {
-            const value: any = getValueByColumn(item, column);
+        return initialData.filter((item) => {
+            const value = getValueByColumn(item, column);
             if (column?.filter) {
                 return column.filter(value, column.headerFilterValues, item);
             }
-            const fieldValue =
-                (format && format({ column, value, rowData: item }))
-                || value?.toString();
-            return column.headerFilterValues?.includes(fieldValue);
+            return column.headerFilterValues?.includes(getHeaderFilterText(value, column, item, format));
         });
     }, data);
 }
+
+/**
+ * The text of the value in the header filter: the text of format, the value itself when format doesn't format it as a text (e.g. as an element)
+ */
+export const getHeaderFilterText = (value: unknown, column: Column, rowData: unknown, format?: FormatFunc): string => {
+    const formattedValue: ReactNode = getFormattedValue(value, column, rowData, format);
+    const text = typeof formattedValue === 'string' || typeof formattedValue === 'number' ? formattedValue : value;
+    return text == null ? '' : String(text);
+};
 

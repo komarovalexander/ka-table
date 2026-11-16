@@ -1,8 +1,8 @@
 import { INoDataRowProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-const NoDataRow: React.FunctionComponent<INoDataRowProps> = (props) => {
+const NoDataRow: FunctionComponent<INoDataRowProps> = (props) => {
     const {
         childComponents,
         columns,

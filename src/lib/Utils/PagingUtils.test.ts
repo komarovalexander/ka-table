@@ -1,5 +1,5 @@
 import { PagingOptions } from '../models';
-import { getPageData, getPagesArrayBySize, getPagesCount, getPagesForCenter } from './PagingUtils';
+import { getPageData, getPageIndex, getPagesArrayBySize, getPagesCount, getPagesForCenter, getPagingWithPageSize } from './PagingUtils';
 
 describe('PagingUtils', () => {
     it('getPagesCount', () => {
@@ -157,5 +157,24 @@ describe('PagingUtils', () => {
     it('getPagesArrayBySize', () => {
         const result = getPagesArrayBySize(3);
         expect(result).toEqual([0, 1, 2]);
+    });
+    it('getPageData shows the last page when the page index is out of the pages', () => {
+        const data = [1, 2, 3, 4, 5];
+        expect(getPageData(data, { enabled: true, pageSize: 2, pageIndex: 7 })).toEqual([5]);
+        expect(getPageData([], { enabled: true, pageSize: 2, pageIndex: 7 })).toEqual([]);
+    });
+    it('getPageIndex', () => {
+        expect(getPageIndex({ enabled: true, pageIndex: 2 }, 5)).toBe(2);
+        expect(getPageIndex({ enabled: true, pageIndex: 7 }, 5)).toBe(4);
+        expect(getPageIndex({ enabled: true, pageIndex: 7 }, 0)).toBe(0);
+        expect(getPageIndex({ enabled: true }, 5)).toBe(0);
+        expect(getPageIndex(undefined, 5)).toBe(0);
+    });
+    it('getPagingWithPageSize keeps the first row of the page shown', () => {
+        expect(getPagingWithPageSize({ enabled: true, pageIndex: 4, pageSize: 10 }, 50)).toEqual({ enabled: true, pageIndex: 0, pageSize: 50 });
+        expect(getPagingWithPageSize({ enabled: true, pageIndex: 2, pageSize: 10 }, 5)).toEqual({ enabled: true, pageIndex: 4, pageSize: 5 });
+        // 10 is the default size of the pages
+        expect(getPagingWithPageSize({ enabled: true, pageIndex: 3 }, 20)).toEqual({ enabled: true, pageIndex: 1, pageSize: 20 });
+        expect(getPagingWithPageSize({ enabled: true }, 20)).toEqual({ enabled: true, pageSize: 20 });
     });
 });

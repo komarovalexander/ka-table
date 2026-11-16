@@ -1,13 +1,9 @@
-import { ActionType, DataType } from '../../enums';
-import Enzyme, { mount } from 'enzyme';
+import { ActionType, DataType, EditingMode } from '../../enums';
+import { act, fireEvent, render } from '@testing-library/react';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import FilterRowBoolean from './FilterRowBoolean';
 import { ICellEditorProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 let props: ICellEditorProps;
 
@@ -18,55 +14,60 @@ beforeEach(() => {
             key: 'fieldName',
             title: 'Field',
         },
-        dispatch: jest.fn(),
+        dispatch: vi.fn(),
+        editingMode: EditingMode.None,
         field: 'fieldName',
+        isDetailsRowShown: false,
         isSelectedRow: true,
         rowData: { column: 1 },
         rowKeyField: '',
-    } as any;
+        rowKeyValue: undefined,
+        selectedRows: [],
+        value: undefined,
+    };
 });
 
 describe('FilterRowBoolean', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-        root.render(<FilterRowBoolean {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<FilterRowBoolean {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('should fire FilterRowChanged', () => {
-        const newValue = false;
         const column = {
             field: 'name',
             key: 'nameKey',
             dataType: DataType.Boolean,
         };
-        const wrapper = mount(<FilterRowBoolean {...props} column={column} />);
+        const { container } = render(<FilterRowBoolean {...props} column={column} />);
 
-        wrapper.find('input').props().onChange!({
-            currentTarget: { checked: newValue },
-        } as any);
+        // the filter value is not specified, so a click checks the checkbox
+        fireEvent.click(container.querySelector('input')!);
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: column.key,
-            filterRowValue: newValue,
+            filterRowValue: true,
             type: ActionType.UpdateFilterRowValue,
         });
     });
 
     it('should set as unspecified after unchecked', () => {
-        const newValue = true;
         const column = {
             field: 'name',
             key: 'nameKey',
             dataType: DataType.Boolean,
             filterRowValue: false,
         };
-        const wrapper = mount(<FilterRowBoolean {...props} column={column} />);
+        const { container } = render(<FilterRowBoolean {...props} column={column} />);
 
-        wrapper.find('input').props().onChange!({
-            currentTarget: { checked: newValue },
-        } as any);
+        // the filter value is false, so the checkbox is unchecked and a click checks it
+        fireEvent.click(container.querySelector('input')!);
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             type: ActionType.UpdateFilterRowValue,

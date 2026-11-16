@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 import { Table } from '../../lib';
 import { DataType, EditingMode, SortingMode } from '../../lib/enums';
@@ -13,7 +13,7 @@ const dataArray = Array(20).fill(undefined).map(
     }),
 );
 
-class ClassComponentDemo extends React.Component {
+class ClassComponentDemo extends Component {
     public render() {
         return (
             <Table

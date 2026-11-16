@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 
 import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionCreators';
 import { Column } from '../../lib/models';
@@ -6,10 +6,10 @@ import { IFilterRowEditorProps } from '../../lib/props';
 import { DispatchFunc } from '../../lib/types';
 import { kaDateUtils } from '../../lib/utils';
 
-export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
+export const CustomLookupEditor: FC<IFilterRowEditorProps> = ({
     column, dispatch,
 }) => {
-    const toNullableBoolean = (value: any) => {
+    const toNullableBoolean = (value: string) => {
         switch (value) {
         case 'true': return true;
         case 'false': return false;
@@ -19,8 +19,8 @@ export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
     return (
         <>
             <select
-                className='form-control'
-                defaultValue={column.filterRowValue}
+                className='form-select'
+                defaultValue={String(column.filterRowValue ?? '')}
                 style={{width: 100}}
                 onChange={(event) => {
                     dispatch(updateFilterRowValue(column.key, toNullableBoolean(event.currentTarget.value)));
@@ -33,12 +33,12 @@ export const CustomLookupEditor: React.FC<IFilterRowEditorProps> = ({
     );
 };
 
-const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
+const FilterOperators: FC<{ column: Column; dispatch: DispatchFunc }> = ({
     column, dispatch,
 }) => {
     return (
         <select
-            className='form-control'
+            className='form-select'
             defaultValue={column.filterRowOperator}
             onChange={(event) => {
                 dispatch(updateFilterRowOperator(column.key, event.currentTarget.value));
@@ -52,14 +52,15 @@ const FilterOperators: React.FC<{ column: Column; dispatch: DispatchFunc }> = ({
     );
 };
 
-export const NumberEditor: React.FC<IFilterRowEditorProps> = ({
+export const NumberEditor: FC<IFilterRowEditorProps> = ({
     column, dispatch,
 }) => {
     return (
         <>
             <FilterOperators column={column} dispatch={dispatch}/>
             <input
-                defaultValue={column.filterRowValue}
+                className='form-control'
+                defaultValue={String(column.filterRowValue ?? '')}
                 style={{width: 100}}
                 onChange={(event) => {
                     const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
@@ -71,21 +72,19 @@ export const NumberEditor: React.FC<IFilterRowEditorProps> = ({
     );
 };
 
-export const DateEditor: React.FC<IFilterRowEditorProps> = ({
+export const DateEditor: FC<IFilterRowEditorProps> = ({
     column, dispatch,
 }) => {
-    const fieldValue = column.filterRowValue;
-    const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
     return (
         <>
             <FilterOperators column={column} dispatch={dispatch}/>
             <input
+                className='form-control'
                 type='date'
-                value={value || ''}
+                value={kaDateUtils.getDateInputValue(column.filterRowValue)}
                 onChange={(event) => {
-                    const targetValue = event.currentTarget.value;
-                    const filterRowValue = targetValue ? new Date(targetValue) : null;
-                    dispatch(updateFilterRowValue(column.key, filterRowValue));
+                    // the local date: new Date('YYYY-MM-DD') would be the midnight of UTC, the previous day west of it
+                    dispatch(updateFilterRowValue(column.key, kaDateUtils.getDateFromInputValue(event.currentTarget.value)));
                 }}
             />
         </>

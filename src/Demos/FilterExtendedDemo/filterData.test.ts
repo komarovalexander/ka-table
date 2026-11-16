@@ -75,7 +75,7 @@ describe('filter data', () => {
             { id: 3, field: 2, field2: 'text 3'},
             { id: 4, field: 1, field2: 'text 2'},
         ];
-        const items: any = [{
+        const items = [{
             field: 'name',
             key: '1',
             operator: '<>',

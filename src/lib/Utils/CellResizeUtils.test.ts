@@ -12,6 +12,11 @@ describe('CellUtils', () => {
         it('should skip minWidth in case of percents', () => {
             expect(getMinWidth({ minWidth: '100%' })).toBe(20);
         });
+        it('takes minWidth of the next style when the first one has none (style, colGroup.style)', () => {
+            expect(getMinWidth({}, { minWidth: 100 })).toBe(100);
+            expect(getMinWidth(undefined, { minWidth: 100 })).toBe(100);
+            expect(getMinWidth({ minWidth: 50 }, { minWidth: 100 })).toBe(50);
+        });
     });
     describe('getValidatedWidth', () => {
         it('newWidth less than minWidth', () => {
@@ -23,16 +28,28 @@ describe('CellUtils', () => {
     });
     describe('getMouseMove', () => {
         it('default', () => {
-            const dispatch = jest.fn();
+            const dispatch = vi.fn();
             const mouseMoveEvent = getMouseMove(40, 50, 100, 'column1', dispatch);
-            mouseMoveEvent({ screenX: 20 } as any);
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 20 }));
             expect(dispatch).toHaveBeenCalledWith({type: 'ResizeColumn', columnKey: 'column1', width: 50});
         });
         it('skip', () => {
-            const dispatch = jest.fn();
+            const dispatch = vi.fn();
             const mouseMoveEvent = getMouseMove(40, 40, 0, 'column1', dispatch);
-            mouseMoveEvent({ screenX: 40 } as any);
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 40 }));
             expect(dispatch).toHaveBeenCalledTimes(0);
+        });
+        it('dispatches only a new width: not for the vertical moves and not again at the min width', () => {
+            const dispatch = vi.fn();
+            const mouseMoveEvent = getMouseMove(100, 50, 0, 'column1', dispatch);
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 120 }));
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 120 }));
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 40 }));
+            mouseMoveEvent(new MouseEvent('mousemove', { screenX: 30 }));
+            expect(dispatch.mock.calls).toEqual([
+                [{ type: 'ResizeColumn', columnKey: 'column1', width: 120 }],
+                [{ type: 'ResizeColumn', columnKey: 'column1', width: 50 }],
+            ]);
         });
     });
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import { DownIcon } from '../../Icons/DownIcon';
 import { ISortIconProps } from '../../props';
@@ -7,7 +7,7 @@ import { UpIcon } from '../../Icons/UpIcon';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-const SortIcon: React.FunctionComponent<ISortIconProps> = (props) => {
+const SortIcon: FunctionComponent<ISortIconProps> = (props) => {
     const {
         column,
         childComponents

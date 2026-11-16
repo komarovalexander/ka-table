@@ -1,34 +1,33 @@
 import { closeEditor, updateCellValue } from '../../actionCreators';
 
 import { ICellEditorProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import defaultOptions from '../../defaultOptions';
-import { getDateInputValue } from '../../Utils/DateUtils';
+import { getDateFromInputValue, getDateInputValue } from '../../Utils/DateUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-const CellEditorDate: React.FunctionComponent<ICellEditorProps> = (props) => {
+const CellEditorDate: FunctionComponent<ICellEditorProps> = (props) => {
     const {
         column,
         dispatch,
         value,
         rowKeyValue,
         autoFocus,
-        childComponents
+        childComponents,
+        validationMessage,
+        validationMessageId,
     } = props;
-    const inputValue = value && getDateInputValue(value);
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: `${defaultOptions.css.dateInput}`,
+        'aria-label': column.title,
+        'aria-invalid': validationMessage ? true : undefined,
+        'aria-describedby': validationMessageId,
         autoFocus,
         type: 'date',
-        value: inputValue || '',
+        value: getDateInputValue(value),
         onChange: (event) => {
-            const targetValue: string = event.currentTarget.value;
-            const newValue = targetValue ? new Date(targetValue) : null;
-            dispatch(updateCellValue(
-                rowKeyValue,
-                column.key,
-                newValue && new Date(newValue.getTime() + newValue.getTimezoneOffset() * 60000)
-            ));
+            // the edited date keeps the type of the value: a string date of a JSON stays a string
+            dispatch(updateCellValue(rowKeyValue, column.key, getDateFromInputValue(event.currentTarget.value, value)));
         },
         onBlur: () => dispatch(closeEditor(rowKeyValue, column.key))
     }, props, childComponents?.cellEditorInput);

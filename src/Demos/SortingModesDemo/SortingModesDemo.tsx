@@ -1,6 +1,6 @@
 import { DataType, SortDirection, SortingMode } from '../../lib/enums';
 import { ITableProps, Table, kaReducer } from '../../lib';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { DispatchFunc } from '../../lib/types';
 import { getSortedColumns } from '../../lib/Utils/PropsUtils';
@@ -37,10 +37,10 @@ const SortingModesDemo = () => {
     };
     return (
         <>
-      sortingMode:
+            sortingMode:
             <select
                 value={tableProps.sortingMode}
-                onChange={(e) => changeTableProps({ ...tablePropsInit, sortingMode: e.target.value as any })}
+                onChange={(e) => changeTableProps({ ...tablePropsInit, sortingMode: e.target.value as SortingMode })}
                 style={{marginBottom: 20}}>
                 <option value={SortingMode.Single}>Single</option>
                 <option value={SortingMode.SingleTripleState}>SingleTripleState</option>
@@ -58,7 +58,7 @@ const SortingModesDemo = () => {
             </div>
             <div style={{fontSize: 12}}>
                 <b>'*Remote' sorting</b> modes do not sort data, it should be done outside of the grid,
-          see <a href='#/remote-data-editing'>remote data editing demo</a> for details
+                see <a href='#/remote-data-editing'>remote data editing demo</a> for details
             </div>
         </>
     );

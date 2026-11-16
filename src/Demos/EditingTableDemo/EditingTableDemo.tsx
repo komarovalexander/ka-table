@@ -1,7 +1,7 @@
-import './EditingTableDemo.scss';
+import './EditingTableDemo.css';
 
 import { DataType, Table, useTable } from '../../lib';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { kaPropsUtils } from '../../lib/utils';
 import { openAllEditors } from '../../lib/actionCreators';
@@ -18,7 +18,7 @@ const dataArray = Array(3)
 
 const AddRowDemo = () => {
     const [data, setData] = useState<typeof dataArray | undefined>(dataArray);
-    const table = useTable({
+    const table = useTable<typeof dataArray[number]>({
         onDispatch: (action, tableProps) => {
             setData(tableProps.data);
         }

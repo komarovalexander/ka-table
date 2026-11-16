@@ -1,6 +1,7 @@
 import { ActionType, EditingMode } from '../enums';
 import {
     addItemToEditableCells,
+    checkPopupPosition,
     getCellEditorDispatchHandler,
     getEditableCell,
     getNewRowDataFromEditableCells,
@@ -80,7 +81,7 @@ describe('CellUtils', () => {
     });
     describe('getCellEditorDispatchHandler', () => {
         it('transform UpdateEditorValue to UpdateCellValue', () => {
-            const dispatch = jest.fn();
+            const dispatch = vi.fn();
             const dispatchHandler = getCellEditorDispatchHandler(dispatch);
             dispatchHandler(updateEditorValue(1, 'column', 2));
             expect(dispatch).toHaveBeenCalledWith({
@@ -92,7 +93,7 @@ describe('CellUtils', () => {
         });
 
         it('pass action to dispatch', () => {
-            const dispatch = jest.fn();
+            const dispatch = vi.fn();
             const dispathcHandler = getCellEditorDispatchHandler(dispatch);
             const action = closeEditor(1, 'column');
             dispathcHandler(action);
@@ -130,11 +131,18 @@ describe('CellUtils', () => {
             ]);
             expect(result).toEqual({ column1: 11, column2: 22 });
         });
+        it('skips the editors of the columns which are not in the table', () => {
+            const editableCells: EditableCell[] = [
+                { columnKey: 'column1', rowKeyValue: 1, editorValue: 11 },
+                { columnKey: 'removed', rowKeyValue: 1, editorValue: 22 },
+            ];
+            expect(getNewRowDataFromEditableCells(editableCells, [{ key: 'column1' }])).toEqual({ column1: 11 });
+        });
     });
 });
 
 it('should dispatch the action', () => {
-    const dispatch = jest.fn();
+    const dispatch = vi.fn();
     const popupPosition: PopupPosition = {
         x: 0,
         y: 0
@@ -144,5 +152,37 @@ it('should dispatch the action', () => {
     expect(dispatch).toHaveBeenCalledWith({
         popupPosition,
         type: ActionType.UpdatePopupPosition
+    });
+});
+
+describe('checkPopupPosition', () => {
+    const createHeadCellContent = () => {
+        const tableWrapper = document.createElement('div');
+        tableWrapper.className = 'ka-table-wrapper';
+        const headCell = tableWrapper.appendChild(document.createElement('table')).appendChild(document.createElement('th'));
+        const element = headCell.appendChild(document.createElement('div'));
+        Object.defineProperty(element, 'offsetParent', { value: headCell });
+        return element;
+    };
+
+    it('dispatches the popup position', () => {
+        const dispatch = vi.fn();
+        checkPopupPosition({ key: 'name', isHeaderFilterPopupShown: true }, { current: createHeadCellContent() }, dispatch);
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledWith(updatePopupPosition({ x: 0, y: 0 }));
+    });
+    it('does not dispatch if the position is not changed', () => {
+        const dispatch = vi.fn();
+        checkPopupPosition({
+            headerFilterPopupPosition: { x: 0, y: 0 },
+            isHeaderFilterPopupShown: true,
+            key: 'name',
+        }, { current: createHeadCellContent() }, dispatch);
+        expect(dispatch).not.toHaveBeenCalled();
+    });
+    it('does not dispatch if the popup is not shown', () => {
+        const dispatch = vi.fn();
+        checkPopupPosition({ key: 'name' }, { current: createHeadCellContent() }, dispatch);
+        expect(dispatch).not.toHaveBeenCalled();
     });
 });

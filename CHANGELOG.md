@@ -1,0 +1,70 @@
+# Changelog
+
+## 13.0.0 (not released yet)
+
+13.0.0 has breaking changes: the [migration guide](./MIGRATION.md) describes what to change in the code written for 12.x.
+
+### Breaking changes
+
+- Keyboard navigation is enabled by default: the table is a WAI-ARIA grid with a single Tab stop, the arrows move the focus between the cells, Enter and F2 open the editors. `keyboardNavigation={false}` turns it off. [Details](./MIGRATION.md#1-keyboard-navigation-is-enabled-by-default)
+- A table without `dispatch` applies all the props which the parent changes, compared by value, and always uses the latest functions (`format`, `search`, `validation`...). 12.x applied only six props, compared with the state by reference. [Details](./MIGRATION.md#2-a-table-without-dispatch-applies-the-props-which-the-parent-changes)
+- The types have no `any`: the values of the cells and the keys of the rows are `unknown`, the actions are `TableAction`, the type of the rows is inferred from `data`. [Details](./MIGRATION.md#3-values-are-unknown-instead-of-any)
+- Fixes of the data processing change some results: the search uses the text of `format` and the visible columns only, ungrouping keeps a group with settings as `enabled: false`, collapsing keeps the groups of the other pages expanded, and more. [Details](./MIGRATION.md#4-fixes-of-the-data-processing-change-some-results)
+- React 18 or 19 is required: React 16 and 17 are not supported. [Details](./MIGRATION.md#7-react-18-or-19-is-required)
+- The package is built for ES2019 (12.x was built for ES5) and contains ES modules chosen by `exports`. [Details](./MIGRATION.md#5-the-package-is-built-for-es2019-and-has-exports)
+- `style.css` is plain CSS with custom properties (`--ka-*`), a theme overrides them; the package has no Sass files, `ka-table/style.scss` and `ka-table/_default_theme.scss` can't be imported. The rows get a hover colour, the selected rows, the active page and the focused cell are easier to tell from the other ones; the editors and the filter inputs are styled instead of the look of the browser. [Details](./MIGRATION.md#6-the-theme-is-plain-css-with-custom-properties)
+
+### Added
+
+- `keyboardNavigation` prop: the navigation by the cells of the WAI-ARIA grid pattern (treegrid for a tree), the focused cell is kept in `focused.cell`, a focused group row in `focused.group`. The group rows get the focus as rows, Enter, Space and the arrows Left and Right expand and collapse them; Enter and Space expand and collapse a tree row on the cell of its arrow. The cell which becomes focused is scrolled out from under the sticky header and the fixed columns.
+- Keyboard and screen reader support of sorting, groups, the tree, paging, the group panel and the header filter: ARIA roles, states and names, the rows of a tree tell their level, the focus stays in the header filter popup and returns from it by Esc.
+- The validation messages are announced and describe their editors (`aria-invalid`, `aria-describedby`, `role="alert"`), the editors get the id of the message as `validationMessageId`.
+- `useTableSelector(table, selector, isEqual?)`: re-renders a component only when the selected part of the state of the table changes.
+- `memoizedRows` prop: rows and cells are re-rendered only when their own props change.
+- Typed instance and actions: `useTable<TData>()`, `useTableInstance<TData>()`, `ITableInstance<TData>`, `TableAction` and `CustomAction`, the `HeaderFilterItem` model.
+- `Group.enabled`: a disabled group keeps its settings until its column is grouped again.
+- `sort`: the comparator gets the rows (`(valueA, valueB, rowDataA, rowDataB)`) and returns any number, e.g. `Intl.Collator().compare` or `(a, b) => a - b` (#477).
+- `oddEvenRows="treeRoots"`: a root of a tree and all its children get the class of the root (`ka-odd` or `ka-even`), also with virtual scrolling (#479).
+- `column.fixed`: `'left'` or `'right'` makes the column stick to the edge of the table when it is scrolled horizontally, after the other fixed columns of the edge. A shadow (`--ka-fixed-column-shadow-color`) shows the columns scrolled under the fixed ones (#495).
+- `virtualScrolling.horizontal`: only the visible columns are rendered, and the fixed ones and the ones without a numeric `width`; spacers keep the width of the table. `tableWidth` is measured, `leftInvisibleCount` and `rightInvisibleCount` render the columns around the visible ones. With 500 columns a table is mounted in ~50 ms instead of ~350 ms and is scrolled to other rows in ~4 ms instead of ~130 ms (#495, #504).
+- `kaDateUtils.getDate`, `kaDateUtils.getDateFromInputValue`, `kaPagingUtils.getPageIndex` and `kaPagingUtils.getPagingWithPageSize`.
+- ES modules in `esm/` and `sideEffects` for tree shaking.
+- CSS custom properties of the default theme (`--ka-*`, listed in the readme): the hover colours of the rows and the cells, the sticky offsets of the header calculated from `--ka-header-cell-height`.
+- A dark theme: `ka-table/themes/dark.css`, applied by the class `ka-dark` on the table or an ancestor.
+- `AGENTS.md` in the package: notes for AI coding agents about this version (the rules of the API, the imports, where the docs and the examples are). The readme shows the line which points an agent of a project to it.
+
+### Fixed
+
+- A table without `dispatch` keeps its sorting, column widths and edited data when the parent re-renders with equal props (#480), uses the latest functions of the parent, also in `table.props` and `kaPropsUtils` (#482), and shows the changed data and the scroll position when it is mounted again with the same instance. `onDispatch` is called once per action in StrictMode.
+- The reducer doesn't mutate the previous state (`UpdateHeaderFilterValues`, `SaveRowEditors` with validation, `ResizeColumn`).
+- Selection: no duplicate keys in `selectedRows`, `selectRowsRange` with the key `0` or with a row which is not found, `areAllRowsSelected` checks every row and is `false` without rows.
+- Trees: rows with keys like `'constructor'`, a parent with the key `0`, a row whose parent is not in the data or is the row itself is a root, the found rows keep their parents in the order of the data and stay sorted.
+- A tree with more than about 110 000 shown rows under one root doesn't throw `RangeError: Maximum call stack size exceeded`.
+- Groups: grouping by a date column with `format`, different groups for `null` and `undefined`, `groupItems` of a group with a summary contain only its rows, the summary of a group which is grouped again (#336).
+- Editing: validation gets the row with all its edited values (also of a new row) and reads the value by `column.field`, nested `rowKeyField`, `openAllEditors` skips the columns which are not editable, Esc and Enter of a cell editor are handled only in its row, the string editor shows `0`, `updateCellValue` and `insertRow` with a key which is not in the data.
+- Dates: the date editor and the date filter accept the dates of a JSON (strings) and timestamps, the date filter doesn't depend on the time zone.
+- An unknown filter operator logs a warning instead of breaking the table.
+- The page index stays inside the pages.
+- `virtualScrolling` with `itemHeight: undefined` doesn't hang the page, with `enabled: false` it shows all the rows.
+- The column resize keeps the `minWidth` of `colGroup.style`.
+- `ComponentDidMount` and `singleAction` are dispatched once in StrictMode (the development mode).
+- Drag and drop: rows and columns are dropped only on the items of the same kind and table.
+- Drag and drop by touches in the browsers which don't support it (e.g. Firefox and Samsung Internet for Android): a long press drags a row or a column, the page is scrolled as before (#328).
+- A nested field whose parent is `null` or a primitive gives `undefined` instead of throwing.
+- The position of the header filter popup.
+- `moveFocusedRight()` can be called without settings, as `moveFocusedLeft()`, `moveFocusedUp()` and `moveFocusedDown()`.
+- The `loading` prop is typed as `LoadingSettings` (`enabled` and `text`, in `ka-table/types`): it had `childComponents` of the props of the loading component, which the table doesn't take from this prop.
+
+### Performance
+
+- The values of the fields are read without copying the row: `getData()` of 10 000 rows with search, sorting and paging takes ~9 ms instead of ~125 ms.
+- Filtering, sorting and grouping are calculated again only when the props which they use change: selection, editing and scrolling don't process the data again, a page change only slices it.
+- `validate()` and saving all the editors find the rows by their keys instead of searching the data for every cell.
+- A resize of a column doesn't process the rows again and doesn't render them while the mouse moves: `ResizeColumn` is dispatched only when the width changes, and the rows are rendered with the new width when the mouse is released (#475). Opening the header filter popup and typing into its search don't process the rows again either.
+- A horizontal scrolling of a table with virtual scrolling doesn't render the rows again: `ScrollTable` is dispatched only when `scrollTop` changes, or other columns become visible with `virtualScrolling.horizontal` (#495). With 200 columns a scroll event took ~35 ms.
+
+## 12.0.3
+
+- `columns` is in the default `controlledPropsKeys`: a table without `dispatch` applies the columns which the parent changes.
+
+The changes of the earlier versions are in the [commit history](https://github.com/komarovalexander/ka-table/commits/master).

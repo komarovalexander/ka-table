@@ -1,15 +1,36 @@
-The customizable, extendable, lightweight, and fully free React Table Component
+Fully free React data grid: sorting, filtering, grouping, tree data, editing and virtual scrolling built in, every part customizable.
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komarovalexander/ka-table/blob/master/LICENSE)
+[![CI](https://github.com/komarovalexander/ka-table/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/komarovalexander/ka-table/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/ka-table.svg?style=flat-square)](https://www.npmjs.com/package/ka-table)
 [![Coverage Status](https://coveralls.io/repos/github/komarovalexander/ka-table/badge.svg?branch=master&service=github)](https://coveralls.io/github/komarovalexander/ka-table?branch=master&service=github)
 
-<a href="http://ka-table.com"><img src="http://ka-table.com/images/logo.svg"/></a>
+<a href="https://ka-table.com"><img src="https://ka-table.com/images/logo.svg"/></a>
 
-[Site](http://ka-table.com) | [Demos](https://komarovalexander.github.io/ka-table/#/overview) | [Docs](http://ka-table.com/docs_get_started.html)
+[Site](https://ka-table.com) | [Demos](https://komarovalexander.github.io/ka-table/#/overview) | [Docs](https://ka-table.com/docs_get_started.html) | [Changelog](https://github.com/komarovalexander/ka-table/blob/master/CHANGELOG.md)
+
+Upgrading from 12.x? See the [migration guide](https://github.com/komarovalexander/ka-table/blob/master/MIGRATION.md).
 
 ![Table](https://komarovalexander.github.io/ka-table/static/demos-screenshots/delete-row.png)
 [Demo link](https://komarovalexander.github.io/ka-table/#/delete-row)
+
+## Why ka-table
+
+- **Everything is free.** Grouping with summaries, tree data, fixed columns, virtual scrolling of rows and columns: all of it is in the MIT package, there is no paid edition.
+- **Ready to use, open to change.** The table works with its default look, and every part of it (cells, editors, rows, the header, filters, paging...) can get your content, attributes and event handlers through `childComponents`.
+- **The state is yours.** The state of the table is plain props, and every change is an action. The table can keep the state itself: `useTable` gives its actions as methods (`table.selectRow(1)`), `customReducer` and `onDispatch` see every action. Or keep the state in Redux, in the URL or on a server and apply the actions with `kaReducer`.
+- **Typed.** The type of the rows is inferred from `data`, the values of the cells and the keys of the rows are `unknown` instead of `any`.
+- **Accessible.** The table is a WAI-ARIA grid with a single Tab stop: the arrows move the focus between the cells, Enter and F2 open the editors. Sorting, groups, the tree, paging and the header filter have ARIA roles, states and names.
+- **No dependencies.** Only React 18 or 19. The styles are plain CSS with custom properties, a dark theme is included.
+
+## Features
+
+- **Data:** [sorting](https://komarovalexander.github.io/ka-table/#/sorting) by one or [several columns](https://komarovalexander.github.io/ka-table/#/sorting-extended), [filter row](https://komarovalexander.github.io/ka-table/#/filter-row), [header filter](https://komarovalexander.github.io/ka-table/#/header-filter), [search](https://komarovalexander.github.io/ka-table/#/search), [grouping](https://komarovalexander.github.io/ka-table/#/grouping) with [summaries](https://komarovalexander.github.io/ka-table/#/grouping-summary), [tree data](https://komarovalexander.github.io/ka-table/#/tree-mode), [paging](https://komarovalexander.github.io/ka-table/#/paging), [remote data](https://komarovalexander.github.io/ka-table/#/remote-data)
+- **Editing:** [cells](https://komarovalexander.github.io/ka-table/#/editing), [rows](https://komarovalexander.github.io/ka-table/#/editing-row) or [the whole table](https://komarovalexander.github.io/ka-table/#/editing-table), [validation](https://komarovalexander.github.io/ka-table/#/validation), [new rows](https://komarovalexander.github.io/ka-table/#/add-row), [custom editors](https://komarovalexander.github.io/ka-table/#/custom-editor)
+- **Rows and columns:** [selection](https://komarovalexander.github.io/ka-table/#/selection), [details rows](https://komarovalexander.github.io/ka-table/#/details-row), [summary row](https://komarovalexander.github.io/ka-table/#/summary), [resizing of columns](https://komarovalexander.github.io/ka-table/#/column-resizing), reordering of [columns](https://komarovalexander.github.io/ka-table/#/column-reordering) and [rows](https://komarovalexander.github.io/ka-table/#/row-reordering) by mouse and touch, [fixed columns](https://komarovalexander.github.io/ka-table/#/fixed-column), [multi-level header](https://komarovalexander.github.io/ka-table/#/grouped-columns)
+- **Big data:** virtual scrolling of [rows](https://komarovalexander.github.io/ka-table/#/many-rows) and [columns](https://komarovalexander.github.io/ka-table/#/many-columns), [memoized rows](https://komarovalexander.github.io/ka-table/#/many-rows-memo), [infinite scrolling](https://komarovalexander.github.io/ka-table/#/infinite-scrolling)
+- **Look:** custom [cells](https://komarovalexander.github.io/ka-table/#/custom-cell), [rows](https://komarovalexander.github.io/ka-table/#/custom-data-row) and [header cells](https://komarovalexander.github.io/ka-table/#/custom-header-cell), [your own theme](https://komarovalexander.github.io/ka-table/#/custom-theme), [dark theme](https://komarovalexander.github.io/ka-table/#/dark-theme), [Bootstrap](https://komarovalexander.github.io/ka-table/#/bootstrap) and [Material UI](https://komarovalexander.github.io/ka-table/#/material)
+- **More:** [keyboard navigation](https://komarovalexander.github.io/ka-table/#/keyboard-navigation), [Redux](https://komarovalexander.github.io/ka-table/#/redux), [state storing](https://komarovalexander.github.io/ka-table/#/state-storing), export to [CSV](https://komarovalexander.github.io/ka-table/#/export) and [PDF](https://komarovalexander.github.io/ka-table/#/export-pdf) and [printing](https://komarovalexander.github.io/ka-table/#/print) with other libraries
 
 ## Installation
 
@@ -23,6 +44,14 @@ yarn
 
 ```sh
 yarn add ka-table
+```
+
+## AI coding agents
+
+The package has `AGENTS.md`: short notes for coding agents (Claude Code, Codex, Cursor, Copilot...) about the installed version: the rules of the API, the imports, where the docs and the examples are. Agents seldom open the files of the packages by themselves, so point to it from the `AGENTS.md` or `CLAUDE.md` of your project:
+
+```text
+Before writing or changing ka-table code, read node_modules/ka-table/AGENTS.md.
 ```
 
 ## Usage
@@ -68,3 +97,101 @@ export default OverviewDemo;
 ```
 
 [Example link](https://komarovalexander.github.io/ka-table/#/overview)
+
+## Theming
+
+`ka-table/style.css` is plain CSS: every colour and size of the default theme is a CSS custom property declared on the root element of the table (`.ka`), so a theme is a rule which overrides the properties you need — for every table or for the tables inside a container:
+
+```css
+/* a dark theme for every table */
+.ka {
+  --ka-background-color: #2c2c2c;
+  --ka-border-color: #4d4d4d;
+  --ka-color-base: #fefefe;
+  --ka-thead-background-color: #1b1b1b;
+  --ka-thead-color: #c5c5c5;
+  --ka-selected-background-color: #3c3c3c;
+  --ka-row-hover-background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* or only for the tables inside .my-wrapper */
+.my-wrapper .ka {
+  --ka-thead-background-color: #1b1b1b;
+}
+```
+
+The rule has to match `.ka` itself: a property set only on an ancestor (`:root { ... }`, `html[data-theme="dark"] { ... }`) is overridden by the defaults of the table.
+
+[Custom theme demo](https://komarovalexander.github.io/ka-table/#/custom-theme)
+
+### Dark theme
+
+`ka-table/themes/dark.css` is such a rule for the class `ka-dark`: add the class to an ancestor of the table (e.g. `<body class="ka-dark">`) or to the table itself (`childComponents.rootDiv`). It also sets `color-scheme: dark`, so the native inputs of the editors and the filters are dark too.
+
+```js
+import 'ka-table/style.css';
+import 'ka-table/themes/dark.css';
+```
+
+```tsx
+<div className='ka-dark'>
+  <Table {...tableProps} />
+</div>
+```
+
+[Dark theme demo](https://komarovalexander.github.io/ka-table/#/dark-theme)
+
+| Property | Default | Used for |
+| --- | --- | --- |
+| `--ka-background-color` | `white` | background of the table |
+| `--ka-border-color` | `#F3F6F9` | borders of the rows, `.ka-even` rows, border of the popup |
+| `--ka-color-base` | `#353C44` | text |
+| `--ka-font-size` | `14px` | font size of the table |
+| `--ka-thead-background-color` | `#F1F5F7` | background of the header |
+| `--ka-thead-color` | `#646D76` | text of the header |
+| `--ka-thead-cell-padding` | `15px 20px` | padding of the header cells |
+| `--ka-header-cell-height` | `47px` | height of a header row (the sticky offsets are calculated from it) |
+| `--ka-sort-icon-color` | `#586068` | arrows of the sorting |
+| `--ka-header-filter-button-icon-color` | `#41474D` | icon of the header filter |
+| `--ka-column-resize-border-color` | `#D7E4EB` | handle of the column resizing |
+| `--ka-cell-color` | `var(--ka-color-base)` | text of the cells |
+| `--ka-cell-padding` | `8px 20px` | padding of the cells |
+| `--ka-cell-line-height` | `29px` | line height of the cells |
+| `--ka-cell-hover-background-color` | `transparent` | overlay of the hovered cell |
+| `--ka-row-border-size` | `2px` | width of the borders of the rows |
+| `--ka-row-hover-background-color` | `rgba(69, 88, 128, 0.05)` | overlay of the hovered row |
+| `--ka-selected-background-color` | `#EAF1FB` | selected rows |
+| `--ka-selected-border-color` | `#E1EBF0` | drop target of the drag and drop |
+| `--ka-focus-color` | `#8795A3` | ring of the cell focused by the keyboard |
+| `--ka-fixed-column-shadow-color` | `rgba(0, 0, 0, 0.12)` | shadow of the fixed columns (`column.fixed`) over the columns scrolled under them |
+| `--ka-group-row-background-color` | `#F9FBFC` | background of the group rows |
+| `--ka-group-row-border-color` | `white` | borders of the group rows |
+| `--ka-group-row-border-size` | `1px` | width of the borders of the group rows |
+| `--ka-group-cell-padding` | `8px 10px` | padding of the group cells |
+| `--ka-group-panel-text-color` | `#747D86` | text of the empty group panel |
+| `--ka-group-panel-cell-remove-color` | `#A6ADB4` | remove icon of the group panel |
+| `--ka-input-background-color` | `white` | background of the editors and the filter inputs |
+| `--ka-input-border-color` | `#747D86` | border of the editors and the filter inputs |
+| `--ka-input-color` | `currentColor` | text of the editors and the filter inputs |
+| `--ka-input-validation-background-color` | `#FDF2F2` | background of an invalid editor |
+| `--ka-validation-background-color` | `#D64550` | background of the validation message, border of an invalid editor |
+| `--ka-validation-color` | `white` | text of the validation message |
+| `--ka-validation-message-font-size` | `12px` | font size of the validation message |
+| `--ka-validation-message-padding` | `0 10px` | padding of the validation message |
+| `--ka-filter-row-cell-padding` | `0 20px 15px 20px` | padding of the filter row cells |
+| `--ka-summary-cell-padding` | `12px 20px` | padding of the summary cells |
+| `--ka-icon-font-size` | `10px` | font size of the icons |
+| `--ka-loading-backdrop-color` | `#ffffff88` | backdrop of the loading |
+| `--ka-loading-background-color-base` | `rgb(116, 125, 134)` | dots of the loading |
+| `--ka-loading-background-color-medium` | `rgba(116, 125, 134, 0.4)` | dots of the loading (animation) |
+| `--ka-loading-background-color-light` | `rgba(116, 125, 134, 0.2)` | dots of the loading (animation) |
+| `--ka-paging-index-color` | `var(--ka-thead-color)` | page numbers |
+| `--ka-paging-index-active-background-color` | `#E4EAEF` | background of the active page |
+| `--ka-paging-index-active-color` | `#353C44` | text of the active page |
+| `--ka-paging-pages-margin` | `0` | margin of the paging |
+| `--ka-paging-pages-padding` | `0 10px` | padding of the paging |
+| `--ka-popup-background-color` | `white` | background of the header filter popup |
+| `--ka-popup-color` | `#747D86` | text of the header filter popup |
+| `--ka-popup-box-shadow` | `0 6px 12px rgba(0, 0, 0, 0.18)` | shadow of the header filter popup |
+
+The hover colours are painted as an overlay above the background of the row and the cell, so a translucent colour blends with the zebra and the selection colours. The themes written for the Sass variables of 12.x are described in the [migration guide](https://github.com/komarovalexander/ka-table/blob/master/MIGRATION.md#6-the-theme-is-plain-css-with-custom-properties).

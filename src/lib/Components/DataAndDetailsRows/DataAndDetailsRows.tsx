@@ -1,10 +1,10 @@
-import React from 'react';
+import { FunctionComponent, memo } from 'react';
 
 import { IRowProps } from '../../props';
 import DataRow from '../DataRow/DataRow';
 import DetailsRow from '../DetailsRow/DetailsRow';
 
-const DataAndDetailsRows: React.FunctionComponent<IRowProps> = (props) => {
+const DataAndDetailsRows: FunctionComponent<IRowProps> = (props) => {
     const { isDetailsRowShown } = props;
     return (
         <>
@@ -13,5 +13,7 @@ const DataAndDetailsRows: React.FunctionComponent<IRowProps> = (props) => {
         </>
     );
 };
+
+export const DataAndDetailsRowsMemo = memo(DataAndDetailsRows);
 
 export default DataAndDetailsRows;

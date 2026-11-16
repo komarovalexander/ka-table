@@ -1,6 +1,6 @@
-import './Demos.scss';
+import './Demos.css';
 
-import React, { useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { CollapsedIcon } from '../lib/Icons/CollapsedIcon';
 import { ExpandedIcon } from '../lib/Icons/ExpandedIcon';
@@ -17,11 +17,11 @@ export class MenuItem {
 const newItems: string[] = [];
 const updateItems: string[] = ['HeaderFilterLogicDemo'];
 
-const MenuItems: React.FC<{ items: MenuItem[] }> = ({ items }) => {
+const MenuItems: FC<{ items: MenuItem[] }> = ({ items }) => {
 
     const [menuItems, changeItems] = useState(items);
 
-    React.useEffect(() => {
+    useEffect(() => {
         changeItems(items);
     }, [items]);
 

@@ -8,8 +8,8 @@ describe('Validation', () => {
             {
                 key: 'field',
             },
-            (value: any) =>
-                value > 2 ? undefined : 'value must be more than 2'
+            ({ value }) =>
+                (value as number) > 2 ? undefined : 'value must be more than 2'
         );
         expect(result).toBe('value must be more than 2');
 

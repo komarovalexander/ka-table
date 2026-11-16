@@ -1,10 +1,10 @@
-import './EditingRowDemo.scss';
+import './EditingRowDemo.css';
 
 import { DataType, Table } from '../../lib';
 import { ICellEditorProps, ICellTextProps } from '../../lib/props';
 import { closeRowEditors, openRowEditors, saveRowEditors } from '../../lib/actionCreators';
 
-import React from 'react';
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -73,7 +73,7 @@ const EditingDemoRow = () => {
                 ]}
                 format= {({ column, value }) => {
                     if (column.dataType === DataType.Date){
-                        return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value instanceof Date && dateFormat.format(value);
                     }
                 }}
                 data={dataArray}

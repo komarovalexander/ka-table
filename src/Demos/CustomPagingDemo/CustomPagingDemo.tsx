@@ -1,10 +1,9 @@
-import './CustomPagingDemo.scss';
+import './CustomPagingDemo.css';
 
 import { DataType, Table } from '../../lib';
 import { updatePageIndex, updatePageSize } from '../../lib/actionCreators';
 
 import { IPagingProps } from '../../lib/props';
-import React from 'react';
 
 const dataArray = Array(180).fill(undefined).map(
     (_, index) => ({
@@ -18,7 +17,7 @@ const dataArray = Array(180).fill(undefined).map(
 
 const PageSizeSelector = ({ pageSize, pageSizes, dispatch }: IPagingProps) =>  (
     <>
-    Page Size:
+        Page Size:
         <select
             className='form-control'
             value={pageSize}
@@ -34,7 +33,7 @@ const PageSizeSelector = ({ pageSize, pageSizes, dispatch }: IPagingProps) =>  (
 
 const PagesSelector = ({ pageIndex, pagesCount, dispatch }: IPagingProps) =>  (
     <>
-    Page Number:
+        Page Number:
         <select
             className='form-control'
             value={pageIndex}

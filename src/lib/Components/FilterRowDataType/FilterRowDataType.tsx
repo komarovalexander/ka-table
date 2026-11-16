@@ -1,4 +1,4 @@
-import React from 'react';
+import { FunctionComponent } from 'react';
 
 import { DataType } from '../../enums';
 import { IFilterRowEditorProps } from '../../props';
@@ -7,7 +7,7 @@ import FilterRowDate from '../FilterRowDate/FilterRowDate';
 import FilterRowNumber from '../FilterRowNumber/FilterRowNumber';
 import FilterRowString from '../FilterRowString/FilterRowString';
 
-const FilterRowDataType: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
+const FilterRowDataType: FunctionComponent<IFilterRowEditorProps> = (props) => {
     switch (props.column.dataType) {
     case DataType.Boolean: return <FilterRowBoolean {...props} />;
     case DataType.Date: return <FilterRowDate {...props} />;

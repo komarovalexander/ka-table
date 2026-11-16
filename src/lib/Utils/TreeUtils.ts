@@ -4,116 +4,162 @@ import { getValueByField } from './DataUtils';
 export const treeGroupMark = {};
 export const treeDataMark = {};
 
+// a row of the tree: the row of the data and its level, treeGroupMark for a row with children, treeDataMark for a row without them
+export interface ShownTreeRow<TData> {
+    rowData: TData;
+    treeDataMark?: typeof treeDataMark;
+    treeDeep: number;
+    treeGroupMark?: typeof treeGroupMark;
+}
 
-export const getExpandedParents = (treeData: any[], rowKeyField: any): any[][] =>
+export const isTreeGroupRow = (row: unknown): row is ShownTreeRow<unknown> => (row as Partial<ShownTreeRow<unknown>>).treeGroupMark === treeGroupMark;
+
+export const isTreeRow = (row: unknown): row is ShownTreeRow<unknown> => (
+    isTreeGroupRow(row) || (row as Partial<ShownTreeRow<unknown>>).treeDataMark === treeDataMark
+);
+
+// the level of a row from 1 (aria-level): a row without children has the treeDeep of the next level, as it is indented for the missing arrow
+export const getTreeRowLevel = (row: ShownTreeRow<unknown>): number => row.treeDeep + (isTreeGroupRow(row) ? 1 : 0);
+
+// a row of the tree which is not a root
+export const isTreeChildRow = (row: unknown): boolean => isTreeRow(row) && getTreeRowLevel(row) > 1;
+
+export const getExpandedParents = (treeData: unknown[], rowKeyField: string): unknown[] =>
     treeData
-        .filter((item) => item.treeGroupMark === treeGroupMark)
+        .filter(isTreeGroupRow)
         .map((item) => getValueByField(item.rowData, rowKeyField));
 
-const getItemStructure = (
-    item: any,
-    dataHash: any,
-    rowKeyField: any,
-    treeDeep: number = 0): any[] => {
-    const children = dataHash[getValueByField(item, rowKeyField)];
+// adds the item and its children to the rows of the tree: all the levels are added to one array,
+// push(...rows) of the rows of a level exceeds the limit of the arguments of a function in a big tree
+const addItemStructure = <TData>(
+    item: TData,
+    dataHash: Record<string, TData[]>,
+    rowKeyField: string,
+    rows: ShownTreeRow<TData>[],
+    treeDeep: number = 0): void => {
+    const children = dataHash[String(getValueByField(item, rowKeyField))];
     if (!children){
-        return [{ treeDataMark, rowData: item, treeDeep: treeDeep + 1 }];
+        rows.push({ treeDataMark, rowData: item, treeDeep: treeDeep + 1 });
+        return;
     }
-    const result = [{ treeGroupMark, rowData: item, treeDeep }];
-    children.forEach((c: any) => {
-        const childrenData = getItemStructure(c, dataHash, rowKeyField, treeDeep + 1);
-        result.push(...childrenData);
-    });
-    return result;
+    rows.push({ treeGroupMark, rowData: item, treeDeep });
+    children.forEach((c) => addItemStructure(c, dataHash, rowKeyField, rows, treeDeep + 1));
 };
 
-export const getTreeGroupChain = (keyValue: any, dataMap: any, treeGroupKeyField: any, treeGroupKeyValues: any[], groupChain: any = []): any[] => {
-    const value = dataMap[keyValue];
-    let chain = groupChain;
-
-    if (!treeGroupKeyValues.includes(keyValue)){
-        treeGroupKeyValues.push(keyValue);
-        chain = [...groupChain, value];
+export const getTreeGroupChain = <TData>(
+    keyValue: unknown,
+    dataMap: Record<string, TData>,
+    treeGroupKeyField: string,
+    treeGroupKeyValues: unknown[],
+    groupChain: TData[] = []
+): TData[] => {
+    const value = dataMap[String(keyValue)];
+    // the chain ends at a parent which is not in the data or is shown already: its own parents are shown too (this also ends a cycle)
+    if (!value || treeGroupKeyValues.includes(keyValue)) {
+        return groupChain;
     }
-
+    treeGroupKeyValues.push(keyValue);
+    const chain = [...groupChain, value];
     const treeGroupKeyValue = getValueByField(value, treeGroupKeyField);
-    if (treeGroupKeyValue){
-        return getTreeGroupChain(treeGroupKeyValue, dataMap, treeGroupKeyField, treeGroupKeyValues, chain);
-    }
-    return chain;
+    return treeGroupKeyValue == null ? chain : getTreeGroupChain(treeGroupKeyValue, dataMap, treeGroupKeyField, treeGroupKeyValues, chain);
 };
 
-export const restoreFilteredData = ({
+export const restoreFilteredData = <TData>({
     data,
     originalData,
     rowKeyField,
     treeGroupKeyField,
-    treeGroupsExpanded
 }: {
-    data: any[],
-    originalData: any[],
-    rowKeyField: any,
-    treeGroupKeyField: any,
-    treeGroupsExpanded?: any[][]
-}): any[] => {
-    let filteredData: any[] = [];
+    data: TData[],
+    originalData: TData[],
+    rowKeyField: string,
+    treeGroupKeyField: string,
+    treeGroupsExpanded?: unknown[]
+}): TData[] => {
     const treeGroupKeyValues = data.map(d => getValueByField(d, rowKeyField));
-    const dataMap = originalData.reduce((acc, d) => {
-        acc[getValueByField(d, rowKeyField)] = d;
+    // without a prototype: the keys like 'constructor' don't find the members of Object
+    const dataMap = originalData.reduce<Record<string, TData>>((acc, d) => {
+        acc[String(getValueByField(d, rowKeyField))] = d;
         return acc;
-    }, {});
+    }, Object.create(null));
+    const parents: TData[] = [];
     data.forEach(d => {
         const treeGroupKeyValue = getValueByField(d, treeGroupKeyField);
-        if (treeGroupKeyValues.includes(treeGroupKeyValue) || !treeGroupKeyValue){
-            filteredData.push(d);
-        } else {
-            const groupsChain = getTreeGroupChain(treeGroupKeyValue, dataMap, treeGroupKeyField, treeGroupKeyValues);
-            filteredData = [...filteredData, ...groupsChain, d];
+        if (treeGroupKeyValue != null && !treeGroupKeyValues.includes(treeGroupKeyValue)) {
+            parents.push(...getTreeGroupChain(treeGroupKeyValue, dataMap, treeGroupKeyField, treeGroupKeyValues));
         }
     });
-    return filteredData;
+    if (!parents.length) {
+        return data;
+    }
+    // in the order of the original data, not with the parents at the place of their first found child
+    const originalIndexes = new Map<unknown, number>();
+    originalData.forEach((d, index) => {
+        const rowKeyValue = getValueByField(d, rowKeyField);
+        if (!originalIndexes.has(rowKeyValue)) {
+            originalIndexes.set(rowKeyValue, index);
+        }
+    });
+    return [...data, ...parents]
+        .map((row) => ({ row, index: originalIndexes.get(getValueByField(row, rowKeyField)) ?? originalData.length }))
+        .sort((a, b) => a.index - b.index)
+        .map(({ row }) => row);
 }
 
-const getDataHashAndRootElements = ({
+const getDataHashAndRootElements = <TData>({
     data,
+    rowKeyField,
     treeGroupKeyField,
     treeGroupsExpanded
 }: {
-    data: any[],
-    treeGroupKeyField: any,
-    treeGroupsExpanded?: any[][]
+    data: TData[],
+    rowKeyField: string,
+    treeGroupKeyField: string,
+    treeGroupsExpanded?: unknown[]
 }) => {
-    const dataHash: any = {};
-    const rootElements: any[] = [];
-    data.forEach(d => {
-        const parentRowKeyValue = getValueByField(d, treeGroupKeyField) ?? undefined;
-        if (!parentRowKeyValue){
+    // without a prototype: keys like 'constructor' don't find the members of Object (not a Map: the keys 1 and '1' are the same)
+    const dataHash: Record<string, TData[]> = Object.create(null);
+    const rowKeys = data.map((d) => String(getValueByField(d, rowKeyField)));
+    const hasRow: Record<string, boolean> = Object.create(null);
+    rowKeys.forEach((rowKey) => {
+        hasRow[rowKey] = true;
+    });
+    const expandedRowKeyValues = treeGroupsExpanded && new Set(treeGroupsExpanded);
+    const rootElements: TData[] = [];
+    data.forEach((d, index) => {
+        const parentRowKeyValue = getValueByField(d, treeGroupKeyField);
+        const parentRowKey = String(parentRowKeyValue);
+        const isRoot = parentRowKeyValue == null
+            // a row whose parent is not in the data (e.g. it is deleted) or is the row itself is a root instead of a lost row
+            || !hasRow[parentRowKey]
+            || parentRowKey === rowKeys[index];
+        if (isRoot) {
             rootElements.push(d);
             return;
         }
-        if (!dataHash[parentRowKeyValue]){
-            dataHash[parentRowKeyValue] = [];
+        if (!dataHash[parentRowKey]){
+            dataHash[parentRowKey] = [];
         }
-        if (!treeGroupsExpanded || treeGroupsExpanded.includes(parentRowKeyValue)) {
-            dataHash[parentRowKeyValue].push(d);
+        if (!expandedRowKeyValues || expandedRowKeyValues.has(parentRowKeyValue)) {
+            dataHash[parentRowKey].push(d);
         }
     });
     return { dataHash, rootElements };
 };
 
-export const getTreeData = ({
+export const getTreeData = <TData>({
     data,
     originalData,
     rowKeyField,
     treeGroupKeyField,
     treeGroupsExpanded
 }: {
-    data: any[],
-    originalData: any[],
-    rowKeyField: any,
-    treeGroupKeyField: any,
-    treeGroupsExpanded?: any[][]
-}): any[] => {
+    data: TData[],
+    originalData: TData[],
+    rowKeyField: string,
+    treeGroupKeyField: string,
+    treeGroupsExpanded?: unknown[]
+}): ShownTreeRow<TData>[] => {
     if (data.length !== originalData.length){
         data = restoreFilteredData({
             data,
@@ -125,13 +171,12 @@ export const getTreeData = ({
     }
     const { dataHash, rootElements } = getDataHashAndRootElements({
         data,
+        rowKeyField,
         treeGroupKeyField,
         treeGroupsExpanded
     });
-    const newData: any[] = [];
-    rootElements.forEach(d => {
-        newData.push(...getItemStructure(d, dataHash, rowKeyField));
-    });
+    const newData: ShownTreeRow<TData>[] = [];
+    rootElements.forEach(d => addItemStructure(d, dataHash, rowKeyField, newData));
     return newData;
 };
 

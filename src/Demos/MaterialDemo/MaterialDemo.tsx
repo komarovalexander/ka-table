@@ -1,4 +1,4 @@
-import './MaterialDemo.scss';
+import './MaterialDemo.css';
 
 import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -6,10 +6,11 @@ import { Table, useTable } from '../../lib';
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import Checkbox from '@mui/material/Checkbox';
-import React from 'react';
 import TablePagination from '@mui/material/TablePagination';
 import TextField from '@mui/material/TextField';
 import { filterAndSearchData } from '../../lib/Utils/FilterUtils';
+
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = Array(119)
     .fill(undefined)
@@ -42,7 +43,7 @@ const MaterialDemo = () => {
                 ]}
                 format={({ column, value }) => {
                     if (column.dataType === DataType.Date) {
-                        return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value instanceof Date && dateFormat.format(value);
                     }
                 }}
                 paging={{
@@ -66,7 +67,7 @@ const MaterialDemo = () => {
                                 return (
                                     <Checkbox
                                         style={{ marginLeft: -12 }}
-                                        checked={column.filterRowValue || false}
+                                        checked={column.filterRowValue === true}
                                         indeterminate={column.filterRowValue == null}
                                         onChange={(e, checked?: boolean) => {
                                             if (column.filterRowValue === false) {
@@ -106,8 +107,8 @@ const MaterialDemo = () => {
                                 return (
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                                         <DatePicker
-                                            value={column.filterRowValue ?? null}
-                                            onChange={(value: any) => {
+                                            value={(column.filterRowValue as Date | undefined) ?? null}
+                                            onChange={(value) => {
                                                 table.updateFilterRowValue(column.key, value);
                                             }}
                                             slotProps={{ textField: { size: 'small' } }}

@@ -1,4 +1,4 @@
-import './Demos.scss';
+import './Demos.css';
 
 import { HashRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { initializeGA, trackEvent, trackPage } from './ga';
@@ -17,6 +17,7 @@ import CustomEditorDemo from './CustomEditorDemo/CustomEditorDemo';
 import CustomHeaderCellDemo from './CustomHeaderCellDemo/CustomHeaderCellDemo';
 import CustomPagingDemo from './CustomPagingDemo/CustomPagingDemo';
 import CustomThemeDemo from './CustomThemeDemo/CustomThemeDemo';
+import DarkThemeDemo from './DarkThemeDemo/DarkThemeDemo';
 import DeleteRowDemo from './DeleteRowDemo/DeleteRowDemo';
 import Demo from './Demo';
 import { DemoCase } from './DemoCase';
@@ -57,7 +58,7 @@ import NullableCellDataDemo from './NullableCellDataDemo/NullableCellDataDemo';
 import OverviewDemo from './OverviewDemo/OverviewDemo';
 import PagingDemo from './PagingDemo/PagingDemo';
 import PrintDemo from './PrintDemo/PrintDemo';
-import React from 'react';
+import { FC, useEffect } from 'react';
 import ReduxDemo from './ReduxDemo/ReduxDemo';
 import RemoteDataDemo from './RemoteDataDemo/RemoteDataDemo';
 import RemoteDataEditingDemo from './RemoteDataEditingDemo/RemoteDataEditingDemo';
@@ -94,7 +95,8 @@ const demos: Demo[] = [
     new Demo(CustomEditorDemo, '/custom-editor', 'Custom Editor', 'CustomEditorDemo', 'https://stackblitz.com/edit/table-custom-editor-js', 'https://stackblitz.com/edit/table-custom-editor-ts', 'Editing'),
     new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo', 'https://stackblitz.com/edit/table-custom-header-cell-js', 'https://stackblitz.com/edit/table-custom-header-cell-ts', 'Customization'),
     new Demo(CustomPagingDemo, '/custom-paging', 'Custom Paging', 'CustomPagingDemo', 'https://stackblitz.com/edit/table-custom-paging-js', 'https://stackblitz.com/edit/table-custom-paging-ts', 'Customization'),
-    new Demo(CustomThemeDemo, '/custom-theme', 'Custom Theme', 'CustomThemeDemo', 'https://stackblitz.com/edit/table-custom-theme-js', 'https://stackblitz.com/edit/table-custom-theme-ts', 'Themes', 'dark.scss'),
+    new Demo(CustomThemeDemo, '/custom-theme', 'Custom Theme', 'CustomThemeDemo', 'https://stackblitz.com/edit/table-custom-theme-js', 'https://stackblitz.com/edit/table-custom-theme-ts', 'Themes', 'custom-theme.css'),
+    new Demo(DarkThemeDemo, '/dark-theme', 'Dark Theme', 'DarkThemeDemo', '', '', 'Themes'),
     new Demo(DeleteRowDemo, '/delete-row', 'Delete Row', 'DeleteRowDemo', 'https://stackblitz.com/edit/table-delete-row-js', 'https://stackblitz.com/edit/table-delete-row-ts', 'Editing'),
     new Demo(DetailsRowDemo, '/details-row', 'Details Row', 'DetailsRowDemo', 'https://stackblitz.com/edit/table-details-row-js', 'https://stackblitz.com/edit/table-details-row-ts', 'Rows'),
     new Demo(EditingDemo, '/editing', 'Editing - Cell', 'EditingDemo', 'https://stackblitz.com/edit/table-editing-js', 'https://stackblitz.com/edit/table-editing-ts', 'Editing'),
@@ -122,7 +124,7 @@ const demos: Demo[] = [
     new Demo(LoadingDemo, '/loading', 'Loading', 'LoadingDemo', 'https://stackblitz.com/edit/table-loading-js', 'https://stackblitz.com/edit/table-loading-ts', 'Miscellaneous'),
     new Demo(InfiniteScrollingDemo, '/infinite-scrolling', 'Infinite Scrolling', 'InfiniteScrollingDemo', 'https://stackblitz.com/edit/table-infinite-scrolling-js', 'https://stackblitz.com/edit/table-infinite-scrolling-ts', 'Virtual Scrolling'),
     new Demo(InsertRowDemo, '/insert-row', 'Insert Row', 'InsertRowDemo', 'https://stackblitz.com/edit/table-insert-row-js', 'https://stackblitz.com/edit/table-insert-row-ts', 'Editing'),
-    new Demo(ManyColumnsDemo, '/many-columns', 'Many Columns', 'ManyColumnsDemo', 'https://stackblitz.com/edit/table-many-columns-js', 'https://stackblitz.com/edit/table-many-columns-ts', 'Columns'),
+    new Demo(ManyColumnsDemo, '/many-columns', 'Many Columns', 'ManyColumnsDemo', 'https://stackblitz.com/edit/table-many-columns-js', 'https://stackblitz.com/edit/table-many-columns-ts', 'Virtual Scrolling'),
     new Demo(ManyRowsDemo, '/many-rows', '100K Rows', 'ManyRowsDemo', 'https://stackblitz.com/edit/table-many-rows-js', 'https://stackblitz.com/edit/table-many-rows-ts', 'Virtual Scrolling'),
     new Demo(ManyRowsDynamicDemo, '/many-rows-dynamic', '10K Rows Dynamic', 'ManyRowsDynamicDemo', 'https://stackblitz.com/edit/table-many-rows-dynamic-js', 'https://stackblitz.com/edit/table-many-rows-dynamic-ts', 'Virtual Scrolling'),
     new Demo(ManyRowsGroupingDemo, '/many-rows-grouping', '10k Grouped', 'ManyRowsGroupingDemo', 'https://stackblitz.com/edit/table-many-rows-grouping-js', 'https://stackblitz.com/edit/table-many-rows-grouping-ts', 'Virtual Scrolling'),
@@ -153,7 +155,7 @@ const demos: Demo[] = [
 const PageRoute = ({ c }: { c: DemoCase }) => {
     const location = useLocation();
 
-    React.useEffect(() => {
+    useEffect(() => {
         trackPage(location?.pathname);
     }, [location?.pathname]);
     return <>{c.demoComponent()}</>;
@@ -169,7 +171,7 @@ const cases: DemoCase[] = demos.map((d: Demo) => {
     });
 });
 
-const Demos: React.FC = () => {
+const Demos: FC = () => {
     return (
         <HashRouter>
             <div className='demos-search-back' />
@@ -200,7 +202,7 @@ const Demos: React.FC = () => {
                                     target='_blank'
                                     onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex'); }}>
                                     <img src='static/icons/link.svg' alt='' />
-                  Developed by Alexander Komarov
+                                    Developed by Alexander Komarov
                                 </a>
                             </div>
                             <div>
@@ -209,7 +211,7 @@ const Demos: React.FC = () => {
                                     target='_blank'
                                     onMouseDown={() => { trackEvent('click', 'developed_by', 'Daria'); }}>
                                     <img src='static/icons/link.svg' alt='' />
-                  UI Design by Daria Komarova
+                                    UI Design by Daria Komarova
                                 </a>
                             </div>
                         </div>
@@ -227,12 +229,12 @@ const Demos: React.FC = () => {
                 <footer>
                     <h3>Provide your feedback</h3>
                     <div>
-            if you like it - click the star in this repo: <a href='https://github.com/komarovalexander/ka-table'>https://github.com/komarovalexander/ka-table</a><br />
-            if you found any issue or have any idea what to add/improve - feel free to create an issue: <a href='https://github.com/komarovalexander/ka-table/issues'>https://github.com/komarovalexander/ka-table/issues</a><br />
+                        if you like it - click the star in this repo: <a href='https://github.com/komarovalexander/ka-table'>https://github.com/komarovalexander/ka-table</a><br />
+                        if you found any issue or have any idea what to add/improve - feel free to create an issue: <a href='https://github.com/komarovalexander/ka-table/issues'>https://github.com/komarovalexander/ka-table/issues</a><br />
                         <br />
-            you also can reach the <a href='https://github.com/komarovalexander' onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex (bottom)'); }}>developer</a> by this email: sanrkom@gmail.com
+                        you also can reach the <a href='https://github.com/komarovalexander' onMouseDown={() => { trackEvent('click', 'developed_by', 'Alex (bottom)'); }}>developer</a> by this email: sanrkom@gmail.com
                         <br />
-            Thanks for collaboration!
+                        Thanks for collaboration!
                     </div>
                 </footer>
             </div>

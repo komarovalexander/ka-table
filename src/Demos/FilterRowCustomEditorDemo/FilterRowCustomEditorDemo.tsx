@@ -5,8 +5,9 @@ import { updateFilterRowOperator, updateFilterRowValue } from '../../lib/actionC
 import { Column } from '../../lib/models';
 import { DispatchFunc } from '../../lib/types';
 import { IFilterRowEditorProps } from '../../lib/props';
-import React from 'react';
 import { kaDateUtils } from '../../lib/utils';
+
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, nextTry: new Date(2021, 10, 9) },
@@ -21,7 +22,7 @@ const dataArray = [
 const CustomLookupEditor = ({
     column, dispatch,
 }: IFilterRowEditorProps) => {
-    const toNullableBoolean = (value: any) => {
+    const toNullableBoolean = (value: string) => {
         switch (value) {
         case 'true': return true;
         case 'false': return false;
@@ -32,7 +33,7 @@ const CustomLookupEditor = ({
         <div>
             <select
                 className='form-control'
-                defaultValue={column.filterRowValue}
+                defaultValue={String(column.filterRowValue ?? '')}
                 onChange={(event) => {
                     dispatch(updateFilterRowValue(column.key, toNullableBoolean(event.currentTarget.value)));
                 }}>
@@ -71,7 +72,7 @@ const NumberEditor = ({
         <div>
             <FilterOperators column={column} dispatch={dispatch}/>
             <input
-                defaultValue={column.filterRowValue}
+                defaultValue={String(column.filterRowValue ?? '')}
                 style={{width: 60}}
                 onChange={(event) => {
                     const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
@@ -86,18 +87,15 @@ const NumberEditor = ({
 const DateEditor = ({
     column, dispatch,
 }: IFilterRowEditorProps) => {
-    const fieldValue = column.filterRowValue;
-    const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
     return (
         <div>
             <FilterOperators column={column} dispatch={dispatch}/>
             <input
                 type='date'
-                value={value || ''}
+                value={kaDateUtils.getDateInputValue(column.filterRowValue)}
                 onChange={(event) => {
-                    const targetValue = event.currentTarget.value;
-                    const filterRowValue = targetValue ? new Date(targetValue) : null;
-                    dispatch(updateFilterRowValue(column.key, filterRowValue));
+                    // the local date: new Date('YYYY-MM-DD') would be the midnight of UTC, the previous day west of it
+                    dispatch(updateFilterRowValue(column.key, kaDateUtils.getDateFromInputValue(event.currentTarget.value)));
                 }}
             />
         </div>
@@ -142,7 +140,7 @@ const FilterRowCustomEditorDemo = () => {
             editingMode={EditingMode.Cell}
             format= {({ column, value }) => {
                 if (column.dataType === DataType.Date){
-                    return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value instanceof Date && dateFormat.format(value);
                 }
             }}
             filteringMode= {FilteringMode.FilterRow}

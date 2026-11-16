@@ -1,58 +1,58 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ArrayUtils getCopyOfArrayAndDeleteItem 1`] = `
-Array [
-  Object {
+exports[`ArrayUtils > getCopyOfArrayAndDeleteItem 1`] = `
+[
+  {
     "column1": 1,
     "column2": 31,
   },
-  Object {
+  {
     "column1": 2,
     "column2": 32,
   },
-  Object {
+  {
     "column1": 4,
     "column2": 34,
   },
 ]
 `;
 
-exports[`ArrayUtils getCopyOfArrayAndInsertOrReplaceItem insert 1`] = `
-Array [
-  Object {
+exports[`ArrayUtils > getCopyOfArrayAndInsertOrReplaceItem insert 1`] = `
+[
+  {
     "column1": 1,
     "column2": 31,
   },
-  Object {
+  {
     "column1": 2,
     "column2": 32,
   },
-  Object {
+  {
     "column1": 4,
     "column2": 34,
   },
-  Object {
+  {
     "column1": 3,
     "column2": 333,
   },
 ]
 `;
 
-exports[`ArrayUtils getCopyOfArrayAndInsertOrReplaceItem replace 1`] = `
-Array [
-  Object {
+exports[`ArrayUtils > getCopyOfArrayAndInsertOrReplaceItem replace 1`] = `
+[
+  {
     "column1": 1,
     "column2": 31,
   },
-  Object {
+  {
     "column1": 2,
     "column2": 32,
   },
-  Object {
+  {
     "column1": 3,
     "column2": 333,
   },
-  Object {
+  {
     "column1": 4,
     "column2": 34,
   },

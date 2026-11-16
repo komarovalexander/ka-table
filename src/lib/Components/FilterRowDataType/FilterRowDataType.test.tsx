@@ -1,7 +1,6 @@
 import { DataType } from '../../enums';
 import FilterRowBoolean from '../FilterRowBoolean/FilterRowBoolean';
 import { IFilterRowEditorProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: IFilterRowEditorProps = {
@@ -10,9 +9,9 @@ const props: IFilterRowEditorProps = {
         key: 'fieldName',
         title: 'Field',
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     field: 'fieldName',
-} as any;
+} as IFilterRowEditorProps;
 
 describe('FilterRowBoolean', () => {
     it('renders without crashing', () => {

@@ -1,10 +1,9 @@
-import './SelectionDemo.scss';
+import './SelectionDemo.css';
 
 import { DataType, FilteringMode, SortingMode } from '../../lib/enums';
 import { Table, useTableInstance } from '../../lib';
 
 import { ICellTextProps } from '../../lib/props';
-import React from 'react';
 import { kaPropsUtils } from '../../lib/utils';
 
 const dataArray = Array(64)
@@ -23,8 +22,9 @@ const SelectionCell = ({ rowKeyValue, isSelectedRow, selectedRows }: ICellTextPr
         <input
             type='checkbox'
             checked={isSelectedRow}
-            onChange={(event: any) => {
-                if (event.nativeEvent.shiftKey) {
+            onChange={(event) => {
+                // the change of a checkbox is its click
+                if ((event.nativeEvent as MouseEvent).shiftKey) {
                     table.selectRowsRange(rowKeyValue, [...selectedRows].pop());
                 } else if (event.currentTarget.checked) {
                     table.selectRow(rowKeyValue);

@@ -1,12 +1,14 @@
-import './DemoPage.scss';
+import './DemoPage.css';
+// scoped to .enable-ka-styles and .print-content by the scopedCss plugin (vite.config.mts)
+import '../lib/style.css';
+import 'highlight.js/styles/vs.css';
 
 import { CollapsedIcon } from '../lib/Icons/CollapsedIcon';
 import Demo from './Demo';
 import DemoText from './DemoText';
-import React from 'react';
 import { trackEvent } from './ga';
 
-const kaStylesDisabled = ['BootstrapDemo', 'CustomThemeDemo'];
+const kaStylesDisabled = ['BootstrapDemo'];
 const getDemoPage = (demo: Demo) => {
     return () => {
         return (
@@ -23,13 +25,15 @@ const getDemoPage = (demo: Demo) => {
                 <div className='code'>
                     <div className='code-content'>
                         <div className='editor-links'>
-                            <a className='editor-link editor-link-ts'
-                                href={demo.tsLink}
-                                onMouseDown={() => { trackEvent('click', 'ts_example', demo.path); }}
-                                rel='noopener noreferrer'
-                                target='_blank'>
-                  Open in Online Editor
-                            </a>
+                            {demo.tsLink && (
+                                <a className='editor-link editor-link-ts'
+                                    href={demo.tsLink}
+                                    onMouseDown={() => { trackEvent('click', 'ts_example', demo.path); }}
+                                    rel='noopener noreferrer'
+                                    target='_blank'>
+                                    Open in Online Editor
+                                </a>
+                            )}
                         </div>
                         <DemoText demoFileName={demo.fileName}/>
 

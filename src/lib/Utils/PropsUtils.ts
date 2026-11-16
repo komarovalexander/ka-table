@@ -1,27 +1,31 @@
-import { ChildAttributesItem, DispatchFunc } from '../types';
+import { ChildAttributesItem, DispatchFunc, DraggableKind, TableAction } from '../types';
 import { getPageData, getPagesCount } from './PagingUtils';
 import { isRemoteSorting, sortColumns, sortData } from './SortUtils';
 
-import { AllHTMLAttributes } from 'react';
+import { AllHTMLAttributes, DragEvent } from 'react';
 import { ChildComponent } from '../Models/ChildComponent';
 import { Column } from '../models';
 import { ITableProps } from '../';
 import { SortingMode } from '../enums';
+import defaultOptions from '../defaultOptions';
 import { filterAndSearchData } from './FilterUtils';
-import { getGroupedData } from './GroupUtils';
-import { getTreeData } from './TreeUtils';
+import { getEnabledGroups, getGroupedAndVisibleColumns, getGroupedData } from './GroupUtils';
+import { getTreeData, restoreFilteredData } from './TreeUtils';
+import { getRowKeyValues } from './RowUtils';
 import { getValidatedEditableCells } from './ReducerUtils';
 import { getValueByField } from './DataUtils';
 import { groupColumn } from '../actionCreators';
 
+// childComponent: the customization of the component (ChildComponent<never> takes the customizations of all the components),
+// it gets the props of the component (childProps)
 export function extendProps<T = HTMLElement>(
     childElementAttributes: AllHTMLAttributes<T>,
-    childProps: any,
-    childComponent?: ChildComponent<any>): React.AllHTMLAttributes<T> {
+    childProps: unknown,
+    childComponent?: ChildComponent<never>): AllHTMLAttributes<T> {
     let resultProps = childElementAttributes;
-    const childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps);
+    const childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps as never);
     if (childCustomAttributes) {
-        const dispatch: DispatchFunc = childProps.dispatch;
+        const { dispatch } = childProps as { dispatch: DispatchFunc };
         resultProps = mergeProps(childElementAttributes, childProps, childCustomAttributes, dispatch);
     }
     return resultProps;
@@ -30,17 +34,17 @@ export function extendProps<T = HTMLElement>(
 const emptyFunc = () => { };
 export function mergeProps<T = HTMLElement>(
     childElementAttributes: AllHTMLAttributes<T>,
-    childProps: any,
-    childCustomAttributes: ChildAttributesItem<any>,
-    dispatch: DispatchFunc): React.AllHTMLAttributes<T> {
-    const customPropsWithEvents: any = {};
+    childProps: unknown,
+    childCustomAttributes: ChildAttributesItem<never>,
+    dispatch: DispatchFunc): AllHTMLAttributes<T> {
+    const customPropsWithEvents: Record<string, (e: unknown) => void> = {};
     for (const prop in childCustomAttributes) {
-        if (childCustomAttributes.hasOwnProperty(prop)) {
+        if (Object.prototype.hasOwnProperty.call(childCustomAttributes, prop)) {
             const propName = prop as string;
-            const propValue: any = (childCustomAttributes as any)[propName];
-            const baseFunc = (childElementAttributes as any)[propName] || emptyFunc;
+            const propValue: unknown = (childCustomAttributes as Record<string, unknown>)[propName];
+            const baseFunc = (childElementAttributes as Record<string, unknown>)[propName] || emptyFunc;
             if (typeof propValue === 'function') {
-                customPropsWithEvents[prop] = (e: any) => {
+                customPropsWithEvents[prop] = (e) => {
                     propValue(e, {
                         baseFunc,
                         childElementAttributes,
@@ -52,35 +56,48 @@ export function mergeProps<T = HTMLElement>(
         }
     }
 
-    const mergedResult: React.AllHTMLAttributes<T> = {
+    // the event handlers of the customization are replaced by the ones which call them with the extended event
+    const mergedResult = {
         ...childElementAttributes,
         ...childCustomAttributes,
         ...customPropsWithEvents,
         className: `${childElementAttributes.className || ''} ${childCustomAttributes.className || ''}`,
         style: { ...childElementAttributes.style, ...childCustomAttributes.style }
-    };
+    } as AllHTMLAttributes<T>;
 
     return mergedResult;
 };
 
-export const getFilteredData = (props: ITableProps) => {
+/**
+ * Obtains filtered data
+ */
+export const getFilteredData = <TData>(props: ITableProps<TData>): TData[] => {
     return filterAndSearchData(props);
 }
 
-export const areAllFilteredRowsSelected = (props: ITableProps) => {
-    const { selectedRows = [], rowKeyField } = props;
-    return filterAndSearchData(props).every(d => selectedRows.includes(getValueByField(d, rowKeyField)))
-}
+// false without rows (e.g. nothing is found), so the checkbox of all the rows is not checked
+const areAllRowsSelected = (rowKeyValues: unknown[], selectedRows: unknown[] = []) => {
+    const selectedRowsSet = new Set(selectedRows);
+    return rowKeyValues.length > 0 && rowKeyValues.every((rowKeyValue) => selectedRowsSet.has(rowKeyValue));
+};
 
-export const areAllVisibleRowsSelected = (props: ITableProps) => {
-    const { selectedRows = [], rowKeyField } = props;
-    return getData(props).every(d => selectedRows.includes(getValueByField(d, rowKeyField)))
-}
+/**
+ * Returns true if all filtered rows are selected
+ */
+export const areAllFilteredRowsSelected = (props: ITableProps) => (
+    areAllRowsSelected(filterAndSearchData(props).map((d) => getValueByField(d, props.rowKeyField)), props.selectedRows)
+);
+
+/**
+ * Returns true if all visible rows are selected
+ */
+export const areAllVisibleRowsSelected = (props: ITableProps) => (
+    areAllRowsSelected(getRowKeyValues(getData(props), props.rowKeyField), props.selectedRows)
+);
 
 const getDataWithoutPaging =  (props: ITableProps) => {
     const {
         columns,
-        groups,
         groupsExpanded,
         treeGroupKeyField,
         treeGroupsExpanded,
@@ -92,8 +109,12 @@ const getDataWithoutPaging =  (props: ITableProps) => {
     const {
         data = [],
     } = props;
-    let resultData = [...data];
-    resultData = filterAndSearchData(props);
+    const groups = getEnabledGroups(props.groups);
+    let resultData = filterAndSearchData(props);
+    if (treeGroupKeyField && resultData.length !== data.length) {
+        // the parents of the found rows are sorted together with them
+        resultData = restoreFilteredData({ data: resultData, originalData: data, rowKeyField, treeGroupKeyField });
+    }
     if (!isRemoteSorting(sortingMode)) {
         resultData = sortData(columns, resultData, sort);
     }
@@ -101,11 +122,15 @@ const getDataWithoutPaging =  (props: ITableProps) => {
 
     const groupedColumns: Column[] = groups ? columns.filter((c) => groups.some((g) => g.columnKey === c.key)) : [];
     resultData = groups ? getGroupedData(resultData, groups, groupedColumns, groupsExpanded) : resultData;
-    resultData = treeGroupKeyField ? getTreeData({ data: resultData, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: data }) : resultData;
+    resultData = treeGroupKeyField ? getTreeData({ data: resultData, rowKeyField, treeGroupKeyField, treeGroupsExpanded, originalData: resultData }) : resultData;
 
     return resultData;
 };
 
+/**
+ * Obtains sorted, filtered, grouped, paged data for table according to current props
+ * @see {@link https://komarovalexander.github.io/ka-table/#/get-data-by-props | Get Data By Props}
+ */
 export const getData = (props: ITableProps) => {
     const {
         paging
@@ -116,19 +141,27 @@ export const getData = (props: ITableProps) => {
     return resultData;
 };
 
+/**
+ * Returns true if the open editors have no validation errors
+ */
 export const isValid = (props: ITableProps) => {
     return (
         !props.validation || !getValidatedEditableCells(props).some(cell => cell.validationMessage)
     );
 };
 
-export const getSelectedData = ({ data, selectedRows, rowKeyField }: ITableProps) => {
-    return data ? data.filter(d => {
-        const value = getValueByField(d, rowKeyField);
-        return selectedRows?.some(v => v === value);
-    }) : [];
+/**
+ * Obtains selected data for table according to current props
+ * @see {@link https://komarovalexander.github.io/ka-table/#/selection-single | Selection - Single}
+ */
+export const getSelectedData = <TData>({ data, selectedRows, rowKeyField }: ITableProps<TData>): TData[] => {
+    const selectedRowsSet = new Set(selectedRows);
+    return data ? data.filter(d => selectedRowsSet.has(getValueByField(d, rowKeyField))) : [];
 };
 
+/**
+ * Returns array of columns with sortDirection only, and they are sorted by sortIndex (if it is set)
+ */
 export const getSortedColumns = (props: ITableProps): Column[] => {
     return sortColumns(props.columns);
 };
@@ -146,56 +179,80 @@ export const getPagesCountByProps = (props: ITableProps) => {
 };
 
 export const prepareTableOptions = (props: ITableProps) => {
-    const {
-        groups,
-    } = props;
-    let {
-        columns,
-    } = props;
-    const groupedData = getData(props);
-    let groupColumnsCount = 0;
-    let groupedColumns: Column[] = [];
-    if (groups) {
-        groupColumnsCount = groups.length;
-        groupedColumns = columns.filter((c) => groups.some((g) => g.columnKey === c.key));
-        columns = columns.filter((c) => !groups.some((g) => g.columnKey === c.key));
-    }
-    columns = columns.filter((c) => c.visible !== false);
-
     return {
-        columns,
-        groupColumnsCount,
-        groupedColumns,
-        groupedData
+        ...getGroupedAndVisibleColumns(props.columns, props.groups),
+        groupedData: getData(props),
     };
 };
 
-export const groupPanelOnDrop = (event: React.DragEvent, dispatch: DispatchFunc) => {
-    const draggableKeyValueData = event.dataTransfer?.getData('ka-draggableKeyValue');
-    if (draggableKeyValueData){
-        const draggableKeyValue = JSON.parse(draggableKeyValueData);
-        dispatch(groupColumn(draggableKeyValue));
+const draggableDataType = 'ka-draggableKeyValue';
+
+interface DraggedItem {
+    key: unknown;
+    kind?: DraggableKind;
+    // weak: dragend doesn't come when the dragged element is removed during the drag (the column dropped on the group panel,
+    // the row scrolled away by the virtual scrolling), the item stays until the next drag and mustn't keep the removed table
+    table?: WeakRef<Element>;
+}
+// the item which is dragged now by a table: rows and columns of all the tables use the same type of the data
+let draggedItem: DraggedItem | undefined;
+
+const getTableElement = (element: Element): Element | null => element.closest?.(`.${defaultOptions.css.root}`) || null;
+
+// the dragged item if it is of the kind and from the table of the element
+const getDraggedItem = (event: DragEvent, kind?: DraggableKind): DraggedItem | undefined => (
+    draggedItem
+    && draggedItem.kind === kind
+    // the item dragged by a table, not a file or a text which is dragged after that
+    && Array.from(event.dataTransfer?.types || []).some((type) => type.toLowerCase() === draggableDataType.toLowerCase())
+    && draggedItem.table?.deref() === (getTableElement(event.currentTarget) ?? undefined)
+        ? draggedItem
+        : undefined
+);
+
+/**
+ * Checks that the dragged item is of the kind (rows or columns) and from the table of the element,
+ * so a row dropped on a header cell or on the group panel, or an item of another table, changes nothing.
+ */
+export const isDraggedItemOfKind = (event: DragEvent, kind?: DraggableKind): boolean => !!getDraggedItem(event, kind);
+
+export const groupPanelOnDrop = (event: DragEvent, dispatch: DispatchFunc) => {
+    const item = getDraggedItem(event, 'column');
+    if (!item) {
+        return;
+    }
+    // the drop ends the drag: the grouped column is removed from the header before dragend, which then doesn't come
+    draggedItem = undefined;
+    // the keys of the columns are strings
+    if (typeof item.key === 'string') {
+        dispatch(groupColumn(item.key));
     }
 };
 
-export const getDraggableProps = ({
+export const getDraggableProps = <TKey>({
     key,
     dispatch,
     actionCreator,
     draggedClass,
     dragOverClass,
-    hasReordering
+    hasReordering,
+    kind,
 }: {
-    key: any,
+    key: TKey,
     dispatch: DispatchFunc,
-    actionCreator: (draggableKeyValue: any, targetKeyValue: any) => any,
+    actionCreator: (draggableKeyValue: TKey, targetKeyValue: TKey) => TableAction,
     draggedClass: string,
     dragOverClass: string,
-    hasReordering: boolean
-}): ChildAttributesItem<any> => {
+    hasReordering: boolean,
+    // the items are dropped only on the items of the same kind, the items without a kind on the items without a kind
+    kind?: DraggableKind,
+}): ChildAttributesItem<unknown> => {
     let count: number = 0;
-    const reorderingProps: ChildAttributesItem<any> = hasReordering ? {
+    const reorderingProps: ChildAttributesItem<unknown> = hasReordering ? {
         onDragEnter: (event) => {
+            if (!isDraggedItemOfKind(event, kind)) {
+                return;
+            }
             count++;
             if (!event.currentTarget.classList.contains(dragOverClass)) {
                 event.currentTarget.classList.add(dragOverClass);
@@ -203,12 +260,18 @@ export const getDraggableProps = ({
             event.preventDefault();
         },
         onDragLeave: (event) => {
+            if (!isDraggedItemOfKind(event, kind)) {
+                return;
+            }
             count--;
             if (count === 0) {
                 event.currentTarget.classList.remove(dragOverClass);
             }
         },
         onDragOver: (event) => {
+            if (!isDraggedItemOfKind(event, kind)) {
+                return;
+            }
             if (!event.currentTarget.classList.contains(dragOverClass)) {
                 event.currentTarget.classList.add(dragOverClass);
             }
@@ -219,19 +282,28 @@ export const getDraggableProps = ({
         draggable: true,
         onDragStart: (event) => {
             count = 0;
-            event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
+            const table = getTableElement(event.currentTarget);
+            draggedItem = { key, kind, table: table ? new WeakRef(table) : undefined };
+            event.dataTransfer.setData(draggableDataType, JSON.stringify(key));
             event.currentTarget.classList.add(draggedClass);
             event.dataTransfer.effectAllowed = 'move';
         },
         onDragEnd: (event) => {
             event.currentTarget.classList.remove(draggedClass);
+            draggedItem = undefined;
         },
         onDrop: (event) => {
+            // dragleave doesn't follow the drop
+            count = 0;
             event.currentTarget.classList.remove(dragOverClass);
-            const keyDataTransfer = event.dataTransfer.getData('ka-draggableKeyValue')
-            if (hasReordering && keyDataTransfer){
-                const draggableKeyValue = JSON.parse(keyDataTransfer);
-                dispatch(actionCreator(draggableKeyValue, key));
+            const item = getDraggedItem(event, kind);
+            if (item) {
+                // the drop ends the drag: dragend doesn't come if the dragged element has been removed (e.g. by the virtual scrolling)
+                draggedItem = undefined;
+            }
+            if (hasReordering && item) {
+                // the dragged item is of the same kind and from the same table
+                dispatch(actionCreator(item.key as TKey, key));
             }
         },
         ...reorderingProps

@@ -3,9 +3,9 @@ import { addEscEnterKeyEffect, getEventListenerEffect } from './EffectUtils';
 
 describe('EffectUtils', () => {
     it('getEventListenerEffect', () => {
-        const handler: jest.Mock<any, any> = jest.fn();
-        const addEventListenerMock: jest.Mock<any, any> = jest.fn();
-        const removeEventListenerMock: jest.Mock<any, any> = jest.fn();
+        const handler = vi.fn();
+        const addEventListenerMock = vi.fn();
+        const removeEventListenerMock = vi.fn();
 
         window.addEventListener = addEventListenerMock;
         window.removeEventListener = removeEventListenerMock;
@@ -22,29 +22,47 @@ describe('EffectUtils', () => {
     });
 
     it('addEscEnterKeyEffect', () => {
-        const escKeyHandler: jest.Mock<any, any> = jest.fn();
-        const enterKeyHandler: jest.Mock<any, any> = jest.fn();
-        let keyPressFunc: any;
-        const addEventListenerMock: jest.Mock<any, any> = jest.fn((event, fn) => {
-            keyPressFunc = fn;
+        const escKeyHandler = vi.fn();
+        const enterKeyHandler = vi.fn();
+        let keyPressFunc: EventListener = () => {};
+        const addEventListenerMock = vi.fn((event: string, fn: EventListenerOrEventListenerObject) => {
+            // the effect adds a function
+            keyPressFunc = fn as EventListener;
         });
         window.addEventListener = addEventListenerMock;
 
         addEscEnterKeyEffect(escKeyHandler, enterKeyHandler);
 
-        keyPressFunc({ keyCode: KeyboardEnum.Esc });
+        keyPressFunc(new KeyboardEvent('keyup', { keyCode: KeyboardEnum.Esc }));
 
         expect(escKeyHandler.mock.calls.length).toBe(1);
         expect(enterKeyHandler.mock.calls.length).toBe(0);
 
-        keyPressFunc({ keyCode: KeyboardEnum.Enter });
+        keyPressFunc(new KeyboardEvent('keyup', { keyCode: KeyboardEnum.Enter }));
 
         expect(escKeyHandler.mock.calls.length).toBe(1);
         expect(enterKeyHandler.mock.calls.length).toBe(1);
 
-        keyPressFunc({ keyCode: 10 });
+        keyPressFunc(new KeyboardEvent('keyup', { keyCode: 10 }));
 
         expect(escKeyHandler.mock.calls.length).toBe(1);
         expect(enterKeyHandler.mock.calls.length).toBe(1);
+    });
+
+    it('addEscEnterKeyEffect handles the keys of the target', () => {
+        const escKeyHandler = vi.fn();
+        const enterKeyHandler = vi.fn();
+        const target = document.createElement('tr');
+        const child = target.appendChild(document.createElement('td'));
+        const removeEffect = addEscEnterKeyEffect(escKeyHandler, enterKeyHandler, target);
+
+        child.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', bubbles: true }));
+        target.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+        expect(escKeyHandler).toHaveBeenCalledTimes(1);
+        expect(enterKeyHandler).toHaveBeenCalledTimes(1);
+
+        removeEffect();
+        target.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape' }));
+        expect(escKeyHandler).toHaveBeenCalledTimes(1);
     });
 });

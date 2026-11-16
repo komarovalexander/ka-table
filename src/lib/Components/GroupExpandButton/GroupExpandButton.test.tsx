@@ -1,17 +1,12 @@
-import Adapter from '@cfaester/enzyme-adapter-react-18';
-import Enzyme from 'enzyme';
 import GroupExpandButton from './GroupExpandButton';
 import { IGroupRowProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const props: IGroupRowProps = {
     childComponents: {},
     column: { key: 'field' },
     contentColSpan: 0,
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     groupIndex: 0,
     groupKey: ['group'],
     isExpanded: false,

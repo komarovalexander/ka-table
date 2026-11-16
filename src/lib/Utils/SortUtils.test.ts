@@ -10,7 +10,7 @@ import {
 
 import { Column } from '../Models/Column';
 
-const data: any[] = [
+const data = [
     { column: 1, id: 1 },
     { column: null, id: 6 },
     { column: 3, id: 2 },
@@ -28,7 +28,7 @@ const columns: Column[] = [
 describe('sortData', () => {
     describe('strings', () => {
         it('should be case insensitive', () => {
-            const stringData: any[] = [
+            const stringData = [
                 { column: 'A', id: 1 },
                 { column: null, id: 6 },
                 { column: 'a', id: 2 },
@@ -62,10 +62,32 @@ describe('sortData', () => {
     it('Custom logic', () => {
         const newData = sortData(columns, data, ({ column }) => {
             if (column.key === 'column') {
-                return (a: any, b: any) => a === 3 ? -1 : 0;
+                return (a: unknown) => a === 3 ? -1 : 0;
             }
         });
         expect(newData).toMatchSnapshot();
+    });
+
+    it('gets the rows in the comparator (#477)', () => {
+        const comparedValues: unknown[][] = [];
+        const newData = sortData(columns, data, ({ column }) => {
+            if (column.key === 'column') {
+                return (valueA, valueB, rowDataA, rowDataB) => {
+                    comparedValues.push([valueA, rowDataA.column], [valueB, rowDataB.column]);
+                    // the ids of the rows in the reverse order
+                    return rowDataB.id - rowDataA.id;
+                };
+            }
+        });
+        expect(newData.map((row) => row.id)).toEqual([7, 6, 5, 4, 3, 2, 1]);
+        // the values are the ones of the rows
+        expect(comparedValues.every(([value, rowValue]) => value === rowValue)).toBe(true);
+    });
+
+    it('takes a comparator which returns any number, e.g. Intl.Collator().compare', () => {
+        const stringData = [{ column: 'b', id: 1 }, { column: 'B', id: 2 }, { column: 'a', id: 3 }];
+        const newData = sortData(columns, stringData, () => new Intl.Collator('en').compare);
+        expect(newData.map((row) => row.column)).toEqual(['a', 'b', 'B']);
     });
 });
 

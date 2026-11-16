@@ -1,6 +1,6 @@
 import { ActionType, DataType, EditingMode, SortingMode } from '../../lib/enums';
 import { ITableProps, Table, useTable } from '../../lib';
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 
 import CellEditorBoolean from '../../lib/Components/CellEditorBoolean/CellEditorBoolean';
 
@@ -20,7 +20,7 @@ const ColumnSettings = ({ columns, onChange }: { columns: ITableProps['columns']
     const settingsTable = useTable({
         onDispatch: (action) => {
             if (action.type === ActionType.UpdateCellValue) {
-                onChange(action.rowKeyValue, action.value);
+                onChange(action.rowKeyValue as string, action.value as boolean);
             }
         },
     });
@@ -61,7 +61,7 @@ const ColumnSettings = ({ columns, onChange }: { columns: ITableProps['columns']
     );
 };
 
-const ColumnSettingsDemo: React.FC = () => {
+const ColumnSettingsDemo: FC = () => {
     const table = useTable();
     const [columns] = useState([
         { key: 'column1', title: 'Column 1', dataType: DataType.String },

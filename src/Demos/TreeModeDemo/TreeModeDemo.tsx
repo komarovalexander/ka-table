@@ -1,8 +1,6 @@
 import { DataType, Table } from '../../lib';
 import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 
-import React from 'react';
-
 const data = [
     { treeGroupId: null, id: 1, name: 'Department A', productivity: 5 },
     { treeGroupId: 1, id: 2, name: 'Mike Wazowski', productivity: 2 },

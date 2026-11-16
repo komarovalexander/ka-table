@@ -1,10 +1,6 @@
 import { DataType, Table } from '../../lib';
 
-import DataRowContent from '../../lib/Components/DataRowContent/DataRowContent';
-import { IDataRowProps } from '../../lib/props';
-import React from 'react';
-
-let dataArray: any[];
+let dataArray: { column1: string; column2: string; column3: string; column4: string; id: number }[];
 
 const getDataArray = () => {
     if (!dataArray){
@@ -21,8 +17,6 @@ const getDataArray = () => {
     return dataArray;
 };
 
-const DataRowContentMemo = React.memo((props: IDataRowProps) => <DataRowContent {...props}/>, () => true);
-
 const ManyRowsMemoDemo = () => {
     return (
         <Table
@@ -36,13 +30,12 @@ const ManyRowsMemoDemo = () => {
             virtualScrolling= {{
                 enabled: true
             }}
+            // rows are re-rendered only when their props change: on scrolling only the new rows are rendered
+            memoizedRows={true}
             data={getDataArray()}
             childComponents={{
                 cellText: {
                     elementAttributes: () => ({ style: {lineHeight: '25px'} }),
-                },
-                dataRow: {
-                    content: (props: IDataRowProps) => <DataRowContentMemo {...props}/>
                 },
                 tableWrapper: {
                     elementAttributes: () => ({ style: { maxHeight: 600 }})

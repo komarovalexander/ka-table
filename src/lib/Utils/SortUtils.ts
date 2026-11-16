@@ -22,12 +22,13 @@ export const sortColumns = (columns: Column[]) => {
     });
 }
 
-export const sortData = (columns: Column[], data: any, sort?: SortFunc): any[] => {
+export const sortData = <TData>(columns: Column[], data: TData[], sort?: SortFunc<TData>): TData[] => {
     const column = columns.find((c) => c.sortDirection);
     if (!column) { return data; }
     const customSort = sort && sort({ column });
     const sortFunc = (
-        customSort && ((rowDataA: any, rowDataB: any) => customSort(getValueByColumn(rowDataA, column), getValueByColumn(rowDataB, column)))
+        // the comparator gets the rows too
+        customSort && ((rowDataA: TData, rowDataB: TData) => customSort(getValueByColumn(rowDataA, column), getValueByColumn(rowDataB, column), rowDataA, rowDataB))
     ) || (
         column.sortDirection === SortDirection.Ascend
             ? ascendSort(column)
@@ -38,7 +39,7 @@ export const sortData = (columns: Column[], data: any, sort?: SortFunc): any[] =
 };
 
 const ascendSort = (sortedColumn: Column) => {
-    return (a: any, b: any) => {
+    return (a: unknown, b: unknown) => {
         const aValue = getValueByColumn(a, sortedColumn);
         const bValue = getValueByColumn(b, sortedColumn);
         if (aValue === bValue) {
@@ -56,7 +57,7 @@ const ascendSort = (sortedColumn: Column) => {
 };
 
 const descendSort = (sortedColumn: Column) => {
-    return (a: any, b: any) => {
+    return (a: unknown, b: unknown) => {
         const aValue = getValueByColumn(a, sortedColumn);
         const bValue = getValueByColumn(b, sortedColumn);
         if (aValue === bValue) {
@@ -90,3 +91,11 @@ export const isRemoteSorting =  (sortingMode: SortingMode) =>
 
 export const isSortingEnabled = (sortingMode: SortingMode, column?: Column) =>
     sortingMode !== SortingMode.None && column?.isSortable !== false;
+
+// aria-sort is set only for the sorted columns, sortable columns are recognized by their buttons
+export const getAriaSort = (sortingMode: SortingMode, column: Column): 'ascending' | 'descending' | undefined => {
+    if (!isSortingEnabled(sortingMode, column) || !column.sortDirection) {
+        return undefined;
+    }
+    return column.sortDirection === SortDirection.Ascend ? 'ascending' : 'descending';
+};

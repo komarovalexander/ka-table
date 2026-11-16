@@ -1,29 +1,40 @@
 import { ActionType, InsertRowPosition, SortingMode } from '../enums';
 import {
     addColumnsToRowEditableCells,
+    addRowKeyValuesToSelectedRows,
     getEditableCellsByData,
     getUpdatedFocused,
     getValidatedEditableCells,
+    insertOrReplaceRow,
     removeDataKeysFromSelectedRows,
+    removeRowKey,
+    replaceRowKeys,
 } from '../Utils/ReducerUtils';
 import { addItemToEditableCells, removeItemFromEditableCells } from '../Utils/CellUtils';
-import { getData, isValid, prepareTableOptions } from '../Utils/PropsUtils';
+import { filterAndSearchData, isFilterOperatorWithoutValue, isFilteredByFilterRow } from '../Utils/FilterUtils';
+import { getData, isValid } from '../Utils/PropsUtils';
 import { getDownCell, getLeftCell, getRightCell, getUpCell } from '../Utils/NavigationUtils';
-import { getExpandedGroups, updateExpandedGroups } from '../Utils/GroupUtils';
+import { getExpandedGroups, getGroupedAndVisibleColumns, getGroupedData, updateExpandedGroups } from '../Utils/GroupUtils';
+import { getExpandedParents, getTreeData } from '../Utils/TreeUtils';
 import { getValueByField, insertBefore, reorderData, reorderDataByIndex, replaceValue } from '../Utils/DataUtils';
 
 import { Column } from '../models';
-import { ILoadingProps } from '../props';
+import { CustomAction, LoadingSettings, TableAction } from '../types';
 import { ITableProps } from '../index';
-import { filterAndSearchData } from '../Utils/FilterUtils';
-import { getCopyOfArrayAndInsertOrReplaceItem } from '../Utils/ArrayUtils';
-import { getExpandedParents } from '../Utils/TreeUtils';
+import { getPagingWithPageSize } from '../Utils/PagingUtils';
+import { isTableAction } from '../Utils/ActionUtils';
+import { getRowKeyValues } from '../Utils/RowUtils';
 import { getUpdatedSortedColumns } from '../Utils/HeadRowUtils';
 import { kaPropsUtils } from '../utils';
 import { newRowId } from '../const';
 import { replaceColumnValue } from '../Utils/ColumnUtils';
 
-const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
+// the filtered or found rows are shown from the first page
+const withFirstPage = (props: ITableProps): ITableProps => (
+    props.paging?.pageIndex ? { ...props, paging: { ...props.paging, pageIndex: 0 } } : props
+);
+
+const reducer = (props: ITableProps, action: TableAction): ITableProps => {
     const {
         columns,
         data = [],
@@ -32,10 +43,10 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         groupsExpanded,
         loading,
         paging,
+        treeGroupKeyField,
         treeGroupsExpanded,
         rowKeyField,
         selectedRows = [],
-        validation,
         sortingMode = SortingMode.None,
         virtualScrolling,
     } = props;
@@ -47,47 +58,48 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
             options
         } = action;
         const { rowKeyValue, insertRowPosition } = options || {};
+        const isAfter = insertRowPosition === InsertRowPosition.after;
         const newData = [...data];
-        if (rowKeyValue != null) {
-            let rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === rowKeyValue);
-            if (insertRowPosition === InsertRowPosition.after) {
-                rowIndex++;
-            }
-            newData.splice(rowIndex, 0, rowData);
+        const rowIndex = rowKeyValue != null ? newData.findIndex((d) => getValueByField(d, rowKeyField) === rowKeyValue) : -1;
+        if (rowIndex === -1) {
+            // without the row of rowKeyValue the row is inserted at the start or at the end
+            isAfter ? newData.push(rowData) : newData.unshift(rowData);
         } else {
-            insertRowPosition === InsertRowPosition.after ? newData.push(rowData) : newData.unshift(rowData);
+            newData.splice(isAfter ? rowIndex + 1 : rowIndex, 0, rowData);
         }
         return { ...props, data: newData };
     }
     case ActionType.UpdateHeaderFilterValues: {
         const newColumns = columns.map((c: Column) => {
-            if (c.key === action.columnKey) {
-                let headerFilterValues = c.headerFilterValues;
-                if (action.checked) {
-                    if (headerFilterValues === undefined) {
-                        headerFilterValues = [];
-                    }
-                    if (!headerFilterValues.includes(action.item)) {
-                        headerFilterValues.push(action.item);
-                    }
-                } else {
-                    headerFilterValues = headerFilterValues?.filter((value: any) => value !== action.item);
-                }
-                c.headerFilterValues = headerFilterValues;
+            if (c.key !== action.columnKey) {
+                return c;
             }
-            return c;
-        }
-        );
-        return { ...props, columns: newColumns }
+            const headerFilterValues = c.headerFilterValues;
+            let newHeaderFilterValues: string[] | undefined;
+            if (action.checked) {
+                newHeaderFilterValues = headerFilterValues?.includes(action.item)
+                    ? headerFilterValues
+                    : [...(headerFilterValues || []), action.item];
+            } else {
+                newHeaderFilterValues = headerFilterValues?.filter((value) => value !== action.item);
+            }
+            return { ...c, headerFilterValues: newHeaderFilterValues };
+        });
+        return withFirstPage({ ...props, columns: newColumns });
     }
     case ActionType.ClearAllFilters: {
-        return { ...props, columns: columns.map((c: Column) => ({ ...c, filterRowValue: undefined, headerFilterValues: undefined })) }
-    }
-    case ActionType.UpdatePopupPosition: {
         const newColumns = columns.map((c: Column) => ({
             ...c,
-            headerFilterPopupPosition: action.popupPosition
+            filterRowOperator: isFilterOperatorWithoutValue(c.filterRowOperator) ? undefined : c.filterRowOperator,
+            filterRowValue: undefined,
+            headerFilterValues: undefined,
         }));
+        return withFirstPage({ ...props, columns: newColumns });
+    }
+    case ActionType.UpdatePopupPosition: {
+        const newColumns = columns.map((c: Column) => c.isHeaderFilterPopupShown
+            ? { ...c, headerFilterPopupPosition: action.popupPosition }
+            : c);
         return { ...props, columns: newColumns }
     }
     case ActionType.UpdateHeaderFilterPopupState: {
@@ -164,12 +176,25 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, columns: newColumns };
     }
     case ActionType.UngroupColumn: {
-        const newGroups = props?.groups?.filter(group => group.columnKey !== action.columnKey);
+        // a group with settings (e.g. enableSummary) is disabled: the settings are used when its column is grouped again
+        const newGroups = props?.groups?.flatMap((group) => {
+            if (group.columnKey !== action.columnKey) {
+                return [group];
+            }
+            const hasSettings = Object.entries(group).some(([key, value]) => key !== 'columnKey' && key !== 'enabled' && value !== undefined && value !== false);
+            return hasSettings ? [{ ...group, enabled: false }] : [];
+        });
         return { ...props, groups: newGroups?.length ? newGroups : undefined }
     }
     case ActionType.GroupColumn: {
-        const newGroups = [...props?.groups || [], { columnKey: action.columnKey }];
-        return { ...props, groups: newGroups?.length ? newGroups : undefined }
+        const group = props.groups?.find((g) => g.columnKey === action.columnKey);
+        // a column which is not in the table or is grouped already is not grouped
+        if (!columns?.some((c) => c.key === action.columnKey) || (group && group.enabled !== false)) {
+            return props;
+        }
+        // a disabled group is enabled with its settings and becomes the last one, as a new group
+        const { enabled, ...enabledGroup } = group || { columnKey: action.columnKey };
+        return { ...props, groups: [...(props.groups || []).filter((g) => g !== group), enabledGroup] };
     }
     case ActionType.ResizeColumn: {
         const { columnKey, width } = action;
@@ -185,10 +210,10 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
                     newColumn.width = width;
                 }
                 if (newColumn.colGroup?.style?.width != null) {
-                    newColumn.colGroup.style = { ...newColumn.colGroup.style, width };
+                    newColumn.colGroup = { ...newColumn.colGroup, style: { ...newColumn.colGroup.style, width } };
                 }
                 if (newColumn.colGroup?.width != null) {
-                    newColumn.colGroup.width = width;
+                    newColumn.colGroup = { ...newColumn.colGroup, width };
                 }
                 return newColumn;
             }
@@ -200,7 +225,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, paging: { ...paging, pageIndex: action.pageIndex } };
     }
     case ActionType.UpdatePageSize: {
-        return { ...props, paging: { ...paging, pageSize: action.pageSize } };
+        return { ...props, paging: getPagingWithPageSize(paging, action.pageSize) };
     }
     case ActionType.UpdatePagesCount: {
         return { ...props, paging: { ...paging, pagesCount: action.pagesCount } };
@@ -209,7 +234,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, loading: { ...loading, enabled: false } };
     }
     case ActionType.ShowLoading: {
-        const newLoading: ILoadingProps = { ...loading, enabled: true };
+        const newLoading: LoadingSettings = { ...loading, enabled: true };
         if (action.text !== undefined) {
             newLoading.text = action.text;
         }
@@ -243,7 +268,7 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
             replacedOption: 'filterRowValue',
             replacedValue: action.filterRowValue
         });
-        return { ...props, columns: newColumns };
+        return withFirstPage({ ...props, columns: newColumns });
     }
     case ActionType.UpdateHeaderFilterSearchValue: {
         const newColumns = replaceColumnValue({
@@ -261,26 +286,37 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
             replacedOption: 'filterRowOperator',
             replacedValue: action.filterRowOperator
         });
-        return { ...props, columns: newColumns };
+        // the operator changes the shown rows only when the column is filtered with the previous or the new operator
+        const column = columns.find((c) => c.key === action.columnKey);
+        const isFiltered = !!column && (isFilteredByFilterRow(column) || isFilterOperatorWithoutValue(action.filterRowOperator));
+        return isFiltered ? withFirstPage({ ...props, columns: newColumns }) : { ...props, columns: newColumns };
     }
     case ActionType.UpdateEditorValue: {
+        const editableCellIndex = editableCells.findIndex((c) => c.columnKey === action.columnKey && c.rowKeyValue === action.rowKeyValue);
+        if (editableCellIndex === -1) {
+            return props;
+        }
         const newEditableCells = [...editableCells];
-        const editableCellIndex = newEditableCells.findIndex((c) => c.columnKey === action.columnKey && c.rowKeyValue === action.rowKeyValue);
-        const editableCell = { ...newEditableCells[editableCellIndex], editorValue: action.value };
-        newEditableCells[editableCellIndex] = editableCell;
+        newEditableCells[editableCellIndex] = { ...newEditableCells[editableCellIndex], editorValue: action.value };
         return { ...props, editableCells: newEditableCells };
     }
     case ActionType.UpdateCellValue: {
-        const row = data.find((d) => getValueByField(d, rowKeyField) === action.rowKeyValue);
-        const column = columns.find((c) => c.key === action.columnKey)!;
-        const updatedRowData = replaceValue(row, column, action.value);
-        const newData = getCopyOfArrayAndInsertOrReplaceItem(updatedRowData, rowKeyField, data);
-        return { ...props, data: newData };
+        const rowIndex = data.findIndex((d) => getValueByField(d, rowKeyField) === action.rowKeyValue);
+        const column = columns.find((c) => c.key === action.columnKey);
+        if (rowIndex === -1 || !column) {
+            return props;
+        }
+        const updatedRowData = replaceValue(data[rowIndex], column, action.value);
+        // the row is replaced by its index: the value of its key can be changed
+        const newData = [...data];
+        newData[rowIndex] = updatedRowData;
+        // the editor is closed with the previous key (closeEditor follows updateCellValue), so editableCells keep it
+        return replaceRowKeys({ ...props, data: newData }, new Map([[action.rowKeyValue, getValueByField(updatedRowData, rowKeyField)]]));
     }
     case ActionType.DeleteRow: {
         const newData = data.filter(
-            (d: any) => getValueByField(d, rowKeyField) !== action.rowKeyValue);
-        return { ...props, data: newData };
+            (d) => getValueByField(d, rowKeyField) !== action.rowKeyValue);
+        return removeRowKey({ ...props, data: newData }, action.rowKeyValue);
     }
     case ActionType.SelectAllRows: {
         const newSelectedRows = data.map((d) => getValueByField(d, rowKeyField));
@@ -295,11 +331,11 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     case ActionType.SelectAllVisibleRows: {
         const newData = getData(props);
         let newSelectedRows = removeDataKeysFromSelectedRows(selectedRows, newData, rowKeyField);
-        newSelectedRows = [...newSelectedRows, ...newData.map((d) => getValueByField(d, rowKeyField))];
+        newSelectedRows = [...newSelectedRows, ...getRowKeyValues(newData, rowKeyField)];
         return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.Search: {
-        return { ...props, searchText: action.searchText };
+        return withFirstPage({ ...props, searchText: action.searchText });
     }
     case ActionType.SelectSingleRow: {
         const newSelectedRows = [action.rowKeyValue];
@@ -318,52 +354,52 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.SelectRow:
-        return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValue]] };
+        return { ...props, selectedRows: addRowKeyValuesToSelectedRows(selectedRows, [action.rowKeyValue]) };
     case ActionType.SelectRows:
-        return { ...props, selectedRows: [...selectedRows, ...action.rowsKeyValues] };
+        return { ...props, selectedRows: addRowKeyValuesToSelectedRows(selectedRows, action.rowsKeyValues) };
     case ActionType.SelectRowsRange: {
-        const rowKeyValueTo = action.rowKeyValueTo;
-        if (rowKeyValueTo) {
-            const shownData = kaPropsUtils.getData(props);
-            const rowKeyValueToIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === rowKeyValueTo);
-            const rowKeyValueFromIndex = shownData.findIndex(d => getValueByField(d, rowKeyField) === action.rowKeyValueFrom);
-            if (rowKeyValueToIndex != null && rowKeyValueFromIndex != null) {
+        const { rowKeyValueFrom, rowKeyValueTo } = action;
+        if (rowKeyValueTo != null) {
+            const shownRowKeyValues = getRowKeyValues(kaPropsUtils.getData(props), rowKeyField);
+            const rowKeyValueToIndex = shownRowKeyValues.indexOf(rowKeyValueTo);
+            const rowKeyValueFromIndex = shownRowKeyValues.indexOf(rowKeyValueFrom);
+            if (rowKeyValueToIndex !== -1 && rowKeyValueFromIndex !== -1) {
                 const [start, end] = rowKeyValueToIndex > rowKeyValueFromIndex ? [rowKeyValueFromIndex, rowKeyValueToIndex] : [rowKeyValueToIndex, rowKeyValueFromIndex];
-                const rowsToSelect = [];
-                for (let i = start; i <= end; i++) {
-                    const value = getValueByField(shownData[i], rowKeyField);
-                    if (!selectedRows.includes(value)) {
-                        rowsToSelect.push(value);
-                    }
-                }
-                return { ...props, selectedRows: [...selectedRows, ...rowsToSelect] };
+                const rowsToSelect = shownRowKeyValues
+                    .slice(start, end + 1)
+                    .filter(value => value !== undefined);
+                return { ...props, selectedRows: addRowKeyValuesToSelectedRows(selectedRows, rowsToSelect) };
             }
         }
-        return { ...props, selectedRows: [...selectedRows, ...[action.rowKeyValueFrom]] };
+        return { ...props, selectedRows: addRowKeyValuesToSelectedRows(selectedRows, [rowKeyValueFrom]) };
     }
     case ActionType.DeselectRow: {
         const newSelectedRows = [...selectedRows].filter((s) => s !== action.rowKeyValue);
         return { ...props, selectedRows: newSelectedRows };
     }
     case ActionType.DeselectRows: {
-        const newSelectedRows = [...selectedRows].filter((s) => !action.rowsKeyValues.includes(s));
+        const rowsKeyValues = new Set(action.rowsKeyValues);
+        const newSelectedRows = selectedRows.filter((s) => !rowsKeyValues.has(s));
         return { ...props, selectedRows: newSelectedRows };
     }
-    case ActionType.UpdateSortDirection:
+    case ActionType.UpdateSortDirection: {
         const sortedColumns = getUpdatedSortedColumns(columns, action.columnKey, sortingMode);
         return { ...props, columns: sortedColumns };
+    }
     case ActionType.UpdateVirtualScrolling:
         return { ...props, virtualScrolling: action.virtualScrolling };
     case ActionType.UpdateData:
         return { ...props, data: action.data };
-    case ActionType.ScrollTable:
-        const scrollTop = action.scrollTop;
-        return { ...props, ...{ virtualScrolling: { ...virtualScrolling, scrollTop } } };
+    case ActionType.ScrollTable: {
+        const { scrollLeft, scrollTop } = action;
+        return { ...props, ...{ virtualScrolling: { ...virtualScrolling, scrollTop, ...(scrollLeft !== undefined && { scrollLeft }) } } };
+    }
     case ActionType.UpdateGroupsExpanded: {
         let currentGroupsExpanded = groupsExpanded;
         if (!currentGroupsExpanded) {
-            const preparedOptions = prepareTableOptions(props);
-            currentGroupsExpanded = getExpandedGroups(preparedOptions.groupedData);
+            // all the groups are expanded: the groups of the other pages and the filtered groups stay expanded
+            const { groupedColumns } = getGroupedAndVisibleColumns(columns, props.groups);
+            currentGroupsExpanded = getExpandedGroups(getGroupedData(data, props.groups || [], groupedColumns));
         }
         const newGroupsExpanded = updateExpandedGroups(
             currentGroupsExpanded,
@@ -392,53 +428,67 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         return { ...props, editableCells: [...newEditableCells] };
     }
     case ActionType.SaveAllEditors: {
+        // the rows are found by their keys before the saving: an edited key doesn't move the values of the next editors
+        const rowIndexes = new Map<unknown, number>();
+        data.forEach((d, index) => {
+            const rowKeyValue = getValueByField(d, rowKeyField);
+            if (!rowIndexes.has(rowKeyValue)) {
+                rowIndexes.set(rowKeyValue, index);
+            }
+        });
         const newData = [...data];
         editableCells?.forEach(editableCell => {
-            if (editableCell.hasOwnProperty('editorValue')) {
-                const rowIndex = newData.findIndex((d) => getValueByField(d, rowKeyField) === editableCell.rowKeyValue);
-                if (rowIndex != null) {
-                    const column = columns.find((c) => c.key === editableCell.columnKey)!;
+            if (Object.prototype.hasOwnProperty.call(editableCell, 'editorValue')) {
+                const rowIndex = rowIndexes.get(editableCell.rowKeyValue);
+                const column = columns.find((c) => c.key === editableCell.columnKey);
+                if (rowIndex !== undefined && column) {
                     newData[rowIndex] = replaceValue(newData[rowIndex], column, editableCell.editorValue);
                 }
             }
         });
-        return { ...props, data: newData };
+        // the editors stay open, so they follow the keys of their rows
+        const newRowKeys = new Map([...rowIndexes].map(([rowKeyValue, rowIndex]) => [rowKeyValue, getValueByField(newData[rowIndex], rowKeyField)]));
+        return replaceRowKeys({ ...props, data: newData }, newRowKeys, true);
     }
     case ActionType.SaveRowEditors:
     case ActionType.SaveNewRow: {
         const isNewRow = action.type === ActionType.SaveNewRow;
         const rowEditorKeyValue = isNewRow ? newRowId : action.rowKeyValue;
-        let updatedRowData = data.find((d) => getValueByField(d, rowKeyField) === rowEditorKeyValue);
+        const rowIndex = data.findIndex((d) => getValueByField(d, rowKeyField) === rowEditorKeyValue);
+        let updatedRowData = data[rowIndex];
         const rowEditableCells = editableCells.filter(
             editableCell => editableCell.rowKeyValue === rowEditorKeyValue
-                    && (isNewRow || editableCell.hasOwnProperty('editorValue')));
+                    && (isNewRow || Object.prototype.hasOwnProperty.call(editableCell, 'editorValue')));
+        if (isNewRow ? !rowEditableCells.length : !updatedRowData) {
+            // the new row is not shown or the row is not in data: there is nothing to save
+            return props;
+        }
         if (action.validate && !isValid({ ...props, editableCells: rowEditableCells })) {
-            rowEditableCells.forEach(cell => {
-                const column = columns.find((c) => c.key === cell.columnKey)!;
-                cell.validationMessage = validation && validation({
-                    column,
-                    value: cell.editorValue,
-                    rowData: updatedRowData
-                });
+            const validatedRowEditableCells = getValidatedEditableCells({ ...props, editableCells: rowEditableCells });
+            const validatedEditableCells = editableCells.map(cell => {
+                const index = rowEditableCells.indexOf(cell);
+                return index === -1 ? cell : validatedRowEditableCells[index];
             });
-            return { ...props, editableCells: [...editableCells] };
+            return { ...props, editableCells: validatedEditableCells };
         }
         const newEditableCells = editableCells.filter(e => e.rowKeyValue !== rowEditorKeyValue);
         rowEditableCells.forEach(cell => {
-            const column = columns.find((c) => c.key === cell.columnKey)!;
-            updatedRowData = replaceValue(updatedRowData, column, cell.editorValue);
+            const column = columns.find((c) => c.key === cell.columnKey);
+            if (column) {
+                updatedRowData = replaceValue(updatedRowData, column, cell.editorValue);
+            }
         });
-        let newData;
         if (isNewRow) {
-            updatedRowData[rowKeyField] = action.rowKeyValue;
-            newData = [updatedRowData, ...data];
-        } else {
-            newData = getCopyOfArrayAndInsertOrReplaceItem(updatedRowData, rowKeyField, data);
+            updatedRowData = replaceValue(updatedRowData, { key: rowKeyField }, action.rowKeyValue);
+            return { ...props, data: [updatedRowData, ...data], editableCells: newEditableCells };
         }
-        return { ...props, data: newData, editableCells: newEditableCells };
+        // the row is replaced by its index: the value of its key can be changed
+        const newData = [...data];
+        newData[rowIndex] = updatedRowData;
+        return replaceRowKeys({ ...props, data: newData, editableCells: newEditableCells }, new Map([[rowEditorKeyValue, getValueByField(updatedRowData, rowKeyField)]]));
     }
     case ActionType.UpdateRow: {
-        const newData = getCopyOfArrayAndInsertOrReplaceItem(action.rowData, rowKeyField, data);
+        const newData = insertOrReplaceRow(data, action.rowData, rowKeyField);
         return { ...props, data: newData };
     }
     case ActionType.UpdateTreeGroupsExpanded: {
@@ -449,8 +499,10 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
         }
         let currentExpanded = treeGroupsExpanded;
         if (!currentExpanded) {
-            const preparedOptions = prepareTableOptions(props);
-            currentExpanded = getExpandedParents(preparedOptions.groupedData, rowKeyField);
+            // all the rows are expanded: the rows of the other pages and the filtered rows stay expanded
+            currentExpanded = treeGroupKeyField
+                ? getExpandedParents(getTreeData({ data, originalData: data, rowKeyField, treeGroupKeyField }), rowKeyField)
+                : [];
         }
         return { ...props, treeGroupsExpanded: currentExpanded.filter(item => item !== rowKeyValue) };
     }
@@ -458,6 +510,8 @@ const kaReducer: any = (props: ITableProps, action: any): ITableProps => {
     return props;
 };
 
-export {
-    kaReducer,
-};
+// the actions of the code which uses the table don't change the table
+export const kaReducer = <TData>(props: ITableProps<TData>, action: TableAction | CustomAction): ITableProps<TData> => (
+    // the reducer moves and changes the rows of the props and inserts the rows of the actions, which are the rows of the table
+    isTableAction(action) ? reducer(props, action) as ITableProps<TData> : props
+);

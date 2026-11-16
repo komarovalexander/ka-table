@@ -1,5 +1,4 @@
 import { ISortIconProps } from '../../props';
-import React from 'react';
 import SortIcon from './SortIcon';
 import { createRoot } from 'react-dom/client';
 

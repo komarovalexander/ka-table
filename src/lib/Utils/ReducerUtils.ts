@@ -1,8 +1,23 @@
 import { ITableProps } from '../';
 import { Column, EditableCell } from '../models';
+import { Cell } from '../Models/Cell';
+import { IMoveFocusedSettings } from './NavigationUtils';
 import { ValidationFunc } from '../types';
-import { getValueByField } from './DataUtils';
+import { getValueByColumn, getValueByField, replaceValue } from './DataUtils';
+import { getRowKeyValues } from './RowUtils';
 
+const hasEditorValue = (cell: EditableCell) => Object.prototype.hasOwnProperty.call(cell, 'editorValue');
+
+const getRowDataWithEditorValues = (rowData: unknown, rowEditableCells: EditableCell[], columns: Column[]): unknown =>
+    rowEditableCells.reduce((editedRowData, cell) => {
+        const column = columns.find((c) => c.key === cell.columnKey);
+        return column && hasEditorValue(cell) ? replaceValue(editedRowData, column, cell.editorValue) : editedRowData;
+    }, rowData ?? {});
+
+/**
+ * Validates the editors: validation gets the row with the values of all its editors,
+ * so the values of a row are checked together (e.g. start <= end), and the new row is validated too
+ */
 export const getValidatedEditableCells = ({
     data,
     editableCells = [],
@@ -10,39 +25,63 @@ export const getValidatedEditableCells = ({
     rowKeyField,
     validation
 }: {
-    data?: any[],
+    data?: unknown[],
     editableCells?: EditableCell[],
     columns: Column[],
     rowKeyField: string,
     validation?: ValidationFunc
-}) : EditableCell[] => {
+}): EditableCell[] => {
+    // the first row of a key, as data.find() and the saving of the row
+    const rowsByKey = new Map<unknown, unknown>();
+    data?.forEach((d) => {
+        const rowKeyValue = getValueByField(d, rowKeyField);
+        if (!rowsByKey.has(rowKeyValue)) {
+            rowsByKey.set(rowKeyValue, d);
+        }
+    });
+    const editableCellsByRow = new Map<unknown, EditableCell[]>();
+    editableCells.forEach((cell) => {
+        editableCellsByRow.set(cell.rowKeyValue, [...editableCellsByRow.get(cell.rowKeyValue) || [], cell]);
+    });
+    const editedRows = new Map<unknown, unknown>();
+    const getEditedRowData = (rowKeyValue: unknown) => {
+        if (!editedRows.has(rowKeyValue)) {
+            editedRows.set(rowKeyValue, getRowDataWithEditorValues(rowsByKey.get(rowKeyValue), editableCellsByRow.get(rowKeyValue) || [], columns));
+        }
+        return editedRows.get(rowKeyValue);
+    };
     return editableCells.map(cell => {
         const column = columns.find((c) => c.key === cell.columnKey)!;
-        const updatedRowData = data?.find((d) => getValueByField(d, rowKeyField) === cell.rowKeyValue);
-        const value = cell.hasOwnProperty('editorValue') ? cell.editorValue : getValueByField(updatedRowData, cell.columnKey);
+        const rowData = getEditedRowData(cell.rowKeyValue);
+        let value = cell.editorValue;
+        if (!hasEditorValue(cell)) {
+            value = column ? getValueByColumn(rowData, column) : getValueByField(rowData, cell.columnKey);
+        }
         return {
             ...cell,
-            validationMessage: validation && validation({
+            validationMessage: validation?.({
                 column,
-                rowData: updatedRowData,
+                rowData,
                 value
-            })
+            }) || undefined
         }
     });
 }
 
-export const getEditableCellsByData = (data: any[], rowKeyField: string, columns: Column[]) => {
+export const getEditableCellsByData = (data: unknown[], rowKeyField: string, columns: Column[]) => {
     const editableCells: EditableCell[] = [];
     data?.forEach((rowData) => {
         const rowKeyValue = getValueByField(rowData, rowKeyField);
         columns.forEach(column => {
-            editableCells.push({ columnKey: column.key, rowKeyValue });
+            if (column.isEditable !== false) {
+                editableCells.push({ columnKey: column.key, rowKeyValue });
+            }
         });
     });
     return editableCells;
 }
 
-export const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: any) => {
+export const addColumnsToRowEditableCells = (editableCells: EditableCell[], columns: Column[], rowKeyValue: unknown) => {
     const newEditableCells = [...editableCells];
     columns.forEach(column => {
         if (column.isEditable !== false
@@ -56,13 +95,91 @@ export const addColumnsToRowEditableCells = (editableCells: EditableCell[], colu
     return newEditableCells;
 }
 
-export const removeDataKeysFromSelectedRows = (selectedRows: any[], data: any[], rowKeyField: string) => {
-    const newSelectedRows = selectedRows.filter((rowKeyValue: any) =>
-        !data.some(d => getValueByField(d, rowKeyField) === rowKeyValue));
+export const insertOrReplaceRow = <TData>(data: TData[], rowData: TData, rowKeyField: string): TData[] => {
+    const rowKeyValue = getValueByField(rowData, rowKeyField);
+    const rowIndex = data.findIndex((d) => getValueByField(d, rowKeyField) === rowKeyValue);
+    if (rowIndex === -1) {
+        return [...data, rowData];
+    }
+    const newData = [...data];
+    newData[rowIndex] = rowData;
+    return newData;
+}
+
+export const addRowKeyValuesToSelectedRows = (selectedRows: unknown[], rowKeyValues: unknown[]) => {
+    const selectedRowsSet = new Set(selectedRows);
+    const newSelectedRows = [...selectedRows];
+    rowKeyValues.forEach((rowKeyValue) => {
+        if (!selectedRowsSet.has(rowKeyValue)) {
+            selectedRowsSet.add(rowKeyValue);
+            newSelectedRows.push(rowKeyValue);
+        }
+    });
     return newSelectedRows;
 }
 
-export const getUpdatedFocused = (props: ITableProps, action: any, funcToUpdate: any) => {
+export const removeDataKeysFromSelectedRows = (selectedRows: unknown[], data: unknown[], rowKeyField: string) => {
+    const dataKeys = new Set(getRowKeyValues(data, rowKeyField));
+    return selectedRows.filter((rowKeyValue) => !dataKeys.has(rowKeyValue));
+}
+
+// the props which keep the keys of the rows besides the data
+const rowKeysProps = ['detailsRows', 'selectedRows', 'treeGroupsExpanded'] as const;
+
+/**
+ * The deleted row is not selected, expanded, edited or focused anymore, so a new row with its key doesn't get its state
+ */
+export const removeRowKey = (props: ITableProps, rowKeyValue: unknown): ITableProps => {
+    const newProps = { ...props };
+    rowKeysProps.forEach((prop) => {
+        const rowKeyValues = props[prop];
+        if (rowKeyValues?.includes(rowKeyValue)) {
+            newProps[prop] = rowKeyValues.filter((value) => value !== rowKeyValue);
+        }
+    });
+    if (props.editableCells?.some((cell) => cell.rowKeyValue === rowKeyValue)) {
+        newProps.editableCells = props.editableCells.filter((cell) => cell.rowKeyValue !== rowKeyValue);
+    }
+    if (props.focused?.cell?.rowKeyValue === rowKeyValue) {
+        newProps.focused = { ...props.focused, cell: undefined };
+    }
+    return newProps;
+};
+
+/**
+ * The rows keep their selection, details, expanded state and focus when their keys are changed (newRowKeys: the previous key
+ * to the new one), withEditableCells keeps their open editors too
+ */
+export const replaceRowKeys = (props: ITableProps, newRowKeys: Map<unknown, unknown>, withEditableCells = false): ITableProps => {
+    const changedRowKeys = new Map([...newRowKeys].filter(([rowKeyValue, newRowKeyValue]) => rowKeyValue !== newRowKeyValue));
+    if (!changedRowKeys.size) {
+        return props;
+    }
+    const getNewRowKey = (rowKeyValue: unknown) => (changedRowKeys.has(rowKeyValue) ? changedRowKeys.get(rowKeyValue) : rowKeyValue);
+    const newProps = { ...props };
+    rowKeysProps.forEach((prop) => {
+        const rowKeyValues = props[prop];
+        if (rowKeyValues?.some((value) => changedRowKeys.has(value))) {
+            newProps[prop] = rowKeyValues.map(getNewRowKey);
+        }
+    });
+    const focusedCell = props.focused?.cell;
+    if (focusedCell && changedRowKeys.has(focusedCell.rowKeyValue)) {
+        newProps.focused = { ...props.focused, cell: { ...focusedCell, rowKeyValue: getNewRowKey(focusedCell.rowKeyValue) } };
+    }
+    if (withEditableCells && props.editableCells?.some((cell) => changedRowKeys.has(cell.rowKeyValue))) {
+        newProps.editableCells = props.editableCells.map((cell) => (
+            changedRowKeys.has(cell.rowKeyValue) ? { ...cell, rowKeyValue: getNewRowKey(cell.rowKeyValue) } : cell
+        ));
+    }
+    return newProps;
+};
+
+export const getUpdatedFocused = (
+    props: ITableProps,
+    action: { settings?: IMoveFocusedSettings },
+    funcToUpdate: (cell: Cell, props: ITableProps, settings?: IMoveFocusedSettings) => Cell,
+): ITableProps => {
     if (!props?.focused?.cell) return props;
     const newFocused = { cell: funcToUpdate(props.focused.cell, props, action.settings) };
     return { ...props, focused: newFocused };

@@ -1,7 +1,7 @@
 import { ActionType, EditingMode, SortingMode } from '../../lib/enums';
 import { DataType, Table, useTable } from '../../lib';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDelete, useGet, useUpdate } from './serverEmulator';
 
 import { Column } from '../../lib/models';

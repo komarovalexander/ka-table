@@ -1,18 +1,13 @@
-import Enzyme, { shallow } from 'enzyme';
-
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { ColGroup } from './ColGroup';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { IColGroupProps } from '../../props';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-const props: any = {
+const props = {
     columns: [
         { key: 'column', width: 100 },
         { key: 'column2' },
     ]
-};
+} as IColGroupProps;
 
 describe('ColGroup', () => {
     it('renders without crashing', () => {

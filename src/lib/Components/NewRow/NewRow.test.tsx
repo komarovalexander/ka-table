@@ -1,6 +1,5 @@
 import { INewRowProps } from '../../props';
 import NewRow from './NewRow';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: INewRowProps = {
@@ -10,7 +9,7 @@ const props: INewRowProps = {
     dispatch: () => {},
     editableCells: [],
     rowKeyField: '',
-} as any;
+} as INewRowProps;
 
 it('renders without crashing', () => {
     const div = document.createElement('tbody');

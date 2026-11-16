@@ -1,23 +1,14 @@
-import './SelectionSingleDemo.scss';
+import './SelectionSingleDemo.css';
 
-import { DataType, Table, useTable } from '../../lib';
-import React, { useState } from 'react';
+import { DataType, Table, useTable, useTableSelector } from '../../lib';
 
 import dataArray from './data';
 
 const SelectionSingleDemo = () => {
-    const [selectedId, changeSelectedId] = useState<any>();
-    const selectedData = selectedId && dataArray?.find(d => d.id === selectedId);
-    const table = useTable({
-        onDispatch: (action, tableProps) => {
-            if (action.type === 'SelectSingleRow'){
-                changeSelectedId(action.rowKeyValue);
-            }
-            if (action.type === 'DeselectAllRows'){
-                changeSelectedId(undefined);
-            }
-        },
-    });
+    const table = useTable();
+    // the component re-renders only when the selected row changes
+    const selectedId = useTableSelector(table, (props) => props.selectedRows?.[0]);
+    const selectedData = dataArray.find(d => d.id === selectedId);
 
     return (
         <div className='selection-single-demo'>
@@ -48,7 +39,6 @@ const SelectionSingleDemo = () => {
                 ]}
                 data={dataArray}
                 rowKeyField={'id'}
-                selectedRows={[selectedId]}
                 childComponents={{
                     dataRow: {
                         elementAttributes: () => ({
@@ -62,13 +52,13 @@ const SelectionSingleDemo = () => {
             {selectedData && (
                 <div className='info'>
                     <div>
-            Selected: {selectedData.name} ({selectedData.company.name})
+                        Selected: {selectedData.name} ({selectedData.company.name})
                         <button
                             onClick={() => {
                                 table.deselectAllRows();
                             }}
                         >
-              Deselect
+                            Deselect
                         </button>
                     </div>
                 </div>

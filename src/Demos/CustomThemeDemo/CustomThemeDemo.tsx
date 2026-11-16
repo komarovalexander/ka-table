@@ -1,10 +1,12 @@
-// open TS Example or JS Example to see how to override styles
-import './CustomThemeDemo.scss';
+// the theme is a set of overridden ka-table CSS variables, see custom-theme.css
+import './custom-theme.css';
 
-import React from 'react';
+import { FC } from 'react';
 
 import { DataType, Table } from '../../lib';
 import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
+
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = Array(119).fill(undefined).map(
     (_, index) => ({
@@ -16,7 +18,7 @@ const dataArray = Array(119).fill(undefined).map(
     }),
 );
 
-const CustomThemeDemo: React.FC = () => {
+const CustomThemeDemo: FC = () => {
     return (
         <div className='custom-theme-demo'>
             <Table
@@ -28,7 +30,7 @@ const CustomThemeDemo: React.FC = () => {
                 ]}
                 format= {({ column, value }) => {
                     if (column.dataType === DataType.Date){
-                        return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value instanceof Date && dateFormat.format(value);
                     }
                 }}
                 paging= {{

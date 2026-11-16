@@ -1,25 +1,30 @@
 import { closeEditor, updateCellValue } from '../../actionCreators';
 
 import { ICellEditorProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 import { isEmpty } from '../../Utils/CommonUtils';
 
-const CellEditorBoolean: React.FunctionComponent<ICellEditorProps> = (props) => {
+const CellEditorBoolean: FunctionComponent<ICellEditorProps> = (props) => {
     const {
         column,
         dispatch,
         value,
         rowKeyValue,
         autoFocus,
-        childComponents
+        childComponents,
+        validationMessage,
+        validationMessageId,
     } = props;
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: `${defaultOptions.css.checkbox}`,
+        'aria-label': column.title,
+        'aria-invalid': validationMessage ? true : undefined,
+        'aria-describedby': validationMessageId,
         autoFocus,
         type: 'checkbox',
-        checked: value || false,
+        checked: !!value,
         onChange: (event) => dispatch(updateCellValue(
             rowKeyValue,
             column.key,

@@ -1,10 +1,12 @@
-import './GetDataByPropsDemo.scss';
+import './GetDataByPropsDemo.css';
 
 import { DataType, EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Table, useTable } from '../../lib';
 
 import { kaPropsUtils } from '../../lib/utils';
+
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true },
@@ -17,7 +19,7 @@ const dataArray = [
 
 
 const GetDataByPropsDemo = () => {
-    const [printData, setPrintData] = useState<any[]>();
+    const [printData, setPrintData] = useState<unknown[]>();
     const [searchText, setSearchText] = useState<string>();
     const table = useTable();
 
@@ -47,7 +49,7 @@ const GetDataByPropsDemo = () => {
                 editingMode={EditingMode.Cell}
                 format={({ column, value }) => {
                     if (column.dataType === DataType.Date){
-                        return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value instanceof Date && dateFormat.format(value);
                     }
                 }}
                 rowKeyField={'id'}

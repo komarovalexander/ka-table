@@ -1,8 +1,8 @@
-import './AddRowDemo.scss';
+import './AddRowDemo.css';
 
 import { DataType, Table, useTableInstance } from '../../lib';
 
-import React from 'react';
+import { FC } from 'react';
 
 const dataArray = Array(7).fill(undefined).map(
     (_, index) => ({
@@ -62,7 +62,7 @@ const SaveButton = () => {
     );
 };
 
-const AddRowDemo: React.FC = () => {
+const AddRowDemo: FC = () => {
     return (
         <div className='add-row-demo'>
             <Table

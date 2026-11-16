@@ -1,7 +1,9 @@
 import { DataType, Table } from '../../lib';
 
-import React from 'react';
+import { FC } from 'react';
 import { SortingMode } from '../../lib/enums';
+
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = [
     { id: 1, name: 'Mike Wazowski', score: 80, passed: true, tryDate: new Date(2021, 10, 9) },
@@ -15,7 +17,7 @@ const dataArray = [
     { id: 9, name: 'Treme Watson', score: 61, passed: true, tryDate: new Date(2022, 10, 9) },
 ];
 
-const CustomAttributesDemo: React.FC = () => {
+const CustomAttributesDemo: FC = () => {
     return (
         <Table
             columns= {[
@@ -24,9 +26,9 @@ const CustomAttributesDemo: React.FC = () => {
                 { key: 'passed', title: 'Passed', dataType: DataType.Boolean },
                 { dataType: DataType.Date, key: 'tryDate', title: 'Date', filterRowOperator: '<' },
             ]}
-            format= {({ column, value, rowData }) => {
+            format= {({ column, value }) => {
                 if (column.dataType === DataType.Date){
-                    return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value instanceof Date && dateFormat.format(value);
                 }
             }}
             paging= {{

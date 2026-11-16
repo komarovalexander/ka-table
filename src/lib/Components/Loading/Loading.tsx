@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import { ILoadingProps } from '../../props';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-const Loading: React.FunctionComponent<ILoadingProps> = (props) => {
+const Loading: FunctionComponent<ILoadingProps> = (props) => {
     const {
         enabled,
         text,

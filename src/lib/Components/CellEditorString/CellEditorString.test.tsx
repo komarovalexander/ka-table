@@ -1,13 +1,9 @@
-import { ActionType, DataType } from '../../enums';
-import Enzyme, { mount } from 'enzyme';
+import { ActionType, DataType, EditingMode } from '../../enums';
+import { act, fireEvent, render } from '@testing-library/react';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import CellEditorString from './CellEditorString';
 import { ICellEditorProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 let props: ICellEditorProps;
 
@@ -18,30 +14,36 @@ beforeEach(() => {
             key: 'fieldName',
             title: 'Field',
         },
-        dispatch: jest.fn(),
+        dispatch: vi.fn(),
+        editingMode: EditingMode.None,
         field: 'fieldName',
+        isDetailsRowShown: false,
         isSelectedRow: true,
         rowData: { fieldName: 'fieldNameText', id: 1 },
         rowKeyField: 'id',
         rowKeyValue: 1,
-    } as any;
+        selectedRows: [],
+        value: undefined,
+    };
 });
 
-describe('CellEditorNumber', () => {
+describe('CellEditorString', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-        root.render(<CellEditorString {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<CellEditorString {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('should fire RowDataChanged', () => {
         const newValue = 'fieldNameUpdatedText';
-        const wrapper = mount(<CellEditorString {...props} />);
+        const { container } = render(<CellEditorString {...props} />);
 
-        wrapper.find('input').props().onChange!({
-            currentTarget: { value: newValue },
-        } as any);
+        fireEvent.change(container.querySelector('input')!, { target: { value: newValue } });
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: 'fieldName',
@@ -52,8 +54,8 @@ describe('CellEditorNumber', () => {
     });
 
     it('should fire CloseEditor on blur', () => {
-        const wrapper = mount(<CellEditorString {...props} />);
-        wrapper.find('input').simulate('blur');
+        const { container } = render(<CellEditorString {...props} />);
+        fireEvent.blur(container.querySelector('input')!);
 
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
@@ -61,5 +63,10 @@ describe('CellEditorNumber', () => {
             columnKey: 'fieldName',
             rowKeyValue: 1,
         });
+    });
+
+    it('shows the value 0', () => {
+        const { container } = render(<CellEditorString {...props} value={0} />);
+        expect(container.querySelector('input')!.value).toBe('0');
     });
 });

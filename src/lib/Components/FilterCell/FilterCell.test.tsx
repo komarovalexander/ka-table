@@ -1,7 +1,6 @@
 import { DataType } from '../../enums';
 import FilterCell from './FilterCell';
 import { IFilterRowEditorProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 const props: IFilterRowEditorProps = {
@@ -11,7 +10,7 @@ const props: IFilterRowEditorProps = {
         key: 'columnField',
         title: 'Field',
     },
-} as any;
+} as IFilterRowEditorProps;
 
 it('renders without crashing', () => {
     const element = document.createElement('tr');

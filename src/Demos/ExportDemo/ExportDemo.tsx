@@ -1,6 +1,5 @@
 import { CSVLink } from 'react-csv';
 import { DataType } from '../../lib/enums';
-import React from 'react';
 import { Table } from '../../lib';
 
 const dataArray = Array(7).fill(undefined).map(
@@ -34,7 +33,7 @@ const ExportDemo = () => {
                     filename='ka-table.data.csv'
                     enclosingCharacter={''}
                     separator={';'}>
-          Download .csv
+                    Download .csv
                 </CSVLink>
             </div>
             <Table

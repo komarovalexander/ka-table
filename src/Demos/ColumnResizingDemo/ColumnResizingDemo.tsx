@@ -1,6 +1,6 @@
-import './ColumnResizingDemo.scss';
+import './ColumnResizingDemo.css';
 
-import React from 'react';
+import { FC } from 'react';
 
 import { DataType, Table } from '../../lib';
 import { EditingMode, SortingMode } from '../../lib/enums';
@@ -17,13 +17,13 @@ const columns: Column[] = Array(15).fill(undefined).map(
 );
 
 const dataArray = Array(30).fill(undefined).map(
-    (_, index) => columns.reduce((previousValue: any, currentValue) => {
+    (_, index) => columns.reduce<Record<string, string | number>>((previousValue, currentValue) => {
         previousValue[currentValue.key] = `${currentValue.key} row:${index}`;
         return previousValue;
     }, { id: index }),
 );
 
-const ColumnResizingDemo: React.FC = () => {
+const ColumnResizingDemo: FC = () => {
 
     return (
         <div className='column-resizing-demo'>

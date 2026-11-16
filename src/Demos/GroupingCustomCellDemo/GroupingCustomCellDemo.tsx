@@ -1,7 +1,5 @@
 import { DataType, Table } from '../../lib';
 
-import React from 'react';
-
 const dataArray = [
     { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
     { id: 2, type: 'Dog', name: 'Rex', country: 'Montenegro', age: 6 },
@@ -44,9 +42,10 @@ const GroupingCustomCellDemo = () => {
                     content: (props) => {
                         switch (props.column.key){
                         case 'type':
-                        case 'country':
+                        case 'country': {
                             const folder = props.column.key === 'type' ? 'animals' : 'flags';
-                            return <img height='30px' src={`static/icons/${folder}/${props.groupKey[props.groupIndex].toLowerCase().replace(' ', '_')}.svg`} alt={props.groupKey[0]} />;
+                            return <img height='30px' src={`static/icons/${folder}/${String(props.groupKey[props.groupIndex]).toLowerCase().replace(' ', '_')}.svg`} alt={String(props.groupKey[0])} />;
+                        }
                         }
                     }
                 }

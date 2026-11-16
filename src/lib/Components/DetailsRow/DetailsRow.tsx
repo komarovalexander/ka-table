@@ -1,10 +1,10 @@
 import EmptyCells from '../EmptyCells/EmptyCells';
 import { IRowProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-const DetailsRow: React.FunctionComponent<IRowProps> = (props) => {
+const DetailsRow: FunctionComponent<IRowProps> = (props) => {
     const { groupColumnsCount, childComponents, columns } = props;
 
     const { elementAttributes, content } = getElementCustomization({

@@ -1,10 +1,11 @@
-import './BootstrapDemo.scss';
+import 'bootstrap/dist/css/bootstrap.css';
+import './BootstrapDemo.css';
 
 import { CustomLookupEditor, DateEditor, NumberEditor } from './editors';
 import { DataType, Table } from '../../lib';
 import { EditingMode, FilteringMode, SortingMode } from '../../lib/enums';
 
-import React from 'react';
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = Array(119).fill(undefined).map(
     (_, index) => ({
@@ -28,7 +29,7 @@ const BootstrapDemo = () => {
                 ]}
                 format= {({ column, value }) => {
                     if (column.dataType === DataType.Date){
-                        return value && value.toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return value instanceof Date && dateFormat.format(value);
                     }
                 }}
                 paging= {{
@@ -74,14 +75,18 @@ const BootstrapDemo = () => {
                     },
                     cellEditorInput: {
                         elementAttributes: ({column}) => ({
-                            className: column.dataType === DataType.Boolean ? 'form-check-input' : undefined
+                            className: column.dataType === DataType.Boolean ? 'form-check-input' : 'form-control'
                         }),
                     },
                     pagingIndex: {
                         elementAttributes: ({ isActive }) => ({
                             className: `page-item ${(isActive ? 'active' : '')}`
                         }),
-                        content: ({ text, isActive }) => <div className={`page-link ${(isActive ? 'active' : '')}`}>{text}</div>
+                        content: ({ text, isActive }) => (
+                            <button type='button' className={`page-link ${(isActive ? 'active' : '')}`} aria-current={isActive ? 'page' : undefined}>
+                                {text}
+                            </button>
+                        )
                     },
                     pagingPages: {
                         elementAttributes: () => ({

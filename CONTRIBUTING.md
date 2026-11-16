@@ -7,7 +7,7 @@ or create an issue on github in any form
 
 2) Create a branch from the <code>master</code> branch with your feature or bug fix
 
-3) <code>yarn</code>
+3) <code>yarn</code> (Node.js 22.18+ or 24.11+)
 
 4)
 to run app: <code>yarn start</code>
@@ -15,6 +15,8 @@ to run app: <code>yarn start</code>
 to run test: <code>yarn test</code>
 
 to create library's .tgz file: <code>yarn run pack</code>
+
+to update the reference tables of the docs pages after a change of JSDoc (ka-table-site next to ka-table): <code>yarn docs</code>, to check them: <code>yarn docs:check</code>
 
 5)
 if you fixed a bug - increase the 'path' package version

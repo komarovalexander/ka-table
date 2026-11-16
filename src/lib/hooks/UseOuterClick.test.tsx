@@ -1,10 +1,10 @@
-import React from 'react';
+import { FC } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useOuterClick } from './UseOuterClick';
 
 describe('UseOuterClick', () => {
     it('returns ref', () => {
-        const Component: React.FC = () => {
+        const Component: FC = () => {
             const result = useOuterClick(() => {});
 
             expect(result).toBeDefined();

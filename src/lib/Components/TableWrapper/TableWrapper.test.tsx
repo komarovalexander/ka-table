@@ -1,42 +1,49 @@
-import Enzyme, { mount } from 'enzyme';
+import { act, fireEvent, render } from '@testing-library/react';
 
 import { ActionType } from '../../enums';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
-import React from 'react';
+import { ITableAllProps } from '../Table/Table';
 import { TableWrapper } from './TableWrapper';
 import { createRoot } from 'react-dom/client';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-const tableProps: any = {
+const dispatch = vi.fn();
+const tableProps: ITableAllProps = {
     columns: [
-        { key: 'column', name: 'Column 1' },
-        { key: 'column2', name: 'Column 2' },
+        { key: 'column' },
+        { key: 'column2' },
     ],
     data: [
         { column: 1, column2: 2, id: 1 },
         { column: 12, column2: 22, id: 2 },
     ],
-    dispatch: jest.fn(),
+    dispatch,
     rowKeyField: 'id',
 };
 
 describe('TableWrapper', () => {
+    beforeEach(() => {
+        dispatch.mockClear();
+    });
+
     it('renders without crashing', () => {
         const div = document.createElement('div');
         const root = createRoot(div!);
-        root.render(<TableWrapper {...tableProps} />);
-        root.unmount();
+        act(() => {
+            root.render(<TableWrapper {...tableProps} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('should not dispatch ScrollTable on scroll', () => {
-        const wrapper = mount(<TableWrapper {...tableProps} />);
-        expect(wrapper.find('.ka-table-wrapper').prop('onScroll')).toBeUndefined();
-        expect(tableProps.dispatch).toHaveBeenCalledTimes(0);
+        const { container } = render(<TableWrapper {...tableProps} />);
+
+        fireEvent.scroll(container.querySelector('.ka-table-wrapper')!, { target: { scrollTop: 11 } });
+        expect(dispatch).toHaveBeenCalledTimes(0);
     });
 
     it('should dispatch ScrollTable on scroll in case of virtual scrolling', () => {
-        const wrapper = mount(
+        const { container } = render(
             (
                 <TableWrapper {...tableProps} virtualScrolling={({
                     itemHeight: 10,
@@ -46,46 +53,95 @@ describe('TableWrapper', () => {
         );
         const scrollTop = 11;
 
-        wrapper.find('.ka-table-wrapper').prop('onScroll')!({ currentTarget: {scrollTop} } as any);
-        expect(tableProps.dispatch).toHaveBeenCalledTimes(1);
-        expect(tableProps.dispatch).toHaveBeenCalledWith(
+        fireEvent.scroll(container.querySelector('.ka-table-wrapper')!, { target: { scrollTop } });
+        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledWith(
             { type: ActionType.ScrollTable, scrollTop },
         );
     });
 
-    it('does not have table foot by default', () => {
-        const wrapper = mount(<TableWrapper {...tableProps} />);
+    it('does not dispatch ScrollTable when the table is scrolled horizontally (#495)', () => {
+        const { container, rerender } = render(<TableWrapper {...tableProps} virtualScrolling={{ itemHeight: 10, tbodyHeight: 100 }} />);
+        const wrapper = container.querySelector('.ka-table-wrapper')!;
+        fireEvent.scroll(wrapper, { target: { scrollLeft: 100 } });
+        expect(dispatch).toHaveBeenCalledTimes(0);
 
-        wrapper.contains('tfoot');
-        expect(wrapper.find('tfoot').length).toBe(0);
+        rerender(<TableWrapper {...tableProps} virtualScrolling={{ itemHeight: 10, tbodyHeight: 100, scrollTop: 11 }} />);
+        fireEvent.scroll(wrapper, { target: { scrollTop: 11, scrollLeft: 200 } });
+        expect(dispatch).toHaveBeenCalledTimes(0);
+        fireEvent.scroll(wrapper, { target: { scrollTop: 21 } });
+        expect(dispatch).toHaveBeenCalledWith({ type: ActionType.ScrollTable, scrollTop: 21 });
+    });
+
+    it('does not have table foot by default', () => {
+        const { container } = render(<TableWrapper {...tableProps} />);
+
+        expect(container.querySelectorAll('tfoot').length).toBe(0);
+    });
+
+    describe('areAllRowsSelected', () => {
+        const getAreAllRowsSelected = (selectedRows: unknown[], data = tableProps.data) => {
+            const { container } = render(
+                <TableWrapper
+                    {...tableProps}
+                    data={data}
+                    selectedRows={selectedRows}
+                    childComponents={{
+                        headCell: {
+                            content: ({ areAllRowsSelected }) => <span className='all-selected'>{String(areAllRowsSelected)}</span>
+                        }
+                    }}
+                />
+            );
+            const values = Array.from(container.querySelectorAll('.all-selected')).map((element) => element.textContent);
+            expect(values).toHaveLength(tableProps.columns.length);
+            expect(new Set(values).size).toBe(1);
+            return JSON.parse(values[0]!);
+        };
+
+        it('is true if all rows are selected', () => {
+            expect(getAreAllRowsSelected([2, 1])).toBe(true);
+        });
+        it('is false if some rows are not selected', () => {
+            expect(getAreAllRowsSelected([1])).toBe(false);
+        });
+        it('is false if the same number of other rows is selected', () => {
+            expect(getAreAllRowsSelected([1, 3])).toBe(false);
+        });
+        it('is true if selectedRows also contains keys which are not in data', () => {
+            expect(getAreAllRowsSelected([1, 2, 3])).toBe(true);
+        });
+        it('is false without rows', () => {
+            expect(getAreAllRowsSelected([], [])).toBe(false);
+        });
     });
 
     describe('header', () => {
         it('hides table header in case of noData.hideHeader=true and data is empty', () => {
-            const wrapper = mount((
+            const { container } = render((
                 <TableWrapper {...tableProps} data={[]} noData={{hideHeader: true}}/>
             ));
 
-            expect(wrapper.find('thead').length).toBe(0);
+            expect(container.querySelectorAll('thead').length).toBe(0);
         });
         it('shows table header in case of noData.hideHeader=true and data has values', () => {
-            const wrapper = mount((
+            const { container } = render((
                 <TableWrapper {...tableProps} noData={{hideHeader: false}}/>
             ));
 
-            expect(wrapper.find('thead').length).toBe(1);
+            expect(container.querySelectorAll('thead').length).toBe(1);
         });
         it('shows table header in case of noData.hideHeader=false and data is empty', () => {
-            const wrapper = mount((
+            const { container } = render((
                 <TableWrapper {...tableProps} data={[]} noData={{hideHeader: false}}/>
             ));
 
-            expect(wrapper.find('thead').length).toBe(1);
+            expect(container.querySelectorAll('thead').length).toBe(1);
         });
     });
 
     it('shows table foot in case of tableFoot to be set', () => {
-        const wrapper = mount((
+        const { container } = render((
             <TableWrapper {...tableProps} childComponents={{
                 tableFoot: {
                     elementAttributes: () => ({ className: 'custom-footer' }),
@@ -94,14 +150,13 @@ describe('TableWrapper', () => {
             }}/>
         ));
 
-        wrapper.contains('tfoot');
-        expect(wrapper.find('tfoot').length).toBe(1);
-        expect(wrapper.find('tfoot.custom-footer').length).toBe(1);
-        expect(wrapper.find('.table-foot-custom-content').length).toBe(1);
+        expect(container.querySelectorAll('tfoot').length).toBe(1);
+        expect(container.querySelectorAll('tfoot.custom-footer').length).toBe(1);
+        expect(container.querySelectorAll('.table-foot-custom-content').length).toBe(1);
     });
 
     it('shows table foot in case of summaryRow to be set', () => {
-        const wrapper = mount((
+        const { container } = render((
             <TableWrapper {...tableProps} childComponents={{
                 summaryRow: {
                     elementAttributes: () => ({ className: 'custom-summaryRow' }),
@@ -110,13 +165,12 @@ describe('TableWrapper', () => {
             }}/>
         ));
 
-        wrapper.contains('tfoot');
-        expect(wrapper.find('tfoot').length).toBe(1);
-        expect(wrapper.find('tr.custom-summaryRow').length).toBe(1);
-        expect(wrapper.find('.summaryRow-content').length).toBe(1);
+        expect(container.querySelectorAll('tfoot').length).toBe(1);
+        expect(container.querySelectorAll('tr.custom-summaryRow').length).toBe(1);
+        expect(container.querySelectorAll('.summaryRow-content').length).toBe(1);
     });
     it('shows table foot in case of summaryCell to be set', () => {
-        const wrapper = mount((
+        const { container } = render((
             <TableWrapper {...tableProps} childComponents={{
                 summaryCell: {
                     elementAttributes: () => ({ className: 'custom-summaryCell' }),
@@ -125,9 +179,8 @@ describe('TableWrapper', () => {
             }}/>
         ));
 
-        wrapper.contains('tfoot');
-        expect(wrapper.find('tfoot').length).toBe(1);
-        expect(wrapper.find('td.custom-summaryCell').length).toBe(2);
-        expect(wrapper.find('.summaryCell-content').length).toBe(2);
+        expect(container.querySelectorAll('tfoot').length).toBe(1);
+        expect(container.querySelectorAll('td.custom-summaryCell').length).toBe(2);
+        expect(container.querySelectorAll('.summaryCell-content').length).toBe(2);
     });
 });

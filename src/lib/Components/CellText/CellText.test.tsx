@@ -1,13 +1,9 @@
 import { ActionType, DataType, EditingMode } from '../../enums';
-import Enzyme, { mount } from 'enzyme';
+import { act, fireEvent, render } from '@testing-library/react';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import CellText from './CellText';
 import { ICellTextProps } from '../../props';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const props: ICellTextProps = {
     childComponents: {},
@@ -16,30 +12,36 @@ const props: ICellTextProps = {
         key: 'columnField',
         title: 'Field',
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     editingMode: EditingMode.Cell,
     field: 'columnField',
+    isDetailsRowShown: false,
     isSelectedRow: false,
     rowData: { columnField: 'columnFieldValue', id: 1 },
     rowKeyField: 'id',
     rowKeyValue: 1,
+    selectedRows: [],
     value: 'columnFieldValue',
-} as any;
+};
 
-afterEach(() => jest.clearAllMocks());
+afterEach(() => vi.clearAllMocks());
 
 describe('CellText', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-        root.render(<CellText {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<CellText {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('should dispatch OpenEditor', () => {
-        const wrapper = mount(<CellText {...props} />);
+        const { container } = render(<CellText {...props} />);
 
-        wrapper.find('.ka-cell-text').simulate('click');
+        fireEvent.click(container.querySelector('.ka-cell-text')!);
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             type: ActionType.OpenEditor,
@@ -49,10 +51,28 @@ describe('CellText', () => {
     });
 
     it('should skip OpenEditor', () => {
-        const wrapper = mount(
+        const { container } = render(
             <CellText {...props} editingMode={EditingMode.None} />
         );
-        wrapper.find('.ka-cell-text').simulate('click');
+        fireEvent.click(container.querySelector('.ka-cell-text')!);
         expect(props.dispatch).toHaveBeenCalledTimes(0);
+    });
+
+    it.each([
+        [0, '0'],
+        ['', '\u00a0'],
+    ])('shows %j of format instead of the value', (formattedValue, text) => {
+        const { container } = render(<CellText {...props} value={0.4} format={() => formattedValue} />);
+        expect(container.querySelector('.ka-cell-text')!.textContent).toBe(text);
+    });
+
+    it('shows the value 0', () => {
+        const { container } = render(<CellText {...props} value={0} />);
+        expect(container.querySelector('.ka-cell-text')!.textContent).toBe('0');
+    });
+
+    it.each([undefined, null, false])('shows the value when format returns %s (e.g. of condition && text)', (formattedValue) => {
+        const { container } = render(<CellText {...props} value={0.4} format={() => formattedValue} />);
+        expect(container.querySelector('.ka-cell-text')!.textContent).toBe('0.4');
     });
 });

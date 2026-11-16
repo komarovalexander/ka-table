@@ -3,3 +3,4 @@ export * from './Reducers/kaReducer';
 export * from './hooks/UseTable';
 export * from './enums';
 export * from './hooks/UseTableInstance';
+export * from './hooks/UseTableSelector';

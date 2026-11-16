@@ -1,33 +1,51 @@
-import React, { RefObject, useEffect, useRef } from 'react';
+import { FunctionComponent, RefObject, useEffect, useMemo, useRef } from 'react';
 import { checkIndexOdd, getValueByField } from '../../Utils/DataUtils';
-import { getGroupMark, getGroupText, groupSummaryMark } from '../../Utils/GroupUtils';
-import { treeDataMark, treeGroupMark } from '../../Utils/TreeUtils';
+import { getGroupKeyId, getGroupText, isGroupRow, isGroupSummaryRow } from '../../Utils/GroupUtils';
+import { getReactKey, getRowKeyValues } from '../../Utils/RowUtils';
+import { isTreeChildRow, isTreeGroupRow, isTreeRow } from '../../Utils/TreeUtils';
+import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 
-import DataAndDetailsRows from '../DataAndDetailsRows/DataAndDetailsRows';
+import DataAndDetailsRows, { DataAndDetailsRowsMemo } from '../DataAndDetailsRows/DataAndDetailsRows';
+
+import { EditableCell } from '../../Models/EditableCell';
 import GroupRow from '../GroupRow/GroupRow';
 import { GroupSummaryRow } from '../GroupSummaryRow/GroupSummaryRow';
 import { ITableBodyProps } from '../../props';
-import { getRowEditableCells } from '../../Utils/FilterUtils';
+import { MemoizedRowsContext } from './MemoizedRowsContext';
 
 export interface IRowsProps extends ITableBodyProps {
-    onFirstRowRendered: (firstRowRef: RefObject<HTMLElement | null>) => any;
-    treeGroupsExpanded?: any[];
+    onFirstRowRendered: (firstRowRef: RefObject<HTMLElement | null>) => void;
+    treeGroupsExpanded?: unknown[];
+    // the index of the stripe of the first row is odd (it gets ka-even): the virtual scrolling doesn't render the rows above it
     isFirstRowOdd?: boolean;
 }
 
-const Rows: React.FunctionComponent<IRowsProps> = (props) => {
+const emptyArray: never[] = [];
+
+const groupEditableCellsByRow = (editableCells: EditableCell[]) => {
+    const editableCellsByRow = new Map<unknown, EditableCell[]>();
+    editableCells.forEach((cell) => {
+        const rowEditableCells = editableCellsByRow.get(cell.rowKeyValue);
+        rowEditableCells ? rowEditableCells.push(cell) : editableCellsByRow.set(cell.rowKeyValue, [cell]);
+    });
+    return editableCellsByRow;
+};
+
+const Rows: FunctionComponent<IRowsProps> = (props) => {
     const {
         childComponents,
         columns,
         data,
-        detailsRows = [],
+        detailsRows = emptyArray,
         dispatch,
         editableCells,
+        focused,
         format,
         groupedColumns,
-        groups = [],
-        groupsExpanded = [],
+        groups = emptyArray,
+        groupsExpanded = emptyArray,
         isFirstRowOdd,
+        keyboardNavigation,
         onFirstRowRendered,
         treeGroupsExpanded,
         rowKeyField,
@@ -35,20 +53,58 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
         selectedRows,
         validation,
         treeExpandButtonColumnKey,
-        oddEvenRows
+        oddEvenRows,
+        memoizedRows,
     } = props;
-    const groupMark = getGroupMark();
+    const RowComponent = memoizedRows ? DataAndDetailsRowsMemo : DataAndDetailsRows;
 
-    const firstRowRef = useRef<HTMLElement>(null);
+    // lookups by key instead of searching the arrays for every row
+    const selectedRowsSet = useMemo(() => new Set(selectedRows), [selectedRows]);
+    const detailsRowsSet = useMemo(() => new Set(detailsRows), [detailsRows]);
+    const treeGroupsExpandedSet = useMemo(() => treeGroupsExpanded && new Set(treeGroupsExpanded), [treeGroupsExpanded]);
+    const expandedGroupKeys = useMemo(() => new Set(groupsExpanded.map((groupKey) => getGroupKeyId(groupKey))), [groupsExpanded]);
+    const editableCellsByRow = useMemo(() => groupEditableCellsByRow(editableCells), [editableCells]);
+    // with the keyboard navigation the first row gets the focus by Tab while the focused cell or group row is not shown
+    const { focusedCell, focusedGroupKeyId } = useMemo(() => {
+        const cell = focused?.cell;
+        if (!keyboardNavigation) {
+            return { focusedCell: cell };
+        }
+        const groupKeyIds = data.filter(isGroupRow).map((row) => getGroupKeyId(row.key));
+        const groupKeyId = focused?.group && getGroupKeyId(focused.group);
+        if (groupKeyId && groupKeyIds.includes(groupKeyId)) {
+            return { focusedGroupKeyId: groupKeyId };
+        }
+        const rowKeyValues = getRowKeyValues(data, rowKeyField);
+        // the rendered columns (virtualScrolling.horizontal renders spacers in place of the other ones)
+        const cellColumns = columns.filter((c) => !isVirtualColumnSpacer(c));
+        if (cell && rowKeyValues.includes(cell.rowKeyValue) && cellColumns.some((c) => c.key === cell.columnKey)) {
+            return { focusedCell: cell };
+        }
+        const firstRow = data.find((row) => !isGroupSummaryRow(row));
+        if (firstRow && isGroupRow(firstRow)) {
+            return { focusedGroupKeyId: getGroupKeyId(firstRow.key) };
+        }
+        return rowKeyValues.length && cellColumns.length ? { focusedCell: { columnKey: cellColumns[0].key, rowKeyValue: rowKeyValues[0] } } : {};
+    }, [focused, keyboardNavigation, data, rowKeyField, columns]);
+
+    const firstRowRef = useRef<HTMLTableRowElement>(null);
     useEffect(() => {
         onFirstRowRendered(firstRowRef);
     }, [firstRowRef, onFirstRowRendered]);
 
-    let rowRefLink: any = firstRowRef;
+    let rowRefLink: RefObject<HTMLTableRowElement | null> | undefined = firstRowRef;
+    // oddEvenRows: every row starts a stripe, with 'treeRoots' a child of a tree gets the stripe of its root
+    const isTreeRootsStripe = oddEvenRows === 'treeRoots';
+    let stripeIndex = isFirstRowOdd ? 1 : 0;
     return (
-        <>
+        <MemoizedRowsContext.Provider value={!!memoizedRows}>
             {data.map((d, index) => {
-                if (d.groupMark === groupMark) {
+                if (index > 0 && !(isTreeRootsStripe && isTreeChildRow(d))) {
+                    stripeIndex++;
+                }
+                if (isGroupRow(d)) {
+                    const groupKeyId = getGroupKeyId(d.key);
                     const groupIndex = d.key.length - 1;
                     const group = groups && groups[groupIndex];
                     const column = group && groupedColumns.find((c) => c.key === group.columnKey)!;
@@ -63,43 +119,42 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                             groupItems={d.groupItems}
                             columns={columns}
                             groupedColumns={groupedColumns}
-                            isExpanded={groupsExpanded.some((ge) => JSON.stringify(ge) === JSON.stringify(d.key))}
+                            isExpanded={expandedGroupKeys.has(groupKeyId)}
+                            isFocused={focusedGroupKeyId === groupKeyId}
                             text={getGroupText(d.value, column, format, d.groupItems)}
-                            key={JSON.stringify(d.key)}
+                            key={groupKeyId}
                         />
                     );
-                } else if (d.groupSummaryMark === groupSummaryMark) {
+                } else if (isGroupSummaryRow(d)) {
                     return <GroupSummaryRow {...props} groupData={d.groupData} key={d.key} groupIndex={d.groupIndex} />;
                 } else {
-                    const isTreeGroup = d.treeGroupMark === treeGroupMark;
-                    const isTreeData =  d.treeDataMark === treeDataMark;
-                    const isTreeRow = isTreeGroup || isTreeData;
-                    const rowData = isTreeRow ? d.rowData : d;
+                    const isTreeGroup = isTreeGroupRow(d);
+                    const treeRow = isTreeRow(d) ? d : undefined;
+                    const rowData = treeRow ? treeRow.rowData : d;
                     const rowKeyValue = getValueByField(rowData, rowKeyField);
-                    const isTreeExpanded = isTreeGroup && (!treeGroupsExpanded || treeGroupsExpanded.includes(rowKeyValue));
-                    const isSelectedRow = selectedRows.some((s) => s === rowKeyValue);
-                    const isDetailsRowShown = detailsRows.some((r) => r === rowKeyValue);
-                    const rowEditableCells = getRowEditableCells(rowKeyValue, editableCells);
-                    const isOdd = oddEvenRows
-                        ? isFirstRowOdd ? checkIndexOdd(index) : !checkIndexOdd(index)
-                        : undefined;
+                    const isTreeExpanded = isTreeGroup && (!treeGroupsExpandedSet || treeGroupsExpandedSet.has(rowKeyValue));
+                    const isSelectedRow = selectedRowsSet.has(rowKeyValue);
+                    const isDetailsRowShown = detailsRowsSet.has(rowKeyValue);
+                    const rowEditableCells = editableCellsByRow.get(rowKeyValue) || emptyArray;
+                    const isOdd = oddEvenRows ? !checkIndexOdd(stripeIndex) : undefined;
                     const dataRow = (
-                        <DataAndDetailsRows
+                        <RowComponent
                             isOdd={isOdd}
                             childComponents={props.childComponents}
                             columns={props.columns}
                             dispatch={dispatch}
                             editableCells={props.editableCells}
                             editingMode={props.editingMode}
+                            focusedColumnKey={focusedCell && focusedCell.rowKeyValue === rowKeyValue ? focusedCell.columnKey : undefined}
                             isTreeGroup={isTreeGroup}
                             isTreeExpanded={isTreeExpanded}
-                            treeDeep={isTreeRow === true ? d.treeDeep : undefined}
+                            treeDeep={treeRow?.treeDeep}
                             treeExpandButtonColumnKey={treeExpandButtonColumnKey}
                             format={format}
                             groupColumnsCount={props.groupColumnsCount}
                             isDetailsRowShown={isDetailsRowShown}
                             isSelectedRow={isSelectedRow}
-                            key={rowKeyValue}
+                            key={getReactKey(rowKeyValue)}
                             rowData={rowData}
                             rowEditableCells={rowEditableCells}
                             rowKeyField={props.rowKeyField}
@@ -114,7 +169,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                     return dataRow;
                 }
             })}
-        </>
+        </MemoizedRowsContext.Provider>
     );
 };
 

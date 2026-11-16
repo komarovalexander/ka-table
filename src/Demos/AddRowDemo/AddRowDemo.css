@@ -1,0 +1,10 @@
+.add-row-demo .plus-cell-button,
+.add-row-demo .buttons {
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.add-row-demo .save-cell-button {
+  margin-right: 15px;
+}

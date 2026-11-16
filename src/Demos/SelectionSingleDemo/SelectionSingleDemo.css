@@ -1,0 +1,12 @@
+.selection-single-demo .ka-row {
+  cursor: pointer;
+}
+
+.selection-single-demo .info {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.selection-single-demo .info button {
+  margin-left: 10px;
+}

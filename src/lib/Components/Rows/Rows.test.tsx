@@ -1,13 +1,10 @@
-import Enzyme, { mount } from 'enzyme';
+import { act } from '@testing-library/react';
 import Rows, { IRowsProps } from './Rows';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import { EditingMode } from '../../enums';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { getGroupMark } from '../../Utils/GroupUtils';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { renderInto } from '../../../testUtils/renderInto';
 
 const props: IRowsProps = {
     childComponents: {},
@@ -21,7 +18,7 @@ const props: IRowsProps = {
         { key: [1], groupMark: getGroupMark(), value: 1 },
     ],
     dispatch: () => {},
-    format: ({ value }: any) => `formatted: ${value}`,
+    format: ({ value }) => `formatted: ${value}`,
     editableCells: [],
     editingMode: EditingMode.None,
     groupColumnsCount: 1,
@@ -29,30 +26,31 @@ const props: IRowsProps = {
     groups: [{ columnKey: 'column' }],
     onFirstRowRendered: () => {},
     rowKeyField: 'id',
+    rowReordering: false,
     selectedRows: [],
-} as any;
+};
 
 describe('Rows', () => {
     it('renders without crashing', () => {
         const element = document.createElement('tbody');
         const root = createRoot(element!);
-        root.render(<Rows {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<Rows {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('formats group cell', () => {
-        const wrapper = mount(<Rows {...props} />, {
-            attachTo: document.createElement('tbody'),
-        });
-        expect(wrapper.find('.ka-group-text').text()).toBe('formatted: 1');
+        const { container } = renderInto('tbody', <Rows {...props} />);
+        expect(container.querySelector('.ka-group-text')!.textContent).toBe('formatted: 1');
     });
 
     it('does not add ka-tree-cell classes', () => {
-        const wrapper = mount(<Rows {...props} />, {
-            attachTo: document.createElement('tbody'),
-        });
-        expect(wrapper.find('.ka-tree-cell').length).toBe(0);
-        expect(wrapper.find('.ka-tree-empty-space').length).toBe(0);
-        expect(wrapper.find('.ka-icon-tree-arrow').length).toBe(0);
+        const { container } = renderInto('tbody', <Rows {...props} />);
+        expect(container.querySelectorAll('.ka-tree-cell').length).toBe(0);
+        expect(container.querySelectorAll('.ka-tree-empty-space').length).toBe(0);
+        expect(container.querySelectorAll('.ka-icon-tree-arrow').length).toBe(0);
     });
 });

@@ -1,5 +1,4 @@
 import { IHeadCellProps } from '../../lib/props';
-import React from 'react';
 import { Table } from '../../lib';
 
 const dataArray = Array(7).fill(undefined).map(

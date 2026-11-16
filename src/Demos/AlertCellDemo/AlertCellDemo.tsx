@@ -1,9 +1,8 @@
-import './AlertCellDemo.scss';
+import './AlertCellDemo.css';
 
 import { DataType, Table } from '../../lib';
 
 import { ICellTextProps } from '../../lib/props';
-import React from 'react';
 
 const dataArray = Array(10).fill(undefined).map(
     (_, index) => ({

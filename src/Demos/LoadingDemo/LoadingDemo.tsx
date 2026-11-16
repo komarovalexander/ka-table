@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { DataType } from '../../lib/enums';
 import { Table } from '../../lib';
@@ -19,7 +19,7 @@ const LoadingDemo = () => {
     return (
         <>
             <button
-                onClick={(e) => {
+                onClick={() => {
                     setLoading(!loading);
                 }}
                 className='top-element'

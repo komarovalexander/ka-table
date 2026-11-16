@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import FilterRow from '../FilterRow/FilterRow';
 import { FilteringMode } from '../../enums';
@@ -8,7 +8,7 @@ import { ITableHeadProps } from '../../props';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-export const TableHead: React.FunctionComponent<ITableHeadProps> = (props) => {
+export const TableHead: FunctionComponent<ITableHeadProps> = (props) => {
     const {
         areAllRowsSelected,
         childComponents,

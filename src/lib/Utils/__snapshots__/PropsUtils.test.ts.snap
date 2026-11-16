@@ -1,8 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getData get data by extendedFilter 1`] = `
-Array [
-  Object {
+exports[`getData > get data by extendedFilter 1`] = `
+[
+  {
     "column1": "column:1 row:1",
     "column2": "column:2 row:1",
     "column3": "column:3 row:1",
@@ -12,17 +12,17 @@ Array [
 ]
 `;
 
-exports[`getData get data by filter (number) 1`] = `
-Array [
-  Object {
+exports[`getData > get data by filter (number) 1`] = `
+[
+  {
     "column1": 1,
   },
 ]
 `;
 
-exports[`getData get data by filter 1`] = `
-Array [
-  Object {
+exports[`getData > get data by filter 1`] = `
+[
+  {
     "column1": "column:1 row:2",
     "column2": "column:2 row:2",
     "column3": "column:3 row:2",
@@ -32,9 +32,9 @@ Array [
 ]
 `;
 
-exports[`getData get data by search 1`] = `
-Array [
-  Object {
+exports[`getData > get data by search 1`] = `
+[
+  {
     "column1": "column:1 row:3",
     "column2": "column:2 row:3",
     "column3": "column:3 row:3",
@@ -44,11 +44,11 @@ Array [
 ]
 `;
 
-exports[`getData get grouped data 1`] = `
-Array [
-  Object {
-    "groupItems": Array [
-      Object {
+exports[`getData > get grouped data 1`] = `
+[
+  {
+    "groupItems": [
+      {
         "column1": "column:1 row:0",
         "column2": "column:2 row:0",
         "column3": "column:3 row:0",
@@ -56,22 +56,22 @@ Array [
         "id": 0,
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "column:1 row:0",
     ],
     "value": "column:1 row:0",
   },
-  Object {
+  {
     "column1": "column:1 row:0",
     "column2": "column:2 row:0",
     "column3": "column:3 row:0",
     "column4": "column:4 row:0",
     "id": 0,
   },
-  Object {
-    "groupItems": Array [
-      Object {
+  {
+    "groupItems": [
+      {
         "column1": "column:1 row:1",
         "column2": "column:2 row:1",
         "column3": "column:3 row:1",
@@ -79,22 +79,22 @@ Array [
         "id": 1,
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "column:1 row:1",
     ],
     "value": "column:1 row:1",
   },
-  Object {
+  {
     "column1": "column:1 row:1",
     "column2": "column:2 row:1",
     "column3": "column:3 row:1",
     "column4": "column:4 row:1",
     "id": 1,
   },
-  Object {
-    "groupItems": Array [
-      Object {
+  {
+    "groupItems": [
+      {
         "column1": "column:1 row:2",
         "column2": "column:2 row:2",
         "column3": "column:3 row:2",
@@ -102,22 +102,22 @@ Array [
         "id": 2,
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "column:1 row:2",
     ],
     "value": "column:1 row:2",
   },
-  Object {
+  {
     "column1": "column:1 row:2",
     "column2": "column:2 row:2",
     "column3": "column:3 row:2",
     "column4": "column:4 row:2",
     "id": 2,
   },
-  Object {
-    "groupItems": Array [
-      Object {
+  {
+    "groupItems": [
+      {
         "column1": "column:1 row:3",
         "column2": "column:2 row:3",
         "column3": "column:3 row:3",
@@ -125,22 +125,22 @@ Array [
         "id": 3,
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "column:1 row:3",
     ],
     "value": "column:1 row:3",
   },
-  Object {
+  {
     "column1": "column:1 row:3",
     "column2": "column:2 row:3",
     "column3": "column:3 row:3",
     "column4": "column:4 row:3",
     "id": 3,
   },
-  Object {
-    "groupItems": Array [
-      Object {
+  {
+    "groupItems": [
+      {
         "column1": "column:1 row:4",
         "column2": "column:2 row:4",
         "column3": "column:3 row:4",
@@ -148,13 +148,13 @@ Array [
         "id": 4,
       },
     ],
-    "groupMark": Object {},
-    "key": Array [
+    "groupMark": {},
+    "key": [
       "column:1 row:4",
     ],
     "value": "column:1 row:4",
   },
-  Object {
+  {
     "column1": "column:1 row:4",
     "column2": "column:2 row:4",
     "column3": "column:3 row:4",
@@ -164,16 +164,16 @@ Array [
 ]
 `;
 
-exports[`getData get paged data 1`] = `
-Array [
-  Object {
+exports[`getData > get paged data 1`] = `
+[
+  {
     "column1": "column:1 row:2",
     "column2": "column:2 row:2",
     "column3": "column:3 row:2",
     "column4": "column:4 row:2",
     "id": 2,
   },
-  Object {
+  {
     "column1": "column:1 row:3",
     "column2": "column:2 row:3",
     "column3": "column:3 row:3",
@@ -183,37 +183,37 @@ Array [
 ]
 `;
 
-exports[`getData get sorted data 1`] = `
-Array [
-  Object {
+exports[`getData > get sorted data 1`] = `
+[
+  {
     "column1": "column:1 row:4",
     "column2": "column:2 row:4",
     "column3": "column:3 row:4",
     "column4": "column:4 row:4",
     "id": 4,
   },
-  Object {
+  {
     "column1": "column:1 row:3",
     "column2": "column:2 row:3",
     "column3": "column:3 row:3",
     "column4": "column:4 row:3",
     "id": 3,
   },
-  Object {
+  {
     "column1": "column:1 row:2",
     "column2": "column:2 row:2",
     "column3": "column:3 row:2",
     "column4": "column:4 row:2",
     "id": 2,
   },
-  Object {
+  {
     "column1": "column:1 row:1",
     "column2": "column:2 row:1",
     "column3": "column:3 row:1",
     "column4": "column:4 row:1",
     "id": 1,
   },
-  Object {
+  {
     "column1": "column:1 row:0",
     "column2": "column:2 row:0",
     "column3": "column:3 row:0",
@@ -223,37 +223,37 @@ Array [
 ]
 `;
 
-exports[`getData skips sorting in case of singleRemote 1`] = `
-Array [
-  Object {
+exports[`getData > skips sorting in case of singleRemote 1`] = `
+[
+  {
     "column1": "column:1 row:0",
     "column2": "column:2 row:0",
     "column3": "column:3 row:0",
     "column4": "column:4 row:0",
     "id": 0,
   },
-  Object {
+  {
     "column1": "column:1 row:1",
     "column2": "column:2 row:1",
     "column3": "column:3 row:1",
     "column4": "column:4 row:1",
     "id": 1,
   },
-  Object {
+  {
     "column1": "column:1 row:2",
     "column2": "column:2 row:2",
     "column3": "column:3 row:2",
     "column4": "column:4 row:2",
     "id": 2,
   },
-  Object {
+  {
     "column1": "column:1 row:3",
     "column2": "column:2 row:3",
     "column3": "column:3 row:3",
     "column4": "column:4 row:3",
     "id": 3,
   },
-  Object {
+  {
     "column1": "column:1 row:4",
     "column2": "column:2 row:4",
     "column3": "column:3 row:4",
@@ -263,56 +263,56 @@ Array [
 ]
 `;
 
-exports[`getFilteredData default 1`] = `
-Array [
-  Object {
+exports[`getFilteredData > default 1`] = `
+[
+  {
     "field": "11",
     "id": 1,
   },
-  Object {
+  {
     "field": "21",
     "id": 2,
   },
 ]
 `;
 
-exports[`getSelectedData one item 1`] = `
-Array [
-  Object {
+exports[`getSelectedData > one item 1`] = `
+[
+  {
     "field": "11",
     "id": 1,
   },
 ]
 `;
 
-exports[`getSelectedData two items 1`] = `
-Array [
-  Object {
+exports[`getSelectedData > two items 1`] = `
+[
+  {
     "field": "11",
     "id": 1,
   },
-  Object {
+  {
     "field": "22",
     "id": 2,
   },
 ]
 `;
 
-exports[`prepareTableOptions prepareTableOptions 1`] = `
-Array [
-  Object {
+exports[`prepareTableOptions > prepareTableOptions 1`] = `
+[
+  {
     "key": "column2",
     "visible": true,
   },
-  Object {
+  {
     "key": "column3",
   },
 ]
 `;
 
-exports[`prepareTableOptions should filter number correctly 1`] = `
-Array [
-  Object {
+exports[`prepareTableOptions > should filter number correctly 1`] = `
+[
+  {
     "column1": 1,
   },
 ]

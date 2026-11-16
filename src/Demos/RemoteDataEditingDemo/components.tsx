@@ -1,9 +1,9 @@
-import React from 'react';
+import { FC } from 'react';
 
 import { deleteRow } from '../../lib/actionCreators';
 import { ICellTextProps } from '../../lib/props';
 
-export const DeleteRow: React.FC<ICellTextProps> = ({
+export const DeleteRow: FC<ICellTextProps> = ({
     dispatch, rowKeyValue,
 }) => {
     return (

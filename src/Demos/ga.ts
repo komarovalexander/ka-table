@@ -2,8 +2,8 @@ import ReactGA from 'react-ga';
 
 const host = window.location.hostname;
 let initializeGA = () => {};
-let trackPage = (page: string) => {};
-let trackEvent = (category: string, action: string, label: string = '') => {};
+let trackPage: (page: string) => void = () => {};
+let trackEvent: (category: string, action: string, label?: string) => void = () => {};
 if (host !== 'localhost') {
     initializeGA = () => ReactGA.initialize('UA-50311880-5');
 

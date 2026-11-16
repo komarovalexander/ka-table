@@ -14,11 +14,11 @@ export const getUpdatedSortedColumns = (
     const newColumns = columns.map(c => ({...c}));
     const curentColumn = newColumns.find((c) => c.key === columnKey);
     if (curentColumn){
-        let nextSortDirection = getNextSortDirection(curentColumn.sortDirection);
+        let nextSortDirection: SortDirection | undefined = getNextSortDirection(curentColumn.sortDirection);
         if (isTripleStateSorting(sortingMode)
       && curentColumn.sortDirection
       && nextSortDirection === defaultOptions.columnSortDirection) {
-            nextSortDirection = undefined as any;
+            nextSortDirection = undefined;
         }
         if (!isMultipleSorting(sortingMode)) {
             newColumns.forEach(c => {

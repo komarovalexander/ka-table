@@ -3,7 +3,25 @@ import { PagingOptions } from '../models';
 
 export const centerLength = 5;
 const DEFAULT_PAGE_SIZE = 10;
-export const getPagesCount = (data: any[], paging?: PagingOptions): number => {
+const getPageSize = (paging: PagingOptions) => paging.pageSize || DEFAULT_PAGE_SIZE;
+
+/**
+ * The index of the shown page: the last page when the page index is out of the pages,
+ * e.g. after the rows of the last page are filtered or deleted
+ */
+export const getPageIndex = (paging: PagingOptions | undefined, pagesCount: number): number => (
+    Math.max(Math.min(paging?.pageIndex || 0, pagesCount - 1), 0)
+);
+
+/**
+ * The paging with the new size of the pages: the first row of the shown page stays shown
+ */
+export const getPagingWithPageSize = (paging: PagingOptions | undefined, pageSize: number): PagingOptions => (
+    paging?.pageIndex && pageSize > 0
+        ? { ...paging, pageSize, pageIndex: Math.floor(paging.pageIndex * getPageSize(paging) / pageSize) }
+        : { ...paging, pageSize }
+);
+export const getPagesCount = (data: unknown[], paging?: PagingOptions): number => {
     if (!paging || !paging.enabled) {
         return 1;
     }
@@ -13,17 +31,16 @@ export const getPagesCount = (data: any[], paging?: PagingOptions): number => {
     return Math.ceil(data.length / ((paging && paging.pageSize) || DEFAULT_PAGE_SIZE));
 };
 
-export const getPageData = (data: any[], paging?: PagingOptions): any[] => {
+export const getPageData = <TData>(data: TData[], paging?: PagingOptions): TData[] => {
     if (!paging || !paging.enabled || paging.pagesCount) {
         return data;
     }
-    const pageSize = paging.pageSize || DEFAULT_PAGE_SIZE;
-    const pageIndex = paging.pageIndex || 0;
-    const startIndex = pageSize * pageIndex;
+    const pageSize = getPageSize(paging);
+    const startIndex = pageSize * getPageIndex(paging, Math.ceil(data.length / pageSize));
     return data.slice(startIndex, startIndex + pageSize);
 
 };
-export const getPagesForCenter = (pages: number[], isStartShown: boolean, isEndShown: boolean, pageIndex: number): any[] => {
+export const getPagesForCenter = (pages: number[], isStartShown: boolean, isEndShown: boolean, pageIndex: number): number[] => {
     if (isStartShown && !isEndShown){
         return pages.filter(page => (page >= pages.length - centerLength - 1));
     } else if (!isStartShown && isEndShown) {

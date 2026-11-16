@@ -1,10 +1,11 @@
 import { IFilterRowEditorProps } from '../../props';
-import React from 'react';
+import { FunctionComponent } from 'react';
 import defaultOptions from '../../defaultOptions';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
+import { getInputValue } from '../../Utils/DataUtils';
 import { updateFilterRowValue } from '../../actionCreators';
 
-const FilterRowNumber: React.FunctionComponent<IFilterRowEditorProps> = (props) => {
+const FilterRowNumber: FunctionComponent<IFilterRowEditorProps> = (props) => {
     const {
         column,
         dispatch,
@@ -14,8 +15,9 @@ const FilterRowNumber: React.FunctionComponent<IFilterRowEditorProps> = (props) 
 
     const { elementAttributes, content } = getElementCustomization<HTMLInputElement>({
         className: defaultOptions.css.numberInput,
+        'aria-label': column.title,
         type: 'number',
-        value: value === null || value === undefined ? '' : value,
+        value: getInputValue(value),
         onChange: (event) => {
             const filterRowValue = event.currentTarget.value !== '' ? Number(event.currentTarget.value) : null;
             dispatch(updateFilterRowValue(column.key, filterRowValue));

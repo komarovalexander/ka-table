@@ -1,9 +1,8 @@
-import './DeleteRowDemo.scss';
+import './DeleteRowDemo.css';
 
 import { DataType, Table } from '../../lib';
 
 import { ICellTextProps } from '../../lib/props';
-import React from 'react';
 import { deleteRow } from '../../lib/actionCreators';
 
 const dataArray = Array(10).fill(undefined).map(

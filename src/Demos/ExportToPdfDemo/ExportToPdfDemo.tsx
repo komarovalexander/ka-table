@@ -1,8 +1,7 @@
-import 'jspdf-autotable';
+import { FC } from 'react';
 
-import jsPDF from 'jspdf';
-import React from 'react';
-
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { DataType, Table, useTable } from '../../lib';
 import { getValueByColumn } from '../../lib/Utils/DataUtils';
 
@@ -16,19 +15,20 @@ const dataArray = Array(2000).fill(undefined).map(
     }),
 );
 
-const ExportToPdfDemo: React.FC = () => {
+const ExportToPdfDemo: FC = () => {
     const table = useTable();
-    const exportClick = (orientation?: any) => {
-        const doc: any = new jsPDF(orientation);
-        const head = [table.props.columns.map(c => c.title)];
-        const body = table.props.data!.map(d => table.props.columns.map(c => getValueByColumn(d, c)));
-        doc.autoTable({
+    const exportClick = (orientation?: 'portrait' | 'landscape') => {
+        const doc = new jsPDF(orientation);
+        const head = [table.props.columns.map(c => c.title!)];
+        const body = table.props.data!.map(d => table.props.columns.map(c => String(getValueByColumn(d, c) ?? '')));
+
+        autoTable(doc, {
             margin: 1,
             headStyles: { fillColor: '#F1F5F7', textColor: '#747D86' },
             alternateRowStyles: { fillColor: '#F9FBFC' },
             head,
             body,
-        })
+        });
 
         doc.save('table.pdf')
     }

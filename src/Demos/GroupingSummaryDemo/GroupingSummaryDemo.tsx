@@ -1,7 +1,5 @@
 import { DataType, Table } from '../../lib';
 
-import React from 'react';
-
 const dataArray = [
     { id: 1, type: 'Cat', name: 'Kas', country: 'Czech Republic', age: 2 },
     { id: 2, type: 'Dog', name: 'Rex', country: 'Montenegro', age: 6 },

@@ -14,9 +14,12 @@ let dataArray = Array(100).fill(undefined).map(
     }),
 );
 
+// the rows of the page and the count of the pages
+type Page = { data: typeof dataArray; pagesCount: number };
+
 export const useGet = (pageIndexNew: number, columns: Column[]) => {
-    return useQuery<any, any>(['useGet', pageIndexNew, JSON.stringify(columns)], async () => {
-        return new Promise((resolve) => {
+    return useQuery(['useGet', pageIndexNew, JSON.stringify(columns)], async () => {
+        return new Promise<Page>((resolve) => {
             setTimeout(() => {
                 const paging = {
                     enabled: true,
@@ -41,7 +44,7 @@ export const useGet = (pageIndexNew: number, columns: Column[]) => {
 
 export const useUpdate = () => {
     const queryClient = useQueryClient();
-    return useMutation(({id, data}: {id: any, data: any}) => new Promise((resolve) => {
+    return useMutation(({id, data}: {id: unknown, data: Record<string, unknown>}) => new Promise((resolve) => {
         setTimeout(async () => {
             for (let i = 0; i < dataArray.length; i++) {
                 if (dataArray[i].id === id) {
@@ -56,7 +59,7 @@ export const useUpdate = () => {
 
 export const useDelete = () => {
     const queryClient = useQueryClient();
-    return useMutation(async (id: any) => new Promise((resolve) => {
+    return useMutation(async (id: unknown) => new Promise((resolve) => {
         setTimeout(async () => {
             dataArray = dataArray.filter((d) => d.id !== id);
             await queryClient.refetchQueries();

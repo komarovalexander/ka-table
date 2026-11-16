@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import { GroupedColumnResult, getRowsWithGroupedColumns } from '../../Utils/GroupedColumnsUtils';
 
@@ -7,7 +7,7 @@ import HeadCell from '../HeadCell/HeadCell';
 import { IHeadRowProps } from '../../props';
 import defaultOptions from '../../defaultOptions';
 
-export const GroupedColumnsRow: React.FunctionComponent<IHeadRowProps> = (props) => {
+export const GroupedColumnsRow: FunctionComponent<IHeadRowProps> = (props) => {
     const {
         columns,
         groupColumnsCount,

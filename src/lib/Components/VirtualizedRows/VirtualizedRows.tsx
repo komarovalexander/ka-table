@@ -1,13 +1,13 @@
-import React, { RefObject } from 'react';
+import { FunctionComponent, RefObject } from 'react';
 
 import { ActionType } from '../../enums';
 import { ITableBodyProps } from '../../props';
 import Rows from '../Rows/Rows';
 import defaultOptions from '../../defaultOptions';
 import { getNewRowEditableCells } from '../../Utils/CellUtils';
-import { getVirtualized } from '../../Utils/Virtualize';
+import { defaultTableWidth, getVirtualized, isVirtualScrollingEnabled } from '../../Utils/Virtualize';
 
-const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
+const VirtualizedRows: FunctionComponent<ITableBodyProps> = (props) => {
     const {
         data,
         dispatch,
@@ -15,22 +15,28 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
         editableCells,
         oddEvenRows,
     } = props;
+    // virtualScrolling with enabled: false shows all the rows
+    const enabledVirtualScrolling = isVirtualScrollingEnabled(virtualScrolling) ? virtualScrolling : undefined;
 
     const onFirstRowRendered = (firstRowRef: RefObject<HTMLElement | null>) => {
         if (firstRowRef
       && firstRowRef.current
-      && (virtualScrolling
-      && (!virtualScrolling.itemHeight
-      || !virtualScrolling.tbodyHeight))) {
+      && (enabledVirtualScrolling
+      && (!enabledVirtualScrolling.itemHeight
+      || !enabledVirtualScrolling.tbodyHeight
+      || (enabledVirtualScrolling.horizontal && !enabledVirtualScrolling.tableWidth)))) {
             const itemHeight = firstRowRef.current.offsetHeight || 40;
-            const rootElement: any = firstRowRef.current.closest(`.${defaultOptions.css.root}`);
+            const rootElement = firstRowRef.current.closest<HTMLElement>(`.${defaultOptions.css.root}`);
             const tbodyHeight =
-          (rootElement && rootElement.offsetHeight)
-          || 600;
+                (rootElement && rootElement.offsetHeight)
+                || 600;
+            // the visible width of the wrapper which scrolls the columns
+            const tableWidth = firstRowRef.current.closest<HTMLElement>(`.${defaultOptions.css.tableWrapper}`)?.clientWidth || defaultTableWidth;
             const newVirtualScrolling = {
-                itemHeight,
-                tbodyHeight,
-                ...virtualScrolling,
+                ...enabledVirtualScrolling,
+                itemHeight: enabledVirtualScrolling.itemHeight || itemHeight,
+                tbodyHeight: enabledVirtualScrolling.tbodyHeight || tbodyHeight,
+                ...(enabledVirtualScrolling.horizontal && { tableWidth: enabledVirtualScrolling.tableWidth || tableWidth }),
             };
             dispatch({ type: ActionType.UpdateVirtualScrolling, virtualScrolling: newVirtualScrolling });
         }
@@ -39,9 +45,9 @@ const VirtualizedRows: React.FunctionComponent<ITableBodyProps> = (props) => {
     let virtualizedData = data;
     let virtualized;
     let isFirstVisibleRowOdd;
-    if (virtualScrolling) {
+    if (enabledVirtualScrolling) {
         const isNewRowShown = !!getNewRowEditableCells(editableCells)?.length;
-        virtualized = getVirtualized(virtualScrolling, virtualizedData, isNewRowShown, oddEvenRows);
+        virtualized = getVirtualized(enabledVirtualScrolling, virtualizedData, isNewRowShown, oddEvenRows);
         virtualizedData = virtualized.virtualizedData;
         isFirstVisibleRowOdd = virtualized.isFirstVisibleRowOdd;
     }

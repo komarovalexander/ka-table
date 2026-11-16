@@ -1,11 +1,13 @@
-import './CustomCellDemo.scss';
+import './CustomCellDemo.css';
 
 import { DataType, Table, useTableInstance } from '../../lib';
 
 import { EditingMode } from '../../lib/enums';
 import { ICellTextProps } from '../../lib/props';
-import React from 'react';
 import dataArray from './data';
+import { kaDateUtils } from '../../lib/utils';
+
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const CustomCell = ({
     column,
@@ -64,7 +66,7 @@ const CustomCellDemo = () => {
                     return `$${value}`;
                 }
                 if (column.dataType === DataType.Date){
-                    return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return typeof value === 'string' && dateFormat.format(kaDateUtils.getDate(value));
                 }
             }}
             data={dataArray}

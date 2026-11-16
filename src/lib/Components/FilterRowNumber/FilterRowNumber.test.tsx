@@ -1,37 +1,38 @@
 import { ActionType, DataType } from '../../enums';
-import Enzyme, { mount } from 'enzyme';
+import { act, fireEvent, render } from '@testing-library/react';
 
-import Adapter from '@cfaester/enzyme-adapter-react-18';
 import FilterRowNumber from './FilterRowNumber';
-import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { IFilterRowEditorProps } from '../../props';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-const props: any = {
+const props = {
     column: {
         dataType: DataType.String,
         key: 'columnField',
         title: 'Field',
     },
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
     rowData: { column: 1 },
-};
+} as IFilterRowEditorProps;
 
 describe('FilterRowNumber', () => {
     it('renders without crashing', () => {
         const element = document.createElement('td');
         const root = createRoot(element!);
-        root.render(<FilterRowNumber {...props} />);
-        root.unmount();
+        act(() => {
+            root.render(<FilterRowNumber {...props} />);
+        });
+        act(() => {
+            root.unmount();
+        });
     });
 
     it('should fire FilterRowChanged', () => {
         const newValue = 2;
         const column = { field: 'name', key: 'nameKey', dataType: DataType.Number };
-        const wrapper = mount(<FilterRowNumber {...props} column={column} />);
+        const { container } = render(<FilterRowNumber {...props} column={column} />);
 
-        wrapper.find('input').props().onChange!({currentTarget: { value: newValue} } as any);
+        fireEvent.change(container.querySelector('input')!, { target: { value: `${newValue}` } });
         expect(props.dispatch).toHaveBeenCalledTimes(1);
         expect(props.dispatch).toHaveBeenCalledWith({
             columnKey: 'nameKey',

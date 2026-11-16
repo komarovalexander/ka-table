@@ -3,7 +3,7 @@ import { Cell } from '../Models/Cell';
 import { getDownCell, getLeftCell, getRightCell, getUpCell } from './NavigationUtils';
 
 describe('NavigationUtils', () => {
-    const props: ITableProps = {
+    const props: ITableProps<{ id: number; column1: number; column2: number; column3: number }> = {
         rowKeyField: 'id',
         columns: [{ key: 'column1' }, { key: 'column2' }, { key: 'column3' }],
         data: [
@@ -80,6 +80,42 @@ describe('NavigationUtils', () => {
             const cell: Cell = { columnKey: 'column2', rowKeyValue: 5 }
             const result = getDownCell(cell, props);
             expect(result).toEqual({ columnKey: 'column2', rowKeyValue: 5 });
+        });
+    });
+    describe('cells which are shown', () => {
+        it('skips hidden and grouped columns', () => {
+            const columns = [{ key: 'column1' }, { key: 'column2', visible: false }, { key: 'column3' }, { key: 'group' }];
+            const groupedProps: ITableProps = { ...props, columns, groups: [{ columnKey: 'group' }] };
+            expect(getRightCell({ columnKey: 'column1', rowKeyValue: 1 }, groupedProps)).toEqual({ columnKey: 'column3', rowKeyValue: 1 });
+            expect(getLeftCell({ columnKey: 'column3', rowKeyValue: 1 }, groupedProps)).toEqual({ columnKey: 'column1', rowKeyValue: 1 });
+            expect(getRightCell({ columnKey: 'column1', rowKeyValue: 1 }, groupedProps, { end: true })).toEqual({ columnKey: 'column3', rowKeyValue: 1 });
+        });
+        it('skips group rows', () => {
+            const groupedProps: ITableProps = {
+                ...props,
+                columns: [...props.columns, { key: 'group' }],
+                data: props.data!.map((d) => ({ ...d, group: d.id < 3 ? 'a' : 'b' })),
+                groups: [{ columnKey: 'group' }],
+            };
+            expect(getDownCell({ columnKey: 'column1', rowKeyValue: 2 }, groupedProps)).toEqual({ columnKey: 'column1', rowKeyValue: 3 });
+            expect(getUpCell({ columnKey: 'column1', rowKeyValue: 3 }, groupedProps)).toEqual({ columnKey: 'column1', rowKeyValue: 2 });
+            expect(getUpCell({ columnKey: 'column1', rowKeyValue: 1 }, groupedProps)).toEqual({ columnKey: 'column1', rowKeyValue: 1 });
+        });
+        it('moves through the rows of a tree', () => {
+            const treeProps: ITableProps = {
+                ...props,
+                data: props.data!.map((d) => ({ ...d, parentId: d.id === 1 ? null : 1 })),
+                treeGroupKeyField: 'parentId',
+            };
+            expect(getDownCell({ columnKey: 'column1', rowKeyValue: 1 }, treeProps)).toEqual({ columnKey: 'column1', rowKeyValue: 2 });
+            expect(getDownCell({ columnKey: 'column1', rowKeyValue: 1 }, treeProps, { end: true })).toEqual({ columnKey: 'column1', rowKeyValue: 5 });
+            const collapsedTreeProps = { ...treeProps, treeGroupsExpanded: [] };
+            expect(getDownCell({ columnKey: 'column1', rowKeyValue: 1 }, collapsedTreeProps)).toEqual({ columnKey: 'column1', rowKeyValue: 1 });
+        });
+        it('moves through the rows of the current page', () => {
+            const pagedProps: ITableProps = { ...props, paging: { enabled: true, pageSize: 2, pageIndex: 1 } };
+            expect(getDownCell({ columnKey: 'column1', rowKeyValue: 4 }, pagedProps)).toEqual({ columnKey: 'column1', rowKeyValue: 4 });
+            expect(getUpCell({ columnKey: 'column1', rowKeyValue: 4 }, pagedProps, { end: true })).toEqual({ columnKey: 'column1', rowKeyValue: 3 });
         });
     });
 });

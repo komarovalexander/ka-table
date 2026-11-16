@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 import CellEditorState from '../CellEditorState/CellEditorState';
 import { EditingMode } from '../../enums';
@@ -7,7 +7,7 @@ import defaultOptions from '../../defaultOptions';
 import { getCellEditorDispatchHandler } from '../../Utils/CellUtils';
 import { getElementCustomization } from '../../Utils/ComponentUtils';
 
-const CellEditor: React.FunctionComponent<ICellEditorProps> = (props) => {
+const CellEditor: FunctionComponent<ICellEditorProps> = (props) => {
     const {
         childComponents,
         dispatch,

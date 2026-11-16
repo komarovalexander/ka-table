@@ -1,8 +1,6 @@
 import { DataType, Table, useTable } from '../../lib';
 import { EditingMode, InsertRowPosition } from '../../lib/enums';
 
-import React from 'react';
-
 const dataArray = Array(7).fill(undefined).map(
     (_, index) => ({
         column1: `column:1 rowId:${index}`,
@@ -58,7 +56,7 @@ const InsertRowDemo = () => {
                                         };
                                         table.insertRow(newRow, { rowKeyValue: props.rowKeyValue })
                                     }}>
-                    Insert Row Before
+                                        Insert Row Before
                                     </button>
                                 );
                             }
@@ -72,7 +70,7 @@ const InsertRowDemo = () => {
                                         };
                                         table.insertRow(newRow, { rowKeyValue: props.rowKeyValue, insertRowPosition: InsertRowPosition.after })
                                     }}>
-                    Insert Row After
+                                        Insert Row After
                                     </button>
                                 );
                             }

@@ -1,8 +1,7 @@
 import { DataType, Table } from '../../lib';
-import { openEditor, updateSortDirection } from '../../lib/actionCreators';
+import { openEditor } from '../../lib/actionCreators';
 
 import CellEditorString from '../../lib/Components/CellEditorString/CellEditorString';
-import React from 'react';
 import { SortingMode } from '../../lib/enums';
 import useKaFocusRef from './hook';
 
@@ -35,17 +34,10 @@ const TabIndexDemo = () => {
                 data={dataArray}
                 rowKeyField={'id'}
                 sortingMode={SortingMode.Single}
+                // the demo moves the focus between the cells by Tab instead of the keyboard navigation of the table
+                keyboardNavigation={false}
                 childComponents={{
-                    headCell: {
-                        elementAttributes: (props) => ({
-                            tabIndex: 0,
-                            onKeyUp: (e) => {
-                                if (e.key === 'Enter') {
-                                    props.dispatch(updateSortDirection(props.column.key));
-                                }
-                            }
-                        })
-                    },
+                    // the headers are sorted by their buttons: Tab moves the focus to them, Enter sorts
                     cell: {
                         elementAttributes: (props) => ({
                             tabIndex: 0,

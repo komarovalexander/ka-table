@@ -1,7 +1,7 @@
 import { Column } from '../models';
 import { ValidationFunc } from '../types';
 
-export const getValidationValue = (value: any, rowData: any, column: Column, validation?: ValidationFunc) => {
+export const getValidationValue = <TData>(value: unknown, rowData: TData, column: Column, validation?: ValidationFunc<TData>) => {
     if (validation) {
         return validation({ value, rowData, column });
     }

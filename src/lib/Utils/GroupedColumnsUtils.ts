@@ -9,7 +9,7 @@ export interface GroupedColumnResult {
     columns: Column[]
 }
 
-export const getChain = (column: Column | GroupedColumn, groupedColumns: GroupedColumn[], currentChain: (Column | GroupedColumn)[] = []): any[] => {
+export const getChain = (column: Column | GroupedColumn, groupedColumns: GroupedColumn[], currentChain: (Column | GroupedColumn)[] = []): (Column | GroupedColumn)[] => {
     const newChain = [column, ...currentChain];
     const groupedColumn = groupedColumns.find(gc => gc.columnsKeys.includes(column.key));
     if (groupedColumn) {
@@ -53,7 +53,7 @@ export const getRowsWithGroupedColumns = (columns: Column[], groupedColumns: Gro
     });
     rows.forEach((row, index) => {
         row.forEach((c: GroupedColumnResult) => {
-            c.rowSpan = index === c.columnChainLength - 1 ? rows.length - c.columnChainLength + 1 : 1 ;
+            c.rowSpan = index === c.columnChainLength - 1 ? rows.length - c.columnChainLength + 1 : 1;
         });
     });
     return rows;

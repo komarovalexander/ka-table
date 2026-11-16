@@ -1,8 +1,6 @@
 import { DataType, EditingMode, PagingPosition, SortingMode } from '../../lib/enums';
 import { Table, useTable } from '../../lib';
 
-import React from 'react';
-
 const dataArray = Array(180).fill(undefined).map(
     (_, index) => ({
         column1: `column:1 row:${index}`,
@@ -18,9 +16,9 @@ const PagingDemo = () => {
 
     return (
         <>
-      Paging position: <select
+            Paging position: <select
                 defaultValue={PagingPosition.Bottom}
-                onChange={(e) => table.changeProps({ ...table.props, paging: { ...table.props.paging, position: e.target.value as any }})}
+                onChange={(e) => table.changeProps({ ...table.props, paging: { ...table.props.paging, position: e.target.value as PagingPosition }})}
                 style={{marginBottom: 20}}>
                 <option value={PagingPosition.Bottom}>Bottom</option>
                 <option value={PagingPosition.Top}>Top</option>

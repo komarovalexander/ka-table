@@ -1,7 +1,7 @@
 import { DataType, Table } from '../../lib';
 import { FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
 
-import React from 'react';
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
 
 const dataArray = [
     {
@@ -64,7 +64,7 @@ const HeaderFilterLogicDemo = () => {
                 {
                     key: 'score',
                     isHeaderFilterSearchable: true,
-                    headerFilterSearchValue: 33,
+                    headerFilterSearchValue: '33',
                     title: 'Score', dataType: DataType.Number
                 },
                 {
@@ -93,7 +93,7 @@ const HeaderFilterLogicDemo = () => {
                     },
                     headerFilterListItems: ({ data }) => {
                         const departments = data?.reduce<{ name: string, id: number }[]>((acc, item) => [...acc, ...(item.departments || [])], []);
-                        const departmentsList = departments?.filter((item: any, index) => {
+                        const departmentsList = departments?.filter((item, index) => {
                             return departments?.findIndex(i => i.id === item.id) === index;
                         }).map(x => x.name) || [];
                         departmentsList?.unshift('Department is unspecified');
@@ -106,10 +106,10 @@ const HeaderFilterLogicDemo = () => {
             filteringMode={FilteringMode.HeaderFilter}
             format={({ column, value }) => {
                 if (column.dataType === DataType.Date) {
-                    return value && new Date(value).toLocaleDateString('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return value instanceof Date && dateFormat.format(value);
                 }
                 if (column.key === 'departments') {
-                    return value?.map((d: any) => d.name).join(', ');
+                    return (value as { name: string }[] | undefined)?.map((d) => d.name).join(', ');
                 }
             }}
             rowKeyField={'id'}
@@ -139,7 +139,7 @@ const HeaderFilterLogicDemo = () => {
                             return `(${rowData.value})`;
                         }
                         if (column.key === 'departments_isSelected'){
-                            return<></>;
+                            return <></>;
                         }
                     }
                 },

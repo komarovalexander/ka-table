@@ -1,27 +1,26 @@
 import { DataType, Table, useTableInstance } from '../../lib';
 import { EditingMode, FilteringMode, SortDirection, SortingMode } from '../../lib/enums';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { IFilterRowEditorProps } from '../../lib/props';
 import dataArray from './data';
 import { kaDateUtils } from '../../lib/utils';
 
+const dateFormat = new Intl.DateTimeFormat('en', { month: '2-digit', day: '2-digit', year: 'numeric' });
+
 const CustomDateFilterEditor = ({
     column,
 }: IFilterRowEditorProps) => {
-    const fieldValue = column.filterRowValue;
-    const value = fieldValue && kaDateUtils.getDateInputValue(fieldValue);
     const table = useTableInstance();
     return (
         <div>
             <>Less than: </>
             <input
                 type='date'
-                value={value || ''}
+                value={kaDateUtils.getDateInputValue(column.filterRowValue)}
                 onChange={(event) => {
-                    const targetValue = event.currentTarget.value;
-                    const filterRowValue = targetValue ? new Date(targetValue) : null;
-                    table.updateFilterRowValue(column.key, filterRowValue);
+                    // the local date: new Date('YYYY-MM-DD') would be the midnight of UTC, the previous day west of it
+                    table.updateFilterRowValue(column.key, kaDateUtils.getDateFromInputValue(event.currentTarget.value));
                 }}
             />
         </div>
@@ -87,7 +86,7 @@ const NullableCellDataDemo = () => {
                         return value == null ? '-' : `$${value}`;
                     }
                     if (column.dataType === DataType.Date){
-                        return value && new Date(value).toLocaleDateString('en', {month: '2-digit', day: '2-digit', year: 'numeric' });
+                        return typeof value === 'string' && dateFormat.format(kaDateUtils.getDate(value));
                     }
                 }}
                 filteringMode={FilteringMode.FilterRow}

@@ -1,20 +1,27 @@
-import CellComponent from '../CellComponent/CellComponent';
+import CellComponent, { CellComponentMemo } from '../CellComponent/CellComponent';
+
 import { CollapsedIcon } from '../../Icons/CollapsedIcon';
 import { ExpandedIcon } from '../../Icons/ExpandedIcon';
 import { IDataRowProps } from '../../props';
-import React from 'react';
+import { KeyboardNavigationContext } from '../../hooks/UseKeyboardNavigation';
+import { MemoizedRowsContext } from '../Rows/MemoizedRowsContext';
+import { FunctionComponent, useContext } from 'react';
+import VirtualColumnSpacer from '../VirtualColumnSpacer/VirtualColumnSpacer';
 import defaultOptions from '../../defaultOptions';
+import { buttonAttributes, getAriaLabel } from '../../Utils/AriaUtils';
 import { getEditableCell } from '../../Utils/CellUtils';
 import { getField } from '../../Utils/ColumnUtils';
-import { getValueByColumn } from '../../Utils/DataUtils';
+import { getFormattedValue, getValueByColumn } from '../../Utils/DataUtils';
+import { isVirtualColumnSpacer } from '../../Utils/Virtualize';
 import { updateTreeGroupsExpanded } from '../../actionCreators';
 
-const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
+const DataRowContent: FunctionComponent<IDataRowProps> = ({
     childComponents,
     columns,
     treeDeep,
     dispatch,
     editingMode,
+    focusedColumnKey,
     format,
     isDetailsRowShown,
     isSelectedRow,
@@ -28,24 +35,42 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
     validation,
     treeExpandButtonColumnKey
 }) => {
-    const arrow = isTreeGroup
-        ? (<div className='ka-icon-tree-arrow' onClick={() => dispatch(updateTreeGroupsExpanded(rowKeyValue))}>{(
-            isTreeExpanded
+    const Cell = useContext(MemoizedRowsContext) ? CellComponentMemo : CellComponent;
+    // with the keyboard navigation the cell gets the focus, its keys toggle the row and the row tells its state (treegrid),
+    // otherwise the arrow is a button named by the text of its cell, aria-expanded tells its state
+    const navigation = useContext(KeyboardNavigationContext);
+    const getTreeArrow = (label?: string) => (
+        <div
+            className='ka-icon-tree-arrow'
+            {...(navigation ? { 'aria-hidden': true } : {
+                ...buttonAttributes,
+                'aria-expanded': !!isTreeExpanded,
+                'aria-label': label || getAriaLabel(rowKeyValue),
+            })}
+            onClick={() => dispatch(updateTreeGroupsExpanded(rowKeyValue))}>
+            {isTreeExpanded
                 ? <ExpandedIcon className={defaultOptions.css.iconTreeArrowExpanded} />
-                : <CollapsedIcon className={defaultOptions.css.iconTreeArrowCollapsed} />
-        )}</div>) : undefined;
+                : <CollapsedIcon className={defaultOptions.css.iconTreeArrowCollapsed} />}
+        </div>
+    );
     return (
         <>
             {columns.map((column, index) => {
+                if (isVirtualColumnSpacer(column)) {
+                    return <VirtualColumnSpacer key={column.key} />;
+                }
                 const editableCell = getEditableCell(column, rowEditableCells);
-                const hasEditorValue = editableCell && editableCell.hasOwnProperty('editorValue');
+                const hasEditorValue = editableCell && Object.prototype.hasOwnProperty.call(editableCell, 'editorValue');
                 const editorValue = editableCell && editableCell.editorValue;
                 const value = hasEditorValue ? editorValue : getValueByColumn(rowData, column);
                 const isTreeColumn = treeExpandButtonColumnKey ? treeExpandButtonColumnKey === column.key : index === 0;
                 const cellDeep = treeDeep != null && isTreeColumn ? treeDeep : undefined;
+                const treeArrowElement = isTreeGroup && isTreeColumn
+                    ? getTreeArrow(getAriaLabel(getFormattedValue(value, column, rowData, format)))
+                    : undefined;
                 return (
-                    <CellComponent
-                        treeArrowElement={isTreeColumn && arrow}
+                    <Cell
+                        treeArrowElement={treeArrowElement}
                         childComponents={childComponents}
                         treeDeep={cellDeep}
                         column={column}
@@ -54,9 +79,10 @@ const DataRowContent: React.FunctionComponent<IDataRowProps> = ({
                         editorValue={editorValue}
                         field={getField(column)}
                         format={format}
-                        hasEditorValue={editableCell && editableCell.hasOwnProperty('editorValue')}
+                        hasEditorValue={editableCell && Object.prototype.hasOwnProperty.call(editableCell, 'editorValue')}
                         isDetailsRowShown={isDetailsRowShown}
                         isEditableCell={!!editableCell}
+                        isFocused={focusedColumnKey === column.key}
                         isSelectedRow={isSelectedRow}
                         key={column.key}
                         rowData={rowData}
