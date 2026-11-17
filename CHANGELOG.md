@@ -1,6 +1,12 @@
 # Changelog
 
-## 13.0.0 (not released yet)
+## 13.0.1
+
+### Added
+
+- Machine-readable documentation: `llms.txt` and `llms-full.txt`, included in the npm package and published with the demo site. The full Markdown reference contains the generated API, actions, integration rules and direct links to the demo sources.
+
+## 13.0.0
 
 13.0.0 has breaking changes: the [migration guide](./MIGRATION.md) describes what to change in the code written for 12.x.
 

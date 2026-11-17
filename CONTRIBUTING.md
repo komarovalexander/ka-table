@@ -16,7 +16,8 @@ to run test: <code>yarn test</code>
 
 to create library's .tgz file: <code>yarn run pack</code>
 
-to update the reference tables of the docs pages after a change of JSDoc (ka-table-site next to ka-table): <code>yarn docs</code>, to check them: <code>yarn docs:check</code>
+to update the reference tables of the docs pages after a change of JSDoc (ka-table-site next to ka-table): <code>yarn docs</code>, to check them: <code>yarn docs:check</code><br>
+to update <code>public/llms.txt</code> and <code>public/llms-full.txt</code> after a change of the docs, API or demos: <code>yarn docs:llms</code>, to check them: <code>yarn docs:llms:check</code>
 
 5)
 if you fixed a bug - increase the 'path' package version

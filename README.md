@@ -54,6 +54,8 @@ The package has `AGENTS.md`: short notes for coding agents (Claude Code, Codex, 
 Before writing or changing ka-table code, read node_modules/ka-table/AGENTS.md.
 ```
 
+Machine-readable documentation is available as a [compact llms.txt index](https://komarovalexander.github.io/ka-table/llms.txt) and a [standalone llms-full.txt reference](https://komarovalexander.github.io/ka-table/llms-full.txt). The full reference includes installation, usage, state rules, theming, the generated API, actions, and direct links to the TSX source of every demo. Both files are included in the npm package.
+
 ## Usage
 
 ### Basic example

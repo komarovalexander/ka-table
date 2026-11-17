@@ -1,0 +1,35 @@
+# ka-table
+
+> Free and customizable React data grid with sorting, filtering, grouping, tree data, editing, paging, and virtual scrolling. MIT licensed; React 18 or 19 is the only peer dependency.
+
+Version: 13.0.1.
+
+## Machine-readable documentation
+
+- [Complete Markdown reference](https://komarovalexander.github.io/ka-table/llms-full.txt): installation, usage, state rules, theming, generated API reference, actions, and links to every demo source.
+- [Agent notes](https://raw.githubusercontent.com/komarovalexander/ka-table/master/scripts/package/AGENTS.md): concise integration rules and correct package imports.
+
+## Guides
+
+- [Getting started](https://ka-table.com/docs_get_started.html)
+- [Table and column props](https://ka-table.com/docs_props.html)
+- [UI customization](https://ka-table.com/docs_ui.html)
+- [Actions and state](https://ka-table.com/docs_action.html)
+- [Hooks and utilities](https://ka-table.com/docs_hooks_utils.html)
+- [Migration guide](https://raw.githubusercontent.com/komarovalexander/ka-table/master/MIGRATION.md)
+- [README](https://raw.githubusercontent.com/komarovalexander/ka-table/master/README.md)
+
+## Essential examples
+
+- [Overview](https://komarovalexander.github.io/ka-table/#/overview): basic table setup.
+- [Editing](https://komarovalexander.github.io/ka-table/#/editing): cell editing.
+- [Remote data](https://komarovalexander.github.io/ka-table/#/remote-data): server-controlled data.
+- [Virtual scrolling](https://komarovalexander.github.io/ka-table/#/many-rows): large datasets.
+- [Custom cell](https://komarovalexander.github.io/ka-table/#/custom-cell): component customization.
+- [All examples and TSX sources](https://komarovalexander.github.io/ka-table/llms-full.txt#examples)
+
+## Project
+
+- [GitHub repository](https://github.com/komarovalexander/ka-table)
+- [npm package](https://www.npmjs.com/package/ka-table)
+- [License: MIT](https://raw.githubusercontent.com/komarovalexander/ka-table/master/LICENSE)
