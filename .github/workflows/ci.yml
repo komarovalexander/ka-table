@@ -45,6 +45,9 @@ jobs:
       - name: Type check
         run: yarn typecheck
 
+      - name: Check machine-readable docs
+        run: yarn docs:llms:check
+
       - name: Test
         run: yarn test:coverage
 

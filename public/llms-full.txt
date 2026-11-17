@@ -1,0 +1,1494 @@
+# ka-table
+
+> Machine-readable documentation for ka-table 13.0.1, generated from the package sources, TypeScript declarations, and JSDoc. React 18 or 19 is the only peer dependency. The package is MIT licensed.
+
+Use this document together with the installed package types. The API reference and example links are also available separately at https://komarovalexander.github.io/ka-table/llms.txt.
+
+## Installation
+
+npm
+
+```sh
+npm install ka-table
+```
+
+yarn
+
+```sh
+yarn add ka-table
+```
+
+## Usage
+
+### Basic example
+
+```js
+import 'ka-table/style.css';
+
+import React from 'react';
+
+import { Table } from 'ka-table';
+import { DataType, EditingMode, SortingMode } from 'ka-table/enums';
+
+const dataArray = Array(10)
+  .fill(undefined)
+  .map((_, index) => ({
+    column1: `column:1 row:${index}`,
+    column2: `column:2 row:${index}`,
+    column3: `column:3 row:${index}`,
+    column4: `column:4 row:${index}`,
+    id: index,
+  }));
+
+const OverviewDemo = () => {
+  return (
+    <Table
+      columns={[
+        { key: 'column1', title: 'Column 1', dataType: DataType.String },
+        { key: 'column2', title: 'Column 2', dataType: DataType.String },
+        { key: 'column3', title: 'Column 3', dataType: DataType.String },
+        { key: 'column4', title: 'Column 4', dataType: DataType.String },
+      ]}
+      data={dataArray}
+      editingMode={EditingMode.Cell}
+      rowKeyField={'id'}
+      sortingMode={SortingMode.Single}
+    />
+  );
+};
+
+export default OverviewDemo;
+```
+
+[Example link](https://komarovalexander.github.io/ka-table/#/overview)
+
+## Rules
+
+- A table without `dispatch` keeps its own state and applies the props which the parent changes.
+- To call actions and read the state, create an instance: `const table = useTable<Row>()`, `<Table table={table} />`.
+  Its methods are the actions (`table.selectRow(key)`, `table.updatePageIndex(0)`), `table.props` is the state.
+  `useTableSelector(table, (props) => props.selectedRows)` re-renders your component when the value changes.
+- `useTable({ onDispatch, customReducer })` sees every action (`action.type` is an `ActionType`).
+  Data from a server: `paging.pagesCount`, the `...Remote` sorting modes, load the data in `onDispatch`.
+- Pass `dispatch` only when the state has to live in your code (Redux, the URL): keep it as `ITableProps<Row>`
+  and apply every action with `kaReducer`, `SetFocused` too, otherwise the focus doesn't move.
+- The values of the cells and the keys of the rows are `unknown`: narrow them, or read the typed `rowData`.
+- Customize cells, rows, editors and the other parts with `childComponents`: `content` renders a part,
+  `elementAttributes` adds attributes and event handlers to its element.
+- With `memoizedRows`, keep `childComponents`, `format`, `validation` and `dispatch` the same between renders.
+- Next.js App Router: ka-table uses hooks and has no 'use client', render the table in a client component.
+- Theme: override the `--ka-*` custom properties on `.ka`. Dark theme: `import 'ka-table/themes/dark.css'`
+  and the class `ka-dark` on the table or on an ancestor.
+
+## Imports
+
+| What | From |
+| --- | --- |
+| `Table`, `ITableProps`, `useTable`, `useTableInstance`, `useTableSelector`, `kaReducer`, the enums (`DataType`, `SortingMode`, `ActionType`...) | `ka-table` |
+| `Column`, `ChildComponents`, `EditableCell`, `Group` | `ka-table/models` |
+| `ICellTextProps`, `ICellEditorProps` and the other props of the parts | `ka-table/props` |
+| `DispatchFunc`, `TableAction`, `FormatFunc`, `ValidationFunc` | `ka-table/types` |
+| `kaPropsUtils`, `kaPagingUtils`, `kaDateUtils`, `kaColumnUtils` | `ka-table/utils` |
+| the action creators (`updateData`, `selectRow`...) | `ka-table/actionCreators` |
+
+## Theming
+
+`ka-table/style.css` is plain CSS: every colour and size of the default theme is a CSS custom property declared on the root element of the table (`.ka`), so a theme is a rule which overrides the properties you need — for every table or for the tables inside a container:
+
+```css
+/* a dark theme for every table */
+.ka {
+  --ka-background-color: #2c2c2c;
+  --ka-border-color: #4d4d4d;
+  --ka-color-base: #fefefe;
+  --ka-thead-background-color: #1b1b1b;
+  --ka-thead-color: #c5c5c5;
+  --ka-selected-background-color: #3c3c3c;
+  --ka-row-hover-background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* or only for the tables inside .my-wrapper */
+.my-wrapper .ka {
+  --ka-thead-background-color: #1b1b1b;
+}
+```
+
+The rule has to match `.ka` itself: a property set only on an ancestor (`:root { ... }`, `html[data-theme="dark"] { ... }`) is overridden by the defaults of the table.
+
+[Custom theme demo](https://komarovalexander.github.io/ka-table/#/custom-theme)
+
+### Dark theme
+
+`ka-table/themes/dark.css` is such a rule for the class `ka-dark`: add the class to an ancestor of the table (e.g. `<body class="ka-dark">`) or to the table itself (`childComponents.rootDiv`). It also sets `color-scheme: dark`, so the native inputs of the editors and the filters are dark too.
+
+```js
+import 'ka-table/style.css';
+import 'ka-table/themes/dark.css';
+```
+
+```tsx
+<div className='ka-dark'>
+  <Table {...tableProps} />
+</div>
+```
+
+[Dark theme demo](https://komarovalexander.github.io/ka-table/#/dark-theme)
+
+| Property | Default | Used for |
+| --- | --- | --- |
+| `--ka-background-color` | `white` | background of the table |
+| `--ka-border-color` | `#F3F6F9` | borders of the rows, `.ka-even` rows, border of the popup |
+| `--ka-color-base` | `#353C44` | text |
+| `--ka-font-size` | `14px` | font size of the table |
+| `--ka-thead-background-color` | `#F1F5F7` | background of the header |
+| `--ka-thead-color` | `#646D76` | text of the header |
+| `--ka-thead-cell-padding` | `15px 20px` | padding of the header cells |
+| `--ka-header-cell-height` | `47px` | height of a header row (the sticky offsets are calculated from it) |
+| `--ka-sort-icon-color` | `#586068` | arrows of the sorting |
+| `--ka-header-filter-button-icon-color` | `#41474D` | icon of the header filter |
+| `--ka-column-resize-border-color` | `#D7E4EB` | handle of the column resizing |
+| `--ka-cell-color` | `var(--ka-color-base)` | text of the cells |
+| `--ka-cell-padding` | `8px 20px` | padding of the cells |
+| `--ka-cell-line-height` | `29px` | line height of the cells |
+| `--ka-cell-hover-background-color` | `transparent` | overlay of the hovered cell |
+| `--ka-row-border-size` | `2px` | width of the borders of the rows |
+| `--ka-row-hover-background-color` | `rgba(69, 88, 128, 0.05)` | overlay of the hovered row |
+| `--ka-selected-background-color` | `#EAF1FB` | selected rows |
+| `--ka-selected-border-color` | `#E1EBF0` | drop target of the drag and drop |
+| `--ka-focus-color` | `#8795A3` | ring of the cell focused by the keyboard |
+| `--ka-fixed-column-shadow-color` | `rgba(0, 0, 0, 0.12)` | shadow of the fixed columns (`column.fixed`) over the columns scrolled under them |
+| `--ka-group-row-background-color` | `#F9FBFC` | background of the group rows |
+| `--ka-group-row-border-color` | `white` | borders of the group rows |
+| `--ka-group-row-border-size` | `1px` | width of the borders of the group rows |
+| `--ka-group-cell-padding` | `8px 10px` | padding of the group cells |
+| `--ka-group-panel-text-color` | `#747D86` | text of the empty group panel |
+| `--ka-group-panel-cell-remove-color` | `#A6ADB4` | remove icon of the group panel |
+| `--ka-input-background-color` | `white` | background of the editors and the filter inputs |
+| `--ka-input-border-color` | `#747D86` | border of the editors and the filter inputs |
+| `--ka-input-color` | `currentColor` | text of the editors and the filter inputs |
+| `--ka-input-validation-background-color` | `#FDF2F2` | background of an invalid editor |
+| `--ka-validation-background-color` | `#D64550` | background of the validation message, border of an invalid editor |
+| `--ka-validation-color` | `white` | text of the validation message |
+| `--ka-validation-message-font-size` | `12px` | font size of the validation message |
+| `--ka-validation-message-padding` | `0 10px` | padding of the validation message |
+| `--ka-filter-row-cell-padding` | `0 20px 15px 20px` | padding of the filter row cells |
+| `--ka-summary-cell-padding` | `12px 20px` | padding of the summary cells |
+| `--ka-icon-font-size` | `10px` | font size of the icons |
+| `--ka-loading-backdrop-color` | `#ffffff88` | backdrop of the loading |
+| `--ka-loading-background-color-base` | `rgb(116, 125, 134)` | dots of the loading |
+| `--ka-loading-background-color-medium` | `rgba(116, 125, 134, 0.4)` | dots of the loading (animation) |
+| `--ka-loading-background-color-light` | `rgba(116, 125, 134, 0.2)` | dots of the loading (animation) |
+| `--ka-paging-index-color` | `var(--ka-thead-color)` | page numbers |
+| `--ka-paging-index-active-background-color` | `#E4EAEF` | background of the active page |
+| `--ka-paging-index-active-color` | `#353C44` | text of the active page |
+| `--ka-paging-pages-margin` | `0` | margin of the paging |
+| `--ka-paging-pages-padding` | `0 10px` | padding of the paging |
+| `--ka-popup-background-color` | `white` | background of the header filter popup |
+| `--ka-popup-color` | `#747D86` | text of the header filter popup |
+| `--ka-popup-box-shadow` | `0 6px 12px rgba(0, 0, 0, 0.18)` | shadow of the header filter popup |
+
+The hover colours are painted as an overlay above the background of the row and the cell, so a translucent colour blends with the zebra and the selection colours. The themes written for the Sass variables of 12.x are described in the [migration guide](https://github.com/komarovalexander/ka-table/blob/master/MIGRATION.md#6-the-theme-is-plain-css-with-custom-properties).
+
+## API reference
+
+This section is generated from the public TypeScript declarations. Cell values and row keys are `unknown`; narrow them or use the typed `rowData`. The row type is inferred from `data` or from `useTable<Row>()`.
+
+### Enums
+
+#### PagingPosition
+
+- `Bottom = 'bottom'`
+- `Top = 'top'`
+- `TopAndBottom = 'topAndBottom'`
+
+#### DataType
+
+- `Boolean = 'boolean'`
+- `Date = 'date'`
+- `Number = 'number'`
+- `Object = 'object'`
+- `String = 'string'`
+
+#### EditingMode
+
+- `None = 'none'`
+- `Cell = 'cell'`
+
+#### ActionType
+
+- `ClearAllFilters = 'ClearAllFilters'`
+- `ClearFocused = 'ClearFocused'`
+- `ClearSingleAction = 'ClearSingleAction'`
+- `CloseEditor = 'CloseEditor'`
+- `CloseRowEditors = 'CloseRowEditors'`
+- `ComponentDidMount = 'ComponentDidMount'`
+- `DeleteRow = 'DeleteRow'`
+- `DeselectAllFilteredRows = 'DeselectAllFilteredRows'`
+- `DeselectAllRows = 'DeselectAllRows'`
+- `DeselectAllVisibleRows = 'DeselectAllVisibleRows'`
+- `DeselectRow = 'DeselectRow'`
+- `DeselectRows = 'DeselectRows'`
+- `GroupColumn = 'GroupColumn'`
+- `HideColumn = 'HideColumn'`
+- `HideDetailsRow = 'HideDetailsRow'`
+- `HideLoading = 'HideLoading'`
+- `HideNewRow = 'HideNewRow'`
+- `InsertRow = 'InsertRow'`
+- `LoadData = 'LoadData'`
+- `InsertColumn = 'InsertColumn'`
+- `MoveColumnBefore = 'MoveColumnBefore'`
+- `MoveColumnToIndex = 'MoveColumnToIndex'`
+- `MoveFocusedDown = 'MoveFocusedDown'`
+- `MoveFocusedLeft = 'MoveFocusedLeft'`
+- `MoveFocusedRight = 'MoveFocusedRight'`
+- `MoveFocusedUp = 'MoveFocusedUp'`
+- `OpenAllEditors = 'OpenAllEditors'`
+- `OpenEditor = 'OpenEditor'`
+- `OpenRowEditors = 'OpenRowEditors'`
+- `ReorderColumns = 'ReorderColumns'`
+- `ReorderRows = 'ReorderRows'`
+- `ResizeColumn = 'ResizeColumn'`
+- `SaveAllEditors = 'SaveAllEditors'`
+- `SaveNewRow = 'SaveNewRow'`
+- `SaveRowEditors = 'SaveRowEditors'`
+- `ScrollTable = 'ScrollTable'`
+- `Search = 'Search'`
+- `SelectAllFilteredRows = 'SelectAllFilteredRows'`
+- `SelectAllRows = 'SelectAllRows'`
+- `SelectAllVisibleRows = 'SelectAllVisibleRows'`
+- `SelectRow = 'SelectRow'`
+- `SelectRows = 'SelectRows'`
+- `SelectRowsRange = 'SelectRowsRange'`
+- `SelectSingleRow = 'SelectSingleRow'`
+- `SetFocused = 'SetFocused'`
+- `SetSingleAction = 'SetSingleAction'`
+- `ShowColumn = 'ShowColumn'`
+- `ShowDetailsRow = 'ShowDetailsRow'`
+- `ShowLoading = 'ShowLoading'`
+- `ShowNewRow = 'ShowNewRow'`
+- `UngroupColumn = 'UngroupColumn'`
+- `UpdateCellValue = 'UpdateCellValue'`
+- `UpdateData = 'UpdateData'`
+- `UpdateEditorValue = 'UpdateEditorValue'`
+- `UpdateFilterRowOperator = 'UpdateFilterRowOperator'`
+- `UpdateFilterRowValue = 'UpdateFilterRowValue'`
+- `UpdateGroupsExpanded = 'UpdateGroupsExpanded'`
+- `UpdateHeaderFilterSearchValue = 'UpdateHeaderFilterSearchValue'`
+- `UpdateHeaderFilterValues = 'UpdateHeaderFilterValues'`
+- `UpdateHeaderFilterPopupState = 'UpdateHeaderFilterPopupState'`
+- `UpdatePopupPosition = 'UpdatePopupPosition'`
+- `UpdatePageIndex = 'UpdatePageIndex'`
+- `UpdatePageSize = 'UpdatePageSize'`
+- `UpdatePagesCount = 'UpdatePagesCount'`
+- `UpdateRow = 'UpdateRow'`
+- `UpdateSortDirection = 'UpdateSortDirection'`
+- `UpdateTreeGroupsExpanded = 'UpdateTreeGroupsExpanded'`
+- `UpdateVirtualScrolling = 'UpdateVirtualScrolling'`
+- `Validate = 'Validate'`
+
+#### KeyboardEnum
+
+- `Esc = 27`
+- `Enter = 13`
+
+#### SortDirection
+
+- `Ascend = 'ascend'`
+- `Descend = 'descend'`
+
+#### SortingMode
+
+- `None = 'none'`
+- `Single = 'single'`
+- `SingleTripleState = 'singleTripleState'`
+- `SingleRemote = 'singleRemote'`
+- `SingleTripleStateRemote = 'singleTripleStateRemote'`
+- `MultipleRemote = 'multipleRemote'`
+- `MultipleTripleStateRemote = 'multipleTripleStateRemote'`
+
+#### FilteringMode
+
+- `None = 'none'`
+- `FilterRow = 'filterRow'`
+- `HeaderFilter = 'headerFilter'`
+- `FilterRowAndHeaderFilter = 'filterRowAndHeaderFilter'`
+
+#### FilterOperatorName
+
+- `Equal = '='`
+- `IsNotEqual = '!='`
+- `MoreThan = '>'`
+- `LessThan = '<'`
+- `MoreThanOrEqual = '>='`
+- `LessThanOrEqual = '<='`
+- `Contains = 'contains'`
+- `IsEmpty = 'IsEmpty'`
+- `IsNotEmpty = 'IsNotEmpty'`
+
+#### InsertRowPosition
+
+- `before = 'before'`
+- `after = 'after'`
+
+### Type aliases
+
+| Name | Definition |
+| --- | --- |
+| `Bivariant` | `{ bivarianceHack(...args: Parameters<TFunction>): ReturnType<TFunction>; }['bivarianceHack']` |
+| `NoInference` | `[T][T extends unknown ? 0 : never]` |
+| `ElementRef` | `((element: never) => void) \| { current: unknown } \| null` |
+| `ChildAttributesItem` | `WithExtraParameters<ElementAttributes, T> & { ref?: ElementRef }` |
+| `TableAction` | `ReturnType<ActionCreators[keyof ActionCreators]> \| { type: ActionType.ComponentDidMount } \| { type: ActionType.ScrollTable; scrollTop: number; scrollLeft?: number } \| { type: ActionType.UpdateVirtualScrolling; virtualScrolling: VirtualScrolling }` |
+| `DispatchFunc` | `(action: TableAction \| CustomAction) => void` |
+| `DraggableKind` | `'row' \| 'column'` |
+| `CustomReducerFunc` | `Bivariant<(nextState: ITableProps<TData>, action: TableAction, prevState: ITableProps<TData>) => ITableProps<TData>>` |
+| `OnDispatchFunc` | `Bivariant<(action: TableAction, tableProps: ITableProps<TData>, prevState: ITableProps<TData>) => void>` |
+| `ControlledPropsKeys` | `(keyof ITableProps)[]` |
+| `Field` | `string` |
+| `FormatFunc` | `Bivariant<(props: { value: unknown, column: Column<TData>, rowData?: TData; }) => ReactNode>` |
+| `FilterFunc` | `Bivariant<(props: { column: Column<TData> }) => Bivariant<(value: unknown, filterRowValue: unknown, rowData?: TData) => boolean> \| void>` |
+| `SortFunc` | `Bivariant<(props: { column: Column<TData> }) => Bivariant<(valueA: unknown, valueB: unknown, rowDataA: TData, rowDataB: TData) => number> \| void>` |
+| `SearchFunc` | `Bivariant<(props: { searchText: string, rowData: TData, column: Column<TData> }) => boolean \| void>` |
+| `ValidationFunc` | `Bivariant<(props: { value: unknown, rowData: TData, column: Column<TData> }) => string \| void>` |
+
+### Interfaces and classes
+
+#### ITableProps
+
+Interface from `src/lib/Components/Table/Table.tsx`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `columnReordering?` | `boolean` | Enables columns reordering using drag and drop |
+| `columnResizing?` | `boolean` | The columns are resized by the mouse. While a column is resized, the rows are not processed and rendered again: they don't use the widths, and they are rendered with the new width when the mouse is released. A controlled table doesn't render the rows only if the props which the parent passes keep their references between its renders (dispatch, childComponents, format...), as with memoizedRows<br>Demo: [Column Resizing](https://komarovalexander.github.io/ka-table/#/column-resizing) |
+| `columns` | `Column<NoInference<TData>>[]` | Columns in table and their look and behaviour |
+| `controlledPropsKeys?` | `ControlledPropsKeys` | The props which the table with its own state (without dispatch) applies when the parent changes them. By default these are all the props: they are compared by value and the objects are merged by the changed fields, so the state of the table (sorting, page, widths...) is kept when the parent passes equal props again. During a loading (loading.enabled) data, columns, paging and selectedRows are applied when the loading ends. The functions (format, filter, search, sort, validation...) are not the state: the latest ones are always used. |
+| `data?` | `TData[]` | The Table's data. Change it immutably: the data is processed again when the reference changes |
+| `detailsRows?` | `unknown[]` | Keys of the rows whose details rows are shown<br>Demo: [Details Row](https://komarovalexander.github.io/ka-table/#/details-row) |
+| `editableCells?` | `EditableCell[]` | Array of cells currently editing<br>Demo: [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
+| `editingMode?` | `EditingMode` | Sets the table's editing mode note: when *EditingMode.Cell* is enabled table calls *CloseEditor* action each time editor loses focus<br>Demo: [Editing Example](https://komarovalexander.github.io/ka-table/#/editing) |
+| `extendedFilter?` | `Bivariant<(data: NoInference<TData>[]) => NoInference<TData>[]>` | Adds additional filtering layer<br>Demo: [Filter Extended](https://komarovalexander.github.io/ka-table/#/filter-extended) |
+| `extendedSort?` | `Bivariant<(data: NoInference<TData>[], columns: Column<NoInference<TData>>[]) => NoInference<TData>[]>` | Sorts the data instead of the default sorting<br>Demo: [Sorting Extended](https://komarovalexander.github.io/ka-table/#/sorting-extended) |
+| `filter?` | `FilterFunc<NoInference<TData>>` | Returns filter function |
+| `filteringMode?` | `FilteringMode` | Show filter UI elements in Table<br>Demo: [Filter Row Example](https://komarovalexander.github.io/ka-table/#/filter-row) |
+| `focused?` | `Focused` | Stores information about the currently focused element: the cell or the group row (its key) focused by the keyboard navigation<br>Demo: [Keyboard navigation](https://komarovalexander.github.io/ka-table/#/keyboard-navigation) |
+| `format?` | `FormatFunc<NoInference<TData>>` | Returns the content of the cell; `undefined`, `null` and `false` show the value itself. The search, the groups and the header filter use its text<br>Demo: [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) |
+| `groupedColumns?` | `GroupedColumn[]` | Demo: [Grouped Columns](https://komarovalexander.github.io/ka-table/#/grouped-columns) |
+| `groupPanel?` | `GroupPanelSettings` | Allows users to select grouping columns in the UI.<br>Demo: [Grouping](https://komarovalexander.github.io/ka-table/#/grouping) |
+| `groups?` | `Group[]` | Groups in the table<br>Demo: [Grouping Example](https://komarovalexander.github.io/ka-table/#/grouping) |
+| `groupsExpanded?` | `unknown[][]` | Expanded groups - array of group keys |
+| `height?` | `number \| string` | Height of the component |
+| `keyboardNavigation?` | `boolean` | Navigation by the cells with the keyboard (the grid pattern of WAI-ARIA, treegrid for a tree), enabled by default: the table is a single stop of Tab, arrows move the focus between the cells (with Ctrl to the last one), Home and End to the first and the last cell of the row (with Ctrl of the page), PageUp and PageDown change the page, Enter and F2 open the editor. Group rows get the focus as rows: Enter, Space and the arrows Left and Right expand and collapse them. Enter and Space on the cell of the arrow of a tree row expand and collapse it (F2 opens the editor of this cell). The focus is kept in focused.cell (focused.group for a group row). false turns the navigation off, e.g. for an own handling of the keys.<br>Demo: [Keyboard navigation](https://komarovalexander.github.io/ka-table/#/keyboard-navigation) |
+| `loading?` | `LoadingSettings` | Loading indicator options<br>Demo: [Loading](https://komarovalexander.github.io/ka-table/#/loading) |
+| `memoizedRows?` | `boolean` | Rows and their cells are re-rendered only when their own props change, which is much faster for big tables. Customizations of rows and cells (childComponents) have to render from their props then: values read from table.props or from closures during rendering are not updated. childComponents, format, validation and dispatch should keep their references between renders (be declared outside of the component or memoized), otherwise all the rows are re-rendered.<br>Demo: [300K Rows & memo](https://komarovalexander.github.io/ka-table/#/many-rows-memo) |
+| `noData?` | `NoData` | No data settings (for deeper UI customization childComponents.noDataRow also)<br>Demo: [Search](https://komarovalexander.github.io/ka-table/#/search) |
+| `oddEvenRows?` | `boolean \| 'treeRoots'` | The rows get the classes ka-odd and ka-even in turn, counted from the first row of the page, also with the virtual scrolling. `'treeRoots'`: a root of a tree and all its children get the class of the root, the stripes change at the roots only<br>Demo: [100K Rows](https://komarovalexander.github.io/ka-table/#/many-rows) |
+| `paging?` | `PagingOptions` | Paging settings, `pagesCount` is set for remote paging<br>Demo: [Paging](https://komarovalexander.github.io/ka-table/#/paging) |
+| `rowKeyField` | `string` | Data's field which is used to identify row |
+| `rowReordering?` | `boolean` | Enables rows reordering using drag and drop |
+| `search?` | `SearchFunc<NoInference<TData>>` | Overrides the default search method for the cell, `undefined` keeps the default search of the column. Executes if `searchText` is set |
+| `searchText?` | `string` | Specifies the text for search by data: the text which the cells of the visible columns show is searched<br>Demo: [Search Example](https://komarovalexander.github.io/ka-table/#/search) |
+| `selectedRows?` | `unknown[]` | Array of selected rows keys<br>Demo: [Selection Example](https://komarovalexander.github.io/ka-table/#/selection) |
+| `singleAction?` | `TableAction \| CustomAction` | Is dispatched only once after Table render, after this action ka-table will dispatch `'ClearSingleAction'` to set singleAction as undefined<br>Demo: [Remote Data](https://komarovalexander.github.io/ka-table/#/remote-data) |
+| `sort?` | `SortFunc<NoInference<TData>>` | Returns the comparator of the sorted column, as the one of `Array.prototype.sort`: e.g. `Intl.Collator().compare` or `(a, b) => a - b`. It sorts in the direction of the column<br>Demo: [Sorting Custom Logic](https://komarovalexander.github.io/ka-table/#/sorting-custom-logic) |
+| `sortingMode?` | `SortingMode` | Sorting mode. *Remote* - means only grid elements are updated but data should be sorted outside of the grid. *TripleState* - means: "ascend - descend - no sorting"<br>Demo: [Sorting Example](https://komarovalexander.github.io/ka-table/#/sorting) |
+| `treeExpandButtonColumnKey?` | `string` | Sets the column key where tree expanded button will be rendered, by default it is rendered in the first column of the table |
+| `treeGroupKeyField?` | `string` | Group key field<br>Demo: [Tree Mode](https://komarovalexander.github.io/ka-table/#/tree-mode) |
+| `treeGroupsExpanded?` | `unknown[]` | Array of ids of expanded rows, if it is `undefined` - all rows are expanded<br>Demo: [Tree Mode](https://komarovalexander.github.io/ka-table/#/tree-mode) |
+| `validation?` | `ValidationFunc<NoInference<TData>>` | Returns the validation error string or does not return anything in case of passed validation; `rowData` has the edited values of the row<br>Demo: [Validation Example](https://komarovalexander.github.io/ka-table/#/validation) |
+| `virtualScrolling?` | `VirtualScrolling` | Virtual scrolling options of the rows and the columns<br>Demo: [Many Rows Example](https://komarovalexander.github.io/ka-table/#/many-rows)<br>Demo: [Many Columns](https://komarovalexander.github.io/ka-table/#/many-columns) |
+| `width?` | `number \| string` | Width of the component |
+
+#### IKaTableProps
+
+Interface from `src/lib/Components/Table/Table.tsx`.
+
+Extends: `ITableProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents?` | `ChildComponents<NoInference<TData>>` | Customization logic for ka-table parts (cells, rows, editors, etc.)<br>Demo: [Events](https://komarovalexander.github.io/ka-table/#/events)<br>Demo: [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) |
+| `dispatch?` | `DispatchFunc` | The function takes action as an argument, is used as a notification about any changes and events in the Table. `dispatch` enables controlled mode in the table |
+| `table?` | `ITableInstance<TData> \| ITableInstance` | Object is used only by *uncontrolled mode* to get/set table props, use [`useTable()`](https://ka-table.com/docs_hooks_utils.html#usetable) to create your own instance and handle changes using `onDispatch`, and use [`useTableInstance()`](https://ka-table.com/docs_hooks_utils.html#usetableinstance) to get instance of table from context |
+
+#### ITableInstance
+
+Interface from `src/lib/Components/Table/Table.tsx`.
+
+Extends: `ActionMethods`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `props` | `ITableProps<TData>` |  |
+| `changeProps` | `(value: ITableProps<TData> \| Bivariant<(prevState: ITableProps<TData>) => ITableProps<TData>>) => void` |  |
+| `onDispatch` | `OnDispatchFunc<TData>` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `customReducer?` | `CustomReducerFunc<TData>` |  |
+
+#### Column
+
+Class from `src/lib/Models/Column.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `colGroup?` | `ColHTMLAttributes<HTMLElement>` | Sets attributes for col element in table colGroup |
+| `dataType?` | `DataType` | Specifies the type of column |
+| `field?` | `Field` | Specifies the property of data's object which value will be used in column, if null value from key option will be used |
+| `filter?` | `Bivariant<(value: unknown, filterValue: unknown, rowData?: TData) => boolean>` | Returns filter function for particular column<br>Demo: [Filter Custom Logic](https://komarovalexander.github.io/ka-table/#/filter-row-custom-logic) |
+| `filterRowOperator?` | `string` | Sets filter row operator. Predefined filter operators are: `'='`, `'!='`, `'>'`, `'<'`, `'>='`, `'<='`, `'contains'`, `'IsEmpty'`, `'IsNotEmpty'`<br>Demo: [Filter Row Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) |
+| `filterRowValue?` | `unknown` | Sets filter row value<br>Demo: [Filter Row](https://komarovalexander.github.io/ka-table/#/filter-row) |
+| `fixed?` | `'left' \| 'right'` | The column sticks to the edge of the table when it is scrolled horizontally, after the other fixed columns of the edge. The offsets are calculated from the numeric `width` of the fixed columns. The horizontal virtual scrolling always renders the fixed columns<br>Demo: [Fixed Column](https://komarovalexander.github.io/ka-table/#/fixed-column) |
+| `headerFilterListItems?` | `Bivariant<(props: { data?: TData[] }) => string[]>` | Returns array of header filter items<br>Demo: [Header Filter - Logic](https://komarovalexander.github.io/ka-table/#/header-filter-logic) |
+| `headerFilterPopupPosition?` | `PopupPosition` | Header filter popup position |
+| `headerFilterSearch?` | `(value: string, searchValue: string, rowData?: HeaderFilterItem) => boolean` | Used to customize header filter search logic, `HeaderFilterItem` is `{ value: string, isSelected: boolean }`<br>Demo: [Header Filter - Logic](https://komarovalexander.github.io/ka-table/#/header-filter-logic) |
+| `headerFilterSearchValue?` | `string` | Stores value for search by `headerFilterValues`<br>Demo: [Header Filter - Logic](https://komarovalexander.github.io/ka-table/#/header-filter-logic) |
+| `headerFilterValues?` | `string[]` | Array of selected values |
+| `isDraggable?` | `boolean` | Specifies can a column be dragged or not |
+| `isEditable?` | `boolean` | Specifies can a column be editable or not |
+| `isFilterable?` | `boolean` | If `false` then header filter cell content will not be shown for a column |
+| `isHeaderFilterPopupShown?` | `boolean` | Shows/hides header filter popup for specific column |
+| `isHeaderFilterSearchable?` | `boolean` | Enables search in header filter |
+| `isResizable?` | `boolean` | Specifies can a column be resized or not<br>Demo: [Column Resizing](https://komarovalexander.github.io/ka-table/#/column-resizing) |
+| `isSortable?` | `boolean` | Specifies can a column be sorted or not<br>Demo: [Sorting](https://komarovalexander.github.io/ka-table/#/sorting) |
+| `key` | `string` | Mandatory field, specifies unique key for the column |
+| `sortDirection?` | `SortDirection` | Sets the direction of sorting for the column<br>Demo: [Sorting](https://komarovalexander.github.io/ka-table/#/sorting) |
+| `sortIndex?` | `number` | The priority of the column for sorting<br>Demo: [Sorting](https://komarovalexander.github.io/ka-table/#/sorting) |
+| `style?` | `CSSProperties` | Sets the style options of the elements |
+| `title?` | `string` | Specifies the text of the header |
+| `visible?` | `boolean` | Shows/Hides columns |
+| `width?` | `number \| string` | Column width. A number (pixels) is required for `fixed` offsets and for `virtualScrolling.horizontal` |
+
+#### ChildComponents
+
+Class from `src/lib/Models/ChildComponents.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `cell?` | `ChildComponent<ICellProps<TData>>` |  |
+| `cellEditor?` | `ChildComponent<ICellEditorProps<TData>>` | Demo: [Custom Editor](https://komarovalexander.github.io/ka-table/#/custom-editor) |
+| `cellEditorInput?` | `ChildComponent<ICellEditorProps<TData>>` | Demo: [Keyboard Navigation](https://komarovalexander.github.io/ka-table/#/keyboard-navigation) |
+| `cellText?` | `ChildComponent<ICellTextProps<TData>>` | Demo: [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) |
+| `dataRow?` | `ChildComponent<IDataRowProps<TData>>` | Demo: [Custom Row](https://komarovalexander.github.io/ka-table/#/custom-data-row) |
+| `detailsCell?` | `ChildComponent<IDataRowProps<TData>>` | Demo: [Details Row](https://komarovalexander.github.io/ka-table/#/details-row) |
+| `detailsRow?` | `ChildComponent<IDataRowProps<TData>>` | Demo: [Details Row](https://komarovalexander.github.io/ka-table/#/details-row) |
+| `emptyCell?` | `ChildComponent<IEmptyCellProps>` |  |
+| `filterRowCell?` | `ChildComponent<IFilterRowEditorProps>` | Demo: [Filter Row - Custom Editor](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) |
+| `filterRowCellInput?` | `ChildComponent<IFilterRowEditorProps>` |  |
+| `groupCell?` | `ChildComponent<IGroupRowProps<TData>>` | Demo: [Grouping Custom Cell](https://komarovalexander.github.io/ka-table/#/grouping-custom-cell) |
+| `groupExpandButton?` | `ChildComponent<IGroupRowProps<TData>>` |  |
+| `groupPanel?` | `ChildComponent<IGroupPanelProps>` | Demo: [Grouping](https://komarovalexander.github.io/ka-table/#/grouping) |
+| `groupPanelCell?` | `ChildComponent<IGroupPanelCellProps>` | Demo: [Grouping](https://komarovalexander.github.io/ka-table/#/grouping) |
+| `groupRow?` | `ChildComponent<IGroupRowProps<TData>>` | Demo: [Grouping Custom Row](https://komarovalexander.github.io/ka-table/#/grouping-custom-row) |
+| `groupSummaryCell?` | `ChildComponent<IGroupSummaryCellProps<TData>>` | Demo: [Grouping Summary](https://komarovalexander.github.io/ka-table/#/grouping-summary) |
+| `groupSummaryRow?` | `ChildComponent<IGroupSummaryRowProps<TData>>` |  |
+| `headCell?` | `ChildComponent<IHeadCellProps>` | Demo: [Custom Header Cell](https://komarovalexander.github.io/ka-table/#/custom-header-cell) |
+| `headCellContent?` | `ChildComponent<IHeadCellProps>` | Demo: [Column Reordering](https://komarovalexander.github.io/ka-table/#/column-reordering) |
+| `headCellResize?` | `ChildComponent<IHeadCellResizeProps>` |  |
+| `headerFilterButton?` | `ChildComponent<IHeaderFilterButtonProps>` |  |
+| `headerFilterPopupContent?` | `ChildComponent<IPopupContentProps<TData>>` |  |
+| `headerFilterPopupRow?` | `ChildComponent<IDataRowProps<HeaderFilterItem>>` | Demo: [Header Filter - Logic](https://komarovalexander.github.io/ka-table/#/header-filter-logic) |
+| `headerFilterPopupSearchInput?` | `ChildComponent<IFilterRowEditorProps>` |  |
+| `headerFilterPopupTextCell?` | `ChildComponent<ICellProps<HeaderFilterItem>>` | Demo: [Header Filter - Logic](https://komarovalexander.github.io/ka-table/#/header-filter-logic) |
+| `headRow?` | `ChildComponent<IHeadRowProps>` |  |
+| `loading?` | `ChildComponent<ILoadingProps>` |  |
+| `noDataCell?` | `ChildComponent<INoDataRowProps>` |  |
+| `noDataRow?` | `ChildComponent<INoDataRowProps>` | Demo: [Search](https://komarovalexander.github.io/ka-table/#/search) |
+| `paging?` | `ChildComponent<IPagingProps>` |  |
+| `pagingIndex?` | `ChildComponent<IPagingIndexProps>` | Demo: [Bootstrap](https://komarovalexander.github.io/ka-table/#/bootstrap) |
+| `pagingPages?` | `ChildComponent<IPagingProps>` | Demo: [Bootstrap](https://komarovalexander.github.io/ka-table/#/bootstrap) |
+| `pagingSize?` | `ChildComponent<IPagingSizeProps>` | Demo: [Paging](https://komarovalexander.github.io/ka-table/#/paging) |
+| `pagingSizes?` | `ChildComponent<IPagingProps>` | Demo: [Paging](https://komarovalexander.github.io/ka-table/#/paging) |
+| `rootDiv?` | `ChildComponent<ITableProps<TData>>` |  |
+| `sortIcon?` | `ChildComponent<ISortIconProps>` | Demo: [Sorting](https://komarovalexander.github.io/ka-table/#/sorting) |
+| `summaryCell?` | `ChildComponent<ISummaryCellProps<TData>>` | Demo: [Summary](https://komarovalexander.github.io/ka-table/#/summary) |
+| `summaryRow?` | `ChildComponent<ISummaryRowProps<TData>>` |  |
+| `table?` | `ChildComponent<ITableProps<TData>>` |  |
+| `tableBody?` | `ChildComponent<ITableBodyProps<TData>>` |  |
+| `tableFoot?` | `ChildComponent<ITableFootProps<TData>>` |  |
+| `tableHead?` | `ChildComponent<ITableHeadProps>` |  |
+| `tableWrapper?` | `ChildComponent<ITableProps<TData>>` |  |
+
+#### ChildComponent
+
+Class from `src/lib/Models/ChildComponent.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `elementAttributes?` | `Bivariant<(props: PropsWithChildren<TProps>) => ChildAttributesItem<TProps> \| void>` | Demo: [Events Demo](https://komarovalexander.github.io/ka-table/#/events) |
+| `content?` | `Bivariant<(props: PropsWithChildren<TProps>) => ReactNode \| Promise<ReactNode>>` | `undefined` renders the default content. A function component can be passed as `content`<br>Demo: [Custom Cell](https://komarovalexander.github.io/ka-table/#/custom-cell) |
+
+#### VirtualScrolling
+
+Class from `src/lib/Models/VirtualScrolling.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `enabled?` | `boolean` | Enables virtual scrolling: only the visible rows are rendered. `false` shows all the rows |
+| `horizontal?` | `boolean` | The columns are virtualized too: only the visible columns are rendered, and the fixed ones and the ones without a numeric `width`; spacers keep the width of the table. Is not applied with `groupedColumns`<br>Demo: [Many Columns](https://komarovalexander.github.io/ka-table/#/many-columns) |
+| `scrollLeft?` | `number` | Horizontal: scroll left position at the last change of the rendered columns (the state of the table) |
+| `scrollTop?` | `number` | Current scroll top position (the state of the table) |
+| `itemHeight?` | `Bivariant<(data: unknown) => number> \| number` | The height of the rows, or a function which returns the height of a row of the shown data: a row of the data, a group row, a tree row... |
+| `tbodyHeight?` | `number` | Tbody height |
+| `bottomInvisibleCount?` | `number` | Amount of rows which should be rendered under visible area |
+| `topInvisibleCount?` | `number` | Amount of rows which should be rendered over visible area (useful for scrolling - in that case some items will be already visible and it will be more smooth) |
+| `tableWidth?` | `number` | Horizontal: the width of the visible part of the table, measured when it is not set |
+| `leftInvisibleCount?` | `number` | Horizontal: amount of columns rendered before the visible ones (2 by default) |
+| `rightInvisibleCount?` | `number` | Horizontal: amount of columns rendered after the visible ones (2 by default) |
+
+#### EditableCell
+
+Class from `src/lib/Models/EditableCell.ts`.
+
+Extends: `Cell`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `editorValue?` | `unknown` | Value of the editor |
+| `validationMessage?` | `string` | Validation message of the column |
+
+#### Group
+
+Class from `src/lib/Models/Group.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `columnKey` | `string` | The key of the grouped column |
+| `enableSummary?` | `boolean` | Enable summary row for the group |
+| `enabled?` | `boolean` | false keeps the settings of the group without grouping the rows: the group is enabled when its column is grouped (e.g. dropped on the group panel). Ungrouping disables a group with settings instead of removing it Skip such groups in the code which reads `groups` |
+
+#### GroupedColumn
+
+Class from `src/lib/Models/GroupedColumn.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `key` | `string` | Unique identifier |
+| `title?` | `string` | Used to show text in the cell |
+| `columnsKeys` | `string[]` | List of children's keys |
+
+#### Focused
+
+Class from `src/lib/Models/Focused.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `cell?` | `Cell` |  |
+| `cellEditorInput?` | `Cell` |  |
+| `group?` | `unknown[]` |  |
+
+#### LoadingSettings
+
+Interface from `src/lib/types.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `enabled?` | `boolean` | Shows the loading indicator |
+| `text?` | `string` | The text of the loading indicator |
+
+#### AttributeTableData
+
+Class from `src/lib/Models/AttributeTableData.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `baseFunc` | `(...args: unknown[]) => void` | Contains the default function of the overridden attribute, e.g. the `onClick` which the table sets: it is easy to add additional logic and execute the default behaviour where you want it |
+| `childElementAttributes` | `AllHTMLAttributes<HTMLElement>` | Default HTMLAttributes of the component |
+| `dispatch` | `DispatchFunc` | Dispatches an action of the table or of your own code |
+| `childProps` | `T` | Props of the component |
+
+#### Cell
+
+Class from `src/lib/Models/Cell.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `columnKey` | `string` | The key of specific column |
+| `rowKeyValue` | `unknown` | Data's key value of every specific row |
+
+#### CssClasses
+
+Class from `src/lib/Models/CssClasses.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `root` | `unknown` |  |
+| `cell` | `unknown` |  |
+| `treeCell` | `unknown` |  |
+| `treeCellEmptySpace` | `unknown` |  |
+| `cellEditor` | `string` |  |
+| `cellText` | `unknown` |  |
+| `groupCell` | `unknown` |  |
+| `groupSummaryRow` | `unknown` |  |
+| `detailsRow` | `unknown` |  |
+| `detailsCell` | `unknown` |  |
+| `groupRow` | `unknown` |  |
+| `groupSummaryCell` | `unknown` |  |
+| `groupPanel` | `unknown` |  |
+| `groupPanelCell` | `unknown` |  |
+| `groupPanelCellRemove` | `unknown` |  |
+| `groupPanelText` | `unknown` |  |
+| `kaCellEditorValidationError` | `unknown` |  |
+| `row` | `unknown` |  |
+| `rowSelected` | `unknown` |  |
+| `tableWrapper` | `unknown` |  |
+| `table` | `unknown` |  |
+| `tableFixedColumns` | `unknown` |  |
+| `tableOverflowLeft` | `unknown` |  |
+| `tableOverflowRight` | `unknown` |  |
+| `tbody` | `unknown` |  |
+| `tfoot` | `unknown` |  |
+| `thead` | `unknown` |  |
+| `theadBackground` | `unknown` |  |
+| `theadFixed` | `unknown` |  |
+| `theadCell` | `unknown` |  |
+| `theadCellHeight` | `unknown` |  |
+| `summaryCell` | `unknown` |  |
+| `summaryRow` | `unknown` |  |
+| `theadCellContent` | `unknown` |  |
+| `theadCellContentWrapper` | `unknown` |  |
+| `theadCellResize` | `unknown` |  |
+| `theadCellWrapper` | `unknown` |  |
+| `theadRow` | `unknown` |  |
+| `draggedRow` | `unknown` |  |
+| `dragOverRow` | `unknown` |  |
+| `draggedColumn` | `unknown` |  |
+| `dragOverColumn` | `unknown` |  |
+| `fixedLeft` | `unknown` |  |
+| `fixedLeftLast` | `unknown` |  |
+| `fixedRight` | `unknown` |  |
+| `fixedRightFirst` | `unknown` |  |
+| `virtualColumnSpacer` | `unknown` |  |
+| `paging` | `unknown` |  |
+| `pagingPages` | `unknown` |  |
+| `pagingPageIndex` | `unknown` |  |
+| `pagingSize` | `unknown` |  |
+| `pagingSizes` | `unknown` |  |
+| `iconGroupArrowCollapsed` | `unknown` |  |
+| `iconGroupArrowExpanded` | `unknown` |  |
+| `iconTreeArrowCollapsed` | `unknown` |  |
+| `iconTreeArrowExpanded` | `unknown` |  |
+| `iconSort` | `unknown` |  |
+| `iconSortContent` | `unknown` |  |
+| `iconSortArrowDown` | `unknown` |  |
+| `iconSortArrowUp` | `unknown` |  |
+| `checkbox` | `unknown` |  |
+| `dateInput` | `unknown` |  |
+| `numberInput` | `unknown` |  |
+| `textInput` | `unknown` |  |
+
+#### CustomAction
+
+Interface from `src/lib/types.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `type` | `string` |  |
+
+#### FilterOperator
+
+Class from `src/lib/Models/FilterOperator.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `compare` | `Bivariant<(fieldValue: unknown, conditionValue: unknown, rowData?: unknown) => boolean>` |  |
+| `defaultForTypes?` | `DataType[]` |  |
+| `name` | `string` |  |
+
+#### GroupPanelSettings
+
+Class from `src/lib/Models/GroupPanelSettings.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `enabled?` | `boolean` |  |
+| `text?` | `string` |  |
+| `deep?` | `number` |  |
+
+#### GroupRowData
+
+Class from `src/lib/Models/GroupRowData.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `groupMark` | `object` |  |
+| `key` | `unknown[]` |  |
+| `value` | `unknown` |  |
+
+#### HeaderFilterItem
+
+Class from `src/lib/Models/HeaderFilterItem.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `isSelected` | `boolean` |  |
+| `value` | `string` |  |
+
+#### ICellEditorProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `IFilterRowEditorProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `autoFocus?` | `boolean` |  |
+| `editingMode` | `EditingMode` |  |
+| `editorValue?` | `unknown` |  |
+| `field` | `Field` |  |
+| `isDetailsRowShown` | `boolean` |  |
+| `isSelectedRow` | `boolean` |  |
+| `rowData` | `TData` |  |
+| `rowKeyField` | `string` |  |
+| `rowKeyValue` | `unknown` |  |
+| `value` | `unknown` |  |
+| `selectedRows` | `unknown[]` |  |
+| `validationMessage?` | `string` |  |
+| `validationMessageId?` | `string` |  |
+| `validation?` | `ValidationFunc` |  |
+
+#### ICellEditorValidationMessageProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `id?` | `string` |  |
+| `message` | `string` |  |
+
+#### ICellProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `treeArrowElement?` | `ReactNode` |  |
+| `childComponents` | `ChildComponents` |  |
+| `column` | `Column` |  |
+| `treeDeep?` | `number` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `editingMode` | `EditingMode` |  |
+| `editorValue?` | `unknown` |  |
+| `field` | `Field` |  |
+| `format?` | `FormatFunc` |  |
+| `hasEditorValue?` | `boolean` |  |
+| `isDetailsRowShown` | `boolean` |  |
+| `isEditableCell` | `boolean` |  |
+| `isFocused?` | `boolean` | The cell is focused (focused.cell). With the keyboard navigation it is the cell which gets the focus by Tab: the first cell is focused while focused.cell is not set or is not shown |
+| `isSelectedRow` | `boolean` |  |
+| `rowData` | `TData` |  |
+| `rowKeyField` | `string` |  |
+| `rowKeyValue` | `unknown` |  |
+| `selectedRows` | `unknown[]` |  |
+| `validation?` | `ValidationFunc` |  |
+| `validationMessage?` | `string` |  |
+| `value` | `unknown` |  |
+
+#### ICellTextProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents` | `ChildComponents` |  |
+| `column` | `Column` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `editingMode` | `EditingMode` |  |
+| `field` | `Field` |  |
+| `format?` | `FormatFunc` |  |
+| `isDetailsRowShown` | `boolean` |  |
+| `isSelectedRow` | `boolean` |  |
+| `rowData` | `TData` |  |
+| `rowKeyField` | `string` |  |
+| `rowKeyValue` | `unknown` |  |
+| `selectedRows` | `unknown[]` |  |
+| `value` | `unknown` |  |
+
+#### IColGroupProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `columns` | `Column[]` |  |
+| `groupColumnsCount` | `number` |  |
+
+#### IDataRowProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `IRowCommonProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `format?` | `FormatFunc` |  |
+| `validation?` | `ValidationFunc` |  |
+| `isDetailsRowShown` | `boolean` |  |
+| `isSelectedRow` | `boolean` |  |
+| `rowEditableCells` | `EditableCell[]` |  |
+
+#### IEmptyCellProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `index?` | `number` |  |
+| `isTh?` | `boolean` |  |
+| `isColGroup?` | `boolean` |  |
+| `className?` | `string` |  |
+| `dispatch?` | `DispatchFunc` |  |
+| `childComponents?` | `ChildComponents` |  |
+
+#### IEmptyCellsProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `count` | `number` |  |
+| `isTh?` | `boolean` |  |
+| `isColGroup?` | `boolean` |  |
+| `className?` | `string` |  |
+| `dispatch?` | `DispatchFunc` |  |
+| `childComponents?` | `ChildComponents` |  |
+
+#### IFilterRowEditorProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents?` | `ChildComponents` |  |
+| `column` | `Column` |  |
+| `dispatch` | `DispatchFunc` |  |
+
+#### IFilterRowProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents?` | `ChildComponents` |  |
+| `columns` | `Column[]` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `groupColumnsCount` | `number` |  |
+
+#### IGroupPanelCellProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `column` | `Column` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `sortingMode?` | `SortingMode` |  |
+| `filteringMode?` | `FilteringMode` |  |
+| `childComponents?` | `ChildComponents` |  |
+
+#### IGroupPanelProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `groupPanel` | `GroupPanelSettings` |  |
+| `columns` | `Column[]` |  |
+| `groups?` | `Group[]` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `sortingMode?` | `SortingMode` |  |
+| `filteringMode?` | `FilteringMode` |  |
+| `childComponents?` | `ChildComponents` |  |
+
+#### IGroupRowProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents` | `ChildComponents` |  |
+| `column` | `Column` |  |
+| `columns?` | `Column[]` |  |
+| `groupedColumns?` | `Column[]` |  |
+| `contentColSpan` | `number` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `groupIndex` | `number` |  |
+| `groupKey` | `unknown[]` |  |
+| `isExpanded` | `boolean` |  |
+| `isFocused?` | `boolean` |  |
+| `text` | `ReactNode` |  |
+| `groupItems?` | `TData[]` |  |
+
+#### IGroupSummaryCellProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `IGroupSummaryRowProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `column` | `Column` |  |
+
+#### IGroupSummaryRowProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `IRowsProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `groupData` | `TData[]` |  |
+| `groupIndex` | `number` |  |
+
+#### IHeadCellProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `areAllRowsSelected` | `boolean` |  |
+| `childComponents` | `ChildComponents` |  |
+| `colSpan?` | `number` |  |
+| `column` | `Column` |  |
+| `columnReordering?` | `boolean` |  |
+| `columnResizing?` | `boolean` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `filteringMode?` | `FilteringMode` |  |
+| `groupPanel?` | `GroupPanelSettings` |  |
+| `hasChildren?` | `boolean` |  |
+| `isGrouped?` | `boolean` |  |
+| `rowSpan?` | `number` |  |
+| `sortingMode` | `SortingMode` |  |
+
+#### IHeadCellResizeProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `dispatch` | `DispatchFunc` |  |
+| `column` | `Column` |  |
+| `childComponents` | `ChildComponents` |  |
+
+#### IHeadRowProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `areAllRowsSelected` | `boolean` |  |
+| `childComponents` | `ChildComponents` |  |
+| `columnReordering?` | `boolean` |  |
+| `columnResizing?` | `boolean` |  |
+| `columns` | `Column[]` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `filteringMode?` | `FilteringMode` |  |
+| `groupColumnsCount` | `number` |  |
+| `groupedColumns?` | `GroupedColumn[]` |  |
+| `groupPanel?` | `GroupPanelSettings` |  |
+| `sortingMode` | `SortingMode` |  |
+
+#### IHeaderFilterButtonProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents?` | `ChildComponents` |  |
+| `column` | `Column` |  |
+| `dispatch` | `DispatchFunc` |  |
+
+#### IHeaderFilterPopupProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `column` | `Column` |  |
+| `childComponents?` | `ChildComponents` |  |
+| `data?` | `unknown[]` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `format?` | `FormatFunc` |  |
+
+#### ILoadingProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `LoadingSettings`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents?` | `ChildComponents` |  |
+
+#### IMoveFocusedSettings
+
+Interface from `src/lib/Utils/NavigationUtils.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `end?` | `boolean` |  |
+
+#### INewRowProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents` | `ChildComponents` |  |
+| `columns` | `Column[]` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `editableCells` | `EditableCell[]` |  |
+| `format?` | `FormatFunc` |  |
+| `groupColumnsCount` | `number` |  |
+| `rowKeyField` | `string` |  |
+| `validation?` | `ValidationFunc` |  |
+
+#### INoDataRowProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents` | `ChildComponents` |  |
+| `loading?` | `LoadingSettings` |  |
+| `columns` | `Column[]` |  |
+| `groupColumnsCount` | `number` |  |
+| `noData?` | `NoData` |  |
+
+#### IPagingIndexProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `IPagingProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `isActive` | `boolean` |  |
+| `pageIndex` | `number` |  |
+| `text` | `string \| number` |  |
+
+#### IPagingProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents` | `ChildComponents` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `enabled?` | `boolean` |  |
+| `pageIndex?` | `number` |  |
+| `pageSize?` | `number` |  |
+| `pageSizes?` | `number[]` |  |
+| `pagesCount?` | `number` |  |
+
+#### IPagingSizeProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `IPagingProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `value` | `number` |  |
+
+#### IPopupContentItemProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `column` | `Column` |  |
+| `childComponents?` | `ChildComponents` |  |
+| `item?` | `unknown` |  |
+| `dispatch` | `DispatchFunc` |  |
+
+#### IPopupContentProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `column` | `Column` |  |
+| `childComponents?` | `ChildComponents` |  |
+| `data?` | `TData[]` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `format?` | `FormatFunc` |  |
+
+#### IRowProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `IRowCommonProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `isOdd?` | `boolean` |  |
+| `format?` | `FormatFunc` |  |
+| `groupColumnsCount` | `number` |  |
+| `isDetailsRowShown` | `boolean` |  |
+| `isSelectedRow` | `boolean` |  |
+| `rowEditableCells` | `EditableCell[]` |  |
+| `rowReordering` | `boolean` |  |
+| `trRef?` | `Ref<HTMLTableRowElement>` |  |
+| `validation?` | `ValidationFunc` |  |
+
+#### ISortIconProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents?` | `ChildComponents` |  |
+| `column` | `Column` |  |
+| `dispatch` | `DispatchFunc` |  |
+
+#### ISummaryCellProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `ISummaryRowProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `column` | `Column` |  |
+
+#### ISummaryRowProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `ITableFootProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+
+#### ITableAllProps
+
+Interface from `src/lib/Components/Table/Table.tsx`.
+
+Extends: `ITableEvents`, `ITableProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents?` | `ChildComponents` |  |
+
+#### ITableBodyProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `childComponents` | `ChildComponents` |  |
+| `columnResizeRef?` | `{ current: boolean }` |  |
+| `columns` | `Column[]` |  |
+| `data` | `TData[]` |  |
+| `loading?` | `LoadingSettings` |  |
+| `detailsRows?` | `unknown[]` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `editableCells` | `EditableCell[]` |  |
+| `editingMode` | `EditingMode` |  |
+| `focused?` | `Focused` |  |
+| `format?` | `FormatFunc` |  |
+| `groupColumnsCount` | `number` |  |
+| `groupedColumns` | `Column[]` |  |
+| `groups?` | `Group[]` |  |
+| `groupsExpanded?` | `unknown[][]` |  |
+| `keyboardNavigation?` | `boolean` |  |
+| `memoizedRows?` | `boolean` |  |
+| `oddEvenRows?` | `boolean \| 'treeRoots'` |  |
+| `rowKeyField` | `string` |  |
+| `rowReordering` | `boolean` |  |
+| `selectedRows` | `unknown[]` |  |
+| `noData?` | `NoData` |  |
+| `validation?` | `ValidationFunc` |  |
+| `virtualScrolling?` | `VirtualScrolling` |  |
+| `treeExpandButtonColumnKey?` | `string` |  |
+
+#### ITableEvents
+
+Interface from `src/lib/Components/Table/Table.tsx`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `dispatch` | `DispatchFunc` |  |
+
+#### ITableFootProps
+
+Interface from `src/lib/props.ts`.
+
+Extends: `ITableAllProps`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `data` | `TData[]` |  |
+| `groupColumnsCount` | `number` |  |
+
+#### ITableHeadProps
+
+Interface from `src/lib/props.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `groupPanel?` | `GroupPanelSettings` |  |
+| `columnReordering?` | `boolean` |  |
+| `groupedColumns?` | `GroupedColumn[]` |  |
+| `columnResizing?` | `boolean` |  |
+| `areAllRowsSelected` | `boolean` |  |
+| `childComponents` | `ChildComponents` |  |
+| `columns` | `Column[]` |  |
+| `dispatch` | `DispatchFunc` |  |
+| `filteringMode` | `FilteringMode` |  |
+| `groupColumnsCount` | `number` |  |
+| `sortingMode` | `SortingMode` |  |
+
+#### NoData
+
+Interface from `src/lib/types.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `text?` | `string` |  |
+| `hideHeader?` | `boolean` |  |
+
+#### PagingOptions
+
+Class from `src/lib/Models/Paging.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `enabled?` | `boolean` |  |
+| `pageIndex?` | `number` |  |
+| `pageSize?` | `number` |  |
+| `pageSizes?` | `number[]` |  |
+| `pagesCount?` | `number` |  |
+| `position?` | `PagingPosition` |  |
+
+#### PopupPosition
+
+Class from `src/lib/Models/PopupPosition.ts`.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `x?` | `number` |  |
+| `y?` | `number` |  |
+
+### Action creators
+
+Actions can be dispatched through a table instance, `dispatch`, or the action creators exported from `ka-table/actionCreators`. A controlled table must apply actions with `kaReducer`.
+
+| Action creator | Action type | Description |
+| --- | --- | --- |
+| `updateHeaderFilterValues(columnKey: string, item: string, checked: boolean)` | `'UpdateHeaderFilterValues'` | Fires when user selects/deselects value in the header filter |
+| `updatePopupPosition(popupPosition: PopupPosition)` | `'UpdatePopupPosition'` | Fires when header filter popup is shown |
+| `updateHeaderFilterPopupState(columnKey: string, isHeaderFilterPopupShown?: boolean)` | `'UpdateHeaderFilterPopupState'` | Shows/hides the header filter popup |
+| `updateFilterRowValue(columnKey: string, filterRowValue: unknown)` | `'UpdateFilterRowValue'` | Update _filterRowValue_ for specific column |
+| `updateHeaderFilterSearchValue(columnKey: string, headerFilterSearchValue: string)` | `'UpdateHeaderFilterSearchValue'` | Updates the search text of the header filter popup |
+| `updateFilterRowOperator(columnKey: string, filterRowOperator: string)` | `'UpdateFilterRowOperator'` | Update _filterRowOperator_ for specific column |
+| `clearAllFilters()` | `'ClearAllFilters'` | Clears all table filters |
+| `updateEditorValue(rowKeyValue: unknown, columnKey: string, value: unknown)` | `'UpdateEditorValue'` | Update editorCell in _editableCells_ |
+| `updateCellValue(rowKeyValue: unknown, columnKey: string, value: unknown)` | `'UpdateCellValue'` | Update _data_ |
+| `updateSortDirection(columnKey: string)` | `'UpdateSortDirection'` | Update _sortDirection_ to the opposite for specific column |
+| `closeEditor(rowKeyValue: unknown, columnKey: string)` | `'CloseEditor'` | Removes cell from _editableCells_ note: when _EditingMode.Cell_ is enabled table calls _CloseEditor_ action each time editor loses focus |
+| `deleteRow(rowKeyValue: unknown)` | `'DeleteRow'` | Deletes row from _data_ and its key from _selectedRows_, _detailsRows_, _treeGroupsExpanded_, _editableCells_ and _focused_ |
+| `deselectAllRows()` | `'DeselectAllRows'` | Clears _selectedRows_ |
+| `deselectAllFilteredRows()` | `'DeselectAllFilteredRows'` | Remove all filtered items ids of _data_ to _selectedRows_ |
+| `deselectAllVisibleRows()` | `'DeselectAllVisibleRows'` | Remove all visible items ids of _data_ to _selectedRows_ |
+| `deselectRow(rowKeyValue: unknown)` | `'DeselectRow'` | Removes row id from _selectedRows_ |
+| `deselectRows(rowsKeyValues: unknown[])` | `'DeselectRows'` | Removes rows ids from _selectedRows_ |
+| `openEditor(rowKeyValue: unknown, columnKey: string)` | `'OpenEditor'` | Add cell to _editableCells_ |
+| `search(searchText: string)` | `'Search'` | Change _searchText_ option |
+| `selectAllRows()` | `'SelectAllRows'` | Add all items ids of _data_ to _selectedRows_ |
+| `selectAllFilteredRows()` | `'SelectAllFilteredRows'` | Add all filtered items ids of _data_ to _selectedRows_ |
+| `selectAllVisibleRows()` | `'SelectAllVisibleRows'` | Add all visible items ids of _data_ to _selectedRows_ |
+| `selectSingleRow(rowKeyValue: unknown)` | `'SelectSingleRow'` | Set _selectedRows_ as an array with one row id |
+| `selectRow(rowKeyValue: unknown)` | `'SelectRow'` | Add row id to _selectedRows_ |
+| `selectRows(rowsKeyValues: unknown[])` | `'SelectRows'` | Add rows ids to _selectedRows_ |
+| `selectRowsRange(rowKeyValueFrom: unknown, rowKeyValueTo: unknown)` | `'SelectRowsRange'` | rowKeyValueFrom, rowKeyValueTo describe start and end of visible elements range, all ids added to _selectedRows_ |
+| `updateGroupsExpanded(groupKey: unknown[])` | `'UpdateGroupsExpanded'` | Add/remove group id to/from _groupsExpanded_ |
+| `updateData(data: unknown[])` | `'UpdateData'` | Update _data_ |
+| `showLoading(text?: string)` | `'ShowLoading'` | Set _loading_ = true and updates the text if text is specified |
+| `hideLoading()` | `'HideLoading'` | Set _loading_ = false |
+| `showNewRow()` | `'ShowNewRow'` | Add new row cells to _editableCells_ |
+| `hideNewRow()` | `'HideNewRow'` | Removes row cells from _editableCells_ |
+| `showDetailsRow(rowKeyValue: unknown)` | `'ShowDetailsRow'` | Adds the row key to _detailsRows_ |
+| `hideDetailsRow(rowKeyValue: unknown)` | `'HideDetailsRow'` | Removes the row key from _detailsRows_ |
+| `saveNewRow(rowKeyValue: unknown, settings?: { validate?: boolean })` | `'SaveNewRow'` | Saves editor values to the new item of _data_ and removes row cells from _editableCells_. Settings is optional: validate - validate values before save, do not save if validation is unsuccessful. |
+| `openRowEditors(rowKeyValue: unknown)` | `'OpenRowEditors'` | Add row cells to _editableCells_ |
+| `closeRowEditors(rowKeyValue: unknown)` | `'CloseRowEditors'` | Removes row cells from _editableCells_ |
+| `saveRowEditors(rowKeyValue: unknown, settings?: { validate?: boolean })` | `'SaveRowEditors'` | Saves editor values to _data_ and removes row cells from _editableCells_. Settings is optional: validate - validate values before save, do not save and do not close if validation is unsuccessful. |
+| `updateRow(rowData: unknown)` | `'UpdateRow'` | Replaces the row with the same key in _data_ |
+| `updatePageIndex(pageIndex: number)` | `'UpdatePageIndex'` | Update _paging.pageIndex_ option and show new page data |
+| `updatePageSize(pageSize: number)` | `'UpdatePageSize'` | Update _paging.pageSize_, the first row of the page stays shown |
+| `updatePagesCount(pagesCount: number)` | `'UpdatePagesCount'` | Update _paging.pagesCount_ (remote paging) |
+| `resizeColumn(columnKey: string, width: number)` | `'ResizeColumn'` | Change column width |
+| `reorderRows(rowKeyValue: unknown, targetRowKeyValue: unknown)` | `'ReorderRows'` | Place rowKeyValue to the position of targetRowKeyValue |
+| `reorderColumns(columnKey: string, targetColumnKey: string)` | `'ReorderColumns'` | Place columnKey to the position of targetColumnKey |
+| `moveColumnBefore(columnKey: string, targetColumnKey: string)` | `'MoveColumnBefore'` | Move _columnKey_ to position before _targetColumnKey_ in _columns_ |
+| `insertColumn(column: Column, index: number)` | `'InsertColumn'` | Inserts column to specific position in the _columns_ |
+| `moveColumnToIndex(columnKey: string, index: number)` | `'MoveColumnToIndex'` | Move _columnKey_ to _index_ position in _columns_ |
+| `showColumn(columnKey: string)` | `'ShowColumn'` | Sets _visible=true_ for specific column |
+| `hideColumn(columnKey: string)` | `'HideColumn'` | Sets _visible=false_ for specific column |
+| `loadData()` | `'LoadData'` | Notifies grid about time to reload its data |
+| `clearSingleAction()` | `'ClearSingleAction'` | Sets singleAction as undefined |
+| `setSingleAction(singleAction: CustomAction)` | `'SetSingleAction'` | Set _singleAction_ property |
+| `clearFocused()` | `'ClearFocused'` | Sets focused as undefined |
+| `setFocused(focused: Focused)` | `'SetFocused'` | Set _focused_ property: the cell or the group row focused by a click, Tab or the keyboard navigation |
+| `moveFocusedRight(settings?: IMoveFocusedSettings)` | `'MoveFocusedRight'` | Move focused one cell right |
+| `moveFocusedLeft(settings?: IMoveFocusedSettings)` | `'MoveFocusedLeft'` | Move focused one cell left |
+| `moveFocusedUp(settings?: IMoveFocusedSettings)` | `'MoveFocusedUp'` | Move focused one cell up |
+| `moveFocusedDown(settings?: IMoveFocusedSettings)` | `'MoveFocusedDown'` | Move focused one cell down |
+| `updateTreeGroupsExpanded(rowKeyValue: unknown)` | `'UpdateTreeGroupsExpanded'` | Adds/removes _rowKeyValue_ to/from _treeGroupsExpanded_ |
+| `validate()` | `'Validate'` | Adds/removes _validationMessage_ to/from _editableCells_ items |
+| `openAllEditors()` | `'OpenAllEditors'` | Adds each data cell to _editableCells_ |
+| `saveAllEditors()` | `'SaveAllEditors'` | Saves _editableCells_ editorValues to _data_ |
+| `insertRow(rowData: unknown, options?: { rowKeyValue?: unknown, insertRowPosition?: InsertRowPosition })` | `'InsertRow'` | Inserts row to specific position in the _data_ |
+| `groupColumn(columnKey: string)` | `'GroupColumn'` | Groups _columnKey_ |
+| `ungroupColumn(columnKey: string)` | `'UngroupColumn'` | Ungroups _columnKey_ |
+
+## Examples
+
+Every example below links to its complete TSX source. When adapting a demo to a package import, replace its relative `../../lib` imports with the package paths listed in the Imports section.
+
+### Columns
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Column Reordering | [Live demo](https://komarovalexander.github.io/ka-table/#/column-reordering) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ColumnReorderingDemo/ColumnReorderingDemo.tsx) |
+| Column Resizing | [Live demo](https://komarovalexander.github.io/ka-table/#/column-resizing) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ColumnResizingDemo/ColumnResizingDemo.tsx) |
+| Column Settings | [Live demo](https://komarovalexander.github.io/ka-table/#/column-settings) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ColumnSettingsDemo/ColumnSettingsDemo.tsx) |
+| Fixed Colum | [Live demo](https://komarovalexander.github.io/ka-table/#/fixed-column) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/FixedColumnDemo/FixedColumnDemo.tsx) |
+
+### Customization
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Alert Cell | [Live demo](https://komarovalexander.github.io/ka-table/#/alert-cell) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/AlertCellDemo/AlertCellDemo.tsx) |
+| Custom Attributes | [Live demo](https://komarovalexander.github.io/ka-table/#/custom-attributes) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/CustomAttributesDemo/CustomAttributesDemo.tsx) |
+| Custom Cell | [Live demo](https://komarovalexander.github.io/ka-table/#/custom-cell) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/CustomCellDemo/CustomCellDemo.tsx) |
+| Custom Row | [Live demo](https://komarovalexander.github.io/ka-table/#/custom-data-row) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/CustomDataRowDemo/CustomDataRowDemo.tsx) |
+| Custom Header Cell | [Live demo](https://komarovalexander.github.io/ka-table/#/custom-header-cell) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/CustomHeaderCellDemo/CustomHeaderCellDemo.tsx) |
+| Custom Paging | [Live demo](https://komarovalexander.github.io/ka-table/#/custom-paging) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/CustomPagingDemo/CustomPagingDemo.tsx) |
+
+### Editing
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Add New Row | [Live demo](https://komarovalexander.github.io/ka-table/#/add-row) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/AddRowDemo/AddRowDemo.tsx) |
+| Custom Editor | [Live demo](https://komarovalexander.github.io/ka-table/#/custom-editor) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/CustomEditorDemo/CustomEditorDemo.tsx) |
+| Delete Row | [Live demo](https://komarovalexander.github.io/ka-table/#/delete-row) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/DeleteRowDemo/DeleteRowDemo.tsx) |
+| Editing - Cell | [Live demo](https://komarovalexander.github.io/ka-table/#/editing) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/EditingDemo/EditingDemo.tsx) |
+| Editing - Row | [Live demo](https://komarovalexander.github.io/ka-table/#/editing-row) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/EditingRowDemo/EditingRowDemo.tsx) |
+| Editing - Table | [Live demo](https://komarovalexander.github.io/ka-table/#/editing-table) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/EditingTableDemo/EditingTableDemo.tsx) |
+| Insert Row | [Live demo](https://komarovalexander.github.io/ka-table/#/insert-row) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/InsertRowDemo/InsertRowDemo.tsx) |
+| Validation | [Live demo](https://komarovalexander.github.io/ka-table/#/validation) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ValidationDemo/ValidationDemo.tsx) |
+
+### Export / Print
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Export to CSV | [Live demo](https://komarovalexander.github.io/ka-table/#/export) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ExportDemo/ExportDemo.tsx) |
+| Export to PDF | [Live demo](https://komarovalexander.github.io/ka-table/#/export-pdf) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ExportToPdfDemo/ExportToPdfDemo.tsx) |
+| Print | [Live demo](https://komarovalexander.github.io/ka-table/#/print) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/PrintDemo/PrintDemo.tsx) |
+
+### Filtering
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Filter Extended | [Live demo](https://komarovalexander.github.io/ka-table/#/filter-extended) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/FilterExtendedDemo/FilterExtendedDemo.tsx) |
+| Filter Row - Custom Editor | [Live demo](https://komarovalexander.github.io/ka-table/#/filter-row-custom-editor) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/FilterRowCustomEditorDemo/FilterRowCustomEditorDemo.tsx) |
+| Filter Row - Logic | [Live demo](https://komarovalexander.github.io/ka-table/#/filter-row-custom-logic) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/FilterRowCustomLogicDemo/FilterRowCustomLogicDemo.tsx) |
+| Filter Row | [Live demo](https://komarovalexander.github.io/ka-table/#/filter-row) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/FilterRowDemo/FilterRowDemo.tsx) |
+| Header Filter | [Live demo](https://komarovalexander.github.io/ka-table/#/header-filter) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/HeaderFilterDemo/HeaderFilterDemo.tsx) |
+| Header Filter - Logic | [Live demo](https://komarovalexander.github.io/ka-table/#/header-filter-logic) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/HeaderFilterLogicDemo/HeaderFilterLogicDemo.tsx) |
+| Search | [Live demo](https://komarovalexander.github.io/ka-table/#/search) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/SearchDemo/SearchDemo.tsx) |
+
+### Grouping
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Grouped Columns | [Live demo](https://komarovalexander.github.io/ka-table/#/grouped-columns) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/GroupedColumnsDemo/GroupedColumnsDemo.tsx) |
+| Grouping Custom Cell | [Live demo](https://komarovalexander.github.io/ka-table/#/grouping-custom-cell) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/GroupingCustomCellDemo/GroupingCustomCellDemo.tsx) |
+| Grouping Custom Row | [Live demo](https://komarovalexander.github.io/ka-table/#/grouping-custom-row) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/GroupingCustomRowDemo/GroupingCustomRowDemo.tsx) |
+| Grouping | [Live demo](https://komarovalexander.github.io/ka-table/#/grouping) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/GroupingDemo/GroupingDemo.tsx) |
+| Grouping Summary | [Live demo](https://komarovalexander.github.io/ka-table/#/grouping-summary) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/GroupingSummaryDemo/GroupingSummaryDemo.tsx) |
+| Tree Mode | [Live demo](https://komarovalexander.github.io/ka-table/#/tree-mode) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/TreeModeDemo/TreeModeDemo.tsx) |
+
+### Miscellaneous
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Events | [Live demo](https://komarovalexander.github.io/ka-table/#/events) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/EventsDemo/EventsDemo.tsx) |
+| Get Data By Props | [Live demo](https://komarovalexander.github.io/ka-table/#/get-data-by-props) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/GetDataByPropsDemo/GetDataByPropsDemo.tsx) |
+| Keyboard Navigation | [Live demo](https://komarovalexander.github.io/ka-table/#/keyboard-navigation) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/KeyboardNavigationDemo/KeyboardNavigationDemo.tsx) |
+| Loading | [Live demo](https://komarovalexander.github.io/ka-table/#/loading) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/LoadingDemo/LoadingDemo.tsx) |
+| Nullable Cell Data | [Live demo](https://komarovalexander.github.io/ka-table/#/nullable-cell-data) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/NullableCellDataDemo/NullableCellDataDemo.tsx) |
+| Responsive | [Live demo](https://komarovalexander.github.io/ka-table/#/responsive) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ResponsiveDemo/ResponsiveDemo.tsx) |
+| State Storing | [Live demo](https://komarovalexander.github.io/ka-table/#/state-storing) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/StateStoringDemo/StateStoringDemo.tsx) |
+| Summary | [Live demo](https://komarovalexander.github.io/ka-table/#/summary) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/SummaryDemo/SummaryDemo.tsx) |
+| Tab Index | [Live demo](https://komarovalexander.github.io/ka-table/#/tab-index) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/TabIndexDemo/TabIndexDemo.tsx) |
+
+### Other
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Basics | [Live demo](https://komarovalexander.github.io/ka-table/#/overview) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/OverviewDemo/OverviewDemo.tsx) |
+| Paging | [Live demo](https://komarovalexander.github.io/ka-table/#/paging) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/PagingDemo/PagingDemo.tsx) |
+| Redux | [Live demo](https://komarovalexander.github.io/ka-table/#/redux) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ReduxDemo/ReduxDemo.tsx) |
+
+### Remote Data
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Json | [Live demo](https://komarovalexander.github.io/ka-table/#/json) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/JsonDemo/JsonDemo.tsx) |
+| Load | [Live demo](https://komarovalexander.github.io/ka-table/#/remote-data) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/RemoteDataDemo/RemoteDataDemo.tsx) |
+| Editing | [Live demo](https://komarovalexander.github.io/ka-table/#/remote-data-editing) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/RemoteDataEditingDemo/RemoteDataEditingDemo.tsx) |
+
+### Rows
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Details Row | [Live demo](https://komarovalexander.github.io/ka-table/#/details-row) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/DetailsRowDemo/DetailsRowDemo.tsx) |
+| Hover Row | [Live demo](https://komarovalexander.github.io/ka-table/#/hover-row) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/HoverRowDemo/HoverRowDemo.tsx) |
+| Row Reordering | [Live demo](https://komarovalexander.github.io/ka-table/#/row-reordering) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/RowReorderingDemo/RowReorderingDemo.tsx) |
+
+### Selection
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Selection - Multiple | [Live demo](https://komarovalexander.github.io/ka-table/#/selection) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/SelectionDemo/SelectionDemo.tsx) |
+| Selection - Single | [Live demo](https://komarovalexander.github.io/ka-table/#/selection-single) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/SelectionSingleDemo/SelectionSingleDemo.tsx) |
+
+### Sorting
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Sorting | [Live demo](https://komarovalexander.github.io/ka-table/#/sorting) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/SortingDemo/SortingDemo.tsx) |
+| Sorting Modes | [Live demo](https://komarovalexander.github.io/ka-table/#/sorting-modes) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/SortingModesDemo/SortingModesDemo.tsx) |
+| Sorting Logic | [Live demo](https://komarovalexander.github.io/ka-table/#/sorting-custom-logic) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/SortingCustomLogicDemo/SortingCustomLogicDemo.tsx) |
+| Sorting Extended | [Live demo](https://komarovalexander.github.io/ka-table/#/sorting-extended) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/SortingExtendedDemo/SortingExtendedDemo.tsx) |
+
+### Themes
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Bootstrap | [Live demo](https://komarovalexander.github.io/ka-table/#/bootstrap) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/BootstrapDemo/BootstrapDemo.tsx) |
+| Custom Theme | [Live demo](https://komarovalexander.github.io/ka-table/#/custom-theme) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/CustomThemeDemo/CustomThemeDemo.tsx) |
+| Dark Theme | [Live demo](https://komarovalexander.github.io/ka-table/#/dark-theme) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/DarkThemeDemo/DarkThemeDemo.tsx) |
+| Material | [Live demo](https://komarovalexander.github.io/ka-table/#/material) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/MaterialDemo/MaterialDemo.tsx) |
+
+### Virtual Scrolling
+
+| Example | Demo | Source |
+| --- | --- | --- |
+| Infinite Scrolling | [Live demo](https://komarovalexander.github.io/ka-table/#/infinite-scrolling) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/InfiniteScrollingDemo/InfiniteScrollingDemo.tsx) |
+| Many Columns | [Live demo](https://komarovalexander.github.io/ka-table/#/many-columns) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ManyColumnsDemo/ManyColumnsDemo.tsx) |
+| 100K Rows | [Live demo](https://komarovalexander.github.io/ka-table/#/many-rows) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ManyRowsDemo/ManyRowsDemo.tsx) |
+| 10K Rows Dynamic | [Live demo](https://komarovalexander.github.io/ka-table/#/many-rows-dynamic) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ManyRowsDynamicDemo/ManyRowsDynamicDemo.tsx) |
+| 10k Grouped | [Live demo](https://komarovalexander.github.io/ka-table/#/many-rows-grouping) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ManyRowsGroupingDemo/ManyRowsGroupingDemo.tsx) |
+| 300K Rows & memo | [Live demo](https://komarovalexander.github.io/ka-table/#/many-rows-memo) | [TSX source](https://raw.githubusercontent.com/komarovalexander/ka-table/master/src/Demos/ManyRowsMemoDemo/ManyRowsMemoDemo.tsx) |
+
+## Additional documentation
+
+- [Hooks and utilities](https://ka-table.com/docs_hooks_utils.html)
+- [Migration from 12.x](https://raw.githubusercontent.com/komarovalexander/ka-table/master/MIGRATION.md)
+- [Changelog](https://raw.githubusercontent.com/komarovalexander/ka-table/master/CHANGELOG.md)
+- [Agent notes](https://raw.githubusercontent.com/komarovalexander/ka-table/master/scripts/package/AGENTS.md)
+- [GitHub repository](https://github.com/komarovalexander/ka-table)

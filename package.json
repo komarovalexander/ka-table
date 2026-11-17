@@ -1,6 +1,6 @@
 {
   "name": "ka-table",
-  "version": "13.0.0",
+  "version": "13.0.1",
   "private": true,
   "license": "MIT",
   "repository": "github:komarovalexander/ka-table",
@@ -22,6 +22,8 @@
     "typecheck": "tsc --noEmit",
     "docs": "node scripts/docs/generate-docs.mjs",
     "docs:check": "node scripts/docs/generate-docs.mjs --check",
+    "docs:llms": "node scripts/docs/generate-llms.mjs",
+    "docs:llms:check": "node scripts/docs/generate-llms.mjs --check",
     "dist": "tsdown",
     "pack": "tsdown && cd dist && npm pack"
   },

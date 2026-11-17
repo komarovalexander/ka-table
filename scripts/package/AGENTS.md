@@ -54,4 +54,6 @@ over what you remember: 13.0 changed the API of 12.x.
   https://ka-table.com/docs_props.html, https://ka-table.com/docs_ui.html, https://ka-table.com/docs_action.html
 - An example of every feature: https://github.com/komarovalexander/ka-table/tree/master/src/Demos
   (`<Name>Demo/<Name>Demo.tsx`, e.g. `RemoteDataDemo`, `CustomEditorDemo`; read `../../lib` as `ka-table`).
+- The standalone Markdown reference: `node_modules/ka-table/llms-full.txt` in a project which installed the package, or
+  https://komarovalexander.github.io/ka-table/llms-full.txt online. It has the generated API and direct demo source links.
 - Code written for 12.x: https://github.com/komarovalexander/ka-table/blob/master/MIGRATION.md

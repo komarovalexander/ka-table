@@ -6,7 +6,6 @@ import { initializeGA, trackEvent, trackPage } from './ga';
 import AddRowDemo from './AddRowDemo/AddRowDemo';
 import AlertCellDemo from './AlertCellDemo/AlertCellDemo';
 import BootstrapDemo from './BootstrapDemo/BootstrapDemo';
-import ClassComponentDemo from './ClassComponentDemo/ClassComponentDemo';
 import ColumnReorderingDemo from './ColumnReorderingDemo/ColumnReorderingDemo';
 import ColumnResizingDemo from './ColumnResizingDemo/ColumnResizingDemo';
 import ColumnSettingsDemo from './ColumnSettingsDemo/ColumnSettingsDemo';
@@ -85,7 +84,6 @@ const demos: Demo[] = [
     new Demo(AddRowDemo, '/add-row', 'Add New Row', 'AddRowDemo', 'https://stackblitz.com/edit/table-add-row-js', 'https://stackblitz.com/edit/table-add-row-ts', 'Editing'),
     new Demo(AlertCellDemo, '/alert-cell', 'Alert Cell', 'AlertCellDemo', 'https://stackblitz.com/edit/table-alert-cell-js', 'https://stackblitz.com/edit/table-alert-cell-ts', 'Customization'),
     new Demo(BootstrapDemo, '/bootstrap', 'Bootstrap', 'BootstrapDemo', 'https://stackblitz.com/edit/table-bootstrap-js', 'https://stackblitz.com/edit/table-bootstrap-ts', 'Themes'),
-    new Demo(ClassComponentDemo, '/class-component', 'Class Component', 'ClassComponentDemo', 'https://stackblitz.com/edit/table-class-component-js', 'https://stackblitz.com/edit/table-class-component-ts', ''),
     new Demo(ColumnReorderingDemo, '/column-reordering', 'Column Reordering', 'ColumnReorderingDemo', 'https://stackblitz.com/edit/table-column-reordering-js', 'https://stackblitz.com/edit/table-column-reordering-ts', 'Columns'),
     new Demo(ColumnResizingDemo, '/column-resizing', 'Column Resizing', 'ColumnResizingDemo', 'https://stackblitz.com/edit/table-column-resizing-js', 'https://stackblitz.com/edit/table-column-resizing-ts', 'Columns'),
     new Demo(ColumnSettingsDemo, '/column-settings', 'Column Settings', 'ColumnSettingsDemo', 'https://stackblitz.com/edit/table-column-settings-js', 'https://stackblitz.com/edit/table-column-settings-ts', 'Columns'),
@@ -96,7 +94,7 @@ const demos: Demo[] = [
     new Demo(CustomHeaderCellDemo, '/custom-header-cell', 'Custom Header Cell', 'CustomHeaderCellDemo', 'https://stackblitz.com/edit/table-custom-header-cell-js', 'https://stackblitz.com/edit/table-custom-header-cell-ts', 'Customization'),
     new Demo(CustomPagingDemo, '/custom-paging', 'Custom Paging', 'CustomPagingDemo', 'https://stackblitz.com/edit/table-custom-paging-js', 'https://stackblitz.com/edit/table-custom-paging-ts', 'Customization'),
     new Demo(CustomThemeDemo, '/custom-theme', 'Custom Theme', 'CustomThemeDemo', 'https://stackblitz.com/edit/table-custom-theme-js', 'https://stackblitz.com/edit/table-custom-theme-ts', 'Themes', 'custom-theme.css'),
-    new Demo(DarkThemeDemo, '/dark-theme', 'Dark Theme', 'DarkThemeDemo', '', '', 'Themes'),
+    new Demo(DarkThemeDemo, '/dark-theme', 'Dark Theme', 'DarkThemeDemo', '', 'https://stackblitz.com/edit/table-dark-theme-ts', 'Themes'),
     new Demo(DeleteRowDemo, '/delete-row', 'Delete Row', 'DeleteRowDemo', 'https://stackblitz.com/edit/table-delete-row-js', 'https://stackblitz.com/edit/table-delete-row-ts', 'Editing'),
     new Demo(DetailsRowDemo, '/details-row', 'Details Row', 'DetailsRowDemo', 'https://stackblitz.com/edit/table-details-row-js', 'https://stackblitz.com/edit/table-details-row-ts', 'Rows'),
     new Demo(EditingDemo, '/editing', 'Editing - Cell', 'EditingDemo', 'https://stackblitz.com/edit/table-editing-js', 'https://stackblitz.com/edit/table-editing-ts', 'Editing'),

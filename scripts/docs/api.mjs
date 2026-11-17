@@ -74,6 +74,7 @@ export const extractApi = (root) => {
             if ((ts.isInterfaceDeclaration(st) || ts.isClassDeclaration(st)) && st.name) {
                 api.declarations[st.name.text] = {
                     kind: ts.isClassDeclaration(st) ? 'class' : 'interface',
+                    exported: isExported(ts, st),
                     file,
                     extends: (st.heritageClauses || []).flatMap((h) => h.types.map((t) => t.expression.getText(sf))),
                     members: st.members
@@ -88,9 +89,13 @@ export const extractApi = (root) => {
                         })),
                 };
             } else if (ts.isTypeAliasDeclaration(st)) {
-                api.aliases[st.name.text] = { file, type: st.type.getText(sf) };
+                api.aliases[st.name.text] = { exported: isExported(ts, st), file, type: st.type.getText(sf) };
             } else if (ts.isEnumDeclaration(st)) {
-                api.enums[st.name.text] = { file, members: st.members.map((m) => ({ name: m.name.getText(sf), value: m.initializer?.getText(sf) })) };
+                api.enums[st.name.text] = {
+                    exported: isExported(ts, st),
+                    file,
+                    members: st.members.map((m) => ({ name: m.name.getText(sf), value: m.initializer?.getText(sf) })),
+                };
             } else if (file === 'actionCreators.ts' && ts.isVariableStatement(st) && isExported(ts, st)) {
                 for (const d of st.declarationList.declarations) {
                     const init = d.initializer;
